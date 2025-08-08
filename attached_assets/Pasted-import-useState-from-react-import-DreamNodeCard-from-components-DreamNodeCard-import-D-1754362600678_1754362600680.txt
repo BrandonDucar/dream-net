@@ -1,0 +1,53 @@
+import { useState } from 'react';
+import DreamNodeCard from '@/components/DreamNodeCard';
+import DreamFilterBar from '@/components/DreamFilterBar';
+import DreamAgentSpawner from '@/components/DreamAgentSpawner';
+import mockDreams from '@/data/mockDreams';
+import { Dream } from '@/components/DreamNodeCard';
+
+export default function DreamsGallery() {
+  const [dreams, setDreams] = useState<Dream[]>(mockDreams);
+  const [filters, setFilters] = useState({ emotion: '', trend: '' });
+  const [sortKey, setSortKey] = useState<string>('none');
+
+  const handleFilterChange = (type: string, value: string) => {
+    setFilters((prev) => ({ ...prev, [type]: value }));
+  };
+
+  const handleSortChange = (key: string) => {
+    setSortKey(key);
+  };
+
+  const handleSpawn = (newDream: Dream) => {
+    setDreams((prev) => [...prev, newDream]);
+  };
+
+  let filtered = dreams.filter((d) => {
+    const emotionMatch = filters.emotion ? d.emotionalProfile.primaryEmotion === filters.emotion : true;
+    const trendMatch = filters.trend ? d.viralityMetrics.currentTrend === filters.trend : true;
+    return emotionMatch && trendMatch;
+  });
+
+  if (sortKey === 'health') {
+    filtered.sort((a, b) => b.healthScore - a.healthScore);
+  } else if (sortKey === 'engagement') {
+    filtered.sort((a, b) => b.engagementScore - a.engagementScore);
+  } else if (sortKey === 'remixes') {
+    filtered.sort((a, b) => b.metrics.remixes - a.metrics.remixes);
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-950 p-8">
+      <h1 className="text-white text-3xl font-bold mb-4">🌌 Dream Gallery</h1>
+
+      <DreamFilterBar onFilterChange={handleFilterChange} onSortChange={handleSortChange} />
+      <DreamAgentSpawner onSpawn={handleSpawn} current={dreams} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filtered.map((dream) => (
+          <DreamNodeCard key={dream.dreamId} dream={dream} />
+        ))}
+      </div>
+    </div>
+  );
+}
