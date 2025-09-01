@@ -52,7 +52,9 @@ import claimFusionRoute from './routes/claim-fusion';
 import dreamViewer from './routes/dreams';
 import walletScoringRouter from './routes/wallet-scoring';
 import echoScoreRouter from './routes/echo-score';
-import mintTokenRouter from './routes/mint-dream-token';
+iimport cronRoutes from "./routes/cron";
+import agentBridge from "./routes/agent-bridge";
+mport mintTokenRouter from './routes/mint-dream-token';
 import { smsRouter } from './routes/sms';
 import mintDreamRouter from './routes/mint-dream';
 // fuseDreamsRouter removed as route is handled inline
@@ -4674,7 +4676,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     };
     
     res.json(leaderboardData);
-  });
+  })
+    // Mount cron and agent bridge routes
+    app.use("/api/cron", cronRoutes);
+    app.use("/api/agent", agentBridge);
+;
 
   const httpServer = createServer(app);
   return httpServer;
