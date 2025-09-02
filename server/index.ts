@@ -75,8 +75,4 @@ app.use((req, res, next) => {
       // Seed dreams on startup
       seedDreams().catch((err) => console.error("Failed to seed dreams:", err));
 
-      // Start the dream scoring engine
-      dreamScoreEngine.startScheduledScoring();
-    },
-  );
-})();
+      
