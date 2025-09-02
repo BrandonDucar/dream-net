@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { dreamScoreEngine } from "./dream-score-engine";
+import { triggerArchiveNow } from "./archive-scheduler";
 import { seedDreams } from "./seed-dreams";
 
 const app = express();
@@ -37,6 +38,39 @@ app.use((req, res, next) => {
 
   next();
 });
+
+  // Health endpoint and cron endpoints
+  app.get("/api/health", (_req, res) => {
+    res.json({ status: "ok", commitSha: process.env.VERCEL_GIT_COMMIT_SHA || "", timestamp: new Date().toISOString() });
+  });
+
+  const requireAgentKey = (req: any, res: any, next: any) => {
+    const agentKey = req.headers["x-agent-key"];
+    const allowedKey = process.env.AGENT_API_KEY;
+    if (!agentKey || agentKey !== allowedKey) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    const allowlist = process.env.IP_ALLOWLIST ? process.env.IP_ALLOWLIST.split(",") : [];
+    if (allowlist.length > 0) {
+      const forwarded = req.headers["x-forwarded-for"];
+      const clientIp = Array.isArray(forwarded) ? forwarded[0] : (forwarded ? forwarded.split(",")[0] : req.socket.remoteAddress);
+      if (clientIp && !allowlist.includes(clientIp as string)) {
+        return res.status(401).json({ error: "Unauthorized" });
+      
+    }
+    return next();
+  };
+
+  app.post("/api/cron/score", requireAgentKey, async (_req, res) => {
+    await dreamScoreEngine.updateAllDreamScores();
+    res.json({ success: true });
+  });
+
+  app.post("/api/cron/archive", requireAgentKey, async (_req, res) => {
+    await triggerArchiveNow();
+    res.json({ success: true });
+  });
+
 
 (async () => {
   const server = await registerRoutes(app);
