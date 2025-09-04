@@ -78,3 +78,5 @@ All systems operational:
 - API errors? Verify DATABASE_URL is correct
 - 404 errors? Check vercel.json routing configuration
 - <!-- trigger redeploy -->
+
+<!-- redeploy v2.0-rc1 commit -->
