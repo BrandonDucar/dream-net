@@ -77,3 +77,4 @@ All systems operational:
 - Domain not working? DNS propagation can take up to 24 hours
 - API errors? Verify DATABASE_URL is correct
 - 404 errors? Check vercel.json routing configuration
+- <!-- trigger redeploy -->
