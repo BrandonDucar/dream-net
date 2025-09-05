@@ -26,24 +26,5 @@
   "crons": [
     { "path": "/api/cron/score", "schedule": "*/5 * * * *" },
     { "path": "/api/cron/archive", "schedule": "0 */6 * * *" }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
-        }
-      ]
-    }
   ]
-}
+  }
