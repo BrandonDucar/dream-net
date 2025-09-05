@@ -3,15 +3,7 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist/public",
   "installCommand": "npm install",
-  "builds": [
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["shared/**", "lib/**", "dreamnodes/**", "server/**"]
-      }
-    }
-  ],
+  
   "routes": [
     {
       "src": "/api/(.*)",
