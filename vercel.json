@@ -3,7 +3,6 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist/public",
   "installCommand": "npm install",
-  
   "routes": [
     {
       "src": "/api/(.*)",
@@ -17,14 +16,8 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "functions": {
-    "server/index.ts": {
-      "maxDuration": 30,
-      "memory": 1024
-    }
-  },
   "crons": [
     { "path": "/api/cron/score", "schedule": "*/5 * * * *" },
     { "path": "/api/cron/archive", "schedule": "0 */6 * * *" }
   ]
-  }
+}
