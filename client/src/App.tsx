@@ -105,13 +105,7 @@ function AuthenticatedApp() {
     );
   }
 
-  if (!walletAddress) {
-    return <LoginForm />;
-  }
 
-  if (!isAdmin) {
-    return <RestrictedAccess />;
-  }
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
