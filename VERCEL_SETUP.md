@@ -73,10 +73,9 @@ All systems operational:
 
 ## Troubleshooting
 
-- Build failing? Check environment variables are set
-- Domain not working? DNS propagation can take up to 24 hours
+- Build failing? Check environment variables are setomain not working? DNS propagation can take up to 24 hours <! trigger redeploy --> 
 - API errors? Verify DATABASE_URL is correct
-- 404 errors? Check vercel.json routing configuration
+- 4rrors? Check vercel.json routing configuration
 - <!-- trigger redeploy -->
 
 <!-- redeploy v2.0-rc1 commit -->
