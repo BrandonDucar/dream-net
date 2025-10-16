@@ -1,0 +1,65 @@
+[
+  {
+    "name": "DeployKeeper",
+    "path": "agents/deployKeeper.cjs",
+    "description": "Deployment operations and monitoring agent. Monitors and triggers deployments across Vercel, GitHub and Replit; supports status checks, deployment and rollback triggers.",
+    "triggers": "Manual (via API/CLI) and periodic status checks",
+    "runtime": "Node.js (CommonJS)",
+    "env_vars": [
+      "VERCEL_TOKEN",
+      "VERCEL_TEAM_ID",
+      "GITHUB_TOKEN",
+      "GITHUB_OWNER",
+      "GITHUB_REPO",
+      "VERCEL_PROJECT_ID",
+      "GITHUB_WORKFLOW_ID",
+      "REPLIT_URL"
+    ],
+    "status": "stopped"
+  },
+  {
+    "name": "DreamKeeper",
+    "path": "lib/dreamkeeperCore.ts",
+    "description": "Dream network intelligence and self-diagnostic core. Tracks network vitals (total dreams, active cores, agent clusters), runs self-diagnostics, scans the network, logs events, and learns and adapts based on feedback.",
+    "triggers": "Initialized on app start; runs continuous monitoring loops and scheduled scans",
+    "runtime": "TypeScript (client library)",
+    "env_vars": [],
+    "status": "stopped"
+  },
+  {
+    "name": "DreamOps Launcher",
+    "path": "client/src/components/DreamOpsLauncher.tsx",
+    "description": "Front‑end multi-agent orchestrator. Provides UI to launch dream core creation and manage sub‑agents (LUCID, CANVAS, ROOT, ECHO, CRADLE, WING). Handles wallet scanning, agent selection, logging, and saving/loading dream cores.",
+    "triggers": "User interactions via UI; calls API endpoints for wallet analysis, canvas generation, root schema, etc.",
+    "runtime": "React (TypeScript)",
+    "env_vars": [],
+    "status": "stopped"
+  },
+  {
+    "name": "AI Surgeon Agent",
+    "path": "lib/aiSurgeonAgents.ts",
+    "description": "AI Surgeon agent (\"Dr. Dreamfix\"). Performs diagnostic sweeps, detects and automatically fixes issues (stale remix branches, missing timeouts, orphaned references, broken fusion links), maintains a task queue, and can run manual fixes or emergency stop.",
+    "triggers": "Initialized on start; scheduled diagnostic sweeps every 10 minutes; triggered by critical threats or manual tasks",
+    "runtime": "TypeScript (server)",
+    "env_vars": [],
+    "status": "stopped"
+  },
+  {
+    "name": "DreamDefenseNet",
+    "path": "lib/defenseBots.ts",
+    "description": "Dream defense network and threat detection. Monitors for unauthorized cores, dream injection, fusion tampering, agent impersonation, data exfiltration, network scanning, brute force attempts; neutralizes threats and escalates critical issues to DreamKeeper or AI Surgeon.",
+    "triggers": "Continuous monitoring loop with threat detection every 5 seconds; auto‑escalation of critical/high threats",
+    "runtime": "TypeScript (server)",
+    "env_vars": [],
+    "status": "stopped"
+  },
+  {
+    "name": "EvolutionEngine",
+    "path": "lib/evolutionEngine.ts",
+    "description": "Evolution Engine. Runs upgrade cycles based on diagnostics, threats, remix patterns and surgeon fixes; generates insights (rewrite rules, remove flaws, optimizations, security enhancements, performance boosts); applies upgrades and analyses dream events.",
+    "triggers": "Initial run on start; periodic cycles based on evolutionRate (weekly) or triggered by dream events",
+    "runtime": "TypeScript (server)",
+    "env_vars": [],
+    "status": "stopped"
+  }
+]
