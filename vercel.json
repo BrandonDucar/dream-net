@@ -18,6 +18,9 @@
   },
   "crons": [
     { "path": "/api/cron/score", "schedule": "*/5 * * * *" },
-    { "path": "/api/cron/archive", "schedule": "0 */6 * * *" }
+    { "path": "/api/cron/archive", "schedule": "0 */6 * * *" },
+    { "path": "/api/agents/deploykeeper/run", "schedule": "*/15 * * * *" },
+    { "path": "/api/agents/surgeon/sweep", "schedule": "*/10 * * * *" },
+    { "path": "/api/defense/arm", "schedule": "* * * * *" }
   ]
 }
