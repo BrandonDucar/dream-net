@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@packages/*": ["packages/*"],
+      "@apps/*": ["apps/*"],
+      "@services/*": ["services/*"],
+      "@shared/*": ["shared/*"],
+      "@/components/*": ["client/src/components/*"],
+      "@/hooks/*": ["client/src/hooks/*"],
+      "@/lib/*": ["client/src/lib/*"],
+      "@/pages/*": ["client/src/pages/*"],
+      "@/utils/*": ["client/src/utils/*"],
+      "@assets/*": ["client/public/*"]
+    }
+  },
+  "include": [
+    "apps/**/*",
+    "services/**/*",
+    "packages/**/*",
+    "shared/**/*",
+    "client/src/**/*",
+    "server/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "qa/artifacts"
+  ]
+}

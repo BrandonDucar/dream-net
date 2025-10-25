@@ -1,0 +1,12 @@
+{
+  "default": {
+    "stripeSecretKey": "",
+    "stripePublicKey": "",
+    "openaiApiKey": "",
+    "email": "brandonducar1234@gmail.com",
+    "businessName": "Ducar Consulting inc.",
+    "notificationsEnabled": true,
+    "emailAlerts": true,
+    "updatedAt": "2025-10-19T00:45:05.475Z"
+  }
+}
