@@ -19,11 +19,9 @@
   "crons": [
     { "path": "/api/cron/score", "schedule": "*/5 * * * *" },
     { "path": "/api/cron/archive", "schedule": "0 */6 * * *" }
-  ]
-}
-,
+  ],
   "redirects": [
     { "source": "/gpt", "destination": "https://chatgpt.com/g/g-68fcf51b8e48819196cab30d60699031-dreamnet-operator", "permanent": false },
     { "source": "/gateway", "destination": "https://chatgpt.com/g/g-68fcf74672c881918712fa9f75ce5ab4-trusted-agent-gateway", "permanent": false }
-
   ]
+}
