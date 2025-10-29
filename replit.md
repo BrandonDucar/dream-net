@@ -1,109 +1,51 @@
-# Dream Network Management Platform
+# DreamNet - World's First Biomimetic AI Platform
 
 ## Overview
-This project is a sophisticated multi-agent AI platform for collaborative dream exploration and intelligent system interaction. It features a comprehensive DreamNodes architecture with modular node-based processing, enhanced by a powerful network intelligence trinity. The platform enables real-time multi-agent orchestration, advanced analysis, and progressive access control. Key capabilities include wallet trust scoring, AI agent activation based on reputation, micro-token delivery, and live processing results with visual outputs (e.g., HTML component generation, database schema creation). 
+DreamNet is a biomimetic AI platform aiming for multi-product monetization through a distributed, self-healing architecture. Its initial product, QuantumCommerce ("Prime Source Direct"), is a B2B enterprise procurement platform for precious metals trading. The platform provides AI-powered market intelligence, persistent data storage, flexible integrations, subscription models, and specialized AI agents for enterprise reporting and media generation, including a fully functional shopping cart with Stripe integration. DreamNet's ambition is to deploy production-grade systems with real data, targeting a $100M valuation and continuous innovation.
 
-The system now includes four coordinated intelligence systems with unified monitoring:
-- **DREAMKEEPER Core**: Network monitoring and adaptive learning
-- **AI Surgeon Agent**: Automated maintenance and issue resolution  
-- **Dream Defense Network**: Security threat detection and neutralization
-- **Evolution Engine**: Adaptive system improvement through data analysis
-- **DreamScope Interface**: Unified dashboard for all intelligence systems
-
-It leverages advanced React patterns, wallet-based authentication, and sophisticated agent communication to offer a comprehensive dream management and exploration experience. The business vision is to create a unique ecosystem for creative collaboration and personalized digital experiences in a decentralized, self-healing environment.
+**Latest (Oct 24, 2025):** 🌟 **BIOMIMETIC SHOWCASE LIVE** - dreamnet.live transformed into stunning visual demonstration of autonomous systems! New BioShowcaseLanding features live visualizations: AntColonyVisualizer (agents tunneling + building code), MyceliumNetworkViz (253 cellular bridges self-healing), WolfPackDashboard (offensive agents hunting grants/opportunities), and UseCaseShowcase (7 verticals, $165T TAM). Architect-approved, production-ready. **AUTONOMOUS PIPELINE PROVEN** - victorybanner.jsx autonomously generated end-to-end (RequestWatcher → Orchestrator → ExecutionAgent → QualityGuard → disk write) confirming ant agents are tunneling! **Previous:** FixPack v1 quality controls integrated, preventing stub code. META-PROGRAMMING MILESTONE - DreamNet built its own CodeGenerationTeam!
 
 ## User Preferences
-Preferred communication style: Simple, everyday language.
+- 4 months of development completed
+- Ready to integrate existing monorepo structure bit by bit
+- Need actual demo for users to watch
+- Build for the world 🌍
+- Ambitious, production-grade systems
+- Real data over mocks
+- Distributed, self-healing architecture
+- Biomimetic design patterns
+- Zero compromises on vision
+- Real payments (Stripe + Lemon Squeezy)
+- Custom domain: dreamnet.ink (production target)
+- Partnership Goal: $100M valuation, 51/49 split (user retains control of quality and production)
+- Innovation Pipeline: "Pump out agents in my sleep, wake up with ideas for fifty"
 
 ## System Architecture
+DreamNet's architecture is based on a distributed agent mesh, specialized AI agents, biomimicry, and real-time communication within an event-driven and self-healing system.
 
-### Frontend Architecture
-- **Framework**: React 18 with TypeScript and Vite.
-- **UI Components**: Shadcn/UI built on Radix UI primitives.
-- **Styling**: Tailwind CSS with a custom dark theme (electric cyan and gold accents).
-- **Routing**: Wouter.
-- **State Management**: TanStack Query for server state.
-- **Forms**: React Hook Form with Zod validation.
-- **UI/UX Decisions**: Terminal-style interfaces, real-time data visualization, professional WalletHeader, and visual indicators for agent status and dream properties. Dream cards are designed as 512x512 black cards with cyan glow, monospace font, and specific visual cues for remix/fusion/original dreams. Nightmare indications use a distinct red background and visual styling. Interactive dream gallery with filtering, sorting, health visualization, and hover action overlays. Dual view modes (Grid/Constellation) with interactive canvas-based visualization featuring physics simulation and emotional connections.
+### UI/UX Decisions
+The frontend, built with React + Vite, features a redesigned landing page with animated gradients, live platform stats, and a "Platform Building Itself" section. It includes dedicated pages for demos, a multi-product ecosystem, tiered pricing, and a `/construction` page. The interface provides real-time data through live agent cards, status indicators, resource utilization bars, and an event feed via WebSockets, showcasing live agent communication and metrics.
 
-### Backend Architecture
-- **Runtime**: Node.js with TypeScript and ES modules.
-- **Framework**: Express.js.
-- **API Design**: RESTful API structure with comprehensive endpoint coverage.
-- **Authentication**: Wallet-based admin authentication (EIP-4361 SIWE integration).
-- **Authorization**: Middleware for protected, admin-only endpoints.
-- **Error Handling**: Centralized error middleware and an enhanced ErrorBoundary system with database fallback.
-- **Task Routing**: Six-agent orchestration system: LUCID, CANVAS, ROOT, ECHO, CRADLE, and WING. Features intelligent, goal-based routing and progressive access control. Includes multi-agent capabilities for remix, score, and link functionality.
-- **DreamCoreViewer**: Integrated component for displaying processed results from multi-agent operations, including HTML components, JSON schemas, wallet trust levels, and agent activation status.
-- **Real-time Orchestration**: Live agent dashboard with status indicators, activation buttons, response panels, and terminal-style output logging.
-- **Secret Vault System**: Emotional messaging backend with unlock mechanics, reply functionality, and burn operations.
-- **Seasonal Events Engine**: Dynamic event system with bonus multipliers, special tokens, and progress tracking.
-- **Dream Remix Processing**: Complete remix submission workflow with similarity scoring and innovation tracking.
-- **Dream Drifters DAO**: System with quadratic voting, theme-based governance, vault management, and member management.
-- **Dream Enhancement System**: For adding emotions, providing audience multipliers, and granting access to remix toolchains (LUCID, CANVAS, ROOT, ECHO agents).
-- **Whisper Messaging System**: For emotional overlays, token-gated access, remix workflow processing, and dream lineage tracking.
-- **User Progression System**: Multi-tier advancement system with XP tracking, visual customization, and tier-specific benefits.
-- **Revenue Sharing System**: Multi-party distribution for earnings from dream vaults.
-- **SMS Reminder System**: For dream reminders with advanced search, filtering, tagging, and export/import functionality.
-- **Nightmare Network System**: With agent assignment (DREAD, SHADE, WHISPER, ECHO, CRYPT) and resolution tracking (transmutation, purification, containment).
-- **Multi-token Coordination**: System (FLBY, SHEEP, CORE, ROOT) for swarm operations.
+### Technical Implementations
+DreamNet employs a suite of AI agents integrated with GPT-4, including Agent Mesh, OrchestratorAgent, WatcherAgent, RequestWatcherAgent (autonomous build system), and Atlas Agent Foundry (AI manufacturing system). Proprietary systems like DreamKeeper and Quantum Vault Core manage ecosystem health. The platform includes a full e-commerce system for Precious Metals and Crypto Operations with real-time prices and multi-wallet management, integrating Coinbase Embedded Wallets. Specialized "Military GPT" agents for predictive maintenance, red-teaming, humanitarian operations, compliance, and procurement are ready for integration.
 
-### Database Layer
-- **ORM**: Drizzle ORM.
-- **Database**: PostgreSQL with Neon serverless connection pooling.
-- **Schema Design**: Comprehensive schema with enums and foreign key relationships for Users, Dreams, Cocoons, Dream Cores, Wallets, Evolution Chains, DreamCoreTokens, and Dream Invites. Also includes Secret Vault and Seasonal Events.
-- **Migration**: Drizzle Kit for schema management.
+The **RequestWatcherAgent** autonomously detects build requests from the `server/requests/` directory, triggering the OrchestratorAgent for project execution and maintaining audit logs. The **Atlas Agent Foundry** enables scalable manufacturing of GPT-based agents through a staged build cycle with quality validation, self-healing mechanisms, and advanced intelligence systems like Neurofabric Intelligence Grid and Adaptive Personalization Layer. It supports rapid expansion across verticals, including Travel, Military, and others.
 
-### Data Models
-The system manages core entities and supporting models:
-- **Users**: For authentication.
-- **Dreams**: Categorized submissions with approval workflows, trust properties, type indicators (e.g., nightmare), lineage (forkedFrom), and associated bounties (bountyId). Includes metadata ecosystem with tags and lore.
-- **Cocoons**: Lifecycle management.
-- **Dream Cores**: Energy and resonance tracking.
-- **Wallets**: User reward system with scores, tokens, and fragments.
-- **Evolution Chains**: Tracks dream progression.
-- **DreamCoreTokens**: Manages minted tokens.
-- **Dream Invites**: Manages pending invitations.
-- **Secret Vault**: Emotional messaging system with unlock mechanics and XP rewards.
-- **Seasonal Events**: Time-limited events with bonus multipliers and special rewards.
+The **CodeGenerationTeam** (newly autonomous-built Oct 24, 2025) is a specialized multi-agent system for code generation, composed of six specialized agents: SpecReader (requirements analysis), Architect (system design), CodeSmith (code generation), Integrator (component assembly), ContentCraft (documentation/PRs), and QualityGuard (validation/testing). Authenticated via X-DREAMNET-KEY header, it provides REST endpoints at `/api/codegen/run` (start builds), `/api/codegen/status` (track progress), and `/api/codegen/pr` (get scaffolded pull requests). Built entirely by DreamNet itself through the autonomous pipeline, marking the first meta-programming milestone where the system extended its own capabilities.
 
-### Development Architecture
-- **Monorepo Structure**: Shared TypeScript types in `/shared`.
-- **Build Process**: Vite for frontend, ESBuild for backend.
-- **Type Safety**: Strict TypeScript configuration.
-- **Code Organization**: Feature-based.
+### System Design Choices
+The system is designed for distributed, self-healing operations, utilizing WebSockets for real-time communication and an event-driven architecture. It supports containerized deployment, autoscaling, and data persistence via PostgreSQL (Drizzle ORM). The architecture incorporates biomimetic components such as the Biomimetic Systems Dashboard and Nanoswarm Network to support multi-vertical expansion.
 
 ## External Dependencies
-
-### Database and Storage
-- **Neon Database**: Serverless PostgreSQL.
-- **Drizzle ORM**: Type-safe database operations.
-
-### UI and Styling
-- **Shadcn/UI**: Component library.
-- **Radix UI**: Headless UI primitives.
-- **Tailwind CSS**: Utility-first CSS.
-- **Lucide Icons**: Icon set.
-
-### Authentication
-- **Sign-In With Ethereum (SIWE)**: EIP-4361 standard for wallet authentication.
-- **MetaMask**: Wallet integration.
-
-### Development Tools
-- **Vite**: Development server and build tool.
-- **TanStack Query**: Server state management.
-- **React Hook Form**: Form state management.
-- **Zod**: Runtime type validation.
-- **html2canvas**: For capturing HTML elements as images.
-- **QRCode**: For generating QR codes.
-
-### Runtime and Build
-- **Node.js**: JavaScript runtime.
-- **TypeScript**: Static type checking.
-- **ESBuild**: Fast JavaScript bundler.
-- **PostCSS**: CSS processing.
-
-### Integrations
-- **OpenAI**: For AI-powered dream title generation.
-- **Discord**: Webhook notifications.
-- **Telegram**: Bot messages for notifications.
+- **Stripe**: Payment processing, subscriptions.
+- **Lemon Squeezy**: International payments.
+- **OpenAI API (GPT-4, DALL·E, Sora)**: AI-powered analysis, market intelligence, design, media generation.
+- **Alchemy SDK**: Multi-chain blockchain data for EVM chains.
+- **Helius API**: Solana blockchain data.
+- **VeChain Thor API**: VeChain blockchain data.
+- **CoinGecko API**: Real-time crypto prices.
+- **MetalpriceAPI**: Real-time precious metals spot prices.
+- **Suno API**: Audio/music generation.
+- **Livepeer API**: Video transcoding.
+- **n8n**: Workflow automation.
+- **PostgreSQL (via Drizzle ORM)**: Primary database.
