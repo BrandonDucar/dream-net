@@ -1,7 +1,7 @@
 // Deployment operations and monitoring agent
 
-const VercelClient = require('../clients/vercel.cjs');
-const GitHubClient = require('../clients/github.cjs');
+const VercelClient = require('../dream-net/clients/vercel.cjs');
+const GitHubClient = require('../dream-net/clients/github.cjs');
 
 class DeployKeeperAgent {
   constructor(httpClient, replitUrl) {

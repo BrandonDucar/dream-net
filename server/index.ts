@@ -1,3 +1,4 @@
+
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -8,6 +9,15 @@ import { seedDreams } from "./seed-dreams";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Edict endpoint for Atlas to communicate with LUCID
+app.post("/api/edict", (req, res) => {
+  const { edict } = req.body;
+  // In a real scenario, this would trigger an event for the LUCID agent.
+  // For now, we log it to the server console to show the bridge is working.
+  log(`🏛️ [EDICT RECEIVED] via Atlas: "${edict}"`);
+  res.json({ status: "acknowledged", edict });
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -56,7 +66,7 @@ app.use((req, res, next) => {
       const clientIp = Array.isArray(forwarded) ? forwarded[0] : (forwarded ? forwarded.split(",")[0] : req.socket.remoteAddress);
       if (clientIp && !allowlist.includes(clientIp as string)) {
         return res.status(401).json({ error: "Unauthorized" });
-      
+      }
     }
     return next();
   };
@@ -108,5 +118,6 @@ app.use((req, res, next) => {
 
       // Seed dreams on startup
       seedDreams().catch((err) => console.error("Failed to seed dreams:", err));
-
-      
+    }
+  );
+})();

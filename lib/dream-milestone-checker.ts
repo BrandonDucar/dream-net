@@ -5,7 +5,6 @@ export async function checkDreamMilestones(dream: any, userPhone: string) {
 
   if (remixes >= 5 && !dream.flags?.calledOnRemix5) {
     await sendDreamCallSMS(userPhone, dream.id, 'Your dream just hit 5 remixes. Evolution time?');
-    // Flag this milestone as triggered
     dream.flags = { ...dream.flags, calledOnRemix5: true };
   }
 
@@ -15,7 +14,7 @@ export async function checkDreamMilestones(dream: any, userPhone: string) {
   }
 
   if (viralityMetrics?.currentTrend === 'ascending' && !dream.flags?.calledOnVirality) {
-    await sendDreamCallSMS(userPhone, dream.id, 'You're going viral. Strike now while it's hot.');
+    await sendDreamCallSMS(userPhone, dream.id, 'You\'re going viral. Strike now while it\'s hot.');
     dream.flags = { ...dream.flags, calledOnVirality: true };
   }
 
@@ -24,9 +23,8 @@ export async function checkDreamMilestones(dream: any, userPhone: string) {
     dream.flags = { ...dream.flags, calledOnEvolve3: true };
   }
 
-  // Additional milestone checks
   if (dream.aiScore >= 85 && !dream.flags?.calledOnHighScore) {
-    await sendDreamCallSMS(userPhone, dream.id, 'AI scored you 85+. This dream is special. What's next?');
+    await sendDreamCallSMS(userPhone, dream.id, 'AI scored you 85+. This dream is special. What\'s next?');
     dream.flags = { ...dream.flags, calledOnHighScore: true };
   }
 

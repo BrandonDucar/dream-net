@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -27,8 +28,7 @@ const Alert = React.forwardRef<
     ref={ref}
     role="alert"
     className={cn(alertVariants({ variant }), className)}
-    {...props}
-  />
+    {...props} />
 ))
 Alert.displayName = "Alert"
 
@@ -39,8 +39,7 @@ const AlertTitle = React.forwardRef<
   <h5
     ref={ref}
     className={cn("mb-1 font-medium leading-none tracking-tight", className)}
-    {...props}
-  />
+    {...props} />
 ))
 AlertTitle.displayName = "AlertTitle"
 
@@ -51,8 +50,7 @@ const AlertDescription = React.forwardRef<
   <div
     ref={ref}
     className={cn("text-sm [&_p]:leading-relaxed", className)}
-    {...props}
-  />
+    {...props} />
 ))
 AlertDescription.displayName = "AlertDescription"
 
