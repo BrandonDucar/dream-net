@@ -15,7 +15,7 @@
       "GITHUB_WORKFLOW_ID",
       "REPLIT_URL"
     ],
-    "status": "stopped"
+    "status": "running"
   },
   {
     "name": "DreamKeeper",
@@ -24,7 +24,7 @@
     "triggers": "Initialized on app start; runs continuous monitoring loops and scheduled scans",
     "runtime": "TypeScript (client library)",
     "env_vars": [],
-    "status": "stopped"
+    "status": "running"
   },
   {
     "name": "DreamOps Launcher",
@@ -42,7 +42,7 @@
     "triggers": "Initialized on start; scheduled diagnostic sweeps every 10 minutes; triggered by critical threats or manual tasks",
     "runtime": "TypeScript (server)",
     "env_vars": [],
-    "status": "stopped"
+    "status": "running"
   },
   {
     "name": "DreamDefenseNet",
@@ -50,8 +50,7 @@
     "description": "Dream defense network and threat detection. Monitors for unauthorized cores, dream injection, fusion tampering, agent impersonation, data exfiltration, network scanning, brute force attempts; neutralizes threats and escalates critical issues to DreamKeeper or AI Surgeon.",
     "triggers": "Continuous monitoring loop with threat detection every 5 seconds; auto‑escalation of critical/high threats",
     "runtime": "TypeScript (server)",
-    "env_vars": [],
-    "status": "stopped"
+   "status": "runningng
   },
   {
     "name": "EvolutionEngine",
@@ -60,6 +59,6 @@
     "triggers": "Initial run on start; periodic cycles based on evolutionRate (weekly) or triggered by dream events",
     "runtime": "TypeScript (server)",
     "env_vars": [],
-    "status": "stopped"
+   "status": "running"
   }
 ]
