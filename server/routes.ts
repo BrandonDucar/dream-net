@@ -66,6 +66,9 @@ import joinDreamTeamHandler from './routes/join-dream-team';
 import starbridgeRouter from "./routes/starbridge";
 import wormholeRouter from "./routes/wormhole";
 import vectorRouter from "./routes/vector";
+import reputationRouter from "./routes/reputation";
+import zkRouter from "./routes/zk";
+import chronoCacheRouter from "./routes/chronocache";
 import getDreamForksHandler from './routes/get-dream-forks';
 import getDreamsByCloudHandler from './routes/get-dreams-by-cloud';
 import evolutionVaultRouter from './routes/evolution-vault';
@@ -2087,6 +2090,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     app.use("/api/echo", echoRoute);
     app.use("/api/starbridge", starbridgeRouter);
     app.use("/api/vector", vectorRouter);
+    app.use("/api/reputation", reputationRouter);
+    app.use("/api/zk", zkRouter);
+    app.use("/api/chronocache", chronoCacheRouter);
     app.use("/api/wormhole", wormholeRouter);
 
   // Test orchestration endpoint for simulation

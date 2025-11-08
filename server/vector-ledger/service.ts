@@ -1,8 +1,11 @@
 import { sql } from "drizzle-orm";
+import { performance } from "perf_hooks";
 import { db } from "../db";
 import { nanoid } from "nanoid";
-import { hashJson, hashVector, activeHashAlgo, HashAlgorithm } from "../trust/hash";
+import { hashJson, hashVector, hashBuffer, activeHashAlgo, HashAlgorithm } from "../trust/hash";
 import { publishInternalEvent, StarbridgeSource, StarbridgeTopic } from "../starbridge";
+import { computeMerkleRoot } from "../trust/merkle";
+import { recordMetric } from "../trust/metrics";
 
 const TABLE = "dreamnet_trust.vector_events";
 
@@ -60,6 +63,15 @@ export async function logVectorEvent(input: VectorLogInput): Promise<VectorEvent
     },
   });
 
+  await recordMetric("vector.events", {
+    lastEventId: id,
+    lastObjectType: input.objectType,
+    lastObjectId: input.objectId,
+    lastModel: input.model,
+    lastHashAlgo: algo,
+    lastCreatedAt: new Date().toISOString(),
+  });
+
   return row;
 }
 
@@ -91,8 +103,15 @@ export interface VectorVerifyInput {
 }
 
 export async function verifyVectorEvent(input: VectorVerifyInput) {
+  const start = performance.now?.() ?? Date.now();
   const record = await getVectorEvent(input.id);
   if (!record) {
+    await recordMetric("vector.verify", {
+      lastId: input.id,
+      ok: false,
+      reason: "not_found",
+      latencyMs: (performance.now?.() ?? Date.now()) - start,
+    });
     return { ok: false, reason: "not_found" } as const;
   }
 
@@ -103,7 +122,7 @@ export async function verifyVectorEvent(input: VectorVerifyInput) {
   const vecMatches = vecHash ? vecHash === record.vec_hash : true;
   const payloadMatches = payloadHash ? payloadHash === record.payload_hash : true;
 
-  return {
+  const result = {
     ok: vecMatches && payloadMatches,
     vecMatches,
     payloadMatches,
@@ -112,4 +131,70 @@ export async function verifyVectorEvent(input: VectorVerifyInput) {
     expectedPayloadHash: record.payload_hash,
     computedPayloadHash: payloadHash ?? undefined,
   };
+
+  await recordMetric("vector.verify", {
+    lastId: input.id,
+    ok: result.ok,
+    vecMatches,
+    payloadMatches,
+    latencyMs: (performance.now?.() ?? Date.now()) - start,
+    timestamp: new Date().toISOString(),
+  });
+
+  return result;
+}
+
+export async function runVectorRollup(date: Date) {
+  const batchDate = date.toISOString().slice(0, 10);
+  const result = await db.execute(sql`
+    SELECT vec_hash, payload_hash, hash_algo
+    FROM ${sql.raw(TABLE)}
+    WHERE DATE(created_at) = ${batchDate}
+    ORDER BY created_at ASC
+  `);
+
+  const rows = result.rows as Array<{ vec_hash: string; payload_hash: string; hash_algo: string }>;
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const algo = rows[0].hash_algo as HashAlgorithm;
+  const leaves = rows.map((row) => {
+    const combined = Buffer.from(`${row.vec_hash}:${row.payload_hash}`, "utf-8");
+    return hashBuffer(combined, algo);
+  });
+
+  const merkleRoot = computeMerkleRoot(leaves, algo);
+
+  await db.execute(sql`
+    INSERT INTO ${sql.raw("dreamnet_trust.vector_roots")} (batch_date, merkle_root, hash_algo, event_count)
+    VALUES (${batchDate}, ${merkleRoot}, ${algo}, ${rows.length})
+    ON CONFLICT (batch_date)
+    DO UPDATE SET merkle_root = EXCLUDED.merkle_root,
+                  hash_algo = EXCLUDED.hash_algo,
+                  event_count = EXCLUDED.event_count,
+                  computed_at = NOW();
+  `);
+
+  await publishInternalEvent({
+    topic: StarbridgeTopic.System,
+    source: StarbridgeSource.Runtime,
+    type: "vector.rollup.completed",
+    payload: {
+      batchDate,
+      merkleRoot,
+      hashAlgo: algo,
+      eventCount: rows.length,
+    },
+  });
+
+  await recordMetric("vector.rollup", {
+    batchDate,
+    merkleRoot,
+    hashAlgo: algo,
+    eventCount: rows.length,
+    computedAt: new Date().toISOString(),
+  });
+
+  return { batchDate, merkleRoot, hashAlgo: algo, eventCount: rows.length };
 }

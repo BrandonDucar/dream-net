@@ -9,6 +9,8 @@ import { seedSystemHeartbeat } from "./starbridge";
 import { bootstrapRail } from "./magnetic-rail/scheduler";
 import { bootstrapWormhole } from "./wormhole/dispatcher";
 import { runTrustMigrations } from "./trust/migrations";
+import "./jobs/vectorRollup";
+import "./jobs/reputation";
 
 const app = express();
 app.use(express.json());

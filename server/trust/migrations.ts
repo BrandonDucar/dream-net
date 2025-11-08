@@ -27,6 +27,16 @@ async function createVectorLedger() {
     CREATE INDEX IF NOT EXISTS vector_events_object_idx
       ON ${sql.raw(`${TRUST_SCHEMA}.vector_events`)} (object_type, object_id);
   `);
+
+  await db.execute(sql`
+    CREATE TABLE IF NOT EXISTS ${sql.raw(`${TRUST_SCHEMA}.vector_roots`)} (
+      batch_date DATE PRIMARY KEY,
+      merkle_root TEXT NOT NULL,
+      hash_algo TEXT NOT NULL,
+      event_count INTEGER NOT NULL,
+      computed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
 }
 
 async function createReputationGraph() {
@@ -69,6 +79,15 @@ async function createZkLayer() {
       backend TEXT NOT NULL,
       anchor_root TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+
+  await db.execute(sql`
+    CREATE TABLE IF NOT EXISTS ${sql.raw(`${TRUST_SCHEMA}.zk_roots`)} (
+      batch_date DATE PRIMARY KEY,
+      merkle_root TEXT NOT NULL,
+      proof_count INTEGER NOT NULL,
+      computed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `);
 }
