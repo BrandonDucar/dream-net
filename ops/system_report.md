@@ -3,8 +3,7 @@
 ## 1. Repo & Infrastructure Audit
 
 - **File Inventory**: Generated comprehensive file inventories from the `dream-net` repository in batches of 50 files. These CSVs are stored in the branch under `ops` and capture every file path and SHA.  
-- **Environment Variables**: Reviewed Vercel projects `dreamnet` and `dreamnet-v2` and inspected `.env.example` in the repo. The example file lists required variables such as `DATABASE_URL`, `JWT_SECRET`, `ADMIN_WALLETS`, `OPENAI_API_KEY`, `STRIPE_SECRET_KEY`, `NEON_DATABASE_URL`, etc.  
-  - The Vercel projects currently **lack** `OPENAI_API_KEY`, `STRIPE_SECRET_KEY`, and an admin token. These will be required for full functionality.  
+- **Environment Variables**: `.env.example` still enumerates required variables (`DATABASE_URL`, `JWT_SECRET`, `OPENAI_API_KEY`, `STRIPE_SECRET_KEY`, etc.). Runtime now accepts either `DATABASE_URL_V2` or `DATABASE2_URL` for the secondary Neon instance (see `server/db.ts`). Vercel project has been populated with OpenAI/Anthropic keys and both Neon URLs; keep budget enforcement at $50/mo via Compute Governor.
 - **Branches**: Created and switched to the working branch `bootstrap/hybrid-init` and committed all changes there.
 
 ## 2. Agent Manifest
@@ -24,36 +23,32 @@ All agents are currently marked “stopped” in the manifest; they require acti
 
 ## 3. API Endpoints
 
-Four new API routes were added under `app/api`:
+- `app/api/health`, `app/api/agents`, `app/api/runs/recent`, `app/api/changelog` – continue to serve stubbed data for the marketing layer; hydration is handled via `lib/marketing/metrics.ts` with safe fallbacks.  
+- `server/routes/dreamstar.ts` – DreamStar router exposing `/api/dreamstar/ingest` and `/generate` (Zod-validated payloads that emit StarBridge events `dreamstar.ingest.requested` / `dreamstar.generate.requested`) plus `/pipeline` metadata.  
+- `server/routes/dreamsnail.ts` – DreamSnail router serving `/api/dreamsnail/spec`, `/summary`, and `/roadmap` directly from `ops/dreamsnail.md`.
 
-- `**/api/health**` – minimal health check returning `{ ok: true }`.
-- `**/api/agents**` – returns a stubbed list of agents from the manifest.
-- `**/api/runs/recent**` – returns stubbed recent run data.
-- `**/api/changelog**` – returns a stubbed commit history.
+## 4. Marketing Homepage
 
-These endpoints form the backbone of the hybrid homepage and will need to be wired to real data sources later.
+`app/page.tsx` now renders a biomimetic marketing experience (Next.js server components) comprising:
 
-## 4. Hybrid Homepage
+1. Hero + CTA (“Schedule a Mission Briefing”, “View Live Status”).  
+2. Live stats strip (system health, agents active, latest mission).  
+3. Vertical highlight cards for DreamStar, DreamSnail, and Precious Metals Intelligence.  
+4. Governance showcase (Compute Governor, Daemon, StarBridge) and recent autonomous activity/changelog feed.  
 
-Replaced the placeholder landing page with a client‑side React component (`app/page.tsx`) that:
-
-1. Declares `'use client'` so it can run browser code.  
-2. Uses `useEffect` to fetch data from `/api/health`, `/api/agents`, `/api/runs/recent`, and `/api/changelog`.  
-3. Displays the JSON responses in four sections: **System Health**, **Agents**, **Recent Runs**, and **Changelog**.  
-
-This provides a simple console view of core metrics. Styling is minimal; further design work is needed to align with the hybrid vision (console + narrative + store).
+Dedicated pages (`/dreamstar`, `/dreamsnail`, `/metals`) deepen each vertical; `/contact`, `/status`, `/privacy`, `/terms` cover lead capture and compliance.
 
 ## 5. System Verification
 
-- **Health Endpoint**: Checked the production endpoint at `https://dreamnet.ink/api/health`. It returned `{"ok":true,"at":"2025-10-15T17:15:12.819Z","db":true,"stripe":true}`, indicating the database and Stripe integrations are currently operational【475234586610102†screenshot】.
-- **Other Endpoints**: The new endpoints exist only in the `bootstrap/hybrid-init` branch and aren’t deployed yet. They will need a Vercel deployment before they can be tested publicly.
-- **Database Query**: No direct Neon DB credentials were available, so `SELECT NOW();` has not been run. Once credentials are provided, connect to Neon and run the query to verify connectivity.
+- **Health Endpoint**: Last confirmed at `https://dreamnet.ink/api/health` returning `{"ok":true,"at":"2025-10-15T17:15:12.819Z","db":true,"stripe":true}`. Re-run post-deploy with refreshed secrets.  
+- **DreamStar / DreamSnail Routes**: Exercised locally; production verification pending Vercel deployment.  
+- **Database Query**: Execute `SELECT NOW();` on both Neon databases after deployment to confirm connectivity via the `DATABASE_URL_V2` / `DATABASE2_URL` fallback.
 
 ## 6. Next Steps
 
-1. **Environment Configuration** – Add missing secrets (`OPENAI_API_KEY`, `STRIPE_SECRET_KEY`, `ADMIN_TOKEN`, etc.) to Vercel.  
-2. **Deployment** – Deploy the `bootstrap/hybrid-init` branch to Vercel and set `HOMEPAGE_MODE=hybrid`. Verify that the new homepage and endpoints work in production.  
-3. **Agent Activation** – Start DeployKeeper, DreamKeeper, DreamOps, AI Surgeon, DreamDefenseNet, and EvolutionEngine; run smoke tests.  
-4. **Database Check** – With Neon credentials, run `SELECT NOW();` to confirm DB connectivity.  
-5. **User Interface** – Flesh out the hybrid homepage design with Hero, Narrative carousel, Agent grid, console preview, waitlist form, and changelog.  
-6. **Reporting** – Continue to generate and commit operational reports (access matrix, inventory, endpoint lists) to the `ops/reports/` directory.
+1. **Deployment** – Promote the updated marketing build to Vercel (`dreamnet.ink`) and validate all routes + hydration.  
+2. **Lead Routing** – Replace the Formspree placeholder in `app/contact/page.tsx` with the preferred inbox or CRM webhook.  
+3. **DreamStar Backlog** – Persist ingestion requests (Neon table), wire DreamForge job templates, and expose mission history via `/api/dreamstar`.  
+4. **DreamSnail Backlog** – Scaffold TrailCommit contracts/circuits and wire commitment endpoints once solidity/circom repos are ready.  
+5. **Database Health** – Run verification queries on both Neon instances and monitor Compute Governor spend against the $50/mo cap.  
+6. **Documentation** – Continue auditing/refreshing ops docs (`replit.md`, `ops/dreamnet-site-plan.md`, `ops/assistant-memory.md`) as milestones ship.
