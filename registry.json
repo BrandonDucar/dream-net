@@ -206,15 +206,15 @@
     "purpose": "Investment and portfolio monitoring",
     "status": "Active",
     "date_added": "2025-10-25"
-  },
-  {
-    "name": "Local Edge AI",
-    "link": "https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai",
-    "category": "Experimental",
-    "purpose": "Regional compute and CDN intelligence",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    },
+    {
+      "name": "Local Edge AI",
+      "link": "https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai",
+      "category": "Compliance & Marketing",
+      "purpose": "Regulatory-aware investor outreach intelligence",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
   {
     "name": "Tag Registry Orche",
     "link": "https://chatgpt.com/g/g-68f1c8c8a4248191816332d1cf36f001-tag-registry-orche",

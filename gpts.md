@@ -30,7 +30,7 @@ This registry lists all DreamNet GPTs with their key metadata.
 | RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Commerce | Convert physical assets into tokenized units | Active | 2025-10-25 |
 | LawyerAgent Paralegal | https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal | Commerce | Legal document generation and filings | Active | 2025-10-25 |
 | InvestorOps Sentinel | https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel | Commerce | Investment and portfolio monitoring | Active | 2025-10-25 |
-| Local Edge AI | https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai | Experimental | Regional compute and CDN intelligence | Active | 2025-10-25 |
+| Local Edge AI | https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai | Compliance & Marketing | Regulatory-aware investor outreach intelligence | Active | 2025-10-25 |
 | Tag Registry Orche | https://chatgpt.com/g/g-68f1c8c8a4248191816332d1cf36f001-tag-registry-orche | Experimental | Tag and identity control system | Active | 2025-10-25 |
 | Design Studio Pro | https://chatgpt.com/g/g-68f3fc7884dc8191a8c52e8fd68572f4-design-studio-pro | Creative | UI/UX design builder | Active | 2025-10-25 |
 | Aethersafe | https://chatgpt.com/g/g-68f2fe8a43388191802b041568139164-aethersafe | Experimental | Secure vault and backup agent | Active | 2025-10-25 |
