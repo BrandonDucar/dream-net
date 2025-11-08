@@ -6,6 +6,8 @@ import { dreamScoreEngine } from "./dream-score-engine";
 import { triggerArchiveNow } from "./archive-scheduler";
 import { seedDreams } from "./seed-dreams";
 import { seedSystemHeartbeat } from "./starbridge";
+import { bootstrapRail } from "./magnetic-rail/scheduler";
+import { bootstrapWormhole } from "./wormhole/dispatcher";
 
 const app = express();
 app.use(express.json());
@@ -84,6 +86,8 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
   await seedSystemHeartbeat().catch((err) => console.error("[StarBridge] Failed to seed system heartbeat:", err));
+  bootstrapRail();
+  bootstrapWormhole();
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
