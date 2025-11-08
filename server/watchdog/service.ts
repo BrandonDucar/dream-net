@@ -88,6 +88,8 @@ async function createAlert(severity: string, message: string, diff: any) {
 }
 
 export async function runWatchdogSnapshot() {
+  const previousSnapshotId = await latestSnapshotId();
+
   const files = await fg("**/*", {
     cwd: WATCH_PATH,
     dot: false,
@@ -105,9 +107,6 @@ export async function runWatchdogSnapshot() {
     entries.push({ path: relPath, hash, size: data.length });
   }
 
-  await saveSnapshot(snapshotId, entries);
-
-  const previousSnapshotId = await latestSnapshotId();
   let diff = { added: [] as string[], removed: [] as string[], changed: [] as string[] };
 
   if (previousSnapshotId && previousSnapshotId !== snapshotId) {
@@ -136,6 +135,8 @@ export async function runWatchdogSnapshot() {
       );
     }
   }
+
+  await saveSnapshot(snapshotId, entries);
 
   await recordMetric("watchdog.snapshot", {
     snapshotId,

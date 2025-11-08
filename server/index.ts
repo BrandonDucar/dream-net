@@ -11,6 +11,7 @@ import { bootstrapWormhole } from "./wormhole/dispatcher";
 import { runTrustMigrations } from "./trust/migrations";
 import "./jobs/vectorRollup";
 import "./jobs/reputation";
+import "./jobs/watchdog";
 
 const app = express();
 app.use(express.json());
