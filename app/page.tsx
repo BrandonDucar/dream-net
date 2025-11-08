@@ -1,54 +1,125 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+import { Hero } from "./(marketing)/components/Hero";
+import { SiteShell } from "./(marketing)/components/SiteShell";
+import { StatsStrip } from "./(marketing)/components/StatsStrip";
+import { VerticalHighlights } from "./(marketing)/components/VerticalHighlights";
+import { getMarketingMetrics } from "../lib/marketing/metrics";
 
-export default function Page() {
-  const [health, setHealth] = useState(null);
-  const [agents, setAgents] = useState([]);
-  const [runs, setRuns] = useState([]);
-  const [changelog, setChangelog] = useState([]);
+export const metadata = {
+  title: "DreamNet – Autonomous Intelligence Platform",
+  description:
+    "DreamNet builds, deploys, and governs autonomous systems spanning creative, privacy, and finance verticals. Explore DreamStar, DreamSnail, and Precious Metals Intelligence.",
+};
 
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => res.json())
-      .then((data) => setHealth(data))
-      .catch(console.error);
-    fetch('/api/agents')
-      .then((res) => res.json())
-      .then((data) => setAgents(data))
-      .catch(console.error);
-    fetch('/api/runs/recent')
-      .then((res) => res.json())
-      .then((data) => setRuns(data))
-      .catch(console.error);
-    fetch('/api/changelog')
-      .then((res) => res.json())
-      .then((data) => setChangelog(data))
-      .catch(console.error);
-  }, []);
+export default async function MarketingHome() {
+  const metrics = await getMarketingMetrics();
+
+  const stats = [
+    {
+      label: "System Status",
+      value: metrics.health?.status?.toUpperCase() ?? "OPERATIONAL",
+      caption: metrics.health?.uptime ? `Uptime ${metrics.health.uptime}` : undefined,
+    },
+    {
+      label: "Agents Active",
+      value: String(metrics.agents.length),
+      caption: metrics.agents.slice(0, 2).map((agent) => agent.name).join(" • ") || "Atlas Agent Foundry • DreamForge",
+    },
+    {
+      label: "Latest Mission",
+      value: metrics.runs[0]?.name ?? "DreamStar Studio Pilot",
+      caption: metrics.runs[0]?.status ? `Status: ${metrics.runs[0].status}` : undefined,
+    },
+  ];
+
+  const verticals = [
+    {
+      name: "DreamStar",
+      description: "Artist-trained AI music engine that transforms influence catalogs into fully original, releasable tracks.",
+      href: "/dreamstar",
+      accent: "linear-gradient(135deg, #7755FF, #2FD3FF)",
+      badge: "AI Music",
+    },
+    {
+      name: "DreamSnail",
+      description: "Triple-helix NFTs with zk-proven slime trails, Fibonacci rarity, and privacy-native unlocks.",
+      href: "/dreamsnail",
+      accent: "linear-gradient(135deg, #F73D9B, #5CFFED)",
+      badge: "Privacy NFTs",
+    },
+    {
+      name: "Precious Metals Intelligence",
+      description: "Real-time metals signals, compliance automation, and treasury intelligence for institutional buyers.",
+      href: "/metals",
+      accent: "linear-gradient(135deg, #E0B857, #FFEDC2)",
+      badge: "Enterprise",
+    },
+  ];
+
+  const changelog = metrics.changelog;
 
   return (
-    <main className="p-4 space-y-4">
-      <h1 className="text-4xl font-bold">DreamNet Hybrid Homepage</h1>
+    <SiteShell>
+      <div className="space-y-16">
+        <Hero
+          title="Autonomous systems that evolve while you sleep."
+          subtitle="DreamNet is a biomimetic intelligence platform spanning agents, governance, and live revenue verticals. Watch it build, heal, and deploy itself in real time."
+          primaryCta={{ label: "Schedule a Mission Briefing", href: "/contact" }}
+          secondaryCta={{ label: "View Live Status", href: "/status" }}
+        />
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">System Health</h2>
-        <pre>{JSON.stringify(health, null, 2)}</pre>
-      </section>
+        <StatsStrip stats={stats} />
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Agents</h2>
-        <pre>{JSON.stringify(agents, null, 2)}</pre>
-      </section>
+        <VerticalHighlights verticals={verticals} />
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Recent Runs</h2>
-        <pre>{JSON.stringify(runs, null, 2)}</pre>
-      </section>
+        <section className="grid gap-10 lg:grid-cols-2">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
+            <h2 className="text-2xl font-semibold text-white">Governance Spine</h2>
+            <p className="mt-4 text-sm leading-relaxed text-white/70">
+              Compute Governor, Daemon orchestration, and StarBridge event mesh keep DreamNet cost-aware, compliant, and responsive. Manual overrides include throttle presets, emergency stop, and budget relays.
+            </p>
+            <ul className="mt-6 space-y-3 text-sm text-white/70">
+              <li>• Compute Governor – live credit ledger, throttles, emergency brake</li>
+              <li>• Daemon Engine – mission scheduling with budget fences</li>
+              <li>• StarBridge – high-trust pub/sub linking agents, UI, and deploy pipelines</li>
+            </ul>
+          </div>
 
-      <section>
-        <h2 className="text-2xl font-semibold mb-2">Changelog</h2>
-        <pre>{JSON.stringify(changelog, null, 2)}</pre>
-      </section>
-    </main>
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
+            <h2 className="text-2xl font-semibold text-white">Recent Autonomous Activity</h2>
+            <ul className="mt-4 space-y-4 text-sm text-white/70">
+              {metrics.runs.length > 0
+                ? metrics.runs.map((run) => (
+                    <li key={run.id ?? run.name}>
+                      <div className="text-white/90">{run.name ?? "Autonomous mission"}</div>
+                      <div className="text-xs uppercase tracking-wide text-white/50">
+                        {run.status ?? "complete"} • {run.startedAt ? new Date(run.startedAt).toLocaleString() : "Recently"}
+                      </div>
+                    </li>
+                  ))
+                : (
+                  <li>No missions recorded yet. DreamNet is warming up.</li>
+                )}
+            </ul>
+          </div>
+        </section>
+
+        <section className="rounded-3xl border border-white/10 bg-white/5 p-8">
+          <h2 className="text-2xl font-semibold text-white">Latest Updates</h2>
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+            {changelog.map((entry) => (
+              <div key={`${entry.date}-${entry.message}`} className="rounded-2xl border border-white/5 bg-slate-900/40 p-4">
+                <div className="text-xs uppercase tracking-widest text-white/40">{entry.date}</div>
+                <p className="mt-2 text-sm text-white/80">{entry.message}</p>
+              </div>
+            ))}
+            {changelog.length === 0 ? (
+              <div className="rounded-2xl border border-white/5 bg-slate-900/40 p-4 text-sm text-white/60">
+                No updates logged yet. DreamNet is compiling mission reports.
+              </div>
+            ) : null}
+          </div>
+        </section>
+      </div>
+    </SiteShell>
   );
 }

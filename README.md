@@ -35,7 +35,7 @@ DreamNet is a biomimetic, self-healing intelligence platform that builds, deploy
 - `server/` – Express routes, StarBridge, Daemon, governance, OTT, and service schedulers.
 - `client/` – React + Vite UI with dashboards, command center, wallets, demos.
 - `lib/`, `dreamnodes/`, `agents/` – Reusable libraries and agent implementations.
-- `ops/` – Operational manifests, persistent memory (`assistant-memory.md`), DreamStar blueprint, reports.
+- `ops/` – Operational manifests, persistent memory (`assistant-memory.md`), DreamStar blueprint, DreamSnail spec, marketing site plan.
 - `app/`, `apps/` – Next.js & Vercel-ready endpoints, changelog API.
 - `mission_brief.md` – Active directives (Project Chimera Hunt, Governor/Throttle/Daemon mastery).
 

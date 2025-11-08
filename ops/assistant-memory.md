@@ -20,7 +20,11 @@
 3. **Agent Ecosystem Stewardship**
    - Atlas, Aegis, Travel, Commerce, and Growth GPT registries remain active.
    - Royalty Flow Nexus, Atlas Agent Foundry, Axis AI, and Traceline are critical pillars—ensure their specs remain intact and advance toward implementation.
-4. **Governance Systems**
+4. **DreamNet Marketing Launch**
+   - New Next.js marketing surface live under `app/` with DreamStar, DreamSnail, and Metals vertical pages.
+   - Styling + content blueprint captured in `ops/dreamnet-site-plan.md`.
+   - Pending: finalize contact lead routing and coordinate Vercel deployment with updated Neon secrets (`DATABASE_URL`, `DATABASE_URL_V2`/`DATABASE2_URL`).
+5. **Governance Systems**
    - Compute Governor, Throttle controls, Daemon execution loops, and StarBridge event mesh govern operational safety; monitor for regressions.
 
 ## Recovery Instructions
@@ -28,6 +32,7 @@
   - `ops/assistant-memory.md` (this file) for identity & active missions.
   - `ops/dreamstar.md` for DreamStar technical outline.
   - `ops/dreamsnail.md` for DreamSnail privacy layout.
+  - `ops/dreamnet-site-plan.md` for marketing rollout.
   - `gpts.md` and `registry.json` for the authoritative GPT roster.
   - `mission_brief.md` for overarching directives (Project Chimera Hunt, ALL-IN DREAMNET CLOSE & PUBLISH v1).
 - Resume TODO tracking via `todo_write` list: `task-1` (this memory), `task-2` (README refresh), `task-3` (supplemental docs).
