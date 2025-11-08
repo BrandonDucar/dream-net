@@ -175,14 +175,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "Novaframe QME",
-    "link": "https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme",
-    "category": "Creative",
-    "purpose": "Design and media framework generator",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "Novaframe QME",
+      "link": "https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme",
+      "category": "Production",
+      "purpose": "Consumer creator & spec generator (code/config/copy/assets)",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
     {
       "name": "RWA Home Tokenization System",
       "link": "https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system",
