@@ -119,14 +119,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "NBT Squad Builder",
-    "link": "https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder",
-    "category": "Sentinel",
-    "purpose": "Team composition and performance simulator",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "NBT Squad Builder",
+      "link": "https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder",
+      "category": "OmniBridge",
+      "purpose": "Systems-level coordinator for Nano Bridge Tenders",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
   {
     "name": "DreamTrace",
     "link": "https://chatgpt.com/g/g-68ebd79e914c8191b517ff54e8904415-dreamtrace",
