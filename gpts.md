@@ -25,6 +25,8 @@ This registry lists all DreamNet GPTs with their key metadata.
 | ForgeFix | https://chatgpt.com/g/g-68edb577f6988191ab80eb9fc4030687-forgefix | Experimental | Debug and patch management agent | Active | 2025-10-25 |
 | Workflow Agent Orchestrator | https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator | Automation | Autonomous agent workflow designer & monorepo generator | Active | 2025-10-25 |
 | Wallet Maestro | https://chatgpt.com/g/g-68ede6b4ef388191805f4d44fe517fac-wallet-maestro | Commerce | Wallet intelligence and analytics engine | Active | 2025-10-25 |
+| Dream Surgeon Agent | TBD | DreamOps | Autonomous micro-repair and healing engine | Draft | 2025-11-08 |
+| Ecosystem Synthesizer | TBD | Evolution | Meta-agent for sensing, designing, and promoting DreamNet agents | Draft | 2025-11-08 |
 | Aegis Privacy Lab | https://chatgpt.com/g/g-68ef00feea9481919028940e9df21d78-aegis-privacy-lab | Aegis | Privacy and compliance research node | Active | 2025-10-25 |
 | Novaframe QME | https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme | Production | Consumer creator & spec generator (code/config/copy/assets) | Active | 2025-10-25 |
 | RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Compliance & Tokenization | Paralegal-level U.S. real estate tokenization architect | Active | 2025-10-25 |

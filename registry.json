@@ -167,6 +167,22 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
+    {
+      "name": "Dream Surgeon Agent",
+      "link": null,
+      "category": "DreamOps",
+      "purpose": "Autonomous micro-repair and healing engine",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Ecosystem Synthesizer",
+      "link": null,
+      "category": "Evolution",
+      "purpose": "Meta-agent for sensing, designing, and promoting DreamNet agents",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
   {
     "name": "Aegis Privacy Lab",
     "link": "https://chatgpt.com/g/g-68ef00feea9481919028940e9df21d78-aegis-privacy-lab",
