@@ -191,21 +191,21 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "LawyerAgent Paralegal",
-    "link": "https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal",
-    "category": "Commerce",
-    "purpose": "Legal document generation and filings",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
-  {
-    "name": "InvestorOps Sentinel",
-    "link": "https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel",
-    "category": "Commerce",
-    "purpose": "Investment and portfolio monitoring",
-    "status": "Active",
-    "date_added": "2025-10-25"
+    {
+      "name": "LawyerAgent Paralegal",
+      "link": "https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal",
+      "category": "Commerce",
+      "purpose": "Legal document generation and filings",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "InvestorOps Sentinel",
+      "link": "https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel",
+      "category": "Compliance & Analytics",
+      "purpose": "Audit-ready investor relations intelligence",
+      "status": "Active",
+      "date_added": "2025-10-25"
     },
     {
       "name": "Local Edge AI",
@@ -214,6 +214,14 @@
       "purpose": "Regulatory-aware investor outreach intelligence",
       "status": "Active",
       "date_added": "2025-10-25"
+    },
+    {
+      "name": "Luxury Dial Concierge — by Ducar",
+      "link": null,
+      "category": "Luxury Design",
+      "purpose": "Hyper-luxury watch wallpaper concierge",
+      "status": "Draft",
+      "date_added": "2025-11-08"
     },
   {
     "name": "Tag Registry Orche",
