@@ -151,14 +151,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "Workflow Agent Orchestrator",
-    "link": "https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator",
-    "category": "Core",
-    "purpose": "Manage build/deploy sequences and task chains",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "Workflow Agent Orchestrator",
+      "link": "https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator",
+      "category": "Automation",
+      "purpose": "Autonomous agent workflow designer & monorepo generator",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
   {
     "name": "Wallet Maestro",
     "link": "https://chatgpt.com/g/g-68ede6b4ef388191805f4d44fe517fac-wallet-maestro",
