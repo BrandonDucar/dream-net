@@ -32,6 +32,7 @@ This registry lists all DreamNet GPTs with their key metadata.
 | Trend Hijack | TBD | Growth | Compliance-ready trend detection and content bundler | Draft | 2025-11-08 |
 | Commerce Optimizer | TBD | Commerce | Profit-focused pricing and bundling strategist | Draft | 2025-11-08 |
 | IntegrationScanner | TBD | Infra | Conservative integrations auditor and planner | Draft | 2025-11-08 |
+| Traffic Shaper | TBD | Infra | Latency-aware routing and caching planner | Draft | 2025-11-08 |
 | Aegis Privacy Lab | https://chatgpt.com/g/g-68ef00feea9481919028940e9df21d78-aegis-privacy-lab | Aegis | Privacy and compliance research node | Active | 2025-10-25 |
 | Novaframe QME | https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme | Production | Consumer creator & spec generator (code/config/copy/assets) | Active | 2025-10-25 |
 | RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Compliance & Tokenization | Paralegal-level U.S. real estate tokenization architect | Active | 2025-10-25 |
