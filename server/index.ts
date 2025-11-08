@@ -5,6 +5,7 @@ import { setupVite, serveStatic, log } from "./vite";
 import { dreamScoreEngine } from "./dream-score-engine";
 import { triggerArchiveNow } from "./archive-scheduler";
 import { seedDreams } from "./seed-dreams";
+import { seedSystemHeartbeat } from "./starbridge";
 
 const app = express();
 app.use(express.json());
@@ -80,10 +81,9 @@ app.use((req, res, next) => {
     await triggerArchiveNow();
     res.json({ success: true });
   });
-
-
 (async () => {
   const server = await registerRoutes(app);
+  await seedSystemHeartbeat().catch((err) => console.error("[StarBridge] Failed to seed system heartbeat:", err));
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

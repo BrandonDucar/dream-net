@@ -11,6 +11,8 @@ export const cocoonStageEnum = pgEnum("cocoon_stage", ["seedling", "incubating",
 export const coreTypeEnum = pgEnum("core_type", ["resonance", "energy", "memory", "lucidity", "nightmare"]);
 export const contributorRoleEnum = pgEnum("contributor_role", ["Builder", "Artist", "Coder", "Visionary", "Promoter"]);
 export const actionTypeEnum = pgEnum("action_type", ["added", "removed"]);
+export const starbridgeTopicEnum = pgEnum("starbridge_topic", ["Governor", "Deploy", "System", "Economy", "Vault"]);
+export const starbridgeSourceEnum = pgEnum("starbridge_source", ["Runtime", "ComputeGovernor", "DeployKeeper", "DreamKeeper", "RelayBot", "External"]);
 
 // New enums for Dream interface compatibility
 export const dreamCoreTypeEnum = pgEnum("dream_core_type", ["Vision", "Tool", "Movement", "Story"]);
@@ -201,6 +203,16 @@ export const dreamTokens = pgTable("dream_tokens", {
   milestone: text("milestone"), // Stage that triggered the minting
   metadata: jsonb("metadata"), // Additional token data
   mintedAt: timestamp("minted_at").defaultNow().notNull(),
+});
+
+export const starbridgeEvents = pgTable("starbridge_events", {
+  id: varchar("id").primaryKey(),
+  topic: starbridgeTopicEnum("topic").notNull(),
+  source: starbridgeSourceEnum("source").notNull(),
+  type: text("type").notNull(),
+  ts: timestamp("ts").defaultNow().notNull(),
+  payload: jsonb("payload"),
+  replayed: boolean("replayed").default(false).notNull(),
 });
 
 // Dream Cores table
@@ -402,6 +414,15 @@ export const insertDreamTokenSchema = createInsertSchema(dreamTokens).pick({
   metadata: true,
 });
 
+export const insertStarbridgeEventSchema = createInsertSchema(starbridgeEvents).pick({
+  id: true,
+  topic: true,
+  source: true,
+  type: true,
+  ts: true,
+  payload: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -441,6 +462,9 @@ export type InsertDreamReminder = {
   status?: "pending" | "sent";
   tags?: string[];
 };
+
+export type StarbridgeEventRecord = typeof starbridgeEvents.$inferSelect;
+export type InsertStarbridgeEvent = z.infer<typeof insertStarbridgeEventSchema>;
 
 // Contributor types
 export type ContributorRole = "Builder" | "Artist" | "Coder" | "Visionary" | "Promoter";
