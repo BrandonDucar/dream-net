@@ -111,22 +111,22 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "Watcher Mesh",
-    "link": "https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh",
-    "category": "Sentinel",
-    "purpose": "Continuous system observer",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
-  {
-    "name": "NBT Squad Builder",
-    "link": "https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder",
-    "category": "Sentinel",
-    "purpose": "Team composition and performance simulator",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "Watcher Mesh",
+      "link": "https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh",
+      "category": "Sentinel",
+      "purpose": "Edge telemetry swarm for DreamNet nodes",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "NBT Squad Builder",
+      "link": "https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder",
+      "category": "OmniBridge",
+      "purpose": "Systems-level coordinator for Nano Bridge Tenders",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
   {
     "name": "DreamTrace",
     "link": "https://chatgpt.com/g/g-68ebd79e914c8191b517ff54e8904415-dreamtrace",
@@ -151,14 +151,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "Workflow Agent Orchestrator",
-    "link": "https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator",
-    "category": "Core",
-    "purpose": "Manage build/deploy sequences and task chains",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "Workflow Agent Orchestrator",
+      "link": "https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator",
+      "category": "Automation",
+      "purpose": "Autonomous agent workflow designer & monorepo generator",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
   {
     "name": "Wallet Maestro",
     "link": "https://chatgpt.com/g/g-68ede6b4ef388191805f4d44fe517fac-wallet-maestro",
@@ -167,6 +167,86 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
+    {
+      "name": "Dream Surgeon Agent",
+      "link": null,
+      "category": "DreamOps",
+      "purpose": "Autonomous micro-repair and healing engine",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Ecosystem Synthesizer",
+      "link": null,
+      "category": "Evolution",
+      "purpose": "Meta-agent for sensing, designing, and promoting DreamNet agents",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "AURA-9",
+      "link": null,
+      "category": "Web3",
+      "purpose": "Autonomous blockchain repair and optimization intelligence",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Community Growth & SEO Engine",
+      "link": null,
+      "category": "Growth",
+      "purpose": "Cultural signal and community activation intelligence",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Trend Hijack",
+      "link": null,
+      "category": "Growth",
+      "purpose": "Compliance-ready trend detection and content bundler",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Commerce Optimizer",
+      "link": null,
+      "category": "Commerce",
+      "purpose": "Profit-focused pricing and bundling strategist",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "IntegrationScanner",
+      "link": null,
+      "category": "Infra",
+      "purpose": "Conservative integrations auditor and planner",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Traffic Shaper",
+      "link": null,
+      "category": "Infra",
+      "purpose": "Latency-aware routing and caching planner",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Memory Fabric Agent",
+      "link": null,
+      "category": "Memory",
+      "purpose": "Shared consciousness layer for multi-agent systems",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
+    {
+      "name": "Private Key Gate",
+      "link": null,
+      "category": "Security",
+      "purpose": "Secure transient API key gating controller",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
   {
     "name": "Aegis Privacy Lab",
     "link": "https://chatgpt.com/g/g-68ef00feea9481919028940e9df21d78-aegis-privacy-lab",
@@ -175,46 +255,54 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "Novaframe QME",
-    "link": "https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme",
-    "category": "Creative",
-    "purpose": "Design and media framework generator",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
-  {
-    "name": "RWA Home Tokenization System",
-    "link": "https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system",
-    "category": "Commerce",
-    "purpose": "Convert physical assets into tokenized units",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
-  {
-    "name": "LawyerAgent Paralegal",
-    "link": "https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal",
-    "category": "Commerce",
-    "purpose": "Legal document generation and filings",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
-  {
-    "name": "InvestorOps Sentinel",
-    "link": "https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel",
-    "category": "Commerce",
-    "purpose": "Investment and portfolio monitoring",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
-  {
-    "name": "Local Edge AI",
-    "link": "https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai",
-    "category": "Experimental",
-    "purpose": "Regional compute and CDN intelligence",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "Novaframe QME",
+      "link": "https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme",
+      "category": "Production",
+      "purpose": "Consumer creator & spec generator (code/config/copy/assets)",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "RWA Home Tokenization System",
+      "link": "https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system",
+      "category": "Compliance & Tokenization",
+      "purpose": "Paralegal-level U.S. real estate tokenization architect",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "LawyerAgent Paralegal",
+      "link": "https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal",
+      "category": "Commerce",
+      "purpose": "Legal document generation and filings",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "InvestorOps Sentinel",
+      "link": "https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel",
+      "category": "Compliance & Analytics",
+      "purpose": "Audit-ready investor relations intelligence",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "Local Edge AI",
+      "link": "https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai",
+      "category": "Compliance & Marketing",
+      "purpose": "Regulatory-aware investor outreach intelligence",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
+    {
+      "name": "Luxury Dial Concierge — by Ducar",
+      "link": null,
+      "category": "Luxury Design",
+      "purpose": "Hyper-luxury watch wallpaper concierge",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
   {
     "name": "Tag Registry Orche",
     "link": "https://chatgpt.com/g/g-68f1c8c8a4248191816332d1cf36f001-tag-registry-orche",

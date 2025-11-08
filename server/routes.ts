@@ -63,6 +63,15 @@ import saveDreamRouter from './routes/save-dream';
 import postBountyHandler from './routes/post-bounty';
 import getBountiesHandler from './routes/get-bounties';
 import joinDreamTeamHandler from './routes/join-dream-team';
+import starbridgeRouter from "./routes/starbridge";
+import wormholeRouter from "./routes/wormhole";
+import vectorRouter from "./routes/vector";
+import reputationRouter from "./routes/reputation";
+import zkRouter from "./routes/zk";
+import chronoCacheRouter from "./routes/chronocache";
+import watchdogRouter from "./routes/watchdog";
+import statusRouter from "./routes/status";
+import hashRouter from "./routes/hash";
 import getDreamForksHandler from './routes/get-dream-forks';
 import getDreamsByCloudHandler from './routes/get-dreams-by-cloud';
 import evolutionVaultRouter from './routes/evolution-vault';
@@ -2063,25 +2072,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use("/api/connector", taskConnectorRouter);
   app.use("/api/connector-v1", streamlinedConnectorRouter);
   
-  // Dreams Router - Simple dream submission endpoint  
-  app.use('/api/dreams', dreamsRouter);
-  
-  // Wallet Scan Router - FlutterAI wallet analysis
-  app.use('/api/wallet-scan', walletScanRouter);
-  
-  // Dream Processing Pipeline - LUCID/CANVAS/ROOT/ECHO stages
-  app.use('/api/dream-processor', dreamProcessorRouter);
-  
-  // Wallet Score Evaluation - CRADLE vs SEED access determination
-  app.use('/api/wallet-score', walletScoreRouter);
-  
-  // Dream Core Management - Spawning and evolution
-  app.use('/api/dream-cores', dreamCoresRouter);
-  
-  app.use('/api/lucid', lucidRoute);
-  app.use('/api/canvas', canvasRoute);
-  app.use('/api/root', rootRoute);
-  app.use('/api/echo', echoRoute);
+    // Dreams Router - Simple dream submission endpoint
+    app.use("/api/dreams", dreamsRouter);
+
+    // Wallet Scan Router - FlutterAI wallet analysis
+    app.use("/api/wallet-scan", walletScanRouter);
+
+    // Dream Processing Pipeline - LUCID/CANVAS/ROOT/ECHO stages
+    app.use("/api/dream-processor", dreamProcessorRouter);
+
+    // Wallet Score Evaluation - CRADLE vs SEED access determination
+    app.use("/api/wallet-score", walletScoreRouter);
+
+    // Dream Core Management - Spawning and evolution
+    app.use("/api/dream-cores", dreamCoresRouter);
+
+    app.use("/api/lucid", lucidRoute);
+    app.use("/api/canvas", canvasRoute);
+    app.use("/api/root", rootRoute);
+    app.use("/api/echo", echoRoute);
+    app.use("/api/starbridge", starbridgeRouter);
+    app.use("/api/vector", vectorRouter);
+    app.use("/api/reputation", reputationRouter);
+    app.use("/api/zk", zkRouter);
+    app.use("/api/chronocache", chronoCacheRouter);
+    app.use("/api/watchdog", watchdogRouter);
+    app.use("/api/status", statusRouter);
+    app.use("/api/hash", hashRouter);
+    app.use("/api/wormhole", wormholeRouter);
 
   // Test orchestration endpoint for simulation
   app.post("/api/test/orchestration", requireAdmin, async (req, res) => {

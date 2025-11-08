@@ -137,10 +137,10 @@ router.get('/devtools', async (req, res) => {
  * Business user endpoints
  */
 
-// Eric - Metals Mint President
-router.get('/business/eric', async (req, res) => {
+// Auric - Metals Intelligence Node
+router.get('/business/auric', async (req, res) => {
   try {
-    const metrics = veloIntegration.getBusinessUserMetrics('eric');
+    const metrics = veloIntegration.getBusinessUserMetrics('auric');
     
     res.json({
       success: true,
@@ -148,7 +148,7 @@ router.get('/business/eric', async (req, res) => {
       data: metrics
     });
   } catch (error) {
-    console.error('Velo Eric metrics error:', error);
+    console.error('Velo Auric metrics error:', error);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -157,10 +157,10 @@ router.get('/business/eric', async (req, res) => {
   }
 });
 
-// Dan - Crypto Trader
-router.get('/business/dan', async (req, res) => {
+// Flux - Crypto Intelligence Node
+router.get('/business/flux', async (req, res) => {
   try {
-    const metrics = veloIntegration.getBusinessUserMetrics('dan');
+    const metrics = veloIntegration.getBusinessUserMetrics('flux');
     
     res.json({
       success: true,
@@ -168,7 +168,7 @@ router.get('/business/dan', async (req, res) => {
       data: metrics
     });
   } catch (error) {
-    console.error('Velo Dan metrics error:', error);
+    console.error('Velo Flux metrics error:', error);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -177,10 +177,10 @@ router.get('/business/dan', async (req, res) => {
   }
 });
 
-// Sutton - Security Professional
-router.get('/business/sutton', async (req, res) => {
+// Sentinel - Security Intelligence Node
+router.get('/business/sentinel', async (req, res) => {
   try {
-    const metrics = veloIntegration.getBusinessUserMetrics('sutton');
+    const metrics = veloIntegration.getBusinessUserMetrics('sentinel');
     
     res.json({
       success: true,
@@ -188,7 +188,7 @@ router.get('/business/sutton', async (req, res) => {
       data: metrics
     });
   } catch (error) {
-    console.error('Velo Sutton metrics error:', error);
+    console.error('Velo Sentinel metrics error:', error);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -197,10 +197,10 @@ router.get('/business/sutton', async (req, res) => {
   }
 });
 
-// Brandon - System Administrator
-router.get('/business/brandon', async (req, res) => {
+// DreamOps - Core Operations Node
+router.get('/business/dreamops', async (req, res) => {
   try {
-    const metrics = veloIntegration.getBusinessUserMetrics('brandon');
+    const metrics = veloIntegration.getBusinessUserMetrics('dreamops');
     
     res.json({
       success: true,
@@ -208,7 +208,7 @@ router.get('/business/brandon', async (req, res) => {
       data: metrics
     });
   } catch (error) {
-    console.error('Velo Brandon metrics error:', error);
+    console.error('Velo DreamOps metrics error:', error);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',

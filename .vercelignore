@@ -1,3 +1,7 @@
+**/*.md
+**/tests/**
+**/.github/**
+**/.vscode/**
 node_modules
 .env
 .env.local

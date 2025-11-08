@@ -95,15 +95,15 @@ router.post('/ingest', rawBodyParser, (req: any, res: any) => {
     case 'routing_test':
       const content = data?.content || '';
       let confidence = 'unknown';
-      let owner = 'Brandon';
+      let owner = 'DreamOps';
 
       // Simple routing logic for demonstration
       if (content.includes('metal') || content.includes('gold') || content.includes('silver')) {
         confidence = '95%';
-        owner = 'Eric';
+        owner = 'Auric';
       } else if (content.includes('security') || content.includes('crypto')) {
         confidence = '92%';
-        owner = content.includes('crypto') ? 'Dan' : 'Sutton';
+        owner = content.includes('crypto') ? 'Flux' : 'Sentinel';
       }
 
       responseData = {

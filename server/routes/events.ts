@@ -282,10 +282,10 @@ router.get('/events/owner/:owner', (req, res) => {
     const { owner } = req.params;
     const { limit, since } = req.query;
     
-    if (!['Eric', 'Sutton', 'Dan', 'Brandon'].includes(owner)) {
+    if (!['Auric', 'Sentinel', 'Flux', 'DreamOps'].includes(owner)) {
       return res.status(400).json({ 
         success: false, 
-        error: 'Invalid owner. Must be Eric, Sutton, Dan, or Brandon' 
+        error: 'Invalid owner. Must be Auric, Sentinel, Flux, or DreamOps' 
       });
     }
 

@@ -100,12 +100,12 @@ const getBusinessUserData = (userType) => {
   };
 
   switch (userType) {
-    case 'eric':
+    case 'auric':
       return {
         ...baseData,
-        user: 'Eric (Metals Mint President)',
-        role: 'Business Owner & Trading Systems',
-        focus: 'E-commerce and metals trading integration',
+        user: 'Auric (Metals Intelligence)',
+        role: 'Metals Intelligence & Trading Systems',
+        focus: 'E-commerce and DreamNet metals intelligence integration',
         relevant_apis: [
           'Wix Stores API',
           'Payment Gateways',
@@ -125,12 +125,12 @@ const getBusinessUserData = (userType) => {
         integration_priority: 'High-volume trading and inventory management'
       };
     
-    case 'dan':
+    case 'flux':
       return {
         ...baseData,
-        user: 'Dan (Crypto Trader)',
-        role: 'Crypto Trading & Meme Coin Creation',
-        focus: 'Crypto tools and trading platforms',
+        user: 'Flux (Crypto Intelligence)',
+        role: 'Crypto Trading & Liquidity Systems',
+        focus: 'Crypto tools and DreamNet trading platforms',
         relevant_apis: [
           'External Crypto APIs',
           'Webhook Integrations',
@@ -150,11 +150,11 @@ const getBusinessUserData = (userType) => {
         integration_priority: 'Real-time crypto data and automated trading'
       };
     
-    case 'sutton':
+    case 'sentinel':
       return {
         ...baseData,
-        user: 'Sutton (Security Professional)',
-        role: 'IT Security & Deployment Solutions',
+        user: 'Sentinel (Defense Intelligence)',
+        role: 'Defense & Deployment Solutions',
         focus: 'Security, authentication, and secure deployments',
         relevant_apis: [
           'Wix Members API',
@@ -175,12 +175,12 @@ const getBusinessUserData = (userType) => {
         integration_priority: 'Secure authentication and deployment monitoring'
       };
     
-    case 'brandon':
+    case 'dreamops':
       return {
         ...baseData,
-        user: 'Brandon (System Administrator)',
+        user: 'DreamOps (Core Operations)',
         role: 'Backend Systems & Network Monitoring',
-        focus: 'Infrastructure monitoring and system administration',
+        focus: 'Infrastructure monitoring and DreamOps administration',
         relevant_apis: [
           'Site Monitoring APIs',
           'Analytics Integration',
@@ -267,16 +267,16 @@ router.get('/velo/site', (req, res) => {
 // Data collections
 router.get('/velo/collections', (req, res) => {
   const collections = getCollections();
-  res.json({
-    ok: true,
-    service: 'velo-collections',
-    data: {
-      collections: collections,
-      count: collections.length,
-      total_records: collections.reduce((sum, col) => sum + col.recordCount, 0)
-    },
-    ts: new Date().toISOString()
-  });
+    res.json({
+      ok: true,
+      service: 'velo-collections',
+      data: {
+        collections: collections,
+        count: collections.length,
+        total_records: collections.reduce((sum, col) => sum + col.recordCount, 0)
+      },
+      ts: new Date().toISOString()
+    });
 });
 
 // Development tools status
@@ -314,38 +314,38 @@ router.get('/velo/devtools', (req, res) => {
 });
 
 // Business user endpoints
-router.get('/velo/business/eric', (req, res) => {
+router.get('/velo/business/auric', (req, res) => {
   res.json({
     ok: true,
-    service: 'velo-business-eric',
-    data: getBusinessUserData('eric'),
+    service: 'velo-business-auric',
+    data: getBusinessUserData('auric'),
     ts: new Date().toISOString()
   });
 });
 
-router.get('/velo/business/dan', (req, res) => {
+router.get('/velo/business/flux', (req, res) => {
   res.json({
     ok: true,
-    service: 'velo-business-dan',
-    data: getBusinessUserData('dan'),
+    service: 'velo-business-flux',
+    data: getBusinessUserData('flux'),
     ts: new Date().toISOString()
   });
 });
 
-router.get('/velo/business/sutton', (req, res) => {
+router.get('/velo/business/sentinel', (req, res) => {
   res.json({
     ok: true,
-    service: 'velo-business-sutton',
-    data: getBusinessUserData('sutton'),
+    service: 'velo-business-sentinel',
+    data: getBusinessUserData('sentinel'),
     ts: new Date().toISOString()
   });
 });
 
-router.get('/velo/business/brandon', (req, res) => {
+router.get('/velo/business/dreamops', (req, res) => {
   res.json({
     ok: true,
-    service: 'velo-business-brandon',
-    data: getBusinessUserData('brandon'),
+    service: 'velo-business-dreamops',
+    data: getBusinessUserData('dreamops'),
     ts: new Date().toISOString()
   });
 });
@@ -359,26 +359,26 @@ router.get('/velo/dashboard', (req, res) => {
   res.json({
     ok: true,
     service: 'velo-dashboard',
-    data: {
-      integration_status: status,
-      site_info: site,
-      data_collections: {
-        collections: collections.slice(0, 3),
-        total_collections: collections.length,
-        total_records: collections.reduce((sum, col) => sum + col.recordCount, 0)
-      },
-      github: {
-        total_repos: 2,
-        total_stars: 20,
-        integration_active: true
-      },
-      business_users: [
-        { name: 'Eric', role: 'Metals Mint President', focus: 'E-commerce & Trading' },
-        { name: 'Dan', role: 'Crypto Trader', focus: 'Crypto Tools & Platforms' },
-        { name: 'Sutton', role: 'Security Professional', focus: 'Security & Deployments' },
-        { name: 'Brandon', role: 'System Administrator', focus: 'Infrastructure Monitoring' }
-      ],
-      api_capabilities: {
+      data: {
+        integration_status: status,
+        site_info: site,
+        data_collections: {
+          collections: collections.slice(0, 3),
+          total_collections: collections.length,
+          total_records: collections.reduce((sum, col) => sum + col.recordCount, 0)
+        },
+        github: {
+          total_repos: 2,
+          total_stars: 20,
+          integration_active: true
+        },
+        business_users: [
+          { name: 'Auric', role: 'Metals Intelligence', focus: 'E-commerce & Trading' },
+          { name: 'Flux', role: 'Crypto Intelligence', focus: 'Crypto Tools & Platforms' },
+          { name: 'Sentinel', role: 'Defense Intelligence', focus: 'Security & Deployments' },
+          { name: 'DreamOps', role: 'Core Operations', focus: 'Infrastructure Monitoring' }
+        ],
+        api_capabilities: {
         rest_endpoints: true,
         http_functions: true,
         webhooks: true,

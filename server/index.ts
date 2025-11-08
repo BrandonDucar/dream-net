@@ -5,6 +5,13 @@ import { setupVite, serveStatic, log } from "./vite";
 import { dreamScoreEngine } from "./dream-score-engine";
 import { triggerArchiveNow } from "./archive-scheduler";
 import { seedDreams } from "./seed-dreams";
+import { seedSystemHeartbeat } from "./starbridge";
+import { bootstrapRail } from "./magnetic-rail/scheduler";
+import { bootstrapWormhole } from "./wormhole/dispatcher";
+import { runTrustMigrations } from "./trust/migrations";
+import "./jobs/vectorRollup";
+import "./jobs/reputation";
+import "./jobs/watchdog";
 
 const app = express();
 app.use(express.json());
@@ -80,10 +87,12 @@ app.use((req, res, next) => {
     await triggerArchiveNow();
     res.json({ success: true });
   });
-
-
 (async () => {
   const server = await registerRoutes(app);
+  await runTrustMigrations().catch((err) => console.error("[Trust] Failed to run migrations:", err));
+  await seedSystemHeartbeat().catch((err) => console.error("[StarBridge] Failed to seed system heartbeat:", err));
+  bootstrapRail();
+  bootstrapWormhole();
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

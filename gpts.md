@@ -18,19 +18,31 @@ This registry lists all DreamNet GPTs with their key metadata.
 | Hotel Optimizer X | https://chatgpt.com/g/g-68f99afc03908191a380f9d453fb8381-hotel-optimizer-x | Travel & Commerce | Hospitality pricing and occupancy modeler | Active | 2025-10-25 |
 | Ground Atlas | https://chatgpt.com/g/g-68f99d6a41b48191b3b2367fee6eda52-ground-atlas | Travel & Commerce | Transportation data and mapping | Active | 2025-10-25 |
 | Skypath Companion | https://chatgpt.com/g/g-68f9a6d6f2988191ad7b0284d70d3a14-skypath-companion | Travel & Commerce | Personal travel assistant | Active | 2025-10-25 |
-| Watcher Mesh | https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh | Sentinel | Continuous system observer | Active | 2025-10-25 |
-| NBT Squad Builder | https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder | Sentinel | Team composition and performance simulator | Active | 2025-10-25 |
+| Watcher Mesh | https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh | Sentinel | Edge telemetry swarm for DreamNet nodes | Active | 2025-10-25 |
+| NBT Squad Builder | https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder | OmniBridge | Systems-level coordinator for Nano Bridge Tenders | Active | 2025-10-25 |
 | DreamTrace | https://chatgpt.com/g/g-68ebd79e914c8191b517ff54e8904415-dreamtrace | Sentinel | Project lineage and evolution mapper | Active | 2025-10-25 |
 | DreamNet Orchestrator | https://chatgpt.com/g/g-68ec2a40c59c81919ef51768a2be08c0-dreamnet-orchestrator | Core | System-level command bus for GPTs | Active | 2025-10-25 |
 | ForgeFix | https://chatgpt.com/g/g-68edb577f6988191ab80eb9fc4030687-forgefix | Experimental | Debug and patch management agent | Active | 2025-10-25 |
-| Workflow Agent Orchestrator | https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator | Core | Manage build/deploy sequences and task chains | Active | 2025-10-25 |
+| Workflow Agent Orchestrator | https://chatgpt.com/g/g-68eddf0d79bc81919152dca41beb1996-workflow-agent-orchestrator | Automation | Autonomous agent workflow designer & monorepo generator | Active | 2025-10-25 |
 | Wallet Maestro | https://chatgpt.com/g/g-68ede6b4ef388191805f4d44fe517fac-wallet-maestro | Commerce | Wallet intelligence and analytics engine | Active | 2025-10-25 |
+| Dream Surgeon Agent | TBD | DreamOps | Autonomous micro-repair and healing engine | Draft | 2025-11-08 |
+| Ecosystem Synthesizer | TBD | Evolution | Meta-agent for sensing, designing, and promoting DreamNet agents | Draft | 2025-11-08 |
+| AURA-9 | TBD | Web3 | Autonomous blockchain repair and optimization intelligence | Draft | 2025-11-08 |
+| Community Growth & SEO Engine | TBD | Growth | Cultural signal and community activation intelligence | Draft | 2025-11-08 |
+| Trend Hijack | TBD | Growth | Compliance-ready trend detection and content bundler | Draft | 2025-11-08 |
+| Commerce Optimizer | TBD | Commerce | Profit-focused pricing and bundling strategist | Draft | 2025-11-08 |
+| IntegrationScanner | TBD | Infra | Conservative integrations auditor and planner | Draft | 2025-11-08 |
+| Traffic Shaper | TBD | Infra | Latency-aware routing and caching planner | Draft | 2025-11-08 |
+| Memory Fabric Agent | TBD | Memory | Shared consciousness layer for multi-agent systems | Draft | 2025-11-08 |
+| Private Key Gate | TBD | Security | Secure transient API key gating controller | Draft | 2025-11-08 |
+| Freename Registrar | TBD | Web3 | Dry-run-first registrar automating Freename TLD/SLD lifecycle | Draft | 2025-11-08 |
 | Aegis Privacy Lab | https://chatgpt.com/g/g-68ef00feea9481919028940e9df21d78-aegis-privacy-lab | Aegis | Privacy and compliance research node | Active | 2025-10-25 |
-| Novaframe QME | https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme | Creative | Design and media framework generator | Active | 2025-10-25 |
-| RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Commerce | Convert physical assets into tokenized units | Active | 2025-10-25 |
+| Novaframe QME | https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme | Production | Consumer creator & spec generator (code/config/copy/assets) | Active | 2025-10-25 |
+| RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Compliance & Tokenization | Paralegal-level U.S. real estate tokenization architect | Active | 2025-10-25 |
 | LawyerAgent Paralegal | https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal | Commerce | Legal document generation and filings | Active | 2025-10-25 |
-| InvestorOps Sentinel | https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel | Commerce | Investment and portfolio monitoring | Active | 2025-10-25 |
-| Local Edge AI | https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai | Experimental | Regional compute and CDN intelligence | Active | 2025-10-25 |
+| InvestorOps Sentinel | https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel | Compliance & Analytics | Audit-ready investor relations intelligence | Active | 2025-10-25 |
+| Local Edge AI | https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai | Compliance & Marketing | Regulatory-aware investor outreach intelligence | Active | 2025-10-25 |
+| Luxury Dial Concierge — by Ducar | TBD | Luxury Design | Hyper-luxury watch wallpaper concierge | Draft | 2025-11-08 |
 | Tag Registry Orche | https://chatgpt.com/g/g-68f1c8c8a4248191816332d1cf36f001-tag-registry-orche | Experimental | Tag and identity control system | Active | 2025-10-25 |
 | Design Studio Pro | https://chatgpt.com/g/g-68f3fc7884dc8191a8c52e8fd68572f4-design-studio-pro | Creative | UI/UX design builder | Active | 2025-10-25 |
 | Aethersafe | https://chatgpt.com/g/g-68f2fe8a43388191802b041568139164-aethersafe | Experimental | Secure vault and backup agent | Active | 2025-10-25 |
