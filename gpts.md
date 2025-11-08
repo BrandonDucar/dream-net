@@ -18,7 +18,7 @@ This registry lists all DreamNet GPTs with their key metadata.
 | Hotel Optimizer X | https://chatgpt.com/g/g-68f99afc03908191a380f9d453fb8381-hotel-optimizer-x | Travel & Commerce | Hospitality pricing and occupancy modeler | Active | 2025-10-25 |
 | Ground Atlas | https://chatgpt.com/g/g-68f99d6a41b48191b3b2367fee6eda52-ground-atlas | Travel & Commerce | Transportation data and mapping | Active | 2025-10-25 |
 | Skypath Companion | https://chatgpt.com/g/g-68f9a6d6f2988191ad7b0284d70d3a14-skypath-companion | Travel & Commerce | Personal travel assistant | Active | 2025-10-25 |
-| Watcher Mesh | https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh | Sentinel | Continuous system observer | Active | 2025-10-25 |
+| Watcher Mesh | https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh | Sentinel | Edge telemetry swarm for DreamNet nodes | Active | 2025-10-25 |
 | NBT Squad Builder | https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder | OmniBridge | Systems-level coordinator for Nano Bridge Tenders | Active | 2025-10-25 |
 | DreamTrace | https://chatgpt.com/g/g-68ebd79e914c8191b517ff54e8904415-dreamtrace | Sentinel | Project lineage and evolution mapper | Active | 2025-10-25 |
 | DreamNet Orchestrator | https://chatgpt.com/g/g-68ec2a40c59c81919ef51768a2be08c0-dreamnet-orchestrator | Core | System-level command bus for GPTs | Active | 2025-10-25 |

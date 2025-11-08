@@ -111,14 +111,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "Watcher Mesh",
-    "link": "https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh",
-    "category": "Sentinel",
-    "purpose": "Continuous system observer",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "Watcher Mesh",
+      "link": "https://chatgpt.com/g/g-68e813ffa56c81919ea10863450df494-watcher-mesh",
+      "category": "Sentinel",
+      "purpose": "Edge telemetry swarm for DreamNet nodes",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
     {
       "name": "NBT Squad Builder",
       "link": "https://chatgpt.com/g/g-68e818b7740c81919e17aee6f0b204a1-nbt-squad-builder",
