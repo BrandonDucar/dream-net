@@ -183,14 +183,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
-  {
-    "name": "RWA Home Tokenization System",
-    "link": "https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system",
-    "category": "Commerce",
-    "purpose": "Convert physical assets into tokenized units",
-    "status": "Active",
-    "date_added": "2025-10-25"
-  },
+    {
+      "name": "RWA Home Tokenization System",
+      "link": "https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system",
+      "category": "Compliance & Tokenization",
+      "purpose": "Paralegal-level U.S. real estate tokenization architect",
+      "status": "Active",
+      "date_added": "2025-10-25"
+    },
     {
       "name": "LawyerAgent Paralegal",
       "link": "https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal",

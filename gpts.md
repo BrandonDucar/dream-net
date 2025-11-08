@@ -27,7 +27,7 @@ This registry lists all DreamNet GPTs with their key metadata.
 | Wallet Maestro | https://chatgpt.com/g/g-68ede6b4ef388191805f4d44fe517fac-wallet-maestro | Commerce | Wallet intelligence and analytics engine | Active | 2025-10-25 |
 | Aegis Privacy Lab | https://chatgpt.com/g/g-68ef00feea9481919028940e9df21d78-aegis-privacy-lab | Aegis | Privacy and compliance research node | Active | 2025-10-25 |
 | Novaframe QME | https://chatgpt.com/g/g-68f05e9c885081918e9fdfdc1f2eec24-novaframe-qme | Creative | Design and media framework generator | Active | 2025-10-25 |
-| RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Commerce | Convert physical assets into tokenized units | Active | 2025-10-25 |
+| RWA Home Tokenization System | https://chatgpt.com/g/g-68f142a2c2b8819181e3cdbaa7f56864-rwa-home-tokenization-system | Compliance & Tokenization | Paralegal-level U.S. real estate tokenization architect | Active | 2025-10-25 |
 | LawyerAgent Paralegal | https://chatgpt.com/g/g-68f14d30a958819183a03a91fd5d9927-lawyeragent-paralegal | Commerce | Legal document generation and filings | Active | 2025-10-25 |
 | InvestorOps Sentinel | https://chatgpt.com/g/g-68f156b2d5588191a26775b9c2a109f1-investorops-sentinel | Compliance & Analytics | Audit-ready investor relations intelligence | Active | 2025-10-25 |
 | Local Edge AI | https://chatgpt.com/g/g-68f181863f94819187bc501987804729-local-edge-ai | Compliance & Marketing | Regulatory-aware investor outreach intelligence | Active | 2025-10-25 |
