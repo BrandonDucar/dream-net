@@ -29,7 +29,7 @@ DreamNet is a biomimetic, self-healing intelligence platform that builds, deploy
 - **Aegis Command Stack:** Security, logistics, and emergency response GPTs (Aegis Sentinel, Command, Maintenance Intelligence, Relief Command, RedShield Sandbox).
 - **Travel & Commerce Network:** Wanderweave, Travel Fleet GPT, Skycircuit AI, Ground Atlas, Aeromax Optimizer, Royalty Flow Nexus.
 - **Infrastructure & Growth:** IntegrationScanner, Traffic Shaper, Trend Hijack, Commerce Optimizer, Memory Fabric Agent, Private Key Gate.
-- **Creative Ops:** Reverb (music studio), DreamStar (AI music engine), ShowBuilder, Design Studio Pro, RightSphere.
+  - **Creative Ops:** Reverb (music studio), DreamStar (AI music engine), DreamSnail (privacy NFTs), ShowBuilder, Design Studio Pro, RightSphere.
 
 ## Repository Map
 - `server/` – Express routes, StarBridge, Daemon, governance, OTT, and service schedulers.
