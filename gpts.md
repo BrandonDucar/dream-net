@@ -56,6 +56,7 @@ This registry lists all DreamNet GPTs with their key metadata.
 | SyncPoint | https://chatgpt.com/g/g-68f5a19d7b008191b319880c21b6ed47-syncpoint | Experimental | Trigger and synchronization scheduler | Active | 2025-10-25 |
 | Promo Forge | https://chatgpt.com/g/g-68f5a4982ba88191b7c459bbb5bdff42-promo-forge | Commerce | Advertisement and campaign automation | Active | 2025-10-25 |
 | Reverb | https://chatgpt.com/g/g-68f5a63fab4481918f5418ba742aa889-reverb | Creative | Audio and music AI studio | Active | 2025-10-25 |
+| DreamStar | TBD | Creative | Artist-trained AI music engine for original, releasable tracks | Draft | 2025-11-08 |
 | OmniSync | https://chatgpt.com/g/g-68f5a8653dac8191afab1e2237ec8c99-omnisync | Experimental | Synchronizes data across GPTs | Active | 2025-10-25 |
 | Loginet Sentinel | https://chatgpt.com/g/g-68f85456dc188191b3e311ba40e6bb3e-loginet-sentinel | Sentinel | Network authentication and monitoring | Active | 2025-10-25 |
 | RA-1 | https://chatgpt.com/g/g-68f5ab4220a08191949f96ffc1be3880-ra-1 | Experimental | Experimental reasoning agent | Active | 2025-10-25 |
