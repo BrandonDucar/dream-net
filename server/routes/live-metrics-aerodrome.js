@@ -90,32 +90,32 @@ const getBusinessUserData = (userType) => {
   };
 
   switch (userType) {
-    case 'eric':
+    case 'auric':
       return {
         ...baseData,
-        user: 'Eric (Metals Mint President)',
-        focus: 'Trading systems and metals intelligence',
+        user: 'Auric (Metals Intelligence)',
+        focus: 'Trading systems and auric intelligence',
         relevant_pools: pools.filter(pool => pool.apr > 15),
         top_volume_pools: pools.sort((a, b) => b.volume24h - a.volume24h).slice(0, 2),
-        business_priority: 'High-volume trading pairs for metals business'
+        business_priority: 'High-volume trading pairs for the metals intelligence stack'
       };
     
-    case 'dan':
+    case 'flux':
       return {
         ...baseData,
-        user: 'Dan (Crypto Trader)',
-        focus: 'Crypto trading and meme coin creation',
+        user: 'Flux (Crypto Intelligence)',
+        focus: 'Crypto trading orchestration and liquidity design',
         high_yield_pools: pools.filter(pool => pool.apr > 10),
         volatile_pairs: pools.filter(pool => !pool.stable),
         aero_price: '$1.32',
-        business_priority: 'High-APR opportunities and volatile trading pairs'
+        business_priority: 'High-APR opportunities and volatile trading corridors'
       };
     
-    case 'sutton':
+    case 'sentinel':
       return {
         ...baseData,
-        user: 'Sutton (Security Professional)',
-        focus: 'IT security and secure deployment solutions',
+        user: 'Sentinel (Defense Intelligence)',
+        focus: 'Network defense and secure deployment solutions',
         security_metrics: {
           contract_verification: 'Verified on BaseScan',
           audit_status: 'Multiple audits completed',
@@ -125,10 +125,10 @@ const getBusinessUserData = (userType) => {
         business_priority: 'Secure, audited protocols with low risk'
       };
     
-    case 'brandon':
+    case 'dreamops':
       return {
         ...baseData,
-        user: 'Brandon (System Administrator)',
+        user: 'DreamOps (Core Operations)',
         focus: 'Backend tools and network monitoring',
         system_metrics: {
           api_uptime: '99.95%',
@@ -192,38 +192,38 @@ router.get('/aerodrome/pools', (req, res) => {
 });
 
 // Business user endpoints
-router.get('/aerodrome/business/eric', (req, res) => {
+router.get('/aerodrome/business/auric', (req, res) => {
   res.json({
     ok: true,
-    service: 'aerodrome-business-eric',
-    data: getBusinessUserData('eric'),
+    service: 'aerodrome-business-auric',
+    data: getBusinessUserData('auric'),
     ts: new Date().toISOString()
   });
 });
 
-router.get('/aerodrome/business/dan', (req, res) => {
+router.get('/aerodrome/business/flux', (req, res) => {
   res.json({
     ok: true,
-    service: 'aerodrome-business-dan',
-    data: getBusinessUserData('dan'),
+    service: 'aerodrome-business-flux',
+    data: getBusinessUserData('flux'),
     ts: new Date().toISOString()
   });
 });
 
-router.get('/aerodrome/business/sutton', (req, res) => {
+router.get('/aerodrome/business/sentinel', (req, res) => {
   res.json({
     ok: true,
-    service: 'aerodrome-business-sutton',
-    data: getBusinessUserData('sutton'),
+    service: 'aerodrome-business-sentinel',
+    data: getBusinessUserData('sentinel'),
     ts: new Date().toISOString()
   });
 });
 
-router.get('/aerodrome/business/brandon', (req, res) => {
+router.get('/aerodrome/business/dreamops', (req, res) => {
   res.json({
     ok: true,
-    service: 'aerodrome-business-brandon',
-    data: getBusinessUserData('brandon'),
+    service: 'aerodrome-business-dreamops',
+    data: getBusinessUserData('dreamops'),
     ts: new Date().toISOString()
   });
 });
@@ -246,10 +246,10 @@ router.get('/aerodrome/dashboard', (req, res) => {
         avg_apr: pools.reduce((sum, pool) => sum + pool.apr, 0) / pools.length
       },
       business_users: [
-        { name: 'Eric', role: 'Metals Mint President', focus: 'Trading systems' },
-        { name: 'Dan', role: 'Crypto Trader', focus: 'Meme coins & trading' },
-        { name: 'Sutton', role: 'Security Professional', focus: 'IT security' },
-        { name: 'Brandon', role: 'System Administrator', focus: 'Backend monitoring' }
+        { name: 'Auric', role: 'Metals Intelligence', focus: 'Trading systems' },
+        { name: 'Flux', role: 'Crypto Intelligence', focus: 'Liquidity & trading' },
+        { name: 'Sentinel', role: 'Defense Intelligence', focus: 'IT security' },
+        { name: 'DreamOps', role: 'Core Operations', focus: 'Backend monitoring' }
       ],
       last_updated: new Date().toISOString()
     },

@@ -1,7 +1,7 @@
 /**
  * NEST SECURITY STATUS ENDPOINT
  * 
- * Provides Brandon with real-time verification that all nest systems 
+ * Provides DreamOps with real-time verification that all nest systems 
  * are properly isolated from proprietary data and secrets
  */
 
@@ -11,11 +11,11 @@ import { NestPermissionValidator, getSafeEnvironmentForNests } from '../middlewa
 const router = Router();
 
 /**
- * Security Status Dashboard for Brandon
+ * Security Status Dashboard for DreamOps
  * Shows real-time verification of nest isolation
  */
 router.get('/security-status', (req, res) => {
-  console.log('🛡️ [SecurityStatus] Brandon checking nest security isolation...');
+  console.log('🛡️ [SecurityStatus] DreamOps checking nest security isolation...');
   
   const securityReport = {
     timestamp: new Date().toISOString(),
@@ -51,7 +51,7 @@ router.get('/security-status', (req, res) => {
       '/api/database',
       '/api/auth',
       '/api/vault',
-      '/api/brandon',
+    '/api/dreamops',
       '/api/internal'
     ],
     
@@ -82,24 +82,24 @@ router.get('/security-status', (req, res) => {
     
     // Active nest systems
     active_nests: [
-      {
-        name: 'Eric Metals Mint',
-        status: 'ISOLATED',
-        access_level: 'RESTRICTED',
-        security_boundary: 'ENFORCED'
-      },
-      {
-        name: 'Sutton FlutterbeyeDev', 
-        status: 'ISOLATED',
-        access_level: 'RESTRICTED',
-        security_boundary: 'ENFORCED'
-      },
-      {
-        name: 'Dan Crypto Trading',
-        status: 'ISOLATED', 
-        access_level: 'RESTRICTED',
-        security_boundary: 'ENFORCED'
-      }
+    {
+      name: 'AuricVault Metals Intelligence',
+      status: 'ISOLATED',
+      access_level: 'RESTRICTED',
+      security_boundary: 'ENFORCED'
+    },
+    {
+      name: 'SentinelCore Defense Systems', 
+      status: 'ISOLATED',
+      access_level: 'RESTRICTED',
+      security_boundary: 'ENFORCED'
+    },
+    {
+      name: 'FluxWave Crypto Operations',
+      status: 'ISOLATED', 
+      access_level: 'RESTRICTED',
+      security_boundary: 'ENFORCED'
+    }
     ],
     
     security_verifications: {
@@ -145,7 +145,7 @@ router.get('/security-status', (req, res) => {
 
 /**
  * Test Nest Security Boundaries
- * Allows Brandon to verify that security blocks work
+ * Allows DreamOps to verify that security blocks work
  */
 router.post('/test-security', (req, res) => {
   const { testType, nestId } = req.body;
