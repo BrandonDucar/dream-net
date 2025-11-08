@@ -8,6 +8,7 @@ import { seedDreams } from "./seed-dreams";
 import { seedSystemHeartbeat } from "./starbridge";
 import { bootstrapRail } from "./magnetic-rail/scheduler";
 import { bootstrapWormhole } from "./wormhole/dispatcher";
+import { runTrustMigrations } from "./trust/migrations";
 
 const app = express();
 app.use(express.json());
@@ -85,6 +86,7 @@ app.use((req, res, next) => {
   });
 (async () => {
   const server = await registerRoutes(app);
+  await runTrustMigrations().catch((err) => console.error("[Trust] Failed to run migrations:", err));
   await seedSystemHeartbeat().catch((err) => console.error("[StarBridge] Failed to seed system heartbeat:", err));
   bootstrapRail();
   bootstrapWormhole();

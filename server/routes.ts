@@ -65,6 +65,7 @@ import getBountiesHandler from './routes/get-bounties';
 import joinDreamTeamHandler from './routes/join-dream-team';
 import starbridgeRouter from "./routes/starbridge";
 import wormholeRouter from "./routes/wormhole";
+import vectorRouter from "./routes/vector";
 import getDreamForksHandler from './routes/get-dream-forks';
 import getDreamsByCloudHandler from './routes/get-dreams-by-cloud';
 import evolutionVaultRouter from './routes/evolution-vault';
@@ -2085,6 +2086,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     app.use("/api/root", rootRoute);
     app.use("/api/echo", echoRoute);
     app.use("/api/starbridge", starbridgeRouter);
+    app.use("/api/vector", vectorRouter);
     app.use("/api/wormhole", wormholeRouter);
 
   // Test orchestration endpoint for simulation
