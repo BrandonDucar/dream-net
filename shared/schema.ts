@@ -254,6 +254,15 @@ export const foundryHybrids = pgTable("foundry_hybrids", {
   metadata: jsonb("metadata"),
 });
 
+
+export const dreamsnailTrailEvents = pgTable("dreamsnail_trail_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  commitment: text("commitment").notNull(),
+  nullifier: text("nullifier"),
+  root: text("root").notNull(),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
 export const starbridgeEvents = pgTable("starbridge_events", {
   id: varchar("id").primaryKey(),
   topic: starbridgeTopicEnum("topic").notNull(),
@@ -572,4 +581,10 @@ export const insertFoundryTraitSchema = createInsertSchema(foundryTraits, {
 export const insertFoundryHybridSchema = createInsertSchema(foundryHybrids, {
   parents: z.array(z.string()).optional(),
   metadata: z.record(z.any()).optional(),
+});
+
+export const insertDreamsnailTrailEventSchema = createInsertSchema(dreamsnailTrailEvents, {
+  nullifier: z.string().optional(),
+  root: z.string().optional(),
+  timestamp: z.coerce.date().optional(),
 });

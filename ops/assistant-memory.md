@@ -17,8 +17,8 @@
 2. **DreamSnail Privacy NFTs**
    - Privacy-first triple-helix NFT collection with zk-proven slime trails and Fibonacci rarity.
    - Documentation: `ops/dreamsnail.md` (spec). Repo layout includes `apps/web/app/dreamsnails/`, `packages/dreamsnail-crypto`, `packages/dreamsnail-trail`, `packages/dreamsnail-contracts`, `packages/dreamsnail-zk`, `packages/dreamsnail-art`.
-   - Backend: `/api/dreamsnail/spec|summary|roadmap|commit|verify` with in-memory trail manager (placeholder until TrailCommit contracts deploy).
-   - Pending builds: TrailCommit smart contracts, zk circuits, Neon-backed trail storage, shader pipeline, explorer UI.
+   - Backend: `/api/dreamsnail/spec|summary|roadmap|commit|verify|trail|root` persists events to Neon (`dreamsnail_trail_events`) with an in-memory mirror for fallback.
+   - Pending builds: TrailCommit smart contracts + zk circuits, contract-driven Merkle verification, shader pipeline, explorer UI.
 3. **Atlas Agent Foundry**
    - Documentation: `ops/dreamnet-site-plan.md` (foundry section TBD).
    - Backend: `/api/foundry/ingest|hybridize|traits|hybrids` storing telemetry traits and proposed hybrids in Neon.

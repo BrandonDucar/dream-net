@@ -64,6 +64,7 @@ public/og/
 - **Hero:** Triple helix visualization (canvas shader) with privacy narrative.
 - **Sections:** Fibonacci rarity tiers, zk slime trails, unlockable perks.
 - **Proof Badges:** Diagram of Poseidon commitments → Merkle root → zk proof → badge.
+- **Data Hooks:** `/api/dreamsnail/commit|verify|trail|root` surfaces live trail commitments mirrored in Neon (`dreamsnail_trail_events`).
 - **CTA:** “Join the Trailblazer List” form with optional zk preview invite.
 
 ### 3.4 Atlas Foundry Page

@@ -2,7 +2,8 @@ import { Router } from "express";
 import { z } from "zod";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { appendTrail, getTrailRoot, verifyTrail } from "@packages/dreamsnail-trail/src";
+import { appendTrail, getTrailRoot, verifyTrail, getTrailNodes } from "@packages/dreamsnail-trail/src";
+import { latestTrailRoot, listTrailEvents, recordTrailEvent, verifyTrailCommitment } from "../dreamsnail/service";
 
 const router = Router();
 
@@ -59,13 +60,24 @@ router.get("/roadmap", (_req, res) => {
   });
 });
 
-router.post("/commit", (req, res) => {
+router.post("/commit", async (req, res) => {
   const payload = commitSchema.parse(req.body);
   const node = appendTrail({
     commitment: payload.commitment,
     nullifier: payload.nullifier,
     timestamp: payload.timestamp,
   });
+
+  try {
+    await recordTrailEvent({
+      commitment: node.commitment,
+      nullifier: node.nullifier ?? null,
+      root: node.root,
+      timestamp: new Date(node.timestamp),
+    });
+  } catch (error) {
+    console.error("[DreamSnail] Failed to persist trail event:", error);
+  }
 
   res.json({
     ok: true,
@@ -75,14 +87,41 @@ router.post("/commit", (req, res) => {
   });
 });
 
-router.post("/verify", (req, res) => {
+router.post("/verify", async (req, res) => {
   const payload = verifySchema.parse(req.body);
-  const valid = verifyTrail(payload.commitment);
+  let record = null;
+  try {
+    record = await verifyTrailCommitment(payload.commitment);
+  } catch (error) {
+    console.error("[DreamSnail] Failed to query trail event:", error);
+  }
+
+  const valid = Boolean(record) || verifyTrail(payload.commitment);
   res.json({
     ok: valid,
     verified: valid,
-    root: getTrailRoot(),
+    root: record?.root ?? getTrailRoot(),
   });
+});
+
+router.get("/trail", async (_req, res) => {
+  try {
+    const events = await listTrailEvents();
+    res.json({ ok: true, events });
+  } catch (error) {
+    console.error("[DreamSnail] Failed to list trail events:", error);
+    res.json({ ok: true, events: getTrailNodes() });
+  }
+});
+
+router.get("/root", async (_req, res) => {
+  try {
+    const root = await latestTrailRoot();
+    res.json({ ok: true, root: root ?? getTrailRoot() });
+  } catch (error) {
+    console.error("[DreamSnail] Failed to fetch trail root:", error);
+    res.json({ ok: true, root: getTrailRoot() });
+  }
 });
 
 export default router;

@@ -25,7 +25,7 @@ All agents are currently marked “stopped” in the manifest; they require acti
 
 - `app/api/health`, `app/api/agents`, `app/api/runs/recent`, `app/api/changelog` – continue to serve stubbed data for the marketing layer; hydration is handled via `lib/marketing/metrics.ts` with safe fallbacks.  
 - `server/routes/dreamstar.ts` – DreamStar router exposing `/api/dreamstar/ingest`, `/generate`, `/pipeline`, and `/missions`. Ingest & generate endpoints persist to Neon (`dreamstar_ingestions`, `dreamstar_generations`) and emit StarBridge events (`dreamstar.ingest.requested`, `dreamstar.generate.requested`).  
-- `server/routes/dreamsnail.ts` – DreamSnail router serving `/api/dreamsnail/spec`, `/summary`, `/roadmap`, alongside new `/commit` and `/verify` endpoints that append to an in-memory trail manager (placeholder until TrailCommit contracts go live).
+- `server/routes/dreamsnail.ts` – DreamSnail router serving `/api/dreamsnail/spec`, `/summary`, `/roadmap`, `/commit`, `/verify`, `/trail`, `/root` with events persisted to Neon (`dreamsnail_trail_events`) and real-time in-memory mirror until TrailCommit contracts go live.
 
 ## 4. Marketing Homepage
 
@@ -40,16 +40,17 @@ Dedicated pages (`/dreamstar`, `/dreamsnail`, `/metals`) deepen each vertical; `
 
 ## 5. System Verification
 
-- **Health Endpoint**: Last confirmed at `https://dreamnet.ink/api/health` returning `{"ok":true,"at":"2025-10-15T17:15:12.819Z","db":true,"stripe":true}`. Re-run post-deploy with refreshed secrets.  
+- **Health Endpoint**: `/api/health` now includes a Neon connectivity probe (`db: connected|error`) alongside commit SHA + timestamp. Verify after deploy (`https://dreamnet.ink/api/health`).  
 - **DreamStar / DreamSnail Routes**: Exercised locally; production verification pending Vercel deployment.  
 - **Database Query**: Execute `SELECT NOW();` on both Neon databases after deployment to confirm connectivity via the `DATABASE_URL_V2` / `DATABASE2_URL` fallback.
 
 ## 6. Next Steps
 
 1. **Deployment** – Promote the updated marketing build to Vercel (`dreamnet.ink`) and validate all routes + hydration.  
-2. **Lead Routing** – Replace the Formspree placeholder in `app/contact/page.tsx` with the preferred inbox or CRM webhook.  
-3. **DreamStar Backlog** – Integrate DreamForge job templates, DreamVault fingerprinting, and mission history dashboards on top of the new Neon tables.  
-4. **DreamSnail Backlog** – Scaffold TrailCommit contracts/circuits, migrate the in-memory trail to Neon, and hook privacy shaders/UI.  
-5. **Atlas Foundry Backlog** – Build trait analytics, hybrid scoring, and DreamForge interoperability for `/api/foundry`.  
-6. **Database Health** – Run verification queries on both Neon instances and monitor Compute Governor spend against the $50/mo cap.  
-7. **Documentation** – Continue auditing/refreshing ops docs (`replit.md`, `ops/dreamnet-site-plan.md`, `ops/assistant-memory.md`) as milestones ship.
+2. **Apply Migrations** – Run `migrations/2025-11-08_dreamnet_core.sql` and `migrations/2025-11-08_dreamsnail_trail.sql` against both Neon databases (`psql "$NEON_DATABASE_URL" -f …`).  
+3. **Lead Routing** – Replace the Formspree placeholder in `app/contact/page.tsx` with the preferred inbox or CRM webhook.  
+4. **DreamStar Backlog** – Integrate DreamForge job templates, DreamVault fingerprinting, and mission history dashboards on top of the new Neon tables.  
+5. **DreamSnail Backlog** – Implement TrailCommit contracts/circuits, replace the transitional schema with contract-driven Merkle proofs, and hook privacy shaders/UI.  
+6. **Atlas Foundry Backlog** – Build trait analytics, hybrid scoring, and DreamForge interoperability for `/api/foundry`.  
+7. **Database Health** – Run verification queries on both Neon instances and monitor Compute Governor spend against the $50/mo cap.  
+8. **Documentation** – Continue auditing/refreshing ops docs (`replit.md`, `ops/dreamnet-site-plan.md`, `ops/assistant-memory.md`) as milestones ship.
