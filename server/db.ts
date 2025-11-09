@@ -13,7 +13,8 @@ if (!process.env.DATABASE_URL) {
     "DATABASE_URL must be set. Did you forget to provision a database?",
   );
 }
-if (!process.env.DATABASE_URL_V2) {
+const DATABASE_URL_V2 = process.env.DATABASE_URL_V2 ?? process.env.DATABASE2_URL;
+if (!DATABASE_URL_V2) {
   throw new Error(
     "DATABASE_URL_V2 must be set. Did you forget to provision a database?",
   );
@@ -25,7 +26,7 @@ export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 export const db = drizzle({ client: pool, schema });
 
 // Secondary DB (from DreamnetV2)
-export const pool2 = new Pool({ connectionString: process.env.DATABASE_URL_V2 });
+export const pool2 = new Pool({ connectionString: DATABASE_URL_V2 });
 export const db2 = drizzle({ client: pool2, schema });
 
 

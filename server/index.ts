@@ -12,6 +12,7 @@ import { runTrustMigrations } from "./trust/migrations";
 import "./jobs/vectorRollup";
 import "./jobs/reputation";
 import "./jobs/watchdog";
+import { pool } from "./db";
 
 const app = express();
 app.use(express.json());
@@ -57,8 +58,21 @@ app.use((req, res, next) => {
 });
 
   // Health endpoint and cron endpoints
-  app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok", commitSha: process.env.VERCEL_GIT_COMMIT_SHA || "", timestamp: new Date().toISOString() });
+  app.get("/api/health", async (_req, res) => {
+    let dbStatus = "unknown";
+    try {
+      await pool.query("select 1");
+      dbStatus = "connected";
+    } catch (error) {
+      dbStatus = error instanceof Error ? `error: ${error.message}` : "error";
+    }
+
+    res.json({
+      ok: true,
+      commitSha: process.env.VERCEL_GIT_COMMIT_SHA || "",
+      db: dbStatus,
+      timestamp: new Date().toISOString(),
+    });
   });
 
   const requireAgentKey = (req: any, res: any, next: any) => {

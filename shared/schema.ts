@@ -205,6 +205,64 @@ export const dreamTokens = pgTable("dream_tokens", {
   mintedAt: timestamp("minted_at").defaultNow().notNull(),
 });
 
+
+export type DreamstarReference = {
+  title?: string;
+  url?: string;
+  type: "playlist" | "track" | "stem" | "file";
+};
+
+export const dreamstarIngestions = pgTable("dreamstar_ingestions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  artist: text("artist").notNull(),
+  project: text("project").notNull(),
+  references: jsonb("references").$type<DreamstarReference[]>().default(sql`'[]'::jsonb`),
+  notes: text("notes"),
+  status: text("status").$type<"pending" | "processing" | "completed" | "failed">().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const dreamstarGenerations = pgTable("dreamstar_generations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  artist: text("artist").notNull(),
+  project: text("project").notNull(),
+  influenceWeights: jsonb("influence_weights").$type<Record<string, number>>().default(sql`'{}'::jsonb`),
+  deliverables: text("deliverables").array().default(sql`'{}'::text[]`),
+  deadline: timestamp("deadline"),
+  notes: text("notes"),
+  status: text("status").$type<"pending" | "processing" | "completed" | "failed">().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+
+export const foundryTraits = pgTable("foundry_traits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  source: text("source").notNull(),
+  vector: jsonb("vector").$type<number[]>().default(sql`'[]'::jsonb`),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const foundryHybrids = pgTable("foundry_hybrids", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  parents: jsonb("parents").$type<string[]>().default(sql`'[]'::jsonb`),
+  score: integer("score").default(0),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  metadata: jsonb("metadata"),
+});
+
+
+export const dreamsnailTrailEvents = pgTable("dreamsnail_trail_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  commitment: text("commitment").notNull(),
+  nullifier: text("nullifier"),
+  root: text("root").notNull(),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
 export const starbridgeEvents = pgTable("starbridge_events", {
   id: varchar("id").primaryKey(),
   topic: starbridgeTopicEnum("topic").notNull(),
@@ -493,3 +551,40 @@ export interface Dream {
 
 // Legacy alias for backward compatibility
 export interface DreamInterface extends Dream {}
+
+
+export const insertDreamstarIngestionSchema = createInsertSchema(dreamstarIngestions, {
+  references: z
+    .array(
+      z.object({
+        title: z.string().optional(),
+        url: z.string().url().optional(),
+        type: z.enum(["playlist", "track", "stem", "file"]),
+      }),
+    )
+    .optional(),
+  status: z.enum(["pending", "processing", "completed", "failed"]).optional(),
+});
+
+export const insertDreamstarGenerationSchema = createInsertSchema(dreamstarGenerations, {
+  influenceWeights: z.record(z.string(), z.number()).optional(),
+  deliverables: z.array(z.string()).optional(),
+  status: z.enum(["pending", "processing", "completed", "failed"]).optional(),
+});
+
+
+export const insertFoundryTraitSchema = createInsertSchema(foundryTraits, {
+  vector: z.array(z.number()).optional(),
+  metadata: z.record(z.any()).optional(),
+});
+
+export const insertFoundryHybridSchema = createInsertSchema(foundryHybrids, {
+  parents: z.array(z.string()).optional(),
+  metadata: z.record(z.any()).optional(),
+});
+
+export const insertDreamsnailTrailEventSchema = createInsertSchema(dreamsnailTrailEvents, {
+  nullifier: z.string().optional(),
+  root: z.string().optional(),
+  timestamp: z.coerce.date().optional(),
+});

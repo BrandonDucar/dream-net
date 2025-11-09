@@ -407,6 +407,14 @@
     "status": "Active",
     "date_added": "2025-10-25"
   },
+    {
+      "name": "DreamStar",
+      "link": null,
+      "category": "Creative",
+      "purpose": "Artist-trained AI music engine for original, releasable tracks",
+      "status": "Draft",
+      "date_added": "2025-11-08"
+    },
   {
     "name": "OmniSync",
     "link": "https://chatgpt.com/g/g-68f5a8653dac8191afab1e2237ec8c99-omnisync",
