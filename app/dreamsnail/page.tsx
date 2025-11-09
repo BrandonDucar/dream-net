@@ -1,7 +1,7 @@
 import { Hero } from "../(marketing)/components/Hero";
 import { SiteShell } from "../(marketing)/components/SiteShell";
 import { StatsStrip } from "../(marketing)/components/StatsStrip";
-import { getMarketingMetrics } from "../../lib/marketing/metrics";
+import { getDreamstarMissions, getFoundrySummaries, getMarketingMetrics } from "../../lib/marketing/metrics";
 
 export const metadata = {
   title: "DreamSnail – Privacy Trails & Triple-Helix NFTs | DreamNet",
@@ -17,7 +17,11 @@ const rarityTiers = [
 ];
 
 export default async function DreamSnailPage() {
-  const metrics = await getMarketingMetrics();
+  const [metrics, missions, foundry] = await Promise.all([
+    getMarketingMetrics(),
+    getDreamstarMissions(),
+    getFoundrySummaries(),
+  ]);
   const stats = [
     { label: "Trail Commitments", value: "Poseidon", caption: "Merkle + zk verified" },
     { label: "Rarity Model", value: "Fibonacci", caption: "Supply-balanced tiers" },
@@ -90,6 +94,30 @@ export default async function DreamSnailPage() {
           <p className="mt-4 text-sm text-white/70">
             DreamSnail trails unlock DreamStar stems, DreamOps missions, and Atlas experiences once zk badges verify the owner&apos;s footprint. Everything is logged back through StarBridge for autonomous rewards.
           </p>
+          <div className="mt-6 grid gap-6 text-sm text-white/70 lg:grid-cols-2">
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">DreamStar Crossovers</h3>
+              <ul className="mt-3 space-y-2">
+                {missions.ingestions.slice(0, 5).map((mission: any) => (
+                  <li key={mission.id}>
+                    {mission.artist} — {mission.project} <span className="text-white/50">({mission.status ?? "pending"})</span>
+                  </li>
+                ))}
+                {missions.ingestions.length === 0 ? <li>No DreamStar missions logged yet.</li> : null}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">Foundry Traits Referenced</h3>
+              <ul className="mt-3 space-y-2">
+                {foundry.traits.slice(0, 5).map((trait: any) => (
+                  <li key={trait.id}>
+                    {trait.name} <span className="text-white/50">({trait.source})</span>
+                  </li>
+                ))}
+                {foundry.traits.length === 0 ? <li>No Foundry traits ingested yet.</li> : null}
+              </ul>
+            </div>
+          </div>
         </section>
       </div>
     </SiteShell>
