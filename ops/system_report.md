@@ -48,7 +48,8 @@ Dedicated pages (`/dreamstar`, `/dreamsnail`, `/metals`) deepen each vertical; `
 
 1. **Deployment** – Promote the updated marketing build to Vercel (`dreamnet.ink`) and validate all routes + hydration.  
 2. **Lead Routing** – Replace the Formspree placeholder in `app/contact/page.tsx` with the preferred inbox or CRM webhook.  
-3. **DreamStar Backlog** – Persist ingestion requests (Neon table), wire DreamForge job templates, and expose mission history via `/api/dreamstar`.  
-4. **DreamSnail Backlog** – Scaffold TrailCommit contracts/circuits and wire commitment endpoints once solidity/circom repos are ready.  
-5. **Database Health** – Run verification queries on both Neon instances and monitor Compute Governor spend against the $50/mo cap.  
-6. **Documentation** – Continue auditing/refreshing ops docs (`replit.md`, `ops/dreamnet-site-plan.md`, `ops/assistant-memory.md`) as milestones ship.
+3. **DreamStar Backlog** – Integrate DreamForge job templates, DreamVault fingerprinting, and mission history dashboards on top of the new Neon tables.  
+4. **DreamSnail Backlog** – Scaffold TrailCommit contracts/circuits, migrate the in-memory trail to Neon, and hook privacy shaders/UI.  
+5. **Atlas Foundry Backlog** – Build trait analytics, hybrid scoring, and DreamForge interoperability for `/api/foundry`.  
+6. **Database Health** – Run verification queries on both Neon instances and monitor Compute Governor spend against the $50/mo cap.  
+7. **Documentation** – Continue auditing/refreshing ops docs (`replit.md`, `ops/dreamnet-site-plan.md`, `ops/assistant-memory.md`) as milestones ship.

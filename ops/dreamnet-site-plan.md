@@ -49,7 +49,7 @@ public/og/
 ### 3.1 Homepage (`/(marketing)/page.tsx`)
 - **Hero:** “DreamNet — Autonomous Intelligence Platform” with animated biomimetic gradient, “Schedule a Mission Briefing” CTA.
 - **Live Status Band:** Pull data from `/api/health` and `/api/changelog` (sanitized) to show uptime, agents active, latest ops milestone.
-- **Vertical Highlights:** Three cards linking to DreamStar, DreamSnail, and Metals pages; include iconography + key metrics.
+- **Vertical Highlights:** Cards linking to DreamStar, DreamSnail, Foundry, and Metals pages; include iconography + key metrics.
 - **Governance Showcase:** Explain Compute Governor, Daemon, StarBridge with simple illustrations and bullet stats.
 - **Proof Section:** Embed DreamNet Live Proof snapshot excerpts, testimonials from early adopters.
 - **CTA Footer:** Contact form (Netlify-style fallback or API route) + Subscribe button (hooks into existing email provider).
@@ -66,7 +66,12 @@ public/og/
 - **Proof Badges:** Diagram of Poseidon commitments → Merkle root → zk proof → badge.
 - **CTA:** “Join the Trailblazer List” form with optional zk preview invite.
 
-### 3.4 Precious Metals Intelligence Page
+### 3.4 Atlas Foundry Page
+- **Overview:** Display ingested traits and proposed hybrids with StarBridge lineage.
+- **Sections:** Trait registry (table), hybrid lineage cards, submission CTA linking to APIs.
+- **CTA:** “Submit Telemetry” + “Propose a Hybrid” (links to corresponding endpoints).
+
+### 3.5 Precious Metals Intelligence Page
 - **Overview:** Real-time metals market intelligence, proprietary data edge, compliance readiness.
 - **Feature Blocks:** Live pricing, AI signal engine, regulatory guardrails.
 - **Case Study:** Example ROI scenario (80% cost reduction vs manual).

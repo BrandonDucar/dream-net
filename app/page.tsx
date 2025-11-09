@@ -47,6 +47,13 @@ export default async function MarketingHome() {
       badge: "Privacy NFTs",
     },
     {
+      name: "Foundry",
+      description: "Atlas Agent Foundry hybridizes agents, traits, and telemetry into new mission-ready specialists.",
+      href: "/foundry",
+      accent: "linear-gradient(135deg, #4E9BFF, #8D66FF)",
+      badge: "Hybrid Lab",
+    },
+    {
       name: "Precious Metals Intelligence",
       description: "Real-time metals signals, compliance automation, and treasury intelligence for institutional buyers.",
       href: "/metals",

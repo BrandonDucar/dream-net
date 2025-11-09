@@ -234,6 +234,26 @@ export const dreamstarGenerations = pgTable("dreamstar_generations", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+
+export const foundryTraits = pgTable("foundry_traits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  source: text("source").notNull(),
+  vector: jsonb("vector").$type<number[]>().default(sql`'[]'::jsonb`),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const foundryHybrids = pgTable("foundry_hybrids", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  parents: jsonb("parents").$type<string[]>().default(sql`'[]'::jsonb`),
+  score: integer("score").default(0),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  metadata: jsonb("metadata"),
+});
+
 export const starbridgeEvents = pgTable("starbridge_events", {
   id: varchar("id").primaryKey(),
   topic: starbridgeTopicEnum("topic").notNull(),
@@ -541,4 +561,15 @@ export const insertDreamstarGenerationSchema = createInsertSchema(dreamstarGener
   influenceWeights: z.record(z.string(), z.number()).optional(),
   deliverables: z.array(z.string()).optional(),
   status: z.enum(["pending", "processing", "completed", "failed"]).optional(),
+});
+
+
+export const insertFoundryTraitSchema = createInsertSchema(foundryTraits, {
+  vector: z.array(z.number()).optional(),
+  metadata: z.record(z.any()).optional(),
+});
+
+export const insertFoundryHybridSchema = createInsertSchema(foundryHybrids, {
+  parents: z.array(z.string()).optional(),
+  metadata: z.record(z.any()).optional(),
 });

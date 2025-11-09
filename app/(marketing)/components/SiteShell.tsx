@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 const navLinks = [
   { href: "/dreamstar", label: "DreamStar" },
   { href: "/dreamsnail", label: "DreamSnail" },
+  { href: "/foundry", label: "Foundry" },
   { href: "/metals", label: "Metals Intelligence" },
 ];
 

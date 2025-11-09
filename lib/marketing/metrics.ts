@@ -34,6 +34,10 @@ export type DreamstarMissionSummary = {
   generations: Array<Record<string, unknown>>;
 };
 
+export type FoundrySummary = {
+  traits: Array<Record<string, unknown>>;
+  hybrids: Array<Record<string, unknown>>;
+};
 const FALLBACK: MarketingMetrics = {
   health: {
     status: "operational",
@@ -93,4 +97,16 @@ export async function getDreamstarMissions(): Promise<DreamstarMissionSummary> {
   const result = await safeFetch<{ missions: DreamstarMissionSummary }>("/api/dreamstar/missions");
   if (result?.missions) return result.missions;
   return { ingestions: [], generations: [] };
+}
+
+export async function getFoundrySummaries(): Promise<FoundrySummary> {
+  const [traits, hybrids] = await Promise.all([
+    safeFetch<{ traits: Array<Record<string, unknown>> }>("/api/foundry/traits"),
+    safeFetch<{ hybrids: Array<Record<string, unknown>> }>("/api/foundry/hybrids"),
+  ]);
+
+  return {
+    traits: traits?.traits ?? [],
+    hybrids: hybrids?.hybrids ?? [],
+  };
 }

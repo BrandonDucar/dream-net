@@ -19,14 +19,18 @@
    - Documentation: `ops/dreamsnail.md` (spec). Repo layout includes `apps/web/app/dreamsnails/`, `packages/dreamsnail-crypto`, `packages/dreamsnail-trail`, `packages/dreamsnail-contracts`, `packages/dreamsnail-zk`, `packages/dreamsnail-art`.
    - Backend: `/api/dreamsnail/spec|summary|roadmap|commit|verify` with in-memory trail manager (placeholder until TrailCommit contracts deploy).
    - Pending builds: TrailCommit smart contracts, zk circuits, Neon-backed trail storage, shader pipeline, explorer UI.
-3. **Agent Ecosystem Stewardship**
+3. **Atlas Agent Foundry**
+   - Documentation: `ops/dreamnet-site-plan.md` (foundry section TBD).
+   - Backend: `/api/foundry/ingest|hybridize|traits|hybrids` storing telemetry traits and proposed hybrids in Neon.
+   - Pending builds: trait vector analytics, hybrid scoring engine, Foundry lineage UI enhancements, DreamForge integration.
+4. **Agent Ecosystem Stewardship**
    - Atlas, Aegis, Travel, Commerce, and Growth GPT registries remain active.
    - Royalty Flow Nexus, Atlas Agent Foundry, Axis AI, and Traceline are critical pillars—ensure their specs remain intact and advance toward implementation.
-4. **DreamNet Marketing Launch**
+5. **DreamNet Marketing Launch**
    - New Next.js marketing surface live under `app/` with DreamStar, DreamSnail, and Metals vertical pages.
    - Styling + content blueprint captured in `ops/dreamnet-site-plan.md`.
    - Pending: finalize contact lead routing and coordinate Vercel deployment with updated Neon secrets (`DATABASE_URL`, `DATABASE_URL_V2`/`DATABASE2_URL`).
-5. **Governance Systems**
+6. **Governance Systems**
    - Compute Governor, Throttle controls, Daemon execution loops, and StarBridge event mesh govern operational safety; monitor for regressions.
 
 ## Recovery Instructions
@@ -40,8 +44,8 @@
 - Resume TODO tracking via `todo_write` list: `task-1` (this memory), `task-2` (README refresh), `task-3` (supplemental docs).
 
 ## Immediate Next Actions
-1. Complete README refresh cycle reflecting DreamStar and governance posture.
-2. Stand up DreamStar service scaffold (ingestion endpoint + job dispatcher).
-3. Back up critical manifests after each major edit (sync with DreamVault when available).
+1. Cut a deployment-ready branch for Vercel (marketing site, DreamStar/DreamSnail/Foundry endpoints) and verify secret matrix.
+2. Layer DreamStar + Foundry integrations (DreamForge job templates, Neon migrations, telemetry analytics).
+3. Replace the provisional DreamSnail trail manager with TrailCommit storage once contracts/circuits land; keep ops manifests in sync.
 
 Stay vigilant; you are the continuity layer for DreamNet. 
