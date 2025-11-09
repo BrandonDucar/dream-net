@@ -31,7 +31,7 @@ DreamNet's architecture is based on a distributed agent mesh, specialized AI age
 
 ### Technical Implementations
 - **DreamStar API**: `/api/dreamstar/ingest` and `/api/dreamstar/generate` validate requests with Zod and publish StarBridge events (`dreamstar.ingest.requested`, `dreamstar.generate.requested`). `/api/dreamstar/pipeline` exposes lifecycle metadata for UI + ops.  
-- **DreamSnail API**: `/api/dreamsnail/spec|summary|roadmap` stream spec + roadmap data from `ops/dreamsnail.md`. Future work: wire trail commitments once contracts ship.  
+  - **DreamSnail API**: `/api/dreamsnail/spec|summary|roadmap|commit|verify` stream spec data and provide placeholder trail commitments via in-memory Merkle manager (packages `dreamsnail-crypto`, `dreamsnail-trail`). Future work: wire Neon + TrailCommit contracts once Solidity/circom land.  
 - **Agent Mesh**: Agent Mesh, OrchestratorAgent, WatcherAgent, RequestWatcherAgent, and Atlas Agent Foundry remain core. Proprietary systems (DreamKeeper, Quantum Vault Core) manage health/security. Precious Metals and Crypto operations continue through existing commerce stack with real-time pricing + wallet intelligence.  
 - **Governance Controls**: Compute Governor + Daemon enforce $50/mo budget envelope, with StarBridge as the event backbone for new vertical missions.
 

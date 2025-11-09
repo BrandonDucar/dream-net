@@ -16,8 +16,9 @@
    - Pending builds: DreamVault stem fingerprinting, DreamForge job template, Creator Console UI, royalty integration.
 2. **DreamSnail Privacy NFTs**
    - Privacy-first triple-helix NFT collection with zk-proven slime trails and Fibonacci rarity.
-   - Documentation: `ops/dreamsnail.md` (spec). Repo layout includes `apps/web/app/dreamsnails/`, `packages/dreamsnail-contracts`, `packages/dreamsnail-zk`, `packages/dreamsnail-art`.
-   - Pending builds: contracts (ERC721, TrailCommit, Verifier), Circom circuits, web explorer, API endpoints, shader pipeline.
+   - Documentation: `ops/dreamsnail.md` (spec). Repo layout includes `apps/web/app/dreamsnails/`, `packages/dreamsnail-crypto`, `packages/dreamsnail-trail`, `packages/dreamsnail-contracts`, `packages/dreamsnail-zk`, `packages/dreamsnail-art`.
+   - Backend: `/api/dreamsnail/spec|summary|roadmap|commit|verify` with in-memory trail manager (placeholder until TrailCommit contracts deploy).
+   - Pending builds: TrailCommit smart contracts, zk circuits, Neon-backed trail storage, shader pipeline, explorer UI.
 3. **Agent Ecosystem Stewardship**
    - Atlas, Aegis, Travel, Commerce, and Growth GPT registries remain active.
    - Royalty Flow Nexus, Atlas Agent Foundry, Axis AI, and Traceline are critical pillars—ensure their specs remain intact and advance toward implementation.

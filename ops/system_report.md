@@ -24,8 +24,8 @@ All agents are currently marked “stopped” in the manifest; they require acti
 ## 3. API Endpoints
 
 - `app/api/health`, `app/api/agents`, `app/api/runs/recent`, `app/api/changelog` – continue to serve stubbed data for the marketing layer; hydration is handled via `lib/marketing/metrics.ts` with safe fallbacks.  
-- `server/routes/dreamstar.ts` – DreamStar router exposing `/api/dreamstar/ingest` and `/generate` (Zod-validated payloads that emit StarBridge events `dreamstar.ingest.requested` / `dreamstar.generate.requested`) plus `/pipeline` metadata.  
-- `server/routes/dreamsnail.ts` – DreamSnail router serving `/api/dreamsnail/spec`, `/summary`, and `/roadmap` directly from `ops/dreamsnail.md`.
+- `server/routes/dreamstar.ts` – DreamStar router exposing `/api/dreamstar/ingest`, `/generate`, `/pipeline`, and `/missions`. Ingest & generate endpoints persist to Neon (`dreamstar_ingestions`, `dreamstar_generations`) and emit StarBridge events (`dreamstar.ingest.requested`, `dreamstar.generate.requested`).  
+- `server/routes/dreamsnail.ts` – DreamSnail router serving `/api/dreamsnail/spec`, `/summary`, `/roadmap`, alongside new `/commit` and `/verify` endpoints that append to an in-memory trail manager (placeholder until TrailCommit contracts go live).
 
 ## 4. Marketing Homepage
 
