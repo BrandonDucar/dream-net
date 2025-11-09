@@ -205,6 +205,35 @@ export const dreamTokens = pgTable("dream_tokens", {
   mintedAt: timestamp("minted_at").defaultNow().notNull(),
 });
 
+
+export type DreamstarReference = {
+  title?: string;
+  url?: string;
+  type: "playlist" | "track" | "stem" | "file";
+};
+
+export const dreamstarIngestions = pgTable("dreamstar_ingestions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  artist: text("artist").notNull(),
+  project: text("project").notNull(),
+  references: jsonb("references").$type<DreamstarReference[]>().default(sql`'[]'::jsonb`),
+  notes: text("notes"),
+  status: text("status").$type<"pending" | "processing" | "completed" | "failed">().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const dreamstarGenerations = pgTable("dreamstar_generations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  artist: text("artist").notNull(),
+  project: text("project").notNull(),
+  influenceWeights: jsonb("influence_weights").$type<Record<string, number>>().default(sql`'{}'::jsonb`),
+  deliverables: text("deliverables").array().default(sql`'{}'::text[]`),
+  deadline: timestamp("deadline"),
+  notes: text("notes"),
+  status: text("status").$type<"pending" | "processing" | "completed" | "failed">().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const starbridgeEvents = pgTable("starbridge_events", {
   id: varchar("id").primaryKey(),
   topic: starbridgeTopicEnum("topic").notNull(),
@@ -493,3 +522,23 @@ export interface Dream {
 
 // Legacy alias for backward compatibility
 export interface DreamInterface extends Dream {}
+
+
+export const insertDreamstarIngestionSchema = createInsertSchema(dreamstarIngestions, {
+  references: z
+    .array(
+      z.object({
+        title: z.string().optional(),
+        url: z.string().url().optional(),
+        type: z.enum(["playlist", "track", "stem", "file"]),
+      }),
+    )
+    .optional(),
+  status: z.enum(["pending", "processing", "completed", "failed"]).optional(),
+});
+
+export const insertDreamstarGenerationSchema = createInsertSchema(dreamstarGenerations, {
+  influenceWeights: z.record(z.string(), z.number()).optional(),
+  deliverables: z.array(z.string()).optional(),
+  status: z.enum(["pending", "processing", "completed", "failed"]).optional(),
+});

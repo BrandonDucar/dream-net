@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { z } from "zod";
 import { publishInternalEvent, StarbridgeSource, StarbridgeTopic } from "../starbridge";
+import {
+  createDreamstarGeneration,
+  createDreamstarIngestion,
+  getRecentDreamstarMissions,
+} from "../dreamstar/service";
 
 const router = Router();
 
@@ -63,33 +68,37 @@ const PIPELINE = [
 
 router.post("/ingest", async (req, res) => {
   const payload = ingestPayloadSchema.parse(req.body);
+  const record = await createDreamstarIngestion(payload);
 
   await publishInternalEvent({
     topic: StarbridgeTopic.System,
     source: StarbridgeSource.Runtime,
     type: "dreamstar.ingest.requested",
-    payload,
+    payload: { ...payload, ingestionId: record.id },
   });
 
   res.json({
     ok: true,
     message: "DreamStar ingestion queued",
+    ingestion: record,
   });
 });
 
 router.post("/generate", async (req, res) => {
   const payload = generationRequestSchema.parse(req.body);
+  const record = await createDreamstarGeneration(payload);
 
   await publishInternalEvent({
     topic: StarbridgeTopic.System,
     source: StarbridgeSource.Runtime,
     type: "dreamstar.generate.requested",
-    payload,
+    payload: { ...payload, generationId: record.id },
   });
 
   res.json({
     ok: true,
     message: "DreamStar generation mission dispatched",
+    generation: record,
   });
 });
 
@@ -97,6 +106,14 @@ router.get("/pipeline", (_req, res) => {
   res.json({
     ok: true,
     pipeline: PIPELINE,
+  });
+});
+
+router.get("/missions", async (_req, res) => {
+  const missions = await getRecentDreamstarMissions();
+  res.json({
+    ok: true,
+    missions,
   });
 });
 

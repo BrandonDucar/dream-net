@@ -2,7 +2,7 @@ import { Hero } from "../(marketing)/components/Hero";
 import { SiteShell } from "../(marketing)/components/SiteShell";
 import { StatsStrip } from "../(marketing)/components/StatsStrip";
 import { VerticalHighlights } from "../(marketing)/components/VerticalHighlights";
-import { getMarketingMetrics } from "../../lib/marketing/metrics";
+import { getDreamstarMissions, getMarketingMetrics } from "../../lib/marketing/metrics";
 
 export const metadata = {
   title: "DreamStar – AI-Assisted Originals | DreamNet",
@@ -12,6 +12,7 @@ export const metadata = {
 
 export default async function DreamStarPage() {
   const metrics = await getMarketingMetrics();
+  const missions = await getDreamstarMissions();
   const stats = [
     { label: "Influence Profiles", value: "3,200+", caption: "Multi-genre feature banks" },
     { label: "Average Turnaround", value: "14 min", caption: "Spec-to-master with DreamForge" },
@@ -76,21 +77,48 @@ export default async function DreamStarPage() {
 
         <section className="rounded-3xl border border-white/10 bg-white/5 p-8">
           <h2 className="text-2xl font-semibold text-white">Recent DreamStar missions</h2>
-          <ul className="mt-6 space-y-4 text-sm text-white/70">
-            {metrics.runs
-              .filter((run) => run.name?.toLowerCase().includes("dreamstar"))
-              .map((run) => (
-                <li key={run.id ?? run.name}>
-                  <div className="text-white/90">{run.name}</div>
-                  <div className="text-xs uppercase tracking-widest text-white/40">
-                    {run.status ?? "complete"} • {run.startedAt ? new Date(run.startedAt).toLocaleString() : "Recently"}
-                  </div>
-                </li>
-              ))}
-            {metrics.runs.filter((run) => run.name?.toLowerCase().includes("dreamstar")).length === 0 ? (
-              <li>No DreamStar-specific missions logged yet. Studio pilot is staging.</li>
-            ) : null}
-          </ul>
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-white/50">Ingestion queue</h3>
+              <ul className="mt-3 space-y-3 text-sm text-white/70">
+                {missions.ingestions.length > 0 ? (
+                  missions.ingestions.map((mission: any) => (
+                    <li key={mission.id}>
+                      <div className="text-white/90">
+                        {mission.artist} — {mission.project}
+                      </div>
+                      <div className="text-xs uppercase tracking-widest text-white/40">
+                        {mission.status ?? "pending"} •{" "}
+                        {mission.createdAt ? new Date(mission.createdAt).toLocaleString() : "Recently"}
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <li>No ingestion missions logged yet.</li>
+                )}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-white/50">Generation runs</h3>
+              <ul className="mt-3 space-y-3 text-sm text-white/70">
+                {missions.generations.length > 0 ? (
+                  missions.generations.map((mission: any) => (
+                    <li key={mission.id}>
+                      <div className="text-white/90">
+                        {mission.artist} — {mission.project}
+                      </div>
+                      <div className="text-xs uppercase tracking-widest text-white/40">
+                        {mission.status ?? "pending"} •{" "}
+                        {mission.createdAt ? new Date(mission.createdAt).toLocaleString() : "Recently"}
+                      </div>
+                    </li>
+                  ))
+                ) : (
+                  <li>No generation runs recorded yet.</li>
+                )}
+              </ul>
+            </div>
+          </div>
         </section>
 
         <VerticalHighlights verticals={crosslinks} />

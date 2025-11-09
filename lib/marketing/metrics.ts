@@ -29,6 +29,11 @@ export type MarketingMetrics = {
   changelog: ChangelogEntry[];
 };
 
+export type DreamstarMissionSummary = {
+  ingestions: Array<Record<string, unknown>>;
+  generations: Array<Record<string, unknown>>;
+};
+
 const FALLBACK: MarketingMetrics = {
   health: {
     status: "operational",
@@ -82,4 +87,10 @@ export async function getMarketingMetrics(): Promise<MarketingMetrics> {
     runs: Array.isArray(runs) && runs.length > 0 ? runs.slice(0, 3) : FALLBACK.runs,
     changelog: Array.isArray(changelog) && changelog.length > 0 ? changelog.slice(0, 3) : FALLBACK.changelog,
   };
+}
+
+export async function getDreamstarMissions(): Promise<DreamstarMissionSummary> {
+  const result = await safeFetch<{ missions: DreamstarMissionSummary }>("/api/dreamstar/missions");
+  if (result?.missions) return result.missions;
+  return { ingestions: [], generations: [] };
 }

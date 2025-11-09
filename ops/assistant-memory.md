@@ -12,7 +12,8 @@
 1. **DreamStar Launch**
    - Artist-trained AI music engine that ingests reference catalogs, builds influence vectors, and generates releasable originals.
    - Documentation: `gpts.md`, `registry.json`, `ops/dreamstar.md`.
-   - Pending builds: API routes (`server/routes/dreamstar.ts`), DreamVault schema extension, DreamForge job template, Creator Console UI, royalty integration.
+   - Backend: `/api/dreamstar/ingest|generate|pipeline|missions` persist to Neon via `dreamstar_ingestions` / `dreamstar_generations` tables and broadcast StarBridge events.
+   - Pending builds: DreamVault stem fingerprinting, DreamForge job template, Creator Console UI, royalty integration.
 2. **DreamSnail Privacy NFTs**
    - Privacy-first triple-helix NFT collection with zk-proven slime trails and Fibonacci rarity.
    - Documentation: `ops/dreamsnail.md` (spec). Repo layout includes `apps/web/app/dreamsnails/`, `packages/dreamsnail-contracts`, `packages/dreamsnail-zk`, `packages/dreamsnail-art`.
