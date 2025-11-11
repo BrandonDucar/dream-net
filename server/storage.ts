@@ -533,21 +533,6 @@ export class DatabaseStorage implements IStorage {
     return wallet;
   }
 
-  // Dashboard metrics
-  async getDashboardMetrics() {
-    const [dreamsCount] = await db.select({ count: count() }).from(dreams);
-    const [cocoonsCount] = await db.select({ count: count() }).from(cocoons).where(eq(cocoons.stage, "incubating"));
-    const [coresCount] = await db.select({ count: count() }).from(dreamCores).where(eq(dreamCores.isActive, true));
-    const [walletsCount] = await db.select({ count: count() }).from(wallets);
-
-    return {
-      totalDreams: dreamsCount.count,
-      activeCocoons: cocoonsCount.count,
-      dreamCores: coresCount.count,
-      totalWallets: walletsCount.count,
-    };
-  }
-
   // Contributors
   async addCocoonContributor(cocoonId: string, contributor: CocoonContributor, performedBy: string): Promise<Cocoon> {
     const [cocoon] = await db.select().from(cocoons).where(eq(cocoons.id, cocoonId));
@@ -789,8 +774,14 @@ export class DatabaseStorage implements IStorage {
       walletCount
     ] = await Promise.all([
       db.select({ count: count() }).from(dreams),
-      db.select({ count: count() }).from(cocoons),
-      db.select({ count: count() }).from(dreamCores),
+      db
+        .select({ count: count() })
+        .from(cocoons)
+        .where(eq(cocoons.stage, "incubating")),
+      db
+        .select({ count: count() })
+        .from(dreamCores)
+        .where(eq(dreamCores.isActive, true)),
       db.select({ count: count() }).from(wallets)
     ]);
 
