@@ -88,11 +88,77 @@ import UserProgressionPage from "@/pages/user-progression";
 import RevenueSharingPage from "@/pages/revenue-sharing";
 import VaultMarketplacePage from "@/pages/vault-marketplace";
 import EvolutionVaultPage from "@/pages/evolution-vault";
+import LandingPage from "@/pages/landing";
 
 import { SeasonalEventBanner } from "./components/SeasonalEventBanner";
 
 function AuthenticatedApp() {
   const { isAdmin, isLoading, walletAddress } = useAuth();
+
+  // Owner wallet gets instant access (no login needed)
+  // Other admins must sign in with their wallets
+  // Future: DreamSnail-based authentication will replace wallet auth
+  const OWNER_WALLET = '0x742d35Cc6527Cc3de8b36b5C81B8a0ea4d5d3a8e'; // Your wallet
+  const isOwner = walletAddress?.toLowerCase() === OWNER_WALLET.toLowerCase();
+  
+  // Check if we're accessing from owner's browser (localStorage check for instant access)
+  const storedOwnerWallet = typeof window !== 'undefined' 
+    ? localStorage.getItem('owner_wallet') 
+    : null;
+  const isOwnerSession = storedOwnerWallet?.toLowerCase() === OWNER_WALLET.toLowerCase();
+
+  // Owner gets instant bypass, others need full auth
+  if (isOwnerSession && !walletAddress) {
+    // Owner accessing - grant instant access without wallet connection
+    return (
+      <div className="flex min-h-screen bg-background text-foreground">
+        <Sidebar />
+        <main className="flex-1 overflow-auto">
+          <Header />
+          <div className="p-6">
+            <ErrorBoundary fallback={DatabaseErrorFallback}>
+              <Switch>
+                <Route path="/admin/dashboard" component={Dashboard} />
+                <Route path="/admin" component={DreamDashboard} />
+                <Route path="/dashboard" component={DreamDashboard} />
+                <Route path="/dreams" component={Dreams} />
+                <Route path="/dream-gallery" component={DreamGallery} />
+                <Route path="/cocoons" component={Cocoons} />
+                <Route path="/cores" component={Cores} />
+                <Route path="/wallets" component={Wallets} />
+                <Route path="/contributors" component={Contributors} />
+                <Route path="/leaderboard" component={LeaderboardPage} />
+                <Route path="/dao-management" component={DAOManagementPage} />
+                <Route path="/whisper-messaging" component={WhisperMessagingPage} />
+                <Route path="/user-progression" component={UserProgressionPage} />
+                <Route path="/revenue-sharing" component={RevenueSharingPage} />
+                <Route path="/vault-marketplace" component={VaultMarketplacePage} />
+                <Route path="/dream-cloud" component={DreamCloudPage} />
+                <Route path="/wallet-admin" component={WalletAdmin} />
+                <Route path="/feed" component={DreamFeed} />
+                <Route path="/dream-network-explorer" component={DreamNetworkExplorer} />
+                <Route path="/cloud/:slug" component={DreamCloudPage} />
+                <Route path="/fuse" component={FusePage} />
+                <Route path="/tokens" component={TokenDemo} />
+                <Route path="/simple-tokens" component={SimpleTokenDemo} />
+                <Route path="/dream-nodes" component={DreamNodes} />
+                <Route path="/ecosystem" component={EcosystemDashboard} />
+                <Route path="/commands" component={CommandInterface} />
+                <Route path="/remix" component={RemixSubmission} />
+                <Route path="/dreamkeeper-core" component={DreamKeeperCorePage} />
+                <Route path="/ai-surgeon" component={AISurgeonDashboard} />
+                <Route path="/defense-network" component={DefenseNetworkDashboard} />
+                <Route path="/evolution-engine" component={EvolutionEnginePage} />
+                <Route path="/dreamscope-ui" component={DreamScopeUI} />
+                <Route path="/evolution-vault" component={EvolutionVaultPage} />
+                <Route component={DreamDashboard} />
+              </Switch>
+            </ErrorBoundary>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -106,10 +172,13 @@ function AuthenticatedApp() {
   }
 
   if (!walletAddress) {
+    // Show login form - admins must sign in with their wallets
+    // Future: Will support DreamSnail NFT-based authentication
     return <LoginForm />;
   }
 
-  if (!isAdmin) {
+  if (!isAdmin && !isOwner) {
+    // Not an admin and not the owner - show restricted access
     return <RestrictedAccess />;
   }
 
@@ -121,8 +190,8 @@ function AuthenticatedApp() {
         <div className="p-6">
           <ErrorBoundary fallback={DatabaseErrorFallback}>
             <Switch>
-              <Route path="/" component={DreamDashboard} />
-              <Route path="/admin" component={Dashboard} />
+              <Route path="/admin/dashboard" component={Dashboard} />
+              <Route path="/admin" component={DreamDashboard} />
               <Route path="/dashboard" component={DreamDashboard} />
               <Route path="/dreams" component={Dreams} />
               <Route path="/dream-gallery" component={DreamGallery} />
@@ -237,6 +306,9 @@ function App() {
             <div className="dark">
               <Toaster />
               <Switch>
+              {/* Public Landing Page */}
+              <Route path="/" component={LandingPage} />
+              
               {/* Public Routes - No Authentication Required */}
               <Route path="/submit-dream" component={SubmitDream} />
               <Route path="/gallery" component={DreamGallery} />
@@ -288,7 +360,14 @@ function App() {
         <Route path="/dreams/:dreamId" component={lazy(() => import('@/pages/dream-detail'))} />
               {/* Disabled demo routes with lazy loading issues */}
               
-              {/* Protected Routes - Authentication Required */}
+              {/* Admin Routes - Authentication Required */}
+              <Route path="/admin">
+                <AuthProvider>
+                  <AuthenticatedApp />
+                </AuthProvider>
+              </Route>
+              
+              {/* Protected Routes - Authentication Required (backwards compat) */}
               <Route>
                 <AuthProvider>
                   <AuthenticatedApp />
