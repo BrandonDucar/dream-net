@@ -367,8 +367,8 @@ function App() {
                 </AuthProvider>
               </Route>
               
-              {/* Protected Routes - Authentication Required (backwards compat) */}
-              <Route>
+              {/* Protected Routes - Authentication Required (backwards compat) - Must be last */}
+              <Route path="*">
                 <AuthProvider>
                   <AuthenticatedApp />
                 </AuthProvider>
