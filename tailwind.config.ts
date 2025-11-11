@@ -44,6 +44,8 @@ export default {
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
+        "electric-cyan": "var(--electric-cyan)",
+        "soft-gold": "var(--soft-gold)",
         chart: {
           "1": "var(--chart-1)",
           "2": "var(--chart-2)",
