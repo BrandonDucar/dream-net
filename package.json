@@ -12,7 +12,11 @@
     "db:push": "drizzle-kit push",
     "gpt5:site": "tsx scripts/gpt5-webgen.ts",
     "build:prebuilt": "npx vercel build --prod --yes",
-    "deploy:prebuilt": "npx vercel deploy --prebuilt --prod --yes"
+    "deploy:prebuilt": "npx vercel deploy --prebuilt --prod --yes",
+    "compile": "hardhat compile",
+    "deploy:base-sepolia": "hardhat run scripts/contracts/deploy.ts --network baseSepolia",
+    "deploy:base-mainnet": "hardhat run scripts/contracts/deploy.ts --network baseMainnet",
+    "verify:base": "tsx scripts/verifyBase.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
@@ -99,6 +103,8 @@
     "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.2",
     "@replit/vite-plugin-cartographer": "^0.2.8",
     "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
     "@tailwindcss/typography": "^0.5.19",
@@ -114,8 +120,10 @@
     "@types/ws": "^8.18.1",
     "@vitejs/plugin-react": "^5.1.0",
     "autoprefixer": "^10.4.22",
+    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.31.6",
     "esbuild": "^0.27.0",
+    "hardhat": "^2.22.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "tsx": "^4.20.6",
