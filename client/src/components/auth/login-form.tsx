@@ -117,6 +117,9 @@ export default function LoginForm() {
           <div>
             <CardTitle className="text-2xl font-semibold">Dream Network Admin</CardTitle>
             <p className="text-muted-foreground">Connect your admin wallet to access the dashboard</p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Coming soon: DreamSnail NFT-based authentication
+            </p>
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
