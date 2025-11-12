@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -91,6 +91,20 @@ import EvolutionVaultPage from "@/pages/evolution-vault";
 import LandingPage from "@/pages/landing";
 
 import { SeasonalEventBanner } from "./components/SeasonalEventBanner";
+
+// Catch-all route component that excludes root path
+function CatchAllRoute() {
+  const [location] = useLocation();
+  // Root path is handled by LandingPage route above
+  if (location === '/' || location === '') {
+    return null;
+  }
+  return (
+    <AuthProvider>
+      <AuthenticatedApp />
+    </AuthProvider>
+  );
+}
 
 function AuthenticatedApp() {
   const { isAdmin, isLoading, walletAddress } = useAuth();
@@ -306,7 +320,7 @@ function App() {
             <div className="dark">
               <Toaster />
               <Switch>
-              {/* Public Landing Page */}
+              {/* Public Landing Page - Must be first and exact */}
               <Route path="/" component={LandingPage} />
               
               {/* Public Routes - No Authentication Required */}
@@ -368,10 +382,9 @@ function App() {
               </Route>
               
               {/* Protected Routes - Authentication Required (backwards compat) - Must be last */}
+              {/* Catch-all: matches any path not matched above */}
               <Route path="*">
-                <AuthProvider>
-                  <AuthenticatedApp />
-                </AuthProvider>
+                <CatchAllRoute />
               </Route>
             </Switch>
             </div>
