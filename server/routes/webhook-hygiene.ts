@@ -477,7 +477,8 @@ router.get('/sweep', async (req, res) => {
           console.log(`❌ [Integration Sweep] ${provider}: FAIL (${readiness.score}%) - Read: ${readStatus}, Write: ${writeStatus}`);
         }
         
-      } catch (error) {
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
         summary.failing++;
         results.push({
           provider,
@@ -487,9 +488,9 @@ router.get('/sweep', async (req, res) => {
           writeStatus: 'red',
           flows: {},
           envStatus: 'error',
-          error: error.message
+          error: message
         });
-        console.log(`❌ [Integration Sweep] ${provider}: ERROR - ${error.message}`);
+        console.log(`❌ [Integration Sweep] ${provider}: ERROR - ${message}`);
       }
     }
     
@@ -502,10 +503,11 @@ router.get('/sweep', async (req, res) => {
       coreProviders,
       timestamp: new Date().toISOString()
     });
-  } catch (error) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
     res.status(500).json({ 
       error: 'Integration sweep failed',
-      message: error.message 
+      message
     });
   }
 });

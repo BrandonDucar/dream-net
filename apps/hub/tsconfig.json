@@ -7,8 +7,6 @@
   },
   "include": ["./**/*"],
   "references": [
-    { "path": "../../packages/auth" },
-    { "path": "../../packages/utils" },
-    { "path": "../../packages/ui" }
+    { "path": "../../packages/utils" }
   ]
 }

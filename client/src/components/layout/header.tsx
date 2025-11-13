@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { NotificationCenter } from "@/components/notification-center";
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { BaseWalletButton, BaseWalletInfo } from "@/components/BaseWalletButton";
 
 const pageData = {
   "/": {
@@ -54,6 +55,12 @@ export default function Header() {
           {walletAddress && (
             <NotificationCenter walletAddress={walletAddress} />
           )}
+          
+          {/* Base L2 Wallet Integration */}
+          <div className="flex items-center gap-2">
+            <BaseWalletInfo />
+            <BaseWalletButton />
+          </div>
           
           {/* Solana Wallet Integration */}
           <div className="flex items-center gap-2">

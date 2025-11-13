@@ -43,7 +43,7 @@ async function latestSnapshotId(): Promise<string | null> {
     ORDER BY recorded_at DESC
     LIMIT 1
   `);
-  return result.rows?.[0]?.snapshot_id ?? null;
+  return (result.rows?.[0]?.snapshot_id as string | undefined) ?? null;
 }
 
 async function saveSnapshot(snapshotId: string, entries: Array<{ path: string; hash: string; size: number }>) {

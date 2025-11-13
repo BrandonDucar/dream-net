@@ -237,7 +237,7 @@ export class SwarmCoordinator {
   }
 
   private generateSpecialAbility(evolutionPath: string): string {
-    const abilities = {
+    const abilities: Record<string, string> = {
       'Visionary': 'Enhanced Creative Synthesis - generates 2x innovation tokens',
       'Protean': 'Adaptive Learning Matrix - auto-adjusts to network changes', 
       'Oracle': 'Predictive Dream Mapping - forecasts network evolution patterns'

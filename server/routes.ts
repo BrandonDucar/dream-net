@@ -69,6 +69,7 @@ import evolutionVaultRouter from './routes/evolution-vault';
 import aiSurgeonRouter from './routes/ai-surgeon';
 import defenseNetworkRouter from './routes/defense-network';
 import evolutionEngineRouter from './routes/evolution-engine';
+import baseHealthRouter from './routes/base-health';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // SIWE Auth routes
@@ -1606,7 +1607,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tags: ["ai"],
         score: 0,
         evolved: false,
-        last_updated: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
         coreType: "Vision",
         description: "This is the seed description for Dream 0.",
         image: "https://picsum.photos/seed/0/300/200",
@@ -1622,7 +1623,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tags: ["crypto"],
         score: 0,
         evolved: false,
-        last_updated: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
         coreType: "Tool",
         description: "This is the seed description for Dream 1.",
         image: "https://picsum.photos/seed/1/300/200",
@@ -1638,7 +1639,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tags: ["music"],
         score: 0,
         evolved: false,
-        last_updated: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
         coreType: "Movement",
         description: "This is the seed description for Dream 2.",
         image: "https://picsum.photos/seed/2/300/200",
@@ -2011,7 +2012,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           tags: ["ai"],
           score: 75,
           evolved: false,
-          last_updated: new Date().toISOString(),
+          lastUpdated: new Date().toISOString(),
           coreType: "Vision",
           description: "This is the seed description for Dream 0.",
           image: "https://picsum.photos/seed/0/300/200",
@@ -2024,7 +2025,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           tags: ["crypto"],
           score: 68,
           evolved: false,
-          last_updated: new Date().toISOString(),
+          lastUpdated: new Date().toISOString(),
           coreType: "Tool",
           description: "This is the seed description for Dream 1.",
           image: "https://picsum.photos/seed/1/300/200",
@@ -2037,7 +2038,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           tags: ["music"],
           score: 82,
           evolved: false,
-          last_updated: new Date().toISOString(),
+          lastUpdated: new Date().toISOString(),
           coreType: "Movement",
           description: "This is the seed description for Dream 2.",
           image: "https://picsum.photos/seed/2/300/200",
@@ -2485,6 +2486,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(aiSurgeonRouter);
   app.use(defenseNetworkRouter);
   app.use(evolutionEngineRouter);
+  app.use('/api/base-health', baseHealthRouter);
 
   // Bounty endpoints
   app.post('/api/post-bounty', postBountyHandler);

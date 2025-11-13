@@ -3,8 +3,8 @@ import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
-import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
+import { pathToFileURL } from "url";
 
 const viteLogger = createLogger();
 
@@ -20,6 +20,15 @@ export function log(message: string, source = "express") {
 }
 
 export async function setupVite(app: Express, server: Server) {
+  const viteConfigPath = path.resolve(process.cwd(), "vite.config.ts");
+  if (!fs.existsSync(viteConfigPath)) {
+    log(`Skipping Vite middleware; missing ${viteConfigPath}`, "vite");
+    return;
+  }
+
+  const viteModule = (await import(pathToFileURL(viteConfigPath).href)) as { default?: any };
+  const viteConfig = viteModule.default ?? viteModule;
+
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -51,6 +60,10 @@ export async function setupVite(app: Express, server: Server) {
         "client",
         "index.html",
       );
+
+      if (!fs.existsSync(clientTemplate)) {
+        throw new Error(`Client template missing at ${clientTemplate}`);
+      }
 
       // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");

@@ -1,3 +1,4 @@
+import { Buffer } from "buffer";
 import { sql } from "drizzle-orm";
 import { performance } from "perf_hooks";
 import { db } from "../db";
@@ -8,6 +9,20 @@ import { computeMerkleRoot } from "../trust/merkle";
 import { recordMetric } from "../trust/metrics";
 
 const TABLE = "dreamnet_trust.vector_events";
+
+function mapVectorRow(row: Record<string, unknown>): VectorEventRecord {
+  return {
+    id: String(row.id),
+    object_type: String(row.object_type),
+    object_id: String(row.object_id),
+    model: String(row.model),
+    dim: Number(row.dim ?? 0),
+    hash_algo: String(row.hash_algo),
+    vec_hash: String(row.vec_hash),
+    payload_hash: String(row.payload_hash),
+    created_at: new Date(row.created_at as string | number | Date),
+  };
+}
 
 export interface VectorLogInput {
   objectType: string;
@@ -48,7 +63,18 @@ export async function logVectorEvent(input: VectorLogInput): Promise<VectorEvent
     SELECT * FROM ${sql.raw(TABLE)} WHERE id = ${id}
   `);
 
-  const row = (record.rows?.[0] ?? {}) as VectorEventRecord;
+  const rawRow = record.rows?.[0];
+  const row = rawRow ? mapVectorRow(rawRow as Record<string, unknown>) : {
+    id,
+    object_type: input.objectType,
+    object_id: input.objectId,
+    model: input.model,
+    dim,
+    hash_algo: algo,
+    vec_hash: vecHash,
+    payload_hash: payloadHash,
+    created_at: new Date(),
+  };
 
   await publishInternalEvent({
     topic: StarbridgeTopic.System,
@@ -83,7 +109,7 @@ export async function getVectorHistory(objectType: string, objectId: string, lim
     LIMIT ${limit}
   `);
 
-  return result.rows as VectorEventRecord[];
+  return (result.rows ?? []).map((row) => mapVectorRow(row as Record<string, unknown>));
 }
 
 export async function getVectorEvent(id: string) {
@@ -93,7 +119,8 @@ export async function getVectorEvent(id: string) {
     LIMIT 1
   `);
 
-  return (result.rows?.[0] ?? null) as VectorEventRecord | null;
+  const row = result.rows?.[0];
+  return row ? mapVectorRow(row as Record<string, unknown>) : null;
 }
 
 export interface VectorVerifyInput {

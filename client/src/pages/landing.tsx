@@ -46,6 +46,7 @@ export default function LandingPage() {
               <Link href="#dreamsnail" className="text-gray-400 hover:text-white transition-colors">DreamSnail</Link>
               <Link href="#foundry" className="text-gray-400 hover:text-white transition-colors">Foundry</Link>
               <Link href="#metals" className="text-gray-400 hover:text-white transition-colors">Metals</Link>
+              <Link href="/miniapps" className="text-gray-400 hover:text-white transition-colors">Mini Apps</Link>
               <Link href="/admin" className="text-gray-400 hover:text-white transition-colors">Control Room</Link>
             </nav>
             <Link href="/admin">

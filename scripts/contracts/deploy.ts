@@ -1,4 +1,6 @@
-import { ethers } from "hardhat";
+import hardhat from "hardhat";
+
+const { ethers } = hardhat;
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -22,12 +24,36 @@ async function main() {
   await dreamerPass.waitForDeployment();
   const dreamerPassAddress = await dreamerPass.getAddress();
   console.log("DreamerPass deployed to:", dreamerPassAddress);
+
+  // Deploy SubscriptionBadge
+  console.log("\n=== Deploying SubscriptionBadge ===");
+  const defaultBadgeURI = "https://dreamnet.ink/api/subscriptions/{id}.json";
+  const SubscriptionBadge = await ethers.getContractFactory("SubscriptionBadge");
+  const subscriptionBadge = await SubscriptionBadge.deploy(defaultBadgeURI, deployer.address);
+  await subscriptionBadge.waitForDeployment();
+  const subscriptionBadgeAddress = await subscriptionBadge.getAddress();
+  console.log("SubscriptionBadge deployed to:", subscriptionBadgeAddress);
+
+  // Deploy SubscriptionHub
+  console.log("\n=== Deploying SubscriptionHub ===");
+  const SubscriptionHub = await ethers.getContractFactory("SubscriptionHub");
+  const subscriptionHub = await SubscriptionHub.deploy(subscriptionBadgeAddress, deployer.address);
+  await subscriptionHub.waitForDeployment();
+  const subscriptionHubAddress = await subscriptionHub.getAddress();
+  console.log("SubscriptionHub deployed to:", subscriptionHubAddress);
+
+  // Configure badge minter
+  const setMinterTx = await subscriptionBadge.setMinter(subscriptionHubAddress);
+  await setMinterTx.wait();
+  console.log("Configured SubscriptionHub as badge minter");
   
   console.log("\n=== Deployment Summary ===");
   console.log("Network:", (await ethers.provider.getNetwork()).name);
   console.log("Chain ID:", (await ethers.provider.getNetwork()).chainId);
   console.log("SheepToken:", sheepTokenAddress);
   console.log("DreamerPass:", dreamerPassAddress);
+  console.log("SubscriptionBadge:", subscriptionBadgeAddress);
+  console.log("SubscriptionHub:", subscriptionHubAddress);
   
   // Save deployment info
   const deploymentInfo = {
@@ -37,6 +63,8 @@ async function main() {
     contracts: {
       SheepToken: sheepTokenAddress,
       DreamerPass: dreamerPassAddress,
+      SubscriptionBadge: subscriptionBadgeAddress,
+      SubscriptionHub: subscriptionHubAddress,
     },
     timestamp: new Date().toISOString(),
   };

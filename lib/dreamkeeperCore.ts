@@ -1,5 +1,20 @@
 // dreamkeeperCore.ts
 
+interface BaseHealthStatus {
+  mainnet: {
+    rpc: 'healthy' | 'degraded' | 'down';
+    blockNumber: number | null;
+    latency: number | null;
+    lastCheck: string;
+  };
+  sepolia: {
+    rpc: 'healthy' | 'degraded' | 'down';
+    blockNumber: number | null;
+    latency: number | null;
+    lastCheck: string;
+  };
+}
+
 export const DREAMKEEPER_CORE = {
   version: "1.0.0",
   networkVitals: {
@@ -21,11 +36,26 @@ export const DREAMKEEPER_CORE = {
     recommendations: string[];
   }>,
   updateCycle: "hourly" as "realtime" | "hourly" | "daily",
+  baseHealth: {
+    mainnet: {
+      rpc: 'unknown' as 'healthy' | 'degraded' | 'down' | 'unknown',
+      blockNumber: null as number | null,
+      latency: null as number | null,
+      lastCheck: '',
+    },
+    sepolia: {
+      rpc: 'unknown' as 'healthy' | 'degraded' | 'down' | 'unknown',
+      blockNumber: null as number | null,
+      latency: null as number | null,
+      lastCheck: '',
+    },
+  },
   
   init: () => {
     console.log("🧠 DREAMKEEPER Core Intelligence online...");
     DREAMKEEPER_CORE.runSelfDiagnostics();
     DREAMKEEPER_CORE.startMonitoring();
+    DREAMKEEPER_CORE.startBaseHealthChecks();
   },
   
   processDreamEvent: (event: any) => {
@@ -179,7 +209,91 @@ export const DREAMKEEPER_CORE = {
       ...DREAMKEEPER_CORE.networkVitals,
       version: DREAMKEEPER_CORE.version,
       lastScan: DREAMKEEPER_CORE.scanHistory[DREAMKEEPER_CORE.scanHistory.length - 1]?.timestamp || "never",
-      logCount: DREAMKEEPER_CORE.logs.length
+      logCount: DREAMKEEPER_CORE.logs.length,
+      baseHealth: DREAMKEEPER_CORE.baseHealth,
     };
-  }
+  },
+  
+  /**
+   * Check Base L2 network health (Mainnet and Sepolia)
+   */
+  checkBaseHealth: async (network: 'mainnet' | 'sepolia' = 'mainnet') => {
+    const rpcUrl = network === 'mainnet' 
+      ? (process.env.BASE_MAINNET_RPC_URL || 'https://mainnet.base.org')
+      : (process.env.BASE_SEPOLIA_RPC_URL || 'https://sepolia.base.org');
+    
+    const startTime = Date.now();
+    
+    try {
+      const response = await fetch(rpcUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'eth_blockNumber',
+          params: [],
+          id: 1,
+        }),
+      });
+      
+      const latency = Date.now() - startTime;
+      const data = await response.json();
+      
+      if (data.result) {
+        const blockNumber = parseInt(data.result, 16);
+        const status: 'healthy' | 'degraded' | 'down' = latency < 1000 ? 'healthy' : latency < 3000 ? 'degraded' : 'down';
+        
+        DREAMKEEPER_CORE.baseHealth[network] = {
+          rpc: status,
+          blockNumber,
+          latency,
+          lastCheck: new Date().toISOString(),
+        };
+        
+        DREAMKEEPER_CORE.logs.push({
+          timestamp: new Date().toISOString(),
+          status: 'base_health_check',
+          notes: [
+            `Base ${network} RPC: ${status}`,
+            `Block: ${blockNumber}`,
+            `Latency: ${latency}ms`,
+          ],
+        });
+        
+        return { status, blockNumber, latency };
+      } else {
+        throw new Error('Invalid RPC response');
+      }
+    } catch (error) {
+      DREAMKEEPER_CORE.baseHealth[network] = {
+        rpc: 'down',
+        blockNumber: null,
+        latency: null,
+        lastCheck: new Date().toISOString(),
+      };
+      
+      DREAMKEEPER_CORE.logs.push({
+        timestamp: new Date().toISOString(),
+        status: 'base_health_check_failed',
+        notes: [`Base ${network} RPC check failed: ${(error as Error).message}`],
+      });
+      
+      return { status: 'down' as const, blockNumber: null, latency: null };
+    }
+  },
+  
+  /**
+   * Start periodic Base health checks
+   */
+  startBaseHealthChecks: () => {
+    // Check both networks immediately
+    DREAMKEEPER_CORE.checkBaseHealth('mainnet');
+    DREAMKEEPER_CORE.checkBaseHealth('sepolia');
+    
+    // Then check every 5 minutes
+    setInterval(() => {
+      DREAMKEEPER_CORE.checkBaseHealth('mainnet');
+      DREAMKEEPER_CORE.checkBaseHealth('sepolia');
+    }, 5 * 60 * 1000);
+  },
 };

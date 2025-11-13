@@ -168,13 +168,17 @@ export const SurgeonAgent = {
   },
   
   scheduleDreamAnalysis: (event: any) => {
-    const task = {
+    const severity: SurgeonTask['severity'] = event.metadata?.emotions?.includes('chaos')
+      ? 'high'
+      : 'medium';
+    const task: SurgeonTask = {
       dreamId: `dream_${Date.now()}`,
       issue: `Chaos emotion analysis needed for: ${event.metadata?.title || 'Unknown Dream'}`,
       timestamp: new Date().toISOString(),
       resolved: false,
-      fixApplied: null as string | null,
-      priority: event.metadata?.emotions?.includes('chaos') ? 'high' : 'normal'
+      fixApplied: undefined,
+      priority: event.metadata?.emotions?.includes('chaos') ? 'high' : 'normal',
+      severity,
     };
     
     SurgeonAgent.taskQueue.push(task);

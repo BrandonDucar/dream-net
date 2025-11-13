@@ -1,19 +1,156 @@
 import { 
-  users, dreams, cocoons, dreamCores, wallets, contributorsLog, cocoonLogs, evolutionChains, dreamInvites, dreamTokens,
+  users, dreams, cocoons, dreamCores, wallets, contributorsLog, cocoonLogs, evolutionChains, dreamInvites, dreamTokens, notifications,
   type User, type InsertUser,
-  type Dream, type InsertDream,
+  type Dream, type DreamRecord, type InsertDream,
   type Cocoon, type InsertCocoon,
   type DreamCore, type InsertDreamCore,
   type Wallet, type InsertWallet,
   type ContributorsLog, type CocoonLog, type CocoonContributor, type ContributorRole, type ContributorAction,
   type EvolutionChain, type InsertEvolutionChain,
   type DreamInvite, type InsertDreamInvite,
-  type DreamToken, type InsertDreamToken
+  type DreamToken, type InsertDreamToken, type Notification
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, count, sql, and, or, lt, isNotNull, arrayContains } from "drizzle-orm";
 import { simpleNotifications } from "./simple-notifications";
 import { webhookNotifier } from "./webhook-notifier";
+import { legacyImport } from "./legacy/loader";
+
+function mapDreamRecord(record: DreamRecord): Dream {
+  const tags = Array.isArray(record.tags) ? record.tags : [];
+  const contributors = ((record.contributors as Array<Record<string, any>> | null) ?? []).map((c) => ({
+    wallet: c.wallet,
+    role: c.role,
+    joinedAt: c.joinedAt ?? c.joined_at ?? new Date().toISOString(),
+  })) as CocoonContributor[];
+  const aiTags = Array.isArray(record.aiTags) ? record.aiTags : undefined;
+  const blessings = (record.blessings as Array<{ wallet: string; message: string; amount: number; timestamp: number }> | null) ?? undefined;
+  const lastUpdated =
+    record.lastUpdated instanceof Date
+      ? record.lastUpdated.toISOString()
+      : record.lastUpdated
+        ? new Date(record.lastUpdated).toISOString()
+        : new Date().toISOString();
+  const createdAt =
+    record.createdAt instanceof Date
+      ? record.createdAt.toISOString()
+      : record.createdAt
+        ? new Date(record.createdAt).toISOString()
+        : undefined;
+  const reviewedAt =
+    record.reviewedAt instanceof Date
+      ? record.reviewedAt.toISOString()
+      : record.reviewedAt
+        ? new Date(record.reviewedAt).toISOString()
+        : undefined;
+
+  return {
+    id: record.id,
+    name: record.name ?? record.title ?? "Untitled Dream",
+    creator: record.creator ?? record.wallet,
+    tags,
+    score: record.score ?? record.dreamScore ?? 0,
+    evolved: Boolean(record.evolved),
+    lastUpdated,
+    coreType: record.coreType ?? undefined,
+    description: record.description ?? undefined,
+    image: record.image ?? undefined,
+    status: record.status ?? undefined,
+    title: record.title ?? undefined,
+    wallet: record.wallet,
+    dreamStatus: record.dreamStatus ?? undefined,
+    dreamScore: record.dreamScore ?? undefined,
+    contributors,
+    urgency: record.urgency ?? undefined,
+    origin: record.origin ?? undefined,
+    aiScore: record.aiScore ?? undefined,
+    aiTags,
+    scoreBreakdown: record.scoreBreakdown ?? undefined,
+    views: record.views ?? undefined,
+    likes: record.likes ?? undefined,
+    comments: record.comments ?? undefined,
+    editCount: record.editCount ?? undefined,
+    uniquenessScore: record.uniquenessScore ?? undefined,
+    createdAt,
+    reviewedAt,
+    reviewerId: record.reviewerId ?? undefined,
+    forkedFrom: record.forkedFrom ?? undefined,
+    remixOf: record.remixOf ?? undefined,
+    bountyId: record.bountyId ?? undefined,
+    bountyToken: record.bountyToken ?? undefined,
+    bountyAmount: record.bountyAmount ?? undefined,
+    dreamCloud: record.dreamCloud ?? undefined,
+    evolutionType: record.evolutionType ?? undefined,
+    remixCount: record.remixCount ?? undefined,
+    fusionCount: record.fusionCount ?? undefined,
+    blessCount: record.blessCount ?? undefined,
+    nightmareEscapes: record.nightmareEscapes ?? undefined,
+    xp: record.xp ?? undefined,
+    level: record.level ?? undefined,
+    blessings,
+    swarmBoosted: (record as any).swarmBoosted ?? undefined,
+    swarmBoostTime: (record as any).swarmBoostTime ?? undefined,
+    linkedDreams: (record as any).linkedDreams ?? undefined,
+    networkStrength: (record as any).networkStrength ?? undefined,
+    evolutionPath: (record as any).evolutionPath ?? undefined,
+    specialAbility: (record as any).specialAbility ?? undefined,
+    originalScore: (record as any).originalScore ?? undefined,
+    evolutionTimestamp: (record as any).evolutionTimestamp ?? undefined,
+  };
+}
+
+function mapCocoonContributors(value: unknown): CocoonContributor[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((entry) => ({
+    wallet: entry.wallet,
+    role: entry.role,
+    joinedAt: entry.joinedAt ?? entry.joined_at ?? new Date().toISOString(),
+  }));
+}
+
+const DREAM_UPDATEABLE_FIELDS = new Set<string>([
+  "name",
+  "creator",
+  "description",
+  "tags",
+  "score",
+  "evolved",
+  "coreType",
+  "image",
+  "status",
+  "wallet",
+  "title",
+  "urgency",
+  "origin",
+  "dreamStatus",
+  "isNightmare",
+  "trustScore",
+  "aiScore",
+  "aiTags",
+  "dreamScore",
+  "scoreBreakdown",
+  "views",
+  "likes",
+  "comments",
+  "contributors",
+  "editCount",
+  "uniquenessScore",
+  "reviewerId",
+  "forkedFrom",
+  "remixOf",
+  "bountyId",
+  "bountyToken",
+  "bountyAmount",
+  "dreamCloud",
+  "evolutionType",
+  "remixCount",
+  "fusionCount",
+  "blessCount",
+  "nightmareEscapes",
+  "xp",
+  "level",
+  "blessings",
+]);
 
 export interface IStorage {
   // Users
@@ -35,7 +172,7 @@ export interface IStorage {
     contributors?: Array<{
       wallet: string;
       role: 'Builder' | 'Artist' | 'Coder' | 'Visionary' | 'Promoter';
-      joined_at: string;
+      joinedAt: string;
     }>; 
     editCount?: number; 
     uniquenessScore?: number 
@@ -132,6 +269,9 @@ export interface IStorage {
   getDreamTokens(wallet?: string, dreamId?: string, purpose?: string): Promise<DreamToken[]>;
   getTokensByHolder(wallet: string): Promise<DreamToken[]>;
 
+  // Notifications
+  getNotifications(wallet: string, limit?: number): Promise<Notification[]>;
+
   // Network Graph
   getNetworkGraph(): Promise<{
     nodes: Array<{
@@ -162,6 +302,8 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
+  private dreams: any[] = [];
+
   // Users
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
@@ -183,17 +325,18 @@ export class DatabaseStorage implements IStorage {
 
   // Dreams
   async getDreams(limit = 50, offset = 0): Promise<Dream[]> {
-    return await db
+    const rows = await db
       .select()
       .from(dreams)
       .orderBy(desc(dreams.createdAt))
       .limit(limit)
       .offset(offset);
+    return rows.map(mapDreamRecord);
   }
 
   async getDream(id: string): Promise<Dream | undefined> {
     const [dream] = await db.select().from(dreams).where(eq(dreams.id, id));
-    return dream || undefined;
+    return dream ? mapDreamRecord(dream) : undefined;
   }
 
   async createDream(insertDream: InsertDream): Promise<Dream> {
@@ -201,20 +344,20 @@ export class DatabaseStorage implements IStorage {
       .insert(dreams)
       .values(insertDream)
       .returning();
-    return dream;
+    return mapDreamRecord(dream);
   }
 
   async updateDreamStatus(id: string, status: "pending" | "approved" | "rejected" | "evolved", reviewerId?: string): Promise<Dream> {
     const [dream] = await db
       .update(dreams)
       .set({ 
-        status, 
+        dreamStatus: status, 
         reviewerId, 
         reviewedAt: new Date() 
       })
       .where(eq(dreams.id, id))
       .returning();
-    return dream;
+    return mapDreamRecord(dream);
   }
 
   async updateDreamAIScore(id: string, aiScore: number, aiTags: string[]): Promise<Dream> {
@@ -226,7 +369,7 @@ export class DatabaseStorage implements IStorage {
       })
       .where(eq(dreams.id, id))
       .returning();
-    return dream;
+    return mapDreamRecord(dream);
   }
 
   async updateDreamScore(id: string, dreamScore: number, scoreBreakdown: { originality: number; traction: number; collaboration: number; updates: number }): Promise<Dream> {
@@ -238,7 +381,7 @@ export class DatabaseStorage implements IStorage {
       })
       .where(eq(dreams.id, id))
       .returning();
-    return dream;
+    return mapDreamRecord(dream);
   }
 
   async updateDreamMetrics(id: string, metrics: { 
@@ -248,35 +391,46 @@ export class DatabaseStorage implements IStorage {
     contributors?: Array<{
       wallet: string;
       role: 'Builder' | 'Artist' | 'Coder' | 'Visionary' | 'Promoter';
-      joined_at: string;
+      joinedAt: string;
     }>; 
     editCount?: number; 
     uniquenessScore?: number 
   }): Promise<Dream> {
     const [dream] = await db
       .update(dreams)
-      .set({ ...metrics, last_updated: new Date() })
+      .set({ ...metrics, lastUpdated: new Date() })
       .where(eq(dreams.id, id))
       .returning();
-    return dream;
+    return mapDreamRecord(dream);
   }
 
   async updateDream(id: string, updates: Partial<Dream>): Promise<Dream | undefined> {
+    const { lastUpdated: _ignoredLast, createdAt: _ignoredCreated, reviewedAt: _ignoredReviewed, ...rest } = updates;
+    const payload: Partial<typeof dreams.$inferInsert> = {};
+
+    for (const [key, value] of Object.entries(rest)) {
+      if (value === undefined) continue;
+      if (!DREAM_UPDATEABLE_FIELDS.has(key)) continue;
+      (payload as Record<string, unknown>)[key] = value;
+    }
+
     const [updatedDream] = await db
       .update(dreams)
-      .set({ ...updates, last_updated: new Date() })
+      .set({ ...(payload as Record<string, unknown>), lastUpdated: new Date() })
       .where(eq(dreams.id, id))
       .returning();
-    
-    return updatedDream;
+
+    return updatedDream ? mapDreamRecord(updatedDream) : undefined;
   }
 
   async getAllDreams(): Promise<Dream[]> {
-    return await db.select().from(dreams).orderBy(desc(dreams.createdAt));
+    const rows = await db.select().from(dreams).orderBy(desc(dreams.createdAt));
+    return rows.map(mapDreamRecord);
   }
 
   async getDreamsByWallet(wallet: string): Promise<Dream[]> {
-    return await db.select().from(dreams).where(eq(dreams.wallet, wallet));
+    const rows = await db.select().from(dreams).where(eq(dreams.wallet, wallet));
+    return rows.map(mapDreamRecord);
   }
 
   async deleteDream(id: string): Promise<void> {
@@ -289,7 +443,7 @@ export class DatabaseStorage implements IStorage {
       .set({ tags: tags.map(tag => tag.toLowerCase()), lastUpdated: new Date() })
       .where(eq(dreams.id, id))
       .returning();
-    return dream;
+    return mapDreamRecord(dream);
   }
 
   // Cocoons
@@ -726,7 +880,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTopContributors() {
-    const allCocoons = await db.select().from(cocoons);
+    const allCocoons = await db.select().from(cocoons).execute();
     const contributorStats = new Map<string, {
       roles: Set<ContributorRole>;
       cocoons: Set<string>;
@@ -819,118 +973,103 @@ export class DatabaseStorage implements IStorage {
       metadata?: any;
     };
   }>> {
-    const results: any[] = [];
-
-    // Get dreams
-    let dreamQuery = db
-      .select({
-        id: dreams.id,
-        title: dreams.title,
-        status: dreams.status,
-        score: dreams.dreamScore,
-        tags: dreams.tags,
-        contributors: dreams.contributors,
-        lastUpdated: dreams.lastUpdated,
-        creatorWallet: dreams.wallet,
-        type: sql<'dream'>`'dream'`
-      })
-      .from(dreams)
-      .where(eq(dreams.status, 'approved'));
-
-    // Get cocoons
-    let cocoonQuery = db
-      .select({
-        id: cocoons.id,
-        title: cocoons.title,
-        stage: cocoons.stage,
-        score: cocoons.dreamScore,
-        tags: cocoons.tags,
-        contributors: cocoons.contributors,
-        lastUpdated: cocoons.lastUpdated,
-        creatorWallet: cocoons.creatorWallet,
-        type: sql<'cocoon'>`'cocoon'`
-      })
-      .from(cocoons);
-
-    // Apply stage filter for cocoons
-    if (options.stage) {
-      cocoonQuery = cocoonQuery.where(eq(cocoons.stage, options.stage as any));
-    }
-
-    const [dreamResults, cocoonResults] = await Promise.all([
-      dreamQuery,
-      cocoonQuery
+    const [dreamRows, cocoonRows, evolutionChains] = await Promise.all([
+      db.select().from(dreams).where(eq(dreams.dreamStatus, "approved")),
+      db.select().from(cocoons),
+      this.getEvolutionChains(200, 0),
     ]);
 
-    // Fetch evolution chains for all items
-    const allEvolutionChains = await this.getEvolutionChains(200, 0);
-    const evolutionMap = new Map();
-    allEvolutionChains.forEach(chain => {
-      evolutionMap.set(chain.dreamId, {
-        currentStage: chain.currentStage,
-        createdAt: chain.createdAt,
-        evolvedAt: chain.evolvedAt,
-        completedAt: chain.completedAt,
-        metadata: chain.metadata
-      });
+    const evolutionMap = new Map<string, EvolutionChain>();
+    evolutionChains.forEach((chain) => {
+      evolutionMap.set(chain.dreamId, chain);
     });
 
-    // Combine and transform results with evolution data
-    const combined = [
-      ...dreamResults.map(d => ({
-        id: d.id,
-        type: 'dream' as const,
-        title: d.title,
-        status: d.status,
-        score: d.score || 0,
-        tags: d.tags || [],
-        contributors: (d.contributors as any) || [],
-        lastUpdated: d.lastUpdated,
-        creatorWallet: d.creatorWallet,
-        evolutionChain: evolutionMap.get(d.id)
-      })),
-      ...cocoonResults.map(c => ({
-        id: c.id,
-        type: 'cocoon' as const,
-        title: c.title,
-        stage: c.stage,
-        score: c.score || 0,
-        tags: c.tags || [],
-        contributors: (c.contributors as any) || [],
-        lastUpdated: c.lastUpdated,
-        creatorWallet: c.creatorWallet,
-        evolutionChain: evolutionMap.get(c.dreamId)
-      }))
-    ];
-
-    // Sort
-    combined.sort((a, b) => {
-      const aValue = options.sortBy === 'score' ? a.score : a.lastUpdated.getTime();
-      const bValue = options.sortBy === 'score' ? b.score : b.lastUpdated.getTime();
-      return options.order === 'asc' ? aValue - bValue : bValue - aValue;
+    const dreamFeed = dreamRows.map((row) => {
+      const dream = mapDreamRecord(row);
+      const chain = evolutionMap.get(dream.id);
+      return {
+        id: dream.id,
+        type: "dream" as const,
+        title: dream.title ?? dream.name ?? "Untitled Dream",
+        status: dream.dreamStatus ?? undefined,
+        score: dream.dreamScore ?? dream.score ?? 0,
+        tags: dream.tags ?? [],
+        contributors: dream.contributors ?? [],
+        lastUpdated: new Date(dream.lastUpdated),
+        creatorWallet: dream.wallet,
+        evolutionChain: chain
+          ? {
+              currentStage: chain.currentStage,
+              createdAt: chain.createdAt,
+              evolvedAt: chain.evolvedAt ?? undefined,
+              completedAt: chain.completedAt ?? undefined,
+              metadata: chain.metadata ?? undefined,
+            }
+          : undefined,
+      };
     });
 
-    return combined.slice(options.offset, options.offset + options.limit);
+    const cocoonsFiltered = options.stage
+      ? cocoonRows.filter((row) => row.stage === options.stage)
+      : cocoonRows;
+
+    const cocoonFeed = cocoonsFiltered.map((row) => {
+      const chain = evolutionMap.get(row.dreamId);
+      return {
+        id: row.id,
+        type: "cocoon" as const,
+        title: row.title,
+        stage: row.stage,
+        score: row.dreamScore ?? 0,
+        tags: Array.isArray(row.tags) ? row.tags : [],
+        contributors: mapCocoonContributors(row.contributors),
+        lastUpdated:
+          row.lastUpdated instanceof Date ? row.lastUpdated : new Date(row.lastUpdated ?? Date.now()),
+        creatorWallet: row.creatorWallet,
+        evolutionChain: chain
+          ? {
+              currentStage: chain.currentStage,
+              createdAt: chain.createdAt,
+              evolvedAt: chain.evolvedAt ?? undefined,
+              completedAt: chain.completedAt ?? undefined,
+              metadata: chain.metadata ?? undefined,
+            }
+          : undefined,
+      };
+    });
+
+    const combined = [...dreamFeed, ...cocoonFeed].sort((a, b) => {
+      if (options.sortBy === "score") {
+        return options.order === "asc" ? a.score - b.score : b.score - a.score;
+      }
+      const aTime = a.lastUpdated.getTime();
+      const bTime = b.lastUpdated.getTime();
+      return options.order === "asc" ? aTime - bTime : bTime - aTime;
+    });
+
+    const start = options.offset ?? 0;
+    const end = start + options.limit;
+    return combined.slice(start, end);
   }
 
   async getAllTags(): Promise<string[]> {
     const [dreamTags, cocoonTags] = await Promise.all([
-      db.select({ tags: dreams.tags }).from(dreams).where(isNotNull(dreams.tags)),
-      db.select({ tags: cocoons.tags }).from(cocoons).where(isNotNull(cocoons.tags))
+      db.select({ tags: dreams.tags }).from(dreams).where(isNotNull(dreams.tags)).execute(),
+      db.select({ tags: cocoons.tags }).from(cocoons).where(isNotNull(cocoons.tags)).execute()
     ]);
 
     const allTags = new Set<string>();
     
-    dreamTags.forEach(d => d.tags?.forEach(tag => allTags.add(tag)));
-    cocoonTags.forEach(c => c.tags?.forEach(tag => allTags.add(tag)));
+    dreamTags.forEach(d => (d.tags ?? []).forEach(tag => allTags.add(tag)));
+    cocoonTags.forEach(c => (c.tags ?? []).forEach(tag => allTags.add(tag)));
 
     return Array.from(allTags).sort();
   }
 
   // AI Dream Evaluation function
   async evaluateDream(dream: Dream): Promise<void> {
-    const { dreamEvaluator } = await import("./ai-dream-evaluator");
-    await dreamEvaluator.evaluateDream(dream);
+    const legacyModule = await legacyImport<{ dreamEvaluator?: { evaluateDream: (dream: Dream) => Promise<void> } }>("ai-dream-evaluator");
+    await legacyModule?.dreamEvaluator?.evaluateDream(dream);
   }
 
   // Simple Garden Feed function as requested - returns all dreams and cocoons
@@ -962,17 +1101,17 @@ export class DatabaseStorage implements IStorage {
           contributors: dreams.contributors
         })
         .from(dreams)
-        .where(eq(dreams.status, 'approved'));
+        .where(eq(dreams.dreamStatus, 'approved'));
 
       // Add dreams to results
       dreamList.forEach(dream => {
         results.push({
           id: dream.id,
-          name: dream.title,
+          name: dream.title ?? "Untitled Dream",
           stage: undefined, // Dreams don't have stages
           score: dream.dreamScore || 0,
-          tags: (dream.tags as string[]) || [],
-          contributors: (dream.contributors as CocoonContributor[]) || []
+          tags: Array.isArray(dream.tags) ? (dream.tags as string[]) : [],
+          contributors: mapCocoonContributors(dream.contributors)
         });
       });
 
@@ -995,8 +1134,8 @@ export class DatabaseStorage implements IStorage {
           name: cocoon.title,
           stage: cocoon.stage,
           score: cocoon.dreamScore || 0,
-          tags: (cocoon.tags as string[]) || [],
-          contributors: (cocoon.contributors as CocoonContributor[]) || []
+          tags: Array.isArray(cocoon.tags) ? (cocoon.tags as string[]) : [],
+          contributors: mapCocoonContributors(cocoon.contributors)
         });
       });
 
@@ -1021,9 +1160,9 @@ export class DatabaseStorage implements IStorage {
     // Archive dreams
     const archivedDreams = await db
       .update(dreams)
-      .set({ status: 'rejected', lastUpdated: new Date() })
+      .set({ dreamStatus: 'rejected', lastUpdated: new Date() })
       .where(and(
-        eq(dreams.status, 'pending'),
+        eq(dreams.dreamStatus, 'pending'),
         lt(dreams.lastUpdated, cutoffDate)
       ))
       .returning();
@@ -1136,20 +1275,31 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getDreamInvites(wallet?: string, dreamId?: string): Promise<DreamInvite[]> {
-    let query = db.select().from(dreamInvites);
-
     if (wallet && dreamId) {
-      query = query.where(and(
-        eq(dreamInvites.invitedWallet, wallet),
-        eq(dreamInvites.dreamId, dreamId)
-      ));
-    } else if (wallet) {
-      query = query.where(eq(dreamInvites.invitedWallet, wallet));
-    } else if (dreamId) {
-      query = query.where(eq(dreamInvites.dreamId, dreamId));
+      return await db
+        .select()
+        .from(dreamInvites)
+        .where(and(eq(dreamInvites.invitedWallet, wallet), eq(dreamInvites.dreamId, dreamId)))
+        .orderBy(desc(dreamInvites.createdAt));
     }
 
-    return await query.orderBy(desc(dreamInvites.createdAt));
+    if (wallet) {
+      return await db
+        .select()
+        .from(dreamInvites)
+        .where(eq(dreamInvites.invitedWallet, wallet))
+        .orderBy(desc(dreamInvites.createdAt));
+    }
+
+    if (dreamId) {
+      return await db
+        .select()
+        .from(dreamInvites)
+        .where(eq(dreamInvites.dreamId, dreamId))
+        .orderBy(desc(dreamInvites.createdAt));
+    }
+
+    return await db.select().from(dreamInvites).orderBy(desc(dreamInvites.createdAt));
   }
 
   async respondToInvite(inviteId: string, accept: boolean): Promise<DreamInvite> {
@@ -1259,18 +1409,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getDreamTokens(wallet?: string, dreamId?: string, purpose?: string): Promise<DreamToken[]> {
-    let query = db.select().from(dreamTokens);
-
     const conditions = [];
     if (wallet) conditions.push(eq(dreamTokens.holderWallet, wallet));
     if (dreamId) conditions.push(eq(dreamTokens.dreamId, dreamId));
     if (purpose) conditions.push(eq(dreamTokens.purpose, purpose));
 
     if (conditions.length > 0) {
-      query = query.where(and(...conditions));
+      return await db
+        .select()
+        .from(dreamTokens)
+        .where(and(...conditions))
+        .orderBy(desc(dreamTokens.mintedAt));
     }
 
-    return await query.orderBy(desc(dreamTokens.mintedAt));
+    return await db.select().from(dreamTokens).orderBy(desc(dreamTokens.mintedAt));
   }
 
   async getTokensByHolder(wallet: string): Promise<DreamToken[]> {
@@ -1279,6 +1431,15 @@ export class DatabaseStorage implements IStorage {
       .from(dreamTokens)
       .where(eq(dreamTokens.holderWallet, wallet))
       .orderBy(desc(dreamTokens.mintedAt));
+  }
+
+  async getNotifications(wallet: string, limit = 25): Promise<Notification[]> {
+    return await db
+      .select()
+      .from(notifications)
+      .where(eq(notifications.recipientWallet, wallet))
+      .orderBy(desc(notifications.createdAt))
+      .limit(limit);
   }
 
   // Enhanced cocoon update with token minting
@@ -1350,10 +1511,10 @@ export class DatabaseStorage implements IStorage {
 
     // Get all data
     const [allDreams, allCocoons, allTokens, allInvites] = await Promise.all([
-      db.select().from(dreams),
-      db.select().from(cocoons),
-      db.select().from(dreamTokens),
-      db.select().from(dreamInvites)
+      db.select().from(dreams).execute(),
+      db.select().from(cocoons).execute(),
+      db.select().from(dreamTokens).execute(),
+      db.select().from(dreamInvites).execute()
     ]);
 
     // Add dream nodes
@@ -1361,15 +1522,15 @@ export class DatabaseStorage implements IStorage {
       nodes.push({
         id: `dream-${dream.id}`,
         type: 'dream',
-        label: dream.title,
+        label: dream.title ?? dream.name ?? "Untitled Dream",
         data: {
           id: dream.id,
           status: dream.status,
           score: dream.dreamScore,
           wallet: dream.wallet,
-          tags: dream.tags,
+          tags: dream.tags ?? [],
           createdAt: dream.createdAt,
-          contributors: dream.contributors
+          contributors: dream.contributors ?? []
         }
       });
 
@@ -1480,7 +1641,7 @@ export class DatabaseStorage implements IStorage {
           dreamId: token.dreamId,
           cocoonId: token.cocoonId,
           purpose: token.purpose,
-          milestone: token.milestone,
+          milestone: token.milestone ?? "unknown",
           metadata: token.metadata,
           mintedAt: token.mintedAt
         }
@@ -1493,7 +1654,7 @@ export class DatabaseStorage implements IStorage {
         type: 'owns',
         data: {
           purpose: token.purpose,
-          milestone: token.milestone,
+          milestone: token.milestone ?? "unknown",
           mintedAt: token.mintedAt
         }
       });
@@ -1505,7 +1666,7 @@ export class DatabaseStorage implements IStorage {
         type: 'created',
         data: {
           purpose: token.purpose,
-          milestone: token.milestone
+          milestone: token.milestone ?? "unknown"
         }
       });
 
@@ -1517,7 +1678,7 @@ export class DatabaseStorage implements IStorage {
           type: 'created',
           data: {
             purpose: token.purpose,
-            milestone: token.milestone
+          milestone: token.milestone ?? "unknown"
           }
         });
       }
@@ -1534,7 +1695,7 @@ export class DatabaseStorage implements IStorage {
           role: invite.role,
           status: invite.status,
           createdAt: invite.createdAt,
-          message: invite.message
+          message: invite.message ?? ""
         }
       });
     });
@@ -1557,7 +1718,7 @@ export class DatabaseStorage implements IStorage {
         : `http://localhost:5000/dreams/${dream.id}`;
 
       await webhookNotifier.notifyCocoonActive({
-        dreamName: dream.title,
+        dreamName: dream.title ?? dream.name ?? "Untitled Dream",
         cocoonTitle: cocoon.title,
         creator: cocoon.creatorWallet,
         dreamId: dream.id,
@@ -1904,8 +2065,8 @@ export class DatabaseStorage implements IStorage {
         content: 'A dream exploring the emergence of consciousness in artificial neural networks, examining the boundary between simulation and sentience.',
         creatorWallet: '0xEliteDreamer123',
         score: 94,
-        type: 'Vision' as DreamType,
-        status: 'approved' as DreamStatus,
+        type: 'Vision',
+        status: 'approved',
         created: Date.now() - 86400000,
       });
     }
@@ -1968,8 +2129,8 @@ export class DatabaseStorage implements IStorage {
         content: 'A dream exploring the emergence of consciousness in artificial neural networks, examining the boundary between simulation and sentience.',
         creatorWallet: '0xEliteDreamer123',
         score: 94,
-        type: 'Vision' as DreamType,
-        status: 'approved' as DreamStatus,
+        type: 'Vision',
+        status: 'approved',
         created: Date.now() - 86400000,
       });
     }

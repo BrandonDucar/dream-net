@@ -48,6 +48,7 @@ import EditDreamPage from "@/pages/edit-dream";
 import SharedDreamPage from "@/pages/shared-dream";
 import BountyExplorer from "@/pages/bounty-explorer";
 import { WalletConnectionProvider } from "@/components/SolanaWalletProvider";
+import { BaseProvider } from "@/providers/BaseProvider";
 import DreamProcessor from "@/components/DreamProcessor";
 import ErrorDemoPage from "@/pages/error-demo";
 import Sidebar from "@/components/layout/sidebar";
@@ -315,11 +316,12 @@ function App() {
   return (
     <ErrorBoundary fallback={DatabaseErrorFallback}>
       <QueryClientProvider client={queryClient}>
-        <WalletConnectionProvider>
-          <TooltipProvider>
-            <div className="dark">
-              <Toaster />
-              <Switch>
+        <BaseProvider>
+          <WalletConnectionProvider>
+            <TooltipProvider>
+              <div className="dark">
+                <Toaster />
+                <Switch>
               {/* Public Landing Page - Must be first and exact */}
               <Route path="/" component={LandingPage} />
               
@@ -372,6 +374,11 @@ function App() {
               <Route path="/dream-node-test" component={DreamNodeTest} />
               <Route path="/sms-demo" component={SMSDemo} />
         <Route path="/dreams/:dreamId" component={lazy(() => import('@/pages/dream-detail'))} />
+              
+              {/* Base Mini Apps */}
+              <Route path="/miniapps" component={lazy(() => import('@/pages/miniapps/index'))} />
+              <Route path="/miniapps/:id" component={lazy(() => import('@/pages/miniapps/[id]'))} />
+              
               {/* Disabled demo routes with lazy loading issues */}
               
               {/* Admin Routes - Authentication Required */}
@@ -390,6 +397,7 @@ function App() {
             </div>
           </TooltipProvider>
         </WalletConnectionProvider>
+        </BaseProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );

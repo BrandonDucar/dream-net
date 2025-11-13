@@ -1,11 +1,31 @@
 import { sql, desc, and, inArray, gt, eq } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, pgEnum, jsonb } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 import { db } from "../db";
-import {
-  starbridgeEvents,
-  insertStarbridgeEventSchema,
-  StarbridgeEventRecord,
-} from "@shared/schema";
 import { StarbridgeEvent } from "./types";
+
+const STARBRIDGE_TOPICS = ['Governor', 'Deploy', 'System', 'Economy', 'Vault'] as const;
+const STARBRIDGE_SOURCES = ['Runtime', 'ComputeGovernor', 'DeployKeeper', 'DreamKeeper', 'RelayBot', 'External'] as const;
+
+type StarbridgeTopic = typeof STARBRIDGE_TOPICS[number];
+type StarbridgeSource = typeof STARBRIDGE_SOURCES[number];
+
+const starbridgeTopicEnum = pgEnum("starbridge_topic", STARBRIDGE_TOPICS);
+const starbridgeSourceEnum = pgEnum("starbridge_source", STARBRIDGE_SOURCES);
+
+export const starbridgeEvents = pgTable("starbridge_events", {
+  id: text("id").primaryKey(),
+  topic: starbridgeTopicEnum("topic").notNull(),
+  source: starbridgeSourceEnum("source").notNull(),
+  type: text("type").notNull(),
+  ts: timestamp("ts", { withTimezone: true }).defaultNow().notNull(),
+  payload: jsonb("payload"),
+  replayed: boolean("replayed").default(false).notNull(),
+});
+
+const insertStarbridgeEventSchema = createInsertSchema(starbridgeEvents) as unknown as z.ZodTypeAny;
+export type StarbridgeEventRecord = typeof starbridgeEvents.$inferSelect;
 
 let initialized = false;
 
@@ -84,21 +104,26 @@ export async function fetchEvents(options: FetchOptions = {}): Promise<Starbridg
 
   const conditions = [];
   if (topics && topics.length > 0) {
-    conditions.push(inArray(starbridgeEvents.topic, topics));
+    const validTopics = topics.filter((topic): topic is StarbridgeTopic =>
+      STARBRIDGE_TOPICS.includes(topic as StarbridgeTopic)
+    );
+    if (validTopics.length > 0) {
+      conditions.push(inArray(starbridgeEvents.topic, validTopics));
+    }
   }
   if (since) {
     conditions.push(gt(starbridgeEvents.ts, since));
   }
 
-  let query = db.select().from(starbridgeEvents);
+  let builder: any = db.select().from(starbridgeEvents);
 
   if (conditions.length === 1) {
-    query = query.where(conditions[0]);
+    builder = builder.where(conditions[0]);
   } else if (conditions.length > 1) {
-    query = query.where(and(...(conditions as [any, any, ...any[]])));
+    builder = builder.where(and(...(conditions as [any, any, ...any[]])));
   }
 
-  query = query.orderBy(desc(starbridgeEvents.ts)).limit(limit);
+  const rows = await builder.orderBy(desc(starbridgeEvents.ts)).limit(limit).execute();
 
-  return query;
+  return rows as StarbridgeEventRecord[];
 }

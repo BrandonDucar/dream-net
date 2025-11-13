@@ -50,7 +50,8 @@ Testing all implemented features:
     const gardenData = await storage.getGardenFeed({
       sortBy: 'lastUpdated',
       order: 'desc',
-      limit: 10
+      limit: 10,
+      offset: 0
     });
 
     console.log(`\n🌸 Public Garden Feed (Latest 10 items):`);

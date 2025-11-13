@@ -32,7 +32,7 @@ export const dreams = pgTable("dreams", {
   tags: text("tags").array().default(sql`'{}'::text[]`),
   score: integer("score").default(0), // Simplified from dreamScore
   evolved: boolean("evolved").default(false),
-  last_updated: timestamp("last_updated").defaultNow().notNull(),
+  lastUpdated: timestamp("last_updated").defaultNow().notNull(),
   coreType: dreamCoreTypeEnum("core_type"),
   image: text("image"),
   status: dreamStatusSimpleEnum("status").default("Draft"),
@@ -61,7 +61,7 @@ export const dreams = pgTable("dreams", {
   contributors: jsonb("contributors").$type<Array<{
     wallet: string;
     role: 'Builder' | 'Artist' | 'Coder' | 'Visionary' | 'Promoter';
-    joined_at: string;
+    joinedAt: string;
   }>>().default(sql`'[]'::jsonb`),
   editCount: integer("edit_count").default(0),
   uniquenessScore: integer("uniqueness_score"), // From NLP analysis
@@ -328,7 +328,7 @@ export const walletsRelations = relations(wallets, ({ one }) => ({
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertDreamSchema = createInsertSchema(dreams).pick({
   wallet: true,
@@ -339,7 +339,7 @@ export const insertDreamSchema = createInsertSchema(dreams).pick({
   origin: true,
   forkedFrom: true,
   bountyId: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertCocoonSchema = createInsertSchema(cocoons).pick({
   dreamId: true,
@@ -347,17 +347,17 @@ export const insertCocoonSchema = createInsertSchema(cocoons).pick({
   description: true,
   creatorWallet: true,
   evolutionNotes: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertDreamCoreSchema = createInsertSchema(dreamCores).pick({
   name: true,
   type: true,
   ownerId: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertWalletSchema = createInsertSchema(wallets).pick({
   userId: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertNotificationSchema = createInsertSchema(notifications).pick({
   recipientWallet: true,
@@ -365,7 +365,7 @@ export const insertNotificationSchema = createInsertSchema(notifications).pick({
   title: true,
   message: true,
   data: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertCocoonLogSchema = createInsertSchema(cocoonLogs).pick({
   cocoonId: true,
@@ -374,7 +374,7 @@ export const insertCocoonLogSchema = createInsertSchema(cocoonLogs).pick({
   adminWallet: true,
   isOverride: true,
   notes: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertEvolutionChainSchema = createInsertSchema(evolutionChains).pick({
   dreamId: true,
@@ -383,7 +383,7 @@ export const insertEvolutionChainSchema = createInsertSchema(evolutionChains).pi
   evolvedAt: true,
   completedAt: true,
   metadata: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertDreamInviteSchema = createInsertSchema(dreamInvites).pick({
   dreamId: true,
@@ -391,7 +391,7 @@ export const insertDreamInviteSchema = createInsertSchema(dreamInvites).pick({
   inviterWallet: true,
   role: true,
   message: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertDreamTokenSchema = createInsertSchema(dreamTokens).pick({
   dreamId: true,
@@ -400,7 +400,7 @@ export const insertDreamTokenSchema = createInsertSchema(dreamTokens).pick({
   purpose: true,
   milestone: true,
   metadata: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 // Types
 export type User = typeof users.$inferSelect;
@@ -460,11 +460,61 @@ export interface Dream {
   tags: string[];
   score: number;
   evolved: boolean;
-  last_updated: string;
+  lastUpdated: string;
   coreType?: 'Vision' | 'Tool' | 'Movement' | 'Story';
   description?: string;
   image?: string;
   status?: 'Draft' | 'Live' | 'Abandoned';
+  title?: string;
+  wallet: string;
+  dreamStatus?: 'pending' | 'approved' | 'rejected' | 'evolved';
+  dreamScore?: number;
+  contributors?: CocoonContributor[];
+  urgency?: number;
+  origin?: string;
+  aiScore?: number;
+  aiTags?: string[];
+  scoreBreakdown?: {
+    originality: number;
+    traction: number;
+    collaboration: number;
+    updates: number;
+  };
+  views?: number;
+  likes?: number;
+  comments?: number;
+  editCount?: number;
+  uniquenessScore?: number;
+  createdAt?: string;
+  reviewedAt?: string;
+  reviewerId?: string;
+  forkedFrom?: string;
+  remixOf?: string;
+  bountyId?: string;
+  bountyToken?: 'SHEEP' | 'FLBY' | 'CORE';
+  bountyAmount?: string;
+  dreamCloud?: 'defi' | 'gaming' | 'zksync' | 'desci' | 'memes' | 'ai' | 'tools' | 'social' | 'art' | 'custom';
+  evolutionType?: 'Fractal' | 'Chimera' | 'Divine' | 'Shadow' | 'Ethereal';
+  remixCount?: number;
+  fusionCount?: number;
+  blessCount?: number;
+  nightmareEscapes?: number;
+  xp?: number;
+  level?: number;
+  blessings?: Array<{
+    wallet: string;
+    message: string;
+    amount: number;
+    timestamp: number;
+  }>;
+  swarmBoosted?: boolean;
+  swarmBoostTime?: number;
+  linkedDreams?: string[];
+  networkStrength?: number;
+  evolutionPath?: string;
+  specialAbility?: string;
+  originalScore?: number;
+  evolutionTimestamp?: number;
 }
 
 // Legacy alias for backward compatibility

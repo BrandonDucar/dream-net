@@ -111,17 +111,17 @@ export const DreamDefenseNet = {
   },
   
   neutralizeThreat: (threat: Threat): string => {
-    const responses = {
-      "unauthorized_core": "Isolated core and revoked access credentials",
-      "dream_injection": "Quarantined malicious dream and updated filters",
-      "fusion_tampering": "Rolled back fusion chain to last known good state",
-      "agent_impersonation": "Terminated fake agent and strengthened authentication",
-      "data_exfiltration": "Blocked data transfer and traced connection source",
-      "network_scanning": "Implemented IP-based blocking and monitoring",
-      "brute_force_attempt": "Applied rate limiting and temporary access ban"
+    const responses: Record<string, string> = {
+      unauthorized_core: "Isolated core and revoked access credentials",
+      dream_injection: "Quarantined malicious dream and updated filters",
+      fusion_tampering: "Rolled back fusion chain to last known good state",
+      agent_impersonation: "Terminated fake agent and strengthened authentication",
+      data_exfiltration: "Blocked data transfer and traced connection source",
+      network_scanning: "Implemented IP-based blocking and monitoring",
+      brute_force_attempt: "Applied rate limiting and temporary access ban",
     };
     
-    return responses[threat.type] || "Applied generic threat mitigation protocol";
+    return responses[threat.type] ?? "Applied generic threat mitigation protocol";
   },
   
   updatePatternDatabase: (threat: Threat) => {
@@ -141,14 +141,14 @@ export const DreamDefenseNet = {
     }
   },
   
-  calculateInitialRisk: (severity: string): number => {
-    const riskMap = {
-      'low': 0.2,
-      'medium': 0.5,
-      'high': 0.8,
-      'critical': 1.0
+  calculateInitialRisk: (severity: Threat['severity']): number => {
+    const riskMap: Record<Threat['severity'], number> = {
+      low: 0.2,
+      medium: 0.5,
+      high: 0.8,
+      critical: 1.0,
     };
-    return riskMap[severity] || 0.3;
+    return riskMap[severity];
   },
   
   loadKnownPatterns: () => {
@@ -193,7 +193,7 @@ export const DreamDefenseNet = {
     return {
       status: DreamDefenseNet.status,
       activeThreats: DreamDefenseNet.activeThreats,
-      neutralizedThreeat: DreamDefenseNet.neutralizedThreats,
+      neutralizedThreats: DreamDefenseNet.neutralizedThreats,
       totalThreats: DreamDefenseNet.threatLog.length,
       lastScan: DreamDefenseNet.lastScan,
       patternCount: DreamDefenseNet.patternDatabase.length,
@@ -245,14 +245,14 @@ export const DreamDefenseNet = {
     const hasHighRisk = event.metadata?.emotions?.includes('chaos') || riskScore > 70;
     
     if (hasHighRisk) {
-      const threat = {
+      const threat: Threat = {
         id: `threat_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
         type: 'suspicious_dream_pattern',
-        severity: riskScore > 85 ? 'high' : 'medium' as 'low' | 'medium' | 'high' | 'critical',
+        severity: (riskScore > 85 ? 'high' : 'medium') as Threat['severity'],
         description: `High-risk dream detected: ${event.metadata?.title || 'Unknown'}`,
         timestamp: new Date().toISOString(),
         neutralized: false,
-        response: null as string | null,
+        response: undefined,
         source: event.initiator || 'unknown'
       };
       
@@ -264,7 +264,7 @@ export const DreamDefenseNet = {
         setTimeout(() => {
           threat.neutralized = true;
           threat.response = "Pattern analyzed and classified as creative expression";
-          DreamDefenseNet.neutralizedThreeat++;
+          DreamDefenseNet.neutralizedThreats++;
         }, 2000);
       }
     }

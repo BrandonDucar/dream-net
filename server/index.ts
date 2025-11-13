@@ -1,12 +1,14 @@
-import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
+import express, { type Express, type Request, Response, NextFunction } from "express";
+import type { Server } from "http";
 import { setupVite, serveStatic, log } from "./vite";
-import { dreamScoreEngine } from "./dream-score-engine";
-import { seedDreams } from "./seed-dreams";
+import { legacyRequire } from "./legacy/loader";
+import { startMesh } from "./mesh";
+import { createMeshRouter } from "./mesh/router";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use("/api/mesh", createMeshRouter());
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -39,7 +41,13 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  const legacyRoutesModule = legacyRequire<{ registerRoutes?: (app: Express) => Promise<Server> }>("routes");
+
+  if (!legacyRoutesModule?.registerRoutes) {
+    throw new Error("Legacy routes module not available. Cannot start DreamNet server.");
+  }
+
+  const server = await legacyRoutesModule.registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -63,20 +71,29 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || "5000", 10);
-  server.listen(
-    {
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    },
-    () => {
+  const listenOptions: Record<string, unknown> = {
+    port,
+    host: "0.0.0.0",
+  };
+
+  if (process.platform !== "win32") {
+    listenOptions.reusePort = true;
+  }
+
+  server.listen(listenOptions, () => {
       log(`serving on port ${port}`);
 
-      // Seed dreams on startup
-      seedDreams().catch((err) => console.error("Failed to seed dreams:", err));
+      const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
+      legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
 
-      // Start the dream scoring engine
-      dreamScoreEngine.startScheduledScoring();
+      const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
+      legacyDreamScoreEngine?.startScheduledScoring?.();
+
+      if (process.env.MESH_AUTOSTART !== "false") {
+        startMesh().catch((error) =>
+          console.error("Failed to start DreamNet mesh:", (error as Error).message),
+        );
+      }
     },
   );
 })();

@@ -1,6 +1,7 @@
+import { Buffer } from "buffer";
 import { hashBuffer, HashAlgorithm } from "./hash";
 
-function pairwiseHash(a: Buffer, b: Buffer, algo: HashAlgorithm) {
+function pairwiseHash(a: Buffer, b: Buffer, algo: HashAlgorithm): Buffer {
   const combined = Buffer.concat([a, b]);
   return Buffer.from(hashBuffer(combined, algo), "hex");
 }
@@ -10,7 +11,7 @@ export function computeMerkleRoot(hashes: string[], algo: HashAlgorithm): string
     return hashBuffer(Buffer.from(""), algo);
   }
 
-  let layer = hashes.map((hex) => Buffer.from(hex, "hex"));
+  let layer: Buffer[] = hashes.map((hex) => Buffer.from(hex, "hex") as Buffer);
 
   while (layer.length > 1) {
     const next: Buffer[] = [];

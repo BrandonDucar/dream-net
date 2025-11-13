@@ -1,0 +1,31 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "..",
+    "tsBuildInfoFile": "../node_modules/.cache/server.tsbuildinfo"
+  },
+  "include": [
+    "./index.ts",
+    "./vite.ts",
+    "./config/**/*.ts",
+    "./services/**/*.ts",
+    "./storage.ts",
+    "./types/**/*.d.ts",
+    "./trust/**/*.ts",
+    "./vector-ledger/**/*.ts",
+    "./starbridge/**/*.ts",
+    "./legacy/**/*.ts",
+    "./mesh/**/*.ts",
+    "./db.ts",
+    "./simple-notifications.ts",
+    "./webhook-notifier.ts",
+    "../shared/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "**/*.test.ts"
+  ]
+}
+
