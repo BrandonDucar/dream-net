@@ -63,9 +63,37 @@ const agents = [
 
 const navLinks = [
   { label: "Capabilities", href: "#capabilities" },
+  { label: "Mini Apps", href: "#miniapps" },
   { label: "Agents", href: "#agents" },
   { label: "Mesh Status", href: "#mesh" },
   { label: "Contact", href: "#contact" },
+];
+
+const miniApps = [
+  {
+    name: "Subscription Hub",
+    description:
+      "Launch on-chain membership tiers with ERC1155 badges, automated renewals, and Base-native revenue routing.",
+    status: "Ready",
+    link: "https://dreamnet.ink/miniapps/subscription-hub",
+    tags: ["Base", "Memberships", "Automation"],
+  },
+  {
+    name: "Token Balance",
+    description:
+      "Query wallet holdings across DreamNet vaults and Base mainnet with instant gating logic for contributors.",
+    status: "QA",
+    link: "https://dreamnet.ink/miniapps/token-balance",
+    tags: ["Analytics", "Wallet", "Access"],
+  },
+  {
+    name: "Simple Swap",
+    description:
+      "Low-friction transfer flow for Base ERC20 assets—optimized for contributor payouts and budgeting flows.",
+    status: "QA",
+    link: "https://dreamnet.ink/miniapps/simple-swap",
+    tags: ["Finance", "Base", "Treasury"],
+  },
 ];
 
 function useMeshData() {
@@ -291,6 +319,64 @@ export default function App() {
                 <li>• Revenue flywheel callbacks for on-chain distribution.</li>
                 <li>• Starbridge ledger logs every action for transparent review.</li>
               </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="miniapps" className="border-y border-white/5 bg-black/50 py-20">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h2 className="text-3xl font-semibold">Mini App Launchpad</h2>
+                <p className="max-w-2xl text-white/70">
+                  DreamNet ships on Base through composable mini apps. Each module
+                  can run autonomously, or wire into the agent mesh for
+                  human-in-the-loop approvals.
+                </p>
+              </div>
+              <a
+                href="https://docs.base.org/base-camp/"
+                className="inline-flex items-center gap-2 rounded-full border border-dream-cyan/40 px-4 py-2 text-sm text-dream-cyan transition hover:bg-dream-cyan/10"
+              >
+                Base Builder Programs
+              </a>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {miniApps.map((app) => (
+                <div
+                  key={app.name}
+                  className="group flex flex-col rounded-3xl border border-white/5 bg-gradient-to-br from-white/10 to-black/10 p-6 transition hover:border-dream-cyan/40 hover:shadow-mesh"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs uppercase tracking-[0.3em] text-white/40">
+                      {app.status}
+                    </span>
+                    <span className="rounded-full border border-dream-emerald/30 px-3 py-1 text-[10px] font-semibold text-dream-emerald">
+                      Base
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold">{app.name}</h3>
+                  <p className="mt-2 text-sm text-white/70">{app.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {app.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-white/10 px-3 py-1 text-[11px] text-white/60"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href={app.link}
+                    className="mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs text-white/70 transition hover:border-dream-emerald/60 hover:text-dream-emerald"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open mini app
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
         </section>

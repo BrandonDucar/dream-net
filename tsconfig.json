@@ -8,7 +8,6 @@
     "types": ["node", "vite/client"]
   },
   "include": [
-    "client/src/**/*",
     "shared/**/*",
     "server/**/*",
     "apps/**/*",

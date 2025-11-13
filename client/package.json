@@ -5,13 +5,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "format": "echo \"format: no-op\"",
-    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
-    "preview": "vite preview"
+    "dev": "node ./scripts/legacy-warning.js",
+    "build": "node ./scripts/legacy-warning.js",
+    "typecheck": "node ./scripts/legacy-warning.js",
+    "lint": "node ./scripts/legacy-warning.js",
+    "format": "node ./scripts/legacy-warning.js",
+    "clean": "node ./scripts/legacy-warning.js",
+    "preview": "node ./scripts/legacy-warning.js"
   },
   "dependencies": {
     "react": "^18.2.0",

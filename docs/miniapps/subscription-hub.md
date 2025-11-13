@@ -12,9 +12,7 @@ The mini app relies on two contracts deployed to Base (Mainnet or Sepolia):
 Deploy both contracts with Hardhat:
 
 ```bash
-# Configure RPC + private key in .env
-# BASE_SEPOLIA_RPC_URL=...
-# PRIVATE_KEY=0x...
+# Configure RPC + private key in .env (see ../env.md)
 
 pnpm hardhat run scripts/contracts/deploy.ts --network baseSepolia
 ```
@@ -25,14 +23,21 @@ The deployment script outputs the contract addresses and sets the hub as the bad
 
 Add the following variables to `client/.env` (or your Vercel project):
 
-```bash
+```
 VITE_SUBSCRIPTION_HUB_ADDRESS=0xYourHubAddress
 VITE_SUBSCRIPTION_BADGE_ADDRESS=0xYourBadgeAddress
 VITE_BASE_RPC_URL=https://sepolia.base.org # or mainnet RPC
-VITE_BASE_CHAIN_ID=84532 # 8453 for mainnet
+VITE_BASE_CHAIN_ID=84532 # set to 8453 for mainnet
+VITE_API_URL=https://api.dreamnet.ink # local: http://localhost:5000
 ```
 
 The RPC URL is used for read-only queries when a wallet is not connected. The chain ID helps render the correct Base network.
+
+## Gas Budget Tips
+
+- One clean `pnpm deploy:base-mainnet` run costs ~0.0006–0.0008 ETH.  
+- Keep at least $3–$5 in the deploy wallet for retries.  
+- If funds dip below $2, redeploy on Sepolia and hold mainnet release until refilled.
 
 ## Running the Mini App
 

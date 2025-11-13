@@ -8,6 +8,16 @@ Mini apps are self-contained applications that run on Base L2 and integrate with
 
 ## Quick Start
 
+### 0. Configure Environment
+
+Set the Base RPC endpoints and deploy wallet in your `.env` (see [`docs/env.md`](../env.md) for full reference):
+
+```env
+PRIVATE_KEY=0x...
+BASE_MAINNET_RPC_URL=https://mainnet.base.org
+BASE_SEPOLIA_RPC_URL=https://sepolia.base.org
+```
+
 ### 1. Create a New Mini App
 
 Create a new component in `client/src/miniapps/`:
@@ -174,6 +184,32 @@ See `client/src/miniapps/template/SimpleSwapApp.tsx` for an example of token tra
 
 Contracts are deployed using Hardhat. See `hardhat.config.ts` for Base network configuration.
 
+#### Base Deployment Flow
+
+```bash
+# Install deps if needed
+pnpm install
+
+# Compile
+pnpm compile
+
+# Optional test deploy
+pnpm deploy:base-sepolia
+
+# Mainnet deploy (requires PRIVATE_KEY via .env)
+pnpm deploy:base-mainnet
+
+# Optional: verify on BaseScan
+pnpm verify:base
+```
+
+Record the emitted contract addresses and add them to the Vite environment:
+
+```env
+VITE_SUBSCRIPTION_HUB_ADDRESS=0x...
+VITE_SUBSCRIPTION_BADGE_ADDRESS=0x...
+```
+
 ### Contract Addresses
 
 Store contract addresses in environment variables:
@@ -209,6 +245,16 @@ Mini apps use the same design system as the main DreamNet app:
 ## Deployment
 
 Mini apps are automatically included when deploying the main DreamNet application. No separate deployment is needed.
+
+When pushing to `main`, Vercel rebuilds the site from `apps/site`. Configure the following production variables:
+
+```
+VITE_API_URL=https://api.dreamnet.ink
+VITE_BASE_RPC_URL=https://mainnet.base.org
+VITE_BASE_CHAIN_ID=8453
+VITE_SUBSCRIPTION_HUB_ADDRESS=0x...
+VITE_SUBSCRIPTION_BADGE_ADDRESS=0x...
+```
 
 ## Resources
 
