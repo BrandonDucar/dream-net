@@ -83,6 +83,7 @@ import AISurgeonDashboard from "@/pages/ai-surgeon-dashboard";
 import DefenseNetworkDashboard from "@/pages/defense-network";
 import EvolutionEnginePage from "@/pages/evolution-engine";
 import DreamScopeUI from "@/pages/dreamscope-ui";
+import DreamScopeAlive from "@/pages/dreamscope-alive";
 import DAOManagementPage from "@/pages/dao-management";
 import WhisperMessagingPage from "@/pages/whisper-messaging";
 import UserProgressionPage from "@/pages/user-progression";
@@ -92,6 +93,16 @@ import EvolutionVaultPage from "@/pages/evolution-vault";
 import LandingPage from "@/pages/landing";
 
 import { SeasonalEventBanner } from "./components/SeasonalEventBanner";
+import { DreamNetThemeProvider } from "./contexts/DreamNetThemeContext";
+import HomePage from "./pages/HomePage";
+import OsPage from "./pages/OsPage";
+import VaultPage from "./pages/VaultPage";
+import ShopPage from "./pages/ShopPage";
+import DreamTankPage from "./pages/DreamTankPage";
+import AgentsPage from "./pages/AgentsPage";
+import CommunityPage from "./pages/CommunityPage";
+import SystemOsStatusPage from "./pages/SystemOsStatusPage";
+import SystemRuntimePage from "./pages/SystemRuntimePage";
 
 // Catch-all route component that excludes root path
 function CatchAllRoute() {
@@ -303,6 +314,7 @@ function AuthenticatedApp() {
               <Route path="/defense-network" component={DefenseNetworkDashboard} />
               <Route path="/evolution-engine" component={EvolutionEnginePage} />
               <Route path="/dreamscope" component={DreamScopeUI} />
+              <Route path="/dreamscope/alive" component={DreamScopeAlive} />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>
@@ -319,14 +331,26 @@ function App() {
         <BaseProvider>
           <WalletConnectionProvider>
             <TooltipProvider>
-              <div className="dark">
-                <Toaster />
-                <Switch>
-              {/* Public Landing Page - Must be first and exact */}
-              <Route path="/" component={LandingPage} />
+              <DreamNetThemeProvider>
+                <div className="dark">
+                  <Toaster />
+                  <Switch>
+                    {/* New DreamNet Pages */}
+                    <Route path="/" component={HomePage} />
+                    <Route path="/os" component={OsPage} />
+                    <Route path="/vault" component={VaultPage} />
+                    <Route path="/shop" component={ShopPage} />
+                    <Route path="/dreamtank" component={DreamTankPage} />
+                    <Route path="/agents" component={AgentsPage} />
+                    <Route path="/community" component={CommunityPage} />
+                    <Route path="/system/os-status" component={SystemOsStatusPage} />
+                    <Route path="/system/runtime" component={SystemRuntimePage} />
+                    
+                    {/* Legacy Landing Page (kept for backwards compat) */}
+                    <Route path="/legacy-landing" component={LandingPage} />
               
-              {/* Public Routes - No Authentication Required */}
-              <Route path="/submit-dream" component={SubmitDream} />
+                    {/* Public Routes - No Authentication Required */}
+                    <Route path="/submit-dream" component={SubmitDream} />
               <Route path="/gallery" component={DreamGallery} />
               <Route path="/feed" component={DreamFeed} />
               <Route path="/dream-form" component={() => <DreamForm onSubmit={() => {}} />} />
@@ -390,13 +414,14 @@ function App() {
               
               {/* Protected Routes - Authentication Required (backwards compat) - Must be last */}
               {/* Catch-all: matches any path not matched above */}
-              <Route path="*">
-                <CatchAllRoute />
-              </Route>
-            </Switch>
-            </div>
-          </TooltipProvider>
-        </WalletConnectionProvider>
+                    <Route path="*">
+                      <CatchAllRoute />
+                    </Route>
+                  </Switch>
+                </div>
+              </DreamNetThemeProvider>
+            </TooltipProvider>
+          </WalletConnectionProvider>
         </BaseProvider>
       </QueryClientProvider>
     </ErrorBoundary>

@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* DreamNet Mode Theme Styles */
+.dreamnet-mode {
+  --electric-cyan: #00ffff;
+  --electric-violet: #8b5cf6;
+}
+
+.dreamnet-mode body {
+  background: linear-gradient(135deg, #000000 0%, #0a0a1a 50%, #000000 100%);
+  background-attachment: fixed;
+}
+
+.dreamnet-mode .bg-background {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.dreamnet-mode .border-electric-cyan {
+  border-color: var(--electric-cyan);
+}
+
+.dreamnet-mode .text-electric-cyan {
+  color: var(--electric-cyan);
+}
+
+.dreamnet-mode .bg-electric-cyan\/20 {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+
+.dreamnet-mode .shadow-glow {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+@keyframes neuralPulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.dreamnet-mode .neural-glow {
+  animation: neuralPulse 3s ease-in-out infinite;
+}
+
 @keyframes pulseGlow {
   0%, 100% {
     opacity: 0.8;
