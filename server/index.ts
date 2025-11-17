@@ -37,7 +37,8 @@ import { createMediaListRouter } from "./routes/media-list";
 import { createEmailRouter } from "./routes/email";
 import { createDreamSnailRouter } from "./routes/dream-snail";
 import { createBiomimeticSystemsRouter } from "./routes/biomimetic-systems";
-import { registerHaloLoop, haloTriggers } from "@dreamnet/halo-loop";
+// haloTriggers imported conditionally - see error handler below
+let haloTriggers: { recordError?: () => void } = {};
 import { NeuralMesh } from "@dreamnet/neural-mesh";
 import { QuantumAnticipation } from "@dreamnet/quantum-anticipation";
 import { SquadAlchemy } from "@dreamnet/squad-alchemy";
@@ -146,7 +147,11 @@ app.use(controlCoreMiddleware);
 // AUTO-SEO: Apply SEO optimization globally to all content
 app.use(autoSEORequestMiddleware);
 app.use((req, _res, next) => {
-  haloTriggers.recordRequest();
+  try {
+    haloTriggers.recordRequest?.();
+  } catch {
+    // Ignore if haloTriggers not available
+  }
   next();
 });
 app.use("/api/mesh", createMeshRouter());
@@ -1252,7 +1257,9 @@ app.use("/api", createDreamRouter());
     
     // Legacy seeding and scheduled tasks
     try {
-      registerHaloLoop();
+      const { registerHaloLoop: registerHaloLoopFn, haloTriggers: haloTriggersObj } = await import("@dreamnet/halo-loop");
+      registerHaloLoopFn();
+      haloTriggers = haloTriggersObj || {};
       
       const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
       legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
@@ -1381,16 +1388,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Public health endpoint used by Railway and other platforms for liveness checks
-app.get("/health", (_req, res) => {
-  res.json({
-    ok: true,
-    service: "dreamnet-api",
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-  });
-});
-
 (async () => {
   const legacyRoutesModule = legacyRequire<{ registerRoutes?: (app: Express) => Promise<Server> }>("routes");
 
@@ -1406,7 +1403,11 @@ app.get("/health", (_req, res) => {
 
     res.status(status).json({ message });
     if (status >= 500) {
-      haloTriggers.recordError();
+      try {
+        haloTriggers.recordError();
+      } catch {
+        // Ignore if haloTriggers not available
+      }
     }
     throw err;
   });
