@@ -2,12 +2,23 @@ import express, { type Express, type Request, Response, NextFunction } from "exp
 import type { Server } from "http";
 import { setupVite, serveStatic, log } from "./vite";
 import { legacyRequire } from "./legacy/loader";
-import { startMesh } from "./mesh";
 import { createMeshRouter } from "./mesh/router";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Public health endpoint used by Railway and other platforms for liveness checks
+// Registered early to ensure it's always available, even if subsystems fail to start
+app.get("/health", (_req, res) => {
+  res.json({
+    ok: true,
+    service: "dreamnet-api",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
 app.use("/api/mesh", createMeshRouter());
 
 app.use((req, res, next) => {
@@ -38,16 +49,6 @@ app.use((req, res, next) => {
   });
 
   next();
-});
-
-// Public health endpoint used by Railway and other platforms for liveness checks
-app.get("/health", (_req, res) => {
-  res.json({
-    ok: true,
-    service: "dreamnet-api",
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-  });
 });
 
 (async () => {
@@ -88,16 +89,34 @@ app.get("/health", (_req, res) => {
   server.listen(port, host, () => {
     log(`serving on port ${port}`);
 
-    const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
-    legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
+    // Optional subsystems - only start when INIT_SUBSYSTEMS === "true"
+    // This allows the server to start in resource-constrained environments (like Railway)
+    // without attempting to initialize heavyweight background processes
+    const shouldInitSubsystems = process.env.INIT_SUBSYSTEMS === "true";
+    
+    if (shouldInitSubsystems) {
+      log("INIT_SUBSYSTEMS=true, starting optional subsystems...");
+      
+      // Dynamically import and start mesh subsystem
+      import("./mesh").then(({ startMesh }) => {
+        if (process.env.MESH_AUTOSTART !== "false") {
+          startMesh().catch((error) =>
+            console.error("Failed to start DreamNet mesh:", (error as Error).message),
+          );
+        }
+      }).catch((error) => {
+        console.error("Failed to load mesh module:", (error as Error).message);
+      });
 
-    const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
-    legacyDreamScoreEngine?.startScheduledScoring?.();
+      // Dynamically import and run seed dreams
+      const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
+      legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
 
-    if (process.env.MESH_AUTOSTART !== "false") {
-      startMesh().catch((error) =>
-        console.error("Failed to start DreamNet mesh:", (error as Error).message),
-      );
+      // Dynamically import and start scheduled scoring
+      const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
+      legacyDreamScoreEngine?.startScheduledScoring?.();
+    } else {
+      log("INIT_SUBSYSTEMS not set to 'true', skipping optional subsystems (seedDreams, scoring, mesh)");
     }
   });
 })();
