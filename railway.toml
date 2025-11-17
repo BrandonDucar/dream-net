@@ -17,8 +17,8 @@ root = "server"
 
 # Health check configuration
 healthcheckPath = "/health"
-healthcheckTimeout = 100
-healthcheckInterval = 300
+healthcheckTimeout = 5
+healthcheckInterval = 30
 
 # Environment variables (Railway will inject these from dashboard)
 # These are just documentation - set actual values in Railway dashboard

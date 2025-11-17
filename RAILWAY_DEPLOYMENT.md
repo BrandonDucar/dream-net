@@ -56,7 +56,62 @@ A public health check endpoint is available at `/health`:
 }
 ```
 
-Railway is configured to use this endpoint for health checks.
+Railway is configured to use this endpoint for health checks with:
+- **Path**: `/health`
+- **Timeout**: 5 seconds
+- **Interval**: 30 seconds
+
+A `/ready` endpoint is also available that indicates when optional subsystems have initialized:
+```json
+{
+  "ready": true,
+  "timestamp": "2024-01-01T00:00:00.000Z"
+}
+```
+
+## Optional Subsystems (INIT_SUBSYSTEMS)
+
+By default, the DreamNet server starts with a lightweight `/health` endpoint that never depends on optional subsystems. Heavy subsystems (Neural Mesh, Dream State, Shield Core, etc.) are only initialized when `INIT_SUBSYSTEMS=true`.
+
+### Recommended Deployment Flow
+
+1. **First Deploy (Lightweight)**
+   - Deploy with `INIT_SUBSYSTEMS` unset or `false`
+   - Server starts quickly with only core routes
+   - `/health` endpoint responds immediately
+   - Verify deployment is successful
+
+2. **Enable Full Production Mode**
+   - Set `INIT_SUBSYSTEMS=true` in Railway dashboard
+   - Server will initialize all heavy subsystems:
+     - Neural Mesh, Quantum Anticipation, Squad Alchemy
+     - Dream State Core, Shield Core, Spider Web Core
+     - Directory bootstrap, Network blueprints
+     - Legacy seeding, scheduled scoring, mesh autostart
+   - `/ready` endpoint will return `ready: true` when complete
+
+### INIT_SUBSYSTEMS Behavior
+
+- **Disabled (default)**: Server starts fast, only core routes active
+- **Enabled (`INIT_SUBSYSTEMS=true`)**: All subsystems initialize asynchronously after server starts
+- **Missing packages**: Optional subsystems use dynamic imports with try/catch, so missing packages won't break startup
+
+### Environment Variables
+
+**Required:**
+- `NODE_ENV=production`
+- `PORT` (automatically injected by Railway - do not set manually)
+- `DATABASE_URL` or `NEON_DATABASE_URL` (Neon PostgreSQL connection string)
+
+**Optional:**
+- `INIT_SUBSYSTEMS=true` - Enable heavy subsystem initialization (default: disabled)
+- `MESH_AUTOSTART=false` - Disable mesh autostart (only applies when INIT_SUBSYSTEMS=true)
+- `OPENAI_API_KEY`
+- `DREAMNET_API_KEY`
+- `STRIPE_SECRET_KEY`
+- `TWILIO_AUTH_TOKEN`
+- `TWILIO_PHONE_NUMBER`
+- Any other API keys/secrets your app uses
 
 ## Deployment Steps
 

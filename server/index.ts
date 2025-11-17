@@ -92,6 +92,7 @@ import deadLetterRouter from "./routes/dead-letter";
 import gridLinesRouter from "./routes/grid-lines";
 import directoryRouter from "./routes/directory";
 import networksRouter from "./routes/networks";
+import discoveryRouter from "./routes/discovery";
 import { initDirectory } from "@dreamnet/directory/bootstrap";
 import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
 import { JaggyCore } from "@dreamnet/jaggy-core";
@@ -107,6 +108,25 @@ import { controlCoreMiddleware } from "@dreamnet/dreamnet-control-core/controlCo
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Lightweight health check endpoint - must be early and never depend on optional subsystems
+app.get("/health", (_req, res) => {
+  res.status(200).json({ 
+    ok: true, 
+    service: "dreamnet-api",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
+// Ready endpoint - indicates optional subsystems have initialized
+let subsystemsReady = false;
+app.get("/ready", (_req, res) => {
+  res.status(200).json({ 
+    ready: subsystemsReady,
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Request flow: Trace → Idempotency → Tier Resolver → Control Core → Route Handler
 // Trace ID middleware - adds X-Trace-Id to all requests
@@ -177,38 +197,48 @@ app.use("/api", createDreamRouter());
   let WhalePackCoreInstance: any;
   let DreamStateCoreInstance: any;
   
-  // Initialize Neural Mesh (N-Mesh) - Tier II Subsystem
-  try {
-    const { dreamNetOS } = await import("./core/dreamnet-os");
-    const meshStatus = NeuralMesh.status();
-    console.log(`🧠 [Neural Mesh] Initialized with ${meshStatus.synapses.count} synapses, ${meshStatus.memory.count} memory traces`);
-  } catch (error) {
-    console.warn("[Neural Mesh] Initialization warning:", error);
-  }
+  // Optional subsystems initialization function - only runs when INIT_SUBSYSTEMS=true
+  async function initOptionalSubsystems(app: Express, server: Server): Promise<void> {
+    if (process.env.INIT_SUBSYSTEMS !== "true") {
+      console.log("[Optional Subsystems] Skipped (INIT_SUBSYSTEMS not set to 'true')");
+      return;
+    }
 
-  // Initialize Quantum Anticipation Layer (QAL) - Tier II Subsystem
-  try {
-    const qalStatus = QuantumAnticipation.status();
-    console.log(`🔮 [Quantum Anticipation] Initialized - Last run: ${qalStatus.lastRunAt ? new Date(qalStatus.lastRunAt).toISOString() : "never"}`);
-  } catch (error) {
-    console.warn("[Quantum Anticipation] Initialization warning:", error);
-  }
+    console.log("[Optional Subsystems] Initializing heavy subsystems...");
+    
+    try {
+      // Initialize Neural Mesh (N-Mesh) - Tier II Subsystem
+      try {
+        const { dreamNetOS } = await import("./core/dreamnet-os");
+        const meshStatus = NeuralMesh.status();
+        console.log(`🧠 [Neural Mesh] Initialized with ${meshStatus.synapses.count} synapses, ${meshStatus.memory.count} memory traces`);
+      } catch (error) {
+        console.warn("[Neural Mesh] Initialization warning:", error);
+      }
 
-  // Initialize Squad Alchemy Engine - Tier II Subsystem
-  try {
-    const squadStatus = SquadAlchemy.status();
-    console.log(`⚗️ [Squad Alchemy] Initialized - ${squadStatus.count} squads registered`);
-  } catch (error) {
-    console.warn("[Squad Alchemy] Initialization warning:", error);
-  }
+      // Initialize Quantum Anticipation Layer (QAL) - Tier II Subsystem
+      try {
+        const qalStatus = QuantumAnticipation.status();
+        console.log(`🔮 [Quantum Anticipation] Initialized - Last run: ${qalStatus.lastRunAt ? new Date(qalStatus.lastRunAt).toISOString() : "never"}`);
+      } catch (error) {
+        console.warn("[Quantum Anticipation] Initialization warning:", error);
+      }
 
-  // Initialize Wolf-Pack Protocol (WPP) - Tier II Subsystem
-  try {
-    const wolfStatus = WolfPack.status();
-    console.log(`🐺 [Wolf-Pack] Initialized - Active targets: ${wolfStatus.activeTargets.length}`);
-  } catch (error) {
-    console.warn("[Wolf-Pack] Initialization warning:", error);
-  }
+      // Initialize Squad Alchemy Engine - Tier II Subsystem
+      try {
+        const squadStatus = SquadAlchemy.status();
+        console.log(`⚗️ [Squad Alchemy] Initialized - ${squadStatus.count} squads registered`);
+      } catch (error) {
+        console.warn("[Squad Alchemy] Initialization warning:", error);
+      }
+
+      // Initialize Wolf-Pack Protocol (WPP) - Tier II Subsystem
+      try {
+        const wolfStatus = WolfPack.status();
+        console.log(`🐺 [Wolf-Pack] Initialized - Active targets: ${wolfStatus.activeTargets.length}`);
+      } catch (error) {
+        console.warn("[Wolf-Pack] Initialization warning:", error);
+      }
 
   // Initialize Octopus Executor - Tier II Subsystem (8-Arm Runtime)
   try {
@@ -1211,14 +1241,40 @@ app.use("/api", createDreamRouter());
         dreamSnailCore: DreamSnailCore,
       });
     }, 30 * 1000); // Every 30 seconds
+    } catch (error) {
+      console.warn("[DreamNet OS Core] Initialization warning:", error);
+    }
+    console.log("🧬 [Instant Mesh] Agent hybridization enabled");
+    console.log("🔨 [Foundry] All agents connected - ready to build");
+    console.log("📱 [Social Media Ops] CampaignMasterAgent ready for activation");
+    console.log("🐌 [Dream Snail] Privacy layer active - Know-All Win-All mode");
+    console.log("🌿 [Biomimetic Systems] All systems online");
+    
+    // Legacy seeding and scheduled tasks
+    try {
+      registerHaloLoop();
+      
+      const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
+      legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
+      
+      const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
+      legacyDreamScoreEngine?.startScheduledScoring?.();
+      
+      if (process.env.MESH_AUTOSTART !== "false") {
+        startMesh().catch((error) =>
+          console.error("Failed to start DreamNet mesh:", (error as Error).message),
+        );
+      }
+    } catch (error) {
+      console.warn("[Legacy Seeding] Initialization warning:", error);
+    }
+    
+    subsystemsReady = true;
+    console.log("[Optional Subsystems] Initialization complete");
   } catch (error) {
-    console.warn("[DreamNet OS Core] Initialization warning:", error);
+    console.warn("[Optional Subsystems] Initialization failed:", error);
   }
-  console.log("🧬 [Instant Mesh] Agent hybridization enabled");
-  console.log("🔨 [Foundry] All agents connected - ready to build");
-  console.log("📱 [Social Media Ops] CampaignMasterAgent ready for activation");
-  console.log("🐌 [Dream Snail] Privacy layer active - Know-All Win-All mode");
-  console.log("🌿 [Biomimetic Systems] All systems online");
+}
   
   // Heartbeat API routes
   app.use("/api/heartbeat", heartbeatRouter);

@@ -6,17 +6,27 @@
   "scripts": {
     "dev": "tsx index.ts",
     "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "start:dev": "tsx index.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\""
   },
   "dependencies": {
+    "@dreamnet/directory": "workspace:*",
+    "@dreamnet/dreamnet-control-core": "workspace:*",
+    "@dreamnet/network-blueprints": "workspace:*",
+    "@dreamnet/metrics-engine": "workspace:*",
+    "@dreamnet/nerve": "workspace:*",
     "blake3": "^2.1.7",
     "nanoid": "^5.0.7",
     "node-cron": "^3.0.3",
-    "snarkjs": "^0.7.5"
+    "snarkjs": "^0.7.5",
+    "multer": "^1.4.5-lts.1",
+    "stripe": "^14.21.0"
   },
   "devDependencies": {
-    "tsx": "^4.20.6"
+    "tsx": "^4.20.6",
+    "@types/multer": "^1.4.12"
   }
 }
 
