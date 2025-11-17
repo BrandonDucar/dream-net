@@ -40,6 +40,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Public health endpoint used by Railway and other platforms for liveness checks
+app.get("/health", (_req, res) => {
+  res.json({
+    ok: true,
+    service: "dreamnet-api",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
 (async () => {
   const legacyRoutesModule = legacyRequire<{ registerRoutes?: (app: Express) => Promise<Server> }>("routes");
 
@@ -71,29 +81,23 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || "5000", 10);
-  const listenOptions: Record<string, unknown> = {
-    port,
-    host: "0.0.0.0",
-  };
+  const host = "0.0.0.0";
 
-  if (process.platform !== "win32") {
-    listenOptions.reusePort = true;
-  }
+  // Start the HTTP server. Do not pass unsupported options like `reusePort` which
+  // can cause listen() to throw on some platforms or Node versions.
+  server.listen(port, host, () => {
+    log(`serving on port ${port}`);
 
-  server.listen(listenOptions, () => {
-      log(`serving on port ${port}`);
+    const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
+    legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
 
-      const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
-      legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
+    const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
+    legacyDreamScoreEngine?.startScheduledScoring?.();
 
-      const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
-      legacyDreamScoreEngine?.startScheduledScoring?.();
-
-      if (process.env.MESH_AUTOSTART !== "false") {
-        startMesh().catch((error) =>
-          console.error("Failed to start DreamNet mesh:", (error as Error).message),
-        );
-      }
-    },
-  );
+    if (process.env.MESH_AUTOSTART !== "false") {
+      startMesh().catch((error) =>
+        console.error("Failed to start DreamNet mesh:", (error as Error).message),
+      );
+    }
+  });
 })();
