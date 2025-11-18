@@ -171,7 +171,12 @@ router.get('/status', (req, res) => {
     <script>
         async function fetchWithFallback(url) {
             try {
-                const response = await fetch(url);
+                const { fetchWithTimeout } = await import('../utils/fetchWithTimeout');
+                const traceId = (req as any).traceId;
+                const response = await fetchWithTimeout(url, {
+                  timeout: 5000,
+                  requestId: traceId
+                });
                 return await response.json();
             } catch (error) {
                 return { error: error.message };

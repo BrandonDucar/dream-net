@@ -1,0 +1,23 @@
+{
+  "base": {
+    "chainId": 8453,
+    "contracts": {
+      "DreamPassport": "0x62805dBCc7fb37b62d9Ca92e14aFf63d1e1424CC",
+      "DreamGovernance": "0x44a2E7ee89EEa63C6EAC6532c6B356be1655ff16",
+      "DreamVault": "0x832876CDAaC6e7BAd9C4B953efce19AF0D89Fbd7",
+      "BountyEscrow": "0x21c4BD450a6689353aFfB3EDCA887aa9F908Fc2c",
+      "BadgeNFT": "0x6Ece1531C0547b366Fd10814Fae5963788d2c2a1",
+      "DreamRemixRegistry": "0xF373fE51416BB37067262174e5c721903FC0E66d",
+      "WhisperMessenger": "0x4D33f7Ad7b33cd038770D71C5675B5b2F48A2dFB",
+      "SeasonalEventsRegistry": "0xa7c1d6a3127D17256b40af71F9BE82Ff2235073F",
+      "NightmareRegistry": "0x9347617Ae849aC861489A402193da97Bcd9F8E7f",
+      "RevenueSplitter": "0x807ED6BA7B4AacaDf744693Ca59f118F1a7Bf282",
+      "ProgressionRegistry": "0xe23526d164C568aC0870C0BA26e88c7f158aC80a",
+      "MissionRegistry": "0x1AD0C9a5cFCdCc787C1751a412123939f2d434A9",
+      "DreamDriftersRegistry": "0x63809962f399F42aFf03aF57342F6510D581A0b9",
+      "DreamTimeCapsule": "0x9F62429F7Fa81D5D97a6540386730cC404547629",
+      "DreamDNASequencer": "0x5b511831E1070efFBb70226251a83341Cb73B353",
+      "DreamPredictionMarket": "0xc3C5d260465A1917D7deC4b290fFF0bc8bc74B4c"
+    }
+  }
+}

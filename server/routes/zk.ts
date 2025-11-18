@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getAttestation, proveContent, verifyContent } from "../zk/service";
 
-const router = Router();
+const router: Router = Router();
 
 router.post("/prove", async (req, res) => {
   try {

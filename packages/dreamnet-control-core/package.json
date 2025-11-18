@@ -1,0 +1,51 @@
+{
+  "name": "@dreamnet/dreamnet-control-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "types": "./index.ts"
+    },
+    "./controlCoreMiddleware": {
+      "import": "./controlCoreMiddleware.ts",
+      "types": "./controlCoreMiddleware.ts"
+    },
+    "./identityResolver": {
+      "import": "./identityResolver.ts",
+      "types": "./identityResolver.ts"
+    },
+    "./clusters": {
+      "import": "./clusters.ts",
+      "types": "./clusters.ts"
+    },
+    "./conduits": {
+      "import": "./src/conduits.ts",
+      "types": "./src/conduits.ts"
+    },
+    "./conduitGovernor": {
+      "import": "./src/conduitGovernor.ts",
+      "types": "./src/conduitGovernor.ts"
+    },
+    "./deadLetter": {
+      "import": "./src/deadLetter.ts",
+      "types": "./src/deadLetter.ts"
+    },
+    "./conduitMetrics": {
+      "import": "./src/conduitMetrics.ts",
+      "types": "./src/conduitMetrics.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "echo 'Build step - using TypeScript directly for now'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

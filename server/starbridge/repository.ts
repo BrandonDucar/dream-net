@@ -105,8 +105,8 @@ export async function fetchEvents(options: FetchOptions = {}): Promise<Starbridg
   const conditions = [];
   if (topics && topics.length > 0) {
     const validTopics = topics.filter((topic): topic is StarbridgeTopic =>
-      STARBRIDGE_TOPICS.includes(topic as StarbridgeTopic)
-    );
+      STARBRIDGE_TOPICS.includes(topic as any)
+    ) as StarbridgeTopic[];
     if (validTopics.length > 0) {
       conditions.push(inArray(starbridgeEvents.topic, validTopics));
     }

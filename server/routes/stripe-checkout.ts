@@ -1,9 +1,18 @@
 import { Router } from 'express';
 import Stripe from 'stripe';
-import { IntegrationFlagsService } from '../services/IntegrationFlagsService';
-import { ProviderConfigurationService } from '../services/ProviderConfigurationService';
+// Services are optional
+let IntegrationFlagsService: any = null;
+let ProviderConfigurationService: any = null;
+try {
+  const flagsModule = require('../services/IntegrationFlagsService');
+  IntegrationFlagsService = flagsModule.IntegrationFlagsService;
+  const configModule = require('../services/ProviderConfigurationService');
+  ProviderConfigurationService = configModule.ProviderConfigurationService;
+} catch {
+  console.warn("[Stripe Checkout] Services not available");
+}
 
-const router = Router();
+const router: Router = Router();
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('STRIPE_SECRET_KEY is required for Stripe integration');

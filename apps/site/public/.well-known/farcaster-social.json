@@ -1,0 +1,17 @@
+{
+  "name": "Dream Social Feed",
+  "subtitle": "Share and remix dreams",
+  "description": "Browse, like, comment, and remix creative dreams. Discover trending content and build your creative network on Base.",
+  "iconUrl": "https://dreamnet.ink/icons/social.png",
+  "splashImageUrl": "https://dreamnet.ink/splash/social.png",
+  "splashBackgroundColor": "#06060a",
+  "webUrl": "https://dreamnet.ink/miniapps/social",
+  "appUrl": "https://dreamnet.ink/miniapps/social",
+  "screenshots": [
+    "https://dreamnet.ink/screenshots/social-1.png"
+  ],
+  "tags": ["social", "content", "community", "remix", "base"],
+  "category": "Social",
+  "version": "1.0.0"
+}
+

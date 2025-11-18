@@ -5,6 +5,8 @@ import { legacyRequire } from "./legacy/loader";
 import { startMesh } from "./mesh";
 import { createMeshRouter } from "./mesh/router";
 import { createAgentRouter } from "./routes/agent";
+// Environment configuration - load early to catch config errors
+import { getEnvConfig, PORT as ENV_PORT, ALLOWED_ORIGINS, OPERATOR_WALLETS, INIT_SUBSYSTEMS, MESH_AUTOSTART, NODE_ENV } from "./config/env";
 import { createForgeRouter } from "./routes/forge";
 import { createHaloRouter } from "./routes/halo";
 import { createGraftRouter } from "./routes/graft";
@@ -37,6 +39,8 @@ import { createMediaListRouter } from "./routes/media-list";
 import { createEmailRouter } from "./routes/email";
 import { createDreamSnailRouter } from "./routes/dream-snail";
 import { createBiomimeticSystemsRouter } from "./routes/biomimetic-systems";
+import whaleRouter from "./routes/whale";
+import onboardingRouter from "./routes/onboarding";
 // haloTriggers imported conditionally - see error handler below
 let haloTriggers: { recordError?: () => void } = {};
 import { NeuralMesh } from "@dreamnet/neural-mesh";
@@ -107,16 +111,127 @@ import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
 import { controlCoreMiddleware } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// Request body size limits (prevent memory exhaustion)
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
+
+// Request timeouts (prevent hanging requests)
+app.use((req, res, next) => {
+  req.setTimeout(30000); // 30 seconds
+  res.setTimeout(30000);
+  next();
+});
+
+// CORS configuration
+app.use((req, res, next) => {
+  const envConfig = getEnvConfig();
+  const allowedOrigins = envConfig.ALLOWED_ORIGINS || ['*'];
+  const origin = req.headers.origin;
+  
+  if (allowedOrigins.includes('*') || (origin && allowedOrigins.includes(origin))) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-dreamnet-api-key, x-wallet-address, x-idempotency-key, x-trace-id');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  
+  next();
+});
+
+// Global rate limiting (basic in-memory implementation)
+// Note: For production, consider using Redis-based rate limiting
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX_REQUESTS = 100; // 100 requests per window
+
+app.use((req, res, next) => {
+  // Skip rate limiting for health checks
+  if (req.path === '/health' || req.path === '/ready') {
+    return next();
+  }
+  
+  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+  
+  // Clean up old entries periodically
+  if (rateLimitStore.size > 10000) {
+    for (const [key, value] of rateLimitStore.entries()) {
+      if (now > value.resetAt) {
+        rateLimitStore.delete(key);
+      }
+    }
+  }
+  
+  if (!record || now > record.resetAt) {
+    rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return next();
+  }
+  
+  if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return res.status(429).json({
+      ok: false,
+      error: 'rate_limit_exceeded',
+      message: 'Too many requests from this IP. Please try again later.',
+      retryAfter: Math.ceil((record.resetAt - now) / 1000)
+    });
+  }
+  
+  record.count++;
+  next();
+});
+
+// Database health check helper with timeout
+async function checkDbHealth(): Promise<boolean | null> {
+  if (!process.env.DATABASE_URL) {
+    return null; // Not configured
+  }
+  
+  try {
+    const { getPool, isDbAvailable } = await import('./db');
+    if (!isDbAvailable()) {
+      return false;
+    }
+    const pool = getPool();
+    
+    // Simple query with 1 second timeout
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('Database health check timeout')), 1000);
+    });
+    
+    const queryPromise = pool.query('SELECT 1');
+    await Promise.race([queryPromise, timeoutPromise]);
+    return true;
+  } catch (error) {
+    // Log error but don't crash /health endpoint
+    const { logger } = await import('./utils/logger');
+    logger.warn('Database health check failed', {
+      error: error instanceof Error ? error.message : String(error)
+    });
+    return false;
+  }
+}
 
 // Lightweight health check endpoint - must be early and never depend on optional subsystems
-app.get("/health", (_req, res) => {
-  res.status(200).json({ 
-    ok: true, 
+app.get("/health", async (_req, res) => {
+  const dbHealthy = await checkDbHealth();
+  const isHealthy = dbHealthy !== false; // null (not configured) is OK
+  
+  res.status(isHealthy ? 200 : 503).json({ 
+    ok: isHealthy, 
     service: "dreamnet-api",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: process.uptime(),
+    database: dbHealthy === null ? 'not-configured' : dbHealthy ? 'healthy' : 'unhealthy',
+    // Document what database status means:
+    // - 'healthy': Database is configured and responding to queries
+    // - 'unhealthy': Database is configured but not responding (connection failed or timeout)
+    // - 'not-configured': DATABASE_URL not set (server can run without DB)
   });
 });
 
@@ -204,7 +319,8 @@ app.use("/api", createDreamRouter());
   
   // Optional subsystems initialization function - only runs when INIT_SUBSYSTEMS=true
   async function initOptionalSubsystems(app: Express, server: Server): Promise<void> {
-    if (process.env.INIT_SUBSYSTEMS !== "true") {
+    const envConfig = getEnvConfig();
+    if (!envConfig.INIT_SUBSYSTEMS) {
       console.log("[Optional Subsystems] Skipped (INIT_SUBSYSTEMS not set to 'true')");
       return;
     }
@@ -1267,7 +1383,8 @@ app.use("/api", createDreamRouter());
       const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
       legacyDreamScoreEngine?.startScheduledScoring?.();
       
-      if (process.env.MESH_AUTOSTART !== "false") {
+      const envConfig = getEnvConfig();
+      if (envConfig.MESH_AUTOSTART) {
         startMesh().catch((error) =>
           console.error("Failed to start DreamNet mesh:", (error as Error).message),
         );
@@ -1302,15 +1419,7 @@ app.use("/api", createDreamRouter());
   app.use("/api/billable", billableRouter);
   app.use("/api/health", healthRouter);
   
-  // Simple public health check endpoint for Railway/Docker/K8s
-  app.get("/health", (_req, res) => {
-    res.status(200).json({ 
-      ok: true, 
-      service: "dreamnet-api",
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime()
-    });
-  });
+  // Note: /health endpoint is already defined above (line 205) with DB health check
   app.use("/api/nerve", nerveRouter);
   app.use("/api/audit", auditRouter);
   app.use("/api/rbac", rbacRouter);
@@ -1353,10 +1462,24 @@ app.use("/api", createDreamRouter());
   // Discovery API - Network discovery and mapping (admin-only)
   app.use("/api", discoveryRouter);
   
+  // System Graph API - Internal topology inspection (ports, routes, wormholes)
+  app.get("/api/system/graph", async (req, res) => {
+    try {
+      const { getSystemSnapshot } = await import("./system/graph");
+      const snapshot = await getSystemSnapshot();
+      res.json(snapshot);
+    } catch (err) {
+      console.error("Failed to build system graph:", err);
+      res.status(500).json({ message: "Failed to build system graph" });
+    }
+  });
+  
   // ChatGPT Agent Mode - Natural Language Interface (routes through AGENT_GATEWAY)
   app.use("/api/chatgpt-agent", chatgptAgentRouter);
   
   app.use("/api", createOperatorRouter());
+  app.use("/api/whale", whaleRouter);
+  app.use("/api/onboarding", onboardingRouter);
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -1400,16 +1523,51 @@ app.use((req, res, next) => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
+    
+    // Log error with structured logging
+    const traceId = (_req as any).traceId || 'unknown';
+    const logEntry = {
+      timestamp: new Date().toISOString(),
+      level: 'error',
+      traceId,
+      method: _req.method,
+      path: _req.path,
+      ip: _req.ip || _req.socket.remoteAddress,
+      userAgent: _req.get('user-agent'),
+      error: {
+        name: err.name || 'Error',
+        message: err.message || String(err),
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+      },
+      statusCode: status
+    };
+    console.error('[ERROR]', JSON.stringify(logEntry, null, 2));
 
-    res.status(status).json({ message });
+    // Don't expose internal error details in production
+    const errorResponse: any = {
+      ok: false,
+      error: status >= 500 ? 'internal_server_error' : 'request_error',
+      message: NODE_ENV === 'production' && status >= 500
+        ? 'An internal error occurred'
+        : message
+    };
+
+    // Include trace ID for debugging
+    if (traceId !== 'unknown') {
+      errorResponse.traceId = traceId;
+    }
+
+    res.status(status).json(errorResponse);
+    
     if (status >= 500) {
       try {
-        haloTriggers.recordError();
+        haloTriggers.recordError?.();
       } catch {
         // Ignore if haloTriggers not available
       }
     }
-    throw err;
+    
+    // Don't throw - error handler should not throw
   });
 
   // importantly only setup vite in development and after
@@ -1425,12 +1583,20 @@ app.use((req, res, next) => {
   // Other ports are firewalled. Default to 3000 if not specified.
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
-  const port = Number(process.env.PORT) || 3000;
+  const port = ENV_PORT;
   const host = "0.0.0.0";
 
   server.listen(port, host, () => {
     log(`serving on port ${port}`);
     console.log(`[DreamNet] Server started - /health endpoint available`);
+    
+    // Start Whale Pack control loop (runs every 5 minutes)
+    import('./whale/controlLoop').then(({ startControlLoop }) => {
+      startControlLoop(5 * 60 * 1000);
+      console.log('[WhalePack] Control loop started');
+    }).catch((err) => {
+      console.error('[WhalePack] Failed to start control loop:', err);
+    });
     
     // Initialize optional subsystems asynchronously (non-blocking)
     initOptionalSubsystems(app, server).catch((error) => {

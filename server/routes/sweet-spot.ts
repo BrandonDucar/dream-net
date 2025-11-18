@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-const router = Router();
+const router: Router = Router();
 
 // Sweet Spot Mode API - Optimized for Brandon's monitoring dashboards
 router.get('/status', (req, res) => {

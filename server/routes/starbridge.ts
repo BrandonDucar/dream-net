@@ -10,7 +10,7 @@ import {
 import { verifyIngress } from "../starbridge/policy";
 import type { StarbridgeEvent } from "../starbridge/types";
 
-const router = Router();
+const router: Router = Router();
 
 function formatSseEvent(event: StarbridgeEvent) {
   return `data: ${JSON.stringify({
@@ -117,7 +117,8 @@ router.get("/stream", async (req, res) => {
           ...event,
           ts: new Date(event.ts),
           replayed: true,
-        });
+          topic: event.topic as any,
+        } as any);
         await markEventReplayed(event.id);
       }
     } catch (error) {

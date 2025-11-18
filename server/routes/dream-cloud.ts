@@ -24,7 +24,7 @@ const initializeDreamClouds = () => {
       nodeAffinity: ['My DeFi Lab'],
       activeAgents: ['LUCID', 'ROOT', 'ECHO'],
       trustRequired: 70,
-      createdBy: '0xyourwallet',
+      createdBy: process.env.OPERATOR_WALLETS?.split(',')[0]?.trim() || 'system',
       createdAt: Date.now() - (7 * 24 * 60 * 60 * 1000) // 7 days ago
     },
     {

@@ -1,0 +1,45 @@
+{
+  "name": "@dreamnet/nerve",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./bus": {
+      "import": "./src/bus.ts",
+      "types": "./src/bus.ts"
+    },
+    "./factory": {
+      "import": "./src/factory.ts",
+      "types": "./src/factory.ts"
+    },
+    "./subscribers": {
+      "import": "./src/subscribers.ts",
+      "types": "./src/subscribers.ts"
+    },
+    "./init": {
+      "import": "./src/init.ts",
+      "types": "./src/init.ts"
+    },
+    "./types": {
+      "import": "./src/types.ts",
+      "types": "./src/types.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dreamnet/dreamnet-control-core": "workspace:*",
+    "@dreamnet/dreamstate": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

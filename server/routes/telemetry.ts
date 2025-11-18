@@ -4,11 +4,20 @@
  */
 
 import { Router } from 'express';
-import { isHardStop } from '../core/killSwitch.js';
 import fs from 'fs';
 import { spawn } from 'child_process';
 
-const router = Router();
+const router: Router = Router();
+
+// Kill switch is optional
+let isHardStop: any = null;
+try {
+  const killSwitchModule = require('../core/killSwitch.js');
+  isHardStop = killSwitchModule.isHardStop;
+} catch {
+  console.warn("[Telemetry Router] Kill switch not available");
+  isHardStop = () => false; // Fallback
+}
 
 // Core telemetry data structure
 interface TelemetryTile {
@@ -156,7 +165,7 @@ class TelemetryCollector {
         id: 'db_health',
         title: 'Database',
         value: dbHealth.connected ? 'ONLINE' : 'OFFLINE',
-        status: dbHealth.status,
+        status: dbHealth.status as 'warning' | 'healthy' | 'critical' | 'offline',
         lastUpdate: timestamp
       },
 
@@ -165,7 +174,7 @@ class TelemetryCollector {
         title: 'DB Response',
         value: dbHealth.responseTime,
         unit: 'ms',
-        status: dbHealth.status,
+        status: dbHealth.status as 'warning' | 'healthy' | 'critical' | 'offline',
         trend: 'stable',
         lastUpdate: timestamp
       },
@@ -185,7 +194,7 @@ class TelemetryCollector {
         id: 'budget_status',
         title: 'Budget Control',
         value: budgetStatus.hardStop ? 'ACTIVE' : 'NORMAL',
-        status: budgetStatus.status,
+        status: budgetStatus.status as 'warning' | 'healthy' | 'critical' | 'offline',
         lastUpdate: timestamp
       },
 

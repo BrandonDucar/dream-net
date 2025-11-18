@@ -1,0 +1,53 @@
+{
+  "name": "@dreamnet/base-mini-apps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./frontend": "./frontend/index.tsx",
+    "./frontend/*": "./frontend/*.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "compile": "hardhat compile --config hardhat.config.cjs",
+    "deploy:passport": "hardhat run scripts/deploy-passport.ts --config hardhat.config.cjs --network base",
+    "deploy:governance": "hardhat run scripts/deploy-governance.ts --config hardhat.config.cjs --network base",
+    "deploy:vault": "hardhat run scripts/deploy-vault.ts --config hardhat.config.cjs --network base",
+    "deploy:bounty": "hardhat run scripts/deploy-bounty.ts --config hardhat.config.cjs --network base",
+    "deploy:badge": "hardhat run scripts/deploy-badge.ts --config hardhat.config.cjs --network base",
+    "deploy:remix": "hardhat run scripts/deploy-remix-registry.ts --config hardhat.config.cjs --network base",
+    "deploy:whisper": "hardhat run scripts/deploy-whisper.ts --config hardhat.config.cjs --network base",
+    "deploy:seasonal": "hardhat run scripts/deploy-seasonal-events.ts --config hardhat.config.cjs --network base",
+    "deploy:nightmare": "hardhat run scripts/deploy-nightmare.ts --config hardhat.config.cjs --network base",
+    "deploy:mission": "hardhat run scripts/deploy-mission.ts --config hardhat.config.cjs --network base",
+    "deploy:revenue": "hardhat run scripts/deploy-revenue-splitter.ts --config hardhat.config.cjs --network base",
+    "deploy:progression": "hardhat run scripts/deploy-progression.ts --config hardhat.config.cjs --network base",
+    "deploy:drifters": "hardhat run scripts/deploy-drifters.ts --config hardhat.config.cjs --network base",
+    "deploy:time-capsule": "hardhat run scripts/deploy-time-capsule.ts --config hardhat.config.cjs --network base",
+    "deploy:dna-sequencer": "hardhat run scripts/deploy-dna-sequencer.ts --config hardhat.config.cjs --network base",
+    "deploy:prediction-market": "hardhat run scripts/deploy-prediction-market.ts --config hardhat.config.cjs --network base",
+    "deploy:all": "hardhat run scripts/deploy-all.ts --config hardhat.config.cjs --network base",
+    "deploy:all-mini": "hardhat run scripts/deploy-all-mini-contracts.ts --config hardhat.config.cjs --network base",
+    "deploy:new": "hardhat run scripts/deploy-vault.ts --config hardhat.config.cjs --network base && hardhat run scripts/deploy-bounty.ts --config hardhat.config.cjs --network base && hardhat run scripts/deploy-badge.ts --config hardhat.config.cjs --network base",
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "hardhat": "^2.22.0",
+    "typescript": "^5.9.3",
+    "dotenv": "^16.4.5"
+  },
+  "dependencies": {
+    "ethers": "^6.13.0"
+  },
+  "peerDependencies": {
+    "wagmi": "^2.19.4",
+    "viem": "^2.39.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

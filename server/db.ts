@@ -2,6 +2,7 @@ import { Pool, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-serverless';
 import ws from "ws";
 import * as schema from "@shared/schema";
+import { NODE_ENV } from './config/env';
 
 neonConfig.webSocketConstructor = ws;
 
@@ -9,22 +10,94 @@ neonConfig.webSocketConstructor = ws;
 // Routes that need DB will handle errors gracefully
 let _pool: Pool | null = null;
 let _db: ReturnType<typeof drizzle> | null = null;
+let _dbInitialized = false;
 
 if (process.env.DATABASE_URL) {
   try {
     _pool = new Pool({ connectionString: process.env.DATABASE_URL });
     _db = drizzle({ client: _pool, schema });
-    console.log("[Database] Connected to PostgreSQL");
+    _dbInitialized = true;
+    console.log("[Database] ✅ Connected to PostgreSQL");
+    
+    if (NODE_ENV === 'production') {
+      console.log("[Database] Production mode: Database connection required for core features");
+    }
   } catch (error) {
-    console.warn("[Database] Failed to connect:", error instanceof Error ? error.message : error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("[Database] ❌ Failed to connect:", errorMessage);
+    
+    if (NODE_ENV === 'production') {
+      console.error("[Database] ⚠️  Production mode: Database connection failure may impact core functionality");
+    } else {
+      console.warn("[Database] ⚠️  Development mode: Continuing without database (some features unavailable)");
+    }
   }
 } else {
-  console.warn("[Database] DATABASE_URL not set - database features will be unavailable");
+  if (NODE_ENV === 'production') {
+    console.warn("[Database] ⚠️  Production mode: DATABASE_URL not set - database features will be unavailable");
+    console.warn("[Database] ⚠️  Some routes may fail if they require database access");
+  } else {
+    console.warn("[Database] ⚠️  Development mode: DATABASE_URL not set - database features will be unavailable");
+  }
 }
 
-// Export with fallback - routes should check for null before using
-export const pool: Pool = _pool || ({} as Pool);
-export const db: ReturnType<typeof drizzle> = _db || ({} as ReturnType<typeof drizzle>);
+// Export with proper null checks - routes should use getDb() helper
+// Never export {} - always export null or the actual DB instance
+export const pool: Pool | null = _pool;
+export const db: ReturnType<typeof drizzle> | null = _db;
+
+// Helper functions to safely access database
+export function getDb(): ReturnType<typeof drizzle> {
+  if (!_db) {
+    const errorMsg = 'Database not available. DATABASE_URL may not be set or connection failed.';
+    console.error(`[Database] ❌ ${errorMsg}`);
+    
+    if (NODE_ENV === 'production') {
+      console.error('[Database] ⚠️  Production mode: Database access required but unavailable');
+    }
+    
+    throw new Error(errorMsg);
+  }
+  return _db;
+}
+
+export function getPool(): Pool {
+  if (!_pool) {
+    const errorMsg = 'Database pool not available. DATABASE_URL may not be set or connection failed.';
+    console.error(`[Database] ❌ ${errorMsg}`);
+    
+    if (NODE_ENV === 'production') {
+      console.error('[Database] ⚠️  Production mode: Database pool required but unavailable');
+    }
+    
+    throw new Error(errorMsg);
+  }
+  return _pool;
+}
+
+// Check if database is available
+export function isDbAvailable(): boolean {
+  const available = _db !== null && _pool !== null;
+  
+  if (!available && NODE_ENV === 'production') {
+    console.warn('[Database] ⚠️  Database check: Not available (production mode)');
+  }
+  
+  return available;
+}
+
+// Get database initialization status
+export function getDbStatus(): {
+  initialized: boolean;
+  available: boolean;
+  hasUrl: boolean;
+} {
+  return {
+    initialized: _dbInitialized,
+    available: isDbAvailable(),
+    hasUrl: !!process.env.DATABASE_URL
+  };
+}
 
 // MongoDB-style collection interface for compatibility
 export const mongoDb = {

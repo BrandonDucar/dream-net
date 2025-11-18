@@ -31,6 +31,8 @@
     "./email/**/*.ts",
     "./routes/**/*.ts",
     "./middleware/**/*.ts",
+    "./system/**/*.ts",
+    "./utils/**/*.ts",
     "./zk/**/*.ts",
     "../lib/**/*.ts",
     "./db.ts",

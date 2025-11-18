@@ -95,6 +95,7 @@ import LandingPage from "@/pages/landing";
 import { SeasonalEventBanner } from "./components/SeasonalEventBanner";
 import { DreamNetThemeProvider } from "./contexts/DreamNetThemeContext";
 import HomePage from "./pages/HomePage";
+import BaseMiniAppsHubPage from "./pages/base-mini-apps-hub";
 import OsPage from "./pages/OsPage";
 import VaultPage from "./pages/VaultPage";
 import ShopPage from "./pages/ShopPage";
@@ -336,7 +337,12 @@ function App() {
                   <Toaster />
                   <Switch>
                     {/* New DreamNet Pages */}
-                    <Route path="/" component={HomePage} />
+                    <Route path="/" component={BaseMiniAppsHubPage} />
+                    <Route path="/home" component={HomePage} />
+                    <Route path="/about" component={HomePage} />
+                    <Route path="/mini-apps/dreamscope-ops" component={BaseMiniAppsHubPage} />
+                    <Route path="/mini-apps/onboarding" component={BaseMiniAppsHubPage} />
+                    <Route path="/mini-apps/creator-studio" component={BaseMiniAppsHubPage} />
                     <Route path="/os" component={OsPage} />
                     <Route path="/vault" component={VaultPage} />
                     <Route path="/shop" component={ShopPage} />

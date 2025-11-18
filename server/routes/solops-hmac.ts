@@ -1,7 +1,15 @@
 import { Router } from 'express';
-import { HMACAuth } from '../utils/hmac-auth';
 
-const router = Router();
+const router: Router = Router();
+
+// HMACAuth is optional
+let HMACAuth: any = null;
+try {
+  const hmacModule = require('../utils/hmac-auth');
+  HMACAuth = hmacModule.HMACAuth;
+} catch {
+  console.warn("[Solops HMAC Router] HMACAuth not available");
+}
 
 // Middleware to parse raw body for HMAC verification
 const rawBodyParser = (req: any, res: any, next: any) => {

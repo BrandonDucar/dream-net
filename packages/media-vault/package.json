@@ -1,0 +1,20 @@
+{
+  "name": "@dreamnet/media-vault",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "sharp": "^0.33.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/sharp": "^0.32.0"
+  },
+  "private": true
+}
+

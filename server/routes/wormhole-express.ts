@@ -1,7 +1,7 @@
 
 import { Router } from 'express';
 
-const router = Router();
+const router: Router = Router();
 
 // A high-speed data bus for inter-agent communication.
 const magneticRailTrain = {

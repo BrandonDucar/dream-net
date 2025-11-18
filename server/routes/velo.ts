@@ -10,9 +10,17 @@
  */
 
 import { Router } from 'express';
-import { veloIntegration } from '../integrations/velo';
 
-const router = Router();
+const router: Router = Router();
+
+// Velo integration is optional
+let veloIntegration: any = null;
+try {
+  const veloModule = require('../integrations/velo');
+  veloIntegration = veloModule.veloIntegration;
+} catch {
+  console.warn("[Velo Router] Velo integration not available");
+}
 
 /**
  * Get overall integration status

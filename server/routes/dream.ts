@@ -87,4 +87,53 @@ router.post('/phase', (req, res) => {
   }
 });
 
+// Creator Studio endpoints
+const dreams: Array<{
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  primaryPorts: string[];
+  creator: string;
+  createdAt: string;
+}> = [];
+
+router.post('/', (req, res) => {
+  try {
+    const { name, description, tags, primaryPorts, creator } = req.body;
+
+    if (!name || !description || !creator) {
+      return res.status(400).json({ success: false, error: 'name, description, and creator are required' });
+    }
+
+    const dream = {
+      id: `dream-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      name,
+      description,
+      tags: tags || [],
+      primaryPorts: primaryPorts || [],
+      creator: creator.toLowerCase(),
+      createdAt: new Date().toISOString(),
+    };
+
+    dreams.push(dream);
+    res.json({ success: true, dream });
+  } catch (error) {
+    console.error('Error creating dream:', error);
+    res.status(500).json({ success: false, error: 'Failed to create dream' });
+  }
+});
+
+router.get('/created-by/:address', (req, res) => {
+  try {
+    const { address } = req.params;
+    const normalizedAddress = address.toLowerCase();
+    const userDreams = dreams.filter(d => d.creator === normalizedAddress);
+    res.json({ success: true, dreams: userDreams });
+  } catch (error) {
+    console.error('Error fetching dreams:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch dreams' });
+  }
+});
+
 export default router;

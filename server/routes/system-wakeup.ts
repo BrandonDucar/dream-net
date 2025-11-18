@@ -1,7 +1,15 @@
 import { Router } from 'express';
-import { systemWakeupService } from '../services/SystemWideWakeupService';
 
-const router = Router();
+const router: Router = Router();
+
+// System wakeup service is optional
+let systemWakeupService: any = null;
+try {
+  const wakeupModule = require('../services/SystemWideWakeupService');
+  systemWakeupService = wakeupModule.systemWakeupService;
+} catch {
+  console.warn("[System Wakeup Router] System wakeup service not available");
+}
 
 // Initiate system-wide wakeup
 router.post('/wakeup', async (req, res) => {
@@ -23,6 +31,9 @@ router.post('/wakeup', async (req, res) => {
 
 // Get system status
 router.get('/status', (req, res) => {
+  if (!systemWakeupService) {
+    return res.status(503).json({ error: "System wakeup service not available" });
+  }
   try {
     const status = systemWakeupService.getSystemStatus();
     res.json({
@@ -40,6 +51,9 @@ router.get('/status', (req, res) => {
 
 // Enter Sweet Spot Mode
 router.post('/sweet-spot', async (req, res) => {
+  if (!systemWakeupService) {
+    return res.status(503).json({ error: "System wakeup service not available" });
+  }
   try {
     await systemWakeupService.enterSweetSpotMode();
     res.json({

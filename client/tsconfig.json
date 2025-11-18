@@ -15,6 +15,15 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Path aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["../shared/*"],
+      "@dreamnet/base-mini-apps": ["../packages/base-mini-apps/frontend"],
+      "@dreamnet/base-mini-apps/*": ["../packages/base-mini-apps/frontend/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

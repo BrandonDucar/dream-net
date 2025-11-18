@@ -1,17 +1,38 @@
 import express from 'express';
 import { storage } from '../storage';
+import { calculateSimpleWalletScore } from '../utils/wallet-scoring';
+import { NODE_ENV } from '../config/env';
+import { validateWalletAddress } from '../validation/wallet';
+import { getRequestLogger } from '../utils/logger';
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 // Wallet scoring and trust level evaluation
 router.get('/:wallet', async (req, res) => {
+  const log = getRequestLogger(req);
+  
   try {
     const wallet = req.params.wallet;
     
-    // For now, use a simple scoring algorithm based on wallet address
-    // This will be replaced with actual blockchain analysis later
-    const baseScore = wallet.length % 100; // Fake score based on address length
-    const score = Math.max(25, baseScore); // Minimum score of 25
+    // Validate wallet address
+    const validation = validateWalletAddress(wallet);
+    if (!validation.valid) {
+      log.warn(`Invalid wallet address: ${validation.error}`);
+      return res.status(400).json({
+        ok: false,
+        error: 'validation_error',
+        message: validation.error,
+        traceId: req.traceId
+      });
+    }
+    const isProduction = NODE_ENV === 'production';
+    
+    // Use deterministic scoring utility (no randomness in production)
+    const score = calculateSimpleWalletScore(wallet);
+    
+    if (isProduction) {
+      log.info(`Deterministic score calculated for wallet: ${wallet}`);
+    }
     
     let trustLevel: 'Low' | 'Medium' | 'High';
     let unlockedAgents: string[];
@@ -32,11 +53,17 @@ router.get('/:wallet', async (req, res) => {
       score,
       trustLevel,
       unlockedAgents,
-      status: 'evaluated'
+      status: 'evaluated',
+      placeholder: true,
+      beta: true, // BETA: Placeholder implementation - real blockchain analysis coming soon
+      warning: isProduction 
+        ? 'This endpoint uses deterministic placeholder scoring. Real blockchain analysis will be implemented in a future update.'
+        : 'This endpoint uses deterministic placeholder data. Real blockchain analysis will be implemented in a future update.'
     });
 
   } catch (error) {
-    console.error('Wallet scoring error:', error);
+    const log = getRequestLogger(req);
+    log.error('Wallet scoring error', error instanceof Error ? error : new Error(String(error)));
     res.status(500).json({ error: 'Failed to evaluate wallet trust level' });
   }
 });
@@ -45,10 +72,38 @@ router.get('/:wallet', async (req, res) => {
 router.patch('/:wallet/score', async (req, res) => {
   try {
     const wallet = req.params.wallet;
+    
+    const log = getRequestLogger(req);
+    
+    // Validate wallet address
+    const walletValidation = validateWalletAddress(wallet);
+    if (!walletValidation.valid) {
+      log.warn(`Invalid wallet address: ${walletValidation.error}`);
+      return res.status(400).json({
+        ok: false,
+        error: 'validation_error',
+        message: walletValidation.error,
+        traceId: req.traceId
+      });
+    }
+    
+    // Validate request body
+    const { validateWalletScoreUpdateRequest } = await import('../validation/wallet');
+    const bodyValidation = validateWalletScoreUpdateRequest(req.body);
+    if (!bodyValidation.valid) {
+      log.warn(`Invalid request body: ${bodyValidation.error}`);
+      return res.status(400).json({
+        ok: false,
+        error: 'validation_error',
+        message: bodyValidation.error,
+        traceId: req.traceId
+      });
+    }
+    
     const { action, points } = req.body;
 
-    // Calculate current score
-    const currentScore = Math.max(25, wallet.length % 100);
+    // Calculate current score using deterministic utility
+    const currentScore = calculateSimpleWalletScore(wallet);
 
     // Calculate score adjustment based on action
     let scoreChange = 0;
@@ -100,7 +155,8 @@ router.patch('/:wallet/score', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Score update error:', error);
+    const log = getRequestLogger(req);
+    log.error('Score update error', error instanceof Error ? error : new Error(String(error)));
     res.status(500).json({ error: 'Failed to update wallet score' });
   }
 });

@@ -20,7 +20,9 @@ interface EcosystemData {
 router.get('/', async (req, res) => {
   try {
     const walletAddress = req.headers['x-wallet-address'] as string;
-    const isOperator = Boolean(walletAddress && ['0xYOURWALLET', '0xyourwallet'].includes(walletAddress));
+    // Use environment variable for operator wallets instead of hardcoded values
+    const operatorWallets = (process.env.OPERATOR_WALLETS || '').split(',').map(w => w.trim().toLowerCase()).filter(Boolean);
+    const isOperator = Boolean(walletAddress && operatorWallets.includes(walletAddress.toLowerCase()));
 
     // Import node configurations
     const { FLUTTERBY_NODE } = await import('../../dreamnodes/flutterbye/node.config.js');
@@ -63,14 +65,14 @@ router.get('/', async (req, res) => {
         id: 'dream-1',
         title: 'DeFi Protocol v2',
         name: 'DeFi Protocol v2',
-        creator: '0xyourwallet',
+        creator: process.env.OPERATOR_WALLETS?.split(',')[0]?.trim() || 'system',
         tags: ['defi', 'protocol'],
         score: 92,
         evolved: false,
         status: 'Development',
         trustLevel: 'Maximum',
         nightmare: false,
-        claimedBy: '0xyourwallet',
+        claimedBy: process.env.OPERATOR_WALLETS?.split(',')[0]?.trim() || 'system',
         remix: {
           initiated: false,
           result: null,
@@ -329,7 +331,9 @@ router.get('/', async (req, res) => {
 router.post('/god-trigger', async (req, res) => {
   try {
     const walletAddress = req.headers['x-wallet-address'] as string;
-    const isOperator = Boolean(walletAddress && ['0xYOURWALLET', '0xyourwallet'].includes(walletAddress));
+    // Use environment variable for operator wallets instead of hardcoded values
+    const operatorWallets = (process.env.OPERATOR_WALLETS || '').split(',').map(w => w.trim().toLowerCase()).filter(Boolean);
+    const isOperator = Boolean(walletAddress && operatorWallets.includes(walletAddress.toLowerCase()));
     
     if (!isOperator) {
       return res.status(403).json({

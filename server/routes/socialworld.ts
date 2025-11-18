@@ -1,10 +1,22 @@
 // DreamNet Social World API Routes
 import { Router } from 'express';
-import { dreamNetSocialWorld } from '../services/DreamNetSocialWorld';
-import { platformHijackingEngine } from '../services/PlatformHijackingEngine';
-import { socialMediaBot } from '../services/SocialMediaBot';
 
-const router = Router();
+const router: Router = Router();
+
+// Services are optional
+let dreamNetSocialWorld: any = null;
+let platformHijackingEngine: any = null;
+let socialMediaBot: any = null;
+try {
+  const socialWorldModule = require('../services/DreamNetSocialWorld');
+  dreamNetSocialWorld = socialWorldModule.dreamNetSocialWorld;
+  const hijackingModule = require('../services/PlatformHijackingEngine');
+  platformHijackingEngine = hijackingModule.platformHijackingEngine;
+  const socialBotModule = require('../services/SocialMediaBot');
+  socialMediaBot = socialBotModule.socialMediaBot;
+} catch {
+  console.warn("[Social World Router] Services not available");
+}
 
 // Initialize social world ecosystem
 router.post('/initialize', async (req, res) => {

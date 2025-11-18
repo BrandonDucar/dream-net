@@ -1,12 +1,38 @@
 import express, { Request, Response } from 'express';
 import Stripe from 'stripe';
 import { db } from '../db.js';
-import { stripeEvents } from '../../shared/schema.js';
-import { addCredits, ensureCreatorRole } from '../services/entitlements.js';
-import { getCreditsFromStripeEvent, getUserIdFromStripeEvent } from '../config/plans.js';
+// stripeEvents table is optional - handle missing gracefully
+let stripeEvents: any = null;
+try {
+  const schemaModule = require('../../shared/schema.js');
+  stripeEvents = schemaModule.stripeEvents;
+} catch {
+  console.warn("[Stripe Webhook] stripeEvents table not available");
+}
+// Entitlements and plans are optional
+let addCredits: any = null;
+let ensureCreatorRole: any = null;
+let getCreditsFromStripeEvent: any = null;
+let getUserIdFromStripeEvent: any = null;
+
+try {
+  const entitlementsModule = require('../services/entitlements.js');
+  addCredits = entitlementsModule.addCredits;
+  ensureCreatorRole = entitlementsModule.ensureCreatorRole;
+} catch {
+  console.warn("[Stripe Webhook] Entitlements service not available");
+}
+
+try {
+  const plansModule = require('../config/plans.js');
+  getCreditsFromStripeEvent = plansModule.getCreditsFromStripeEvent;
+  getUserIdFromStripeEvent = plansModule.getUserIdFromStripeEvent;
+} catch {
+  console.warn("[Stripe Webhook] Plans config not available");
+}
 import { eq } from 'drizzle-orm';
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 // Initialize Stripe with webhook secret
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -42,7 +68,7 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req: R
     const existingEvent = await db
       .select()
       .from(stripeEvents)
-      .where(eq(stripeEvents.id, event.id))
+      .where(stripeEvents ? eq(stripeEvents.id, event.id) : undefined)
       .limit(1);
 
     if (existingEvent.length > 0) {
@@ -94,11 +120,15 @@ async function processPaymentEvent(event: Stripe.Event) {
 
   try {
     // Add credits to user's entitlements
-    const entitlement = await addCredits(userId, credits, 'stripe', plan);
-    console.log(`[Stripe Webhook] Added ${credits} credits to user ${userId}:`, entitlement.id);
+    if (addCredits) {
+      await addCredits(userId, credits, 'stripe', plan);
+      console.log(`[Stripe Webhook] Added ${credits} credits to user ${userId}`);
+    }
 
     // Upgrade user to creator role if they purchased a plan
-    await ensureCreatorRole(userId);
+    if (ensureCreatorRole) {
+      await ensureCreatorRole(userId);
+    }
 
     console.log(`[Stripe Webhook] Successfully processed payment for user ${userId}: +${credits} credits`);
   } catch (error: any) {

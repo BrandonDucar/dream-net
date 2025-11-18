@@ -1,0 +1,23 @@
+{
+  "name": "@dreamnet/quantum-anticipation",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@dreamnet/utils": "workspace:*",
+    "@dreamnet/halo-loop": "workspace:*",
+    "@dreamnet/event-wormholes": "workspace:*",
+    "@dreamnet/governance": "workspace:*",
+    "@dreamnet/neural-mesh": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+

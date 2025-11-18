@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { idempotencyMiddleware, checkIdempotency } from '../middleware/idempotency';
 
-const router = Router();
+const router: Router = Router();
 
 // Universal webhook protection wrapper
 // Applies idempotency protection to any webhook endpoint
-export const protectWebhook = (
+export const protectWebhook: (path: string, handler: (req: any, res: any, next?: any) => Promise<void> | void) => any = (
   path: string,
   handler: (req: any, res: any, next?: any) => Promise<void> | void
 ) => {

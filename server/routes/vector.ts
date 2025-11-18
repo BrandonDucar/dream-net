@@ -6,7 +6,7 @@ import {
   verifyVectorEvent,
 } from "../vector-ledger/service";
 
-const router = Router();
+const router: Router = Router();
 
 router.post("/log", async (req, res) => {
   try {

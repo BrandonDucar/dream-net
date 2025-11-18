@@ -81,7 +81,9 @@ const commands = {
     const targetWallet = walletParam.split(':')[1];
 
     // Check if requester has permission
-    const isOperator = ['0xYOURWALLET', '0xyourwallet'].includes(walletAddress);
+    // Use environment variable for operator wallets instead of hardcoded values
+    const operatorWallets = (process.env.OPERATOR_WALLETS || '').split(',').map(w => w.trim().toLowerCase()).filter(Boolean);
+    const isOperator = walletAddress && operatorWallets.includes(walletAddress.toLowerCase());
     
     if (!isOperator) {
       return {
@@ -195,7 +197,9 @@ router.post('/command', async (req, res) => {
 // GET /api/ecosystem/commands - List available commands
 router.get('/commands', async (req, res) => {
   const walletAddress = req.headers['x-wallet-address'] as string;
-  const isOperator = Boolean(walletAddress && ['0xYOURWALLET', '0xyourwallet'].includes(walletAddress));
+  // Use environment variable for operator wallets instead of hardcoded values
+  const operatorWallets = (process.env.OPERATOR_WALLETS || '').split(',').map(w => w.trim().toLowerCase()).filter(Boolean);
+  const isOperator = Boolean(walletAddress && operatorWallets.includes(walletAddress.toLowerCase()));
 
   const availableCommands = {
     remix: {

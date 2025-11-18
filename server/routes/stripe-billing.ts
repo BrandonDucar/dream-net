@@ -1,9 +1,18 @@
 import express from 'express';
 import { db } from '../db';
-import { stripeCustomers, stripeSubs } from '../../shared/schema';
+// Stripe tables are optional
+let stripeCustomers: any = null;
+let stripeSubs: any = null;
+try {
+  const schemaModule = require('../../shared/schema');
+  stripeCustomers = schemaModule.stripeCustomers;
+  stripeSubs = schemaModule.stripeSubs;
+} catch {
+  console.warn("[Stripe Billing] Stripe tables not available");
+}
 import { eq } from 'drizzle-orm';
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 // Configure Stripe - using existing configuration
 let stripe: any = null;

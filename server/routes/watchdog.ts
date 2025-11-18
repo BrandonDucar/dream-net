@@ -2,7 +2,7 @@ import { Router } from "express";
 import { sql } from "drizzle-orm";
 import { db } from "../db";
 
-const router = Router();
+const router: Router = Router();
 const ALERTS = "dreamnet_trust.watchdog_alerts";
 
 router.get("/alerts", async (_req, res) => {

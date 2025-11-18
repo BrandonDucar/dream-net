@@ -1,0 +1,23 @@
+{
+  "name": "@dreamnet/agent-registry-core",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@dreamnet/utils": "workspace:*",
+    "@dreamnet/field-layer": "workspace:*",
+    "@dreamnet/reputation-lattice": "workspace:*",
+    "@dreamnet/narrative-field": "workspace:*",
+    "@dreamnet/neural-mesh": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+

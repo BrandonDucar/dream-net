@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { db } from "../db";
 import { listMetrics } from "../trust/metrics";
 
-const router = Router();
+const router: Router = Router();
 
 router.get("/trust", async (_req, res) => {
   const vectorRoots = await db.execute(sql`

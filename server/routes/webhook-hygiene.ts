@@ -1,15 +1,34 @@
 import { Router } from 'express';
-import { WebhookHygieneService } from '../services/WebhookHygieneService';
-import { DependencySanityService } from '../services/DependencySanityService';
-import { BlastRadiusControlService } from '../services/BlastRadiusControlService';
 
-const router = Router();
-const webhookHygiene = new WebhookHygieneService();
-const dependencySanity = new DependencySanityService();
-const blastRadius = new BlastRadiusControlService();
+const router: Router = Router();
+
+// Services are optional - handle missing gracefully
+let WebhookHygieneService: any = null;
+let DependencySanityService: any = null;
+let BlastRadiusControlService: any = null;
+let webhookHygiene: any = null;
+let dependencySanity: any = null;
+let blastRadius: any = null;
+
+try {
+  const hygieneModule = require('../services/WebhookHygieneService');
+  const sanityModule = require('../services/DependencySanityService');
+  const blastModule = require('../services/BlastRadiusControlService');
+  WebhookHygieneService = hygieneModule.WebhookHygieneService;
+  DependencySanityService = sanityModule.DependencySanityService;
+  BlastRadiusControlService = blastModule.BlastRadiusControlService;
+  if (WebhookHygieneService) webhookHygiene = new WebhookHygieneService();
+  if (DependencySanityService) dependencySanity = new DependencySanityService();
+  if (BlastRadiusControlService) blastRadius = new BlastRadiusControlService();
+} catch {
+  console.warn("[Webhook Hygiene] Services not available");
+}
 
 // Webhook validation endpoint
 router.post('/validate', async (req, res) => {
+  if (!webhookHygiene) {
+    return res.status(503).json({ error: "Webhook Hygiene Service not available" });
+  }
   try {
     const { provider, signature, timestamp, eventId } = req.body;
     const payload = JSON.stringify(req.body.payload || {});
@@ -33,6 +52,9 @@ router.post('/validate', async (req, res) => {
 
 // Dependency audit endpoint
 router.get('/audit/dependencies', async (req, res) => {
+  if (!dependencySanity) {
+    return res.status(503).json({ error: "Dependency Sanity Service not available" });
+  }
   try {
     const audit = await dependencySanity.runDependencyAudit();
     res.json(audit);
@@ -46,6 +68,9 @@ router.get('/audit/dependencies', async (req, res) => {
 
 // Generate dependency audit report
 router.get('/audit/report', async (req, res) => {
+  if (!dependencySanity) {
+    return res.status(503).json({ error: "Dependency Sanity Service not available" });
+  }
   try {
     const report = await dependencySanity.generateAuditReport();
     res.setHeader('Content-Type', 'text/plain');
@@ -60,6 +85,9 @@ router.get('/audit/report', async (req, res) => {
 
 // Blast radius control endpoints
 router.get('/blast-radius/status', (req, res) => {
+  if (!blastRadius) {
+    return res.status(503).json({ error: "Blast Radius Service not available" });
+  }
   try {
     const health = blastRadius.getIntegrationHealth();
     const stats = blastRadius.getBlastRadiusStats();
@@ -78,6 +106,9 @@ router.get('/blast-radius/status', (req, res) => {
 });
 
 router.post('/blast-radius/disable/:integration', async (req, res) => {
+  if (!blastRadius) {
+    return res.status(503).json({ error: "Blast Radius Service not available" });
+  }
   try {
     const { integration } = req.params;
     const { reason } = req.body;
@@ -99,6 +130,9 @@ router.post('/blast-radius/disable/:integration', async (req, res) => {
 });
 
 router.post('/blast-radius/enable/:integration', async (req, res) => {
+  if (!blastRadius) {
+    return res.status(503).json({ error: "Blast Radius Service not available" });
+  }
   try {
     const { integration } = req.params;
     
@@ -118,6 +152,9 @@ router.post('/blast-radius/enable/:integration', async (req, res) => {
 });
 
 router.post('/blast-radius/emergency-disable/:integration', async (req, res) => {
+  if (!blastRadius) {
+    return res.status(503).json({ error: "Blast Radius Service not available" });
+  }
   try {
     const { integration } = req.params;
     const { reason } = req.body;
@@ -141,6 +178,9 @@ router.post('/blast-radius/emergency-disable/:integration', async (req, res) => 
 
 // Webhook statistics
 router.get('/stats', (req, res) => {
+  if (!webhookHygiene) {
+    return res.status(503).json({ error: "Webhook Hygiene Service not available" });
+  }
   try {
     const stats = webhookHygiene.getStats();
     res.json(stats);

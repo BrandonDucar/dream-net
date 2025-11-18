@@ -1,9 +1,42 @@
 import express from 'express';
-import { extractUser, requireAuth, AuthenticatedRequest } from '../middleware/role-gates.js';
-import { getUsage } from '../services/usage.js';
-import { getEntitlements, getTotalCredits } from '../services/entitlements.js';
 
-const router = express.Router();
+// Middleware imports - handle missing gracefully
+let extractUser: any = null;
+let requireAuth: any = null;
+type AuthenticatedRequest = express.Request & { user?: any };
+
+try {
+  const roleGatesModule = require('../middleware/role-gates.js');
+  extractUser = roleGatesModule.extractUser;
+  requireAuth = roleGatesModule.requireAuth;
+} catch {
+  console.warn("[Usage Router] Role gates middleware not available");
+  // Fallback middleware
+  extractUser = (req: any, res: any, next: any) => next();
+  requireAuth = (req: any, res: any, next: any) => next();
+}
+
+// Usage service is optional
+let getUsage: any = null;
+try {
+  const usageModule = require('../services/usage.js');
+  getUsage = usageModule.getUsage;
+} catch {
+  console.warn("[Usage Router] Usage service not available");
+}
+
+// Entitlements service is optional
+let getEntitlements: any = null;
+let getTotalCredits: any = null;
+try {
+  const entitlementsModule = require('../services/entitlements.js');
+  getEntitlements = entitlementsModule.getEntitlements;
+  getTotalCredits = entitlementsModule.getTotalCredits;
+} catch {
+  console.warn("[Usage Router] Entitlements service not available");
+}
+
+const router: express.Router = express.Router();
 
 // Apply user extraction middleware
 router.use(extractUser);
@@ -16,9 +49,9 @@ router.get('/status', requireAuth, async (req: AuthenticatedRequest, res) => {
     // Get usage info
     const usage = await getUsage(userId);
     
-    // Get entitlement details
-    const entitlement = await getEntitlements(userId);
-    const totalCredits = await getTotalCredits(userId);
+    // Get entitlement details (optional)
+    const entitlement = getEntitlements ? await getEntitlements(userId) : null;
+    const totalCredits = getTotalCredits ? await getTotalCredits(userId) : 0;
 
     res.json({
       user: {

@@ -1,7 +1,15 @@
 import { Router } from 'express';
-import { slaService } from '../services/SLAService';
 
-const router = Router();
+const router: Router = Router();
+
+// SLA service is optional
+let slaService: any = null;
+try {
+  const slaModule = require('../services/SLAService');
+  slaService = slaModule.slaService;
+} catch {
+  console.warn("[SLA Router] SLA service not available");
+}
 
 // Get SLA status and metrics
 router.get('/api/sla/status', (req, res) => {
@@ -31,6 +39,9 @@ router.get('/api/sla/config', (req, res) => {
 
 // Record a custom metric (for testing or manual monitoring)
 router.post('/api/sla/metric', (req, res) => {
+  if (!slaService) {
+    return res.status(503).json({ error: "SLA service not available" });
+  }
   try {
     const { metric_name, value, unit } = req.body;
     
@@ -53,6 +64,9 @@ router.post('/api/sla/metric', (req, res) => {
 
 // Acknowledge an alert
 router.post('/api/sla/acknowledge', (req, res) => {
+  if (!slaService) {
+    return res.status(503).json({ error: "SLA service not available" });
+  }
   try {
     const { alert_id } = req.body;
     
@@ -80,6 +94,9 @@ router.post('/api/sla/acknowledge', (req, res) => {
 
 // Simulate a failure (admin protected, for testing)
 router.post('/api/sla/simulate', (req, res) => {
+  if (!slaService) {
+    return res.status(503).json({ error: "SLA service not available" });
+  }
   try {
     const adminToken = req.headers['x-admin-token'] as string;
     

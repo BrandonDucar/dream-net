@@ -1,7 +1,15 @@
 import { Router } from 'express';
-import { syntheticMonitoring } from '../services/SyntheticMonitoring';
 
-const router = Router();
+const router: Router = Router();
+
+// Synthetic monitoring is optional
+let syntheticMonitoring: any = null;
+try {
+  const syntheticModule = require('../services/SyntheticMonitoring');
+  syntheticMonitoring = syntheticModule.syntheticMonitoring;
+} catch {
+  console.warn("[Synthetic Router] Synthetic monitoring not available");
+}
 
 // Get all synthetic checks
 router.get('/synthetic/checks', (req, res) => {
@@ -23,6 +31,9 @@ router.get('/synthetic/checks', (req, res) => {
 
 // Get specific check details
 router.get('/synthetic/checks/:checkId', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const { checkId } = req.params;
     const check = syntheticMonitoring.getCheck(checkId);
@@ -49,6 +60,9 @@ router.get('/synthetic/checks/:checkId', (req, res) => {
 
 // Add new synthetic check
 router.post('/synthetic/checks', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const { id, name, endpoint, method, interval_seconds, timeout_ms, expected_status, headers, body } = req.body;
     
@@ -87,6 +101,9 @@ router.post('/synthetic/checks', (req, res) => {
 
 // Update synthetic check
 router.put('/synthetic/checks/:checkId', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const { checkId } = req.params;
     const updates = req.body;
@@ -112,6 +129,9 @@ router.put('/synthetic/checks/:checkId', (req, res) => {
 
 // Enable/disable synthetic check
 router.post('/synthetic/checks/:checkId/:action', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const { checkId, action } = req.params;
     
@@ -147,6 +167,9 @@ router.post('/synthetic/checks/:checkId/:action', (req, res) => {
 
 // Delete synthetic check
 router.delete('/synthetic/checks/:checkId', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const { checkId } = req.params;
     
@@ -170,6 +193,9 @@ router.delete('/synthetic/checks/:checkId', (req, res) => {
 
 // Get results for specific check
 router.get('/synthetic/checks/:checkId/results', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const { checkId } = req.params;
     const { limit } = req.query;
@@ -198,6 +224,9 @@ router.get('/synthetic/checks/:checkId/results', (req, res) => {
 
 // Get overall synthetic monitoring status
 router.get('/synthetic/status', (req, res) => {
+  if (!syntheticMonitoring) {
+    return res.status(503).json({ error: "Synthetic monitoring not available" });
+  }
   try {
     const overallStatus = syntheticMonitoring.getOverallStatus();
     const checks = syntheticMonitoring.getAllChecks();

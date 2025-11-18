@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { sendDreamCallSMS } from '../../lib/sms';
 
-const router = Router();
+const router: Router = Router();
 
 // SMS opt-in endpoint
 router.post('/opt-in', async (req, res) => {

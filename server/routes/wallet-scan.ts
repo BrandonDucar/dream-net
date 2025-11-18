@@ -1,22 +1,23 @@
 import express from 'express';
-const router = express.Router();
+import { calculateFlutterAIScore } from '../utils/wallet-scoring';
+import { NODE_ENV } from '../config/env';
+import { validateWalletScoreRequest } from '../validation/wallet';
+import { createValidationMiddleware } from '../validation/common';
+import { getRequestLogger } from '../utils/logger';
 
-// Mock FlutterAI wallet scanning
-router.post('/', async (req, res) => {
-  const { wallet } = req.body;
+const router: express.Router = express.Router();
 
-  if (!wallet) {
-    return res.status(400).json({ error: 'Wallet address required' });
-  }
+// FlutterAI wallet scanning (deterministic in production)
+router.post('/', createValidationMiddleware((req) => validateWalletScoreRequest(req.body)), async (req, res) => {
+  const wallet = req.validated?.wallet || req.body.wallet;
+  const log = getRequestLogger(req);
 
   try {
-    console.log(`🔍 [FlutterAI] Scanning wallet: ${wallet}`);
+    const isProduction = NODE_ENV === 'production';
+    log.info(`Scanning wallet: ${wallet} (${isProduction ? 'production' : 'development'})`);
     
-    // Simulate AI analysis with varying results based on wallet
-    const trustScore = Math.floor(Math.random() * 40) + 60; // 60-100
-    const nftCount = Math.floor(Math.random() * 20) + 1;
-    const coreTypes = ['Vision', 'Tool', 'Movement', 'Story'];
-    const dreamCoreType = coreTypes[Math.floor(Math.random() * coreTypes.length)];
+    // Use deterministic scoring utility (no randomness in production)
+    const { trustScore, nftCount, dreamCoreType, confidence } = calculateFlutterAIScore(wallet);
     
     // Unlock bots based on trust score and NFT count
     const unlockedBots = ['DreamIntakeBot'];
@@ -33,17 +34,28 @@ router.post('/', async (req, res) => {
       unlockedBots,
       scanTimestamp: new Date().toISOString(),
       flutterAI: {
-        confidence: Math.floor(Math.random() * 20) + 80, // 80-100%
+        confidence,
         analysisDepth: 'comprehensive',
         riskLevel: trustScore >= 80 ? 'low' : trustScore >= 70 ? 'medium' : 'high'
-      }
+      },
+      placeholder: true
     };
 
-    console.log(`✅ [FlutterAI] Scan complete - Trust: ${trustScore}, Core: ${dreamCoreType}`);
+    if (isProduction) {
+      log.warn('Using deterministic placeholder scoring');
+    }
+    log.info(`Scan complete - Trust: ${trustScore}, Core: ${dreamCoreType}`);
     
-    return res.json(scanResult);
+    return res.json({
+      ...scanResult,
+      beta: true, // BETA: Placeholder implementation - real FlutterAI analysis coming soon
+      warning: isProduction
+        ? 'This endpoint uses deterministic placeholder scoring. Real FlutterAI wallet analysis will be implemented in a future update.'
+        : 'This endpoint uses deterministic placeholder data. Real FlutterAI wallet analysis will be implemented in a future update.'
+    });
   } catch (err) {
-    console.error("❌ [FlutterAI] Scan failed:", err);
+    const log = getRequestLogger(req);
+    log.error('FlutterAI scan failed', err instanceof Error ? err : new Error(String(err)));
     return res.status(500).json({ error: 'Wallet scan failed' });
   }
 });
