@@ -20,4 +20,4 @@ command = "cd server && node build.cjs"
 
 [deploy]
 
-command = "node dist/index.js"
+command = "node server/dist/index.js"

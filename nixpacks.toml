@@ -8,5 +8,5 @@ cmds = ["npm install -g pnpm", "pnpm i --frozen-lockfile"]
 cmds = ["cd server && node build.cjs"]
 
 [start]
-cmd = "node dist/index.js"
+cmd = "node server/dist/index.js"
 

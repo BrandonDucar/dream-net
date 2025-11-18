@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-    "rootDir": "..",
+    "rootDir": ".",
     "tsBuildInfoFile": "../node_modules/.cache/server.tsbuildinfo",
     "noImplicitAny": false,
     "strict": false,
