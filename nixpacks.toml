@@ -2,7 +2,7 @@
 nixPkgs = ["nodejs_18"]
 
 [phases.install]
-cmds = ["npm install -g pnpm", "export PATH=$PATH:/usr/local/bin && pnpm i --frozen-lockfile"]
+cmds = ["npm install -g pnpm && pnpm i --frozen-lockfile"]
 
 [phases.build]
 cmds = ["cd server && node build.cjs"]
