@@ -43,6 +43,31 @@ export { DreamScopeOpsConsole } from './DreamScopeOpsConsole';
 export { OnboardingWizard } from './OnboardingWizard';
 export { CreatorStudio } from './CreatorStudio';
 
+// Fun/Game Apps
+export { JaggyStealthRun } from './JaggyStealthRun';
+export { DreamDNASequencerGame } from './DreamDNASequencerGame';
+export { DreamLatticeGame } from './DreamLatticeGame';
+export { WormholeEscape } from './WormholeEscape';
+export { DreamBetArcade } from './DreamBetArcade';
+export { OctopusPatternMaster } from './OctopusPatternMaster';
+export { LabubuPopSmash } from './LabubuPopSmash';
+export { ReactionTestMini } from './ReactionTestMini';
+export { DreamSnailDrift } from './DreamSnailDrift';
+export { DreamCloudBuilder } from './DreamCloudBuilder';
+
+// Practical/Ops/Money Apps
+export { DreamScopeOpsConsoleMini } from './DreamScopeOpsConsoleMini';
+export { ShieldMonitorMini } from './ShieldMonitorMini';
+export { WormholeRouterMini } from './WormholeRouterMini';
+export { OnboardingWizardMini } from './OnboardingWizardMini';
+export { CreatorStudioMini } from './CreatorStudioMini';
+export { DreamShopMini } from './DreamShopMini';
+export { TributeGateMini } from './TributeGateMini';
+export { WalletScoreDashboard } from './WalletScoreDashboard';
+export { SocialOpsMini } from './SocialOpsMini';
+export { WolfPackFundingHUD } from './WolfPackFundingHUD';
+export { InboxSquaredMini } from './InboxSquaredMini';
+
 // App registry for routing
 export const MINI_APPS = {
   'passport-mint': {
@@ -257,6 +282,134 @@ export const MINI_APPS = {
     component: 'CreatorStudio',
     name: 'Creator Studio',
     category: 'creative',
+    requiresPassport: false,
+  },
+  // Fun/Game Apps
+  'jaggy-stealth-run': {
+    component: 'JaggyStealthRun',
+    name: 'Jaggy Stealth Run',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'dna-sequencer-game': {
+    component: 'DreamDNASequencerGame',
+    name: 'Dream DNA Sequencer Game',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'dream-lattice-game': {
+    component: 'DreamLatticeGame',
+    name: 'Dream Lattice Game',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'wormhole-escape': {
+    component: 'WormholeEscape',
+    name: 'Wormhole Escape',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'dream-bet-arcade': {
+    component: 'DreamBetArcade',
+    name: 'Dream Bet Arcade',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'octopus-pattern-master': {
+    component: 'OctopusPatternMaster',
+    name: 'Octopus Pattern Master',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'labubu-pop-smash': {
+    component: 'LabubuPopSmash',
+    name: 'Labubu Pop Smash',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'reaction-test': {
+    component: 'ReactionTestMini',
+    name: 'Reaction Test Mini',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'dream-snail-drift': {
+    component: 'DreamSnailDrift',
+    name: 'Dream Snail Drift',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'dream-cloud-builder': {
+    component: 'DreamCloudBuilder',
+    name: 'Dream Cloud Builder',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  // Practical/Ops/Money Apps
+  'dreamscope-ops-mini': {
+    component: 'DreamScopeOpsConsoleMini',
+    name: 'DreamScope Ops Console Mini',
+    category: 'ops',
+    requiresPassport: false,
+  },
+  'shield-monitor-mini': {
+    component: 'ShieldMonitorMini',
+    name: 'Shield Monitor Mini',
+    category: 'utility',
+    requiresPassport: false,
+  },
+  'wormhole-router-mini': {
+    component: 'WormholeRouterMini',
+    name: 'Wormhole Router Mini',
+    category: 'ops',
+    requiresPassport: false,
+  },
+  'onboarding-wizard-mini': {
+    component: 'OnboardingWizardMini',
+    name: 'Onboarding Wizard Mini',
+    category: 'onboarding',
+    requiresPassport: false,
+  },
+  'creator-studio-mini': {
+    component: 'CreatorStudioMini',
+    name: 'Creator Studio Mini',
+    category: 'creative',
+    requiresPassport: false,
+  },
+  'dream-shop-mini': {
+    component: 'DreamShopMini',
+    name: 'Dream Shop Mini',
+    category: 'commerce',
+    requiresPassport: false,
+  },
+  'tribute-gate-mini': {
+    component: 'TributeGateMini',
+    name: 'Tribute Gate Mini',
+    category: 'commerce',
+    requiresPassport: false,
+  },
+  'wallet-score-dashboard': {
+    component: 'WalletScoreDashboard',
+    name: 'Wallet Score Dashboard',
+    category: 'utility',
+    requiresPassport: false,
+  },
+  'social-ops-mini': {
+    component: 'SocialOpsMini',
+    name: 'Social Ops Mini',
+    category: 'ops',
+    requiresPassport: false,
+  },
+  'wolf-pack-funding-hud': {
+    component: 'WolfPackFundingHUD',
+    name: 'Wolf Pack Funding HUD',
+    category: 'commerce',
+    requiresPassport: false,
+  },
+  'inbox-squared': {
+    component: 'InboxSquaredMini',
+    name: 'Inbox² - AI Communication Copilot',
+    category: 'ops',
     requiresPassport: false,
   },
 };

@@ -1,3 +1,4 @@
+
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import type { Server } from "http";
 import { setupVite, serveStatic, log } from "./vite";
@@ -37,6 +38,7 @@ import { createInstantMeshRouter } from "./routes/instant-mesh";
 import { createFoundryRouter } from "./routes/foundry";
 import { createMediaListRouter } from "./routes/media-list";
 import { createEmailRouter } from "./routes/email";
+import { createInboxSquaredRouter } from "./routes/inbox-squared";
 import { createDreamSnailRouter } from "./routes/dream-snail";
 import { createBiomimeticSystemsRouter } from "./routes/biomimetic-systems";
 import whaleRouter from "./routes/whale";
@@ -304,6 +306,7 @@ app.use("/api", createDreamRouter());
   app.use("/api", createFoundryRouter());
   app.use("/api", createMediaListRouter());
   app.use("/api", createEmailRouter());
+  app.use("/api/inbox-squared", createInboxSquaredRouter());
   app.use("/api", createDreamSnailRouter());
   app.use("/api", createBiomimeticSystemsRouter());
   

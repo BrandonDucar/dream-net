@@ -73,13 +73,9 @@ export declare const DREAMKEEPER_CORE: {
      * Check Base L2 network health (Mainnet and Sepolia)
      */
     checkBaseHealth: (network?: "mainnet" | "sepolia") => Promise<{
-        status: "healthy" | "degraded" | "down";
+        status: "degraded" | "healthy" | "down";
         blockNumber: number;
         latency: number;
-    } | {
-        status: "down";
-        blockNumber: null;
-        latency: null;
     }>;
     /**
      * Start periodic Base health checks

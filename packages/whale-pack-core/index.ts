@@ -57,6 +57,7 @@ export const WhalePackCore = {
 };
 
 export * from "./types";
+export * from "./logic/whaleOutreachCore";
 export default WhalePackCore;
 
 

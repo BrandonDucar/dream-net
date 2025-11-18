@@ -192,6 +192,22 @@ export const wallets = pgTable("wallets", {
     lastUpdated: timestamp("last_updated").defaultNow().notNull(),
 });
 // Dream Reminders table for SMS scheduling
+export const dreamnetApiKeys = pgTable("dreamnet_api_keys", {
+    id: varchar("id").primaryKey().default(sql `gen_random_uuid()`),
+    keyHash: text("key_hash").notNull().unique(),
+    keyPrefix: text("key_prefix").notNull(),
+    userId: varchar("user_id"),
+    walletAddress: text("wallet_address"),
+    name: text("name").notNull(),
+    description: text("description"),
+    permissions: jsonb("permissions").$type().default(sql `'[]'::jsonb`),
+    rateLimit: integer("rate_limit").default(1000),
+    lastUsedAt: timestamp("last_used_at"),
+    expiresAt: timestamp("expires_at"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    revokedAt: timestamp("revoked_at"),
+    createdBy: text("created_by"),
+});
 export const dreamReminders = pgTable("dream_reminders", {
     id: varchar("id").primaryKey().default(sql `gen_random_uuid()`),
     dreamId: varchar("dream_id").notNull(),

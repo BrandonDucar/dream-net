@@ -52,6 +52,7 @@ export const OrcaPackCore = {
 };
 
 export * from "./types";
+export * from "./logic/orcaOutreachCore";
 export default OrcaPackCore;
 
 

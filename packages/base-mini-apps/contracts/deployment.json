@@ -7,17 +7,22 @@
       "DreamVault": "0x832876CDAaC6e7BAd9C4B953efce19AF0D89Fbd7",
       "BountyEscrow": "0x21c4BD450a6689353aFfB3EDCA887aa9F908Fc2c",
       "BadgeNFT": "0x6Ece1531C0547b366Fd10814Fae5963788d2c2a1",
-      "DreamRemixRegistry": "0xF373fE51416BB37067262174e5c721903FC0E66d",
-      "WhisperMessenger": "0x4D33f7Ad7b33cd038770D71C5675B5b2F48A2dFB",
-      "SeasonalEventsRegistry": "0xa7c1d6a3127D17256b40af71F9BE82Ff2235073F",
-      "NightmareRegistry": "0x9347617Ae849aC861489A402193da97Bcd9F8E7f",
-      "RevenueSplitter": "0x807ED6BA7B4AacaDf744693Ca59f118F1a7Bf282",
-      "ProgressionRegistry": "0xe23526d164C568aC0870C0BA26e88c7f158aC80a",
-      "MissionRegistry": "0x1AD0C9a5cFCdCc787C1751a412123939f2d434A9",
-      "DreamDriftersRegistry": "0x63809962f399F42aFf03aF57342F6510D581A0b9",
-      "DreamTimeCapsule": "0x9F62429F7Fa81D5D97a6540386730cC404547629",
-      "DreamDNASequencer": "0x5b511831E1070efFBb70226251a83341Cb73B353",
-      "DreamPredictionMarket": "0xc3C5d260465A1917D7deC4b290fFF0bc8bc74B4c"
+      "DreamRemixRegistry": "0x66Ef7DDb340537E22F567D60d6c22EDA2B8c3619",
+      "WhisperMessenger": "0x1cBf5C4AB1aa0f1D0Db0fF17f978EC1e165E1002",
+      "SeasonalEventsRegistry": "0xdf30a28fA5DbF392DD76Ed761852a31F772AcC27",
+      "NightmareRegistry": "0x29f2E979E5E2ec0683B1D0ee660824eeb12B7AdF",
+      "RevenueSplitter": "0x07ed77169aD71905aF3778b42760F3269a0D0C74",
+      "ProgressionRegistry": "0xDa02C8383D42C9b0943d532fC9F95C27C9A8055B",
+      "MissionRegistry": "0x73999460083aC079A199B10f1DE1f4A9cA3db837",
+      "DreamDriftersRegistry": "0x3987902f05Dfca6197D08AcB694e48BE5Df8cE65",
+      "DreamTimeCapsule": "0x891A71eB2D20692D22bF7106B16Ba48253826409",
+      "DreamDNASequencer": "0xd9B140aFB0ef0b358f8342fe6381f6589d450A87",
+      "DreamPredictionMarket": "0x036b043Ebb894f16639452fC35B7C379bbD05593",
+      "DreamShop": "0xa1E35292c736a68B9CAB7b9e5c271575632F442d",
+      "TributeGate": "0x318292412250E906951f849eB3446c00b7688a6B",
+      "WalletScoreRegistry": "0x61A0523f068246E72a77e70f7B30AC2e4bfa87D5",
+      "GameRegistry": "0xB38005e10E376D5D43699B45E7fc2f06A8465a5D",
+      "GameAchievementNFT": "0x4AF7a82908C64e554584bD6A0F9145521F1913d6"
     }
   }
 }

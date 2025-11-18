@@ -42,11 +42,11 @@ async function saveManifest(manifest: DeploymentManifest) {
   fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2));
 }
 
-async function deployContract(name: string, factoryName: string): Promise<Deployment | null> {
+async function deployContract(name: string, factoryName: string, args: any[] = []): Promise<Deployment | null> {
   try {
     console.log(`\n📦 Deploying ${name}...`);
     const ContractFactory = await ethers.getContractFactory(factoryName);
-    const contract = await ContractFactory.deploy();
+    const contract = await ContractFactory.deploy(...args);
     await contract.waitForDeployment();
     
     const address = await contract.getAddress();
@@ -79,7 +79,13 @@ async function main() {
   const contracts = manifest.base.contracts;
 
   // List of contracts to deploy (only if not already deployed)
-  const contractsToDeploy = [
+  const contractsToDeploy: Array<{
+    name: string;
+    key: string;
+    factory: string;
+    args?: any[];
+  }> = [
+    // Existing contracts
     { name: "DreamRemixRegistry", key: "DreamRemixRegistry", factory: "DreamRemixRegistry" },
     { name: "WhisperMessenger", key: "WhisperMessenger", factory: "WhisperMessenger" },
     { name: "SeasonalEventsRegistry", key: "SeasonalEventsRegistry", factory: "SeasonalEventsRegistry" },
@@ -88,6 +94,15 @@ async function main() {
     { name: "RevenueSplitter", key: "RevenueSplitter", factory: "RevenueSplitter" },
     { name: "ProgressionRegistry", key: "ProgressionRegistry", factory: "ProgressionRegistry" },
     { name: "DreamDriftersRegistry", key: "DreamDriftersRegistry", factory: "DreamDriftersRegistry" },
+    { name: "DreamTimeCapsule", key: "DreamTimeCapsule", factory: "DreamTimeCapsule" },
+    { name: "DreamDNASequencer", key: "DreamDNASequencer", factory: "DreamDNASequencer" },
+    { name: "DreamPredictionMarket", key: "DreamPredictionMarket", factory: "DreamPredictionMarket" },
+    // New practical app contracts
+    { name: "DreamShop", key: "DreamShop", factory: "DreamShop", args: [deployer.address] },
+    { name: "TributeGate", key: "TributeGate", factory: "TributeGate", args: [deployer.address] },
+    { name: "WalletScoreRegistry", key: "WalletScoreRegistry", factory: "WalletScoreRegistry", args: [deployer.address] },
+    // Game contracts (deploy GameRegistry first, then NFT contract)
+    { name: "GameRegistry", key: "GameRegistry", factory: "GameRegistry", args: [deployer.address] },
   ];
 
   const deployments: Record<string, Deployment> = {};
@@ -99,7 +114,7 @@ async function main() {
       continue;
     }
 
-    const deployment = await deployContract(contract.name, contract.factory);
+    const deployment = await deployContract(contract.name, contract.factory, contract.args || []);
     if (deployment) {
       deployments[contract.key] = deployment;
       contracts[contract.key] = deployment.address;

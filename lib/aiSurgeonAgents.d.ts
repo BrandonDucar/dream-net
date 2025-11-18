@@ -25,7 +25,7 @@ export declare const SurgeonAgent: {
         status: "active" | "idle" | "maintenance";
         diagnosticsRun: number;
         autoFixesApplied: number;
-        lastSweep: string | null;
+        lastSweep: string;
         activeIssues: number;
         totalIssues: number;
         taskQueue: SurgeonTask[];

@@ -8,7 +8,9 @@
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@dreamnet/inbox-squared-core": "workspace:*"
+  },
   "devDependencies": {
     "typescript": "^5.9.3"
   }

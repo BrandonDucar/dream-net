@@ -27,17 +27,17 @@ export declare const DreamDefenseNet: {
     respond: (threat: Threat) => void;
     neutralizeThreat: (threat: Threat) => string;
     updatePatternDatabase: (threat: Threat) => void;
-    calculateInitialRisk: (severity: string) => number;
+    calculateInitialRisk: (severity: Threat["severity"]) => number;
     loadKnownPatterns: () => void;
     cleanupOldThreats: () => void;
     escalateToCore: (threat: Threat) => void;
     requestSurgeonAssistance: (threat: Threat) => void;
     getStatus: () => {
-        status: "maintenance" | "armed" | "standby" | "compromised";
+        status: "standby" | "maintenance" | "armed" | "compromised";
         activeThreats: number;
-        neutralizedThreeat: number;
+        neutralizedThreats: number;
         totalThreats: number;
-        lastScan: string | null;
+        lastScan: string;
         patternCount: number;
         threatLog: Threat[];
         patterns: ThreatPattern[];

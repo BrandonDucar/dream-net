@@ -22,6 +22,7 @@ export default defineConfig({
       '@dreamnet/wolfpack-funding-core': path.resolve(__dirname, '../packages/wolfpack-funding-core'),
       '@dreamnet/jaggy-core': path.resolve(__dirname, '../packages/jaggy-core'),
       '@dreamnet/whale-pack-core': path.resolve(__dirname, '../packages/whale-pack-core'),
+      '@dreamnet/inbox-squared-core': path.resolve(__dirname, '../packages/inbox-squared-core'),
       '@dreamnet/dream-state-core': path.resolve(__dirname, '../packages/dream-state-core'),
       '@dreamnet/webhook-nervous-core': path.resolve(__dirname, '../packages/webhook-nervous-core'),
       '@dreamnet/dreamnet-snail-core': path.resolve(__dirname, '../packages/dreamnet-snail-core'),
@@ -40,6 +41,17 @@ export default defineConfig({
     emptyOutDir: true,
     commonjsOptions: {
       include: [/node_modules/, /packages/],
+    },
+    rollupOptions: {
+      external: [
+        // Exclude server-only packages that have Node.js dependencies
+        '@dreamnet/inbox-squared-core',
+        'googleapis',
+        'puppeteer',
+        'google-trends-api',
+        'newsapi',
+        'timezone-lookup',
+      ],
     },
   },
 });

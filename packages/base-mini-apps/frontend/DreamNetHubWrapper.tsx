@@ -35,6 +35,29 @@ import { DreamPredictionMarketApp } from './DreamPredictionMarketApp';
 import { DreamScopeOpsConsole } from './DreamScopeOpsConsole';
 import { OnboardingWizard } from './OnboardingWizard';
 import { CreatorStudio } from './CreatorStudio';
+// Fun/Game Apps
+import { JaggyStealthRun } from './JaggyStealthRun';
+import { DreamDNASequencerGame } from './DreamDNASequencerGame';
+import { DreamLatticeGame } from './DreamLatticeGame';
+import { WormholeEscape } from './WormholeEscape';
+import { DreamBetArcade } from './DreamBetArcade';
+import { OctopusPatternMaster } from './OctopusPatternMaster';
+import { LabubuPopSmash } from './LabubuPopSmash';
+import { ReactionTestMini } from './ReactionTestMini';
+import { DreamSnailDrift } from './DreamSnailDrift';
+import { DreamCloudBuilder } from './DreamCloudBuilder';
+// Practical/Ops/Money Apps
+import { DreamScopeOpsConsoleMini } from './DreamScopeOpsConsoleMini';
+import { ShieldMonitorMini } from './ShieldMonitorMini';
+import { WormholeRouterMini } from './WormholeRouterMini';
+import { OnboardingWizardMini } from './OnboardingWizardMini';
+import { CreatorStudioMini } from './CreatorStudioMini';
+import { DreamShopMini } from './DreamShopMini';
+import { TributeGateMini } from './TributeGateMini';
+import { WalletScoreDashboard } from './WalletScoreDashboard';
+import { SocialOpsMini } from './SocialOpsMini';
+import { WolfPackFundingHUD } from './WolfPackFundingHUD';
+import { InboxSquaredMini } from './InboxSquaredMini';
 import { CONTRACT_ADDRESSES } from './config';
 
 // Component mapping
@@ -71,6 +94,29 @@ const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
   DreamScopeOpsConsole,
   OnboardingWizard,
   CreatorStudio,
+  // Fun/Game Apps
+  JaggyStealthRun,
+  DreamDNASequencerGame,
+  DreamLatticeGame,
+  WormholeEscape,
+  DreamBetArcade,
+  OctopusPatternMaster,
+  LabubuPopSmash,
+  ReactionTestMini,
+  DreamSnailDrift,
+  DreamCloudBuilder,
+  // Practical/Ops/Money Apps
+  DreamScopeOpsConsoleMini,
+  ShieldMonitorMini,
+  WormholeRouterMini,
+  OnboardingWizardMini,
+  CreatorStudioMini,
+  DreamShopMini,
+  TributeGateMini,
+  WalletScoreDashboard,
+  SocialOpsMini,
+  WolfPackFundingHUD,
+  InboxSquaredMini,
 };
 
 export function DreamNetHubWrapper() {
