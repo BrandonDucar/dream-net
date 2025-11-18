@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["nodejs_18"]
+nixPkgs = ["nodejs_18", "pnpm"]
 
 [phases.install]
-cmds = ["npm install -g pnpm", "npx pnpm i --frozen-lockfile"]
+cmds = ["pnpm i --frozen-lockfile"]
 
 [phases.build]
 cmds = ["cd server && node build.cjs"]
