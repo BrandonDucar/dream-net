@@ -14,7 +14,7 @@ commands = [
 
 [build.command]
 
-command = "pnpm --filter @dreamnet/server build"
+command = "cd server && node build.cjs"
 
 
 
