@@ -28,4 +28,4 @@ command = "pnpm --filter @dreamnet/server build"
 
 [deploy]
 
-command = "pnpm --filter @dreamnet/server start"
+command = "cd server && node dist/index.js"
