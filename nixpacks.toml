@@ -1,3 +1,6 @@
+[providers]
+node = "18"
+
 [phases.setup]
 nixPkgs = ["nodejs_18"]
 
@@ -5,7 +8,7 @@ nixPkgs = ["nodejs_18"]
 cmds = ["npm install -g pnpm", "pnpm i --frozen-lockfile"]
 
 [phases.build]
-cmds = ["pnpm --filter @dreamnet/server build"]
+cmds = ["cd server && node build.cjs"]
 
 [start]
 cmd = "node server/dist/index.js"
