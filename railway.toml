@@ -2,25 +2,17 @@
 
 builder = "railpack"
 
-
-
 [build.env]
 
 NODE_VERSION = "18"
 
-
-
 [build.setup]
 
 commands = [
-
   "npm install -g pnpm"
-
 ]
 
-
-
-[build]
+[build.command]
 
 command = "pnpm --filter @dreamnet/server build"
 
@@ -28,4 +20,4 @@ command = "pnpm --filter @dreamnet/server build"
 
 [deploy]
 
-command = "cd server && node dist/index.js"
+command = "node server/dist/index.js"
