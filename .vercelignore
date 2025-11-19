@@ -1,8 +1,48 @@
-pnpm-lock.yaml
-pnpm-workspace.yaml
-apps/site-old
-packages/*/node_modules
-server/node_modules
-apps/*/node_modules
-apps/site-old/**
+# Exclude all apps (not needed for client build)
+apps/**
+
+# Exclude server (backend only)
+server/**
+
+# Exclude contracts (smart contracts, not needed for frontend)
+contracts/**
+
+# Exclude scripts (dev tooling)
+scripts/**
+
+# Exclude docs (documentation)
+docs/**
+
+# Exclude markdown files (except README)
+*.md
+!README.md
+
+# Exclude all node_modules (will be installed fresh)
 node_modules
+**/node_modules
+
+# Exclude build outputs
+dist
+**/dist
+build
+**/build
+
+# Exclude git and config files
+.git
+.gitignore
+.replit
+.env
+.env.*
+
+# Exclude test and dev files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+coverage
+**/coverage
+
+# Exclude TypeScript build info
+**/*.tsbuildinfo
+
+# Keep packages/ and shared/ - client needs them via Vite aliases
