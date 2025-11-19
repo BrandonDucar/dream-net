@@ -1,9 +1,8 @@
 {
   "version": 2,
-  "rootDirectory": "client",
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist",
+  "buildCommand": "cd client && pnpm build",
+  "outputDirectory": "client/dist",
   "rewrites": [
     {
       "source": "/api/:path*",
