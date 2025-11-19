@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "cd client && pnpm install --frozen-lockfile && pnpm build",
+  "installCommand": "pnpm install --frozen-lockfile --no-optional",
+  "buildCommand": "cd client && pnpm install --frozen-lockfile --no-optional && pnpm build",
   "outputDirectory": "client/dist",
   "framework": null,
+  "env": {
+    "NODE_ENV": "production"
+  },
   "rewrites": [
     {
       "source": "/api/:path*",
