@@ -1,7 +1,7 @@
 {
   "version": 2,
   "installCommand": "pnpm install --frozen-lockfile --no-optional",
-  "buildCommand": "cd client && pnpm install --frozen-lockfile --no-optional && pnpm build",
+  "buildCommand": "cd client && rm -rf dist node_modules/.vite && pnpm install --frozen-lockfile --no-optional && pnpm build",
   "outputDirectory": "client/dist",
   "framework": null,
   "env": {
