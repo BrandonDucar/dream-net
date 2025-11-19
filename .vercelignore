@@ -3,3 +3,6 @@ pnpm-workspace.yaml
 apps/site-old
 packages/*/node_modules
 server/node_modules
+apps/*/node_modules
+apps/site-old/**
+node_modules
