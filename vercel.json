@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "installCommand": "cd client && pnpm install --frozen-lockfile --no-optional --ignore-scripts",
-  "buildCommand": "cd client && rm -rf dist node_modules/.vite && pnpm build",
+  "installCommand": "cd client && npm install --legacy-peer-deps",
+  "buildCommand": "cd client && rm -rf dist node_modules/.vite && npm run build",
   "outputDirectory": "client/dist",
   "framework": null,
   "env": {
