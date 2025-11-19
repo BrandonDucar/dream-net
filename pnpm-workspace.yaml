@@ -1,5 +1,9 @@
 packages:
-  - "apps/*"
+  - "apps/api-forge"
+  - "apps/dreamos"
+  - "apps/hub"
+  - "apps/seo"
+  - "apps/sitebuilder"
   - "packages/*"
   - "server"
 
