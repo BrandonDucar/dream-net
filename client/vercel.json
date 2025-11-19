@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "installCommand": "cd .. && pnpm --filter client... install --no-frozen-lockfile",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "rewrites": [
