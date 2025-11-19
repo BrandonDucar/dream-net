@@ -135,13 +135,27 @@ export class AgentWalletManager {
 
   /**
    * Get wallet balance
+   * Returns balance for agent wallet (uses internal structure)
    */
   async getBalance(
     agentId: string,
     chain: string,
     provider: JsonRpcProvider
   ): Promise<string> {
-    const wallet = await this.getOrCreateWallet(agentId, chain);
+    const key = `${agentId}-${chain}`;
+    const wallet = this.wallets.get(key);
+    
+    if (!wallet) {
+      // Create wallet if doesn't exist
+      await this.getOrCreateWallet(agentId, chain);
+      const newWallet = this.wallets.get(key);
+      if (!newWallet) {
+        throw new Error(`Failed to create wallet for ${agentId} on ${chain}`);
+      }
+      const balance = await provider.getBalance(newWallet.address);
+      return balance.toString();
+    }
+    
     const balance = await provider.getBalance(wallet.address);
     return balance.toString();
   }
