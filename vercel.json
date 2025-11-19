@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "installCommand": "cd client && npm install --legacy-peer-deps --ignore-scripts",
-  "buildCommand": "cd client && rm -rf dist node_modules/.vite && npm run build",
-  "outputDirectory": "client/dist",
+  "rootDirectory": "client",
+  "installCommand": "pnpm --filter client... install --no-frozen-lockfile",
+  "buildCommand": "pnpm --filter client run build",
+  "outputDirectory": "dist",
   "framework": null,
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD .",
   "env": {
     "NODE_ENV": "production"
   },
