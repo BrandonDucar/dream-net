@@ -1,90 +1,72 @@
-# Vercel Root Directory Fix
+# Vercel Building Wrong Project - Root Directory Fix
 
-## The Problem
+## Problem Found
 
-Vercel dashboard won't accept just `.` in the Root Directory field.
+Vercel is building `apps/site` (old site) instead of `client/` (new mini-apps hub).
 
-## Solutions
+**Evidence:**
+- Build log shows: `> @dreamnet/site@0.1.0 build`
+- Output: `dist/index.html` (not `client/dist/index.html`)
+- Build size: 539KB (old site) vs 3MB+ (new mini-apps hub)
 
-### Option 1: Leave It Empty (Recommended) ✅
+## Root Cause
 
-1. Go to **Settings → General → Root Directory**
-2. **Delete/clear the field** (make it empty/blank)
-3. **Save**
+Vercel is detecting `apps/site` as the project because:
+1. It's in the `apps/*` workspace
+2. It has a `package.json` with a build script
+3. Vercel auto-detects workspaces and builds the first one it finds
 
-Vercel will default to repo root (`.`).
+## Fix Applied
+
+✅ **Deleted `apps/site/vercel.json`** - This prevents Vercel from treating it as a separate project.
+
+## Additional Fix Needed
+
+**You must set Root Directory in Vercel Dashboard:**
+
+1. **Go to Vercel Dashboard**
+2. **Project Settings** → **General**
+3. **Root Directory**: Set to `client` (not `.` or empty)
+4. **Save**
+
+This forces Vercel to build from `client/` directory.
 
 ---
 
-### Option 2: Use `./` 
+## Alternative: Rename apps/site
 
-1. Set Root Directory to: `./`
-2. Save
+If Root Directory doesn't work, temporarily rename `apps/site`:
 
----
+```bash
+git mv apps/site apps/site-old
+git commit -m "Rename apps/site to prevent Vercel detection"
+git push
+```
 
-### Option 3: Remove Root Directory Setting
-
-If the field is required and won't accept empty:
-
-1. Try setting it to: `./` (with the slash)
-2. Or: Remove the setting entirely if there's a "Remove" option
+Then Vercel will only see `client/`.
 
 ---
 
-### Option 4: Use vercel.json Only
+## Verify Fix
 
-If dashboard won't cooperate:
+After setting Root Directory to `client`:
 
-1. **Remove Root Directory from dashboard** (set to empty or remove)
-2. **Rely on vercel.json** which already has:
-   ```json
-   {
-     "buildCommand": "cd client && pnpm install && pnpm build",
-     "outputDirectory": "client/dist"
-   }
+1. **Redeploy** (or push a commit)
+2. **Check build log** - Should show:
    ```
+   > dreamops-launcher@0.0.0 build
+   > vite build
+   ```
+   (Not `@dreamnet/site`)
 
-The `cd client` in buildCommand handles the directory navigation.
+3. **Check output** - Should be `client/dist/index.html`
 
----
-
-## What vercel.json Does
-
-Your `vercel.json` already specifies:
-- `buildCommand`: `cd client && pnpm install && pnpm build`
-- `outputDirectory`: `client/dist`
-
-This means:
-- Vercel starts at repo root
-- Build command navigates to `client/`
-- Builds from there
-- Outputs to `client/dist`
-
-**So Root Directory should be empty or `.`** - the build command handles navigation.
+4. **Check build size** - Should be 3MB+ (not 539KB)
 
 ---
 
-## Try This Order
+## Current Status
 
-1. **Clear Root Directory** (make it blank/empty)
-2. **Save**
-3. **Redeploy**
-
-If that doesn't work:
-
-1. Set Root Directory to: `./`
-2. Save
-3. Redeploy
-
----
-
-## If Still Not Working
-
-Check:
-- [ ] Is there a "Remove" or "Clear" button?
-- [ ] Can you delete the value entirely?
-- [ ] Does it accept `./` instead of `.`?
-
-The key is: **Root Directory should point to repo root**, not `client/`.
-
+- ✅ Deleted `apps/site/vercel.json`
+- ⏳ **YOU NEED TO**: Set Root Directory = `client` in Vercel dashboard
+- ⏳ Then redeploy
