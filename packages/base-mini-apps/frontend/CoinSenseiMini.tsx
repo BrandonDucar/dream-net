@@ -1,6 +1,13 @@
 /**
  * CoinSensei 2.0 Mini App
  * Crypto portfolio analytics interface
+ * 
+ * SECURITY: READ_ONLY = true
+ * - Only accepts public wallet addresses (read-only portfolio)
+ * - NEVER accepts or stores private keys, seeds, mnemonics, or 2FA codes
+ * - Returns analytics only (P&L, allocation, suggestions)
+ * - NEVER offers send, trade, swap, or bridge actions
+ * - Educational analytics only (no financial/tax/legal advice)
  */
 
 import React, { useState } from 'react';

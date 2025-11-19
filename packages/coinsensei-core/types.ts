@@ -1,12 +1,22 @@
 /**
  * CoinSensei 2.0 Types
  * Unified compact spec for crypto portfolio analytics
+ * 
+ * SECURITY: READ_ONLY = true
+ * All inputs are public data only (addresses, transactions, manual entries)
+ * NEVER accepts private keys, seeds, mnemonics, or 2FA codes
  */
 
+/**
+ * User Wallet Address (READ-ONLY)
+ * Public address only - no private keys, seeds, or mnemonics
+ * Used for read-only portfolio analysis
+ */
 export interface WalletAddress {
-  address: string;
+  address: string; // Public address only
   chain: string; // 'ethereum', 'base', 'solana', etc.
   label?: string;
+  // NOTE: NEVER include privateKey, seed, mnemonic, or any sensitive data
 }
 
 export interface CEXTransaction {

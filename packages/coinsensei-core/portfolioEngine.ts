@@ -1,6 +1,11 @@
 /**
  * Portfolio Analytics Engine
  * Computes WAC/FIFO, PnL, allocation, rankings
+ * 
+ * SECURITY: READ_ONLY = true
+ * - Only processes public wallet addresses and transaction data
+ * - NEVER touches private keys, seeds, or mnemonics
+ * - Returns analytics only - no transaction capabilities
  */
 
 import type {
