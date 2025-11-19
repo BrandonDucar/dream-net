@@ -104,6 +104,9 @@ import AgentsPage from "./pages/AgentsPage";
 import CommunityPage from "./pages/CommunityPage";
 import SystemOsStatusPage from "./pages/SystemOsStatusPage";
 import SystemRuntimePage from "./pages/SystemRuntimePage";
+import HubRoutes from "./pages/hub/HubRoutes";
+import LandingNew from "./pages/landing-new";
+import CommandPalette from "./components/CommandPalette";
 
 // Catch-all route component that excludes root path
 function CatchAllRoute() {
@@ -335,9 +338,14 @@ function App() {
               <DreamNetThemeProvider>
                 <div className="dark">
                   <Toaster />
+                  <CommandPalette />
                   <Switch>
+                    {/* New Landing Page */}
+                    <Route path="/" component={LandingNew} />
+                    {/* Hub Routes */}
+                    <Route path="/hub/:rest*" component={HubRoutes} />
                     {/* New DreamNet Pages */}
-                    <Route path="/" component={BaseMiniAppsHubPage} />
+                    <Route path="/legacy" component={BaseMiniAppsHubPage} />
                     <Route path="/home" component={HomePage} />
                     <Route path="/about" component={HomePage} />
                     <Route path="/mini-apps/dreamscope-ops" component={BaseMiniAppsHubPage} />
