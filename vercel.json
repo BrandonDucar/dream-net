@@ -2,7 +2,7 @@
   "version": 2,
   "rootDirectory": "client",
   "installCommand": "pnpm --filter client... install --no-frozen-lockfile",
-  "buildCommand": "pnpm --filter client run build",
+  "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "framework": null,
   "env": {
