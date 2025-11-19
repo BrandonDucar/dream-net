@@ -67,6 +67,7 @@ export { WalletScoreDashboard } from './WalletScoreDashboard';
 export { SocialOpsMini } from './SocialOpsMini';
 export { WolfPackFundingHUD } from './WolfPackFundingHUD';
 export { InboxSquaredMini } from './InboxSquaredMini';
+export { CoinSenseiMini } from './CoinSenseiMini';
 
 // App registry for routing
 export const MINI_APPS = {
@@ -410,6 +411,12 @@ export const MINI_APPS = {
     component: 'InboxSquaredMini',
     name: 'Inbox² - AI Communication Copilot',
     category: 'ops',
+    requiresPassport: false,
+  },
+  'coinsensei': {
+    component: 'CoinSenseiMini',
+    name: 'CoinSensei 2.0 - Portfolio Analytics',
+    category: 'utility',
     requiresPassport: false,
   },
 };

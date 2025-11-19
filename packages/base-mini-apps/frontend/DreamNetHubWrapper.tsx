@@ -58,6 +58,7 @@ import { WalletScoreDashboard } from './WalletScoreDashboard';
 import { SocialOpsMini } from './SocialOpsMini';
 import { WolfPackFundingHUD } from './WolfPackFundingHUD';
 import { InboxSquaredMini } from './InboxSquaredMini';
+import { CoinSenseiMini } from './CoinSenseiMini';
 import { CONTRACT_ADDRESSES } from './config';
 
 // Component mapping
@@ -117,6 +118,7 @@ const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
   SocialOpsMini,
   WolfPackFundingHUD,
   InboxSquaredMini,
+  CoinSenseiMini,
 };
 
 export function DreamNetHubWrapper() {

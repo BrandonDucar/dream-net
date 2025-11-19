@@ -39,6 +39,8 @@ import { createFoundryRouter } from "./routes/foundry";
 import { createMediaListRouter } from "./routes/media-list";
 import { createEmailRouter } from "./routes/email";
 import { createInboxSquaredRouter } from "./routes/inbox-squared";
+import { createCoinSenseiRouter } from "./routes/coinsensei";
+import { createAgentWalletRouter } from "./routes/agent-wallets";
 import { createDreamSnailRouter } from "./routes/dream-snail";
 import { createBiomimeticSystemsRouter } from "./routes/biomimetic-systems";
 import whaleRouter from "./routes/whale";
@@ -307,6 +309,8 @@ app.use("/api", createDreamRouter());
   app.use("/api", createMediaListRouter());
   app.use("/api", createEmailRouter());
   app.use("/api/inbox-squared", createInboxSquaredRouter());
+  app.use("/api/coinsensei", createCoinSenseiRouter());
+  app.use("/api/agent-wallets", createAgentWalletRouter());
   app.use("/api", createDreamSnailRouter());
   app.use("/api", createBiomimeticSystemsRouter());
   
