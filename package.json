@@ -2,7 +2,6 @@
   "name": "@dreamnet/monorepo",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@10.21.0",
   "type": "module",
   "license": "MIT",
   "workspaces": [
