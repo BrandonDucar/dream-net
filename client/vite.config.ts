@@ -10,6 +10,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    exclude: [
+      // Exclude server-only packages from Vite's dependency pre-bundling
+      '@dreamnet/inbox-squared-core',
+      'googleapis',
+      'googleapis-common',
+    ],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -22,7 +30,8 @@ export default defineConfig({
       '@dreamnet/wolfpack-funding-core': path.resolve(__dirname, '../packages/wolfpack-funding-core'),
       '@dreamnet/jaggy-core': path.resolve(__dirname, '../packages/jaggy-core'),
       '@dreamnet/whale-pack-core': path.resolve(__dirname, '../packages/whale-pack-core'),
-      '@dreamnet/inbox-squared-core': path.resolve(__dirname, '../packages/inbox-squared-core'),
+      // Removed @dreamnet/inbox-squared-core - server-only package with googleapis dependency
+      // Frontend should use API endpoints instead of importing this package
       '@dreamnet/dream-state-core': path.resolve(__dirname, '../packages/dream-state-core'),
       '@dreamnet/webhook-nervous-core': path.resolve(__dirname, '../packages/webhook-nervous-core'),
       '@dreamnet/dreamnet-snail-core': path.resolve(__dirname, '../packages/dreamnet-snail-core'),
