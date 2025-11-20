@@ -44,7 +44,7 @@ export const CONTRACT_ADDRESSES = {
   GameRegistry: getEnv('VITE_GAME_REGISTRY_ADDRESS', "0xB38005e10E376D5D43699B45E7fc2f06A8465a5D"),
   GameAchievementNFT: getEnv('VITE_GAME_ACHIEVEMENT_NFT_ADDRESS', ""),
   // Card Forge Pro
-  CardForgeNFT: getEnv('VITE_CARD_FORGE_NFT_ADDRESS', ""),
+  CardForgeNFT: getEnv('VITE_CARD_FORGE_NFT_ADDRESS', "0x34e1079820b4c733bE7D67A5F980ea4c752DbD47"),
 } as const;
 
 export const BASE_CHAIN_ID = 8453;

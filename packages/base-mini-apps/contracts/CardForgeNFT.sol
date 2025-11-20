@@ -4,7 +4,6 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * @title CardForgeNFT
@@ -12,8 +11,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
  * Each card is a unique NFT with metadata stored on-chain or IPFS
  */
 contract CardForgeNFT is ERC721URIStorage, Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+    uint256 private _tokenIdCounter;
 
     struct CardMetadata {
         string cardType; // business, trading, digital, nft, custom
@@ -47,8 +45,8 @@ contract CardForgeNFT is ERC721URIStorage, Ownable {
         string memory tokenURI,
         CardMetadata memory metadata
     ) public onlyOwner returns (uint256) {
-        _tokenIds.increment();
-        uint256 newTokenId = _tokenIds.current();
+        _tokenIdCounter++;
+        uint256 newTokenId = _tokenIdCounter;
 
         _safeMint(to, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
@@ -80,7 +78,7 @@ contract CardForgeNFT is ERC721URIStorage, Ownable {
      * @dev Get total number of cards minted
      */
     function totalSupply() public view returns (uint256) {
-        return _tokenIds.current();
+        return _tokenIdCounter;
     }
 }
 
