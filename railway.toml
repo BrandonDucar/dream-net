@@ -3,9 +3,9 @@
 
 [build]
 builder = "nixpacks"
-buildCommand = "cd .. && pnpm install --no-frozen-lockfile && pnpm --filter client build && cd server && pnpm build"
+buildCommand = "cd .. && npx pnpm --filter client build && cd server && npx pnpm build"
 
 [deploy]
-startCommand = "cd server && pnpm start"
+startCommand = "cd server && npx pnpm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
