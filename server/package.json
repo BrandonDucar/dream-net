@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx index.ts",
     "build": "node build.cjs",
+    "build:full": "cd .. && pnpm --filter client build && node build.cjs",
     "start": "node dist/index.js",
     "start:dev": "tsx index.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
