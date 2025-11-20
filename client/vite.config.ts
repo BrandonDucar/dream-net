@@ -1,6 +1,7 @@
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,7 +10,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    nodePolyfills({
+      // Enable polyfills for specific modules
+      include: ['buffer', 'process', 'util', 'stream', 'events'],
+    }),
+  ],
   optimizeDeps: {
     exclude: [
       // Exclude server-only packages from Vite's dependency pre-bundling
@@ -17,6 +24,18 @@ export default defineConfig({
       'googleapis',
       'googleapis-common',
     ],
+    include: [
+      // Explicitly include problematic transitive dependencies
+      'regexparam',
+      'use-sync-external-store/shim/index.js',
+      '@tanstack/query-core',
+      'buffer',
+    ],
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+    },
   },
   resolve: {
     alias: {
@@ -35,21 +54,20 @@ export default defineConfig({
       '@dreamnet/dream-state-core': path.resolve(__dirname, '../packages/dream-state-core'),
       '@dreamnet/webhook-nervous-core': path.resolve(__dirname, '../packages/webhook-nervous-core'),
       '@dreamnet/dreamnet-snail-core': path.resolve(__dirname, '../packages/dreamnet-snail-core'),
-      // Ensure wagmi and viem resolve from client's node_modules (not packages/base-mini-apps/node_modules)
-      'wagmi': path.resolve(__dirname, './node_modules/wagmi'),
-      'viem': path.resolve(__dirname, './node_modules/viem'),
-      '@wagmi/core': path.resolve(__dirname, './node_modules/@wagmi/core'),
-      // Ensure Radix UI packages resolve from client's node_modules to avoid version conflicts
-      '@radix-ui/react-visually-hidden': path.resolve(__dirname, './node_modules/@radix-ui/react-visually-hidden'),
-      '@radix-ui/react-select': path.resolve(__dirname, './node_modules/@radix-ui/react-select'),
     },
     preserveSymlinks: true,
+    dedupe: ['react', 'react-dom'],
+  },
+  define: {
+    'process.env': {},
+    global: 'globalThis',
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     commonjsOptions: {
       include: [/node_modules/, /packages/],
+      transformMixedEsModules: true,
     },
     rollupOptions: {
       external: [
@@ -61,6 +79,13 @@ export default defineConfig({
         'newsapi',
         'timezone-lookup',
       ],
+      onwarn(warning, warn) {
+        // Suppress "unresolved dependencies" warnings for transitive deps
+        if (warning.code === 'UNRESOLVED_IMPORT') {
+          return;
+        }
+        warn(warning);
+      },
     },
   },
 });
