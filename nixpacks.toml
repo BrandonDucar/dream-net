@@ -6,8 +6,7 @@ nixPkgs = ["nodejs_20"]
 
 [phases.install]
 cmds = [
-  "npm install -g pnpm@10.21.0",
-  "pnpm install --no-frozen-lockfile"
+  "npm install -g pnpm@10.21.0 && pnpm install --no-frozen-lockfile"
 ]
 
 [phases.build]
