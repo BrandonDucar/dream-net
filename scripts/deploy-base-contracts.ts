@@ -92,15 +92,19 @@ async function deployContracts() {
 }
 
 function getAddressFromPrivateKey(privateKey: string): string {
-  // Simple address derivation (for display only)
-  // In production, use ethers.js or similar
+  // Derive address from private key for display
   try {
-    const { ethers } = require('ethers');
-    const wallet = new ethers.Wallet(privateKey);
-    return wallet.address;
+    // Try to use ethers from base-mini-apps package
+    const ethersPath = path.join(baseMiniAppsDir, 'node_modules', 'ethers');
+    if (existsSync(ethersPath)) {
+      const { ethers } = require(ethersPath);
+      const wallet = new ethers.Wallet(privateKey);
+      return wallet.address;
+    }
   } catch {
-    return '0x...' + privateKey.slice(-8);
+    // Fallback: show partial address
   }
+  return '0x...' + privateKey.slice(-8);
 }
 
 deployContracts().catch(console.error);
