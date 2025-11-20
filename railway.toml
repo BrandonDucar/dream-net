@@ -1,23 +1,11 @@
+# Railway configuration
+# This file configures Railway deployment settings
+
 [build]
-
 builder = "nixpacks"
-
-[build.env]
-
-NODE_VERSION = "18"
-
-[build.setup]
-
-commands = [
-  "npm install -g pnpm"
-]
-
-[build.command]
-
-command = "cd server && node build.cjs"
-
-
+buildCommand = "cd .. && pnpm install --no-frozen-lockfile && pnpm --filter client build && cd server && pnpm build"
 
 [deploy]
-
-command = "node server/dist/index.js"
+startCommand = "cd server && pnpm start"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10

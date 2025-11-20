@@ -1,12 +1,14 @@
+# Nixpacks configuration for Railway Metal Build
+# This file configures Railway's Metal Build Beta environment
+
 [phases.setup]
-nixPkgs = ["nodejs_18", "pnpm"]
+nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["pnpm i --frozen-lockfile"]
+cmds = ["pnpm install --no-frozen-lockfile"]
 
 [phases.build]
-cmds = ["cd server && node build.cjs"]
+cmds = ["cd .. && pnpm --filter client build && cd server && pnpm build"]
 
 [start]
-cmd = "node server/dist/index.js"
-
+cmd = "cd server && pnpm start"
