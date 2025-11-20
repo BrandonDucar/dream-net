@@ -11,22 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.21.0
-
       - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: "npm"
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: npm ci
 
       - name: Build (matches Vercel)
-        run: pnpm run build
+        run: npm run build
 
       - name: Lint TypeScript
-        run: pnpm run check
+        run: npm run check
