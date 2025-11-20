@@ -1,59 +1,61 @@
-# 🚀 Deploy to Base Mainnet - Quick Guide
+# Deploy Now - You're Ready!
 
-## ⚠️ Important: Check Your Private Key
+## You're Already in the Right Place
 
-The account detected is a test account. Make sure your `.env` has your **real MetaMask private key**:
+Your terminal shows: `PS C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client>`
 
-1. **Get your MetaMask private key:**
-   - Open MetaMask
-   - Click account icon → Settings → Security & Privacy
-   - Click "Show Private Key"
-   - Enter password
-   - Copy the key (starts with `0x`)
+**You're already in `client/` - don't `cd client` again!**
 
-2. **Update `.env`:**
-   ```
-   PRIVATE_KEY=0x_your_real_metamask_key_here
-   ```
+---
 
-3. **Verify account:**
-   ```bash
-   pnpm tsx scripts/check-account.ts
-   ```
-   Should show your MetaMask address with ETH balance.
+## Just Deploy
 
-## 🚀 Deploy Commands
-
-Once your account has ETH:
+Since you're already in `client/`, just run:
 
 ```bash
-# Deploy all contracts to Base mainnet
-pnpm deploy:base-mainnet
+vercel --prod
 ```
 
-## 📋 What Gets Deployed
+That's it! No `cd` needed.
 
-1. **DreamToken** - Main DREAM token (ERC20)
-2. **SheepToken** - SHEEP soft currency (ERC20)
-3. **DreamerPass** - NFT passes
-4. **SubscriptionBadge** - Subscription NFTs
-5. **SubscriptionHub** - Subscription manager
+---
 
-## 💰 Gas Costs
+## What Will Happen
 
-- **Total estimated**: ~0.05-0.1 ETH
-- Make sure you have enough ETH in that account!
+1. Vercel CLI reads `.vercel/project.json` (already linked)
+2. Uses `client/vercel.json` (no rootDirectory, builds from here)
+3. Runs `pnpm run build` (builds dreamops-launcher)
+4. Outputs to `dist/`
+5. Deploys to production
 
-## ✅ After Deployment
+---
 
-Save the contract addresses from the output and add to `.env`:
+## If It Still Fails
+
+Check the error message. Common issues:
+
+**"rootDirectory" error:**
+- Go to Vercel dashboard → Settings → General
+- Clear/delete "Root Directory" field
+- Save, then try `vercel --prod` again
+
+**"pnpm not found":**
+- Vercel needs pnpm installed
+- Dashboard → Settings → Build & Development
+- Add: `corepack enable` to Install Command
+
+**"No projects matched":**
+- The workspace filter isn't working
+- Try: `pnpm install` first, then `vercel --prod`
+
+---
+
+## Quick Command
+
+Just run this (you're already in client/):
+
+```bash
+vercel --prod
 ```
-DREAM_TOKEN_ADDRESS=0x...
-SHEEP_TOKEN_ADDRESS=0x...
-DREAMER_PASS_ADDRESS=0x...
-SUBSCRIPTION_BADGE_ADDRESS=0x...
-SUBSCRIPTION_HUB_ADDRESS=0x...
-```
 
-Then we can build the mini apps! 🎉
-
+That's all you need!
