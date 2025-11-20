@@ -1,87 +1,53 @@
-#!/usr/bin/env ts-node
 /**
  * Deploy CardForgeNFT contract to Base
+ * Uses Hardhat deployment pattern
  */
 
-import { ethers } from "ethers";
-import * as fs from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { ethers } from "hardhat";
 
 async function main() {
-  const network = process.env.NETWORK || "baseSepolia";
-  const privateKey = process.env.PRIVATE_KEY;
-  
-  if (!privateKey) {
-    throw new Error("PRIVATE_KEY environment variable is required");
-  }
+  const [deployer] = await ethers.getSigners();
+  console.log("🚀 Deploying CardForgeNFT with account:", deployer.address);
+  console.log("📊 Account balance:", (await ethers.provider.getBalance(deployer.address)).toString());
 
-  // Get network config
-  const networks: Record<string, { rpc: string; chainId: number }> = {
-    baseSepolia: {
-      rpc: process.env.BASE_SEPOLIA_RPC_URL || "https://sepolia.base.org",
-      chainId: 84532,
-    },
-    base: {
-      rpc: process.env.BASE_MAINNET_RPC_URL || "https://mainnet.base.org",
-      chainId: 8453,
-    },
-  };
+  // Deploy CardForgeNFT
+  const CardForgeNFT = await ethers.getContractFactory("CardForgeNFT");
+  const cardForgeNFT = await CardForgeNFT.deploy(deployer.address);
+  await cardForgeNFT.waitForDeployment();
 
-  const networkConfig = networks[network];
-  if (!networkConfig) {
-    throw new Error(`Unknown network: ${network}`);
-  }
-
-  console.log(`🚀 Deploying CardForgeNFT to ${network}...`);
-
-  // Setup provider and wallet
-  const provider = new ethers.JsonRpcProvider(networkConfig.rpc);
-  const wallet = new ethers.Wallet(privateKey, provider);
-  console.log(`📝 Deploying from: ${wallet.address}`);
-
-  // Read contract ABI and bytecode
-  const artifactsPath = path.join(__dirname, "../artifacts/contracts/CardForgeNFT.sol/CardForgeNFT.json");
-  const artifact = JSON.parse(fs.readFileSync(artifactsPath, "utf-8"));
-
-  // Deploy contract
-  const factory = new ethers.ContractFactory(artifact.abi, artifact.bytecode, wallet);
-  console.log("⏳ Deploying contract...");
-  
-  const contract = await factory.deploy(wallet.address);
-  await contract.waitForDeployment();
-  
-  const address = await contract.getAddress();
-  console.log(`✅ CardForgeNFT deployed to: ${address}`);
+  const address = await cardForgeNFT.getAddress();
+  console.log("✅ CardForgeNFT deployed to:", address);
 
   // Save deployment info
+  const fs = require("fs");
+  const path = require("path");
   const deploymentPath = path.join(__dirname, "../contracts/deployment.json");
-  let deployments: any = {};
   
+  let deployments: any = {};
   if (fs.existsSync(deploymentPath)) {
     deployments = JSON.parse(fs.readFileSync(deploymentPath, "utf-8"));
   }
 
-  if (!deployments[network]) {
-    deployments[network] = {};
+  const network = await ethers.provider.getNetwork();
+  const networkName = network.chainId === 8453n ? "base" : network.chainId === 84532n ? "baseSepolia" : "localhost";
+
+  if (!deployments[networkName]) {
+    deployments[networkName] = { chainId: Number(network.chainId), contracts: {} };
   }
 
-  deployments[network].CardForgeNFT = {
-    address,
-    txHash: contract.deploymentTransaction()?.hash,
-    deployedAt: new Date().toISOString(),
-  };
+  if (!deployments[networkName].contracts) {
+    deployments[networkName].contracts = {};
+  }
+
+  deployments[networkName].contracts.CardForgeNFT = address;
 
   fs.writeFileSync(deploymentPath, JSON.stringify(deployments, null, 2));
-  console.log(`📝 Deployment info saved to: ${deploymentPath}`);
+  console.log("📝 Deployment info saved to:", deploymentPath);
 
   console.log("\n🎉 Deployment complete!");
   console.log(`   Contract: ${address}`);
-  console.log(`   Network: ${network}`);
-  console.log(`   Explorer: https://${network === 'base' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${address}`);
+  console.log(`   Network: ${networkName} (Chain ID: ${network.chainId})`);
+  console.log(`   Explorer: https://${networkName === 'base' ? 'basescan.org' : networkName === 'baseSepolia' ? 'sepolia.basescan.org' : 'localhost'}/address/${address}`);
 }
 
 main()

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { mockApps, MiniApp } from "../../mocks/apps";
+import { getAllBaseMiniApps, getBaseMiniAppsByCategory } from "@/api/baseMiniApps";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,8 @@ import {
   ExternalLink,
   Sparkles,
   Lock,
-  Zap
+  Zap,
+  CreditCard
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,8 +19,48 @@ export default function HubApps() {
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showBaseApps, setShowBaseApps] = useState(true);
 
-  const filteredApps = mockApps.filter((app) => {
+  // Get real Base mini-apps
+  const baseMiniApps = useMemo(() => getAllBaseMiniApps(), []);
+  
+  // Combine mock apps (legacy) with Base mini-apps
+  const allApps = useMemo(() => {
+    const apps: Array<MiniApp & { isBaseApp?: boolean; baseAppId?: string }> = [...mockApps];
+    
+    // Add Base mini-apps
+    Object.entries(baseMiniApps).forEach(([id, info]) => {
+      // Map Base categories to Hub categories
+      const categoryMap: Record<string, MiniApp["category"]> = {
+        'identity': 'identity',
+        'creative': 'creative',
+        'commerce': 'other',
+        'utility': 'analytics',
+        'governance': 'governance',
+        'social': 'other',
+        'defi': 'other',
+        'gaming': 'other',
+        'ops': 'analytics',
+        'onboarding': 'identity',
+        'events': 'other',
+      };
+      
+      apps.push({
+        id: `base-${id}`,
+        name: info.name,
+        description: `${info.name} - Base mini-app`,
+        category: categoryMap[info.category] || 'other',
+        status: 'stable', // Base apps are considered stable
+        route: `/hub/apps/${id}`,
+        isBaseApp: true,
+        baseAppId: id,
+      });
+    });
+    
+    return apps;
+  }, [baseMiniApps]);
+
+  const filteredApps = allApps.filter((app) => {
     if (categoryFilter !== "all" && app.category !== categoryFilter) return false;
     if (statusFilter !== "all" && app.status !== statusFilter) return false;
     if (searchQuery && !app.name.toLowerCase().includes(searchQuery.toLowerCase()) && 
@@ -50,6 +92,8 @@ export default function HubApps() {
         return <Zap className="w-5 h-5" />;
       case "bounty":
         return <Sparkles className="w-5 h-5" />;
+      case "creative":
+        return <CreditCard className="w-5 h-5" />;
       default:
         return <LayoutGrid className="w-5 h-5" />;
     }
@@ -114,7 +158,12 @@ export default function HubApps() {
             className="border-border hover:border-electric-cyan/50 transition-colors cursor-pointer group"
             onClick={() => {
               if (app.status !== "coming-soon") {
-                window.location.href = app.route;
+                if (app.isBaseApp && app.baseAppId) {
+                  // Route to Base mini-apps hub with the app ID
+                  window.location.href = `/mini-apps/${app.baseAppId}`;
+                } else {
+                  window.location.href = app.route;
+                }
               }
             }}
           >
@@ -150,9 +199,16 @@ export default function HubApps() {
                     Coming Soon
                   </Badge>
                 ) : (
-                  <div className="flex items-center space-x-2 text-xs text-electric-cyan group-hover:underline">
-                    <span>Open App</span>
-                    <ExternalLink className="w-3 h-3" />
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center space-x-2 text-xs text-electric-cyan group-hover:underline">
+                      <span>Open App</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </div>
+                    {app.isBaseApp && (
+                      <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/20">
+                        Base
+                      </Badge>
+                    )}
                   </div>
                 )}
               </div>

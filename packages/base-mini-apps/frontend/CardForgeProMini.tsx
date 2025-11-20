@@ -7,6 +7,8 @@
 import React, { useState } from 'react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther } from 'viem';
+import { CONTRACT_ADDRESSES } from './config';
+import { ethers } from 'ethers';
 
 interface CardCreationRequest {
   cardType: 'business' | 'trading' | 'digital' | 'nft' | 'custom';
@@ -103,10 +105,17 @@ export function CardForgeProMini() {
         setResult(cardResult);
 
         // If cardType is 'nft', mint as NFT on Base
-        if (cardType === 'nft' && isConnected && address) {
-          // TODO: Deploy CardForgeNFT contract and mint here
-          // For now, just log that NFT minting would happen
-          console.log('[CardForgePro] Would mint NFT for card:', cardResult.cardId);
+        if (cardType === 'nft' && isConnected && address && CONTRACT_ADDRESSES.CardForgeNFT) {
+          try {
+            await mintCardAsNFT(cardResult, address);
+          } catch (error: any) {
+            console.error('[CardForgePro] NFT minting error:', error);
+            setResult({ 
+              success: true, 
+              ...cardResult, 
+              error: `Card created but NFT minting failed: ${error.message}` 
+            });
+          }
         }
       } else {
         setResult({ success: false, error: cardResult.error || 'Failed to create card' });
