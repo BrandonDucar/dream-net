@@ -103,30 +103,9 @@ export function CardForgeProMini() {
 
         // If cardType is 'nft', mint as NFT on Base
         if (cardType === 'nft' && isConnected && address) {
-          if (!CONTRACT_ADDRESSES.CardForgeNFT) {
-            setResult({
-              success: true,
-              ...cardResult,
-              error: 'Card created, but CardForgeNFT contract is not deployed. Please deploy the contract to enable NFT minting.',
-            });
-            return;
-          }
-
-          try {
-            const txHash = await mintCardAsNFT(cardResult, address);
-            setResult({
-              success: true,
-              ...cardResult,
-              nftTokenId: txHash, // In a real implementation, extract token ID from receipt
-            });
-          } catch (error: any) {
-            console.error('[CardForgePro] NFT minting error:', error);
-            setResult({
-              success: true,
-              ...cardResult,
-              error: `Card created but NFT minting failed: ${error.message}`,
-            });
-          }
+          // TODO: Deploy CardForgeNFT contract and mint here
+          // For now, just log that NFT minting would happen
+          console.log('[CardForgePro] Would mint NFT for card:', cardResult.cardId);
         }
       } else {
         setResult({ success: false, error: cardResult.error || 'Failed to create card' });
