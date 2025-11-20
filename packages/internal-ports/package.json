@@ -16,8 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@dreamnet/internal-router": "workspace:*",
-    "@dreamnet/event-wormholes": "workspace:*"
+    "@dreamnet/internal-router": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

@@ -26,7 +26,7 @@ When Railway shows detected services, you might see multiple. **Only configure O
 
 **Settings:**
 - **Root Directory:** `server`
-- **Build Command:** `cd .. && pnpm --filter client build && cd server && pnpm build`
+- **Build Command:** `cd .. && pnpm install --no-frozen-lockfile && pnpm --filter client build && cd server && pnpm build`
 - **Start Command:** `pnpm start`
 
 ## Step 4: Environment Variables

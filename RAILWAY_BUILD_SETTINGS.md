@@ -9,7 +9,7 @@ server
 
 ### Build Command
 ```bash
-cd .. && pnpm --filter client build && cd server && pnpm build
+cd .. && pnpm install --no-frozen-lockfile && pnpm --filter client build && cd server && pnpm build
 ```
 
 This will:
