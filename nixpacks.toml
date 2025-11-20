@@ -8,7 +8,10 @@ nixPkgs = ["nodejs_20"]
 cmds = ["pnpm install --no-frozen-lockfile"]
 
 [phases.build]
-cmds = ["cd .. && pnpm --filter client build && cd server && pnpm build"]
+cmds = [
+  "cd .. && pnpm --filter client build",
+  "cd server && pnpm build"
+]
 
 [start]
 cmd = "cd server && pnpm start"
