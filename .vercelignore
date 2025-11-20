@@ -1,9 +1,6 @@
 # Exclude old disabled site
 apps/_site-old-DISABLED/**
 
-# Exclude dream-agent-store (empty submodule)
-dream-agent-store/**
-
 # Exclude server (backend is on Railway)
 server/**
 
