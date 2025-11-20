@@ -1,33 +1,16 @@
-# CRITICAL: Do NOT exclude client/ - it's the frontend!
-# CRITICAL: Do NOT exclude pnpm-workspace.yaml - needed for pnpm filter
+# Minimal exclusions - only exclude what we absolutely don't need
+# CRITICAL: client/, packages/, shared/, pnpm-workspace.yaml MUST be included
 
-# Exclude old site specifically
-apps/site-old/**
+# Only exclude the disabled old site
+apps/_site-old-DISABLED/**
 
-# Exclude other apps (but keep structure for workspace)
-apps/api-forge/**
-apps/dreamos/**
-apps/hub/**
-apps/seo/**
-apps/sitebuilder/**
-
-# Exclude server (backend only)
+# Exclude server
 server/**
 
-# Exclude contracts (smart contracts, not needed for frontend)
+# Exclude contracts
 contracts/**
 
-# Exclude scripts (dev tooling)
-scripts/**
-
-# Exclude docs (documentation)
-docs/**
-
-# Exclude markdown files (except README)
-*.md
-!README.md
-
-# Exclude all node_modules (will be installed fresh)
+# Exclude node_modules (will be installed)
 node_modules
 **/node_modules
 
@@ -37,28 +20,11 @@ dist
 build
 **/build
 
-# Exclude git and config files
+# Exclude git
 .git
-.gitignore
-.replit
+
+# Exclude env files
 .env
 .env.*
 
-# Exclude test and dev files
-**/*.test.ts
-**/*.test.tsx
-**/*.spec.ts
-**/*.spec.tsx
-coverage
-**/coverage
-
-# Exclude TypeScript build info
-**/*.tsbuildinfo
-
-# CRITICAL: These MUST be included for pnpm workspace to work:
-# - client/ (the frontend)
-# - packages/ (needed for Vite aliases)
-# - shared/ (needed by client)
-# - pnpm-workspace.yaml (needed for pnpm filter)
-# - package.json (root, needed for workspace)
-# - pnpm-lock.yaml (needed for install)
+# Everything else INCLUDING client/, packages/, shared/, pnpm-workspace.yaml, package.json, pnpm-lock.yaml MUST be included

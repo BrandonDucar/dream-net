@@ -1,8 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "cd client && pnpm install && pnpm run build",
-  "installCommand": "pnpm install --filter client... --no-frozen-lockfile --ignore-scripts",
-  "outputDirectory": "client/dist",
+  "rootDirectory": "client",
+  "installCommand": "cd .. && pnpm --filter client... install --no-frozen-lockfile --ignore-scripts",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist",
   "framework": null,
   "env": {
     "NODE_ENV": "production"
