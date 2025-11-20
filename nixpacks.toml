@@ -11,9 +11,9 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "cd .. && pnpm --filter client build",
-  "cd server && pnpm build"
+  "cd .. && npx pnpm --filter client build",
+  "cd server && npx pnpm build"
 ]
 
 [start]
-cmd = "cd server && pnpm start"
+cmd = "cd server && npx pnpm start"
