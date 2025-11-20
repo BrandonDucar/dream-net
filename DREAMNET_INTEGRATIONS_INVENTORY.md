@@ -10,8 +10,30 @@
 
 ## 🌐 Infrastructure & Hosting
 
-### 1. **Vercel** (Frontend Hosting)
+### Unified Deployment Platform
+- **Package**: `packages/deployment-core`
+- **Purpose**: **We ARE the deployment platform!** Deploy to any hosting provider or use DreamNet's native platform
+- **Capabilities**:
+  - Deploy to 15+ hosting platforms
+  - DreamNet native deployment (no external dependencies)
+  - Multi-platform simultaneous deployment
+  - Unified deployment API
+- **Routes**: `/api/deployment/*`
+- **Status**: ✅ Active
+
+### 1. **DreamNet Native Platform** (Our Own!)
+- **Provider**: `dreamnet`
+- **Purpose**: DreamNet's own deployment platform - no external dependencies!
+- **URL Format**: `https://{project}.dreamnet.ink`
+- **Features**: 
+  - CDN integration
+  - Auto-scaling
+  - Custom domain support
+- **Status**: ✅ Active (Primary platform)
+
+### 2. **Vercel** (Frontend Hosting)
 - **Package**: `packages/dreamnet-vercel-agent`
+- **Provider**: `vercel`
 - **Agent**: DreamNetVercelAgent
 - **Purpose**: Frontend deployment management, project cleanup
 - **Capabilities**:
@@ -19,19 +41,164 @@
   - Get project details
   - Analyze cleanup opportunities
   - Execute cleanup actions (dry-run)
-- **Env Vars**: `VERCEL_TOKEN`
-- **Routes**: `/api/vercel/*`
+- **Domain Management**: `server/services/DomainKeeper.ts`
+  - Automates domain attachment (dreamnet.ink -> Vercel project)
+  - Self-healing DNS sync
+  - Post-deploy domain verification
+- **Env Vars**: 
+  - `VERCEL_TOKEN` (required)
+  - `VERCEL_TEAM_ID` (optional, if account is under a team)
+  - `VERCEL_PROJECT_NAME` (default: "dream-net")
+  - `PRIMARY_DOMAIN` (default: "dreamnet.ink")
+  - `STAGING_DOMAIN` (optional, default: "staging.dreamnet.ink")
+- **Routes**: `/api/vercel/*`, `/api/deployment/deploy` (platform: vercel), `/api/deployment/sync-domains`
 - **Status**: ✅ Active, auto-initializes on startup
 
-### 2. **Railway** (Backend Hosting)
+### 3. **Netlify** (Static Site Hosting)
+- **Provider**: `netlify`
+- **Purpose**: Static site and serverless function hosting
+- **Features**: 
+  - Git-based deployments
+  - Form handling
+  - Edge functions
+- **Env Vars**: `NETLIFY_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: netlify)
+- **Status**: ✅ Integrated
+
+### 4. **Railway** (Backend Hosting)
+- **Provider**: `railway`
 - **Config**: `railway.json`, `railway.toml`
 - **Purpose**: Backend deployment and hosting
 - **Build**: `pnpm install && pnpm build:app`
 - **Start**: `pnpm start`
 - **Health**: `/health` endpoint
+- **Env Vars**: `RAILWAY_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: railway)
 - **Status**: ✅ Configured
 
-### 3. **Neon PostgreSQL** (Database)
+### 5. **Cloudflare Pages** (Edge Hosting)
+- **Provider**: `cloudflare-pages`
+- **Purpose**: Edge-deployed static sites and Workers
+- **Features**:
+  - Global CDN
+  - Edge functions
+  - DDoS protection
+- **Env Vars**: `CLOUDFLARE_API_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: cloudflare-pages)
+- **Status**: ✅ Integrated
+
+### 6. **Render** (Full-Stack Hosting)
+- **Provider**: `render`
+- **Purpose**: Full-stack application hosting
+- **Features**:
+  - Static sites
+  - Web services
+  - Background workers
+  - PostgreSQL databases
+- **Env Vars**: `RENDER_API_KEY`
+- **Routes**: `/api/deployment/deploy` (platform: render)
+- **Status**: ✅ Integrated
+
+### 7. **Fly.io** (Edge Computing)
+- **Provider**: `fly-io`
+- **Purpose**: Edge-deployed applications
+- **Features**:
+  - Multi-region deployment
+  - Low latency
+  - Docker-based
+- **Env Vars**: `FLY_API_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: fly-io)
+- **Status**: ✅ Integrated
+
+### 8. **AWS Amplify** (AWS Hosting)
+- **Provider**: `aws-amplify`
+- **Purpose**: AWS-native hosting and CI/CD
+- **Features**:
+  - Git-based deployments
+  - Serverless functions
+  - Custom domains
+- **Env Vars**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+- **Routes**: `/api/deployment/deploy` (platform: aws-amplify)
+- **Status**: ✅ Integrated
+
+### 9. **Azure Static Web Apps** (Microsoft Hosting)
+- **Provider**: `azure-static-web-apps`
+- **Purpose**: Microsoft Azure static site hosting
+- **Features**:
+  - GitHub integration
+  - Serverless API
+  - Custom domains
+- **Env Vars**: `AZURE_STATIC_WEB_APPS_API_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: azure-static-web-apps)
+- **Status**: ✅ Integrated
+
+### 10. **GitHub Pages** (Static Hosting)
+- **Provider**: `github-pages`
+- **Purpose**: Free static site hosting via GitHub
+- **Features**:
+  - Git-based
+  - Free tier
+  - Custom domains
+- **Env Vars**: `GITHUB_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: github-pages)
+- **Status**: ✅ Integrated
+
+### 11. **Surge.sh** (Static Hosting)
+- **Provider**: `surge`
+- **Purpose**: Simple static site deployment
+- **Features**:
+  - CLI-based
+  - Custom domains
+  - Free tier
+- **Env Vars**: `SURGE_TOKEN`, `SURGE_LOGIN`
+- **Routes**: `/api/deployment/deploy` (platform: surge)
+- **Status**: ✅ Integrated
+
+### 12. **Firebase Hosting** (Google Hosting)
+- **Provider**: `firebase-hosting`
+- **Purpose**: Google Firebase static hosting
+- **Features**:
+  - CDN
+  - SSL certificates
+  - Custom domains
+- **Env Vars**: `FIREBASE_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: firebase-hosting)
+- **Status**: ✅ Integrated
+
+### 13. **DigitalOcean App Platform** (DO Hosting)
+- **Provider**: `digitalocean-app-platform`
+- **Purpose**: DigitalOcean's PaaS hosting
+- **Features**:
+  - Git-based deployments
+  - Auto-scaling
+  - Managed databases
+- **Env Vars**: `DIGITALOCEAN_ACCESS_TOKEN`
+- **Routes**: `/api/deployment/deploy` (platform: digitalocean-app-platform)
+- **Status**: ✅ Integrated
+
+### 14. **Heroku** (PaaS Hosting)
+- **Provider**: `heroku`
+- **Purpose**: Platform-as-a-Service hosting
+- **Features**:
+  - Git-based deployments
+  - Add-ons marketplace
+  - Dyno scaling
+- **Env Vars**: `HEROKU_API_KEY`
+- **Routes**: `/api/deployment/deploy` (platform: heroku)
+- **Status**: ✅ Integrated
+
+### 15. **Pixl** (Website Builder Platform)
+- **Provider**: `pixl`
+- **Purpose**: Direct website generation and deployment
+- **Features**:
+  - Instant website generation
+  - No build process needed
+  - Direct deployment
+- **Env Vars**: `PIXL_API_KEY` (if available)
+- **Routes**: `/api/deployment/deploy` (platform: pixl)
+- **Status**: ✅ Integrated (via Website AI Designer)
+
+### 16. **Neon PostgreSQL** (Database)
 - **Package**: `@neondatabase/serverless`
 - **Purpose**: Serverless PostgreSQL database
 - **Connection**: `DATABASE_URL` or `NEON_DATABASE_URL`
@@ -170,6 +337,21 @@
 - **Purpose**: AI-powered features (alternative to OpenAI)
 - **Status**: ✅ Available
 
+### 17. **Card Forge Pro** (Card Creation GPT)
+- **Package**: `packages/card-forge-pro`
+- **GPT ID**: `g-691e87a571708191aad55627a0b616ef`
+- **Reference**: https://chatgpt.com/g/g-691e87a571708191aad55627a0b616ef-card-forge-pro
+- **Purpose**: AI-powered card creation (business cards, trading cards, digital cards, NFTs)
+- **Capabilities**:
+  - Create professional cards with AI
+  - Multiple card types (business, trading, digital, NFT, custom)
+  - Custom design options (style, color scheme, layout)
+  - Contact information integration
+  - Image and logo support
+- **Env Vars**: `OPENAI_API_KEY`, `CARD_FORGE_PRO_GPT_ID` (optional)
+- **Routes**: `/api/card-forge/*`
+- **Status**: ✅ Integrated
+
 ---
 
 ## 💳 Payments & Commerce
@@ -193,9 +375,33 @@
 
 ---
 
+## 🌐 DNS & Domain Management
+
+### 18. **DomainKeeper** (Automated Domain Management)
+- **Service**: `server/services/DomainKeeper.ts`
+- **Purpose**: Self-healing domain and DNS management for dreamnet.ink
+- **Capabilities**:
+  - Automatically attaches dreamnet.ink to correct Vercel project
+  - Syncs DNS records to point to Vercel infrastructure
+  - Post-deploy domain verification
+  - Idempotent - safe to call multiple times
+- **DNS Providers**:
+  - **Cloudflare**: `server/integrations/cloudflareDns.ts`
+    - Env Vars: `CF_API_TOKEN`, `CF_ZONE_ID`, `CF_ZONE_NAME` (optional)
+  - **NoOp**: Falls back if DNS provider not configured
+- **Env Vars**:
+  - `DNS_PROVIDER` (e.g., "cloudflare", "none")
+  - `CF_API_TOKEN` (Cloudflare API token)
+  - `CF_ZONE_ID` (Cloudflare zone ID)
+  - `CF_ZONE_NAME` (Cloudflare zone name, optional)
+- **Routes**: `POST /api/deployment/sync-domains`
+- **Status**: ✅ Active
+
+---
+
 ## 🔍 Search & Analytics
 
-### 18. **Google Services** (Multiple)
+### 19. **Google Services** (Multiple)
 - **Routes**: `/api/google-integration/*`
 - **Services**:
   - **Gmail**: Email sending (`/send-email`)
@@ -471,8 +677,8 @@
 
 ### By Category
 
-**Infrastructure (3)**:
-- Vercel, Railway, Neon PostgreSQL
+**Infrastructure (16)**:
+- DreamNet Native Platform, Vercel, Netlify, Railway, Cloudflare Pages, Render, Fly.io, AWS Amplify, Azure Static Web Apps, GitHub Pages, Surge, Firebase Hosting, DigitalOcean App Platform, Heroku, Pixl, Neon PostgreSQL
 
 **Blockchain (8)**:
 - Base Mainnet, Base Sepolia, Hardhat, Ethers.js, Coinbase OnChainKit, Solana Wallet Adapter, Wagmi, SIWE
@@ -552,8 +758,29 @@
 - `STRIPE_SECRET_KEY` - Stripe secret key
 - `STRIPE_WEBHOOK_SECRET` - Stripe webhook secret
 
-### Deployment
+### Deployment (Unified Platform)
 - `VERCEL_TOKEN` - Vercel API token
+- `NETLIFY_TOKEN` - Netlify API token
+- `RAILWAY_TOKEN` - Railway API token
+- `CLOUDFLARE_API_TOKEN` - Cloudflare API token
+- `RENDER_API_KEY` - Render API key
+- `FLY_API_TOKEN` - Fly.io API token
+- `AWS_ACCESS_KEY_ID` - AWS access key
+- `AWS_SECRET_ACCESS_KEY` - AWS secret key
+- `AZURE_STATIC_WEB_APPS_API_TOKEN` - Azure Static Web Apps token
+- `GITHUB_TOKEN` - GitHub token (for GitHub Pages)
+- `SURGE_TOKEN` - Surge.sh token
+- `SURGE_LOGIN` - Surge.sh login email
+- `FIREBASE_TOKEN` - Firebase token
+- `DIGITALOCEAN_ACCESS_TOKEN` - DigitalOcean access token
+- `HEROKU_API_KEY` - Heroku API key
+- `PIXL_API_KEY` - Pixl API key (if available)
+
+### DNS Management (DomainKeeper)
+- `DNS_PROVIDER` - DNS provider name (e.g., "cloudflare", "none")
+- `CF_API_TOKEN` - Cloudflare API token (if using Cloudflare)
+- `CF_ZONE_ID` - Cloudflare zone ID (if using Cloudflare)
+- `CF_ZONE_NAME` - Cloudflare zone name (optional, auto-detected)
 
 ### Optional Feature Flags
 - `INIT_SUBSYSTEMS` - Enable heavy subsystems (true/false)
@@ -594,7 +821,7 @@
 
 ## 🎯 Integration Capabilities Summary
 
-**Total Integrations**: 54+  
+**Total Integrations**: 65+  
 **Active Integrations**: 35+  
 **Auto-Discovery Systems**: 3  
 **Zero-Touch Systems**: 3  
@@ -602,7 +829,7 @@
 **Payment Processors**: 1 (Stripe)  
 **Communication Channels**: 3 (SMS, Email, Social Media)  
 **AI Providers**: 2 (OpenAI, Anthropic)  
-**Hosting Providers**: 2 (Vercel, Railway)  
+**Hosting Providers**: 15+ (DreamNet Native, Vercel, Netlify, Railway, Cloudflare Pages, Render, Fly.io, AWS Amplify, Azure Static Web Apps, GitHub Pages, Surge, Firebase Hosting, DigitalOcean App Platform, Heroku, Pixl)  
 **Database Providers**: 1 (Neon PostgreSQL)
 
 ---

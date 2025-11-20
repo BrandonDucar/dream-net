@@ -586,6 +586,16 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
+  packages/deployment-core:
+    dependencies:
+      form-data:
+        specifier: ^4.0.1
+        version: 4.0.4
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/directory:
     dependencies:
       '@dreamnet/dreamnet-control-core':
@@ -1566,6 +1576,16 @@ importers:
         version: 5.9.3
 
   packages/webhook-nervous-core: {}
+
+  packages/website-ai-designer:
+    dependencies:
+      openai:
+        specifier: ^6.8.1
+        version: 6.8.1(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.1.12)
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
 
   packages/whale-pack-core:
     dependencies:
@@ -19096,6 +19116,11 @@ snapshots:
     optionalDependencies:
       ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       zod: 3.25.76
+
+  openai@6.8.1(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@4.1.12):
+    optionalDependencies:
+      ws: 8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      zod: 4.1.12
 
   openapi-fetch@0.13.8:
     dependencies:

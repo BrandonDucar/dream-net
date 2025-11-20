@@ -1,20 +1,23 @@
-# Minimal exclusions - only exclude what we absolutely don't need
-# CRITICAL: client/, packages/, shared/, pnpm-workspace.yaml MUST be included
-
-# Only exclude the disabled old site
+# Exclude old disabled site
 apps/_site-old-DISABLED/**
 
-# Exclude server
+# Exclude server (backend is on Railway)
 server/**
 
 # Exclude contracts
 contracts/**
 
-# Exclude node_modules (will be installed)
+# Exclude scripts
+scripts/**
+
+# Exclude docs
+docs/**
+
+# Exclude node_modules (will be installed by Vercel)
 node_modules
 **/node_modules
 
-# Exclude build outputs
+# Exclude build outputs (will be generated)
 dist
 **/dist
 build
@@ -26,5 +29,11 @@ build
 # Exclude env files
 .env
 .env.*
+
+# Exclude test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
 
 # Everything else INCLUDING client/, packages/, shared/, pnpm-workspace.yaml, package.json, pnpm-lock.yaml MUST be included
