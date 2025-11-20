@@ -4,6 +4,9 @@
 # Only exclude the disabled old site
 apps/_site-old-DISABLED/**
 
+# Exclude dream-agent-store (empty submodule)
+dream-agent-store/**
+
 # Exclude server
 server/**
 
