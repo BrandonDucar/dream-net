@@ -36,7 +36,8 @@
     "deploy:base-sepolia": "hardhat run scripts/contracts/deploy.ts --network baseSepolia",
     "deploy:base-mainnet": "hardhat run scripts/contracts/deploy.ts --network baseMainnet",
     "verify:base": "tsx scripts/verifyBase.ts",
-    "vercel:monitor": "tsx scripts/monitor-vercel-build.ts"
+    "vercel:monitor": "tsx scripts/monitor-vercel-build.ts",
+    "deploy:base-contracts": "tsx scripts/deploy-base-contracts.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

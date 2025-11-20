@@ -13,10 +13,13 @@ cmds = [
   "npx --yes pnpm@10.21.0 install --no-frozen-lockfile"
 ]
 
+# Build in chunks to reduce memory pressure
 [phases.build]
 cmds = [
-  "cd .. && NODE_OPTIONS='--max-old-space-size=8192' npx pnpm --filter client build",
-  "cd server && npx pnpm build"
+  # Step 1: Build frontend only (most memory intensive)
+  "cd .. && echo 'Building frontend...' && NODE_OPTIONS='--max-old-space-size=8192' npx pnpm --filter client build",
+  # Step 2: Build backend (much lighter)
+  "cd server && echo 'Building backend...' && npx pnpm build"
 ]
 
 [start]
