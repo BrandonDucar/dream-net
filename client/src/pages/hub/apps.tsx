@@ -26,7 +26,7 @@ export default function HubApps() {
     return true;
   });
 
-  const categories = ["all", "identity", "vault", "bounty", "remix", "governance", "analytics", "other"];
+  const categories = ["all", "identity", "vault", "bounty", "remix", "governance", "analytics", "creative", "other"];
   const statuses = ["all", "stable", "beta", "alpha", "coming-soon"];
 
   const getStatusBadge = (status: MiniApp["status"]) => {

@@ -68,6 +68,7 @@ export { SocialOpsMini } from './SocialOpsMini';
 export { WolfPackFundingHUD } from './WolfPackFundingHUD';
 export { InboxSquaredMini } from './InboxSquaredMini';
 export { CoinSenseiMini } from './CoinSenseiMini';
+export { CardForgeProMini } from './CardForgeProMini';
 
 // App registry for routing
 export const MINI_APPS = {
@@ -417,6 +418,12 @@ export const MINI_APPS = {
     component: 'CoinSenseiMini',
     name: 'CoinSensei 2.0 - Portfolio Analytics',
     category: 'utility',
+    requiresPassport: false,
+  },
+  'card-forge-pro': {
+    component: 'CardForgeProMini',
+    name: 'Card Forge Pro - AI Card Creation',
+    category: 'creative',
     requiresPassport: false,
   },
 };

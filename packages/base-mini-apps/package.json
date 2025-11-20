@@ -29,6 +29,7 @@
     "deploy:time-capsule": "hardhat run scripts/deploy-time-capsule.ts --config hardhat.config.cjs --network base",
     "deploy:dna-sequencer": "hardhat run scripts/deploy-dna-sequencer.ts --config hardhat.config.cjs --network base",
     "deploy:prediction-market": "hardhat run scripts/deploy-prediction-market.ts --config hardhat.config.cjs --network base",
+    "deploy:card-forge": "hardhat run scripts/deploy-card-forge.ts --config hardhat.config.cjs --network base",
     "deploy:all": "hardhat run scripts/deploy-all.ts --config hardhat.config.cjs --network base",
     "deploy:all-mini": "hardhat run scripts/deploy-all-mini-contracts.ts --config hardhat.config.cjs --network base",
     "deploy:new": "hardhat run scripts/deploy-vault.ts --config hardhat.config.cjs --network base && hardhat run scripts/deploy-bounty.ts --config hardhat.config.cjs --network base && hardhat run scripts/deploy-badge.ts --config hardhat.config.cjs --network base",
