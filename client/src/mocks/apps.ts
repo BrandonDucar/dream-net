@@ -2,7 +2,7 @@ export interface MiniApp {
   id: string;
   name: string;
   description: string;
-  category: "identity" | "vault" | "bounty" | "remix" | "governance" | "analytics" | "other";
+  category: "identity" | "vault" | "bounty" | "remix" | "governance" | "analytics" | "creative" | "other";
   status: "alpha" | "beta" | "stable" | "coming-soon";
   pricingHint?: string;
   route: string;
@@ -81,6 +81,15 @@ export const mockApps: MiniApp[] = [
     status: "stable",
     pricingHint: "Free",
     route: "/hub/apps/onboarding",
+  },
+  {
+    id: "card-forge-pro",
+    name: "Card Forge Pro",
+    description: "AI-powered card creation and NFT minting on Base",
+    category: "creative",
+    status: "beta",
+    pricingHint: "Free (NFT minting costs gas)",
+    route: "/hub/apps/card-forge-pro",
   },
 ];
 
