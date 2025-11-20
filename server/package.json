@@ -19,6 +19,7 @@
     "@dreamnet/metrics-engine": "workspace:*",
     "@dreamnet/nerve": "workspace:*",
     "@dreamnet/ops-sentinel": "workspace:*",
+    "@dreamnet/deployment-core": "workspace:*",
     "blake3": "^2.1.7",
     "nanoid": "^5.0.7",
     "node-cron": "^3.0.3",

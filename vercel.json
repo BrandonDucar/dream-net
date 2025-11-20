@@ -1,13 +1,9 @@
 {
   "version": 2,
   "rootDirectory": "client",
-  "installCommand": "cd .. && pnpm --filter client... install --no-frozen-lockfile --ignore-scripts",
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "framework": null,
-  "env": {
-    "NODE_ENV": "production"
-  },
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -16,12 +12,6 @@
     {
       "source": "/(.*)",
       "destination": "/index.html"
-    }
-  ],
-  "crons": [
-    {
-      "path": "/api/jobs/poster",
-      "schedule": "*/15 * * * *"
     }
   ]
 }

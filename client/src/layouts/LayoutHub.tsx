@@ -13,6 +13,8 @@ import {
   LogOut,
   Activity,
   Zap,
+  Rocket,
+  CreditCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -64,6 +66,18 @@ const hubNavigation = [
     href: "/hub/ops",
     icon: Settings,
     description: "Operator console",
+  },
+  {
+    name: "Deployment",
+    href: "/hub/deployment",
+    icon: Rocket,
+    description: "Deploy to any platform",
+  },
+  {
+    name: "Card Forge",
+    href: "/hub/card-forge",
+    icon: CreditCard,
+    description: "AI-powered card creation",
   },
 ];
 

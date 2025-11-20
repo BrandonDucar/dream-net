@@ -72,6 +72,9 @@ import evolutionEngineRouter from './routes/evolution-engine';
 import opsRouter from './routes/ops';
 import adminWalletsRouter from './routes/admin-wallets';
 import baseHealthRouter from './routes/base-health';
+import websiteDesignerRouter from './routes/website-designer';
+import deploymentRouter from './routes/deployment';
+import cardForgeRouter from './routes/card-forge';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // SIWE Auth routes
@@ -163,10 +166,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Dreams routes
   app.get("/api/dreams", async (req, res) => {
     try {
-      const limit = parseInt(req.query.limit as string) || 50;
+      const limit = parseInt(req.query.limit as string) || 100;
       const offset = parseInt(req.query.offset as string) || 0;
       const dreams = await storage.getDreams(limit, offset);
-      res.json(dreams);
+      
+      // Transform dreams to match Hub Grid format
+      const transformedDreams = dreams.map((dream: any) => ({
+        id: dream.id,
+        dreamId: dream.id,
+        title: dream.title || null,
+        content: dream.content || null,
+        wallet: dream.creatorWallet || null,
+        createdAt: dream.createdAt ? new Date(dream.createdAt).getTime() : null,
+        healthScore: dream.trustScore || dream.score || 50,
+        engagementScore: dream.score || 0,
+        metrics: {
+          views: dream.views || 0,
+          likes: dream.likes || 0,
+          remixes: dream.remixes || 0,
+          shares: dream.shares || 0,
+        },
+        evolutionPath: {
+          generationLevel: dream.generationLevel || 0,
+          branchingFactor: 0,
+          divergenceScore: 0,
+        },
+        remixLineage: dream.forkedFrom ? [{ id: dream.forkedFrom, title: 'Parent Dream' }] : [],
+      }));
+      
+      res.json(transformedDreams);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
@@ -2492,6 +2520,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // OPS Contract routes
   app.use('/api/ops', opsRouter);
+  app.use('/api/website-designer', websiteDesignerRouter);
+  app.use('/api/deployment', deploymentRouter);
   
   // Admin wallets routes
   app.use('/api/admin-wallets', adminWalletsRouter);
