@@ -7,8 +7,6 @@
 import React, { useState } from 'react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther } from 'viem';
-import { CONTRACT_ADDRESSES } from './config';
-import { ethers } from 'ethers';
 
 interface CardCreationRequest {
   cardType: 'business' | 'trading' | 'digital' | 'nft' | 'custom';
@@ -69,7 +67,7 @@ export function CardForgeProMini() {
     setResult(null);
 
     try {
-      const request = {
+      const request: CardCreationRequest = {
         cardType,
         title: title || undefined,
         description,
@@ -89,8 +87,7 @@ export function CardForgeProMini() {
       };
 
       // Call Card Forge Pro API
-      const API_BASE = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${API_BASE}/api/card-forge/create`, {
+      const response = await fetch('/api/card-forge/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,15 +102,29 @@ export function CardForgeProMini() {
         setResult(cardResult);
 
         // If cardType is 'nft', mint as NFT on Base
-        if (cardType === 'nft' && isConnected && address && CONTRACT_ADDRESSES.CardForgeNFT) {
+        if (cardType === 'nft' && isConnected && address) {
+          if (!CONTRACT_ADDRESSES.CardForgeNFT) {
+            setResult({
+              success: true,
+              ...cardResult,
+              error: 'Card created, but CardForgeNFT contract is not deployed. Please deploy the contract to enable NFT minting.',
+            });
+            return;
+          }
+
           try {
-            await mintCardAsNFT(cardResult, address);
+            const txHash = await mintCardAsNFT(cardResult, address);
+            setResult({
+              success: true,
+              ...cardResult,
+              nftTokenId: txHash, // In a real implementation, extract token ID from receipt
+            });
           } catch (error: any) {
             console.error('[CardForgePro] NFT minting error:', error);
-            setResult({ 
-              success: true, 
-              ...cardResult, 
-              error: `Card created but NFT minting failed: ${error.message}` 
+            setResult({
+              success: true,
+              ...cardResult,
+              error: `Card created but NFT minting failed: ${error.message}`,
             });
           }
         }
@@ -354,4 +365,3 @@ export function CardForgeProMini() {
     </div>
   );
 }
-
