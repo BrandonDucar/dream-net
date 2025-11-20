@@ -69,6 +69,8 @@ import evolutionVaultRouter from './routes/evolution-vault';
 import aiSurgeonRouter from './routes/ai-surgeon';
 import defenseNetworkRouter from './routes/defense-network';
 import evolutionEngineRouter from './routes/evolution-engine';
+import opsRouter from './routes/ops';
+import adminWalletsRouter from './routes/admin-wallets';
 import baseHealthRouter from './routes/base-health';
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -2487,6 +2489,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(defenseNetworkRouter);
   app.use(evolutionEngineRouter);
   app.use('/api/base-health', baseHealthRouter);
+  
+  // OPS Contract routes
+  app.use('/api/ops', opsRouter);
+  
+  // Admin wallets routes
+  app.use('/api/admin-wallets', adminWalletsRouter);
 
   // Bounty endpoints
   app.post('/api/post-bounty', postBountyHandler);

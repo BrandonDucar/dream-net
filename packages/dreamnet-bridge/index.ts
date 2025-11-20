@@ -137,6 +137,69 @@ export async function dnWalletIntel(query: string): Promise<string> {
 }
 
 /**
+ * DreamNet OPS Contract Summary
+ * Get OPS_CONTRACT summary via ops-sentinel
+ * 
+ * @returns Promise with OPS contract summary
+ * 
+ * @example
+ * ```typescript
+ * const contract = await dnOpsContract();
+ * console.log(contract);
+ * ```
+ */
+export async function dnOpsContract(): Promise<string> {
+  try {
+    const { loadOpsContract } = await import('@dreamnet/ops-sentinel');
+    const contract = loadOpsContract();
+    return JSON.stringify(
+      {
+        version: contract.version,
+        frontend: contract.frontend,
+        backend: contract.backend,
+        integrationCount: contract.integrations.length,
+        envVarCount: contract.envVars.length,
+      },
+      null,
+      2
+    );
+  } catch (error: any) {
+    throw new Error(`DreamNet OPS Contract Error: ${error.message}`);
+  }
+}
+
+/**
+ * DreamNet OPS Validation
+ * Validate repo setup against OPS_CONTRACT
+ * 
+ * @returns Promise with validation results
+ * 
+ * @example
+ * ```typescript
+ * const validation = await dnOpsValidate();
+ * console.log(validation);
+ * ```
+ */
+export async function dnOpsValidate(): Promise<string> {
+  try {
+    const { loadOpsContract, validateRepoSetup } = await import('@dreamnet/ops-sentinel');
+    const contract = loadOpsContract();
+    const result = validateRepoSetup(contract);
+    return JSON.stringify(
+      {
+        valid: result.valid,
+        errors: result.errors,
+        warnings: result.warnings,
+      },
+      null,
+      2
+    );
+  } catch (error: any) {
+    throw new Error(`DreamNet OPS Validation Error: ${error.message}`);
+  }
+}
+
+/**
  * Reset agent instance (useful for testing or re-initialization)
  */
 export function resetAgent(): void {

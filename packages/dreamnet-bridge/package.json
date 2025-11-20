@@ -6,10 +6,13 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@dreamnet/dreamnet-agent-client": "workspace:*"
+    "@dreamnet/dreamnet-agent-client": "workspace:*",
+    "@dreamnet/ops-sentinel": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

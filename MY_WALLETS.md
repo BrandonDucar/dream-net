@@ -13,7 +13,7 @@
 
 ### Phantom (Solana)
 **Chain:** `solana`  
-**Address:** `YOUR_PHANTOM_ADDRESS_HERE`  
+**Address:** `9jAUEPpb74rJNrgfjAQzDpLgweCbipgdN1fujupFZZj`  
 **Use for:** SOL + SPL tokens (meme coins, alts)
 
 ### Uniswap/MetaMask (Ethereum)
@@ -28,8 +28,21 @@
 
 ### VeChain
 **Chain:** `vechain`  
-**Address:** `YOUR_VECHAIN_ADDRESS_HERE`  
+**Address:** `0x73d4c431ed1fc2126cca2597d9ace1b14de8474e`  
 **Use for:** VET + VTHO
+
+### VeChain (Tangem Wallet - Currently Inaccessible)
+**Chain:** `vechain`  
+**Address:** `0x064915fAD67E70D2Fa708B14af9e01B0083a1B9E`  
+**Status:** 🔒 Locked (missing 3rd card, buddy has it)  
+**Holdings:** B3TR, VTHO, AERO  
+**Note:** Can track via Coin Sensei even if can't access
+
+### Solana (Admin Wallet)
+**Chain:** `solana`  
+**Address:** `9jAUEPpb74rJNrgfjAQzDpLgweCbipgdN1fujupFZZj`  
+**Status:** ✅ Active  
+**Note:** Admin wallet, can track via Coin Sensei
 
 ### Kaspa
 **Chain:** `kaspa`  
