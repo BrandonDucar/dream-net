@@ -48,10 +48,25 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    commonjsOptions: {
-      include: [/node_modules/, /packages/],
-    },
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // Split large dependencies into separate chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-radix';
+            }
+            if (id.includes('wagmi') || id.includes('viem')) {
+              return 'vendor-web3';
+            }
+            return 'vendor';
+          }
+        },
+      },
       external: [
         // Exclude server-only packages that have Node.js dependencies
         '@dreamnet/inbox-squared-core',
@@ -61,6 +76,9 @@ export default defineConfig({
         'newsapi',
         'timezone-lookup',
       ],
+    },
+    commonjsOptions: {
+      include: [/node_modules/, /packages/],
     },
   },
 });

@@ -4,6 +4,9 @@
 [phases.setup]
 nixPkgs = ["nodejs_20"]
 
+[variables]
+NODE_OPTIONS = "--max-old-space-size=6144"
+
 [phases.install]
 cmds = [
   "npx --yes pnpm@10.21.0 install --no-frozen-lockfile"
@@ -11,8 +14,8 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "cd .. && NODE_OPTIONS='--max-old-space-size=4096' npx pnpm --filter client build",
-  "cd server && NODE_OPTIONS='--max-old-space-size=4096' npx pnpm build"
+  "cd .. && npx pnpm --filter client build",
+  "cd server && npx pnpm build"
 ]
 
 [start]
