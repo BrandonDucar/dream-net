@@ -48,22 +48,53 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Split large dependencies into separate chunks
+          // More aggressive chunking to reduce memory usage
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
+            // React core
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
               return 'vendor-react';
             }
+            // Radix UI (large library)
             if (id.includes('@radix-ui')) {
               return 'vendor-radix';
             }
-            if (id.includes('wagmi') || id.includes('viem')) {
+            // Web3 libraries (large)
+            if (id.includes('wagmi') || id.includes('viem') || id.includes('@wagmi') || id.includes('ethers')) {
               return 'vendor-web3';
             }
+            // Solana (large)
+            if (id.includes('@solana')) {
+              return 'vendor-solana';
+            }
+            // TanStack Query
+            if (id.includes('@tanstack')) {
+              return 'vendor-query';
+            }
+            // Form libraries
+            if (id.includes('react-hook-form') || id.includes('@hookform')) {
+              return 'vendor-forms';
+            }
+            // Other large vendors
+            if (id.includes('lucide-react') || id.includes('recharts') || id.includes('vis-network')) {
+              return 'vendor-ui';
+            }
+            // Everything else
             return 'vendor';
+          }
+          // Split large local packages
+          if (id.includes('packages/base-mini-apps')) {
+            return 'mini-apps';
           }
         },
       },
