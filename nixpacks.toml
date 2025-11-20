@@ -11,8 +11,8 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "cd .. && npx pnpm --filter client build",
-  "cd server && npx pnpm build"
+  "cd .. && NODE_OPTIONS='--max-old-space-size=4096' npx pnpm --filter client build",
+  "cd server && NODE_OPTIONS='--max-old-space-size=4096' npx pnpm build"
 ]
 
 [start]
