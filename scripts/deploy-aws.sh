@@ -21,7 +21,7 @@ AWS_REGION="${AWS_REGION:-us-east-1}"
 if [[ "$AWS_REGION" == *"gov"* ]]; then
   echo "🇺🇸 Deploying to AWS GovCloud (US)"
   echo "📊 Region: $AWS_REGION"
-  echo "🏛️  Entity: [Government Entity Number]"
+  echo "📊 AWS Account: 001092882186"
 else
   echo "☁️  Deploying to Commercial AWS"
   echo "📊 Region: $AWS_REGION"
@@ -88,7 +88,7 @@ echo "📊 Deployment Summary:"
 echo "  Region: $AWS_REGION"
 if [[ "$AWS_REGION" == *"gov"* ]]; then
   echo "  Type: AWS GovCloud (US)"
-  echo "  Entity: 001092882186"
+  echo "  AWS Account: 001092882186"
 else
   echo "  Type: Commercial AWS"
 fi
