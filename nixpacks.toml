@@ -1,5 +1,7 @@
-# Nixpacks configuration for Railway Metal Build
-# This file configures Railway's Metal Build Beta environment
+# LEGACY: Nixpacks configuration for Railway Metal Build
+# This file configures Railway's Metal Build Beta environment (legacy provider)
+# PRIMARY DEPLOYMENT: Google Cloud Run (see deploy:gcp script)
+# This file is kept for backward compatibility but is not required for GCP deployment.
 
 [phases.setup]
 nixPkgs = ["nodejs_20"]
