@@ -1,14 +1,20 @@
-name: DreamNet CI/CD
+name: DreamNet CI/CD (DISABLED - Using Google Cloud)
+
+# LEGACY: This workflow previously deployed to Vercel
+# PRIMARY DEPLOYMENT: Google Cloud Run (use pnpm deploy:gcp)
+# This workflow is disabled to prevent automatic Vercel deployments
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  # DISABLED: No longer auto-deploying on push
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:  # Only runs if manually triggered
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    if: false  # Explicitly disabled
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,11 +33,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: .
+      # DISABLED: Vercel deployment removed - use Google Cloud instead
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     working-directory: .
 

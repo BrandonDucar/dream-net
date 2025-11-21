@@ -15,7 +15,17 @@ interface EnvConfig {
   PORT: number;
   
   // Database (optional - server can start without DB)
+  // PRIMARY: Google Cloud SQL / AlloyDB PostgreSQL
+  // LEGACY: Neon PostgreSQL (detected automatically)
   DATABASE_URL?: string;
+  CLOUD_SQL_INSTANCE_CONNECTION_NAME?: string; // For Cloud SQL Proxy connections
+  
+  // Google Cloud Platform (primary deployment target)
+  GCP_PROJECT_ID?: string;
+  GCP_REGION?: string;
+  GCP_SERVICE_NAME?: string;
+  GOOGLE_CLOUD_PROJECT?: string; // Alternative name for GCP_PROJECT_ID
+  GOOGLE_CLOUD_REGION?: string; // Alternative name for GCP_REGION
   
   // API Keys (optional - some features may be unavailable)
   OPENAI_API_KEY?: string;
@@ -28,6 +38,12 @@ interface EnvConfig {
   INIT_SUBSYSTEMS?: boolean;
   MESH_AUTOSTART?: boolean;
   INIT_HEAVY_SUBSYSTEMS?: boolean; // Set to 'true' to enable DreamState, Directory, Nerve Fabric, etc.
+  
+  // Legacy provider support (optional - for backward compatibility)
+  VERCEL_TOKEN?: string; // Only needed if using Vercel integration features
+  VERCEL_TEAM_ID?: string;
+  VERCEL_PROJECT_NAME?: string;
+  RAILWAY_TOKEN?: string; // Legacy - not needed for GCP deployment
 }
 
 /**
@@ -66,12 +82,23 @@ function loadEnvConfig(): EnvConfig {
     NODE_ENV: nodeEnv as 'development' | 'production' | 'test',
     PORT: port,
     DATABASE_URL: process.env.DATABASE_URL,
+    CLOUD_SQL_INSTANCE_CONNECTION_NAME: process.env.CLOUD_SQL_INSTANCE_CONNECTION_NAME,
+    GCP_PROJECT_ID: process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT,
+    GCP_REGION: process.env.GCP_REGION || process.env.GOOGLE_CLOUD_REGION,
+    GCP_SERVICE_NAME: process.env.GCP_SERVICE_NAME,
+    GOOGLE_CLOUD_PROJECT: process.env.GOOGLE_CLOUD_PROJECT,
+    GOOGLE_CLOUD_REGION: process.env.GOOGLE_CLOUD_REGION,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     ALLOWED_ORIGINS: allowedOrigins,
     OPERATOR_WALLETS: operatorWallets,
     INIT_SUBSYSTEMS: process.env.INIT_SUBSYSTEMS === 'true',
     MESH_AUTOSTART: process.env.MESH_AUTOSTART !== 'false',
     INIT_HEAVY_SUBSYSTEMS: process.env.INIT_HEAVY_SUBSYSTEMS === 'true', // Defaults to false for simplified startup
+    // Legacy provider support
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
+    VERCEL_TEAM_ID: process.env.VERCEL_TEAM_ID,
+    VERCEL_PROJECT_NAME: process.env.VERCEL_PROJECT_NAME,
+    RAILWAY_TOKEN: process.env.RAILWAY_TOKEN,
   };
 }
 
@@ -106,6 +133,10 @@ export const env = envConfig;
 export const NODE_ENV = envConfig.NODE_ENV;
 export const PORT = envConfig.PORT;
 export const DATABASE_URL = envConfig.DATABASE_URL;
+export const CLOUD_SQL_INSTANCE_CONNECTION_NAME = envConfig.CLOUD_SQL_INSTANCE_CONNECTION_NAME;
+export const GCP_PROJECT_ID = envConfig.GCP_PROJECT_ID;
+export const GCP_REGION = envConfig.GCP_REGION;
+export const GCP_SERVICE_NAME = envConfig.GCP_SERVICE_NAME;
 export const OPENAI_API_KEY = envConfig.OPENAI_API_KEY;
 export const ALLOWED_ORIGINS = envConfig.ALLOWED_ORIGINS;
 export const OPERATOR_WALLETS = envConfig.OPERATOR_WALLETS;
