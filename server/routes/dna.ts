@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { getMemoryRecord, listMemoryRecords } from "@dreamnet/memory-dna";
-import type { EntityType } from "@dreamnet/memory-dna";
+import { getMemoryRecord, listMemoryRecords, type EntityType } from "../../packages/memory-dna";
 
 const VALID_TYPES: EntityType[] = ["agent", "squad", "endpoint", "spore"];
 

@@ -13,7 +13,7 @@ import {
 import { eq, desc, and } from "drizzle-orm";
 import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios";
 import { VM } from "vm2";
-import { updateTraitsFromEvent } from "@dreamnet/memory-dna";
+import { updateTraitsFromEvent } from "../../packages/memory-dna";
 
 /**
  * Dream API Forge Router

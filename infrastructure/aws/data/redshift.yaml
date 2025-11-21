@@ -1,0 +1,71 @@
+# Redshift Data Warehouse
+# Terraform format
+
+resource "aws_redshift_cluster" "dreamnet_warehouse" {
+  cluster_identifier = "dreamnet-warehouse"
+  database_name      = "dreamnet_analytics"
+  master_username    = "dreamnet_admin"
+  master_password    = var.redshift_password
+  
+  node_type       = "dc2.large"  # Start small, scale up
+  cluster_type    = "multi-node"
+  number_of_nodes = 2
+  
+  vpc_security_group_ids = [aws_security_group.redshift.id]
+  cluster_subnet_group_name = aws_redshift_subnet_group.dreamnet.name
+  
+  publicly_accessible = false
+  encrypted          = true
+  
+  logging {
+    enable        = true
+    bucket_name   = aws_s3_bucket.redshift_logs.id
+    s3_key_prefix = "logs/"
+  }
+  
+  snapshot_copy {
+    destination_region = "us-west-2"  # Cross-region backup
+    retention_period  = 7
+  }
+  
+  tags = {
+    Name = "dreamnet-warehouse"
+    App  = "dreamnet"
+    ManagedBy = "dreamnet-infra"
+  }
+}
+
+resource "aws_redshift_subnet_group" "dreamnet" {
+  name       = "dreamnet-redshift-subnet-group"
+  subnet_ids = var.private_subnet_ids
+  
+  tags = {
+    Name = "dreamnet-redshift-subnet-group"
+  }
+}
+
+resource "aws_security_group" "redshift" {
+  name        = "dreamnet-redshift-sg"
+  description = "Security group for DreamNet Redshift"
+  vpc_id      = var.vpc_id
+  
+  ingress {
+    from_port   = 5439
+    to_port     = 5439
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+  
+  tags = {
+    Name = "dreamnet-redshift-sg"
+  }
+}
+
+resource "aws_s3_bucket" "redshift_logs" {
+  bucket = "dreamnet-redshift-logs-${var.account_id}"
+  
+  tags = {
+    Name = "dreamnet-redshift-logs"
+  }
+}
+

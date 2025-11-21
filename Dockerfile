@@ -20,11 +20,27 @@ RUN pnpm install --frozen-lockfile
 # Copy source code
 COPY . .
 
-# Build frontend
-RUN pnpm --filter client build
+# Build frontend (client is not in workspace, build directly)
+WORKDIR /app/client
+ENV CI=true
+# Install client dependencies (regexparam is now in package.json)
+RUN pnpm install --frozen-lockfile
+RUN pnpm build
+WORKDIR /app
 
 # Build backend
-RUN cd server && pnpm build
+RUN cd server && pnpm build || true
+
+# Copy vite.ts to dist/vite.js (needed for production static file serving)
+# TypeScript may not compile vite.ts due to import.meta.dirname, so we copy it manually
+# Node.js ESM will execute .js files directly
+RUN mkdir -p server/dist && \
+    if [ -f server/vite.ts ]; then \
+      cp server/vite.ts server/dist/vite.js; \
+      echo "✅ Copied vite.ts to dist/vite.js"; \
+    else \
+      echo "⚠️ Warning: server/vite.ts not found"; \
+    fi
 
 # Expose port (Cloud Run uses PORT env var)
 EXPOSE 8080

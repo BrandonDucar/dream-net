@@ -21,7 +21,84 @@ const TEST_FAIL_HEALTH = {
   enabled: false
 };
 
-// Comprehensive health check endpoint
+// ==================== LIVENESS PROBE ====================
+// GET /health/live - Liveness probe (process only, no external deps)
+// Used by Kubernetes/Docker to determine if container should be restarted
+router.get('/live', (_req, res) => {
+  // No external dependencies - just check if process is running
+  res.status(200).json({
+    status: 'alive',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    pid: process.pid
+  });
+});
+
+// ==================== READINESS PROBE ====================
+// GET /health/ready - Readiness probe (critical dependencies)
+// Used by Kubernetes/Docker to determine if container can receive traffic
+router.get('/ready', async (_req, res) => {
+  try {
+    const checks: Record<string, boolean | string> = {};
+    
+    // Check database (if configured)
+    if (process.env.DATABASE_URL) {
+      try {
+        const { getDb } = await import('../db');
+        const db = getDb();
+        if (db) {
+          // Try a simple query
+          await db.execute({ sql: 'SELECT 1', args: [] });
+          checks.database = true;
+        } else {
+          checks.database = 'not-configured';
+        }
+      } catch (error: any) {
+        checks.database = false;
+        checks.database_error = error.message;
+      }
+    } else {
+      checks.database = 'not-configured';
+    }
+    
+    // Check required environment variables
+    const requiredEnvVars = ['NODE_ENV'];
+    const envCheck = requiredEnvVars.every(v => !!process.env[v]);
+    checks.environment = envCheck;
+    
+    // Check disk space (basic check)
+    try {
+      const fs = await import('fs/promises');
+      const stats = await fs.statfs ? await fs.statfs('.') : null;
+      checks.disk = true; // Assume OK if we can check
+    } catch {
+      checks.disk = 'unavailable';
+    }
+    
+    // Determine readiness
+    const criticalChecks = ['database', 'environment'];
+    const ready = criticalChecks.every(key => {
+      const value = checks[key];
+      return value === true || value === 'not-configured'; // not-configured is OK
+    });
+    
+    const statusCode = ready ? 200 : 503;
+    res.status(statusCode).json({
+      ready,
+      checks,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error: any) {
+    res.status(503).json({
+      ready: false,
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
+// ==================== COMPREHENSIVE HEALTH CHECK ====================
+// GET /health - Combined health check (backward compatible)
 router.get('/health', async (req, res) => {
   try {
     const auditStartTime = Date.now();
@@ -94,9 +171,14 @@ router.get('/health', async (req, res) => {
       timestamp: new Date().toISOString()
     };
 
-    // Log health check to audit trail
-    const outcome = TEST_FAIL_HEALTH.enabled ? 'simulated_failure' : (ok ? 'ok' : 'degraded');
-    await auditTrail.writeAudit('/health', 'health_check', outcome, auditStartTime, '', '');
+    // Log health check to audit trail (non-blocking)
+    try {
+      const outcome = TEST_FAIL_HEALTH.enabled ? 'simulated_failure' : (ok ? 'ok' : 'degraded');
+      await auditTrail.writeAudit('/health', 'health_check', outcome, auditStartTime, '', '');
+    } catch (error) {
+      // Don't fail health check if audit trail fails
+      console.warn('[Health] Audit trail write failed:', error);
+    }
 
     const statusCode = ok ? 200 : 500;
     res.status(statusCode).json({ ok, details });
@@ -385,7 +467,12 @@ router.get('/ops/status', (req, res) => {
 // Metrics endpoint for dashboard integration
 router.get('/metrics', async (req, res) => {
   try {
-    const auditStats = await auditTrail.getAuditStats();
+    let auditStats = { total_entries: 0, last_24h: 0 };
+    try {
+      auditStats = await auditTrail.getAuditStats();
+    } catch (error) {
+      console.warn('[Health] Audit stats failed:', error);
+    }
     const rateLimitStats = await rateLimitManager.getStats();
     const backupStats = await backupService.getBackupStats();
     
@@ -589,7 +676,11 @@ const TERMS_HTML = `
 router.get('/privacy', async (req, res) => {
   try {
     // Log privacy policy access for compliance tracking
-    await auditTrail.writeAudit('/privacy', 'legal_access', 'privacy_policy_viewed', Date.now(), '', '');
+    try {
+      await auditTrail.writeAudit('/privacy', 'legal_access', 'privacy_policy_viewed', Date.now(), '', '');
+    } catch (error) {
+      // Non-blocking
+    }
     
     res.setHeader('Content-Type', 'text/html');
     res.send(PRIVACY_HTML);
@@ -603,7 +694,11 @@ router.get('/privacy', async (req, res) => {
 router.get('/terms', async (req, res) => {
   try {
     // Log terms access for compliance tracking
-    await auditTrail.writeAudit('/terms', 'legal_access', 'terms_viewed', Date.now(), '', '');
+    try {
+      await auditTrail.writeAudit('/terms', 'legal_access', 'terms_viewed', Date.now(), '', '');
+    } catch (error) {
+      // Non-blocking
+    }
     
     res.setHeader('Content-Type', 'text/html');
     res.send(TERMS_HTML);

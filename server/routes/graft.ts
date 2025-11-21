@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { randomUUID } from "node:crypto";
-import { submitGraft, getGrafts, getGraftById, validateGraft, removeGraft, applyGraft } from "@dreamnet/graft-engine";
+import { submitGraft, getGrafts, getGraftById, validateGraft, removeGraft, applyGraft } from "../../packages/graft-engine";
 
 const DEFAULT_INTERNAL_URL = `http://127.0.0.1:${process.env.PORT ?? 5000}`;
 

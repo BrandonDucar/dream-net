@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dreamnet-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "dreamnet-ip"
+    networking.gke.io/managed-certificates: "dreamnet-ssl"
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+  - host: dreamnet.ink
+    http:
+      paths:
+      - path: /api/*
+        pathType: Prefix
+        backend:
+          service:
+            name: dreamnet-api-service
+            port:
+              number: 80
+      - path: /*
+        pathType: Prefix
+        backend:
+          service:
+            name: dreamnet-frontend-service
+            port:
+              number: 80
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: dreamnet-ssl
+  namespace: default
+spec:
+  domains:
+    - dreamnet.ink
+    - www.dreamnet.ink
+

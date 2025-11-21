@@ -1,0 +1,74 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: dreamnet-cluster
+  labels:
+    app: dreamnet
+    environment: production
+spec:
+  location: us-central1
+  projectRef:
+    external: aqueous-tube-470317-m6
+  networkRef:
+    name: dreamnet-network
+  subnetworkRef:
+    name: dreamnet-subnet
+  initialNodeCount: 3
+  minMasterVersion: "1.28"
+  nodeConfig:
+    machineType: e2-standard-4
+    diskSizeGb: 100
+    diskType: pd-ssd
+    oauthScopes:
+      - https://www.googleapis.com/auth/cloud-platform
+    labels:
+      app: dreamnet
+      tier: backend
+  nodePools:
+    - name: standard-pool
+      initialNodeCount: 3
+      autoscaling:
+        minNodeCount: 3
+        maxNodeCount: 10
+      config:
+        machineType: e2-standard-4
+        diskSizeGb: 100
+        diskType: pd-ssd
+        oauthScopes:
+          - https://www.googleapis.com/auth/cloud-platform
+    - name: gpu-pool
+      initialNodeCount: 0
+      autoscaling:
+        minNodeCount: 0
+        maxNodeCount: 5
+      config:
+        machineType: n1-standard-4
+        diskSizeGb: 100
+        diskType: pd-ssd
+        accelerators:
+          - acceleratorCount: 1
+            acceleratorType: nvidia-tesla-t4
+        taints:
+          - key: nvidia.com/gpu
+            value: "true"
+            effect: NO_SCHEDULE
+  addonsConfig:
+    httpLoadBalancing:
+      disabled: false
+    horizontalPodAutoscaling:
+      disabled: false
+    networkPolicyConfig:
+      disabled: false
+  networkPolicy:
+    enabled: true
+  privateClusterConfig:
+    enablePrivateNodes: true
+    enablePrivateEndpoint: false
+    masterIpv4CidrBlock: "172.16.0.0/28"
+  masterAuthorizedNetworksConfig:
+    cidrBlocks:
+      - cidrBlock: "0.0.0.0/0"
+        displayName: "All"
+  releaseChannel:
+    channel: REGULAR
+

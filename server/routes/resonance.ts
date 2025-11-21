@@ -3,7 +3,7 @@ import {
   computeResonanceSnapshot,
   saveResonanceInsights,
   getRecentInsights,
-} from "@dreamnet/memory-dna";
+} from "../../packages/memory-dna";
 
 export function createResonanceRouter(): Router {
   const router = Router();

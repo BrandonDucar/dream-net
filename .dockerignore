@@ -1,21 +1,66 @@
+# DreamNet Docker Ignore
+
+# Dependencies
 node_modules
+.pnpm-store
+
+# Build outputs
 dist
-.git
+client/dist
+server/dist
+*.tsbuildinfo
+
+# Environment files
 .env
-.env.local
-*.log
-.DS_Store
-coverage
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
 .vscode
 .idea
-packages/*/node_modules
-packages/*/dist
-packages/*/cache
-packages/*/artifacts
-client/node_modules
-server/node_modules
-*.md
-docs
-scripts
-test
+*.swp
+*.swo
+*~
 
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Tests
+coverage
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Scripts (not needed in container)
+scripts
+infrastructure
+
+# Contracts (not needed in runtime)
+contracts
+hardhat.config.*
+
+# Legacy/experimental
+apps
+*.replit
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Temporary files
+tmp
+temp
+*.tmp

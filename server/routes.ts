@@ -75,6 +75,12 @@ import baseHealthRouter from './routes/base-health';
 import websiteDesignerRouter from './routes/website-designer';
 import deploymentRouter from './routes/deployment';
 import cardForgeRouter from './routes/card-forge';
+import domainIssuanceRouter from './routes/domain-issuance';
+import passportsRouter from './routes/passports';
+import citizensRouter from './routes/citizens';
+import registerAgentsRouter from './routes/register-agents';
+import awsRouter from './routes/aws';
+import googleCloudRouter from './routes/google-cloud';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // SIWE Auth routes
@@ -2522,6 +2528,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/api/ops', opsRouter);
   app.use('/api/website-designer', websiteDesignerRouter);
   app.use('/api/deployment', deploymentRouter);
+  app.use('/api/domains', domainIssuanceRouter);
+  app.use('/api/passports', passportsRouter);
+  app.use('/api/citizens', citizensRouter);
+  app.use('/api/register-agents', registerAgentsRouter);
+  app.use('/api/aws', awsRouter);
+  app.use('/api/google-cloud', googleCloudRouter);
   
   // Admin wallets routes
   app.use('/api/admin-wallets', adminWalletsRouter);

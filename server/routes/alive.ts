@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { runBootSequence, getStatus } from "@dreamnet/alive-mode";
-import { recordHeartbeat } from "@dreamnet/metrics-engine";
+import { runBootSequence, getStatus } from "../../packages/alive-mode";
+import { recordHeartbeat } from "../../packages/metrics-engine";
 
 let booting = false;
 
