@@ -4,8 +4,8 @@
  */
 
 import express from "express";
-import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
-import type { ClusterId } from "@dreamnet/dreamnet-control-core";
+import { DreamNetControlCore } from "../../packages/dreamnet-control-core";
+import type { ClusterId } from "../../packages/dreamnet-control-core";
 import { createPassportGate } from "../middleware/passportGate";
 
 const router = express.Router();

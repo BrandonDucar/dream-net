@@ -6,8 +6,8 @@
  */
 
 import { Router } from 'express';
-import { CitizenshipStore } from '@dreamnet/dream-state-core/store/citizenshipStore';
-import { getDomainsForPassport, getDomainsForWallet } from '@dreamnet/domain-issuance-core';
+import { CitizenshipStore } from '../../packages/dream-state-core/store/citizenshipStore';
+import { getDomainsForPassport, getDomainsForWallet } from '../../packages/domain-issuance-core';
 
 const router = Router();
 

@@ -5,16 +5,16 @@
  */
 
 import { Router, Response } from "express";
-import { withPort } from "@dreamnet/port-governor/withPort";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
+import { withPort } from "../../packages/port-governor/src/withPort";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 import {
   resolveIntentToTool,
   isToolAllowedForCaller,
   type AgentGatewayRequestBody,
-} from "@dreamnet/agent-gateway/router";
-import { getToolConfig, listTools } from "@dreamnet/agent-gateway/tools";
-import { executeTool } from "@dreamnet/agent-gateway/executor";
+} from "../../packages/agent-gateway/src/router";
+import { getToolConfig, listTools } from "../../packages/agent-gateway/src/tools";
+import { executeTool } from "../../packages/agent-gateway/src/executor";
 
 const router = Router();
 

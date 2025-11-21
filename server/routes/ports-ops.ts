@@ -5,12 +5,12 @@
 
 import { Router, Request, Response } from "express";
 import { requireAdmin } from "../siwe-auth";
-import { PORT_PROFILES } from "@dreamnet/port-governor/ports";
-import { NERVE_BUS } from "@dreamnet/nerve/bus";
-import { getDescriptorsBySensitivity } from "@dreamnet/env-keeper-core/logic/envClassifier";
-import { getApiKeeperSummary } from "@dreamnet/api-keeper-core/summary";
-import { getVercelAgentSummary } from "@dreamnet/dreamnet-vercel-agent/summary";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
+import { PORT_PROFILES } from "../../packages/port-governor/src/ports";
+import { NERVE_BUS } from "../../packages/nerve/src/bus";
+import { getDescriptorsBySensitivity } from "../../packages/env-keeper-core/logic/envClassifier";
+import { getApiKeeperSummary } from "../../packages/api-keeper-core/summary";
+import { getVercelAgentSummary } from "../../packages/dreamnet-vercel-agent/summary";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 
 const router = Router();
 

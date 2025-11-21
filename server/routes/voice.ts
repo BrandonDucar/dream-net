@@ -10,7 +10,7 @@ const router: Router = Router();
 // DreamNet Voice Twilio is optional
 let DreamNetVoiceTwilio: any = null;
 try {
-  const voiceModule = require("@dreamnet/dreamnet-voice-twilio");
+  const voiceModule = require("../../packages/dreamnet-voice-twilio");
   DreamNetVoiceTwilio = voiceModule.DreamNetVoiceTwilio;
 } catch {
   console.warn("[Voice Router] @dreamnet/dreamnet-voice-twilio not available");
@@ -19,7 +19,7 @@ try {
 // Operational bridge is optional
 let bridgeToSpiderWeb: any = null;
 try {
-  const bridgeModule = require("@dreamnet/dreamnet-operational-bridge");
+  const bridgeModule = require("../../packages/dreamnet-operational-bridge");
   bridgeToSpiderWeb = bridgeModule.bridgeToSpiderWeb;
 } catch {
   console.warn("[Voice Router] @dreamnet/dreamnet-operational-bridge not available");

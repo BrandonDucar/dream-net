@@ -4,8 +4,8 @@
  */
 
 import { Router, Response } from "express";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 
 const router: Router = Router();
 
@@ -19,34 +19,34 @@ let APIKeeperCore: any = null;
 let recordDeployEvent: any = null;
 
 try {
-  const vercelModule = require("@dreamnet/dreamnet-vercel-agent");
+  const vercelModule = require("../../packages/dreamnet-vercel-agent");
   DreamNetVercelAgent = vercelModule.DreamNetVercelAgent;
-  const summaryModule = require("@dreamnet/dreamnet-vercel-agent/summary");
+  const summaryModule = require("../../packages/dreamnet-vercel-agent/summary");
   recordDeployEvent = summaryModule.recordDeployEvent;
 } catch {
   console.warn("[Vercel Router] @dreamnet/dreamnet-vercel-agent not available");
 }
 
 try {
-  const portModule = require("@dreamnet/port-governor/withPort");
+  const portModule = require("../../packages/port-governor/src/withPort");
   withPort = portModule.withPort;
 } catch {
   console.warn("[Vercel Router] @dreamnet/port-governor not available");
 }
 
 try {
-  const nerveBusModule = require("@dreamnet/nerve/bus");
+  const nerveBusModule = require("../../packages/nerve/src/bus");
   NERVE_BUS = nerveBusModule.NERVE_BUS;
-  const nerveFactoryModule = require("@dreamnet/nerve/factory");
+  const nerveFactoryModule = require("../../packages/nerve/src/factory");
   createNerveEvent = nerveFactoryModule.createNerveEvent;
 } catch {
   console.warn("[Vercel Router] @dreamnet/nerve not available");
 }
 
 try {
-  const envKeeperModule = require("@dreamnet/env-keeper-core");
+  const envKeeperModule = require("../../packages/env-keeper-core");
   EnvKeeperCore = envKeeperModule.EnvKeeperCore;
-  const apiKeeperModule = require("@dreamnet/api-keeper-core");
+  const apiKeeperModule = require("../../packages/api-keeper-core");
   APIKeeperCore = apiKeeperModule.APIKeeperCore;
 } catch {
   console.warn("[Vercel Router] Keeper cores not available");

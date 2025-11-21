@@ -13,7 +13,7 @@
  */
 
 import { Router } from 'express';
-import { getAgentWalletManager } from '@dreamnet/agent-wallet-manager';
+import { getAgentWalletManager } from '../../packages/agent-wallet-manager';
 import { JsonRpcProvider } from 'ethers';
 
 // SECURITY: Initialize wallet manager with mnemonic from env only

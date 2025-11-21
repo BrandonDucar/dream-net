@@ -10,8 +10,8 @@
  */
 
 import { Router } from 'express';
-import { CoinSensei } from '@dreamnet/coinsensei-core';
-import type { CoinSenseiInput } from '@dreamnet/coinsensei-core';
+import { CoinSensei } from '../../packages/coinsensei-core';
+import type { CoinSenseiInput } from '../../packages/coinsensei-core';
 
 const router = Router();
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { haloEngine } from "@dreamnet/halo-loop";
+import { haloEngine } from "../../packages/halo-loop";
 import { recordHaloCycle } from "../../packages/metrics-engine";
 
 export function createHaloRouter(): Router {

@@ -14,7 +14,7 @@ import {
   linkExternalDomain,
   resolveDomain,
   listAllDomains,
-} from '@dreamnet/domain-issuance-core';
+} from '../../packages/domain-issuance-core';
 
 const router = Router();
 

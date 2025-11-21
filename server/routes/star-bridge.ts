@@ -7,7 +7,7 @@ import express from "express";
 // Star Bridge Lungs is optional
 let StarBridgeLungs: any = null;
 try {
-  const starBridgeModule = require("@dreamnet/star-bridge-lungs");
+  const starBridgeModule = require("../../packages/star-bridge-lungs");
   StarBridgeLungs = starBridgeModule.StarBridgeLungs;
 } catch {
   console.warn("[Star Bridge Router] @dreamnet/star-bridge-lungs not available");
@@ -74,9 +74,9 @@ router.post("/breathe", (req, res) => {
   }
   try {
     // Import required systems for context
-    const { NeuralMesh } = require("@dreamnet/neural-mesh");
-    const { QuantumAnticipation } = require("@dreamnet/quantum-anticipation");
-    const { SlugTimeMemory } = require("@dreamnet/slug-time-memory");
+    const { NeuralMesh } = require("../../packages/neural-mesh");
+    const { QuantumAnticipation } = require("../../packages/quantum-anticipation");
+    const { SlugTimeMemory } = require("../../packages/slug-time-memory");
     
     const status = StarBridgeLungs.run({
       neuralMesh: NeuralMesh,

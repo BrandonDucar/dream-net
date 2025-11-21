@@ -5,12 +5,12 @@
 
 import { Router, Request, Response } from "express";
 import { requireAuth, requireAdmin } from "../siwe-auth";
-import { EnvKeeperCore } from "@dreamnet/env-keeper-core";
-import { withPort } from "@dreamnet/port-governor/withPort";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
-import { NERVE_BUS } from "@dreamnet/nerve/bus";
-import { createNerveEvent } from "@dreamnet/nerve/factory";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
+import { EnvKeeperCore } from "../../packages/env-keeper-core";
+import { withPort } from "../../packages/port-governor/src/withPort";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
+import { NERVE_BUS } from "../../packages/nerve/src/bus";
+import { createNerveEvent } from "../../packages/nerve/src/factory";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 
 const router = Router();
 
@@ -160,7 +160,7 @@ router.delete(
       // Emit Nerve event for secret deletions (EnvKeeperCore.delete already emits, but we add context)
       if (deleted) {
         try {
-          const { getEnvDescriptor } = require("@dreamnet/env-keeper-core/logic/envClassifier");
+          const { getEnvDescriptor } = require("../../packages/env-keeper-core/logic/envClassifier");
           const descriptor = getEnvDescriptor(key);
           if (descriptor && descriptor.sensitivity === "secret") {
             const event = createNerveEvent({

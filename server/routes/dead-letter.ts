@@ -8,10 +8,10 @@ import {
   getDeadLetterRecords,
   getDeadLetterRecordsByConduit,
   getDeadLetterStats,
-} from "@dreamnet/dreamnet-control-core/deadLetter";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
-import { withPort } from "@dreamnet/port-governor/withPort";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
+} from "../../packages/dreamnet-control-core/src/deadLetter";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
+import { withPort } from "../../packages/port-governor/src/withPort";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 
 const router = Router();
 

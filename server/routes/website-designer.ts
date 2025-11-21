@@ -13,7 +13,7 @@ let WebsiteDesignRequest: any;
 
 (async () => {
   try {
-    const module = await import('@dreamnet/website-ai-designer');
+    const module = await import('../../packages/website-ai-designer');
     getWebsiteDesigner = module.getWebsiteDesigner;
     WebsiteDesignRequest = module.WebsiteDesignRequest;
   } catch (error) {

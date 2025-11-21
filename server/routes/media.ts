@@ -2,9 +2,9 @@ import { Router } from "express";
 import multer from "multer";
 import { join, dirname } from "node:path";
 import { readFile } from "node:fs/promises";
-import { ingestFromFile, ingestFromUrl, getMediaById, searchMedia, createPostQueueItem, getPostQueueItems, updatePostQueueItem, incrementMediaUsage, getPublicMedia } from "@dreamnet/media-vault";
-import { createSpore } from "@dreamnet/spore-engine";
-import { getHashtagsForTags } from "@dreamnet/media-vault/src/vocab";
+import { ingestFromFile, ingestFromUrl, getMediaById, searchMedia, createPostQueueItem, getPostQueueItems, updatePostQueueItem, incrementMediaUsage, getPublicMedia } from "../../packages/media-vault";
+import { createSpore } from "../../packages/spore-engine";
+import { getHashtagsForTags } from "../../packages/media-vault/src/vocab";
 import { grantReward } from "../../packages/rewards-engine";
 
 const upload = multer({

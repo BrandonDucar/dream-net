@@ -405,7 +405,7 @@ export function createForgeRouter(): Router {
         error = err.message || "Network error";
         // Emit Event Wormhole event for API failure
         try {
-          const { emitEvent } = await import("@dreamnet/event-wormholes");
+          const { emitEvent } = await import("../../packages/event-wormholes");
           await emitEvent({
             sourceType: "api",
             eventType: "api.endpoint.failed",
@@ -456,7 +456,7 @@ export function createForgeRouter(): Router {
       // Emit event if request failed or test failed
       if (axiosResponse.status >= 400 || (testResults && testResults.failed > 0)) {
         try {
-          const { emitEvent } = await import("@dreamnet/event-wormholes");
+          const { emitEvent } = await import("../../packages/event-wormholes");
           await emitEvent({
             sourceType: "api",
             eventType: "api.endpoint.failed",

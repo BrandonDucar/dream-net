@@ -3,7 +3,7 @@
  */
 
 import { Router } from "express";
-import { DreamNetAuditCore } from "@dreamnet/dreamnet-audit-core";
+import { DreamNetAuditCore } from "../../packages/dreamnet-audit-core";
 import { createPassportGate } from "../middleware/passportGate";
 
 const router = Router();

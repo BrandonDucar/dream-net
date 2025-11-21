@@ -4,10 +4,10 @@
  */
 
 import { Router, Request, Response } from "express";
-import { listRiskProfiles, getRiskProfilesByLevel } from "@dreamnet/shield-core/risk";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
-import { withPort } from "@dreamnet/port-governor/withPort";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
+import { listRiskProfiles, getRiskProfilesByLevel } from "../../packages/shield-core/risk";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
+import { withPort } from "../../packages/port-governor/src/withPort";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 
 const router = Router();
 

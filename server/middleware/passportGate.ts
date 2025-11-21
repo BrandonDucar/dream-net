@@ -4,8 +4,8 @@
  */
 
 import { Request, Response, NextFunction } from "express";
-import { DreamStateCore } from "@dreamnet/dream-state-core";
-import type { DreamPassportTier } from "@dreamnet/dream-state-core/types";
+import { DreamStateCore } from "../../packages/dream-state-core";
+import type { DreamPassportTier } from "../../packages/dream-state-core/types";
 import { getTraceId } from "./traceId";
 
 export type RequiredTier = DreamPassportTier;

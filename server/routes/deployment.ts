@@ -4,7 +4,7 @@
  */
 
 import { Router } from 'express';
-import { getDeploymentManager, type DeploymentConfig } from '@dreamnet/deployment-core';
+import { getDeploymentManager, type DeploymentConfig } from '../../packages/deployment-core';
 import { getDomainKeeper } from '../services/DomainKeeper';
 
 const router = Router();
