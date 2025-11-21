@@ -1,7 +1,7 @@
 # AWS GovCloud Deployment
-## US Government Entity: 001092882186
+## US Government Entity Access
 
-**Entity Number**: 001092882186  
+**Entity Number**: [To be provided]  
 **AWS GovCloud**: Available for US government/defense workloads  
 **Credits**: $100 AWS credits + potential government pricing
 
