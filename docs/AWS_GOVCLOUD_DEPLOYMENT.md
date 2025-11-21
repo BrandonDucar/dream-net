@@ -1,7 +1,7 @@
 # AWS GovCloud Deployment
-## US Government Entity Access
+## AWS Account: 001092882186
 
-**Entity Number**: [To be provided]  
+**AWS Account ID**: 001092882186  
 **AWS GovCloud**: Available for US government/defense workloads  
 **Credits**: $100 AWS credits + potential government pricing
 
@@ -17,10 +17,7 @@
 - ✅ **Government pricing** (often better rates)
 
 ### Your Entity Number
-**001092882186** - This appears to be a:
-- DUNS number (Data Universal Numbering System)
-- Government entity identifier
-- Defense contractor identifier
+**AWS Account ID**: 001092882186
 
 ---
 
@@ -59,7 +56,7 @@
 ### AWS GovCloud Access
 1. **Request GovCloud Access**:
    - Contact AWS Support
-   - Provide entity number: 001092882186
+   - Use AWS Account ID: 001092882186
    - Request GovCloud account
 
 2. **Separate Account**:
