@@ -27,6 +27,7 @@ interface EnvConfig {
   // Feature flags
   INIT_SUBSYSTEMS?: boolean;
   MESH_AUTOSTART?: boolean;
+  INIT_HEAVY_SUBSYSTEMS?: boolean; // Set to 'true' to enable DreamState, Directory, Nerve Fabric, etc.
 }
 
 /**
@@ -70,6 +71,7 @@ function loadEnvConfig(): EnvConfig {
     OPERATOR_WALLETS: operatorWallets,
     INIT_SUBSYSTEMS: process.env.INIT_SUBSYSTEMS === 'true',
     MESH_AUTOSTART: process.env.MESH_AUTOSTART !== 'false',
+    INIT_HEAVY_SUBSYSTEMS: process.env.INIT_HEAVY_SUBSYSTEMS === 'true', // Defaults to false for simplified startup
   };
 }
 
@@ -109,4 +111,5 @@ export const ALLOWED_ORIGINS = envConfig.ALLOWED_ORIGINS;
 export const OPERATOR_WALLETS = envConfig.OPERATOR_WALLETS;
 export const INIT_SUBSYSTEMS = envConfig.INIT_SUBSYSTEMS;
 export const MESH_AUTOSTART = envConfig.MESH_AUTOSTART;
+export const INIT_HEAVY_SUBSYSTEMS = envConfig.INIT_HEAVY_SUBSYSTEMS;
 

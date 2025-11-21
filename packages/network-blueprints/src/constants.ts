@@ -21,3 +21,27 @@ export const DREAMNET_PORT_ID = "dreamnet-core";
 export const DREAMNET_EVENT_TYPE = "dreamnet.event";
 export const DREAMNET_FIBER = "ALPHA";
 
+/**
+ * Aegis Fleet Constants
+ */
+export const AEGIS_FLEET_ID = "AEGIS_FLEET";
+export const AEGIS_PORT_ID = "aegis-fleet";
+export const AEGIS_EVENT_TYPE = "aegis.event";
+export const AEGIS_FIBER = "BETA"; // Defense/military semantics
+
+/**
+ * OTT Fleet Constants
+ */
+export const OTT_FLEET_ID = "OTT_FLEET";
+export const OTT_PORT_ID = "ott-fleet";
+export const OTT_EVENT_TYPE = "ott.event";
+export const OTT_FIBER = "DELTA"; // Communications/media semantics
+
+/**
+ * Science Fleet (Archimedes) Constants
+ */
+export const ARCHIMEDES_FLEET_ID = "ARCHIMEDES_FLEET";
+export const ARCHIMEDES_PORT_ID = "archimedes-fleet";
+export const ARCHIMEDES_EVENT_TYPE = "archimedes.event";
+export const ARCHIMEDES_FIBER = "EPSILON"; // Research/science semantics
+

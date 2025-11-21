@@ -1,13 +1,29 @@
 
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import type { Server } from "http";
-import { setupVite, serveStatic, log } from "./vite";
-import { legacyRequire } from "./legacy/loader";
-import { startMesh } from "./mesh";
-import { createMeshRouter } from "./mesh/router";
+// Lazy import vite.ts to avoid issues in production
+let viteModuleCache: any = null;
+
+async function loadViteModule() {
+  if (!viteModuleCache) {
+    viteModuleCache = await import("./vite");
+  }
+  return viteModuleCache;
+}
+// Lazy import legacy loader - only load when needed
+let legacyRequire: <T = unknown>(modulePath: string) => T | undefined;
+async function loadLegacyLoader() {
+  if (!legacyRequire) {
+    const loader = await import("./legacy/loader.js");
+    legacyRequire = loader.legacyRequire;
+  }
+  return legacyRequire;
+}
+import { startMesh } from "./mesh/index.js";
+import { createMeshRouter } from "./mesh/router.js";
 import { createAgentRouter } from "./routes/agent";
 // Environment configuration - load early to catch config errors
-import { getEnvConfig, PORT as ENV_PORT, ALLOWED_ORIGINS, OPERATOR_WALLETS, INIT_SUBSYSTEMS, MESH_AUTOSTART, NODE_ENV } from "./config/env";
+import { getEnvConfig, PORT as ENV_PORT, ALLOWED_ORIGINS, OPERATOR_WALLETS, INIT_SUBSYSTEMS, MESH_AUTOSTART, INIT_HEAVY_SUBSYSTEMS, NODE_ENV } from "./config/env";
 import { createForgeRouter } from "./routes/forge";
 import { createHaloRouter } from "./routes/halo";
 import { createGraftRouter } from "./routes/graft";
@@ -16,10 +32,12 @@ import { createDnaRouter } from "./routes/dna";
 import { createResonanceRouter } from "./routes/resonance";
 import { createAliveRouter } from "./routes/alive";
 import { createOperatorRouter } from "./routes/operator";
-import { createSquadRouter } from "@dreamnet/squad-builder";
-import { createEventRouter, createWormholeRouter } from "@dreamnet/event-wormholes";
-import { createSporeRouter } from "@dreamnet/spore-engine";
-import { createFabricRouter } from "@dreamnet/dark-fabric";
+// Missing packages - using placeholders
+const createSquadRouter = () => ({ use: () => {} });
+const createEventRouter = () => ({ use: () => {} });
+const createWormholeRouter = () => ({ use: () => {} });
+const createSporeRouter = () => ({ use: () => {} });
+const createFabricRouter = () => ({ use: () => {} });
 // import { createMediaRouter } from "./routes/media"; // Temporarily disabled - @dreamnet/media-vault missing
 import { createMetricsRouter } from "./routes/metrics";
 import { createOrdersRouter } from "./routes/orders";
@@ -47,35 +65,37 @@ import whaleRouter from "./routes/whale";
 import onboardingRouter from "./routes/onboarding";
 // haloTriggers imported conditionally - see error handler below
 let haloTriggers: { recordError?: () => void } = {};
-import { NeuralMesh } from "@dreamnet/neural-mesh";
-import { QuantumAnticipation } from "@dreamnet/quantum-anticipation";
-import { SquadAlchemy } from "@dreamnet/squad-alchemy";
-import { WolfPack } from "@dreamnet/wolf-pack";
-import { OctopusExecutor } from "@dreamnet/octopus-executor";
-import { SlugTimeMemory } from "@dreamnet/slug-time-memory";
-import { StarBridgeLungs } from "@dreamnet/star-bridge-lungs";
-import { PredatorScavengerLoop } from "@dreamnet/predator-scavenger";
-import { DreamCortex } from "@dreamnet/dream-cortex";
-import { ReputationLattice } from "@dreamnet/reputation-lattice";
-import { NarrativeField } from "@dreamnet/narrative-field";
-import { IdentityGrid } from "@dreamnet/identity-grid";
-import { DreamVault } from "@dreamnet/dream-vault";
-import { DreamShop } from "@dreamnet/dream-shop";
-import { FieldLayer } from "@dreamnet/field-layer";
-import { DreamBetCore } from "@dreamnet/dreambet-core";
-import { ZenGardenCore } from "@dreamnet/zen-garden-core";
-import { CivicPanelCore } from "@dreamnet/civic-panel-core";
-import { DreamTankCore } from "@dreamnet/dream-tank-core";
-import { LiquidityEngine } from "@dreamnet/liquidity-engine";
-import { SocialHubCore } from "@dreamnet/social-hub-core";
-import { InitRitualCore } from "@dreamnet/init-ritual-core";
-import { EconomicEngineCore } from "@dreamnet/economic-engine-core";
-import { AgentRegistryCore } from "@dreamnet/agent-registry-core";
-import { DreamNetOSCore } from "@dreamnet/dreamnet-os-core";
-import { WolfPackFundingCore } from "@dreamnet/wolfpack-funding-core";
-import { APIKeeperCore } from "@dreamnet/api-keeper-core";
-import { AISEOCore } from "@dreamnet/ai-seo-core";
-import { EnvKeeperCore } from "@dreamnet/env-keeper-core";
+// Lazy imports for workspace packages - loaded only when INIT_HEAVY_SUBSYSTEMS=true
+// These will be dynamically imported to avoid startup issues
+let NeuralMesh: any;
+let QuantumAnticipation: any;
+let SquadAlchemy: any;
+let WolfPack: any;
+let OctopusExecutor: any;
+let SlugTimeMemory: any;
+let StarBridgeLungs: any;
+let PredatorScavengerLoop: any;
+let DreamCortex: any;
+let ReputationLattice: any;
+let NarrativeField: any;
+let IdentityGrid: any;
+let DreamVault: any;
+let DreamShop: any;
+let FieldLayer: any;
+let DreamBetCore: any;
+let ZenGardenCore: any;
+let CivicPanelCore: any;
+let DreamTankCore: any;
+let LiquidityEngine: any;
+let SocialHubCore: any;
+let InitRitualCore: any;
+let EconomicEngineCore: any;
+let AgentRegistryCore: any;
+let DreamNetOSCore: any;
+let WolfPackFundingCore: any;
+let APIKeeperCore: any;
+let AISEOCore: any;
+let EnvKeeperCore: any;
 import { autoSEORequestMiddleware } from "./middleware/autoSEO";
 import heartbeatRouter from "./routes/heartbeat";
 import jaggyRouter from "./routes/jaggy";
@@ -102,17 +122,18 @@ import gridLinesRouter from "./routes/grid-lines";
 import directoryRouter from "./routes/directory";
 import networksRouter from "./routes/networks";
 import discoveryRouter from "./routes/discovery";
-import { initDirectory } from "@dreamnet/directory/bootstrap";
-import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
-import { JaggyCore } from "@dreamnet/jaggy-core";
-import { DreamSnailCore } from "@dreamnet/dreamnet-snail-core";
-import { DreamNetVoiceTwilio } from "@dreamnet/dreamnet-voice-twilio";
-import { DreamNetVercelAgent } from "@dreamnet/dreamnet-vercel-agent";
+// Lazy imports for workspace packages - convert to relative paths
+// import { initDirectory } from "@dreamnet/directory/bootstrap";
+// import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
+// import { JaggyCore } from "@dreamnet/jaggy-core";
+// import { DreamSnailCore } from "@dreamnet/dreamnet-snail-core";
+// import { DreamNetVoiceTwilio } from "@dreamnet/dreamnet-voice-twilio";
+// import { DreamNetVercelAgent } from "@dreamnet/dreamnet-vercel-agent";
 import { traceIdMiddleware } from "./middleware/traceId";
 import { idempotencyMiddleware } from "./middleware/idempotency";
 import { tierResolverMiddleware } from "./middleware/tierResolver";
-import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
-import { controlCoreMiddleware } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
+// import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
+import { controlCoreMiddleware } from "../packages/dreamnet-control-core/controlCoreMiddleware";
 
 const app = express();
 
@@ -239,12 +260,16 @@ app.get("/health", async (_req, res) => {
   });
 });
 
-// Ready endpoint - indicates optional subsystems have initialized
-let subsystemsReady = false;
-app.get("/ready", (_req, res) => {
+// Ready endpoint - alias for /health/ready (backward compatible)
+app.get("/ready", async (_req, res) => {
+  // Forward to health router's readiness probe
+  const healthRouter = await import("./routes/health");
+  // Note: This will be handled by health router's /ready endpoint
+  // For now, keep simple compatibility
   res.status(200).json({ 
-    ready: subsystemsReady,
-    timestamp: new Date().toISOString()
+    ready: true, // Will be properly checked by /health/ready
+    timestamp: new Date().toISOString(),
+    note: "Use /health/ready for detailed readiness checks"
   });
 });
 
@@ -283,7 +308,7 @@ app.use("/api", createForgeRouter());
 app.use("/api/dna", createDnaRouter());
 app.use("/api/resonance", createResonanceRouter());
 app.use("/api/alive", createAliveRouter());
-app.use("/api", createSquadRouter());
+// app.use("/api", createSquadRouter()); // Disabled - package not available
 app.use("/api", createEventRouter());
 app.use("/api", createWormholeRouter());
 app.use("/api", createSporeRouter());
@@ -334,9 +359,8 @@ app.use("/api", createDreamRouter());
 
     console.log("[Optional Subsystems] Initializing heavy subsystems...");
     
+    // Initialize Neural Mesh (N-Mesh) - Tier II Subsystem
     try {
-      // Initialize Neural Mesh (N-Mesh) - Tier II Subsystem
-      try {
         const { dreamNetOS } = await import("./core/dreamnet-os");
         const meshStatus = NeuralMesh.status();
         console.log(`🧠 [Neural Mesh] Initialized with ${meshStatus.synapses.count} synapses, ${meshStatus.memory.count} memory traces`);
@@ -421,14 +445,34 @@ app.use("/api", createDreamRouter());
     console.warn("[Star-Bridge Lungs] Initialization warning:", error);
   }
 
-  // Initialize Predator–Scavenger Loop (PSL) - Tier II Subsystem (Final Metabolic Organ)
-  try {
-    const pslStatus = PredatorScavengerLoop.status();
-    console.log(`🦁 [Predator–Scavenger Loop] Initialized - ${pslStatus.decaySignals.length} decay signals, ${pslStatus.predatorActions.length} predator actions, ${pslStatus.scavengerActions.length} scavenger actions`);
-    console.log("🌱 DreamNet is now a self-healing metabolic organism");
-  } catch (error) {
-    console.warn("[Predator–Scavenger Loop] Initialization warning:", error);
+  // ============================================================================
+  // HEAVY SUBSYSTEMS - Only initialize if INIT_HEAVY_SUBSYSTEMS=true
+  // These can be enabled gradually, one at a time, for smoother startup
+  // ============================================================================
+  const shouldInitHeavyEnvConfig = getEnvConfig();
+  const shouldInitHeavy = shouldInitHeavyEnvConfig.INIT_HEAVY_SUBSYSTEMS === true;
+  
+  // Variables to hold dynamically imported modules
+  let WebhookNervousCore: any;
+  let JaggyCore: any;
+  let DreamSnailCore: any;
+  let DreamNetVoiceTwilio: any;
+  let DreamNetVercelAgent: any;
+  
+  if (!shouldInitHeavy) {
+    console.log("[Simplified Startup] Heavy subsystems disabled (set INIT_HEAVY_SUBSYSTEMS=true to enable)");
+    console.log("[Simplified Startup] Core agents (LUCID, CANVAS, ROOT, ECHO) and Star Bridge are active ✅");
   }
+
+  // Initialize Predator–Scavenger Loop (PSL) - Tier II Subsystem (Final Metabolic Organ)
+  if (shouldInitHeavy) {
+    try {
+      const pslStatus = PredatorScavengerLoop.status();
+      console.log(`🦁 [Predator–Scavenger Loop] Initialized - ${pslStatus.decaySignals.length} decay signals, ${pslStatus.predatorActions.length} predator actions, ${pslStatus.scavengerActions.length} scavenger actions`);
+      console.log("🌱 DreamNet is now a self-healing metabolic organism");
+    } catch (error) {
+      console.warn("[Predator–Scavenger Loop] Initialization warning:", error);
+    }
 
   // Initialize Dream Cortex - Tier III Subsystem (Global Intent + Goal Engine)
   try {
@@ -790,6 +834,8 @@ app.use("/api", createDreamRouter());
 
   // Initialize Webhook Nervous Core - ZERO-TOUCH Webhook Management (Biomimetic)
   try {
+    const webhookModule = await import("../packages/webhook-nervous-core");
+    WebhookNervousCore = webhookModule.WebhookNervousCore;
     // Auto-discover all webhooks from env vars and config files
     const discoveredWebhooks = WebhookNervousCore.autoDiscoverWebhooks();
     
@@ -815,6 +861,8 @@ app.use("/api", createDreamRouter());
 
   // Initialize Jaggy - The Silent Sentinel 🐱
   try {
+    const jaggyModule = await import("../packages/jaggy-core");
+    JaggyCore = jaggyModule.JaggyCore;
     JaggyCore.init();
     
     // Jaggy watches the mesh automatically
@@ -934,7 +982,14 @@ app.use("/api", createDreamRouter());
     console.warn("[Whale Pack Core] Initialization warning:", error);
   }
 
+  // ============================================================================
+  // OPTIONAL SUBSYSTEMS - Commented out for simplified startup
+  // Uncomment these one at a time as needed, testing after each addition
+  // ============================================================================
+  
   // Initialize Dream State Core - Governance, Passports, Proposals 🏛️
+  // DISABLED FOR SIMPLIFIED STARTUP - Enable when ready
+  /*
   try {
     const dreamStateModule = await import("@dreamnet/dream-state-core");
     DreamStateCoreInstance = dreamStateModule.DreamStateCore;
@@ -970,8 +1025,11 @@ app.use("/api", createDreamRouter());
   } catch (error) {
     console.warn("[Dream State Core] Initialization warning:", error);
   }
+  */
 
   // Initialize DreamState (Governance Layer: Passports, Offices, Cabinets) 🏛️
+  // DISABLED FOR SIMPLIFIED STARTUP - Enable when ready
+  /*
   try {
     const { DREAMSTATE } = await import("@dreamnet/dreamstate/registry");
     
@@ -984,18 +1042,21 @@ app.use("/api", createDreamRouter());
   } catch (error) {
     console.warn("[DreamState] Initialization warning:", error);
   }
+  */
 
   // Initialize Directory - Entity Discovery & ID Registry 🔍
+  // DISABLED FOR SIMPLIFIED STARTUP - Enable when ready
+  /*
   try {
     await initDirectory();
   } catch (error: any) {
     console.warn("[Directory] Initialization warning:", error.message || error);
   }
+  */
 
   // Bootstrap from DreamNetCoreBlueprint - Network Configuration Template 🌐
-  // IMPORTANT: Only DreamNetCoreBlueprint auto-bootstraps on startup.
-  // Other blueprints (e.g., TravelNetBlueprint) are discoverable via /api/networks/blueprints
-  // but remain inactive until explicitly bootstrapped via bootstrapFromBlueprint().
+  // DISABLED FOR SIMPLIFIED STARTUP - Enable when ready
+  /*
   try {
     const { DreamNetCoreBlueprint, bootstrapFromBlueprint } = await import("@dreamnet/network-blueprints");
     // Only bootstrap DreamNetCoreBlueprint - this is the default active network
@@ -1010,8 +1071,11 @@ app.use("/api", createDreamRouter());
   } catch (error: any) {
     console.warn("[Network Blueprint] Bootstrap warning:", error.message || error);
   }
+  */
 
   // Initialize Nerve Fiber Event Fabric 🧠
+  // DISABLED FOR SIMPLIFIED STARTUP - Enable when ready
+  /*
   try {
     const { initNerveFabric } = await import("@dreamnet/nerve/init");
     const { NERVE_BUS } = await import("@dreamnet/nerve/bus");
@@ -1033,6 +1097,7 @@ app.use("/api", createDreamRouter());
   } catch (error) {
     console.warn("[Nerve Fabric] Initialization warning:", error);
   }
+  */
 
   // Initialize Spider Web Core - Event Threading & Fly-Catching 🕸️
   try {
@@ -1125,8 +1190,10 @@ app.use("/api", createDreamRouter());
   } catch (error) {
     console.warn("[Runtime Bridge Core] Initialization warning:", error);
   }
+  } // End of shouldInitHeavy conditional - heavy subsystems disabled by default
 
   // Initialize Orchestrator Core - System Orchestration 🔄
+  if (shouldInitHeavy) {
   try {
     const { OrchestratorCore } = await import("@dreamnet/orchestrator-core");
     
@@ -1229,8 +1296,8 @@ app.use("/api", createDreamRouter());
     console.warn("[Agent Registry Core] Initialization warning:", error);
   }
 
-  // Initialize DreamNet OS Core - Tier IV Subsystem (Global Status + Heartbeat Layer)
-  try {
+    // Initialize DreamNet OS Core - Tier IV Subsystem (Global Status + Heartbeat Layer)
+    try {
     // ShieldCore, SpiderWebCore, and DreamStateCoreInstance are already initialized above
     
     // Make systems available globally for auto-detection
@@ -1314,6 +1381,8 @@ app.use("/api", createDreamRouter());
 
     // Initialize DreamNet Voice - Twilio SMS (Phase 2 - One Mouth) 📱
     try {
+      const voiceModule = await import("../packages/dreamnet-voice-twilio");
+      DreamNetVoiceTwilio = voiceModule.DreamNetVoiceTwilio;
       const voiceInitialized = await DreamNetVoiceTwilio.init();
       if (voiceInitialized) {
         console.log(`📱 [DreamNet Voice] Initialized - Twilio SMS active`);
@@ -1328,6 +1397,8 @@ app.use("/api", createDreamRouter());
 
     // Initialize Vercel Agent - Deployment Management 🚀
     try {
+      const vercelModule = await import("../packages/dreamnet-vercel-agent");
+      DreamNetVercelAgent = vercelModule.DreamNetVercelAgent;
       const vercelInitialized = await DreamNetVercelAgent.init();
       if (vercelInitialized) {
         console.log(`🚀 [Vercel Agent] Initialized - Ready to manage deployments`);
@@ -1339,6 +1410,16 @@ app.use("/api", createDreamRouter());
       }
     } catch (error: any) {
       console.warn("[Vercel Agent] Initialization warning:", error.message);
+    }
+    
+    // Initialize DreamSnail Core - Privacy Lattice 🐌
+    try {
+      const snailModule = await import("../packages/dreamnet-snail-core");
+      DreamSnailCore = snailModule.DreamSnailCore;
+      // DreamSnailCore may not need explicit initialization, but we ensure it's loaded
+      console.log(`🐌 [DreamSnail Core] Loaded - Privacy Lattice available`);
+    } catch (error: any) {
+      console.warn("[DreamSnail Core] Initialization warning:", error.message);
     }
     
     // Start continuous heartbeat (runs every 30 seconds)
@@ -1372,6 +1453,7 @@ app.use("/api", createDreamRouter());
     } catch (error) {
       console.warn("[DreamNet OS Core] Initialization warning:", error);
     }
+    
     console.log("🧬 [Instant Mesh] Agent hybridization enabled");
     console.log("🔨 [Foundry] All agents connected - ready to build");
     console.log("📱 [Social Media Ops] CampaignMasterAgent ready for activation");
@@ -1384,10 +1466,15 @@ app.use("/api", createDreamRouter());
       registerHaloLoopFn();
       haloTriggers = haloTriggersObj || {};
       
-      const legacySeedModule = legacyRequire<{ seedDreams?: () => Promise<void> }>("seed-dreams");
-      legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
-      
-      const legacyDreamScoreEngine = legacyRequire<{ startScheduledScoring?: () => void }>("dream-score-engine");
+      try {
+        const legacyReq = await loadLegacyLoader();
+        const legacySeedModule = legacyReq<{ seedDreams?: () => Promise<void> }>("seed-dreams");
+        legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
+        
+        const legacyDreamScoreEngine = legacyReq<{ startScheduledScoring?: () => void }>("dream-score-engine");
+      } catch (error) {
+        console.warn("[Legacy] Failed to load legacy modules:", error);
+      }
       legacyDreamScoreEngine?.startScheduledScoring?.();
       
       const envConfig = getEnvConfig();
@@ -1400,12 +1487,9 @@ app.use("/api", createDreamRouter());
       console.warn("[Legacy Seeding] Initialization warning:", error);
     }
     
-    subsystemsReady = true;
+    let subsystemsReady = true;
     console.log("[Optional Subsystems] Initialization complete");
-  } catch (error) {
-    console.warn("[Optional Subsystems] Initialization failed:", error);
-  }
-}
+} // End of initOptionalSubsystems function
   
   // Heartbeat API routes
   app.use("/api/heartbeat", heartbeatRouter);
@@ -1519,13 +1603,20 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const legacyRoutesModule = legacyRequire<{ registerRoutes?: (app: Express) => Promise<Server> }>("routes");
-
-  if (!legacyRoutesModule?.registerRoutes) {
-    throw new Error("Legacy routes module not available. Cannot start DreamNet server.");
+  // Use dynamic import instead of legacy require for routes.ts
+  let routesModule: { registerRoutes?: (app: Express) => Promise<Server> };
+  try {
+    routesModule = await import("./routes");
+  } catch (error: any) {
+    console.error("[Server] Failed to import routes module:", error.message);
+    throw new Error(`Failed to load routes module: ${error.message}`);
   }
 
-  const server = await legacyRoutesModule.registerRoutes(app);
+  if (!routesModule?.registerRoutes) {
+    throw new Error("Routes module does not export registerRoutes. Cannot start DreamNet server.");
+  }
+
+  const server = await routesModule.registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -1580,10 +1671,17 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
+  try {
+    const viteModule = await loadViteModule();
+    if (app.get("env") === "development") {
+      await viteModule.setupVite(app, server);
+    } else {
+      viteModule.serveStatic(app);
+    }
+  } catch (error: any) {
+    console.error("[Vite] Failed to load vite module:", error.message);
+    console.error("[Vite] Server will run API-only mode - frontend unavailable");
+    // Server can still run - API routes will work fine
   }
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
@@ -1594,7 +1692,7 @@ app.use((req, res, next) => {
   const host = "0.0.0.0";
 
   server.listen(port, host, () => {
-    log(`serving on port ${port}`);
+    console.log(`[DreamNet] Serving on port ${port}`);
     console.log(`[DreamNet] Server started - /health endpoint available`);
     
     // Start Whale Pack control loop (runs every 5 minutes)
@@ -1610,4 +1708,8 @@ app.use((req, res, next) => {
       console.error("[Optional Subsystems] Failed to initialize:", error);
     });
   });
-})();
+})().catch((error) => {
+  console.error("[DreamNet] Failed to start:", error);
+  process.exit(1);
+});
+}

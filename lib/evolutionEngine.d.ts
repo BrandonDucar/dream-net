@@ -41,7 +41,7 @@ export declare const EvolutionEngine: {
     generateRemixPatternScore: () => number;
     getStatus: () => {
         isActive: boolean;
-        evolutionRate: "monthly" | "hourly" | "daily" | "weekly";
+        evolutionRate: "monthly" | "weekly" | "hourly" | "daily";
         upgradeCount: number;
         lastCycle: string;
         cycleCount: number;

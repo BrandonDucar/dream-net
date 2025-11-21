@@ -128,6 +128,18 @@ function registerDefaultWormholes(): void {
     }
   });
   
+  // ARCHIMEDES Wormhole - science/research network teleportation channel
+  registerWormhole({
+    id: 'WH-ARCHIMEDES-EPSILON',
+    label: 'Archimedes Epsilon Wormhole',
+    direction: 'bidirectional',
+    fiber: FIBERS.EPSILON, // Research/science semantics
+    remoteHint: {
+      region: 'lab',
+      cluster: 'archimedes'
+    }
+  });
+  
   console.log('[Event Wormholes] Default wormholes registered');
 }
 

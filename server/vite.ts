@@ -55,8 +55,7 @@ export async function setupVite(app: Express, server: Server) {
 
     try {
       const clientTemplate = path.resolve(
-        import.meta.dirname,
-        "..",
+        process.cwd(),
         "client",
         "index.html",
       );
@@ -82,10 +81,11 @@ export async function setupVite(app: Express, server: Server) {
 
 export function serveStatic(app: Express) {
   // In production, serve built frontend from client/dist
-  const distPath = path.resolve(import.meta.dirname, "..", "client", "dist");
+  // Use process.cwd() instead of import.meta.dirname for compiled JS compatibility
+  const distPath = path.resolve(process.cwd(), "client", "dist");
   
   // Fallback to server/public if client/dist doesn't exist
-  const fallbackPath = path.resolve(import.meta.dirname, "public");
+  const fallbackPath = path.resolve(process.cwd(), "server", "public");
 
   const staticPath = fs.existsSync(distPath) ? distPath : fallbackPath;
 

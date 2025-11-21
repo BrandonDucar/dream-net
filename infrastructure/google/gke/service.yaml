@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dreamnet-api-service
+  namespace: default
+  labels:
+    app: dreamnet-api
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: dreamnet-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dreamnet-frontend-service
+  namespace: default
+  labels:
+    app: dreamnet-frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: dreamnet-frontend
+

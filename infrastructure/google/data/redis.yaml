@@ -1,0 +1,24 @@
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
+metadata:
+  name: dreamnet-redis
+  labels:
+    app: dreamnet
+    environment: production
+spec:
+  region: us-central1
+  projectRef:
+    external: aqueous-tube-470317-m6
+  tier: STANDARD_HA  # High availability
+  memorySizeGb: 1  # Start small, auto-scale
+  redisVersion: REDIS_7_0
+  displayName: DreamNet Redis Cache
+  reservedIpRange: "10.0.0.0/29"
+  authorizedNetworkRef:
+    name: dreamnet-network
+  redisConfigs:
+    maxmemory-policy: allkeys-lru
+  labels:
+    app: dreamnet
+    managed-by: dreamnet-infra
+

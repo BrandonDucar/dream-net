@@ -13,24 +13,25 @@
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\""
   },
   "dependencies": {
+    "@dreamnet/deployment-core": "workspace:*",
     "@dreamnet/directory": "workspace:*",
     "@dreamnet/dreamnet-control-core": "workspace:*",
     "@dreamnet/internal-ports": "workspace:*",
-    "@dreamnet/network-blueprints": "workspace:*",
     "@dreamnet/metrics-engine": "workspace:*",
     "@dreamnet/nerve": "workspace:*",
+    "@dreamnet/network-blueprints": "workspace:*",
     "@dreamnet/ops-sentinel": "workspace:*",
-    "@dreamnet/deployment-core": "workspace:*",
+    "axios": "^1.13.2",
     "blake3": "^2.1.7",
+    "multer": "^1.4.5-lts.1",
     "nanoid": "^5.0.7",
     "node-cron": "^3.0.3",
     "snarkjs": "^0.7.5",
-    "multer": "^1.4.5-lts.1",
-    "stripe": "^14.21.0"
+    "stripe": "^14.21.0",
+    "vm2": "^3.10.0"
   },
   "devDependencies": {
-    "tsx": "^4.20.6",
-    "@types/multer": "^1.4.12"
+    "@types/multer": "^1.4.12",
+    "tsx": "^4.20.6"
   }
 }
-

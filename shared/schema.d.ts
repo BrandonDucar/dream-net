@@ -28,7 +28,7 @@ export declare const users: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         username: import("drizzle-orm/pg-core").PgColumn<{
             name: "username";
@@ -88,7 +88,7 @@ export declare const dreams: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         name: import("drizzle-orm/pg-core").PgColumn<{
             name: "name";
@@ -674,7 +674,7 @@ export declare const dreams: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         forkedFrom: import("drizzle-orm/pg-core").PgColumn<{
             name: "forked_from";
@@ -693,7 +693,7 @@ export declare const dreams: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         remixOf: import("drizzle-orm/pg-core").PgColumn<{
             name: "remix_of";
@@ -712,7 +712,7 @@ export declare const dreams: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         bountyId: import("drizzle-orm/pg-core").PgColumn<{
             name: "bounty_id";
@@ -731,7 +731,7 @@ export declare const dreams: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         bountyToken: import("drizzle-orm/pg-core").PgColumn<{
             name: "bounty_token";
@@ -962,7 +962,7 @@ export declare const cocoons: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         dreamId: import("drizzle-orm/pg-core").PgColumn<{
             name: "dream_id";
@@ -981,7 +981,7 @@ export declare const cocoons: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         title: import("drizzle-orm/pg-core").PgColumn<{
             name: "title";
@@ -1263,7 +1263,7 @@ export declare const contributorsLog: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         cocoonId: import("drizzle-orm/pg-core").PgColumn<{
             name: "cocoon_id";
@@ -1282,7 +1282,7 @@ export declare const contributorsLog: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         walletAddress: import("drizzle-orm/pg-core").PgColumn<{
             name: "wallet_address";
@@ -1393,7 +1393,7 @@ export declare const cocoonLogs: import("drizzle-orm/pg-core").PgTableWithColumn
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         cocoonId: import("drizzle-orm/pg-core").PgColumn<{
             name: "cocoon_id";
@@ -1412,7 +1412,7 @@ export declare const cocoonLogs: import("drizzle-orm/pg-core").PgTableWithColumn
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         previousStage: import("drizzle-orm/pg-core").PgColumn<{
             name: "previous_stage";
@@ -1541,7 +1541,7 @@ export declare const notifications: import("drizzle-orm/pg-core").PgTableWithCol
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         recipientWallet: import("drizzle-orm/pg-core").PgColumn<{
             name: "recipient_wallet";
@@ -1720,7 +1720,7 @@ export declare const evolutionChains: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         dreamId: import("drizzle-orm/pg-core").PgColumn<{
             name: "dream_id";
@@ -1739,7 +1739,7 @@ export declare const evolutionChains: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         cocoonId: import("drizzle-orm/pg-core").PgColumn<{
             name: "cocoon_id";
@@ -1758,7 +1758,7 @@ export declare const evolutionChains: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         currentStage: import("drizzle-orm/pg-core").PgColumn<{
             name: "current_stage";
@@ -1886,7 +1886,7 @@ export declare const dreamInvites: import("drizzle-orm/pg-core").PgTableWithColu
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         dreamId: import("drizzle-orm/pg-core").PgColumn<{
             name: "dream_id";
@@ -1905,7 +1905,7 @@ export declare const dreamInvites: import("drizzle-orm/pg-core").PgTableWithColu
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         invitedWallet: import("drizzle-orm/pg-core").PgColumn<{
             name: "invited_wallet";
@@ -2050,7 +2050,7 @@ export declare const dreamTokens: import("drizzle-orm/pg-core").PgTableWithColum
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         dreamId: import("drizzle-orm/pg-core").PgColumn<{
             name: "dream_id";
@@ -2069,7 +2069,7 @@ export declare const dreamTokens: import("drizzle-orm/pg-core").PgTableWithColum
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         cocoonId: import("drizzle-orm/pg-core").PgColumn<{
             name: "cocoon_id";
@@ -2088,7 +2088,7 @@ export declare const dreamTokens: import("drizzle-orm/pg-core").PgTableWithColum
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         holderWallet: import("drizzle-orm/pg-core").PgColumn<{
             name: "holder_wallet";
@@ -2199,7 +2199,7 @@ export declare const dreamCores: import("drizzle-orm/pg-core").PgTableWithColumn
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         name: import("drizzle-orm/pg-core").PgColumn<{
             name: "name";
@@ -2303,7 +2303,7 @@ export declare const dreamCores: import("drizzle-orm/pg-core").PgTableWithColumn
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         createdAt: import("drizzle-orm/pg-core").PgColumn<{
             name: "created_at";
@@ -2346,7 +2346,7 @@ export declare const wallets: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         userId: import("drizzle-orm/pg-core").PgColumn<{
             name: "user_id";
@@ -2365,7 +2365,7 @@ export declare const wallets: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         dreamScore: import("drizzle-orm/pg-core").PgColumn<{
             name: "dream_score";
@@ -2476,7 +2476,7 @@ export declare const dreamnetApiKeys: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         keyHash: import("drizzle-orm/pg-core").PgColumn<{
             name: "key_hash";
@@ -2529,7 +2529,7 @@ export declare const dreamnetApiKeys: import("drizzle-orm/pg-core").PgTableWithC
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         walletAddress: import("drizzle-orm/pg-core").PgColumn<{
             name: "wallet_address";
@@ -2727,7 +2727,7 @@ export declare const dreamReminders: import("drizzle-orm/pg-core").PgTableWithCo
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         dreamId: import("drizzle-orm/pg-core").PgColumn<{
             name: "dream_id";
@@ -2746,7 +2746,7 @@ export declare const dreamReminders: import("drizzle-orm/pg-core").PgTableWithCo
             identity: undefined;
             generated: undefined;
         }, {}, {
-            length: number | undefined;
+            length: number;
         }>;
         userPhone: import("drizzle-orm/pg-core").PgColumn<{
             name: "user_phone";

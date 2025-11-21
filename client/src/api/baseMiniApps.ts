@@ -3,7 +3,7 @@
  * Fetches real mini-app data from the Base mini-apps registry
  */
 
-import { MINI_APPS } from '@dreamnet/base-mini-apps/frontend';
+import { MINI_APPS } from '@dreamnet/base-mini-apps/frontend/index.tsx';
 
 export interface BaseMiniAppInfo {
   component: string;
