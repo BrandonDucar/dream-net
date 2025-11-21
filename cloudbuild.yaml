@@ -36,6 +36,8 @@ steps:
       - 'managed'
       - '--region'
       - 'us-central1'
+      - '--project'
+      - '$PROJECT_ID'
       - '--allow-unauthenticated'
       - '--port'
       - '8080'

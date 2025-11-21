@@ -4,12 +4,11 @@
 
 set -e
 
-# Check for required env vars
-if [ -z "$GCP_PROJECT_ID" ]; then
-  echo "❌ ERROR: GCP_PROJECT_ID not set"
-  echo "Set it with: export GCP_PROJECT_ID=your-project-id"
-  exit 1
-fi
+# Default project ID (can be overridden)
+GCP_PROJECT_ID="${GCP_PROJECT_ID:-dreamnet-62b49}"
+GCP_PROJECT_NUMBER="${GCP_PROJECT_NUMBER:-857935117713}"
+
+echo "📊 Project: $GCP_PROJECT_ID ($GCP_PROJECT_NUMBER)"
 
 if [ -z "$GOOGLE_APPLICATION_CREDENTIALS" ] && [ -z "$FIREBASE_TOKEN" ]; then
   echo "❌ ERROR: No Google Cloud credentials found"
