@@ -5,12 +5,12 @@
 
 import { Router, Request, Response } from "express";
 import { requireApiKey } from "../middleware/apiKeyAuth";
-import { DreamNetVercelAgent } from "@dreamnet/dreamnet-vercel-agent";
-import { DreamNetOSCore } from "@dreamnet/dreamnet-os-core";
-import { APIKeeperCore } from "@dreamnet/api-keeper-core";
-import { withPort } from "@dreamnet/port-governor/withPort";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
+import { DreamNetVercelAgent } from "../../packages/dreamnet-vercel-agent";
+import { DreamNetOSCore } from "../../packages/dreamnet-os-core";
+import { APIKeeperCore } from "../../packages/api-keeper-core";
+import { withPort } from "../../packages/port-governor/src/withPort";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 
 const router = Router();
 

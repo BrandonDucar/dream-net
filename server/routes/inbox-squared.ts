@@ -4,9 +4,9 @@
  */
 
 import { Router } from 'express';
-import { inboxSquared } from '@dreamnet/inbox-squared-core';
+import { inboxSquared } from '../../packages/inbox-squared-core';
 import { google } from 'googleapis';
-import type { DraftGenerationOptions } from '@dreamnet/inbox-squared-core';
+import type { DraftGenerationOptions } from '../../packages/inbox-squared-core';
 
 const router = Router();
 

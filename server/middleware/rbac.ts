@@ -4,7 +4,7 @@
  */
 
 import { Request, Response, NextFunction } from "express";
-import { DreamNetRBACCore } from "@dreamnet/dreamnet-rbac-core";
+import { DreamNetRBACCore } from "../../packages/dreamnet-rbac-core";
 import type { Permission } from "@dreamnet/dreamnet-rbac-core/types";
 
 export function createRBACMiddleware(permission: Permission) {

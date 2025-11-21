@@ -4,12 +4,12 @@
  */
 
 import express from "express";
-import { DreamNetOSCore } from "@dreamnet/dreamnet-os-core";
-import { DreamStateCore } from "@dreamnet/dream-state-core";
-import { SpiderWebCore } from "@dreamnet/spider-web-core";
-import { ShieldCore } from "@dreamnet/shield-core";
-import { WolfPack } from "@dreamnet/wolf-pack";
-import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
+import { DreamNetOSCore } from "../../packages/dreamnet-os-core";
+import { DreamStateCore } from "../../packages/dream-state-core";
+import { SpiderWebCore } from "../../packages/spider-web-core";
+import { ShieldCore } from "../../packages/shield-core";
+import { WolfPack } from "../../packages/wolf-pack";
+import { DreamNetControlCore } from "../../packages/dreamnet-control-core";
 
 const router = express.Router();
 
@@ -32,13 +32,13 @@ router.get("/", (req, res) => {
     let whalePack: any = null;
     let orcaPack: any = null;
     try {
-      const { WhalePackCore } = require("@dreamnet/whale-pack-core");
+      const { WhalePackCore } = require("../../packages/whale-pack-core");
       whalePack = WhalePackCore?.status?.() || null;
     } catch (e) {
       // Whale Pack not available
     }
     try {
-      const { OrcaPackCore } = require("@dreamnet/orca-pack-core");
+      const { OrcaPackCore } = require("../../packages/orca-pack-core");
       orcaPack = OrcaPackCore?.status?.() || null;
     } catch (e) {
       // Orca Pack not available

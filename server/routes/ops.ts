@@ -12,7 +12,7 @@ import {
   getIntegrationConfig,
   getIntegrationsByCategory,
   getRequiredEnvVars,
-} from '@dreamnet/ops-sentinel';
+} from '../../packages/ops-sentinel';
 
 const router = express.Router();
 

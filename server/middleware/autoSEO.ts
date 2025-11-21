@@ -5,10 +5,10 @@
  */
 
 import { Request, Response, NextFunction } from "express";
-import { autoOptimizeContent, extractLocationFromRequest } from "@dreamnet/ai-seo-core";
-import { AISEOCore } from "@dreamnet/ai-seo-core";
-import { NERVE_BUS } from "@dreamnet/nerve/bus";
-import { createAiSeoEvent } from "@dreamnet/nerve/factory";
+import { autoOptimizeContent, extractLocationFromRequest } from "../../packages/ai-seo-core";
+import { AISEOCore } from "../../packages/ai-seo-core";
+import { NERVE_BUS } from "../../packages/nerve/src/bus";
+import { createAiSeoEvent } from "../../packages/nerve/src/factory";
 
 /**
  * Middleware that auto-optimizes content before it's saved

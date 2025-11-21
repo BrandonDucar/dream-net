@@ -6,9 +6,9 @@
  */
 
 import { Router } from 'express';
-import { CitizenshipStore } from '@dreamnet/dream-state-core/store/citizenshipStore';
-import { issueDreamDomain } from '@dreamnet/domain-issuance-core';
-import type { DreamPassportTier } from '@dreamnet/dream-state-core/types';
+import { CitizenshipStore } from '../../packages/dream-state-core/store/citizenshipStore';
+import { issueDreamDomain } from '../../packages/domain-issuance-core';
+import type { DreamPassportTier } from '../../packages/dream-state-core/types';
 
 const router = Router();
 

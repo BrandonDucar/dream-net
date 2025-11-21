@@ -3,7 +3,7 @@
  */
 
 import { Router } from "express";
-import { DreamNetRBACCore } from "@dreamnet/dreamnet-rbac-core";
+import { DreamNetRBACCore } from "../../packages/dreamnet-rbac-core";
 
 const router = Router();
 

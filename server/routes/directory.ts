@@ -4,15 +4,15 @@
  */
 
 import { Router, Request, Response } from "express";
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
+import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 import {
   getEntry,
   listEntriesByType,
   listAllEntries,
   searchEntries,
-} from "@dreamnet/directory/registry";
-import { withPort } from "@dreamnet/port-governor/withPort";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
+} from "../../packages/directory/src/registry";
+import { withPort } from "../../packages/port-governor/src/withPort";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 
 const router = Router();
 

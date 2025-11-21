@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { wolfPack, type FundingSource, type FundingStatus } from "../agents/WolfPack";
 import { createWolfPackActivateRouter } from "./wolf-pack-activate";
-import { withCluster } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
+import { withCluster } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 
 // Rewards engine is optional
 let grantReward: any = null;
 try {
-  const rewardsModule = require("@dreamnet/rewards-engine");
+  const rewardsModule = require("../../packages/rewards-engine");
   grantReward = rewardsModule.grantReward;
 } catch {
   console.warn("[Wolf Pack] @dreamnet/rewards-engine not available");

@@ -4,8 +4,8 @@
  */
 
 import { Router } from "express";
-import { NERVE_BUS } from "@dreamnet/nerve/bus";
-import { getDreamScopeEvents, getDreamScopeMetrics } from "@dreamnet/nerve/subscribers";
+import { NERVE_BUS } from "../../packages/nerve/src/bus";
+import { getDreamScopeEvents, getDreamScopeMetrics } from "../../packages/nerve/src/subscribers";
 
 const router = Router();
 

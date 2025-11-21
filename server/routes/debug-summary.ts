@@ -5,10 +5,10 @@
 
 import { Router, Request, Response } from "express";
 import { requireAdmin } from "../siwe-auth";
-import { EnvKeeperCore } from "@dreamnet/env-keeper-core";
-import { APIKeeperCore } from "@dreamnet/api-keeper-core";
-import { DreamNetVercelAgent } from "@dreamnet/dreamnet-vercel-agent";
-import { getDescriptorsBySensitivity } from "@dreamnet/env-keeper-core/logic/envClassifier";
+import { EnvKeeperCore } from "../../packages/env-keeper-core";
+import { APIKeeperCore } from "../../packages/api-keeper-core";
+import { DreamNetVercelAgent } from "../../packages/dreamnet-vercel-agent";
+import { getDescriptorsBySensitivity } from "../../packages/env-keeper-core/logic/envClassifier";
 
 const router = Router();
 

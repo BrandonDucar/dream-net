@@ -4,7 +4,7 @@
  */
 
 import express, { type Router } from "express";
-import { withGovernance } from "@dreamnet/dreamnet-control-core/controlCoreMiddleware";
+import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 
 const router: Router = express.Router();
 
@@ -14,7 +14,7 @@ let ShieldCore: any = null;
 async function getShieldCore() {
   if (ShieldCore) return ShieldCore;
   try {
-    const shieldModule = await import("@dreamnet/shield-core");
+    const shieldModule = await import("../../packages/shield-core");
     ShieldCore = shieldModule.ShieldCore;
     return ShieldCore;
   } catch (error) {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPostQueueItems, updatePostQueueItem, incrementMediaUsage } from "@dreamnet/media-vault";
+import { getPostQueueItems, updatePostQueueItem, incrementMediaUsage } from "../../packages/media-vault";
 import { recordEvent } from "../../packages/metrics-engine";
 import { eq, and, lte } from "drizzle-orm";
 import { postQueue } from "@shared/schema";
