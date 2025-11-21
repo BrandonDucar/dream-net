@@ -8,8 +8,8 @@ import {
   getContact,
   listOrders,
   listContacts,
-} from "@dreamnet/orders";
-import { recordEvent, recordTaskCompletion } from "@dreamnet/metrics-engine";
+} from "../../packages/orders";
+import { recordEvent, recordTaskCompletion } from "../../packages/metrics-engine";
 
 // Simple auth middleware for admin routes
 function requireOperatorToken(req: any, res: any, next: any) {

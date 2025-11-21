@@ -1,7 +1,14 @@
 import { Router } from 'express';
-import { dreamNetworkEngine } from '../services/DreamNetworkEngine.js';
+// import { dreamNetworkEngine } from '../services/DreamNetworkEngine.js'; // File not found - disabled
 
 const router = Router();
+
+// Placeholder dreamNetworkEngine until service is implemented
+const dreamNetworkEngine = {
+  getDreamState: () => ({ initialized: false, note: 'DreamNetworkEngine service not available' }),
+  getDreamSeeds: () => [],
+  getNightmareNetwork: () => ({ nodes: [], edges: [] }),
+};
 
 // Dream state endpoints
 router.get('/state', (req, res) => {

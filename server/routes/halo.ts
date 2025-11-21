@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { haloEngine } from "@dreamnet/halo-loop";
-import { recordHaloCycle } from "@dreamnet/metrics-engine";
+import { recordHaloCycle } from "../../packages/metrics-engine";
 
 export function createHaloRouter(): Router {
   const router = Router();

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { grantReward, getUserBalance, listRewardEvents, getAllBalances } from "@dreamnet/rewards-engine";
-import { recordEvent } from "@dreamnet/metrics-engine";
+import { grantReward, getUserBalance, listRewardEvents, getAllBalances } from "../../packages/rewards-engine";
+import { recordEvent } from "../../packages/metrics-engine";
 
 // Simple auth middleware for admin routes
 function requireOperatorToken(req: any, res: any, next: any) {

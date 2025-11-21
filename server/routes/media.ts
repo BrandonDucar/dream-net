@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 import { ingestFromFile, ingestFromUrl, getMediaById, searchMedia, createPostQueueItem, getPostQueueItems, updatePostQueueItem, incrementMediaUsage, getPublicMedia } from "@dreamnet/media-vault";
 import { createSpore } from "@dreamnet/spore-engine";
 import { getHashtagsForTags } from "@dreamnet/media-vault/src/vocab";
-import { grantReward } from "@dreamnet/rewards-engine";
+import { grantReward } from "../../packages/rewards-engine";
 
 const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 }, // 50MB max

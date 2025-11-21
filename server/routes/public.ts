@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getMetrics } from "@dreamnet/metrics-engine";
+import { getMetrics } from "../../packages/metrics-engine";
 
 // Cache for public status (30 seconds)
 let cachedStatus: {
