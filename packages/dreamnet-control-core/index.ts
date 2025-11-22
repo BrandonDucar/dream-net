@@ -7,7 +7,7 @@
 import { controlStore } from "./store/controlStore";
 import type { ClusterId, ClusterRateLimit, ControlConfig, ControlContext } from "./types";
 import type { TierId, TierConfig } from "./tierConfig";
-import { bridgeToSpiderWeb } from "@dreamnet/dreamnet-operational-bridge";
+import { bridgeToSpiderWeb } from "../dreamnet-operational-bridge";
 import { getTierConfig, tierHasFeature } from "./tierConfig";
 
 export const DreamNetControlCore = {
