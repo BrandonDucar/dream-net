@@ -3,8 +3,8 @@
  * Biomimetic: Feed operational metrics into packs (Wolf, Whale, Orca)
  */
 
-import type { ScalingMetrics } from "@dreamnet/dreamnet-metrics-core/types";
-import type { CostSummary } from "@dreamnet/dreamnet-cost-core/types";
+import type { ScalingMetrics } from "../../dreamnet-metrics-core/types";
+import type { CostSummary } from "../../dreamnet-cost-core/types";
 
 /**
  * Feed cost metrics to Wolf Pack (funding decisions)

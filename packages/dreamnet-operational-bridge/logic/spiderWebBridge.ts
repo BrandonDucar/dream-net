@@ -4,7 +4,7 @@
  */
 
 import { SpiderWebCore } from "../../spider-web-core";
-import type { SignalThread, Fly, FlyType, FlyPriority, ThreadPriority } from "@dreamnet/spider-web-core/types";
+import type { SignalThread, Fly, FlyType, FlyPriority, ThreadPriority } from "../../spider-web-core/types";
 
 export type OperationalEventType =
   | "health_check_failed"
