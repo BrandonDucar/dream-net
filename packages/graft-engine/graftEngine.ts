@@ -10,7 +10,7 @@ import { AgentProcessor } from "./processors/processorAgent";
 import { UIProcessor } from "./processors/processorUI";
 import { ModuleProcessor } from "./processors/processorModule";
 import * as graftEvents from "./events/emitter";
-import { updateTraitsFromEvent } from "@dreamnet/memory-dna";
+import { updateTraitsFromEvent } from "../memory-dna";
 
 const validators: Record<string, GraftValidator> = {
   endpoint: new EndpointValidator(),
@@ -96,7 +96,7 @@ export async function installGraft(graft: GraftModel): Promise<void> {
     });
     // Emit Event Wormhole event
     try {
-      const { emitEvent } = await import("@dreamnet/event-wormholes");
+      const { emitEvent } = await import("../event-wormholes");
       await emitEvent({
         sourceType: "graft",
         eventType: "graft.install.failed",
@@ -136,7 +136,7 @@ export async function installGraft(graft: GraftModel): Promise<void> {
   graftEvents.emit("graft:installed", installedPayload);
   // Emit Event Wormhole event
   try {
-    const { emitEvent } = await import("@dreamnet/event-wormholes");
+    const { emitEvent } = await import("../event-wormholes");
     await emitEvent({
       sourceType: "graft",
       eventType: "graft.installed",
