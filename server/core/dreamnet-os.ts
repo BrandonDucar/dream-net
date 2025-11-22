@@ -26,7 +26,7 @@ import { LiquidityEngine } from "../../packages/liquidity-engine";
 import { SocialHubCore } from "../../packages/social-hub-core";
 import { InitRitualCore } from "../../packages/init-ritual-core";
 import { EconomicEngineCore } from "../../packages/economic-engine-core";
-import { AgentRegistryCore } from "../../packages/agent-registry-core";
+import AgentRegistryCore from "../../packages/agent-registry-core";
 import { DreamNetOSCore } from "../../packages/dreamnet-os-core";
 import { OrchestratorCore } from "../../packages/orchestrator-core";
 import { RuntimeBridgeCore } from "../../packages/runtime-bridge-core";
