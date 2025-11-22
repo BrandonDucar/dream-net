@@ -4,11 +4,18 @@
  */
 
 import { FundingLead, EmailDraft } from '../types';
-import { InboxSquared } from '../../inbox-squared-core/index.ts';
-import type { DraftGenerationOptions } from '../../inbox-squared-core/index.ts';
+// Lazy import to avoid ESM resolution issues
+let inboxSquared: any = null;
+let DraftGenerationOptions: any = null;
 
-// Create instance if needed
-const inboxSquared = new InboxSquared();
+async function getInboxSquared() {
+  if (!inboxSquared) {
+    const module = await import('../../inbox-squared-core/index.ts');
+    inboxSquared = new module.InboxSquared();
+    DraftGenerationOptions = module.DraftGenerationOptions;
+  }
+  return { inboxSquared, DraftGenerationOptions };
+}
 
 /**
  * Generate an enhanced email draft using Inbox²
