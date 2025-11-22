@@ -14,7 +14,7 @@ import {
   addDomain,
 } from "./vercelClient";
 import type { VercelProject, VercelDeployment, CleanupAction } from "../types";
-import { bridgeToSpiderWeb } from "@dreamnet/dreamnet-operational-bridge";
+import { bridgeToSpiderWeb } from "../../dreamnet-operational-bridge";
 
 /**
  * Analyze projects and find cleanup opportunities

@@ -6,7 +6,7 @@
 
 import type { JaggyStatus, JaggyAlert, JaggyTerritory } from "../types";
 import { watchMesh } from "./jaggyHunter";
-import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
+import { WebhookNervousCore } from "../../webhook-nervous-core";
 
 let jaggyStatus: JaggyStatus = {
   status: "watching",

@@ -1,5 +1,5 @@
 import { createMailerFromEnv, sendMail } from "./mailer";
-import { WolfPackFundingCore } from "@dreamnet/wolfpack-funding-core";
+import { WolfPackFundingCore } from "../../wolfpack-funding-core";
 import {
   getMaxEmailsPerCycle,
   getMaxEmailsPerDay,
