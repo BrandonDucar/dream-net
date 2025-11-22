@@ -5,7 +5,7 @@
 
 import { Router, Request, Response } from "express";
 import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
-import { listBlueprints, getBlueprint } from "../../packages/network-blueprints";
+import { listBlueprints, getBlueprint } from "../../packages/network-blueprints/src/index";
 import { withPort } from "../../packages/port-governor/src/withPort";
 import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 
