@@ -10,7 +10,7 @@ import {
   registerDream,
   registerPort,
   registerConduit,
-} from "@dreamnet/directory/registry";
+} from "../../directory/src/registry";
 
 export interface BootstrapResult {
   blueprintId: string;

@@ -52,9 +52,9 @@ import type { RequestWithIdentity, CallerIdentity } from "./identityResolver";
 import { checkAndConsume } from "./rateLimiter";
 import { emitControlCoreEvent, type ControlDecision } from "./eventFabric";
 import { evaluatePolicy, type PolicyContext } from "./policyEngine";
-import type { OfficeId, CabinetId } from "@dreamnet/dreamstate/types";
-import { NERVE_BUS } from "@dreamnet/nerve/bus";
-import { createRequestDecisionEvent, createShieldEvent } from "@dreamnet/nerve/factory";
+import type { OfficeId, CabinetId } from "../../dream-state-core/types";
+import { NERVE_BUS } from "../../nerve/src/bus";
+import { createRequestDecisionEvent, createShieldEvent } from "../../nerve/src/factory";
 
 // Global kill-switch flag (in-memory for now, TODO: move to config store)
 let globalKillSwitch = false;

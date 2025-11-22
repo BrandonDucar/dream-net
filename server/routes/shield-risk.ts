@@ -4,7 +4,7 @@
  */
 
 import { Router, Request, Response } from "express";
-import { listRiskProfiles, getRiskProfilesByLevel } from "../../packages/shield-core/risk";
+import { listRiskProfiles, getRiskProfilesByLevel } from "../../packages/shield-core/src/risk";
 import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
 import { withPort } from "../../packages/port-governor/src/withPort";
 import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
