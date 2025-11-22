@@ -13,8 +13,8 @@ import { join } from 'path';
 
 const PROJECT_ID = process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT || 'aqueous-tube-470317-m6';
 const REGION = process.env.GCP_REGION || process.env.GOOGLE_CLOUD_REGION || 'us-central1';
-const CLUSTER_NAME = process.env.GKE_CLUSTER_NAME || 'dreamnet-cluster';
-const ZONE = `${REGION}-a`;
+const CLUSTER_NAME = process.env.GKE_CLUSTER_NAME || 'autopilot-cluster-1';
+const ZONE = REGION; // Autopilot clusters use region, not zone
 
 console.log('🚀 Deploying DreamNet to Google Kubernetes Engine...\n');
 console.log(`📋 Configuration:`);
@@ -40,7 +40,7 @@ console.log('🔍 Checking for existing cluster...');
 let clusterExists = false;
 try {
   execSync(
-    `gcloud container clusters describe ${CLUSTER_NAME} --zone=${ZONE} --project=${PROJECT_ID}`,
+    `gcloud container clusters describe ${CLUSTER_NAME} --region=${REGION} --project=${PROJECT_ID}`,
     { stdio: 'pipe' }
   );
   clusterExists = true;
@@ -53,21 +53,12 @@ try {
 if (!clusterExists) {
   console.log('🏗️  Creating GKE cluster...');
   try {
-    execSync(
-      `gcloud container clusters create ${CLUSTER_NAME} ` +
-      `--zone=${ZONE} ` +
-      `--project=${PROJECT_ID} ` +
-      `--machine-type=e2-standard-4 ` +
-      `--num-nodes=3 ` +
-      `--enable-autoscaling ` +
-      `--min-nodes=3 ` +
-      `--max-nodes=10 ` +
-      `--enable-autorepair ` +
-      `--enable-autoupgrade ` +
-      `--addons=HorizontalPodAutoscaling,HttpLoadBalancing ` +
-      `--enable-network-policy`,
-      { stdio: 'inherit' }
-    );
+    // Note: Autopilot clusters are created differently
+    // This script assumes cluster already exists (created via console)
+    console.log('⚠️  Autopilot cluster creation via CLI requires different flags');
+    console.log('   Cluster should be created via Console or:');
+    console.log(`   gcloud container clusters create-auto ${CLUSTER_NAME} --region=${REGION} --project=${PROJECT_ID}`);
+    throw new Error('Please create Autopilot cluster manually or use create-auto command');
     console.log('✅ Cluster created successfully\n');
   } catch (error) {
     console.error('❌ Failed to create cluster');
@@ -80,7 +71,7 @@ if (!clusterExists) {
 console.log('🔐 Getting cluster credentials...');
 try {
   execSync(
-    `gcloud container clusters get-credentials ${CLUSTER_NAME} --zone=${ZONE} --project=${PROJECT_ID}`,
+    `gcloud container clusters get-credentials ${CLUSTER_NAME} --region=${REGION} --project=${PROJECT_ID}`,
     { stdio: 'inherit' }
   );
   console.log('✅ Credentials configured\n');
@@ -195,7 +186,7 @@ try {
   }
   
   console.log('\n✅ Deployment complete!');
-  console.log(`\n📊 View cluster: https://console.cloud.google.com/kubernetes/clusters/details/${ZONE}/${CLUSTER_NAME}?project=${PROJECT_ID}`);
+  console.log(`\n📊 View cluster: https://console.cloud.google.com/kubernetes/clusters/details/${REGION}/${CLUSTER_NAME}?project=${PROJECT_ID}`);
   console.log(`\n📊 View pods: kubectl get pods`);
   console.log(`\n📊 View logs: kubectl logs -f deployment/dreamnet-api`);
 } catch (error) {
