@@ -26,7 +26,8 @@ import { createAgentRouter } from "./routes/agent";
 import { getEnvConfig, PORT as ENV_PORT, ALLOWED_ORIGINS, OPERATOR_WALLETS, INIT_SUBSYSTEMS, MESH_AUTOSTART, INIT_HEAVY_SUBSYSTEMS, NODE_ENV } from "./config/env";
 // Temporarily disabled - forge tables not in schema yet
 // import { createForgeRouter } from "./routes/forge";
-const createForgeRouter = () => ({ use: () => {} });
+import { Router } from "express";
+const createForgeRouter = () => Router();
 import { createHaloRouter } from "./routes/halo";
 import { createGraftRouter } from "./routes/graft";
 import { createGraftedRouter } from "./routes/grafted";
