@@ -86,9 +86,27 @@ class InstantWormhole {
    * Subscribe to instant mesh events
    */
   private subscribeToMesh(): void {
-    instantMesh.subscribe("*", (event) => {
-      this.routeInstantly(event);
-    });
+    // Use lazy access to avoid initialization order issues
+    try {
+      if (instantMesh && typeof instantMesh.subscribe === 'function') {
+        instantMesh.subscribe("*", (event) => {
+          this.routeInstantly(event);
+        });
+      } else {
+        // Defer subscription until mesh is ready
+        setTimeout(() => {
+          if (instantMesh && typeof instantMesh.subscribe === 'function') {
+            instantMesh.subscribe("*", (event) => {
+              this.routeInstantly(event);
+            });
+          }
+        }, 100);
+      }
+    } catch (error) {
+      console.warn('[InstantWormhole] Failed to subscribe to mesh, will retry:', error);
+      // Retry after a delay
+      setTimeout(() => this.subscribeToMesh(), 1000);
+    }
   }
 
   /**
@@ -142,15 +160,21 @@ class InstantWormhole {
    */
   private deliver(target: string, event: InstantEvent): void {
     // Instant delivery - emit to mesh for target
-    instantMesh.emit({
-      source: "wormhole",
-      target,
-      type: `wormhole.delivered.${event.type}`,
-      payload: {
-        originalEvent: event,
-        deliveredAt: Date.now(),
-      },
-    });
+    try {
+      if (instantMesh && typeof instantMesh.emit === 'function') {
+        instantMesh.emit({
+          source: "wormhole",
+          target,
+          type: `wormhole.delivered.${event.type}`,
+          payload: {
+            originalEvent: event,
+            deliveredAt: Date.now(),
+          },
+        });
+      }
+    } catch (error) {
+      console.warn('[InstantWormhole] Failed to deliver event:', error);
+    }
   }
 
   /**
