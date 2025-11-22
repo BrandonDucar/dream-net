@@ -4,7 +4,7 @@
  */
 
 import express from "express";
-import { DreamNetOSCore } from "../../packages/dreamnet-os-core";
+import DreamNetOSCore from "../../packages/dreamnet-os-core";
 import { DreamStateCore } from "../../packages/dream-state-core";
 import { SpiderWebCore } from "../../packages/spider-web-core";
 import { ShieldCore } from "../../packages/shield-core";
