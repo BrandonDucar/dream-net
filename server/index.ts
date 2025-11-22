@@ -46,7 +46,8 @@ import { createOrdersRouter } from "./routes/orders";
 import { createPublicRouter } from "./routes/public";
 // import { createPosterRouter } from "./routes/poster"; // Temporarily disabled - @dreamnet/media-vault missing
 import { createRewardsRouter } from "./routes/rewards";
-import { createDreamRouter } from "./routes/dream";
+import dreamRouter from "./routes/dream";
+const createDreamRouter = () => dreamRouter;
 import { createDreamInteractionsRouter } from "./routes/dream-interactions";
 import { createDreamContributionsRouter } from "./routes/dream-contributions";
 import { createWolfPackRouter } from "./routes/wolf-pack";
