@@ -4,8 +4,11 @@
  */
 
 import { FundingLead, EmailDraft } from '../types';
-import { inboxSquared } from '../../inbox-squared-core/index.js';
-import type { DraftGenerationOptions } from '../../inbox-squared-core';
+import { InboxSquared } from '../../inbox-squared-core/index.ts';
+import type { DraftGenerationOptions } from '../../inbox-squared-core/index.ts';
+
+// Create instance if needed
+const inboxSquared = new InboxSquared();
 
 /**
  * Generate an enhanced email draft using Inbox²
