@@ -51,7 +51,7 @@ export {
 } from './dispatcher';
 
 // Import for default setup
-import { FIBERS } from '@dreamnet/internal-ports';
+import { FIBERS } from '../../internal-ports/src/index.ts';
 import { configureWormholes, registerWormhole } from './wormholes';
 import type { WormholeEndpoint } from './types';
 

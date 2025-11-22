@@ -37,7 +37,7 @@ export {
 } from './metrics';
 
 // Import for default route registration
-import { FIBERS, PORT_IDS } from '@dreamnet/internal-ports';
+import { FIBERS, PORT_IDS } from '../../internal-ports/src/index.ts';
 import { registerRoute, configureRouter } from './router';
 import type { RouteEntry } from './types';
 

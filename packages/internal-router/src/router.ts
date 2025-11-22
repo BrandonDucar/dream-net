@@ -6,7 +6,7 @@
  */
 
 import type { DreamPacket } from '../../internal-ports/src/index.ts';
-import { getPort } from '@dreamnet/internal-ports';
+import { getPort } from '../../internal-ports/src/index.ts';
 import type { RouteKey, RouteTarget, RouteEntry, RouterConfig } from './types';
 import { incrementRouteCount } from './metrics';
 
