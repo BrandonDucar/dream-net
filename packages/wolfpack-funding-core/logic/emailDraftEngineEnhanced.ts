@@ -31,7 +31,8 @@ export async function generateEmailDraftForLeadEnhanced(
 
   try {
     // Use Inbox² to generate intelligent draft
-    const draft = await inboxSquared.generateDraft(
+    const { inboxSquared: inbox } = await getInboxSquared();
+    const draft = await inbox.generateDraft(
       lead.email,
       lead.name,
       lead.company || lead.type,
