@@ -5,7 +5,7 @@
  */
 
 import express from "express";
-import { JaggyCore } from "../../packages/jaggy-core";
+import JaggyCore from "../../packages/jaggy-core";
 
 const router = express.Router();
 
