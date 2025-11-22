@@ -3,19 +3,21 @@ import type { Request, Response, NextFunction } from "express";
 const DEFAULT_TTL_MS = 10 * 60 * 1000;
 const cache = new Map<string, number>();
 
-export async function checkIdempotency(key: string, ttlMs = DEFAULT_TTL_MS): Promise<boolean> {
+export async function checkIdempotency(key: string, traceId?: string, digest?: string, ttlMs = DEFAULT_TTL_MS): Promise<{ isReplay: boolean; record?: any }> {
   const now = Date.now();
   const existing = cache.get(key);
   if (existing && now - existing < ttlMs) {
-    return true;
+    return { isReplay: true, record: { key, timestamp: existing } };
   }
   cache.set(key, now);
-  return false;
+  return { isReplay: false };
 }
 
 const responseCache = new Map<string, { status: number; body: any; timestamp: number }>();
 
-export async function storeIdempotencyResponse(key: string, status: number, body: any, ttlMs = DEFAULT_TTL_MS): Promise<void> {
+export async function storeIdempotencyResponse(key: string, response: any, ttlMs = DEFAULT_TTL_MS): Promise<void> {
+  const status = typeof response === 'object' && response.status ? response.status : 200;
+  const body = typeof response === 'object' && response.body ? response.body : response;
   responseCache.set(key, { status, body, timestamp: Date.now() });
   // Auto-cleanup after TTL
   setTimeout(() => {
@@ -52,7 +54,7 @@ export async function idempotencyMiddleware(req: Request, res: Response, next: N
       return res.status(cachedResponse.status).json(cachedResponse.body);
     }
 
-    const isReplay = await checkIdempotency(key);
+    const { isReplay } = await checkIdempotency(key);
     if (isReplay) {
       return res.status(409).json({
         ok: false,
