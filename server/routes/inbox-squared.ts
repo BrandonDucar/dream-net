@@ -187,7 +187,8 @@ router.get('/research/:email', async (req, res) => {
     const { email } = req.params;
     const { name, company } = req.query;
 
-    const research = await inboxSquared
+    const { inboxSquared: inbox } = await getInboxSquared();
+    const research = await inbox
       .getResearchEngine()
       .researchRecipient(email, name as string, company as string);
 
@@ -214,7 +215,7 @@ router.get('/status', async (req, res) => {
       relevanceEngineEnabled: true,
       geoAwarenessEnabled: true,
       learningLoopEnabled: true,
-      patternsCount: inboxSquared.getLearningLoop().getAllPatterns().length,
+      patternsCount: (await getInboxSquared()).inboxSquared.getLearningLoop().getAllPatterns().length,
     },
   });
 });
