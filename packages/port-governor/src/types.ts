@@ -3,8 +3,8 @@
  * Governed ports with roles, limits, and access control
  */
 
-import type { TierId } from "@dreamnet/dreamnet-control-core/tierConfig";
-import type { OfficeId, CabinetId } from "@dreamnet/dreamstate/types";
+import type { TierId } from "../../dreamnet-control-core/tierConfig";
+import type { OfficeId, CabinetId } from "../../dream-state-core/types";
 
 export type PortId =
   | "ENVKEEPER_PORT"
