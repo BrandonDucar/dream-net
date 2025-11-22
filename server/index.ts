@@ -338,8 +338,8 @@ app.use("/api", createDreamRouter());
   app.use("/api", createMediaListRouter());
   app.use("/api", createEmailRouter());
   app.use("/api/inbox-squared", createInboxSquaredRouter());
-  app.use("/api/coinsensei", createCoinSenseiRouter());
-  app.use("/api/agent-wallets", createAgentWalletRouter());
+  app.use("/api/coinsensei", createCoinSenseiRouter);
+  app.use("/api/agent-wallets", createAgentWalletRouter);
   app.use("/api", createDreamSnailRouter());
   app.use("/api", createBiomimeticSystemsRouter());
   
