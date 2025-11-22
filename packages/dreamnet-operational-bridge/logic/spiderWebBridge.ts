@@ -3,7 +3,7 @@
  * Biomimetic: Converts operational events into Spider Web threads (nervous system)
  */
 
-import { SpiderWebCore } from "@dreamnet/spider-web-core";
+import { SpiderWebCore } from "../../spider-web-core";
 import type { SignalThread, Fly, FlyType, FlyPriority, ThreadPriority } from "@dreamnet/spider-web-core/types";
 
 export type OperationalEventType =
