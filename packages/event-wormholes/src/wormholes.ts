@@ -13,7 +13,7 @@ import type {
   WormholeResult,
   WormholeStats
 } from './types';
-import type { DreamPacket } from '@dreamnet/internal-ports';
+import type { DreamPacket } from '../../internal-ports/src/index.ts';
 
 /**
  * In-memory wormhole registry

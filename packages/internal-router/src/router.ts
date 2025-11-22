@@ -5,7 +5,7 @@
  * Routes packets to ports based on fiber channel and packet type.
  */
 
-import type { DreamPacket } from '@dreamnet/internal-ports';
+import type { DreamPacket } from '../../internal-ports/src/index.ts';
 import { getPort } from '@dreamnet/internal-ports';
 import type { RouteKey, RouteTarget, RouteEntry, RouterConfig } from './types';
 import { incrementRouteCount } from './metrics';
