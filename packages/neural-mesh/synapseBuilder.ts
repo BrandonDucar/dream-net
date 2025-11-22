@@ -1,5 +1,5 @@
 import type { SynapseConfig, SynapseConnection } from "./types";
-import { emitEvent } from "@dreamnet/event-wormholes";
+import { emitEvent } from "../event-wormholes/src/index.ts";
 
 let synapseMap: Record<string, any> = {};
 let synapseConnections: SynapseConnection[] = [];
