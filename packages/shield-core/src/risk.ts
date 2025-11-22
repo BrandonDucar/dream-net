@@ -3,7 +3,7 @@
  * Tracks risk per caller (API key/wallet/citizen) for adaptive decisions
  */
 
-import type { TierId } from "@dreamnet/dreamnet-control-core/tierConfig";
+import type { TierId } from "../../dreamnet-control-core/tierConfig";
 
 export type RiskLevel = "low" | "medium" | "high" | "critical";
 

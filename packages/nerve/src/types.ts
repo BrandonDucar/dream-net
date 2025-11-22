@@ -5,9 +5,9 @@
  * @module @dreamnet/nerve/types
  */
 
-import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
-import type { TierId } from "@dreamnet/dreamnet-control-core/tierConfig";
-import type { CitizenId, OfficeId, CabinetId } from "@dreamnet/dreamstate/types";
+import type { ClusterId } from "../../dreamnet-control-core/clusters";
+import type { TierId } from "../../dreamnet-control-core/tierConfig";
+import type { CitizenId, OfficeId, CabinetId } from "../../dreamstate/src/types";
 
 /**
  * Nerve Channel ID - Routing channels for events
