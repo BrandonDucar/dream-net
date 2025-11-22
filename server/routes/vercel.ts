@@ -180,7 +180,7 @@ router.post(
 // POST /api/vercel/cleanup/auto - Auto-analyze and execute cleanup (governed port)
 router.post(
   "/cleanup/auto",
-  withPort("VERCEL_PORT"),
+  withPort ? withPort("VERCEL_PORT") : ((req: any, res: any, next: any) => next()),
   withGovernance({ clusterId: "DEPLOYKEEPER_CORE" as any }),
   async (req: RequestWithIdentity, res: Response) => {
     try {
