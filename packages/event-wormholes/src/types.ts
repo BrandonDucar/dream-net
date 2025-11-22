@@ -5,7 +5,7 @@
  * clusters, nodes, or external transports.
  */
 
-import type { DreamPacket } from '@dreamnet/internal-ports';
+import type { DreamPacket } from '../../internal-ports/src/index.ts';
 
 /**
  * Wormhole identifier
