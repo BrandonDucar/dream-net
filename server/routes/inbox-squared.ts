@@ -4,9 +4,20 @@
  */
 
 import { Router } from 'express';
-import { inboxSquared } from '../../packages/inbox-squared-core';
+// Dynamic import to avoid ESM resolution issues
+let inboxSquared: any = null;
+let DraftGenerationOptions: any = null;
+
+async function getInboxSquared() {
+  if (!inboxSquared) {
+    const module = await import('../../packages/inbox-squared-core/index.ts');
+    inboxSquared = new module.InboxSquared();
+    DraftGenerationOptions = module.DraftGenerationOptions;
+  }
+  return { inboxSquared, DraftGenerationOptions };
+}
+
 import { google } from 'googleapis';
-import type { DraftGenerationOptions } from '../../packages/inbox-squared-core';
 
 const router = Router();
 
@@ -30,17 +41,18 @@ function getGmailOAuth2Client() {
 /**
  * Initialize Inbox² with Gmail API
  */
-function initializeInboxSquared() {
+async function initializeInboxSquared() {
   const oauth2Client = getGmailOAuth2Client();
   if (oauth2Client) {
-    inboxSquared.initializeGmail(oauth2Client);
+    const { inboxSquared: inbox } = await getInboxSquared();
+    inbox.initializeGmail(oauth2Client);
     return true;
   }
   return false;
 }
 
 // Initialize on route load
-const gmailInitialized = initializeInboxSquared();
+const gmailInitialized = await initializeInboxSquared();
 
 /**
  * POST /api/inbox-squared/generate-draft
@@ -63,7 +75,8 @@ router.post('/generate-draft', async (req, res) => {
       generateContentTwins: options?.generateContentTwins || false,
     };
 
-    const draft = await inboxSquared.generateDraft(
+    const { inboxSquared: inbox } = await getInboxSquared();
+    const draft = await inbox.generateDraft(
       recipientEmail,
       recipientName,
       recipientCompany,
@@ -99,7 +112,8 @@ router.post('/create-gmail-draft', async (req, res) => {
       return res.status(400).json({ error: 'Invalid draft object' });
     }
 
-    const gmailDraftId = await inboxSquared.createGmailDraft(draft);
+    const { inboxSquared: inbox } = await getInboxSquared();
+    const gmailDraftId = await inbox.createGmailDraft(draft);
 
     res.json({
       ok: true,
@@ -133,7 +147,8 @@ router.post('/track-engagement', async (req, res) => {
       return res.status(400).json({ error: 'messageId is required' });
     }
 
-    const metrics = await inboxSquared.trackEngagement(messageId);
+    const { inboxSquared: inbox } = await getInboxSquared();
+    const metrics = await inbox.trackEngagement(messageId);
 
     res.json({ ok: true, metrics });
   } catch (error) {
@@ -151,7 +166,8 @@ router.post('/track-engagement', async (req, res) => {
  */
 router.get('/learning-patterns', async (req, res) => {
   try {
-    const patterns = inboxSquared.getLearningLoop().getAllPatterns();
+    const { inboxSquared: inbox } = await getInboxSquared();
+    const patterns = inbox.getLearningLoop().getAllPatterns();
     res.json({ ok: true, patterns });
   } catch (error) {
     console.error('[Inbox²] Error getting patterns:', error);
