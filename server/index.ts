@@ -36,11 +36,11 @@ import { createResonanceRouter } from "./routes/resonance";
 import { createAliveRouter } from "./routes/alive";
 import { createOperatorRouter } from "./routes/operator";
 // Missing packages - using placeholders
-const createSquadRouter = () => ({ use: () => {} });
-const createEventRouter = () => ({ use: () => {} });
-const createWormholeRouter = () => ({ use: () => {} });
-const createSporeRouter = () => ({ use: () => {} });
-const createFabricRouter = () => ({ use: () => {} });
+const createSquadRouter = () => Router();
+const createEventRouter = () => Router();
+const createWormholeRouter = () => Router();
+const createSporeRouter = () => Router();
+const createFabricRouter = () => Router();
 // import { createMediaRouter } from "./routes/media"; // Temporarily disabled - @dreamnet/media-vault missing
 import { createMetricsRouter } from "./routes/metrics";
 import { createOrdersRouter } from "./routes/orders";
