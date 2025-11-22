@@ -14,17 +14,16 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY client/package.json ./client/
 COPY server/package.json ./server/
 
-# Install dependencies
+# Install root dependencies first
 RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY . .
 
-# Build frontend (client is not in workspace, build directly)
+# Build frontend (dependencies hoisted to root via .npmrc)
 WORKDIR /app/client
 ENV CI=true
-# Install client dependencies (regexparam is now in package.json)
-RUN pnpm install --frozen-lockfile
+# Build - dependencies should be available from root node_modules
 RUN pnpm build
 WORKDIR /app
 

@@ -1,39 +1,5 @@
-# Exclude old disabled site
-apps/_site-old-DISABLED/**
+# Disable Vercel auto-deployment
+# Primary deployment is now Google Cloud Run (pnpm deploy:gcp)
+# This file prevents Vercel from attempting to deploy
 
-# Exclude server (backend is on Railway)
-server/**
-
-# Exclude contracts
-contracts/**
-
-# Exclude scripts
-scripts/**
-
-# Exclude docs
-docs/**
-
-# Exclude node_modules (will be installed by Vercel)
-node_modules
-**/node_modules
-
-# Exclude build outputs (will be generated)
-dist
-**/dist
-build
-**/build
-
-# Exclude git
-.git
-
-# Exclude env files
-.env
-.env.*
-
-# Exclude test files
-**/*.test.ts
-**/*.test.tsx
-**/*.spec.ts
-**/*.spec.tsx
-
-# Everything else INCLUDING client/, packages/, shared/, pnpm-workspace.yaml, package.json, pnpm-lock.yaml MUST be included
+*
