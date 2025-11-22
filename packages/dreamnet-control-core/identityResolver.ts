@@ -20,7 +20,7 @@ import type { DreamPassport, OfficeId, CabinetId } from "../dream-state-core/typ
 import {
   getPassportByWallet,
   getPassportByCitizenId,
-} from "../dream-state-core/src/registry";
+} from "../dreamstate/src/registry";
 
 // If you're using ethers, you can uncomment this:
 // import { ethers } from "ethers";
