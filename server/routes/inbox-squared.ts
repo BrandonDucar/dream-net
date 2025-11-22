@@ -51,8 +51,13 @@ async function initializeInboxSquared() {
   return false;
 }
 
-// Initialize on route load
-const gmailInitialized = await initializeInboxSquared();
+// Initialize on route load (async initialization)
+let gmailInitialized = false;
+initializeInboxSquared().then(initialized => {
+  gmailInitialized = initialized;
+}).catch(() => {
+  gmailInitialized = false;
+});
 
 /**
  * POST /api/inbox-squared/generate-draft
