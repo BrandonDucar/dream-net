@@ -7,7 +7,7 @@
 
 import type { WormholeId, WormholePacketEnvelope } from './types';
 import type { DreamPacket } from '@dreamnet/internal-ports';
-import { routePacket } from '@dreamnet/internal-router';
+import { routePacket } from '../../internal-router/src/index.ts';
 import {
   getWormhole,
   getWormholeBuffer,
