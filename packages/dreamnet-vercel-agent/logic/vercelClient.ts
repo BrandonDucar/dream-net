@@ -3,7 +3,7 @@
  * Uses API Keeper to discover Vercel token automatically
  */
 
-import { APIKeeperCore } from "@dreamnet/api-keeper-core";
+import { APIKeeperCore } from "../../api-keeper-core";
 import type { VercelConfig, VercelProject, VercelDeployment } from "../types";
 
 let config: VercelConfig | null = null;
