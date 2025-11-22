@@ -4,8 +4,8 @@
  */
 
 import { FundingLead, EmailDraft } from '../types';
-import { inboxSquared } from '@dreamnet/inbox-squared-core';
-import type { DraftGenerationOptions } from '@dreamnet/inbox-squared-core';
+import { inboxSquared } from '../../inbox-squared-core/index.js';
+import type { DraftGenerationOptions } from '../../inbox-squared-core';
 
 /**
  * Generate an enhanced email draft using Inbox²
