@@ -5,7 +5,7 @@
  */
 
 import type { JaggyHunt, JaggyTerritory, JaggyMemory } from "../types";
-import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
+import { WebhookNervousCore } from "../../webhook-nervous-core";
 
 let activeHunts: Map<string, JaggyHunt> = new Map();
 let territories: Map<string, JaggyTerritory> = new Map();

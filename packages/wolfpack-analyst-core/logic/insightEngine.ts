@@ -1,4 +1,4 @@
-import { FundingLead, SendQueueItem, LeadStage } from "@dreamnet/wolfpack-funding-core";
+import { FundingLead, SendQueueItem, LeadStage } from "../../wolfpack-funding-core";
 import { AnalystInsight, LeadPrediction, EmailEffectiveness } from "../types";
 import { AnalystStore } from "../store/analystStore";
 
