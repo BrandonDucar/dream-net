@@ -4,9 +4,9 @@
  * "Supercharges" lines that branch out from ports with power profiles, budgets, and transforms
  */
 
-import type { PortId } from "@dreamnet/port-governor/types";
+import type { PortId } from "../../port-governor/src/types";
 import type { ClusterId } from "../clusters";
-import type { ToolId } from "@dreamnet/agent-gateway/tools";
+import type { ToolId } from "../../agent-gateway/src/tools";
 
 export interface ConduitIdParts {
   portId: PortId;
