@@ -13,13 +13,19 @@ export function runSquadAlchemyCycle(
 ): SquadAlchemyDecision[] {
   const decisions: SquadAlchemyDecision[] = [];
 
-  // Sync Squad-Builder squads into Alchemy registry
+  // Sync Squad-Builder squads into Alchemy registry (async import handled separately)
+  // Note: This is a synchronous function, so we can't await here
+  // The sync will happen lazily when the bridge is first accessed
   try {
-    const { syncSquadBuilderSquads } = await import("../bridge/squadBuilderBridge");
-    const synced = syncSquadBuilderSquads();
-    if (synced > 0) {
-      console.log(`[SquadAlchemy] Synced ${synced} squads from Squad-Builder`);
-    }
+    // Use dynamic import without await - will be handled asynchronously
+    import("../bridge/squadBuilderBridge").then((module) => {
+      const synced = module.syncSquadBuilderSquads();
+      if (synced > 0) {
+        console.log(`[SquadAlchemy] Synced ${synced} squads from Squad-Builder`);
+      }
+    }).catch(() => {
+      // Bridge not available - continue with existing registry
+    });
   } catch {
     // Bridge not available - continue with existing registry
   }
