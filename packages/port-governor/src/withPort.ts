@@ -6,14 +6,14 @@
 import type { Request, Response, NextFunction } from "express";
 import type { PortId } from "./types";
 import { getPortProfile } from "./ports";
-import type { RequestWithIdentity, CallerIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
-import { checkAndConsume } from "@dreamnet/dreamnet-control-core/rateLimiter";
-import type { OfficeId, CabinetId } from "@dreamnet/dreamstate/types";
+import type { RequestWithIdentity, CallerIdentity } from "../../dreamnet-control-core/identityResolver";
+import { checkAndConsume } from "../../dreamnet-control-core/rateLimiter";
+import type { OfficeId, CabinetId } from "../../dream-state-core/types";
 
 // Shield Core risk tracking (optional import)
 let getRiskProfile: ((callerId: string) => any) | null = null;
 try {
-  const riskModule = require("@dreamnet/shield-core/risk");
+  const riskModule = require("../../shield-core/src/risk");
   getRiskProfile = riskModule.getRiskProfile;
 } catch (error) {
   // Shield Core risk module not available, continue without risk checks
