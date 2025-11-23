@@ -1703,16 +1703,32 @@ app.use((req, res, next) => {
 
   // Initialize Star-Bridge Lungs - CRITICAL: Always start, independent of INIT_SUBSYSTEMS ⭐
   // This must run before server.listen() to ensure Star Bridge is available
+  console.log("⭐ [Star-Bridge Lungs] Starting initialization...");
   (async () => {
     try {
-      // Import Star Bridge Lungs package
-      const starBridgeModule = await import("../packages/star-bridge-lungs");
+      console.log("⭐ [Star-Bridge Lungs] Importing package...");
+      // Import Star Bridge Lungs package - try both paths
+      let starBridgeModule: any;
+      try {
+        starBridgeModule = await import("../packages/star-bridge-lungs/index.js");
+      } catch (e1) {
+        try {
+          starBridgeModule = await import("../packages/star-bridge-lungs/index.ts");
+        } catch (e2) {
+          starBridgeModule = await import("../packages/star-bridge-lungs");
+        }
+      }
+      console.log("⭐ [Star-Bridge Lungs] Package imported, checking exports...");
+      console.log("⭐ [Star-Bridge Lungs] Module keys:", Object.keys(starBridgeModule));
+      
       StarBridgeLungs = starBridgeModule.StarBridgeLungs || starBridgeModule.default;
       
       if (!StarBridgeLungs) {
-        throw new Error("StarBridgeLungs not found in package");
+        console.error("⭐ [Star-Bridge Lungs] Available exports:", Object.keys(starBridgeModule));
+        throw new Error("StarBridgeLungs not found in package exports");
       }
       
+      console.log("⭐ [Star-Bridge Lungs] Running initial breath cycle...");
       // Run initial breath cycle (with optional dependencies if available)
       const initialStatus = StarBridgeLungs.run({
         neuralMesh: NeuralMesh || null,
@@ -1739,7 +1755,11 @@ app.use((req, res, next) => {
       
       console.log(`   ⏱️  Breathing every 2 minutes - monitoring cross-chain activity`);
     } catch (error) {
-      console.error("❌ [Star-Bridge Lungs] CRITICAL: Failed to initialize:", error instanceof Error ? error.message : error);
+      console.error("❌ [Star-Bridge Lungs] CRITICAL: Failed to initialize");
+      console.error("   Error:", error instanceof Error ? error.message : String(error));
+      if (error instanceof Error && error.stack) {
+        console.error("   Stack:", error.stack);
+      }
       console.error("   Star Bridge is required for cross-chain operations - please check package installation");
     }
   })();
