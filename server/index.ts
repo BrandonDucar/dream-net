@@ -1672,9 +1672,40 @@ app.use((req, res, next) => {
     // Don't throw - error handler should not throw
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
+  // ALWAYS serve the app on the port specified in the environment variable PORT
+  // Other ports are firewalled. Default to 3000 if not specified.
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+  const port = ENV_PORT || 8080;
+  const host = "0.0.0.0";
+
+  // Add error handlers BEFORE listen to catch any errors
+  server.on('error', (error: any) => {
+    console.error('[Server] HTTP server error:', error);
+    if (error.code === 'EADDRINUSE') {
+      console.error(`[Server] Port ${port} is already in use`);
+      process.exit(1);
+    }
+    // Don't exit on other errors - let the server try to recover
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('[Server] Unhandled Rejection at:', promise, 'reason:', reason);
+    // Don't exit - log and continue
+  });
+
+  process.on('uncaughtException', (error) => {
+    console.error('[Server] Uncaught Exception:', error);
+    console.error('[Server] Stack:', error.stack);
+    // Don't exit immediately - give server a chance to log
+    setTimeout(() => {
+      console.error('[Server] Exiting due to uncaught exception');
+      process.exit(1);
+    }, 1000);
+  });
+
+  // Setup vite AFTER error handlers but BEFORE listen
+  // This way if vite fails, server can still start
   try {
     const viteModule = await loadViteModule();
     if (app.get("env") === "development") {
@@ -1686,15 +1717,11 @@ app.use((req, res, next) => {
     console.error("[Vite] Failed to load vite module:", error.message);
     console.error("[Vite] Server will run API-only mode - frontend unavailable");
     // Server can still run - API routes will work fine
+    // Don't let vite errors crash the server
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 3000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = ENV_PORT;
-  const host = "0.0.0.0";
-
+  // Start listening IMMEDIATELY - don't wait for anything else
+  console.log(`[DreamNet] Starting server on ${host}:${port}...`);
   server.listen(port, host, () => {
     console.log(`[DreamNet] Serving on port ${port}`);
     console.log(`[DreamNet] Server started - /health endpoint available`);
@@ -1714,6 +1741,7 @@ app.use((req, res, next) => {
   });
 })().catch((error) => {
   console.error("[DreamNet] Failed to start:", error);
+  console.error("[DreamNet] Error stack:", error.stack);
   process.exit(1);
 });
 }

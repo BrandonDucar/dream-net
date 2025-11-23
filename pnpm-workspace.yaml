@@ -1,9 +1,12 @@
 packages:
-  - "apps/api-forge"
-  - "apps/dreamos"
-  - "apps/hub"
-  - "apps/seo"
-  - "apps/sitebuilder"
-  - "packages/*"
-  - "server"
+  - apps/api-forge
+  - apps/dreamos
+  - apps/hub
+  - apps/seo
+  - apps/sitebuilder
+  - packages/*
+  - server
 
+onlyBuiltDependencies:
+  - blake3
+  - sharp

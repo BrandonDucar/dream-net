@@ -83,22 +83,16 @@ try {
 // Step 5: Build and push Docker images
 console.log('🐳 Building Docker images...');
 try {
-  // Build API image
+  // Build API image (using root Dockerfile which includes everything)
   const apiImage = `gcr.io/${PROJECT_ID}/dreamnet-api:latest`;
   execSync(
-    `gcloud builds submit --tag ${apiImage} --project=${PROJECT_ID} -f server/Dockerfile .`,
+    `gcloud builds submit --tag ${apiImage} --project=${PROJECT_ID} .`,
     { stdio: 'inherit' }
   );
   console.log(`✅ API image built: ${apiImage}\n`);
   
-  // Build frontend image (if separate)
-  const frontendImage = `gcr.io/${PROJECT_ID}/dreamnet-frontend:latest`;
-  execSync(
-    `gcloud builds submit --tag ${frontendImage} --project=${PROJECT_ID} -f client/Dockerfile .`,
-    { stdio: 'inherit' }
-  ).catch(() => {
-    console.log('⚠️  Frontend Dockerfile not found, skipping frontend image');
-  });
+  // Skip frontend for now - deploy server-only
+  console.log('⚠️  Skipping frontend image (server-only deployment)\n');
 } catch (error) {
   console.error('❌ Failed to build images');
   process.exit(1);
@@ -135,12 +129,15 @@ if (existsSync(deploymentPath)) {
     );
     
     const tempPath = join(process.cwd(), 'infrastructure', 'google', 'gke', 'deployment-temp.yaml');
-    require('fs').writeFileSync(tempPath, deployment);
+    const { writeFileSync } = await import('fs');
+    writeFileSync(tempPath, deployment);
     
     execSync(`kubectl apply -f ${tempPath}`, { stdio: 'inherit' });
     console.log('✅ Deployment applied\n');
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Failed to deploy');
+    console.error('Error details:', error.message || error);
+    console.error('\n💡 Make sure kubectl is installed: gcloud components install kubectl');
     process.exit(1);
   }
 } else {

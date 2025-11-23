@@ -98,7 +98,18 @@ export function serveStatic(app: Express) {
   app.use(express.static(staticPath));
 
   // fall through to index.html if the file doesn't exist (SPA routing)
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(staticPath, "index.html"));
+  app.use("*", (_req, res, next) => {
+    const indexPath = path.resolve(staticPath, "index.html");
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          // If index.html doesn't exist or can't be sent, just return 404
+          res.status(404).json({ ok: false, error: "not_found", message: "API endpoint not found" });
+        }
+      });
+    } else {
+      // No index.html - API-only mode
+      res.status(404).json({ ok: false, error: "not_found", message: "API endpoint not found" });
+    }
   });
 }

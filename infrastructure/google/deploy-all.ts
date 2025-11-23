@@ -71,8 +71,9 @@ try {
     `--cpu 2 ` +
     `--timeout 300 ` +
     `--max-instances 10 ` +
+    `--cpu-boost ` +
     (envFlags ? `${envFlags} ` : '') +
-    `--set-env-vars=NODE_ENV=production`,
+    `--set-env-vars=NODE_ENV=production,INIT_HEAVY_SUBSYSTEMS=false`,
     { stdio: 'inherit', cwd: process.cwd() }
   );
   console.log('✅ Deployment successful\n');
