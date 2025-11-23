@@ -1701,6 +1701,8 @@ app.use((req, res, next) => {
     // Don't let vite errors crash the server
   }
 
+  console.log("🔍 [Debug] Reached Star Bridge initialization section");
+  
   // Initialize Star-Bridge Lungs - CRITICAL: Always start, independent of INIT_SUBSYSTEMS ⭐
   // This must run before server.listen() to ensure Star Bridge is available
   console.log("⭐ [Star-Bridge Lungs] Starting initialization...");
