@@ -1703,76 +1703,54 @@ app.use((req, res, next) => {
     // Don't let vite errors crash the server
   }
 
-  console.log("🔍 [Debug] Reached Star Bridge initialization section");
-  
-  // Initialize Star-Bridge Lungs - CRITICAL: Always start, independent of INIT_SUBSYSTEMS ⭐
-  // This must run before server.listen() to ensure Star Bridge is available
-  console.log("⭐ [Star-Bridge Lungs] Starting initialization...");
-  (async () => {
-    try {
-      console.log("⭐ [Star-Bridge Lungs] Importing package...");
-      // Import Star Bridge Lungs package - try both paths
-      let starBridgeModule: any;
-      try {
-        starBridgeModule = await import("../packages/star-bridge-lungs/index.js");
-      } catch (e1) {
-        try {
-          starBridgeModule = await import("../packages/star-bridge-lungs/index.ts");
-        } catch (e2) {
-          starBridgeModule = await import("../packages/star-bridge-lungs");
-        }
-      }
-      console.log("⭐ [Star-Bridge Lungs] Package imported, checking exports...");
-      console.log("⭐ [Star-Bridge Lungs] Module keys:", Object.keys(starBridgeModule));
-      
-      StarBridgeLungs = starBridgeModule.StarBridgeLungs || starBridgeModule.default;
-      
-      if (!StarBridgeLungs) {
-        console.error("⭐ [Star-Bridge Lungs] Available exports:", Object.keys(starBridgeModule));
-        throw new Error("StarBridgeLungs not found in package exports");
-      }
-      
-      console.log("⭐ [Star-Bridge Lungs] Running initial breath cycle...");
-      // Run initial breath cycle (with optional dependencies if available)
-      const initialStatus = StarBridgeLungs.run({
-        neuralMesh: NeuralMesh || null,
-        quantumAnticipation: QuantumAnticipation || null,
-        slugTimeMemory: SlugTimeMemory || null,
-      });
-      
-      console.log(`⭐ [Star-Bridge Lungs] Initialized - ${initialStatus.chainMetrics.length} chains monitored`);
-      console.log(`   🌬️  ${initialStatus.lastBreaths.length} breath snapshots`);
-      console.log(`   🔗 Cross-chain breathwork active`);
-      
-      // Start continuous breath cycle (runs every 2 minutes)
-      setInterval(() => {
-        try {
-          StarBridgeLungs.run({
-            neuralMesh: NeuralMesh || null,
-            quantumAnticipation: QuantumAnticipation || null,
-            slugTimeMemory: SlugTimeMemory || null,
-          });
-        } catch (error) {
-          console.warn("[Star-Bridge Lungs] Breath cycle warning:", error);
-        }
-      }, 2 * 60 * 1000); // Every 2 minutes
-      
-      console.log(`   ⏱️  Breathing every 2 minutes - monitoring cross-chain activity`);
-    } catch (error) {
-      console.error("❌ [Star-Bridge Lungs] CRITICAL: Failed to initialize");
-      console.error("   Error:", error instanceof Error ? error.message : String(error));
-      if (error instanceof Error && error.stack) {
-        console.error("   Stack:", error.stack);
-      }
-      console.error("   Star Bridge is required for cross-chain operations - please check package installation");
-    }
-  })();
-
   // Start listening IMMEDIATELY - don't wait for anything else
   console.log(`[DreamNet] Starting server on ${host}:${port}...`);
   server.listen(port, host, () => {
     console.log(`[DreamNet] Serving on port ${port}`);
     console.log(`[DreamNet] Server started - /health endpoint available`);
+    
+    // Initialize Star-Bridge Lungs - CRITICAL: Always start ⭐
+    // Running in server.listen callback ensures it runs when server is ready
+    (async () => {
+      try {
+        console.log("⭐ [Star-Bridge Lungs] Starting initialization...");
+        // Import Star Bridge Lungs package
+        const starBridgeModule = await import("../packages/star-bridge-lungs");
+        StarBridgeLungs = starBridgeModule.StarBridgeLungs || starBridgeModule.default;
+        
+        if (!StarBridgeLungs) {
+          throw new Error("StarBridgeLungs not found in package");
+        }
+        
+        // Run initial breath cycle
+        const initialStatus = StarBridgeLungs.run({
+          neuralMesh: NeuralMesh || null,
+          quantumAnticipation: QuantumAnticipation || null,
+          slugTimeMemory: SlugTimeMemory || null,
+        });
+        
+        console.log(`⭐ [Star-Bridge Lungs] Initialized - ${initialStatus.chainMetrics.length} chains monitored`);
+        console.log(`   🌬️  ${initialStatus.lastBreaths.length} breath snapshots`);
+        console.log(`   🔗 Cross-chain breathwork active`);
+        
+        // Start continuous breath cycle (runs every 2 minutes)
+        setInterval(() => {
+          try {
+            StarBridgeLungs.run({
+              neuralMesh: NeuralMesh || null,
+              quantumAnticipation: QuantumAnticipation || null,
+              slugTimeMemory: SlugTimeMemory || null,
+            });
+          } catch (error) {
+            console.warn("[Star-Bridge Lungs] Breath cycle warning:", error);
+          }
+        }, 2 * 60 * 1000);
+        
+        console.log(`   ⏱️  Breathing every 2 minutes - monitoring cross-chain activity`);
+      } catch (error) {
+        console.error("❌ [Star-Bridge Lungs] CRITICAL: Failed to initialize:", error instanceof Error ? error.message : error);
+      }
+    })();
     
     // Start Whale Pack control loop (runs every 5 minutes)
     import('./whale/controlLoop').then(({ startControlLoop }) => {
