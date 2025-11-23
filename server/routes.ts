@@ -4729,5 +4729,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+  console.log("✅ [Routes] registerRoutes completed, returning server");
   return httpServer;
 }
