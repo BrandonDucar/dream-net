@@ -11,7 +11,7 @@
  * - And more...
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 
@@ -51,11 +51,16 @@ class CustomGPTFleetSystem {
   private loadGPTs(): void {
     try {
       const registryPath = join(process.cwd(), "registry.json");
+      if (!existsSync(registryPath)) {
+        console.warn(`📚 [Custom GPT Fleet] registry.json not found at ${registryPath}, using empty registry`);
+        this.gpts = [];
+        return;
+      }
       const registryData = JSON.parse(readFileSync(registryPath, "utf-8"));
       this.gpts = registryData as CustomGPT[];
       console.log(`📚 [Custom GPT Fleet] Loaded ${this.gpts.length} custom GPTs`);
     } catch (error) {
-      console.error("Failed to load GPT registry:", error);
+      console.warn("⚠️ [Custom GPT Fleet] Failed to load GPT registry, using empty registry:", error instanceof Error ? error.message : error);
       this.gpts = [];
     }
   }

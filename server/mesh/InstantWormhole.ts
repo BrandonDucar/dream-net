@@ -5,8 +5,9 @@
  * No staging, no queuing - pure instant delivery.
  */
 
-import { instantMesh } from "./InstantMesh";
 import type { InstantEvent } from "./InstantMesh";
+// Lazy import to avoid initialization order issues
+let instantMesh: any = null;
 
 export interface WormholeRoute {
   id: string;
@@ -88,24 +89,49 @@ class InstantWormhole {
   private subscribeToMesh(): void {
     // Use lazy access to avoid initialization order issues
     try {
-      if (instantMesh && typeof instantMesh.subscribe === 'function') {
-        instantMesh.subscribe("*", (event) => {
-          this.routeInstantly(event);
-        });
-      } else {
-        // Defer subscription until mesh is ready
-        setTimeout(() => {
-          if (instantMesh && typeof instantMesh.subscribe === 'function') {
-            instantMesh.subscribe("*", (event) => {
-              this.routeInstantly(event);
-            });
-          }
-        }, 100);
+      // Lazy load instantMesh if not already loaded
+      if (!instantMesh) {
+        try {
+          const meshModule = require("./InstantMesh");
+          instantMesh = meshModule.instantMesh;
+        } catch (e) {
+          // If require fails, try dynamic import
+          import("./InstantMesh").then((module) => {
+            instantMesh = module.instantMesh;
+            this.attemptSubscription();
+          }).catch(() => {
+            console.warn('[InstantWormhole] Failed to load InstantMesh module');
+          });
+          return;
+        }
       }
+      this.attemptSubscription();
     } catch (error) {
       console.warn('[InstantWormhole] Failed to subscribe to mesh, will retry:', error);
       // Retry after a delay
       setTimeout(() => this.subscribeToMesh(), 1000);
+    }
+  }
+
+  private attemptSubscription(): void {
+    if (instantMesh && typeof instantMesh.subscribe === 'function') {
+      instantMesh.subscribe("*", (event: InstantEvent) => {
+        this.routeInstantly(event);
+      });
+      console.log('[InstantWormhole] Successfully subscribed to mesh');
+    } else {
+      // Defer subscription until mesh is ready
+      setTimeout(() => {
+        if (instantMesh && typeof instantMesh.subscribe === 'function') {
+          instantMesh.subscribe("*", (event: InstantEvent) => {
+            this.routeInstantly(event);
+          });
+          console.log('[InstantWormhole] Successfully subscribed to mesh (delayed)');
+        } else {
+          console.warn('[InstantWormhole] Mesh not ready, will retry later');
+          setTimeout(() => this.subscribeToMesh(), 1000);
+        }
+      }, 100);
     }
   }
 
