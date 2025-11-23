@@ -1602,6 +1602,7 @@ app.use((req, res, next) => {
   }
 
   const server = await routesModule.registerRoutes(app);
+  console.log("✅ [Server] Routes registered, continuing with server setup...");
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -1687,6 +1688,7 @@ app.use((req, res, next) => {
 
   // Setup vite AFTER error handlers but BEFORE listen
   // This way if vite fails, server can still start
+  console.log("🔍 [Debug] About to setup Vite...");
   try {
     const viteModule = await loadViteModule();
     if (app.get("env") === "development") {
