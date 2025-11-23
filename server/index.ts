@@ -1399,21 +1399,26 @@ app.use("/api", createDreamRouter());
       console.warn("[DreamNet Voice] Initialization warning:", error.message);
     }
 
-    // Initialize Vercel Agent - Deployment Management 🚀
-    try {
-      const vercelModule = await import("../packages/dreamnet-vercel-agent");
-      DreamNetVercelAgent = vercelModule.DreamNetVercelAgent;
-      const vercelInitialized = await DreamNetVercelAgent.init();
-      if (vercelInitialized) {
-        console.log(`🚀 [Vercel Agent] Initialized - Ready to manage deployments`);
-        const status = await DreamNetVercelAgent.status();
-        console.log(`   📦 ${status.projectsFound} projects found`);
-      } else {
-        console.warn(`🚀 [Vercel Agent] Not initialized - Vercel token not found`);
-        console.warn(`   💡 Set VERCEL_TOKEN env var or add via API Keeper`);
+    // Initialize Vercel Agent - Deployment Management 🚀 (LEGACY - Disabled by default)
+    // Only initialize if explicitly enabled via ENABLE_VERCEL_AGENT env var
+    if (process.env.ENABLE_VERCEL_AGENT === 'true') {
+      try {
+        const vercelModule = await import("../packages/dreamnet-vercel-agent");
+        DreamNetVercelAgent = vercelModule.DreamNetVercelAgent;
+        const vercelInitialized = await DreamNetVercelAgent.init();
+        if (vercelInitialized) {
+          console.log(`🚀 [Vercel Agent] Initialized - Ready to manage deployments`);
+          const status = await DreamNetVercelAgent.status();
+          console.log(`   📦 ${status.projectsFound} projects found`);
+        } else {
+          console.warn(`🚀 [Vercel Agent] Not initialized - Vercel token not found`);
+          console.warn(`   💡 Set VERCEL_TOKEN env var or add via API Keeper`);
+        }
+      } catch (error: any) {
+        console.warn("[Vercel Agent] Initialization warning:", error.message);
       }
-    } catch (error: any) {
-      console.warn("[Vercel Agent] Initialization warning:", error.message);
+    } else {
+      console.log(`🚀 [Vercel Agent] Skipped (LEGACY - set ENABLE_VERCEL_AGENT=true to enable)`);
     }
     
     // Initialize DreamSnail Core - Privacy Lattice 🐌
@@ -1524,8 +1529,10 @@ app.use("/api", createDreamRouter());
   app.use("/api/keys", apiKeysRouter);
   app.use("/api/env-keeper", envKeeperRouter);
   
-  // Vercel Agent API routes
-  app.use("/api/vercel", vercelRouter);
+  // Vercel Agent API routes (LEGACY - Only register if enabled)
+  if (process.env.ENABLE_VERCEL_AGENT === 'true') {
+    app.use("/api/vercel", vercelRouter);
+  }
   
   // Debug summary endpoint (admin-only)
   app.use("/api/debug-summary", debugSummaryRouter);
