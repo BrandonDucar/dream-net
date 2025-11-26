@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=20.19.0 <=22.18.0",
+    "node": "24.x",
     "pnpm": ">=10.21.0"
   },
   "overrides": {
