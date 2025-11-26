@@ -1,0 +1,22 @@
+{
+  "name": "@dreamnet/cursor-dreamnet-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "description": "Cursor-friendly client for DreamNet API access",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@dreamnet/dreamnet-agent-client": "workspace:*",
+    "eventsource-parser": "^1.1.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

@@ -1,0 +1,18 @@
+{
+  "name": "dreamnet-router",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "gcp-build": "echo 'No build step for router'"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "http-proxy-middleware": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+

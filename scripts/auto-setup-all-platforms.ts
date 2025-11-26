@@ -1,0 +1,248 @@
+#!/usr/bin/env tsx
+/**
+ * Auto-Setup All Social Media Platforms
+ * 
+ * This script attempts to automate the setup of all social media API integrations
+ * by navigating to developer portals and guiding through the setup process.
+ */
+
+import { exec } from "child_process";
+import { promisify } from "util";
+import * as fs from "fs/promises";
+import * as path from "path";
+
+const execAsync = promisify(exec);
+
+interface PlatformConfig {
+  name: string;
+  url: string;
+  envVars: string[];
+  setupSteps: string[];
+  priority: number;
+}
+
+const PLATFORMS: PlatformConfig[] = [
+  {
+    name: "Telegram",
+    url: "https://t.me/BotFather",
+    envVars: ["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"],
+    setupSteps: [
+      "1. Open Telegram and search for @BotFather",
+      "2. Send: /newbot",
+      "3. Follow prompts to create bot",
+      "4. Copy token and add to .env"
+    ],
+    priority: 1
+  },
+  {
+    name: "GitHub",
+    url: "https://github.com/settings/tokens",
+    envVars: ["GITHUB_TOKEN", "GITHUB_OWNER", "GITHUB_DEFAULT_REPO"],
+    setupSteps: [
+      "1. Log in to GitHub",
+      "2. Go to Settings → Developer settings → Personal access tokens",
+      "3. Generate new token (classic)",
+      "4. Select scopes: repo, gist, workflow",
+      "5. Copy token immediately"
+    ],
+    priority: 2
+  },
+  {
+    name: "Discord",
+    url: "https://discord.com/developers/applications",
+    envVars: ["DISCORD_BOT_TOKEN", "DISCORD_WEBHOOK_URL", "DISCORD_DEFAULT_CHANNEL_ID"],
+    setupSteps: [
+      "1. Log in to Discord",
+      "2. Create new application",
+      "3. Go to Bot tab, add bot",
+      "4. Copy token"
+    ],
+    priority: 3
+  },
+  {
+    name: "Slack",
+    url: "https://api.slack.com/apps",
+    envVars: ["SLACK_BOT_TOKEN", "SLACK_WEBHOOK_URL", "SLACK_DEFAULT_CHANNEL"],
+    setupSteps: [
+      "1. Go to your Slack workspace",
+      "2. Apps → Incoming Webhooks → Add to Slack",
+      "3. Copy webhook URL"
+    ],
+    priority: 4
+  },
+  {
+    name: "Reddit",
+    url: "https://www.reddit.com/prefs/apps",
+    envVars: ["REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET", "REDDIT_USERNAME", "REDDIT_PASSWORD"],
+    setupSteps: [
+      "1. Log in to Reddit",
+      "2. Create app (type: script)",
+      "3. Copy Client ID and Secret"
+    ],
+    priority: 5
+  },
+  {
+    name: "Notion",
+    url: "https://www.notion.so/my-integrations",
+    envVars: ["NOTION_TOKEN", "NOTION_DATABASE_ID", "NOTION_DEFAULT_PAGE_ID"],
+    setupSteps: [
+      "1. Log in to Notion",
+      "2. Create new integration",
+      "3. Copy integration token"
+    ],
+    priority: 6
+  },
+  {
+    name: "YouTube",
+    url: "https://console.cloud.google.com/apis/credentials",
+    envVars: ["YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN"],
+    setupSteps: [
+      "1. Log in to Google Cloud Console",
+      "2. Enable YouTube Data API v3",
+      "3. Create OAuth 2.0 credentials",
+      "4. Complete OAuth flow"
+    ],
+    priority: 7
+  },
+  {
+    name: "TikTok",
+    url: "https://developers.tiktok.com/apps",
+    envVars: ["TIKTOK_CLIENT_KEY", "TIKTOK_CLIENT_SECRET", "TIKTOK_ACCESS_TOKEN", "TIKTOK_OPEN_ID"],
+    setupSteps: [
+      "1. Log in to TikTok for Developers",
+      "2. Create app (Individual ownership)",
+      "3. Add Content Posting API product",
+      "4. Get Client Key and Secret",
+      "5. Complete OAuth flow for Access Token"
+    ],
+    priority: 8
+  },
+  {
+    name: "Facebook/Instagram",
+    url: "https://developers.facebook.com/apps/",
+    envVars: [
+      "FACEBOOK_PAGE_ACCESS_TOKEN",
+      "FACEBOOK_PAGE_ID",
+      "INSTAGRAM_ACCESS_TOKEN",
+      "INSTAGRAM_BUSINESS_ACCOUNT_ID"
+    ],
+    setupSteps: [
+      "1. Log in to Facebook Developers",
+      "2. Create app",
+      "3. Add Instagram Basic Display and Instagram Graph API",
+      "4. Get Page Access Token",
+      "5. Connect Instagram Business Account"
+    ],
+    priority: 9
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/developers/apps",
+    envVars: ["LINKEDIN_CLIENT_ID", "LINKEDIN_CLIENT_SECRET", "LINKEDIN_ACCESS_TOKEN", "LINKEDIN_PERSON_URN"],
+    setupSteps: [
+      "1. Log in to LinkedIn Developers",
+      "2. Create app",
+      "3. Request Marketing Developer Platform access",
+      "4. Get Client ID and Secret",
+      "5. Complete OAuth flow"
+    ],
+    priority: 10
+  },
+  {
+    name: "X/Twitter",
+    url: "https://developer.twitter.com/en/portal/dashboard",
+    envVars: [
+      "TWITTER_API_KEY",
+      "TWITTER_API_SECRET",
+      "TWITTER_ACCESS_TOKEN",
+      "TWITTER_ACCESS_TOKEN_SECRET",
+      "TWITTER_BEARER_TOKEN"
+    ],
+    setupSteps: [
+      "1. Create X account (if needed)",
+      "2. Apply for developer access",
+      "3. Create Project and App",
+      "4. Get API keys and tokens"
+    ],
+    priority: 11
+  }
+];
+
+async function generateEnvTemplate() {
+  const envPath = path.join(process.cwd(), ".env.social-media.template");
+  let content = "# Social Media API Keys\n";
+  content += "# Generated by auto-setup-all-platforms.ts\n\n";
+
+  for (const platform of PLATFORMS.sort((a, b) => a.priority - b.priority)) {
+    content += `# ${platform.name}\n`;
+    for (const envVar of platform.envVars) {
+      content += `${envVar}=\n`;
+    }
+    content += "\n";
+  }
+
+  await fs.writeFile(envPath, content);
+  console.log(`✅ Generated .env template: ${envPath}`);
+}
+
+async function openPlatformUrls() {
+  console.log("🌐 Opening all developer portals...\n");
+  
+  for (const platform of PLATFORMS.sort((a, b) => a.priority - b.priority)) {
+    console.log(`📱 ${platform.name}: ${platform.url}`);
+    // Note: Browser automation would happen here
+    // For now, we'll just log the URLs
+  }
+  
+  console.log("\n💡 Tip: Work through each platform in priority order.");
+}
+
+async function checkEnvFile() {
+  const envPath = path.join(process.cwd(), "..", "..", ".env");
+  try {
+    const content = await fs.readFile(envPath, "utf-8");
+    const missing: string[] = [];
+
+    for (const platform of PLATFORMS) {
+      for (const envVar of platform.envVars) {
+        if (!content.includes(`${envVar}=`)) {
+          missing.push(envVar);
+        }
+      }
+    }
+
+    if (missing.length > 0) {
+      console.log(`\n⚠️  Missing environment variables (${missing.length}):`);
+      missing.forEach(v => console.log(`   - ${v}`));
+    } else {
+      console.log("\n✅ All environment variables are present!");
+    }
+  } catch (error) {
+    console.log("\n⚠️  .env file not found. Creating template...");
+    await generateEnvTemplate();
+  }
+}
+
+async function main() {
+  console.log("🚀 DreamNet Social Media Auto-Setup\n");
+  console.log("=" .repeat(50));
+  
+  await generateEnvTemplate();
+  await openPlatformUrls();
+  await checkEnvFile();
+  
+  console.log("\n📋 Setup Priority Order:\n");
+  PLATFORMS.sort((a, b) => a.priority - b.priority).forEach((p, i) => {
+    console.log(`${i + 1}. ${p.name}`);
+    console.log(`   URL: ${p.url}`);
+    console.log(`   Steps:`);
+    p.setupSteps.forEach(step => console.log(`   ${step}`));
+    console.log("");
+  });
+  
+  console.log("\n✅ Setup guide generated!");
+  console.log("📝 Next: Work through each platform and add keys to .env");
+}
+
+main().catch(console.error);
+

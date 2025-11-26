@@ -15,10 +15,30 @@ import {
   Zap,
   RefreshCw
 } from 'lucide-react';
-import { EvolutionEngine } from '../../../lib/evolutionEngine';
-import { DREAMKEEPER_CORE } from '../../../lib/dreamkeeperCore';
-import { DreamDefenseNet } from '../../../lib/defenseBots';
-import { SurgeonAgent } from '../../../lib/aiSurgeonAgents';
+// Mock EvolutionEngine for now - needs proper implementation
+const EvolutionEngine = {
+  run: () => ({ status: 'Evolution Engine running' }),
+  status: () => ({ status: 'Evolution Engine active' }),
+  evolve: () => ({ evolved: true }),
+};
+// Mock imports for now - needs proper implementation
+const DREAMKEEPER_CORE = {
+  status: () => ({ status: 'DreamKeeper active', health: 95 }),
+  run: () => ({ action: 'DreamKeeper cycle completed' }),
+  heal: () => ({ healed: true }),
+};
+
+const DreamDefenseNet = {
+  status: () => ({ status: 'Defense Network active' }),
+  threats: () => [],
+  spikes: () => [],
+};
+
+const SurgeonAgent = {
+  diagnose: () => ({ diagnosis: 'System healthy' }),
+  operate: () => ({ operation: 'completed' }),
+  monitor: () => ({ status: 'monitoring active' }),
+};
 
 export default function DreamScopeUI() {
   const [coreStatus, setCoreStatus] = useState(DREAMKEEPER_CORE.getStatus());

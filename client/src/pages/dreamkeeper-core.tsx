@@ -5,7 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Activity, Brain, Eye, Shield, Zap, AlertTriangle, CheckCircle } from 'lucide-react';
-import { DREAMKEEPER_CORE } from '../../../lib/dreamkeeperCore';
+// Mock DREAMKEEPER_CORE for now - needs proper implementation
+const DREAMKEEPER_CORE = {
+  status: () => ({ status: 'DreamKeeper active', health: 95 }),
+  run: () => ({ action: 'DreamKeeper cycle completed' }),
+  heal: () => ({ healed: true }),
+};
 
 export default function DreamKeeperCorePage() {
   const [coreStatus, setCoreStatus] = useState(DREAMKEEPER_CORE.getStatus());

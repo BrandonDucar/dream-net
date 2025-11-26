@@ -1,0 +1,38 @@
+name: Heartbeat
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # Nightly at 03:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build heartbeat script
+        run: |
+          npm install -D esbuild
+          npx esbuild ops/heartbeat.ts --bundle --platform=node --format=cjs --outfile=ops/heartbeat.cjs
+      
+      - name: Run heartbeat
+        run: node ops/heartbeat.cjs
+        env:
+          DREAM_HUB_HEALTH: ${{ secrets.DREAM_HUB_HEALTH }}
+          DREAM_SNIPE_HEALTH: ${{ secrets.DREAM_SNIPE_HEALTH }}
+          DREAM_SHOP_HEALTH: ${{ secrets.DREAM_SHOP_HEALTH }}
+          DREAM_VAULT_HEALTH: ${{ secrets.DREAM_VAULT_HEALTH }}
+          DREAM_KEEPER_HEALTH: ${{ secrets.DREAM_KEEPER_HEALTH }}
+          WEB_HEALTH: ${{ secrets.WEB_HEALTH }}
+          API_HEALTH: ${{ secrets.API_HEALTH }}
+          AGENTS_HEALTH: ${{ secrets.AGENTS_HEALTH }}
+          DREAMKEEPER_HEALTH: ${{ secrets.DREAMKEEPER_HEALTH }}
+

@@ -121,6 +121,12 @@ const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
   InboxSquaredMini,
   CoinSenseiMini,
   CardForgeProMini,
+  // X402 Mini Apps
+  X402PaymentGateway,
+  X402BalanceViewer,
+  X402ServiceMarketplace,
+  X402TransactionHistory,
+  X402MultiChainBridge,
 };
 
 export function DreamNetHubWrapper() {

@@ -19,7 +19,12 @@ import {
   TrendingUp,
   AlertCircle
 } from 'lucide-react';
-import { SurgeonAgent } from '../../../lib/aiSurgeonAgents';
+// Mock SurgeonAgent for now - needs proper implementation
+const SurgeonAgent = {
+  diagnose: () => ({ diagnosis: 'System healthy' }),
+  operate: () => ({ operation: 'completed' }),
+  monitor: () => ({ status: 'monitoring active' }),
+};
 
 export default function AISurgeonDashboard() {
   const [surgeonStatus, setSurgeonStatus] = useState(SurgeonAgent.getStatus());

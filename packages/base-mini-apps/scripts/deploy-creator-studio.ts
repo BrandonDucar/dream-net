@@ -1,0 +1,36 @@
+import hre from "hardhat";
+const { ethers } = hre;
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const MANIFEST_PATH = path.join(__dirname, "../contracts/deployment.json");
+
+async function main() {
+  console.log("🚀 Deploying CreatorStudioRegistry...\n");
+
+  const CreatorStudioRegistry = await ethers.getContractFactory("CreatorStudioRegistry");
+  const registry = await CreatorStudioRegistry.deploy();
+  await registry.waitForDeployment();
+
+  const address = await registry.getAddress();
+  const tx = registry.deploymentTransaction()?.hash || "";
+
+  console.log(`✅ CreatorStudioRegistry deployed: ${address}`);
+  console.log(`📄 TX: ${tx}`);
+  console.log(`🔗 BaseScan: https://basescan.org/address/${address}\n`);
+
+  // Update deployment.json
+  const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
+  manifest.base.contracts.CreatorStudioRegistry = address;
+  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2));
+  console.log("💾 Updated deployment.json");
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
+

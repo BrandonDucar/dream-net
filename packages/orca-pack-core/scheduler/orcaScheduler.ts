@@ -1,7 +1,7 @@
 import { OrcaPackContext, OrcaPackStatus } from "../types";
 import { OrcaStore } from "../store/orcaStore";
 import { ensureSeedThemes, generateNewOrcaIdeas, generateOrcaPlansFromIdeas } from "../logic/orcaSignalCore";
-import { simulateOrcaPosting } from "../logic/orcaPosterCore";
+import { executeOrcaPosting, simulateOrcaPosting } from "../logic/orcaPosterCore";
 import { runOrcaAnalysis } from "../logic/orcaAnalystCore";
 
 export async function runOrcaPackCycle(ctx: OrcaPackContext): Promise<OrcaPackStatus> {
@@ -11,7 +11,8 @@ export async function runOrcaPackCycle(ctx: OrcaPackContext): Promise<OrcaPackSt
   generateNewOrcaIdeas(ctx, 5);
   generateOrcaPlansFromIdeas(ctx, ["x", "farcaster"]);
 
-  await simulateOrcaPosting(ctx);
+  // Use real posting if API keys are configured, otherwise simulate
+  await executeOrcaPosting(ctx);
   runOrcaAnalysis(ctx);
 
   OrcaStore.setLastRunAt(now);

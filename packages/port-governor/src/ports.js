@@ -48,6 +48,23 @@ export const PORT_PROFILES = {
         defaultSampleRate: 1.0,
         clusterId: "DEPLOYKEEPER_CORE",
     },
+    CLOUD_RUN_PORT: {
+        id: "CLOUD_RUN_PORT",
+        name: "Cloud Run Port",
+        description: "Governed port for Google Cloud Run lifecycle management (deploy, scale, update, keep-alive)",
+        direction: "egress",
+        allowedTiers: ["OPERATOR", "GOD_MODE"],
+        requiredOfficeIds: ["FOUNDER", "MINISTER_OF_WOLF_OPERATIONS"],
+        limits: {
+            maxRequestsPerMinute: 10,
+            maxRequestsPerHour: 100,
+            maxConcurrentRequests: 3,
+            costBudgetPerMinute: 0.01, // Cloud Run operations cost money
+        },
+        priorityLane: 5,
+        defaultSampleRate: 1.0,
+        clusterId: "CLOUD_RUN_CORE",
+    },
     AGENT_GATEWAY: {
         id: "AGENT_GATEWAY",
         name: "Agent Gateway",

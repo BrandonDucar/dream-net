@@ -135,6 +135,24 @@ export const CLUSTERS = {
         defaultMaxRequestsPerHour: 500,
         requiredFeatureFlag: "canAccessOctopus", // Star Bridge is cross-chain connector
     },
+    DEPLOYKEEPER_CORE: {
+        id: "DEPLOYKEEPER_CORE",
+        label: "Deploy Keeper Core",
+        description: "Deployment management - Vercel, Railway, GCP, GKE deployments and cleanup",
+        enabled: true,
+        defaultMaxRequestsPerMinute: 20,
+        defaultMaxRequestsPerHour: 200,
+        requiredFeatureFlag: "canManageDeployments", // Requires OPERATOR tier or higher
+    },
+    CLOUD_RUN_CORE: {
+        id: "CLOUD_RUN_CORE",
+        label: "Cloud Run Core",
+        description: "Google Cloud Run lifecycle management - deploy, scale, update, keep-alive, budget control",
+        enabled: true,
+        defaultMaxRequestsPerMinute: 10,
+        defaultMaxRequestsPerHour: 100,
+        requiredFeatureFlag: "canManageDeployments", // Requires OPERATOR tier or higher
+    },
 };
 /**
  * Get cluster configuration by ID

@@ -23,7 +23,18 @@
       "WalletScoreRegistry": "0x61A0523f068246E72a77e70f7B30AC2e4bfa87D5",
       "GameRegistry": "0xB38005e10E376D5D43699B45E7fc2f06A8465a5D",
       "GameAchievementNFT": "0x4AF7a82908C64e554584bD6A0F9145521F1913d6",
-      "CardForgeNFT": "0x34e1079820b4c733bE7D67A5F980ea4c752DbD47"
+      "CardForgeNFT": "0x34e1079820b4c733bE7D67A5F980ea4c752DbD47",
+      "SocialHubRegistry": "0x6f2E16EF0BFAe08954A1C1F1cce9EfC1AF7530f9",
+      "WolfPackFundingRegistry": "0xb123286E6277FCF87798d050D364b40654d65928",
+      "WhalePackCommerceRegistry": "0xDCE915b47C400BD48571388b7A578C525CA9C780",
+      "TreasuryRegistry": "0x6b81B269e543ffd770e37E6a5233CBd20b17aaBf",
+      "OnboardingRegistry": "0xb253dB5681c5E3A5f097C3C4e70d703B05deDD17",
+      "CreatorStudioRegistry": "0x68b26600BEACca2160380b41BEDED449b9640650",
+      "SocialOpsRegistry": "0x233BaB7d0436Dd1E46f098E3a4668e4860551Bb4",
+      "InboxSquaredRegistry": "0xC85d4de72d731FF6ff9eC82ADfa367dD4ac5F782",
+      "CoinSenseiRegistry": "0xf635b211730747e00CCB98A21794f7aC9003e4F0",
+      "X402ServiceMarketplace": "0xb7834fb3Be595dD480C01B912f79D542C2387De3",
+      "X402TransactionRegistry": "0xE9C2c5c0418b4F85BBE5AEE87620A8760Cdf4DDe"
     }
   }
 }

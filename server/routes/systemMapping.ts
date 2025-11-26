@@ -8,6 +8,87 @@ export function setupSystemMappingRoutes(app: Express) {
         nodes: [
           // System Architecture Level
           {
+            id: 'super-brain',
+            name: 'Super Brain',
+            type: 'autonomous',
+            status: 'active',
+            level: 0,
+            metrics: {
+              eventsWatched: 2847,
+              decisionsMade: 847,
+              actionsExecuted: 623,
+              memoryEntries: 1234,
+              queriesAnswered: 156,
+              health: 98.5,
+              uptime: '99.9%'
+            },
+            position: { x: 400, y: 200 }
+          },
+          {
+            id: 'drive-engine',
+            name: 'Drive Engine',
+            type: 'motivational',
+            status: 'active',
+            level: 0,
+            metrics: {
+              packsMonitored: 12,
+              actionsGenerated: 234,
+              hungerLevel: 0.72,
+              momentumLevel: 0.68,
+              feedbackProcessed: 189,
+              health: 97.8,
+              uptime: '99.9%'
+            },
+            position: { x: 600, y: 200 }
+          },
+          {
+            id: 'brain-integration',
+            name: 'Brain Integration',
+            type: 'integration',
+            status: 'active',
+            level: 0,
+            metrics: {
+              systemsConnected: 8,
+              eventsRouted: 2847,
+              packsHooked: 12,
+              integrationHealth: 98.2,
+              health: 98.2,
+              uptime: '99.9%'
+            },
+            position: { x: 500, y: 100 }
+          },
+          {
+            id: 'biomimetic-integration',
+            name: 'Biomimetic Integration',
+            type: 'integration',
+            status: 'active',
+            level: 0,
+            metrics: {
+              systemsHooked: 9,
+              eventsProcessed: 1847,
+              integrationHealth: 97.5,
+              health: 97.5,
+              uptime: '99.9%'
+            },
+            position: { x: 300, y: 100 }
+          },
+          {
+            id: 'gpt-agent-registry',
+            name: 'GPT Agent Registry',
+            type: 'registry',
+            status: 'active',
+            level: 0,
+            metrics: {
+              gptsRegistered: 75,
+              activeGPTs: 45,
+              draftGPTs: 30,
+              passportsIssued: 75,
+              health: 99.1,
+              uptime: '99.9%'
+            },
+            position: { x: 200, y: 200 }
+          },
+          {
             id: 'head-agent-core',
             name: 'Head Agent Core',
             type: 'agent',
@@ -19,7 +100,7 @@ export function setupSystemMappingRoutes(app: Express) {
               health: 100,
               uptime: '99.9%'
             },
-            position: { x: 400, y: 200 }
+            position: { x: 800, y: 200 }
           },
           {
             id: 'triple-helix-architecture',
@@ -226,10 +307,20 @@ export function setupSystemMappingRoutes(app: Express) {
         ],
         
         connections: [
+          // Super Brain & Drive Engine Connections
+          { from: 'super-brain', to: 'drive-engine', type: 'orchestration', strength: 0.95 },
+          { from: 'super-brain', to: 'brain-integration', type: 'integration', strength: 1.0 },
+          { from: 'drive-engine', to: 'brain-integration', type: 'integration', strength: 0.9 },
+          { from: 'brain-integration', to: 'biomimetic-integration', type: 'integration', strength: 0.95 },
+          { from: 'gpt-agent-registry', to: 'super-brain', type: 'registry', strength: 0.85 },
+          { from: 'gpt-agent-registry', to: 'head-agent-core', type: 'registry', strength: 0.9 },
+          
           // System to Agent Level
           { from: 'head-agent-core', to: 'triple-helix-architecture', type: 'control', strength: 0.9 },
           { from: 'head-agent-core', to: 'mycelium-network', type: 'data', strength: 0.8 },
           { from: 'head-agent-core', to: 'chameleon-adaptation', type: 'control', strength: 0.7 },
+          { from: 'super-brain', to: 'triple-helix-architecture', type: 'orchestration', strength: 0.85 },
+          { from: 'super-brain', to: 'mycelium-network', type: 'orchestration', strength: 0.8 },
           { from: 'triple-helix-architecture', to: 'nano-swarm-collective', type: 'biomimetic', strength: 0.8 },
           { from: 'mycelium-network', to: 'viral-agency-network', type: 'biomimetic', strength: 0.9 },
           { from: 'viral-agency-network', to: 'knowledge-transfer-hub', type: 'data', strength: 0.7 },
@@ -249,10 +340,11 @@ export function setupSystemMappingRoutes(app: Express) {
         ],
         
         metadata: {
-          totalNodes: 16,
-          totalConnections: 15,
+          totalNodes: 21, // Added 5 new nodes (Super Brain, Drive Engine, Brain Integration, Biomimetic Integration, GPT Agent Registry)
+          totalConnections: 20, // Added 5 new connections
           systemLevels: 4,
-          overallHealth: 97.3,
+          overallHealth: 98.1, // Improved with autonomous systems
+          autonomousSystems: 5, // Super Brain, Drive Engine, Brain Integration, Biomimetic Integration, GPT Agent Registry
           lastUpdate: new Date().toISOString()
         }
       };

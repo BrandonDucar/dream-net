@@ -1,0 +1,86 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  REGION: us-central1
+  SERVICE_NAME: dreamnet
+  ARTIFACT_REGISTRY_REPO: dreamnet-repo
+
+jobs:
+  deploy:
+    name: Build and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Authenticate to Artifact Registry
+        run: |
+          gcloud auth configure-docker ${REGION}-docker.pkg.dev
+
+      - name: Build Docker image
+        run: |
+          docker build -f Dockerfile \
+            -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/dreamnet:${{ github.sha }} \
+            -t ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/dreamnet:latest \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/dreamnet:${{ github.sha }}
+          docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/dreamnet:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${SERVICE_NAME} \
+            --image ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/dreamnet:${{ github.sha }} \
+            --platform managed \
+            --region ${REGION} \
+            --project ${PROJECT_ID} \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 512Mi \
+            --cpu 1 \
+            --timeout 300s \
+            --max-instances 10 \
+            --min-instances 0 \
+            --set-env-vars NODE_ENV=production,INIT_SUBSYSTEMS=false,INIT_HEAVY_SUBSYSTEMS=false,MESH_AUTOSTART=false
+
+      - name: Output service URL
+        run: |
+          SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \
+            --platform managed \
+            --region ${REGION} \
+            --project ${PROJECT_ID} \
+            --format 'value(status.url)')
+          echo "Service deployed at: $SERVICE_URL"
+          echo "::set-output name=url::$SERVICE_URL"
+

@@ -14,6 +14,12 @@ export type ToolId =
   | "api.rotateKey"
   | "vercel.deploy"
   | "vercel.listProjects"
+  | "cloudrun.deploy"
+  | "cloudrun.scale"
+  | "cloudrun.update"
+  | "cloudrun.list"
+  | "cloudrun.getStatus"
+  | "cloudrun.setKeepAlive"
   | "diagnostics.ping"
   | string;
 
@@ -116,6 +122,70 @@ export const TOOL_REGISTRY: Record<ToolId, ToolConfig> = {
     requiredOfficeIds: ["FOUNDER", "MINISTER_OF_WOLF_OPERATIONS"],
     cost: { estimatedTokenCost: 0, estimatedDollarCost: 0 },
     riskLevel: "medium",
+  },
+  "cloudrun.deploy": {
+    id: "cloudrun.deploy",
+    label: "Deploy to Cloud Run",
+    description: "Deploy a service to Google Cloud Run with specified configuration.",
+    clusterId: "CLOUD_RUN_CORE" as ClusterId,
+    portId: "CLOUD_RUN_PORT" as PortId,
+    minTier: "OPERATOR",
+    requiredOfficeIds: ["FOUNDER", "MINISTER_OF_WOLF_OPERATIONS"],
+    cost: { estimatedTokenCost: 0, estimatedDollarCost: 0.05 },
+    riskLevel: "critical",
+  },
+  "cloudrun.scale": {
+    id: "cloudrun.scale",
+    label: "Scale Cloud Run service",
+    description: "Update min/max instances for a Cloud Run service (governed by budget).",
+    clusterId: "CLOUD_RUN_CORE" as ClusterId,
+    portId: "CLOUD_RUN_PORT" as PortId,
+    minTier: "OPERATOR",
+    requiredOfficeIds: ["FOUNDER", "MINISTER_OF_WOLF_OPERATIONS"],
+    cost: { estimatedTokenCost: 0, estimatedDollarCost: 0.01 },
+    riskLevel: "high",
+  },
+  "cloudrun.update": {
+    id: "cloudrun.update",
+    label: "Update Cloud Run service",
+    description: "Update environment variables, resources, or other Cloud Run service settings.",
+    clusterId: "CLOUD_RUN_CORE" as ClusterId,
+    portId: "CLOUD_RUN_PORT" as PortId,
+    minTier: "OPERATOR",
+    requiredOfficeIds: ["FOUNDER", "MINISTER_OF_WOLF_OPERATIONS"],
+    cost: { estimatedTokenCost: 0, estimatedDollarCost: 0.02 },
+    riskLevel: "high",
+  },
+  "cloudrun.list": {
+    id: "cloudrun.list",
+    label: "List Cloud Run services",
+    description: "List all Cloud Run services in the project.",
+    clusterId: "CLOUD_RUN_CORE" as ClusterId,
+    portId: "CLOUD_RUN_PORT" as PortId,
+    minTier: "OPERATOR",
+    cost: { estimatedTokenCost: 0, estimatedDollarCost: 0 },
+    riskLevel: "medium",
+  },
+  "cloudrun.getStatus": {
+    id: "cloudrun.getStatus",
+    label: "Get Cloud Run service status",
+    description: "Get current status, health, and configuration of a Cloud Run service.",
+    clusterId: "CLOUD_RUN_CORE" as ClusterId,
+    portId: "CLOUD_RUN_PORT" as PortId,
+    minTier: "OPERATOR",
+    cost: { estimatedTokenCost: 0, estimatedDollarCost: 0 },
+    riskLevel: "low",
+  },
+  "cloudrun.setKeepAlive": {
+    id: "cloudrun.setKeepAlive",
+    label: "Set Cloud Run keep-alive",
+    description: "Configure minInstances to prevent scale-to-zero (governed by budget).",
+    clusterId: "CLOUD_RUN_CORE" as ClusterId,
+    portId: "CLOUD_RUN_PORT" as PortId,
+    minTier: "OPERATOR",
+    requiredOfficeIds: ["FOUNDER", "MINISTER_OF_WOLF_OPERATIONS"],
+    cost: { estimatedTokenCost: 0, estimatedDollarCost: 0.01 },
+    riskLevel: "high",
   },
   "diagnostics.ping": {
     id: "diagnostics.ping",

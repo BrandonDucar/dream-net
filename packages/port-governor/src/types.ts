@@ -10,6 +10,7 @@ export type PortId =
   | "ENVKEEPER_PORT"
   | "APIKEEPER_PORT"
   | "VERCEL_PORT"
+  | "CLOUD_RUN_PORT"
   | "AGENT_GATEWAY"
   | string;
 

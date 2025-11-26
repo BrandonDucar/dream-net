@@ -4,7 +4,7 @@
  */
 import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
 import type { PortId } from "@dreamnet/port-governor/types";
-export type ToolId = "env.get" | "env.set" | "env.delete" | "api.listKeys" | "api.rotateKey" | "vercel.deploy" | "vercel.listProjects" | "diagnostics.ping" | string;
+export type ToolId = "env.get" | "env.set" | "env.delete" | "api.listKeys" | "api.rotateKey" | "vercel.deploy" | "vercel.listProjects" | "cloudrun.deploy" | "cloudrun.scale" | "cloudrun.update" | "cloudrun.list" | "cloudrun.getStatus" | "cloudrun.setKeepAlive" | "diagnostics.ping" | string;
 export interface ToolCostProfile {
     estimatedTokenCost?: number;
     estimatedDollarCost?: number;

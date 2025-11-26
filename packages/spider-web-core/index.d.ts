@@ -35,5 +35,6 @@ export declare const SpiderWebCore: {
     listRecentInsights(limit?: number): SpiderInsight[];
 };
 export * from "./types";
+export { streamingCollector, type StreamEvent, type StreamProcessor } from "./logic/streamingCollector";
 export * from "./adapters/spiderStatusAdapter";
 export default SpiderWebCore;

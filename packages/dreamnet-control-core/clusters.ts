@@ -20,7 +20,9 @@ export type ClusterId =
   | "API_KEEPER"
   | "AI_SEO"
   | "DREAM_STATE"
-  | "STAR_BRIDGE";
+  | "STAR_BRIDGE"
+  | "DEPLOYKEEPER_CORE"
+  | "CLOUD_RUN_CORE";
 
 export interface ClusterConfig {
   /** Cluster identifier */
@@ -172,6 +174,24 @@ export const CLUSTERS: Record<ClusterId, ClusterConfig> = {
     defaultMaxRequestsPerMinute: 30,
     defaultMaxRequestsPerHour: 500,
     requiredFeatureFlag: "canAccessOctopus", // Star Bridge is cross-chain connector
+  },
+  DEPLOYKEEPER_CORE: {
+    id: "DEPLOYKEEPER_CORE",
+    label: "Deploy Keeper Core",
+    description: "Deployment management - Vercel, Railway, GCP, GKE deployments and cleanup",
+    enabled: true,
+    defaultMaxRequestsPerMinute: 20,
+    defaultMaxRequestsPerHour: 200,
+    requiredFeatureFlag: "canManageDeployments", // Requires OPERATOR tier or higher
+  },
+  CLOUD_RUN_CORE: {
+    id: "CLOUD_RUN_CORE",
+    label: "Cloud Run Core",
+    description: "Google Cloud Run lifecycle management - deploy, scale, update, keep-alive, budget control",
+    enabled: true,
+    defaultMaxRequestsPerMinute: 10,
+    defaultMaxRequestsPerHour: 100,
+    requiredFeatureFlag: "canManageDeployments", // Requires OPERATOR tier or higher
   },
 };
 

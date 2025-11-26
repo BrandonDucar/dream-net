@@ -55,6 +55,16 @@ class HealthStore {
         this.checks.set(check.id, check);
       }
     }
+
+    // Bridge health failures to Shield Core
+    if (result.status === "down" || result.status === "degraded") {
+      try {
+        const { bridgeHealthResultToShield } = require("../logic/healthShieldBridge");
+        bridgeHealthResultToShield(result);
+      } catch (error) {
+        // Bridge not available, continue without error
+      }
+    }
   }
 
   getRecentResults(clusterId: string, limit: number = 10): HealthResult[] {

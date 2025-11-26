@@ -132,6 +132,26 @@ class CostStore {
       currentCost: alert.currentCost,
       period: alert.period,
     });
+
+    // Bridge cost alert to Spider Web
+    try {
+      const { bridgeToSpiderWeb } = require("@dreamnet/dreamnet-operational-bridge");
+      bridgeToSpiderWeb({
+        type: isThreshold ? "cost_threshold_exceeded" : "cost_budget_alert",
+        clusterId: budget.clusterId,
+        severity: alert.currentCost >= alert.threshold ? "high" : "medium",
+        message: `Cost ${isThreshold ? "threshold" : "budget"} exceeded: $${alert.currentCost.toFixed(2)}/${alert.period} (threshold: $${alert.threshold.toFixed(2)})`,
+        metadata: {
+          threshold: alert.threshold,
+          currentCost: alert.currentCost,
+          period: alert.period,
+          budgetId: budget.id,
+        },
+        timestamp: Date.now(),
+      });
+    } catch (error) {
+      // Operational bridge not available, continue without error
+    }
   }
 
   getActiveAlerts(): CostAlert[] {

@@ -7,7 +7,7 @@
  *
  * @module @dreamnet/dreamnet-control-core/clusters
  */
-export type ClusterId = "WOLF_PACK" | "OCTOPUS" | "SPIDER_WEB" | "JAGGY" | "SHIELD_CORE" | "WEBHOOK_NERVOUS_SYSTEM" | "ORCA_PACK" | "WHALE_PACK" | "API_KEEPER" | "AI_SEO" | "DREAM_STATE" | "STAR_BRIDGE";
+export type ClusterId = "WOLF_PACK" | "OCTOPUS" | "SPIDER_WEB" | "JAGGY" | "SHIELD_CORE" | "WEBHOOK_NERVOUS_SYSTEM" | "ORCA_PACK" | "WHALE_PACK" | "API_KEEPER" | "AI_SEO" | "DREAM_STATE" | "STAR_BRIDGE" | "DEPLOYKEEPER_CORE" | "CLOUD_RUN_CORE";
 export interface ClusterConfig {
     /** Cluster identifier */
     id: ClusterId;

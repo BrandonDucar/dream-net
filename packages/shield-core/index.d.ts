@@ -1,5 +1,6 @@
 import { ShieldPhase, ShieldLayer, ShieldModulator, ShieldEmitter, Threat, ThreatType, ThreatLevel, OffensiveSpike, ShieldContext, ShieldStatus } from "./types";
-import type { CellularShield, CellType, WormholeShieldSignal, Blockchain } from "./types";
+import { fireAdvancedSpike, fireAdvancedSpikeAtThreat, getBestSpikeType, trackSpikeEffectiveness } from "./logic/advancedSpikes";
+import type { CellularShield, CellType, WormholeShieldSignal } from "./types";
 export declare const ShieldCore: {
     run(context: ShieldContext): ShieldStatus;
     status(): ShieldStatus;
@@ -41,9 +42,9 @@ export declare const ShieldCore: {
     learnFromThreats(): import("./logic/shieldLearner").ThreatPattern[];
     predictThreatSeverity(threat: Threat): ThreatLevel;
     getThreatPatterns(): import("./logic/shieldLearner").ThreatPattern[];
-    initializeCrossChainShield(blockchain: Blockchain, chainId: string): import("./logic/crossChainShield").CrossChainShield;
+    initializeCrossChainShield(blockchain: string, chainId: string): import("./logic/crossChainShield").CrossChainShield;
     syncCrossChainShields(): void;
-    detectCrossChainThreat(blockchain: Blockchain, threatType: ThreatType, level: ThreatLevel, source?: string): Threat | null;
+    detectCrossChainThreat(blockchain: string, threatType: ThreatType, level: ThreatLevel, source?: string): Threat | null;
     listCrossChainShields(): import("./logic/crossChainShield").CrossChainShield[];
     getCrossChainShieldStats(): {
         totalChains: number;
@@ -52,7 +53,18 @@ export declare const ShieldCore: {
         totalThreats: number;
         totalBlocked: number;
     };
+    aiThreatDetector: import("./logic/aiThreatDetector").AIThreatDetector;
+    fireAdvancedSpike: typeof fireAdvancedSpike;
+    fireAdvancedSpikeAtThreat: typeof fireAdvancedSpikeAtThreat;
+    getBestSpikeType: typeof getBestSpikeType;
+    trackSpikeEffectiveness: typeof trackSpikeEffectiveness;
+    zeroTrustVerifier: import("./logic/zeroTrust").ZeroTrustVerifier;
+    threatPredictor: import("./logic/threatPredictor").ThreatPredictor;
 };
 export * from "./types";
 export * from "./src/risk";
+export { aiThreatDetector } from "./logic/aiThreatDetector";
+export { fireAdvancedSpike, fireAdvancedSpikeAtThreat, getBestSpikeType, trackSpikeEffectiveness } from "./logic/advancedSpikes";
+export { zeroTrustVerifier } from "./logic/zeroTrust";
+export { threatPredictor } from "./logic/threatPredictor";
 export default ShieldCore;

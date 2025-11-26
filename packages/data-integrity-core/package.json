@@ -1,0 +1,19 @@
+{
+  "name": "@dreamnet/data-integrity-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dreamnet/spider-web-core": "workspace:*",
+    "ethers": "^6.13.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

@@ -1,0 +1,18 @@
+{
+  "name": "@dreamnet/dreamops-constellation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "orchestrator.ts",
+  "exports": {
+    ".": "./orchestrator.ts",
+    "./BrainHub": "./BrainHub/index.ts",
+    "./DeployKeeper": "./DeployKeeper/index.ts",
+    "./DreamMemory": "./DreamMemory/index.ts",
+    "./SocialWeaver": "./SocialWeaver/index.ts"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
+

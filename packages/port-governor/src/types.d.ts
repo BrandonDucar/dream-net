@@ -4,7 +4,7 @@
  */
 import type { TierId } from "../../dreamnet-control-core/tierConfig";
 import type { OfficeId, CabinetId } from "../../dream-state-core/types";
-export type PortId = "ENVKEEPER_PORT" | "APIKEEPER_PORT" | "VERCEL_PORT" | "AGENT_GATEWAY" | string;
+export type PortId = "ENVKEEPER_PORT" | "APIKEEPER_PORT" | "VERCEL_PORT" | "CLOUD_RUN_PORT" | "AGENT_GATEWAY" | string;
 export type PortDirection = "ingress" | "egress" | "bidirectional";
 export interface PortLimits {
     maxRequestsPerMinute: number;

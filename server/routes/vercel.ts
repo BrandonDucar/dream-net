@@ -120,7 +120,7 @@ router.get("/analyze", async (req, res) => {
 router.post(
   "/cleanup",
   withPort ? withPort("VERCEL_PORT") : ((req: any, res: any, next: any) => next()),
-  withGovernance({ clusterId: "DEPLOYKEEPER_CORE" as any }),
+  withGovernance({ clusterId: "DEPLOYKEEPER_CORE" }),
   async (req: RequestWithIdentity, res: Response) => {
     try {
       const { actions, dryRun = true } = req.body;
@@ -181,7 +181,7 @@ router.post(
 router.post(
   "/cleanup/auto",
   withPort ? withPort("VERCEL_PORT") : ((req: any, res: any, next: any) => next()),
-  withGovernance({ clusterId: "DEPLOYKEEPER_CORE" as any }),
+  withGovernance({ clusterId: "DEPLOYKEEPER_CORE" }),
   async (req: RequestWithIdentity, res: Response) => {
     try {
       const { targetDomain = "dreamnet.ink", dryRun = true } = req.body;

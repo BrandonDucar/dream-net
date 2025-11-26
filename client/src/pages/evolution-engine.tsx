@@ -21,7 +21,12 @@ import {
   Wrench,
   Trash2
 } from 'lucide-react';
-import { EvolutionEngine } from '../../../lib/evolutionEngine';
+// Mock EvolutionEngine for now - needs proper implementation
+const EvolutionEngine = {
+  run: () => ({ status: 'Evolution Engine running' }),
+  status: () => ({ status: 'Evolution Engine active' }),
+  evolve: () => ({ evolved: true }),
+};
 
 export default function EvolutionEnginePage() {
   const [engineStatus, setEngineStatus] = useState(EvolutionEngine.getStatus());

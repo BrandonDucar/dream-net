@@ -108,5 +108,6 @@ export const SpiderWebCore = {
     },
 };
 export * from "./types";
+export { streamingCollector } from "./logic/streamingCollector";
 export * from "./adapters/spiderStatusAdapter";
 export default SpiderWebCore;

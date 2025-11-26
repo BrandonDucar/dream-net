@@ -162,7 +162,7 @@ class SocialMediaOpsAgent {
   }
 
   /**
-   * Post to platform
+   * Post to platform using real APIs
    */
   private async postToPlatform(post: SocialPost): Promise<void> {
     const account = Array.from(this.accounts.values()).find(
@@ -176,29 +176,91 @@ class SocialMediaOpsAgent {
     }
 
     try {
-      // TODO: Integrate with actual platform APIs
-      // For now, simulate posting
-      console.log(`📱 [Social Media Ops] Posting to ${post.platform}:`);
-      console.log(`   Content: ${post.content.substring(0, 100)}...`);
-      if (post.mediaUrls) {
-        console.log(`   Media: ${post.mediaUrls.length} files`);
+      // Import SocialMediaPoster
+      const { SocialMediaPoster } = await import("../../packages/social-media-poster/SocialMediaPoster");
+      const poster = new SocialMediaPoster();
+
+      // Get credentials from environment or account
+      const credentials = this.getCredentialsForAccount(account);
+
+      // Register account if not already registered
+      poster.registerAccount(account, credentials);
+
+      // Post using real API
+      const result = await poster.post({
+        content: post.content,
+        mediaUrls: post.mediaUrls,
+        hashtags: post.hashtags,
+        platform: post.platform,
+      }, account.id);
+
+      if (result.success) {
+        post.status = "posted";
+        post.postedAt = new Date().toISOString();
+        post.postId = result.postId;
+        post.postUrl = result.postUrl;
+        account.lastPostAt = new Date().toISOString();
+
+        console.log(`✅ [Social Media Ops] Posted to ${post.platform}: ${result.postUrl || result.postId}`);
+
+        // Update engagement tracking (will be fetched later)
+        post.engagement = {
+          likes: 0,
+          shares: 0,
+          comments: 0,
+          views: 0,
+        };
+      } else {
+        throw new Error(result.error || "Post failed");
       }
-
-      post.status = "posted";
-      post.postedAt = new Date().toISOString();
-      account.lastPostAt = new Date().toISOString();
-
-      // Update engagement tracking (simulated)
-      post.engagement = {
-        likes: 0,
-        shares: 0,
-        comments: 0,
-        views: 0,
-      };
-    } catch (error) {
+    } catch (error: any) {
       console.error(`[Social Media Ops] Failed to post to ${post.platform}:`, error);
       post.status = "failed";
+      post.error = error.message;
     }
+  }
+
+  /**
+   * Get credentials for an account from environment variables
+   */
+  private getCredentialsForAccount(account: SocialAccount): Record<string, string> {
+    const platform = account.platform;
+    const credentials: Record<string, string> = {};
+
+    switch (platform) {
+      case "twitter":
+        credentials.apiKey = process.env.TWITTER_API_KEY || "";
+        credentials.apiSecret = process.env.TWITTER_API_SECRET || "";
+        credentials.accessToken = process.env.TWITTER_ACCESS_TOKEN || account.accessToken || "";
+        credentials.accessTokenSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET || "";
+        credentials.bearerToken = process.env.TWITTER_BEARER_TOKEN;
+        break;
+
+      case "instagram":
+        credentials.accessToken = process.env.INSTAGRAM_ACCESS_TOKEN || account.accessToken || "";
+        credentials.instagramBusinessAccountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID || account.accountId;
+        credentials.pageId = process.env.FACEBOOK_PAGE_ID;
+        break;
+
+      case "facebook":
+        credentials.accessToken = process.env.FACEBOOK_PAGE_ACCESS_TOKEN || account.accessToken || "";
+        credentials.pageId = process.env.FACEBOOK_PAGE_ID || account.accountId;
+        break;
+
+      case "linkedin":
+        credentials.accessToken = process.env.LINKEDIN_ACCESS_TOKEN || account.accessToken || "";
+        credentials.personUrn = process.env.LINKEDIN_PERSON_URN;
+        break;
+
+      case "tiktok":
+        credentials.clientKey = process.env.TIKTOK_CLIENT_KEY || "";
+        credentials.clientSecret = process.env.TIKTOK_CLIENT_SECRET || "";
+        credentials.accessToken = process.env.TIKTOK_ACCESS_TOKEN || account.accessToken || "";
+        credentials.openId = process.env.TIKTOK_OPEN_ID || account.accountId;
+        break;
+    }
+
+    return credentials;
   }
 
   /**

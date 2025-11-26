@@ -18,7 +18,7 @@ import {
   Database,
   AlertCircle
 } from 'lucide-react';
-import { DreamDefenseNet } from '../../../lib/defenseBots';
+import { ShieldCore } from '@dreamnet/shield-core';
 
 export default function DefenseNetworkDashboard() {
   const [defenseStatus, setDefenseStatus] = useState(DreamDefenseNet.getStatus());

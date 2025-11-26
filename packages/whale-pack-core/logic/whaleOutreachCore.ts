@@ -3,9 +3,11 @@
  * Uses Inbox² for intelligent partner/influencer outreach
  */
 
-import { inboxSquared } from '@dreamnet/inbox-squared-core';
-import type { EmailDraft, DraftGenerationOptions } from '@dreamnet/inbox-squared-core';
 import type { WhaleProduct, WhaleAudience } from '../types';
+
+// Types (imported lazily if available)
+type EmailDraft = any;
+type DraftGenerationOptions = any;
 
 export interface WhaleOutreachTarget {
   email: string;
@@ -38,6 +40,10 @@ export async function generateWhaleOutreachDraft(
   };
 
   try {
+    // Lazy import Inbox²
+    const inboxModule = await import('@dreamnet/inbox-squared-core');
+    const inboxSquared = inboxModule.inboxSquared || new inboxModule.InboxSquared();
+    
     const draft = await inboxSquared.generateDraft(
       target.email,
       target.name,

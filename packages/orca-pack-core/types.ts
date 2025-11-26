@@ -1,9 +1,21 @@
 export type OrcaChannel =
   | "x"
+  | "twitter"
   | "farcaster"
+  | "base"
   | "instagram"
   | "threads"
+  | "youtube"
   | "youtube-shorts"
+  | "github"
+  | "notion"
+  | "slack"
+  | "discord"
+  | "telegram"
+  | "reddit"
+  | "linkedin"
+  | "tiktok"
+  | "facebook"
   | "other";
 
 export type OrcaContentKind =

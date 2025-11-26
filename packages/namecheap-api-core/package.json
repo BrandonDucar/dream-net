@@ -1,0 +1,20 @@
+{
+  "name": "@dreamnet/namecheap-api-core",
+  "version": "1.0.0",
+  "description": "Namecheap API integration for domain and DNS management",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["namecheap", "dns", "domain", "api"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "fast-xml-parser": "^5.2.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

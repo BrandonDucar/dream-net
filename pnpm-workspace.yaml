@@ -1,5 +1,6 @@
 packages:
   - apps/api-forge
+  - apps/admin-dashboard
   - apps/dreamos
   - apps/hub
   - apps/seo

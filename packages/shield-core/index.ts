@@ -20,7 +20,11 @@ import { fireSpike, fireSpikeAtThreat } from "./logic/offensiveSpike";
 import { createCellularShield, getCellularShield, updateCellularShieldIntegrity, propagateShieldViaWormhole, listCellularShields, getCellularShieldStats, getRecentWormholeSignals } from "./logic/cellularShield";
 import { learnFromThreats, predictThreatSeverity, getThreatPatterns } from "./logic/shieldLearner";
 import { initializeCrossChainShield, syncCrossChainShields, detectCrossChainThreat, listCrossChainShields, getCrossChainShieldStats } from "./logic/crossChainShield";
-import type { CellularShield, CellType, WormholeShieldSignal, Blockchain } from "./types";
+import { aiThreatDetector } from "./logic/aiThreatDetector";
+import { fireAdvancedSpike, fireAdvancedSpikeAtThreat, getBestSpikeType, trackSpikeEffectiveness } from "./logic/advancedSpikes";
+import { zeroTrustVerifier } from "./logic/zeroTrust";
+import { threatPredictor } from "./logic/threatPredictor";
+import type { CellularShield, CellType, WormholeShieldSignal } from "./types";
 
 export const ShieldCore = {
   // Orchestration
@@ -188,8 +192,8 @@ export const ShieldCore = {
   },
 
   // Cross-Chain Shields
-  initializeCrossChainShield(blockchain: Blockchain, chainId: string) {
-    return initializeCrossChainShield(blockchain, chainId);
+  initializeCrossChainShield(blockchain: string, chainId: string) {
+    return initializeCrossChainShield(blockchain as any, chainId);
   },
 
   syncCrossChainShields(): void {
@@ -197,12 +201,12 @@ export const ShieldCore = {
   },
 
   detectCrossChainThreat(
-    blockchain: Blockchain,
+    blockchain: string,
     threatType: ThreatType,
     level: ThreatLevel,
     source?: string
   ): Threat | null {
-    return detectCrossChainThreat(blockchain, threatType, level, source);
+    return detectCrossChainThreat(blockchain as any, threatType, level, source);
   },
 
   listCrossChainShields() {
@@ -212,10 +216,29 @@ export const ShieldCore = {
   getCrossChainShieldStats() {
     return getCrossChainShieldStats();
   },
+
+  // AI Threat Detection
+  aiThreatDetector,
+
+  // Advanced Spikes
+  fireAdvancedSpike,
+  fireAdvancedSpikeAtThreat,
+  getBestSpikeType,
+  trackSpikeEffectiveness,
+
+  // Zero Trust
+  zeroTrustVerifier,
+
+  // Threat Prediction
+  threatPredictor,
 };
 
 export * from "./types";
 export * from "./src/risk";
+export { aiThreatDetector } from "./logic/aiThreatDetector";
+export { fireAdvancedSpike, fireAdvancedSpikeAtThreat, getBestSpikeType, trackSpikeEffectiveness } from "./logic/advancedSpikes";
+export { zeroTrustVerifier } from "./logic/zeroTrust";
+export { threatPredictor } from "./logic/threatPredictor";
 // ShieldCore is already exported above as const, so we don't need to re-export it
 export default ShieldCore;
 

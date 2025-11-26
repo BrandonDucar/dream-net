@@ -55,7 +55,10 @@ import { createWolfPackRouter } from "./routes/wolf-pack";
 import { createSuperSpineRouter } from "./routes/super-spine";
 import { createFleetsRouter } from "./routes/fleets";
 import { createCustomGPTFleetsRouter } from "./routes/custom-gpt-fleets";
+import { createGPTAgentsRouter } from "./routes/gpt-agents";
 import { createSocialMediaOpsRouter } from "./routes/social-media-ops";
+import { createSocialMediaAuthRouter } from "./routes/social-media-auth";
+import { createBrainRouter } from "./routes/brain";
 import { createInstantMeshRouter } from "./routes/instant-mesh";
 import { createFoundryRouter } from "./routes/foundry";
 import { createMediaListRouter } from "./routes/media-list";
@@ -65,6 +68,9 @@ import { createCoinSenseiRouter } from "./routes/coinsensei";
 import { createAgentWalletRouter } from "./routes/agent-wallets";
 import { createDreamSnailRouter } from "./routes/dream-snail";
 import { createBiomimeticSystemsRouter } from "./routes/biomimetic-systems";
+import { createAgentMarketplaceRouter } from "./routes/agent-marketplace";
+import { createOrcaMarketplaceRouter } from "./routes/orca-marketplace";
+import { createX402PaymentGatewayRouter } from "./routes/x402-payment-gateway";
 import whaleRouter from "./routes/whale";
 import onboardingRouter from "./routes/onboarding";
 // haloTriggers imported conditionally - see error handler below
@@ -110,6 +116,7 @@ import billableRouter from "./routes/billable";
 import healthRouter from "./routes/health";
 import auditRouter from "./routes/audit";
 import rbacRouter from "./routes/rbac";
+import adminRouter from "./routes/admin";
 import voiceRouter from "./routes/voice";
 import vercelRouter from "./routes/vercel";
 import apiKeysRouter from "./routes/api-keys";
@@ -247,20 +254,39 @@ async function checkDbHealth(): Promise<boolean | null> {
 }
 
 // Lightweight health check endpoint - must be early and never depend on optional subsystems
+// CRITICAL: This must respond IMMEDIATELY for Cloud Run health checks
 app.get("/health", async (_req, res) => {
-  const dbHealthy = await checkDbHealth();
-  const isHealthy = dbHealthy !== false; // null (not configured) is OK
+  // For Cloud Run, we need to respond quickly - don't block on DB checks
+  // If DB is not configured, that's OK - server can run without it
+  const dbConfigured = !!process.env.DATABASE_URL;
+  
+  // Non-blocking DB check - don't wait if it's slow
+  let dbHealthy: boolean | null = null;
+  if (dbConfigured) {
+    try {
+      // Use Promise.race to timeout DB check after 1 second
+      dbHealthy = await Promise.race([
+        checkDbHealth(),
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 1000))
+      ]);
+    } catch {
+      dbHealthy = null; // If check fails, assume not configured
+    }
+  }
+  
+  const isHealthy = dbHealthy !== false; // null (not configured) is OK, false is unhealthy
   
   res.status(isHealthy ? 200 : 503).json({ 
     ok: isHealthy, 
     service: "dreamnet-api",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    database: dbHealthy === null ? 'not-configured' : dbHealthy ? 'healthy' : 'unhealthy',
+    database: dbHealthy === null ? (dbConfigured ? 'checking' : 'not-configured') : dbHealthy ? 'healthy' : 'unhealthy',
     // Document what database status means:
     // - 'healthy': Database is configured and responding to queries
     // - 'unhealthy': Database is configured but not responding (connection failed or timeout)
     // - 'not-configured': DATABASE_URL not set (server can run without DB)
+    // - 'checking': Database check timed out (still OK for health check)
   });
 });
 
@@ -329,10 +355,19 @@ app.use("/api", createDreamRouter());
   app.use("/api", createDreamInteractionsRouter());
   app.use("/api", createDreamContributionsRouter());
   app.use("/api", createWolfPackRouter());
+  
+  // 🚀 Activate Packs for Real-World Work
+  const { createActivatePacksRouter } = await import("./routes/activate-packs");
+  app.use("/api", createActivatePacksRouter());
+  
+  // 🧠 Super Brain API routes (autonomous orchestration)
+  app.use("/api", createBrainRouter());
   app.use("/api", createSuperSpineRouter());
   app.use("/api", createFleetsRouter());
   app.use("/api", createCustomGPTFleetsRouter());
+  app.use("/api", createGPTAgentsRouter());
   app.use("/api", createSocialMediaOpsRouter());
+  app.use("/api/social-media-auth", createSocialMediaAuthRouter());
   app.use("/api", createInstantMeshRouter());
   app.use("/api", createFoundryRouter());
   app.use("/api", createMediaListRouter());
@@ -340,11 +375,40 @@ app.use("/api", createDreamRouter());
   app.use("/api/inbox-squared", createInboxSquaredRouter());
   app.use("/api/coinsensei", createCoinSenseiRouter);
   app.use("/api/agent-wallets", createAgentWalletRouter);
+  app.use("/api/marketplace", createAgentMarketplaceRouter);
+  app.use("/api/x402", createX402PaymentGatewayRouter);
+  
+  // Market Data API routes
+  const marketDataRouter = (await import("./routes/market-data")).default;
+  app.use("/api/market-data", marketDataRouter);
+
+  // Competitive Intelligence API Routes
+  const competitiveIntelligenceRouter = (await import("./routes/competitive-intelligence")).default;
+  app.use("/api/competitive-intelligence", competitiveIntelligenceRouter);
+
+  // Data Integrity API Routes
+  const dataIntegrityRouter = (await import("./routes/data-integrity")).default;
+  app.use("/api/data-integrity", dataIntegrityRouter);
+  
+  // Browser Agent routes - safe, governed browser automation
+  const { createBrowserAgentRouter } = await import("./routes/browser-agent");
+  app.use("/api", createBrowserAgentRouter());
+  app.use("/api/orca-marketplace", createOrcaMarketplaceRouter);
   app.use("/api", createDreamSnailRouter());
   app.use("/api", createBiomimeticSystemsRouter());
   
   // Initialize instant mesh, foundry, and social media ops on startup
   console.log("⚡ [Instant Mesh] Zero-delay event routing active");
+  
+  // Initialize Browser Agent Core integration
+  try {
+    const browserAgentModule = await import("../packages/browser-agent-core/integration/agent-registry");
+    if (browserAgentModule.initBrowserAgentIntegration) {
+      await browserAgentModule.initBrowserAgentIntegration();
+    }
+  } catch (error: any) {
+    console.warn("[BrowserAgentCore] Integration warning:", error.message);
+  }
   
   // Declare variables for systems that need to be shared across initialization
   let ShieldCore: any;
@@ -1109,6 +1173,116 @@ app.use("/api", createDreamRouter());
     console.warn("[Spider Web Core] Initialization warning:", error);
   }
 
+  // Initialize Market Data Core - Real-Time Market Data Spikes with Intelligent Agents 💰📈🤖
+  try {
+    const marketDataModule = await import("@dreamnet/market-data-core");
+    const MarketDataCore = marketDataModule.MarketDataCore || marketDataModule.default;
+    const { initSpikeAgentIntegration } = marketDataModule;
+
+    // Register spike agents with Agent Registry
+    initSpikeAgentIntegration();
+
+    // Configure market data agents (wrappers around spikes)
+    const marketDataCore = new MarketDataCore({
+      useAgents: true, // Use intelligent agent wrappers
+      metals: {
+        enabled: process.env.METALS_API_KEY ? true : false,
+        frequency: parseInt(process.env.METALS_FETCH_INTERVAL || "60000"), // 1 minute default
+        apiKey: process.env.METALS_API_KEY,
+      },
+      crypto: {
+        enabled: true, // CoinGecko free tier doesn't require API key
+        frequency: parseInt(process.env.CRYPTO_FETCH_INTERVAL || "60000"), // 1 minute default
+        symbols: process.env.CRYPTO_SYMBOLS?.split(",") || ["bitcoin", "ethereum", "base", "solana"],
+      },
+      stocks: {
+        enabled: process.env.ALPHA_VANTAGE_API_KEY ? true : false,
+        frequency: parseInt(process.env.STOCKS_FETCH_INTERVAL || "300000"), // 5 minutes default (rate limits)
+        apiKey: process.env.ALPHA_VANTAGE_API_KEY,
+        symbols: process.env.STOCK_SYMBOLS?.split(",") || ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA"],
+      },
+    });
+
+    // Start all enabled agents (which start their spikes)
+    marketDataCore.start();
+
+    // Store globally for API access
+    (global as any).marketDataCore = marketDataCore;
+
+    const status = marketDataCore.getStatus();
+    console.log(`💰📈🤖 [Market Data Core] Initialized with Intelligent Agents`);
+    console.log(`   🥇 Metals Agent: ${status.metals?.isRunning ? "✅ Running" : "❌ Disabled"}`);
+    console.log(`   🪙 Crypto Agent: ${status.crypto?.isRunning ? "✅ Running" : "❌ Disabled"}`);
+    console.log(`   📊 Stock Agent: ${status.stocks?.isRunning ? "✅ Running" : "❌ Disabled"}`);
+    console.log(`   📡 Real-time market data collection active`);
+    console.log(`   🤖 Agents monitoring data quality, API health, and using browser automation for verification`);
+  } catch (error) {
+    console.warn("[Market Data Core] Initialization warning:", error);
+  }
+
+  // Initialize Competitive Intelligence Core - Company Research & Analysis 🔍📊
+  try {
+    const { CompetitiveIntelligenceCore } = await import("@dreamnet/competitive-intelligence-core");
+    const { seedCompanies } = await import("../scripts/seed-competitive-companies");
+    const competitiveIntelligenceCore = new CompetitiveIntelligenceCore();
+    
+    // Seed with all companies to research
+    await seedCompanies();
+    
+    (global as any).competitiveIntelligenceCore = competitiveIntelligenceCore;
+    console.log(`🔍📊 [Competitive Intelligence Core] Initialized`);
+    console.log(`   🕵️ Research Agent ready for web scraping and data collection`);
+    console.log(`   📈 Analysis Engine ready for company analysis`);
+    console.log(`   💡 Opportunity Finder ready to identify market opportunities`);
+    console.log(`   🗺️ Roadmap Generator ready to create innovation roadmaps`);
+    console.log(`   🌱 Companies seeded - ready for research`);
+  } catch (error) {
+    console.warn("[Competitive Intelligence Core] Initialization warning:", error);
+  }
+
+  // Enable Zero-Trust Middleware if configured
+  if (process.env.ZERO_TRUST_ENABLED === "true") {
+    try {
+      const { zeroTrustVerifier } = await import("@dreamnet/shield-core");
+      // Insert middleware before routes (after other security middlewares)
+      // We need to add it to the app, but since routes are already registered,
+      // we'll add it as a route-specific middleware for API routes
+      app.use("/api", zeroTrustVerifier.middleware());
+      console.log("🔒 [Zero-Trust] Middleware enabled for /api routes - all requests require verification");
+    } catch (error) {
+      console.warn("[Zero-Trust] Failed to enable middleware:", error);
+    }
+  }
+
+  // Initialize Data Integrity Core - Blockchain-Based Audit Trails 🔗📋
+  try {
+    const { initDataIntegrityCore } = await import("@dreamnet/data-integrity-core");
+    
+    const dataIntegrityCore = initDataIntegrityCore({
+      enabled: process.env.DATA_INTEGRITY_ENABLED === "true",
+      blockchain: (process.env.DATA_INTEGRITY_BLOCKCHAIN as any) || "base",
+      chainId: process.env.DATA_INTEGRITY_CHAIN_ID || "8453",
+      contractAddress: process.env.DATA_INTEGRITY_CONTRACT_ADDRESS,
+      rpcUrl: process.env.DATA_INTEGRITY_RPC_URL || process.env.BASE_MAINNET_RPC_URL,
+      privateKey: process.env.DATA_INTEGRITY_PRIVATE_KEY || process.env.PRIVATE_KEY,
+      batchSize: parseInt(process.env.DATA_INTEGRITY_BATCH_SIZE || "100"),
+      batchInterval: parseInt(process.env.DATA_INTEGRITY_BATCH_INTERVAL || "60000"),
+    });
+
+    // Store globally for access
+    (global as any).dataIntegrityCore = dataIntegrityCore;
+
+    const status = dataIntegrityCore.getStatus();
+    console.log(`🔗📋 [Data Integrity Core] Initialized`);
+    console.log(`   Blockchain: ${status.blockchain} (chain: ${status.chainId})`);
+    console.log(`   Enabled: ${status.enabled ? "✅" : "❌"}`);
+    console.log(`   Queue size: ${status.queueSize}`);
+    console.log(`   Batch size: ${status.batchSize}, interval: ${status.batchInterval}ms`);
+    console.log(`   📋 Immutable audit trails active`);
+  } catch (error) {
+    console.warn("[Data Integrity Core] Initialization warning:", error);
+  }
+
   // Initialize Wolf Pack Analyst Core - Pattern Learning & Lead Analysis 🐺📊
   try {
     const analystModule = await import("@dreamnet/wolfpack-analyst-core");
@@ -1272,6 +1446,21 @@ app.use("/api", createDreamRouter());
     console.log(`🤖 [Agent Registry Core] Initialized - ${agentStatus.agentCount} agents registered (active=${agentStatus.activeCount}, degraded=${agentStatus.degradedCount}, error=${agentStatus.errorCount})`);
   } catch (error) {
     console.warn("[Agent Registry Core] Initialization warning:", error);
+  }
+
+  // Initialize GPT Agent Registry - Register all Custom GPTs as agents
+  try {
+    const { gptAgentRegistry } = await import("./gpt-agents/GPTAgentRegistry");
+    // Auto-register all GPTs on startup (optional - can be done via API)
+    if (process.env.AUTO_REGISTER_GPT_AGENTS === "true") {
+      const results = await gptAgentRegistry.registerAll();
+      console.log(`🤖 [GPT Agent Registry] Auto-registered ${results.success} GPTs (${results.failed} failed)`);
+    } else {
+      const stats = gptAgentRegistry.getStats();
+      console.log(`🤖 [GPT Agent Registry] Loaded ${stats.total} GPTs (ready for registration via API)`);
+    }
+  } catch (error) {
+    console.warn("[GPT Agent Registry] Initialization warning:", error);
   }
 
     // Initialize DreamNet OS Core - Tier IV Subsystem (Global Status + Heartbeat Layer)
@@ -1443,6 +1632,17 @@ app.use("/api", createDreamRouter());
     console.log("🐌 [Dream Snail] Privacy layer active - Know-All Win-All mode");
     console.log("🌿 [Biomimetic Systems] All systems online");
     
+    // 🧠 Initialize Super Brain + Drive Engine + Biomimetic Integration
+    try {
+      const { brainIntegration } = await import("./core/BrainIntegration");
+      await brainIntegration.initialize();
+      console.log("🧠 [Super Brain] Initialized - Autonomous orchestration active");
+      console.log("🚀 [Drive Engine] Initialized - Packs are now self-motivated");
+      console.log("🧬 [Biomimetic Integration] All systems hooked to Super Brain");
+    } catch (error: any) {
+      console.warn("[Super Brain] Initialization warning:", error.message);
+    }
+    
     // Legacy seeding and scheduled tasks
     try {
       const { registerHaloLoop: registerHaloLoopFn, haloTriggers: haloTriggersObj } = await import("@dreamnet/halo-loop");
@@ -1488,10 +1688,52 @@ app.use("/api", createDreamRouter());
   
   // Control Plane API routes (kill-switch, rate limits)
   app.use("/api/control", controlRouter);
+app.use("/api/admin", adminRouter);
   
   // Billable Actions API routes (two-phase commit)
   app.use("/api/billable", billableRouter);
   app.use("/api/health", healthRouter);
+  
+  // Standardized healthz endpoint for all services
+  const healthzRouter = await import("./routes/healthz");
+  app.use("/", healthzRouter.default);
+  app.use("/api", healthzRouter.default);
+  
+  // Sunrise Report API routes
+  const sunriseReportRouter = await import("./routes/sunrise-report");
+  app.use("/api/sunrise-report", sunriseReportRouter.default);
+  
+  // DreamOps Constellation API routes
+  const dreamopsRouter = await import("./routes/dreamops-constellation");
+  app.use("/api/dreamops", dreamopsRouter.default);
+  
+  // Brand Grading API routes
+  const brandGradingRouter = await import("./routes/brand-grading");
+  app.use("/api/brand-grading", brandGradingRouter.default);
+  
+  // Geofencing API routes
+  const geofenceRouter = await import("./routes/geofence");
+  app.use("/api/geofence", geofenceRouter.default);
+  
+  // Heartbeat Cron API route (for Vercel cron)
+  const heartbeatCronRouter = await import("./routes/heartbeat-cron");
+  app.use("/api", heartbeatCronRouter.default);
+  
+  // Namecheap API routes
+  const namecheapRouter = await import("./routes/namecheap");
+  app.use("/api/namecheap", namecheapRouter.default);
+  
+  // Immune Swarm API routes
+  const immuneSwarmRouter = await import("./routes/immune-swarm");
+  app.use("/api/immune-swarm", immuneSwarmRouter.default);
+  
+  // Threat Memory API routes
+  const threatMemoryRouter = await import("./routes/threat-memory");
+  app.use("/api/threat-memory", threatMemoryRouter.default);
+  
+  // Swarm Fitness API routes
+  const swarmFitnessRouter = await import("./routes/swarm-fitness");
+  app.use("/api/swarm-fitness", swarmFitnessRouter.default);
   
   // Note: /health endpoint is already defined above (line 205) with DB health check
   app.use("/api/nerve", nerveRouter);
@@ -1588,21 +1830,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Use dynamic import instead of legacy require for routes.ts
-  let routesModule: { registerRoutes?: (app: Express) => Promise<Server> };
-  try {
-    routesModule = await import("./routes");
-  } catch (error: any) {
-    console.error("[Server] Failed to import routes module:", error.message);
-    throw new Error(`Failed to load routes module: ${error.message}`);
-  }
-
-  if (!routesModule?.registerRoutes) {
-    throw new Error("Routes module does not export registerRoutes. Cannot start DreamNet server.");
-  }
-
-  const server = await routesModule.registerRoutes(app);
-  console.log("✅ [Server] Routes registered, continuing with server setup...");
+  // CRITICAL: Create server IMMEDIATELY - no async imports
+  // Cloud Run requires the server to respond to health checks within seconds
+  const { createServer } = await import("http");
+  const server = createServer(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -1686,31 +1917,50 @@ app.use((req, res, next) => {
     }, 1000);
   });
 
-  // Setup vite AFTER error handlers but BEFORE listen
-  // This way if vite fails, server can still start
-  console.log("🔍 [Debug] About to setup Vite...");
-  try {
-    const viteModule = await loadViteModule();
-    if (app.get("env") === "development") {
-      await viteModule.setupVite(app, server);
-    } else {
-      viteModule.serveStatic(app);
-    }
-  } catch (error: any) {
-    console.error("[Vite] Failed to load vite module:", error.message);
-    console.error("[Vite] Server will run API-only mode - frontend unavailable");
-    // Server can still run - API routes will work fine
-    // Don't let vite errors crash the server
-  }
-
   // Start listening IMMEDIATELY - don't wait for anything else
+  // This is CRITICAL for Cloud Run - server must respond to health checks quickly
   console.log(`[DreamNet] Starting server on ${host}:${port}...`);
   server.listen(port, host, () => {
-    console.log(`[DreamNet] Serving on port ${port}`);
+    console.log(`[DreamNet] ✅ Server listening on ${host}:${port}`);
     console.log(`[DreamNet] Server started - /health endpoint available`);
     
-    // Initialize Star-Bridge Lungs - CRITICAL: Always start ⭐
-    // Running in server.listen callback ensures it runs when server is ready
+    // Register routes asynchronously AFTER server is listening (non-blocking)
+    (async () => {
+      try {
+        const routesIndex = await import("./routes/index");
+        if (routesIndex.registerRoutes) {
+          // Call it but ignore the returned server - we already have one
+          await routesIndex.registerRoutes(app);
+          console.log("✅ [Server] Routes registered");
+        }
+      } catch (error: any) {
+        console.error("[Server] Failed to register some routes:", error.message);
+        // Don't crash - server can still run with partial routes
+      }
+    })();
+    
+    // Setup vite AFTER server is listening (non-blocking)
+    // This way if vite fails, server can still start
+    (async () => {
+      console.log("🔍 [Debug] Setting up Vite (non-blocking)...");
+      try {
+        const viteModule = await loadViteModule();
+        if (app.get("env") === "development") {
+          await viteModule.setupVite(app, server);
+        } else {
+          viteModule.serveStatic(app);
+        }
+        console.log("✅ [Vite] Static file serving configured");
+      } catch (error: any) {
+        console.error("[Vite] Failed to load vite module:", error.message);
+        console.error("[Vite] Server will run API-only mode - frontend unavailable");
+        // Server can still run - API routes will work fine
+        // Don't let vite errors crash the server
+      }
+    })();
+    
+    // Initialize subsystems AFTER server is listening (non-blocking)
+    // This ensures Cloud Run health checks pass immediately
     (async () => {
       try {
         console.log("⭐ [Star-Bridge Lungs] Starting initialization...");

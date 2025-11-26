@@ -19,6 +19,7 @@ export interface BaseMiniApp {
   
   // Onchain
   contractAddress?: string;      // Base contract address
+  contractName?: string;         // Contract name (e.g., 'DreamPassport', 'GameRegistry')
   chainId: number;               // Base = 8453
   deploymentTx?: string;          // Deployment transaction hash
   
@@ -46,6 +47,20 @@ export interface BaseMiniApp {
   createdAt: number;
   deployedAt?: number;
   updatedAt: number;
+}
+
+/**
+ * Mini-App Registry Entry
+ * Matches the structure of entries in MINI_APPS registry
+ */
+export interface MiniAppRegistryEntry {
+  component: string;
+  name: string;
+  category: string;
+  requiresPassport?: boolean;
+  minTier?: string;
+  contractAddress?: string;
+  contractName?: string;
 }
 
 export interface MiniAppManifest {

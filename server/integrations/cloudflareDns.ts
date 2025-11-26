@@ -240,8 +240,20 @@ export class CloudflareDnsProvider implements DnsProvider {
 /**
  * Create DNS provider based on environment configuration
  */
-export function createDnsProvider(): import('./dnsProvider').DnsProvider {
+export function createDnsProvider(domain?: string): import('./dnsProvider').DnsProvider {
   const provider = process.env.DNS_PROVIDER?.toLowerCase() || '';
+
+  if (provider === 'namecheap' || (process.env.NAMECHEAP_API_USER && process.env.NAMECHEAP_API_KEY)) {
+    try {
+      const { NamecheapDnsProvider } = require('./namecheapDns');
+      const targetDomain = domain || process.env.PRIMARY_DOMAIN || 'dreamnet.ink';
+      return new NamecheapDnsProvider(targetDomain);
+    } catch (error: any) {
+      console.warn(`[DomainKeeper] Failed to initialize Namecheap DNS provider: ${error.message}`);
+      console.warn('[DomainKeeper] Falling back to NoOp provider');
+      return new (require('./dnsProvider').NoOpDnsProvider)();
+    }
+  }
 
   if (provider === 'cloudflare' || (process.env.CF_API_TOKEN && process.env.CF_ZONE_ID)) {
     try {

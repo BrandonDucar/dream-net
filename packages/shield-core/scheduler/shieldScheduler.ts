@@ -4,7 +4,9 @@ import { ensureShieldPhases, rotateShieldFrequencies } from "../logic/shieldRota
 import { ensureDefaultModulators } from "../logic/shieldModulator";
 import { ensureDefaultEmitters } from "../logic/shieldEmitter";
 import { simulateThreatDetection, analyzeThreat } from "../logic/threatDetector";
+import { aiThreatDetector } from "../logic/aiThreatDetector";
 import { fireSpikeAtThreat } from "../logic/offensiveSpike";
+import { fireAdvancedSpikeAtThreat, getBestSpikeType } from "../logic/advancedSpikes";
 import { createCellularShield, propagateShieldViaWormhole, getCellularShieldStats } from "../logic/cellularShield";
 import { learnFromThreats, predictThreatSeverity } from "../logic/shieldLearner";
 import { initializeCrossChainShield, syncCrossChainShields, getCrossChainShieldStats } from "../logic/crossChainShield";
@@ -38,16 +40,53 @@ export function runShieldCycle(ctx: ShieldContext): ShieldStatus {
     console.log(`[Shield:Scheduler] Detected ${detectedThreats.length} threat(s)`);
   }
 
-  // 5. Analyze and block threats
+  // 5. Analyze and block threats (using AI detector if available)
   for (const threat of detectedThreats) {
-    const analysis = analyzeThreat(threat);
+    // Try AI analysis first, fall back to basic analysis
+    let analysis: { shouldBlock: boolean; recommendedSpike?: string; confidence?: number };
+    
+    try {
+      // Use AI threat detector for enhanced analysis
+      analysis = aiThreatDetector.analyzeThreatAI(threat);
+    } catch (error) {
+      // Fall back to basic analysis
+      analysis = analyzeThreat(threat);
+    }
     
     if (analysis.shouldBlock) {
       ShieldStore.blockThreat(threat.id);
-      console.log(`[Shield:Scheduler] Blocked threat: ${threat.id} (${threat.type})`);
+      console.log(`[Shield:Scheduler] Blocked threat: ${threat.id} (${threat.type})${analysis.confidence ? ` [confidence: ${(analysis.confidence * 100).toFixed(1)}%]` : ""}`);
 
-      // Fire spike if recommended
-      if (analysis.recommendedSpike) {
+      // Fire advanced spike for high-level threats, basic spike for others
+      if (threat.level === "critical" || threat.level === "extreme" || threat.level === "high") {
+        // Use advanced spikes for serious threats
+        const bestSpikeType = getBestSpikeType(threat);
+        const advancedSpike = fireAdvancedSpikeAtThreat(threat, bestSpikeType);
+        if (advancedSpike) {
+          threat.spikeFired = true;
+          threat.spikeResult = advancedSpike.result;
+          ShieldStore.detectThreat(threat); // Update threat
+
+          // Bridge Shield spike to Health recovery if threat is health-related
+          if (threat.type === "health_down" || threat.type === "health_degraded") {
+            try {
+              const { bridgeShieldSpikeToHealth } = require("@dreamnet/dreamnet-shield-health-bridge");
+              const clusterId = threat.payload?.clusterId || threat.target;
+              if (clusterId) {
+                bridgeShieldSpikeToHealth({
+                  threatId: threat.id,
+                  clusterId,
+                  action: advancedSpike.result?.action || "recover",
+                  timestamp: Date.now(),
+                });
+              }
+            } catch (error) {
+              // Bridge not available, continue without error
+            }
+          }
+        }
+      } else if (analysis.recommendedSpike) {
+        // Use basic spikes for lower-level threats
         const spike = fireSpikeAtThreat(
           threat,
           analysis.recommendedSpike as any
@@ -56,6 +95,24 @@ export function runShieldCycle(ctx: ShieldContext): ShieldStatus {
           threat.spikeFired = true;
           threat.spikeResult = spike.result;
           ShieldStore.detectThreat(threat); // Update threat
+
+          // Bridge Shield spike to Health recovery if threat is health-related
+          if (threat.type === "health_down" || threat.type === "health_degraded") {
+            try {
+              const { bridgeShieldSpikeToHealth } = require("@dreamnet/dreamnet-shield-health-bridge");
+              const clusterId = threat.payload?.clusterId || threat.target;
+              if (clusterId) {
+                bridgeShieldSpikeToHealth({
+                  threatId: threat.id,
+                  clusterId,
+                  action: spike.result?.action || "recover",
+                  timestamp: Date.now(),
+                });
+              }
+            } catch (error) {
+              // Bridge not available, continue without error
+            }
+          }
         }
       }
     }
