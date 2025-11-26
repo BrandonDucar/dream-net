@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd client && pnpm install --include=optional && pnpm build",
+  "buildCommand": "cd client && chmod +x build.sh && bash build.sh || (pnpm install --include=optional && pnpm build)",
   "outputDirectory": "client/dist",
   "installCommand": "cd client && corepack enable pnpm && pnpm install --include=optional",
   "framework": null,
