@@ -82,5 +82,5 @@ jobs:
             --project ${PROJECT_ID} \
             --format 'value(status.url)')
           echo "Service deployed at: $SERVICE_URL"
-          echo "::set-output name=url::$SERVICE_URL"
+          echo "url=$SERVICE_URL" >> $GITHUB_OUTPUT
 
