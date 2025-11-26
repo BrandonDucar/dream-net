@@ -1,72 +1,86 @@
-# Vercel Building Wrong Project - Root Directory Fix
+# Vercel Root Directory Fix
 
-## Problem Found
+## Problem
+Vercel can't find the `client` directory because the Root Directory might be set incorrectly.
 
-Vercel is building `apps/site` (old site) instead of `client/` (new mini-apps hub).
+## Solution
 
-**Evidence:**
-- Build log shows: `> @dreamnet/site@0.1.0 build`
-- Output: `dist/index.html` (not `client/dist/index.html`)
-- Build size: 539KB (old site) vs 3MB+ (new mini-apps hub)
+### Option 1: Set Root Directory in Vercel Dashboard (RECOMMENDED)
 
-## Root Cause
+1. Go to: https://vercel.com/[your-team]/dreamnet/settings/general
+2. Scroll to **Root Directory**
+3. Set to: **`.`** (just a dot, means repo root)
+4. **OR** leave it **empty**
+5. Save
 
-Vercel is detecting `apps/site` as the project because:
-1. It's in the `apps/*` workspace
-2. It has a `package.json` with a build script
-3. Vercel auto-detects workspaces and builds the first one it finds
+### Option 2: Use pnpm Workspace Filtering
 
-## Fix Applied
+The updated `vercel.json` now uses pnpm workspace filtering, which works from the repo root:
 
-✅ **Deleted `apps/site/vercel.json`** - This prevents Vercel from treating it as a separate project.
-
-## Additional Fix Needed
-
-**You must set Root Directory in Vercel Dashboard:**
-
-1. **Go to Vercel Dashboard**
-2. **Project Settings** → **General**
-3. **Root Directory**: Set to `client` (not `.` or empty)
-4. **Save**
-
-This forces Vercel to build from `client/` directory.
-
----
-
-## Alternative: Rename apps/site
-
-If Root Directory doesn't work, temporarily rename `apps/site`:
-
+**Install Command:**
 ```bash
-git mv apps/site apps/site-old
-git commit -m "Rename apps/site to prevent Vercel detection"
-git push
+corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate
 ```
 
-Then Vercel will only see `client/`.
+**Build Command:**
+```bash
+corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm --filter client... install --include=optional && pnpm --filter client run build
+```
+
+This way, pnpm handles finding the `client` workspace from the repo root.
 
 ---
 
-## Verify Fix
+## Updated Commands for Vercel Dashboard
 
-After setting Root Directory to `client`:
+If you need to set manually:
 
-1. **Redeploy** (or push a commit)
-2. **Check build log** - Should show:
-   ```
-   > dreamops-launcher@0.0.0 build
-   > vite build
-   ```
-   (Not `@dreamnet/site`)
+### Install Command:
+```bash
+corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate
+```
 
-3. **Check output** - Should be `client/dist/index.html`
+### Build Command:
+```bash
+corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm --filter client... install --include=optional && pnpm --filter client run build
+```
 
-4. **Check build size** - Should be 3MB+ (not 539KB)
+### Output Directory:
+```
+client/dist
+```
+
+### Root Directory:
+```
+. 
+```
+(just a dot, or leave empty)
+
+### Framework Preset:
+```
+Other
+```
+
+### Node.js Version:
+```
+24.x
+```
 
 ---
 
-## Current Status
+## Why This Works
 
-- ✅ Deleted `apps/site/vercel.json`
-- ⏳ **YOU NEED TO**: Set Root Directory = `client` in Vercel dashboard
-- ⏳ Then redeploy
+- `pnpm --filter client...` installs `client` and all its dependencies
+- `pnpm --filter client run build` runs the build script in the `client` workspace
+- Works from repo root, no need to `cd` into directories
+- pnpm workspace system handles the path resolution
+
+---
+
+## Test It
+
+After updating, trigger a new deployment and check the logs. You should see:
+- ✅ `corepack enable pnpm`
+- ✅ `pnpm --filter client... install`
+- ✅ `pnpm --filter client run build`
+- ✅ Build succeeds

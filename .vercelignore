@@ -37,6 +37,8 @@ cache/
 
 # Ignore other apps
 apps/
+apps/_site-old-DISABLED/
+apps/site-old/
 
 # Ignore npm lockfiles (we use pnpm)
 package-lock.json
