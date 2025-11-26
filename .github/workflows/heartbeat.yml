@@ -37,4 +37,3 @@ jobs:
           API_HEALTH: ${{ secrets.API_HEALTH }}
           AGENTS_HEALTH: ${{ secrets.AGENTS_HEALTH }}
           DREAMKEEPER_HEALTH: ${{ secrets.DREAMKEEPER_HEALTH }}
-
