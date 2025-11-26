@@ -11,7 +11,14 @@
   },
   "pnpm": {
     "overrides": {
-      "cloudevents": "npm:@cloudevents/sdk@^3.0.0"
+      "cloudevents": "$cloudevents"
+    },
+    "packageExtensions": {
+      "cloudevents@8.0.3": {
+        "engines": {
+          "node": ">=16"
+        }
+      }
     }
   },
   "workspaces": [
