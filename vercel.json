@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm --filter client... install --include=optional && pnpm --filter client run build",
+  "buildCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm --filter client... install && pnpm --filter client run build",
   "outputDirectory": "client/dist",
-  "installCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate",
+  "installCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm --filter client... install",
   "framework": null,
   "rewrites": [
     {
