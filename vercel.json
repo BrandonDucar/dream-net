@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "cd client && pnpm install && pnpm build",
+  "buildCommand": "cd client && pnpm install --include=optional && pnpm build",
   "outputDirectory": "client/dist",
-  "installCommand": "cd client && pnpm install",
+  "installCommand": "cd client && pnpm install --include=optional",
   "framework": null,
   "rewrites": [
     {
