@@ -1,0 +1,23 @@
+name: Update Vercel Node Version
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/update-vercel-node-simple.mjs'
+      - 'package.json'
+
+jobs:
+  update-node-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Update Vercel Node Version
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          node scripts/update-vercel-node-simple.mjs
+
