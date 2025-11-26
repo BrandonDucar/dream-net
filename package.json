@@ -6,8 +6,13 @@
   "type": "module",
   "license": "MIT",
   "engines": {
-    "node": "22.x",
+    "node": "24.x",
     "pnpm": ">=10.21.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "cloudevents": "npm:@cloudevents/sdk@^3.0.0"
+    }
   },
   "workspaces": [
     "apps/*",

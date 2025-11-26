@@ -12,7 +12,7 @@ if (!token) {
   process.exit(1);
 }
 
-console.log('📦 Updating Vercel project Node.js version to 22.x...');
+console.log('📦 Updating Vercel project Node.js version to 24.x...');
 
 const response = await fetch(`https://api.vercel.com/v10/projects/${projectId}`, {
   method: 'PATCH',
@@ -21,7 +21,7 @@ const response = await fetch(`https://api.vercel.com/v10/projects/${projectId}`,
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    nodeVersion: '22.x',
+    nodeVersion: '24.x',
   }),
 });
 
@@ -33,7 +33,7 @@ if (!response.ok) {
 }
 
 const result = await response.json();
-console.log('✅ Success! Node.js version set to 22.x');
+console.log('✅ Success! Node.js version set to 24.x');
 console.log(`   Project: ${result.name}`);
 console.log(`   Node Version: ${result.nodeVersion}`);
 
