@@ -1,5 +1,39 @@
-# Disable Vercel auto-deployment
-# Primary deployment is now Google Cloud Run (pnpm deploy:gcp)
-# This file prevents Vercel from attempting to deploy
+# Ignore server-side code
+server/
+packages/*/dist
+packages/*/node_modules
 
-*
+# Ignore native dependencies
+node_modules/**/ffi-napi
+node_modules/**/node-gyp
+node_modules/**/binding.gyp
+
+# Ignore build artifacts
+dist/
+*.log
+.DS_Store
+
+# Ignore test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Ignore docs
+docs/
+*.md
+!README.md
+
+# Ignore infrastructure
+infrastructure/
+scripts/
+*.sh
+*.ps1
+
+# Ignore contracts (not needed for frontend)
+packages/base-mini-apps/contracts/
+artifacts/
+cache/
+
+# Ignore other apps
+apps/

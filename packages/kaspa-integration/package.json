@@ -1,0 +1,20 @@
+{
+  "name": "@dreamnet/kaspa-integration",
+  "version": "1.0.0",
+  "description": "Kaspa blockchain integration for DreamNet - High-throughput, low-latency transactions",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dreamnet/spider-web-core": "workspace:*",
+    "@dreamnet/agent-registry-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}
+
