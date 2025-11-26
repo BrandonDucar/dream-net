@@ -10,9 +10,6 @@
     "pnpm": ">=10.21.0"
   },
   "pnpm": {
-    "overrides": {
-      "cloudevents": "$cloudevents"
-    },
     "packageExtensions": {
       "cloudevents@8.0.3": {
         "engines": {
