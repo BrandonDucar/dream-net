@@ -7,9 +7,6 @@
     "node": "24.x",
     "pnpm": ">=10.21.0"
   },
-  "overrides": {
-    "@rollup/rollup-linux-x64-gnu": "latest"
-  },
   "scripts": {
     "dev": "vite",
     "build": "vite build --mode production",
