@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm install && pnpm build",
-  "outputDirectory": "dist",
+  "buildCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && cd client && pnpm install && pnpm build",
+  "outputDirectory": "client/dist",
   "installCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate",
   "framework": null,
-  "rootDirectory": "client",
+  "rootDirectory": ".",
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -40,7 +40,7 @@
     "VITE_API_URL": "https://api.dreamnet.ink"
   },
   "functions": {
-    "dist/**/*.js": {
+    "client/dist/**/*.js": {
       "runtime": "nodejs24.x"
     }
   }
