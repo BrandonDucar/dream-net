@@ -27,8 +27,9 @@ docs/
 # Ignore infrastructure
 infrastructure/
 scripts/
-*.sh
 *.ps1
+# Allow client/build.sh for Vercel builds
+!client/build.sh
 
 # Ignore contracts (not needed for frontend)
 packages/base-mini-apps/contracts/
