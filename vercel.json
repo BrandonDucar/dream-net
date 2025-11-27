@@ -1,7 +1,7 @@
 {
   "version": 2,
   "rootDirectory": "client",
-  "installCommand": "npm install -g pnpm@latest && corepack enable pnpm && pnpm install --no-frozen-lockfile",
+  "installCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && pnpm install --no-frozen-lockfile",
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "rewrites": [
