@@ -1,9 +1,7 @@
-import { Pool } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-export declare const pool: Pool | null;
-export declare const db: ReturnType<typeof drizzle> | null;
-export declare function getDb(): ReturnType<typeof drizzle>;
-export declare function getPool(): Pool;
+export declare const pool: any;
+export declare const db: any;
+export declare function getDb(): any;
+export declare function getPool(): any;
 export declare function isDbAvailable(): boolean;
 export declare function getDbStatus(): {
     initialized: boolean;
