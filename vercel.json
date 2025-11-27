@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "cd client && pnpm build",
+  "buildCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && cd client && pnpm install && pnpm build",
   "outputDirectory": "client/dist",
-  "installCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate && cd client && pnpm install",
+  "installCommand": "corepack enable pnpm && corepack prepare pnpm@10.21.0 --activate",
   "framework": null,
+  "rootDirectory": ".",
   "rewrites": [
     {
       "source": "/api/(.*)",
