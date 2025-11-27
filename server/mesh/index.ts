@@ -199,6 +199,7 @@ async function startMagneticRail() {
       legacyImport("./jobs/reputation"),
       legacyImport("./jobs/vectorRollup"),
       legacyImport("./jobs/watchdog"),
+      legacyImport("./jobs/freeTierQuotaReset"),
     ]);
 
     handles.components.magneticRail = true;

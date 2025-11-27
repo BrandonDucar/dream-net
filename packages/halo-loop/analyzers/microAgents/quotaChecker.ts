@@ -1,18 +1,24 @@
 import type { MicroAgentResult } from "../swarmPatrol";
+import { FreeTierQuotaService } from "../../../../server/services/FreeTierQuotaService.js";
 
 export const quotaChecker = {
   id: "swarm-quota-004",
   name: "Resource Quota Check",
   async check(): Promise<MicroAgentResult> {
-    // Check various quotas (Vercel, Neon, etc.)
-    // This is a simplified version - in production, integrate with actual APIs
-
-    const checks: Array<{ name: string; status: "ok" | "warning" | "critical"; usage: number; limit: number }> = [];
-
-    // Mock quota checks - replace with actual API calls
-    // Vercel: check deployment count, bandwidth
-    // Neon: check database size, connection count
-    // GitHub: check API rate limits
+    // Check Google Cloud Free Tier quotas
+    const allQuotas = FreeTierQuotaService.getAllQuotaStatuses();
+    
+    const checks = allQuotas.map((quota) => ({
+      name: quota.quotaType,
+      status: quota.status === 'exceeded' ? 'critical' as const 
+        : quota.status === 'critical' ? 'critical' as const
+        : quota.status === 'warning' ? 'warning' as const
+        : 'ok' as const,
+      usage: quota.used,
+      limit: quota.limit,
+      percentageUsed: quota.percentageUsed,
+      remaining: quota.remaining,
+    }));
 
     const criticalQuotas = checks.filter((c) => c.status === "critical");
     const warningQuotas = checks.filter((c) => c.status === "warning");
@@ -22,7 +28,7 @@ export const quotaChecker = {
         agentId: this.id,
         checkName: this.name,
         status: "red",
-        message: `Critical quota limits: ${criticalQuotas.map((c) => c.name).join(", ")}`,
+        message: `Critical quota limits: ${criticalQuotas.map((c) => `${c.name} (${c.percentageUsed.toFixed(1)}% used)`).join(", ")}`,
         metadata: { checks },
       };
     } else if (warningQuotas.length > 0) {
@@ -30,7 +36,7 @@ export const quotaChecker = {
         agentId: this.id,
         checkName: this.name,
         status: "amber",
-        message: `Quota warnings: ${warningQuotas.map((c) => c.name).join(", ")}`,
+        message: `Quota warnings: ${warningQuotas.map((c) => `${c.name} (${c.percentageUsed.toFixed(1)}% used)`).join(", ")}`,
         metadata: { checks },
       };
     } else {
@@ -38,7 +44,7 @@ export const quotaChecker = {
         agentId: this.id,
         checkName: this.name,
         status: "green",
-        message: "All quotas within limits",
+        message: `All Free Tier quotas within limits (${checks.length} quotas checked)`,
         metadata: { checks },
       };
     }

@@ -1,9 +1,11 @@
 /**
  * Conduit Governor
  * Enforces per-line budgets and limits for {portId, clusterId, toolId} combos
+ * Also applies throttling based on Free Tier quota status
  */
 
 import { getConduitConfig } from "./conduits";
+import { FreeTierQuotaService } from "../../../server/services/FreeTierQuotaService.js";
 import type { PortId } from "../../port-governor/src/types";
 import type { ClusterId } from "../clusters";
 import type { ToolId } from "../../agent-gateway/src/tools";
@@ -40,6 +42,26 @@ export function evaluateConduit(
     return { allowed: true };
   }
 
+  // Check Free Tier quotas for throttling
+  const requestsQuota = FreeTierQuotaService.getQuotaStatus('cloudrun-requests');
+  
+  // Apply throttling based on quota usage
+  let effectiveMaxCallsPerMinute = cfg.budgets.maxCallsPerMinute;
+  if (effectiveMaxCallsPerMinute && requestsQuota.status === 'warning') {
+    // At 80%+ usage, reduce rate limit by 50%
+    effectiveMaxCallsPerMinute = Math.floor(effectiveMaxCallsPerMinute * 0.5);
+  } else if (effectiveMaxCallsPerMinute && requestsQuota.status === 'critical') {
+    // At 95%+ usage, reduce rate limit by 80%
+    effectiveMaxCallsPerMinute = Math.floor(effectiveMaxCallsPerMinute * 0.2);
+  } else if (requestsQuota.status === 'exceeded') {
+    // At 100% usage, block all requests
+    return {
+      allowed: false,
+      reason: `FREE_TIER_QUOTA_EXCEEDED: ${requestsQuota.quotaType} (${requestsQuota.used}/${requestsQuota.limit})`,
+      conduitId: cfg.id,
+    };
+  }
+
   const key = cfg.id;
   const now = Date.now();
   const windowMs = 60_000;
@@ -60,8 +82,8 @@ export function evaluateConduit(
   perConduitUsage.set(key, usage);
 
   if (
-    cfg.budgets.maxCallsPerMinute &&
-    usage.count > cfg.budgets.maxCallsPerMinute
+    effectiveMaxCallsPerMinute &&
+    usage.count > effectiveMaxCallsPerMinute
   ) {
     return {
       allowed: false,

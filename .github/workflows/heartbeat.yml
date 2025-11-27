@@ -13,17 +13,15 @@ jobs:
       
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
-      
-      - name: Enable corepack (pnpm)
-        run: corepack enable && corepack prepare pnpm@10.21.0 --activate
+          node-version: 20
       
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       
       - name: Build heartbeat script
         run: |
-          pnpm exec esbuild ops/heartbeat.ts --bundle --platform=node --format=cjs --outfile=ops/heartbeat.cjs
+          npm install -D esbuild
+          npx esbuild ops/heartbeat.ts --bundle --platform=node --format=cjs --outfile=ops/heartbeat.cjs
       
       - name: Run heartbeat
         run: node ops/heartbeat.cjs

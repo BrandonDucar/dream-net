@@ -11,6 +11,7 @@
  */
 
 import { BudgetControlService } from "../../../server/services/BudgetControlService.js";
+import { FreeTierQuotaService } from "../../../server/services/FreeTierQuotaService.js";
 import { evaluateConduit } from "./conduitGovernor.js";
 import type { PortId } from "../../port-governor/src/types.js";
 import type { ClusterId } from "../clusters.js";
@@ -23,6 +24,11 @@ export interface CloudRunGovernorDecision {
   maxInstances?: number;
   estimatedCost?: number;
   budgetRemaining?: number;
+  quotaStatus?: {
+    requests?: { used: number; limit: number; remaining: number };
+    gbSeconds?: { used: number; limit: number; remaining: number };
+    vcpuSeconds?: { used: number; limit: number; remaining: number };
+  };
 }
 
 export interface CloudRunScaleRequest {
@@ -47,7 +53,8 @@ export interface CloudRunDeployRequest {
  * Checks:
  * 1. Conduit Governor (rate limits)
  * 2. Budget Control Service (cost limits)
- * 3. Keep-alive budget (if setting minInstances > 0)
+ * 3. Free Tier Quota Service (Free Tier limits)
+ * 4. Keep-alive budget (if setting minInstances > 0)
  */
 export function evaluateCloudRunOperation(
   operation: "deploy" | "scale" | "update" | "setKeepAlive",
@@ -81,7 +88,17 @@ export function evaluateCloudRunOperation(
     };
   }
 
-  // 3. Special check for keep-alive (minInstances > 0)
+  // 3. Check Free Tier Quotas
+  const quotaCheck = checkFreeTierQuotas(operation, request);
+  if (!quotaCheck.allowed) {
+    return {
+      allowed: false,
+      reason: quotaCheck.reason || "FREE_TIER_QUOTA_EXCEEDED",
+      quotaStatus: quotaCheck.quotaStatus,
+    };
+  }
+
+  // 4. Special check for keep-alive (minInstances > 0)
   if (operation === "setKeepAlive" || (request as CloudRunScaleRequest).minInstances) {
     const minInstances = (request as CloudRunScaleRequest).minInstances || 1;
     if (minInstances > 0) {
@@ -107,7 +124,100 @@ export function evaluateCloudRunOperation(
     minInstances: (request as CloudRunScaleRequest).minInstances,
     maxInstances: (request as CloudRunScaleRequest).maxInstances,
     estimatedCost,
+    quotaStatus: quotaCheck.quotaStatus,
   };
+}
+
+/**
+ * Check Free Tier quotas for Cloud Run operation
+ */
+function checkFreeTierQuotas(
+  operation: "deploy" | "scale" | "update" | "setKeepAlive",
+  request: CloudRunScaleRequest | CloudRunDeployRequest
+): {
+  allowed: boolean;
+  reason?: string;
+  quotaStatus?: CloudRunGovernorDecision['quotaStatus'];
+} {
+  // For deploy/update operations, estimate resource usage
+  // For scale operations, we're just changing instance counts (no immediate resource usage)
+  
+  if (operation === "deploy" || operation === "update") {
+    // Estimate: Each request uses ~0.5GB memory for 1 second = 0.5 GB-seconds
+    // Estimate: Each request uses ~0.5 vCPU for 1 second = 0.5 vCPU-seconds
+    // We'll track actual usage when requests are made, but check if we have headroom
+    
+    const requestsCheck = FreeTierQuotaService.checkQuota('cloudrun-requests', 1);
+    if (!requestsCheck.allowed) {
+      return {
+        allowed: false,
+        reason: requestsCheck.reason,
+        quotaStatus: {
+          requests: {
+            used: requestsCheck.status.used,
+            limit: requestsCheck.status.limit,
+            remaining: requestsCheck.status.remaining,
+          },
+        },
+      };
+    }
+    
+    // Check if we're in warning/critical zone - throttle accordingly
+    const requestsStatus = FreeTierQuotaService.getQuotaStatus('cloudrun-requests');
+    const gbSecondsStatus = FreeTierQuotaService.getQuotaStatus('cloudrun-gb-seconds');
+    const vcpuSecondsStatus = FreeTierQuotaService.getQuotaStatus('cloudrun-vcpu-seconds');
+    
+    // If any quota is critical (95%+), block new deployments
+    if (requestsStatus.status === 'critical' || requestsStatus.status === 'exceeded' ||
+        gbSecondsStatus.status === 'critical' || gbSecondsStatus.status === 'exceeded' ||
+        vcpuSecondsStatus.status === 'critical' || vcpuSecondsStatus.status === 'exceeded') {
+      return {
+        allowed: false,
+        reason: 'FREE_TIER_QUOTA_CRITICAL',
+        quotaStatus: {
+          requests: {
+            used: requestsStatus.used,
+            limit: requestsStatus.limit,
+            remaining: requestsStatus.remaining,
+          },
+          gbSeconds: {
+            used: gbSecondsStatus.used,
+            limit: gbSecondsStatus.limit,
+            remaining: gbSecondsStatus.remaining,
+          },
+          vcpuSeconds: {
+            used: vcpuSecondsStatus.used,
+            limit: vcpuSecondsStatus.limit,
+            remaining: vcpuSecondsStatus.remaining,
+          },
+        },
+      };
+    }
+    
+    return {
+      allowed: true,
+      quotaStatus: {
+        requests: {
+          used: requestsStatus.used,
+          limit: requestsStatus.limit,
+          remaining: requestsStatus.remaining,
+        },
+        gbSeconds: {
+          used: gbSecondsStatus.used,
+          limit: gbSecondsStatus.limit,
+          remaining: gbSecondsStatus.remaining,
+        },
+        vcpuSeconds: {
+          used: vcpuSecondsStatus.used,
+          limit: vcpuSecondsStatus.limit,
+          remaining: vcpuSecondsStatus.remaining,
+        },
+      },
+    };
+  }
+  
+  // Scale operations don't consume quota immediately
+  return { allowed: true };
 }
 
 /**
@@ -138,7 +248,7 @@ function estimateCloudRunCost(
 }
 
 /**
- * Record Cloud Run operation cost
+ * Record Cloud Run operation cost and quota usage
  */
 export function recordCloudRunCost(
   operation: "deploy" | "scale" | "update" | "setKeepAlive",
@@ -157,6 +267,27 @@ export function recordCloudRunCost(
       BudgetControlService.recordUsage("cloudrun-keepalive", dailyCost);
     }
   }
+}
+
+/**
+ * Record Cloud Run request usage (for Free Tier tracking)
+ * Call this when a Cloud Run service handles a request
+ */
+export function recordCloudRunRequestUsage(config: {
+  memoryGB: number; // Memory allocated (e.g., 0.5 for 512Mi)
+  vcpu: number; // vCPU allocated (e.g., 1.0)
+  executionSeconds: number; // Request execution time in seconds
+}): void {
+  // Record request count
+  FreeTierQuotaService.recordUsage('cloudrun-requests', 1);
+  
+  // Calculate GB-seconds: memoryGB × executionSeconds
+  const gbSeconds = config.memoryGB * config.executionSeconds;
+  FreeTierQuotaService.recordUsage('cloudrun-gb-seconds', gbSeconds);
+  
+  // Calculate vCPU-seconds: vcpu × executionSeconds
+  const vcpuSeconds = config.vcpu * config.executionSeconds;
+  FreeTierQuotaService.recordUsage('cloudrun-vcpu-seconds', vcpuSeconds);
 }
 
 /**
