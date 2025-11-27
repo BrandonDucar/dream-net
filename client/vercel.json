@@ -1,6 +1,12 @@
 {
-  "installCommand": "cd .. && pnpm --filter client... install --no-frozen-lockfile",
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist"
+  "version": 2,
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://api.dreamnet.ink/api/$1"
+    }
+  ]
 }
 
