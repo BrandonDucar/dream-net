@@ -1,0 +1,16 @@
+{
+  "name": "@dreamnet/spine",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "echo \"Spine has no build yet\"",
+    "test": "echo \"no tests configured for spine\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+
