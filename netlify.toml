@@ -1,15 +1,16 @@
 # Netlify Configuration for DreamNet Hub
 # Only builds the client (frontend), not the server
+# Using Option B: Keep root as base, explicitly install in client/
 
 [build]
-  # Build command: Change to client directory and build
-  # Root install handles all dependencies, then we build client
-  command = "cd client && pnpm build"
+  # Build command: Install root deps, then client deps, then build
+  # Client needs workspace packages from root, so we install both
+  command = "pnpm install --frozen-lockfile && cd client && pnpm install --frozen-lockfile && pnpm build"
   
-  # Output directory: Where the built files are
+  # Output directory: Relative to repo root
   publish = "client/dist"
   
-  # Install command: Install all dependencies from root (includes client deps)
+  # Install command: Install root workspace dependencies first
   install = "pnpm install --frozen-lockfile"
 
 [build.environment]
