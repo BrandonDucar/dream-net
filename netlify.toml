@@ -2,13 +2,14 @@
 # Only builds the client (frontend), not the server
 
 [build]
-  # Build command: Only build the client
-  command = "pnpm --filter client build"
+  # Build command: Change to client directory and build
+  # Root install handles all dependencies, then we build client
+  command = "cd client && pnpm build"
   
   # Output directory: Where the built files are
   publish = "client/dist"
   
-  # Install command: Install dependencies from root
+  # Install command: Install all dependencies from root (includes client deps)
   install = "pnpm install --frozen-lockfile"
 
 [build.environment]
