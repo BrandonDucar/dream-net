@@ -3,9 +3,9 @@
 # Using Option B: Keep root as base, explicitly install in client/
 
 [build]
-  # Build command: Install client deps explicitly, then build
-  # Client is NOT in workspace, so we must install its deps separately
-  command = "cd client && pnpm install --frozen-lockfile && pnpm build"
+  # Build command: Root install hoists all deps, so we just build from client
+  # No need for client install since packages are hoisted to root node_modules
+  command = "cd client && pnpm build"
   
   # Output directory: Relative to repo root
   publish = "client/dist"

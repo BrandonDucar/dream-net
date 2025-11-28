@@ -39,9 +39,9 @@ export default defineConfig({
       'wagmi': path.resolve(__dirname, './node_modules/wagmi'),
       'viem': path.resolve(__dirname, './node_modules/viem'),
       '@wagmi/core': path.resolve(__dirname, './node_modules/@wagmi/core'),
-      // Ensure Radix UI packages resolve from client's node_modules to avoid version conflicts
-      '@radix-ui/react-visually-hidden': path.resolve(__dirname, './node_modules/@radix-ui/react-visually-hidden'),
-      '@radix-ui/react-select': path.resolve(__dirname, './node_modules/@radix-ui/react-select'),
+      // Ensure Radix UI packages resolve from root node_modules (hoisted by pnpm)
+      '@radix-ui/react-visually-hidden': path.resolve(__dirname, '../node_modules/@radix-ui/react-visually-hidden'),
+      '@radix-ui/react-select': path.resolve(__dirname, '../node_modules/@radix-ui/react-select'),
     },
     preserveSymlinks: true,
   },
