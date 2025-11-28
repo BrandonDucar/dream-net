@@ -3,14 +3,15 @@
 # Using Option B: Keep root as base, explicitly install in client/
 
 [build]
-  # Build command: Install root deps, then client deps, then build
-  # Client needs workspace packages from root, so we install both
-  command = "pnpm install --frozen-lockfile && cd client && pnpm install --frozen-lockfile && pnpm build"
+  # Build command: Root install handles all workspace deps, then build client
+  # Client is part of workspace, so root install covers its dependencies
+  command = "cd client && pnpm build"
   
   # Output directory: Relative to repo root
   publish = "client/dist"
   
-  # Install command: Install root workspace dependencies first
+  # Install command: Install all workspace dependencies from root
+  # This installs client's deps too since it's part of the workspace
   install = "pnpm install --frozen-lockfile"
 
 [build.environment]
