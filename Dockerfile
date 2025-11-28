@@ -4,7 +4,8 @@
 # ============================================================================
 # Stage 1: Builder - Install dependencies and build all apps
 # ============================================================================
-FROM node:20-slim AS builder
+# Pinned to SHA256 digest for supply-chain security (prevents image tampering)
+FROM node:20-slim@sha256:fbb357f69d05c97333855b0846e4ef65462409728312df3c9ff12c941741c0a5 AS builder
 
 # Install pnpm
 RUN npm install -g pnpm@10.21.0
@@ -48,7 +49,8 @@ RUN (cd /app && pnpm --filter server build) || echo "Server build skipped, will 
 # ============================================================================
 # Stage 2: Runtime - Production image with only necessary files
 # ============================================================================
-FROM node:20-slim AS runtime
+# Pinned to SHA256 digest for supply-chain security (prevents image tampering)
+FROM node:20-slim@sha256:fbb357f69d05c97333855b0846e4ef65462409728312df3c9ff12c941741c0a5 AS runtime
 
 # Install pnpm
 RUN npm install -g pnpm@10.21.0

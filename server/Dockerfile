@@ -1,7 +1,8 @@
 # DreamNet Backend Dockerfile
 # Optimized for Google Cloud Run and AWS App Runner/ECS
 
-FROM node:20-slim
+# Pinned to SHA256 digest for supply-chain security (prevents image tampering)
+FROM node:20-slim@sha256:fbb357f69d05c97333855b0846e4ef65462409728312df3c9ff12c941741c0a5
 
 # Install pnpm
 RUN npm install -g pnpm@10.21.0

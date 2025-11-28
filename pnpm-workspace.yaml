@@ -8,6 +8,16 @@ packages:
   - packages/*
   - server
   - spine
+  - packages/observability-core
+  - packages/sync-yjs-core
+  - packages/sync-automerge-core
+  - packages/sync-replicache-core
+  - packages/sync-dreamnet-core
+  - packages/mcp-backbone
+  - packages/mcp-servers/*
+  - packages/mcp-gateway
+  - packages/liquidity-core
+  - packages/stablecoin-core
 
 onlyBuiltDependencies:
   - blake3

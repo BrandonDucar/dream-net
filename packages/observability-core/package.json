@@ -1,0 +1,25 @@
+{
+  "name": "@dreamnet/observability-core",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/sdk-node": "^0.50.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.46.0",
+      "@opentelemetry/exporter-otlp-proto": "^0.26.0",
+    "@opentelemetry/instrumentation-http": "^0.50.0",
+    "@opentelemetry/instrumentation-express": "^0.50.0",
+    "@opentelemetry/resources": "^1.24.0",
+    "@opentelemetry/semantic-conventions": "^1.24.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

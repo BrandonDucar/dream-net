@@ -1,0 +1,20 @@
+{
+  "name": "@dreamnet/sync-yjs-core",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "yjs": "^13.6.0",
+    "y-indexeddb": "^9.0.12",
+    "y-prosemirror": "^1.3.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

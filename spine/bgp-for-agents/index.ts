@@ -15,7 +15,7 @@ export type {
 } from "./AgentBGP.js";
 
 export { RouteTable } from "./RouteTable.js";
-export { RouteAnnouncementManager } from "./RouteAnnouncements.js";
+export { announceRoute, withdrawRoute } from "./RouteAnnouncements.js";
 export type { RoutingStrategy } from "./RoutingStrategies.js";
 export {
   ShortestPathStrategy,

@@ -1,51 +1,56 @@
 /**
- * Route Announcements - Skeleton for handling route advertisements
+ * Route Announcements - Functions for handling route advertisements
  * 
- * This will be filled by Antigravity with actual announcement logic.
+ * Phase I implementation: Simple event emission for route announcements.
  */
 
-import type { AgentRouteAnnouncement, AgentAutonomousSystem } from "./AgentBGP.js";
+import type { AgentRoute } from "./AgentBGP.js";
+import type { DreamEventBus } from "../dreamnet-event-bus/DreamEventBus.js";
+import { createEventEnvelope } from "../dreamnet-event-bus/EventEnvelope.js";
 
 /**
- * Route Announcement Manager - handles route advertisements
- * Empty implementation - Antigravity will fill this
+ * Announce a route via the event bus
+ * 
+ * Publishes an "Agent.Route.Announced" event with route information.
+ * 
+ * @param route - Route to announce
+ * @param eventBus - Event bus to publish to
  */
-export class RouteAnnouncementManager {
-  constructor() {
-    // Empty constructor - Antigravity will initialize
-  }
+export function announceRoute(route: AgentRoute, eventBus: DreamEventBus): void {
+  const event = createEventEnvelope({
+    type: "Agent.Route.Announced",
+    source: route.agentSystem,
+    payload: {
+      prefix: route.prefix,
+      agentSystem: route.agentSystem,
+      path: route.path,
+      nextHop: route.nextHop,
+      originTime: route.originTime,
+      attributes: route.attributes,
+    },
+  });
+  eventBus.publish(event);
+}
 
-  /**
-   * Announce routes to other agents
-   * @param announcement - Route announcement to send
-   */
-  announce(announcement: AgentRouteAnnouncement): void {
-    throw new Error("Not implemented - Antigravity will implement");
-  }
-
-  /**
-   * Withdraw routes from other agents
-   * @param announcement - Withdrawal announcement
-   */
-  withdraw(announcement: AgentRouteAnnouncement): void {
-    throw new Error("Not implemented - Antigravity will implement");
-  }
-
-  /**
-   * Process incoming route announcement
-   * @param announcement - Incoming announcement
-   */
-  processAnnouncement(announcement: AgentRouteAnnouncement): void {
-    throw new Error("Not implemented - Antigravity will implement");
-  }
-
-  /**
-   * Get announcements from an agent system
-   * @param agentSystem - Agent system to get announcements from
-   * @returns Array of announcements
-   */
-  getAnnouncements(agentSystem: AgentAutonomousSystem): AgentRouteAnnouncement[] {
-    throw new Error("Not implemented - Antigravity will implement");
-  }
+/**
+ * Withdraw a route via the event bus
+ * 
+ * Publishes an "Agent.Route.Withdrawn" event with route information.
+ * 
+ * @param route - Route to withdraw
+ * @param eventBus - Event bus to publish to
+ */
+export function withdrawRoute(route: AgentRoute, eventBus: DreamEventBus): void {
+  const event = createEventEnvelope({
+    type: "Agent.Route.Withdrawn",
+    source: route.agentSystem,
+    payload: {
+      prefix: route.prefix,
+      agentSystem: route.agentSystem,
+      path: route.path,
+      nextHop: route.nextHop,
+    },
+  });
+  eventBus.publish(event);
 }
 

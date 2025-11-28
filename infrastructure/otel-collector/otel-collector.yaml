@@ -1,0 +1,53 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 1s
+    send_batch_size: 1024
+  
+  tail_sampling:
+    decision_wait: 10s
+    num_traces: 100
+    policies:
+      - name: always-sample-errors
+        type: status_code
+        status_code:
+          status_codes:
+            - ERROR
+      - name: always-sample-slow
+        type: latency
+        latency:
+          threshold_ms: 1000
+      - name: sample-1-percent
+        type: probabilistic
+        probabilistic:
+          sampling_percentage: 1
+
+exporters:
+  googlecloud:
+    project: ${GCP_PROJECT_ID}
+    use_insecure: false
+  
+  otlp/honeycomb:
+    endpoint: ${HONEYCOMB_ENDPOINT:-api.honeycomb.io:443}
+    headers:
+      "x-honeycomb-team": ${HONEYCOMB_API_KEY:-}
+      "x-honeycomb-dataset": ${HONEYCOMB_DATASET:-dreamnet}
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [tail_sampling, batch]
+      exporters: [googlecloud, otlp/honeycomb]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [googlecloud]
+

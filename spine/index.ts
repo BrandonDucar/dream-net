@@ -29,3 +29,6 @@ export * from "./wrappers/index.js";
 // Agent Protocols
 export * from "./agent-protocols/index.js";
 
+// Utils
+export * from "./utils/index.js";
+

@@ -1745,7 +1745,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Lighthouse Website Audit endpoint
-  app.post("/api/lighthouse/audit", async (req, res) => {
+  // Phase I: Add governance middleware for Browser Agent security
+  app.post("/api/lighthouse/audit", 
+    async (req, res, next) => {
+      // Attach cluster ID for governance
+      (req as any).clusterId = "BROWSER_AGENT";
+      next();
+    },
+    async (req, res) => {
     try {
       const { url } = req.body;
       
