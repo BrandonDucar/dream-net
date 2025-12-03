@@ -1,0 +1,26 @@
+{
+  "buildCommand": "pnpm install && pnpm build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/.well-known/farcaster.json",
+      "destination": "/.well-known/farcaster.json"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/.well-known/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    }
+  ]
+}
+

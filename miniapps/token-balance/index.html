@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Balance - DreamNet Mini App</title>
+    
+    <!-- Base Mini App Embed Metadata -->
+    <meta name="fc:miniapp" content='{
+      "version":"next",
+      "imageUrl":"https://token-balance-dreamnet.vercel.app/embed-image.png",
+      "button":{
+        "title":"Check Balance",
+        "action":{
+          "type":"launch_miniapp",
+          "name":"Token Balance",
+          "url":"https://token-balance-dreamnet.vercel.app"
+        }
+      }
+    }' />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,34 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Token Balance",
+    "homeUrl": "https://token-balance-dreamnet.vercel.app",
+    "iconUrl": "https://token-balance-dreamnet.vercel.app/icon.png",
+    "splashImageUrl": "https://token-balance-dreamnet.vercel.app/splash.png",
+    "splashBackgroundColor": "#000000",
+    "webhookUrl": "https://token-balance-dreamnet.vercel.app/api/webhook",
+    "subtitle": "View your token balances",
+    "description": "Check your token balances on Base L2",
+    "screenshotUrls": [
+      "https://token-balance-dreamnet.vercel.app/screenshot1.png",
+      "https://token-balance-dreamnet.vercel.app/screenshot2.png"
+    ],
+    "primaryCategory": "utility",
+    "tags": ["tokens", "wallet", "base"],
+    "heroImageUrl": "https://token-balance-dreamnet.vercel.app/hero.png",
+    "tagline": "Check balances instantly",
+    "ogTitle": "Token Balance",
+    "ogDescription": "View your token balances on Base L2",
+    "ogImageUrl": "https://token-balance-dreamnet.vercel.app/og-image.png",
+    "noindex": false
+  }
+}
+
