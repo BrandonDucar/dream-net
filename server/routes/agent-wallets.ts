@@ -14,7 +14,8 @@
 
 import { Router } from 'express';
 import { getAgentWalletManager } from '../../packages/agent-wallet-manager';
-import { JsonRpcProvider } from 'ethers';
+// TODO: Fix ethers v6 compatibility - JsonRpcProvider API changed
+// import { JsonRpcProvider } from 'ethers';
 
 // SECURITY: Initialize wallet manager with mnemonic from env only
 // Mnemonic comes from AGENT_WALLET_MNEMONIC environment variable
@@ -51,7 +52,13 @@ router.post('/:agentId/wallet', async (req, res) => {
 });
 
 // Get wallet balance
+// TODO: Fix ethers v6 compatibility - JsonRpcProvider API changed
 router.get('/:agentId/wallet/:chain/balance', async (req, res) => {
+  res.status(503).json({ 
+    error: 'Balance endpoint temporarily disabled - ethers v6 compatibility issue',
+    note: 'JsonRpcProvider API changed in ethers v6, needs update'
+  });
+  /* DISABLED - ethers v6 compatibility issue
   try {
     const { agentId, chain } = req.params;
     const rpcUrl = req.query.rpcUrl as string;
@@ -71,6 +78,7 @@ router.get('/:agentId/wallet/:chain/balance', async (req, res) => {
     console.error('Balance fetch error:', error);
     res.status(500).json({ error: error.message || 'Balance fetch failed' });
   }
+  */
 });
 
 // List all wallets for an agent

@@ -20,7 +20,18 @@
 3. **Cost Controls:**
    - Rate limiting via Control Core Middleware
    - Tier-based access control
-   - Status: Operational but needs Spine integration
+   - ✅ Spine Phase I complete (Event Bus operational)
+   - ⚠️ FreeTierWrapper still stub (needs implementation)
+   - Status: Operational, Spine Event Bus ready for cost event emission
+
+4. **19 New Integrations Cost Analysis:**
+   - All 19 integrations have external API costs
+   - Need cost tracking for each integration
+   - API usage monitoring required
+   - Cost optimization opportunities
+   - Enterprise pricing models needed
+   - Usage-based billing considerations
+   - Cost governance for integration endpoints
 
 ## What We Think Should Happen Next
 

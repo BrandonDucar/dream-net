@@ -598,5 +598,69 @@
     "purpose": "Central interface for users across DreamNet",
     "status": "Active",
     "date_added": "2025-10-25"
+  },
+  {
+    "name": "VERTEX CORE // AGENT 1",
+    "link": null,
+    "category": "Core",
+    "purpose": "DreamNet Snapshot Engine - State-mapping and normalization engine running inside Google Vertex AI. Understands current state of DreamNet ecosystem (apps, agents, services, data, infra, workflows) and normalizes into vertex_fusion_snapshot JSON as primary source of truth for downstream agents.",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "DRONE DOME SKY SCANNER // AGENT 2",
+    "link": null,
+    "category": "Core",
+    "purpose": "Dome-Level Analyzer for DreamNet. Ingests vertex_fusion_snapshot from Agent 1 and builds dome view of overall health, risk, and priorities across agents, apps, services, data, events, integrations, and infra. Emits drone_dome_report and actionable drone_dome_commands for downstream agents (3-8).",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "AGENT 3 — EVENT & MONITORING BLUEPRINT BUILDER",
+    "link": null,
+    "category": "Core",
+    "purpose": "Event and observability architect for DreamNet. Reads vertex_fusion_snapshot and drone_dome_report to design coherent, future-proof event fabric and monitoring blueprint. Outputs event_fabric_spec (canonical event families and schemas) and monitoring_blueprint (DreamScope and diagnostics observability design).",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "AGENT 4 — DREAMKEEPER HEALTH & DIAGNOSTIC ARCHITECT",
+    "link": null,
+    "category": "Core",
+    "purpose": "Health system architect for DreamNet. Uses snapshot, dome view, and event fabric to design health scores for dreams, agents, services, and infra. Outputs dreamkeeper_spec (health models, metrics, scoring models, diagnostic checks) and surgeon_protocols (automated repair playbooks, escalation rules, integration points).",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "AGENT 5 — DEPLOYKEEPER INFRA & DEPLOY ARCHITECT",
+    "link": null,
+    "category": "Core",
+    "purpose": "Infrastructure and deployment architect for DreamNet. Reads vertex_fusion_snapshot and drone_dome_report to design unified deployment, infra, and config model that works across GitHub, GCP, Netlify, Vercel, Replit, etc. Outputs deploykeeper_blueprint (services, environments, CI/CD flows, config management, safety guards) and infra_unification_plan (current state, target state, migration steps).",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "AGENT 6 — DATA SPINE & SCHEMA ARCHITECT",
+    "link": null,
+    "category": "Core",
+    "purpose": "Data architecture specialist for DreamNet. Transforms conceptual domains from vertex_fusion_snapshot into concrete data spine. Defines core entities and relations, storage choices (OLTP/OLAP), and how event data is materialized into queryable views. Outputs data_spine_spec, storage_plan, and migration_recommendations.",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "AGENT 7 — SOCIALOPS / EXTERNAL-EDGE ARCHITECT",
+    "link": null,
+    "category": "Core",
+    "purpose": "External edge and social operations architect for DreamNet. Maps all external edges including social platforms (X, Base, Farcaster, TikTok, IG, FB, Reddit, DeSo), content platforms (Canva, Whatnot, Gumroad), and onchain surfaces (Base, Zora, HyperSub). Designs standardized playbooks for posting, growth, and interaction, and how agents like Monetizer-1 plug into DreamNet's event fabric. Outputs socialops_spec, external_edge_playbooks, and risk_and_safety_guidelines.",
+    "status": "Draft",
+    "date_added": "2025-01-27"
+  },
+  {
+    "name": "AGENT 8 — MASTER BLUEPRINT & EVOLUTION PLANNER",
+    "link": null,
+    "category": "Core",
+    "purpose": "Master planner and evolution architect for DreamNet. Consumes outputs from Agents 1-7 (vertex_fusion_snapshot, drone_dome_report, event_fabric_spec, monitoring_blueprint, dreamkeeper_spec, surgeon_protocols, deploykeeper_blueprint, data_spine_spec, socialops_spec) to produce phased build plan, component dependencies, milestones, and success criteria. Outputs master_blueprint, evolution_roadmap, and risk_matrix.",
+    "status": "Draft",
+    "date_added": "2025-01-27"
   }
 ]

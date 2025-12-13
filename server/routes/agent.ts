@@ -5,8 +5,34 @@ import type { AgentRunInput } from "../core/types";
 export function createAgentRouter(): Router {
   const router = Router();
 
-  router.get("/agents", (_req, res) => {
-    res.json({ ok: true, agents: dreamNetOS.listAgents() });
+  router.get("/agents", async (_req, res) => {
+    try {
+      const agents = dreamNetOS.listAgents();
+      // Also get GPT agents if available
+      let gptAgents: any[] = [];
+      try {
+        const { gptAgentRegistry } = await import("../gpt-agents/GPTAgentRegistry");
+        const allGPTs = gptAgentRegistry.getAllGPTs();
+        const activeGPTs = allGPTs.filter(gpt => gpt.status === "Active");
+        gptAgents = activeGPTs.map(gpt => ({
+          id: `gpt-${gpt.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+          name: gpt.name,
+          category: gpt.category,
+          purpose: gpt.purpose,
+          status: gpt.status,
+        }));
+      } catch (error) {
+        // GPT agents not available, continue without them
+      }
+      res.json({ 
+        ok: true, 
+        agents: agents,
+        gptAgents: gptAgents,
+        total: agents.length + gptAgents.length,
+      });
+    } catch (error: any) {
+      res.status(500).json({ ok: false, error: error.message });
+    }
   });
 
   router.post("/agent", async (req, res) => {

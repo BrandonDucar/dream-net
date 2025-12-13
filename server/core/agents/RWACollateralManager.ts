@@ -5,7 +5,8 @@
  * Supports yield-bearing tokens like BUIDL, YLDS, and other tokenized assets.
  */
 
-import { JsonRpcProvider, Contract } from "ethers";
+// TODO: Fix ethers v6 compatibility - JsonRpcProvider API changed
+// import { JsonRpcProvider, Contract } from "ethers";
 import { broadcastStarbridgeEvent } from "../../starbridge/bus";
 import { StarbridgeTopic, StarbridgeSource } from "../../starbridge/types";
 

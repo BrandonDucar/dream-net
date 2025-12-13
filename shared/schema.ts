@@ -79,6 +79,23 @@ export const dreamnetApiKeys = pgTable("dreamnet_api_keys", {
   // Add other fields as needed
 });
 
+export const latentSessions = pgTable("latent_sessions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  createdAt: timestamp("created_at").defaultNow(),
+  source: text("source"), // "Citadel", "DroneDome", "DreamKeeper", etc.
+  task: text("task"),
+  inputPrompt: text("input_prompt"),
+  latentRep: jsonb("latent_rep").$type<number[]>(), // Vector representation
+  decodedOutput: text("decoded_output"),
+  relatedAgents: jsonb("related_agents").$type<string[]>(),
+  onchainContext: jsonb("onchain_context").$type<{
+    chain?: string;
+    walletAddress?: string;
+    tokenAddress?: string;
+  }>(),
+  metadata: jsonb("metadata").$type<Record<string, any>>(),
+});
+
 // Types
 export type Dream = typeof dreams.$inferSelect;
 export type DreamRecord = Dream;
@@ -103,6 +120,8 @@ export type InsertDreamInvite = typeof dreamInvites.$inferInsert;
 export type DreamToken = typeof dreamTokens.$inferSelect;
 export type InsertDreamToken = typeof dreamTokens.$inferInsert;
 export type Notification = typeof notifications.$inferSelect;
+export type LatentSession = typeof latentSessions.$inferSelect;
+export type InsertLatentSession = typeof latentSessions.$inferInsert;
 
 // Zod schemas (minimal)
 export const insertDreamSchema = createInsertSchema(dreams);

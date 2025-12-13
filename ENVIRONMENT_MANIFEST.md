@@ -41,6 +41,28 @@ This document catalogs all environment variables used across the DreamNet monore
 
 ---
 
+## 🧠 Latent Collaboration
+
+### Optional
+- **`USE_LATENT_COLLABORATION`** (optional, defaults to false)
+  - Values: `true` | `false`
+  - Used in: `packages/latent-collaboration-core/`, `packages/orchestrator-core/`
+  - Purpose: Enable latent collaboration system for agent communication
+  - Note: Requires `OPENAI_API_KEY` for embeddings
+
+- **`LATENT_EMBEDDING_MODEL`** (optional, defaults to `text-embedding-3-small`)
+  - Used in: `packages/latent-collaboration/src/latentSpace.ts`
+  - Purpose: OpenAI embedding model for latent encoding
+  - Default: `text-embedding-3-small`
+
+- **`LATENT_VECTOR_SIZE`** (optional, defaults to 1536)
+  - Type: number
+  - Used in: `packages/latent-collaboration/src/latentSpace.ts`
+  - Purpose: Dimension of latent vectors
+  - Default: `1536`
+
+---
+
 ## ⛓️ Blockchain
 
 ### Base Network

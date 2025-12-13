@@ -222,7 +222,8 @@ DreamNet is architected as a **living organism** with distinct biological system
 - `dream-token` - DREAM token
 - `economic-engine-core` - Economic engine
 - `rewards-engine` - Rewards system
-- `liquidity-engine` - Liquidity pools
+- `liquidity-engine` - Liquidity pools (includes SLU pool planner)
+- `liquidity-core` - Liquidity client libraries (SLUSystem, SLUSeeder, SOLBridge for Staked Liquidity Units)
 - `dream-vault` - Token vault
 - `dream-shop` - Marketplace
 - `dreambet-core` - Gaming/betting
@@ -250,6 +251,62 @@ DreamNet is architected as a **living organism** with distinct biological system
 - `inbox-squared-core` - Email integration
 - `dreamnet-voice-twilio` - Voice integration
 - `dreamnet-vercel-agent` - Vercel agent
+
+### World & Lore Packages (1+)
+
+### Staked Liquidity Units (SLU) System - NOVEL INNOVATION
+
+**Status:** ✅ **IMPLEMENTED** - Revolutionary triple-yield liquidity pools
+
+**Concept**: Staked tokens (stSPK) act as the **base asset** in liquidity pools, creating **Staked Liquidity Units (SLUs)** that earn:
+1. **Staking Rewards** (stSPK continues earning while in pool)
+2. **Swap Fees** (0.3% per trade)
+3. **Emissions** (Gauge staking rewards)
+
+**Smart Contracts** (`packages/base-mini-apps/contracts/`):
+- `StakedSPK.sol` - Receipt token for staked SPK (auto-compounding)
+- `SLUPool.sol` - Main pool contract accepting stSPK as base asset
+- `SLUWrapper.sol` - Compatibility layer for Aerodrome/Uniswap
+- `interfaces/ISLUPool.sol` - Interface definitions
+
+**TypeScript Clients** (`packages/liquidity-core/src/`):
+- `SLUSystem.ts` - Client for interacting with SLU pools
+- `SLUSeeder.ts` - Admin seeding tool (connects to admin wallet with stSPK)
+- `SOLBridge.ts` - Cross-chain SOL integration (Wormhole/Portal)
+
+**Configuration** (`packages/liquidity-engine/logic/`):
+- `sluPoolPlanner.ts` - SLU pool configuration and seeding
+
+**Frontend** (`packages/base-mini-apps/frontend/`):
+- `SLUPoolApp.tsx` - React component for SLU pool interactions
+
+**Pool Pairs**:
+- stSPK + DREAM → SLU-DREAM
+- stSPK + USDC → SLU-USDC
+- stSPK + ETH → SLU-ETH
+- stSPK + SOL → SLU-SOL (via Wormhole/Portal bridge)
+
+**DreamNet Integration**:
+- Wolf Pack: Discovers optimal seeding opportunities
+- Drive Engine: Motivates liquidity operations
+- Super Brain: Autonomous rebalancing
+- Shield Core: MEV protection
+- Star Bridge Lungs: Cross-chain monitoring
+- Neural Mesh: Pattern learning
+- Economic Engine: Token flow tracking
+
+**Why Novel**: First native implementation where staked tokens are base asset (not receipt token), first triple-yield system, first auto-compounding staked liquidity pools.
+
+### World & Lore Packages (1+)
+- `dreamnet-world` - DreamNet world model and game mechanics
+  - Codifies Genesis mythology (Seed → Underlayer → Breakthrough → First Tree)
+  - World map with regions, layers, and connections
+  - Factions (DreamWeavers, DreamForge, DreamKnights, DreamSnails, Nightmares)
+  - Creatures (Dreamlings, Baseborn, Etherials, Nightmares)
+  - Characters (Lumen, Ferris, Aegis-7, CipherShell, Null Crown)
+  - Game loop (acceptSeed, descendToUnderlayer, rootSeed, protectBranch, etc.)
+  - Quest system (Nightmare Bounties, Branch Stabilization, Seed Escort)
+  - Foundation for games, NFTs, content generation, worldbuilding
 
 ### Utility Packages (20+)
 - `base-mini-apps` - Mini app framework

@@ -9,9 +9,9 @@ steps:
       - '-f'
       - 'Dockerfile'
       - '-t'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/dreamnet:${BUILD_ID}'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_IMAGE_NAME}:${BUILD_ID}'
       - '-t'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/dreamnet:latest'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_IMAGE_NAME}:latest'
       - '.'
     id: 'build-image'
 
@@ -20,7 +20,7 @@ steps:
     args:
       - 'push'
       - '--all-tags'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/dreamnet'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_IMAGE_NAME}'
     id: 'push-image'
 
   # Step 3: Deploy to Cloud Run
@@ -31,7 +31,7 @@ steps:
       - 'deploy'
       - '${_SERVICE_NAME}'
       - '--image'
-      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/dreamnet:${BUILD_ID}'
+      - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_IMAGE_NAME}:${BUILD_ID}'
       - '--platform'
       - 'managed'
       - '--region'
@@ -56,8 +56,9 @@ steps:
 # Substitution variables (can be overridden)
 substitutions:
   _REGION: 'us-central1'
-  _SERVICE_NAME: 'dreamnet'
-  _ARTIFACT_REGISTRY_REPO: 'dreamnet-repo'
+  _SERVICE_NAME: 'dreamnet-api-minimal'
+  _IMAGE_NAME: 'dreamnet-api-minimal'
+  _ARTIFACT_REGISTRY_REPO: 'dreamnet'
   _MEMORY: '2Gi'
   _CPU: '2'
   _TIMEOUT: '300s'
@@ -66,8 +67,8 @@ substitutions:
 
 # Images to push
 images:
-  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/dreamnet:${BUILD_ID}'
-  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/dreamnet:latest'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_IMAGE_NAME}:${BUILD_ID}'
+  - '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/${_IMAGE_NAME}:latest'
 
 # Build options
 options:

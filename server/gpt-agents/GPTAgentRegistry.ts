@@ -7,8 +7,8 @@
 
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { registerAgent, registerCitizen } from "@dreamnet/directory/src/registry";
-import { AgentRegistryCore } from "@dreamnet/agent-registry-core";
+import { registerAgent, registerCitizen } from "@dreamnet/directory/registry";
+import AgentRegistryCore from "@dreamnet/agent-registry-core";
 import { CitizenshipStore } from "@dreamnet/dream-state-core/store/citizenshipStore";
 import type { DreamPassportTier } from "@dreamnet/dream-state-core/types";
 import type { CustomGPT, GPTAgentRegistration, GPTAgentStatus, GPTRegistryStats } from "./types";
@@ -144,6 +144,7 @@ export class GPTAgentRegistry {
 
   /**
    * Register all GPTs
+   * Only registers Active GPTs (filters out Draft status)
    */
   async registerAll(): Promise<{ success: number; failed: number; errors: Array<{ gpt: string; error: string }> }> {
     const results = {
@@ -152,7 +153,15 @@ export class GPTAgentRegistry {
       errors: [] as Array<{ gpt: string; error: string }>,
     };
 
-    for (const gpt of this.gpts) {
+    // Filter for Active GPTs only (match gpt-agent-factory.ts behavior)
+    const activeGPTs = this.gpts.filter(gpt => gpt.status === "Active");
+    const draftCount = this.gpts.length - activeGPTs.length;
+
+    if (draftCount > 0) {
+      console.log(`📊 [GPT Agent Registry] Filtering: ${activeGPTs.length} Active, ${draftCount} Draft (skipped)`);
+    }
+
+    for (const gpt of activeGPTs) {
       try {
         await this.registerGPT(gpt);
         results.success++;
@@ -166,7 +175,7 @@ export class GPTAgentRegistry {
     }
 
     console.log(
-      `📊 [GPT Agent Registry] Registration complete: ${results.success} succeeded, ${results.failed} failed`
+      `📊 [GPT Agent Registry] Registration complete: ${results.success} succeeded, ${results.failed} failed (${activeGPTs.length} Active GPTs processed)`
     );
 
     return results;

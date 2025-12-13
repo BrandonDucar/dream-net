@@ -6,7 +6,7 @@
  */
 
 import { Router, Request, Response } from "express";
-import { registerAgent, registerCitizen, listEntriesByType } from "../../packages/directory/src/registry";
+import { registerAgent, registerCitizen, listEntriesByType } from "@dreamnet/directory/registry";
 import { CitizenshipStore } from "../../packages/dream-state-core/store/citizenshipStore";
 import type { DreamPassportTier } from "../../packages/dream-state-core/types";
 import { readFileSync } from "fs";

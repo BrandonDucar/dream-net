@@ -25,6 +25,11 @@ export function seedInitialLiquidityConfigs() {
     chain: baseChain,
   };
 
+  const SPK: Partial<LiquidityPoolConfig["tokenA"]> = {
+    symbol: "SPK",
+    chain: baseChain,
+  };
+
   const ETH: Partial<LiquidityPoolConfig["tokenA"]> = {
     symbol: "ETH",
     chain: ethChain,
@@ -38,13 +43,23 @@ export function seedInitialLiquidityConfigs() {
   const configs: LiquidityPoolConfig[] = [
     // DREAM pairs
     {
+      id: "pool:DREAM-SPK",
+      label: "DREAM / SPK",
+      tokenA: DREAM as any,
+      tokenB: SPK as any,
+      preferred: true,
+      category: "growth",
+      routingPriority: 1,
+      dex: "aerodrome",
+    },
+    {
       id: "pool:DREAM-AERO",
       label: "DREAM / AERO",
       tokenA: DREAM as any,
       tokenB: AERO as any,
-      preferred: true,
+      preferred: false,
       category: "growth",
-      routingPriority: 1,
+      routingPriority: 2,
       dex: "aerodrome",
     },
     {
@@ -70,13 +85,23 @@ export function seedInitialLiquidityConfigs() {
 
     // SHEEP pairs (ready, can be activated later)
     {
+      id: "pool:SHEEP-SPK",
+      label: "SHEEP / SPK",
+      tokenA: SHEEP as any,
+      tokenB: SPK as any,
+      preferred: true,
+      category: "growth",
+      routingPriority: 1,
+      dex: "aerodrome",
+    },
+    {
       id: "pool:SHEEP-AERO",
       label: "SHEEP / AERO",
       tokenA: SHEEP as any,
       tokenB: AERO as any,
-      preferred: true,
+      preferred: false,
       category: "growth",
-      routingPriority: 1,
+      routingPriority: 2,
       dex: "aerodrome",
     },
     {

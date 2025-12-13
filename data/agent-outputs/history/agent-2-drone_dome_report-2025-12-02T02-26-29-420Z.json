@@ -1,0 +1,2712 @@
+{
+  "agentId": 2,
+  "outputType": "drone_dome_report",
+  "data": {
+    "summary": "DreamNet ecosystem has 83 agents (64 active), 48 apps, 182 services. Infrastructure has known issues. Some critical details are missing.",
+    "overall_health": "fragile",
+    "risk_zones": [
+      {
+        "id": "infra_misconfigured_deploys",
+        "category": "infra",
+        "severity": "high",
+        "description": "Infrastructure has known issues or risks that need attention",
+        "evidence": [
+          "infra entries have issues_or_risks fields",
+          "Multiple deployment targets need coordination"
+        ],
+        "recommended_actions": [
+          "Agent 5 (DEPLOYKEEPER) should align infra entries with real deployment configs",
+          "Unify deployment pipeline across platforms"
+        ]
+      },
+      {
+        "id": "missing_critical_details",
+        "category": "data",
+        "severity": "medium",
+        "description": "Snapshot is missing critical details needed for full understanding",
+        "evidence": [
+          "Exact contract addresses for DreamNet-related tokens",
+          "Precise schema for wallet scoring",
+          "Real production domain list for each app",
+          "Complete event schema definitions"
+        ],
+        "recommended_actions": [
+          "Agent 1 should gather missing details",
+          "Update snapshot with complete information"
+        ]
+      }
+    ],
+    "priority_zones": [
+      {
+        "id": "event_fabric_foundation",
+        "category": "monitoring",
+        "impact": "network_visibility",
+        "description": "Event fabric needs to be designed before other monitoring components can be built",
+        "owners": [
+          "agent_3"
+        ],
+        "dependencies": [
+          "vertex_fusion_snapshot.domains.events",
+          "infra.hosting_stack"
+        ]
+      },
+      {
+        "id": "health_system_foundation",
+        "category": "health",
+        "impact": "system_reliability",
+        "description": "Health scoring and diagnostic systems need to be designed for DreamKeeper",
+        "owners": [
+          "agent_4"
+        ],
+        "dependencies": [
+          "vertex_fusion_snapshot",
+          "event_fabric_spec"
+        ]
+      },
+      {
+        "id": "deployment_unification",
+        "category": "infra",
+        "impact": "deployment_efficiency",
+        "description": "Unified deployment pipeline needed across GCP, Netlify, Vercel",
+        "owners": [
+          "agent_5"
+        ],
+        "dependencies": [
+          "vertex_fusion_snapshot.domains.infra"
+        ]
+      }
+    ],
+    "maps": {
+      "agents": [
+        {
+          "id": "gpt-dreamnet-operator",
+          "name": "DreamNet Operator",
+          "status": "active",
+          "risk": "low",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-trusted-agent-gateway",
+          "name": "Trusted Agent Gateway",
+          "status": "active",
+          "risk": "low",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-atlas-sentinel",
+          "name": "Atlas Sentinel",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Atlas"
+        },
+        {
+          "id": "gpt-wanderweave",
+          "name": "Wanderweave",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-travel-fleet-gpt-transit-visa-sentinel",
+          "name": "Travel Fleet GPT / Transit Visa Sentinel",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-atlas-agent-foundry",
+          "name": "Atlas Agent Foundry",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Atlas"
+        },
+        {
+          "id": "gpt-skycircuit-ai",
+          "name": "Skycircuit AI",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-award-atlas",
+          "name": "Award Atlas",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-culture-code",
+          "name": "Culture Code",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-globepay-ai",
+          "name": "GlobePay AI",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-global-season-matrix",
+          "name": "Global Season Matrix",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-hotel-optimizer-x",
+          "name": "Hotel Optimizer X",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-ground-atlas",
+          "name": "Ground Atlas",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-skypath-companion",
+          "name": "Skypath Companion",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-watcher-mesh",
+          "name": "Watcher Mesh",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-nbt-squad-builder",
+          "name": "NBT Squad Builder",
+          "status": "active",
+          "risk": "low",
+          "importance": "core",
+          "notes": "OmniBridge"
+        },
+        {
+          "id": "gpt-dreamtrace",
+          "name": "DreamTrace",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-dreamnet-orchestrator",
+          "name": "DreamNet Orchestrator",
+          "status": "active",
+          "risk": "low",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-forgefix",
+          "name": "ForgeFix",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-workflow-agent-orchestrator",
+          "name": "Workflow Agent Orchestrator",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Automation"
+        },
+        {
+          "id": "gpt-wallet-maestro",
+          "name": "Wallet Maestro",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-dream-surgeon-agent",
+          "name": "Dream Surgeon Agent",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "DreamOps"
+        },
+        {
+          "id": "gpt-ecosystem-synthesizer",
+          "name": "Ecosystem Synthesizer",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Evolution"
+        },
+        {
+          "id": "gpt-aura-9",
+          "name": "AURA-9",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Web3"
+        },
+        {
+          "id": "gpt-community-growth-seo-engine",
+          "name": "Community Growth & SEO Engine",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Growth"
+        },
+        {
+          "id": "gpt-trend-hijack",
+          "name": "Trend Hijack",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Growth"
+        },
+        {
+          "id": "gpt-commerce-optimizer",
+          "name": "Commerce Optimizer",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-integrationscanner",
+          "name": "IntegrationScanner",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Infra"
+        },
+        {
+          "id": "gpt-traffic-shaper",
+          "name": "Traffic Shaper",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Infra"
+        },
+        {
+          "id": "gpt-memory-fabric-agent",
+          "name": "Memory Fabric Agent",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Memory"
+        },
+        {
+          "id": "gpt-private-key-gate",
+          "name": "Private Key Gate",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Security"
+        },
+        {
+          "id": "gpt-aegis-privacy-lab",
+          "name": "Aegis Privacy Lab",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-novaframe-qme",
+          "name": "Novaframe QME",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Production"
+        },
+        {
+          "id": "gpt-rwa-home-tokenization-system",
+          "name": "RWA Home Tokenization System",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Compliance & Tokenization"
+        },
+        {
+          "id": "gpt-lawyeragent-paralegal",
+          "name": "LawyerAgent Paralegal",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-investorops-sentinel",
+          "name": "InvestorOps Sentinel",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Compliance & Analytics"
+        },
+        {
+          "id": "gpt-local-edge-ai",
+          "name": "Local Edge AI",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Compliance & Marketing"
+        },
+        {
+          "id": "gpt-luxury-dial-concierge-by-ducar",
+          "name": "Luxury Dial Concierge — by Ducar",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "supporting",
+          "notes": "Luxury Design"
+        },
+        {
+          "id": "gpt-tag-registry-orche",
+          "name": "Tag Registry Orche",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-design-studio-pro",
+          "name": "Design Studio Pro",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-aethersafe",
+          "name": "Aethersafe",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-code-pilot-studio",
+          "name": "Code Pilot Studio",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-atlas-namepilot-ai",
+          "name": "Atlas NamePilot AI",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Atlas"
+        },
+        {
+          "id": "gpt-showbuilder-gpt",
+          "name": "ShowBuilder GPT",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-rightsphere",
+          "name": "RightSphere",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-subtitle-pilot",
+          "name": "Subtitle Pilot",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-adslot-gpt",
+          "name": "AdSlot GPT",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-tier-forge",
+          "name": "Tier Forge",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-syncpoint",
+          "name": "SyncPoint",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-promo-forge",
+          "name": "Promo Forge",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-reverb",
+          "name": "Reverb",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Creative"
+        },
+        {
+          "id": "gpt-omnisync",
+          "name": "OmniSync",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-loginet-sentinel",
+          "name": "Loginet Sentinel",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-ra-1",
+          "name": "RA-1",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-royalty-flow-nexus",
+          "name": "Royalty Flow Nexus",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Commerce"
+        },
+        {
+          "id": "gpt-traceline",
+          "name": "Traceline",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-axis-ai",
+          "name": "Axis AI",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-aegis-sentinel",
+          "name": "Aegis Sentinel",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-inbox2",
+          "name": "Inbox2",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Experimental"
+        },
+        {
+          "id": "gpt-aegis-logistics-network",
+          "name": "Aegis Logistics Network",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-logistics-resilience-net",
+          "name": "Logistics Resilience Net",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-aegis-interop-nexus",
+          "name": "Aegis Interop Nexus",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-vanguard-nexus",
+          "name": "Vanguard Nexus",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-aegis-command",
+          "name": "Aegis Command",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-aegis-maintenance-intelligence",
+          "name": "Aegis Maintenance Intelligence",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-aegis-relief-command",
+          "name": "Aegis Relief Command",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-redshield-sandbox-gpt",
+          "name": "RedShield Sandbox GPT",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-sentinel-audit-nexus",
+          "name": "Sentinel Audit Nexus",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-procure-sentinel",
+          "name": "Procure Sentinel",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Sentinel"
+        },
+        {
+          "id": "gpt-aero",
+          "name": "Aero",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-aegis-cipher-mesh",
+          "name": "Aegis Cipher Mesh",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Aegis"
+        },
+        {
+          "id": "gpt-atlasmind-pro",
+          "name": "AtlasMind Pro",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Atlas"
+        },
+        {
+          "id": "gpt-atlas-one",
+          "name": "Atlas One",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Atlas"
+        },
+        {
+          "id": "gpt-aeromax-optimizer",
+          "name": "Aeromax Optimizer",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Travel & Commerce"
+        },
+        {
+          "id": "gpt-dreamnet-gpt",
+          "name": "DreamNet GPT",
+          "status": "active",
+          "risk": "low",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-vertex-core-agent-1",
+          "name": "VERTEX CORE // AGENT 1",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-drone-dome-sky-scanner-agent-2",
+          "name": "DRONE DOME SKY SCANNER // AGENT 2",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-agent-3-event-monitoring-blueprint-builder",
+          "name": "AGENT 3 — EVENT & MONITORING BLUEPRINT BUILDER",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-agent-4-dreamkeeper-health-diagnostic-architect",
+          "name": "AGENT 4 — DREAMKEEPER HEALTH & DIAGNOSTIC ARCHITECT",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-agent-5-deploykeeper-infra-deploy-architect",
+          "name": "AGENT 5 — DEPLOYKEEPER INFRA & DEPLOY ARCHITECT",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-agent-6-data-spine-schema-architect",
+          "name": "AGENT 6 — DATA SPINE & SCHEMA ARCHITECT",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-agent-7-socialops-external-edge-architect",
+          "name": "AGENT 7 — SOCIALOPS / EXTERNAL-EDGE ARCHITECT",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        },
+        {
+          "id": "gpt-agent-8-master-blueprint-evolution-planner",
+          "name": "AGENT 8 — MASTER BLUEPRINT & EVOLUTION PLANNER",
+          "status": "planned",
+          "risk": "medium",
+          "importance": "core",
+          "notes": "Core"
+        }
+      ],
+      "apps": [
+        {
+          "id": "agent-gateway",
+          "name": "Agent Gateway",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agent-gateway.ts"
+        },
+        {
+          "id": "agent-marketplace",
+          "name": "Agent Marketplace",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agent-marketplace.ts"
+        },
+        {
+          "id": "agent-ops",
+          "name": "Agent Ops",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agent-ops.ts"
+        },
+        {
+          "id": "agent-outputs",
+          "name": "Agent Outputs",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agent-outputs.ts"
+        },
+        {
+          "id": "agent-wallets",
+          "name": "Agent Wallets",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agent-wallets.ts"
+        },
+        {
+          "id": "agent",
+          "name": "Agent",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agent.ts"
+        },
+        {
+          "id": "agentCommand",
+          "name": "AgentCommand",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agentCommand.ts"
+        },
+        {
+          "id": "agentMarketplace",
+          "name": "AgentMarketplace",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: agentMarketplace.ts"
+        },
+        {
+          "id": "all-dreams",
+          "name": "All Dreams",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: all-dreams.ts"
+        },
+        {
+          "id": "browser-agent",
+          "name": "Browser Agent",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: browser-agent.ts"
+        },
+        {
+          "id": "chatgpt-agent",
+          "name": "Chatgpt Agent",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: chatgpt-agent.ts"
+        },
+        {
+          "id": "dream-cloud",
+          "name": "Dream Cloud",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-cloud.ts"
+        },
+        {
+          "id": "dream-contributions",
+          "name": "Dream Contributions",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-contributions.ts"
+        },
+        {
+          "id": "dream-cores",
+          "name": "Dream Cores",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-cores.ts"
+        },
+        {
+          "id": "dream-event-processor",
+          "name": "Dream Event Processor",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-event-processor.ts"
+        },
+        {
+          "id": "dream-interactions",
+          "name": "Dream Interactions",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-interactions.ts"
+        },
+        {
+          "id": "dream-processor",
+          "name": "Dream Processor",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-processor.ts"
+        },
+        {
+          "id": "dream-remix",
+          "name": "Dream Remix",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-remix.ts"
+        },
+        {
+          "id": "dream-shopping",
+          "name": "Dream Shopping",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-shopping.ts"
+        },
+        {
+          "id": "dream-snail",
+          "name": "Dream Snail",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-snail.ts"
+        },
+        {
+          "id": "dream-storage",
+          "name": "Dream Storage",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-storage.ts"
+        },
+        {
+          "id": "dream-titles",
+          "name": "Dream Titles",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream-titles.ts"
+        },
+        {
+          "id": "dream",
+          "name": "Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dream.ts"
+        },
+        {
+          "id": "dreamnode-registry",
+          "name": "Dreamnode Registry",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dreamnode-registry.ts"
+        },
+        {
+          "id": "dreamops-constellation",
+          "name": "Dreamops Constellation",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dreamops-constellation.ts"
+        },
+        {
+          "id": "dreams",
+          "name": "Dreams",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: dreams.ts"
+        },
+        {
+          "id": "fuse-dreams",
+          "name": "Fuse Dreams",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: fuse-dreams.ts"
+        },
+        {
+          "id": "generate-dream-link",
+          "name": "Generate Dream Link",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: generate-dream-link.ts"
+        },
+        {
+          "id": "get-dream-by-id",
+          "name": "Get Dream By Id",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: get-dream-by-id.ts"
+        },
+        {
+          "id": "get-dream-forks",
+          "name": "Get Dream Forks",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: get-dream-forks.ts"
+        },
+        {
+          "id": "get-dream",
+          "name": "Get Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: get-dream.ts"
+        },
+        {
+          "id": "get-dreams-by-cloud",
+          "name": "Get Dreams By Cloud",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: get-dreams-by-cloud.ts"
+        },
+        {
+          "id": "google-agent-starter",
+          "name": "Google Agent Starter",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: google-agent-starter.ts"
+        },
+        {
+          "id": "gpt-agents",
+          "name": "Gpt Agents",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: gpt-agents.ts"
+        },
+        {
+          "id": "join-dream-team",
+          "name": "Join Dream Team",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: join-dream-team.ts"
+        },
+        {
+          "id": "load-dreams",
+          "name": "Load Dreams",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: load-dreams.ts"
+        },
+        {
+          "id": "mint-dream-token",
+          "name": "Mint Dream Token",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: mint-dream-token.ts"
+        },
+        {
+          "id": "mint-dream",
+          "name": "Mint Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: mint-dream.ts"
+        },
+        {
+          "id": "mutate-dream",
+          "name": "Mutate Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: mutate-dream.ts"
+        },
+        {
+          "id": "my-dreams",
+          "name": "My Dreams",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: my-dreams.ts"
+        },
+        {
+          "id": "orca-marketplace",
+          "name": "Orca Marketplace",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: orca-marketplace.ts"
+        },
+        {
+          "id": "public-dream",
+          "name": "Public Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: public-dream.ts"
+        },
+        {
+          "id": "register-agents",
+          "name": "Register Agents",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: register-agents.ts"
+        },
+        {
+          "id": "remix-dream",
+          "name": "Remix Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: remix-dream.ts"
+        },
+        {
+          "id": "save-dream",
+          "name": "Save Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: save-dream.ts"
+        },
+        {
+          "id": "save-mutated-dream",
+          "name": "Save Mutated Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: save-mutated-dream.ts"
+        },
+        {
+          "id": "shared-dream-storage",
+          "name": "Shared Dream Storage",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: shared-dream-storage.ts"
+        },
+        {
+          "id": "shared-dream",
+          "name": "Shared Dream",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Route handler: shared-dream.ts"
+        }
+      ],
+      "services": [
+        {
+          "id": "activate-packs",
+          "name": "Activate Packs",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: activate-packs.ts"
+        },
+        {
+          "id": "admin-wallets",
+          "name": "Admin Wallets",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: admin-wallets.ts"
+        },
+        {
+          "id": "admin",
+          "name": "Admin",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: admin.ts"
+        },
+        {
+          "id": "advancedSEO",
+          "name": "AdvancedSEO",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: advancedSEO.ts"
+        },
+        {
+          "id": "aerodrome",
+          "name": "Aerodrome",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: aerodrome.ts"
+        },
+        {
+          "id": "ai-relay",
+          "name": "Ai Relay",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ai-relay.ts"
+        },
+        {
+          "id": "ai-surgeon",
+          "name": "Ai Surgeon",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ai-surgeon.ts"
+        },
+        {
+          "id": "aiDataSheets",
+          "name": "AiDataSheets",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: aiDataSheets.ts"
+        },
+        {
+          "id": "alive",
+          "name": "Alive",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: alive.ts"
+        },
+        {
+          "id": "api-keys",
+          "name": "Api Keys",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: api-keys.ts"
+        },
+        {
+          "id": "audit",
+          "name": "Audit",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: audit.ts"
+        },
+        {
+          "id": "auth",
+          "name": "Auth",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: auth.ts"
+        },
+        {
+          "id": "authorization",
+          "name": "Authorization",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: authorization.ts"
+        },
+        {
+          "id": "aws",
+          "name": "Aws",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: aws.ts"
+        },
+        {
+          "id": "base-health",
+          "name": "Base Health",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: base-health.ts"
+        },
+        {
+          "id": "billable",
+          "name": "Billable",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: billable.ts"
+        },
+        {
+          "id": "biomimetic-systems",
+          "name": "Biomimetic Systems",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: biomimetic-systems.ts"
+        },
+        {
+          "id": "brain",
+          "name": "Brain",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: brain.ts"
+        },
+        {
+          "id": "brand-grading",
+          "name": "Brand Grading",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: brand-grading.ts"
+        },
+        {
+          "id": "budget-control",
+          "name": "Budget Control",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: budget-control.ts"
+        },
+        {
+          "id": "cadDesignRoutes",
+          "name": "CadDesignRoutes",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: cadDesignRoutes.ts"
+        },
+        {
+          "id": "canvas",
+          "name": "Canvas",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: canvas.ts"
+        },
+        {
+          "id": "capabilities",
+          "name": "Capabilities",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: capabilities.ts"
+        },
+        {
+          "id": "card-forge",
+          "name": "Card Forge",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: card-forge.ts"
+        },
+        {
+          "id": "chat",
+          "name": "Chat",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: chat.ts"
+        },
+        {
+          "id": "chronocache",
+          "name": "Chronocache",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: chronocache.ts"
+        },
+        {
+          "id": "citizens",
+          "name": "Citizens",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: citizens.ts"
+        },
+        {
+          "id": "claim-fusion",
+          "name": "Claim Fusion",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: claim-fusion.ts"
+        },
+        {
+          "id": "coinsensei",
+          "name": "Coinsensei",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: coinsensei.ts"
+        },
+        {
+          "id": "communication",
+          "name": "Communication",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: communication.ts"
+        },
+        {
+          "id": "competitive-intelligence",
+          "name": "Competitive Intelligence",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: competitive-intelligence.ts"
+        },
+        {
+          "id": "connector",
+          "name": "Connector",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: connector.ts"
+        },
+        {
+          "id": "ConnectorBot",
+          "name": "ConnectorBot",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ConnectorBot.ts"
+        },
+        {
+          "id": "control",
+          "name": "Control",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: control.ts"
+        },
+        {
+          "id": "creativeAgencyRoutes",
+          "name": "CreativeAgencyRoutes",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: creativeAgencyRoutes.ts"
+        },
+        {
+          "id": "crypto",
+          "name": "Crypto",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: crypto.ts"
+        },
+        {
+          "id": "custom-gpt-fleets",
+          "name": "Custom Gpt Fleets",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: custom-gpt-fleets.ts"
+        },
+        {
+          "id": "data-integrity",
+          "name": "Data Integrity",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: data-integrity.ts"
+        },
+        {
+          "id": "dataIntelligence",
+          "name": "DataIntelligence",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: dataIntelligence.ts"
+        },
+        {
+          "id": "dead-letter",
+          "name": "Dead Letter",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: dead-letter.ts"
+        },
+        {
+          "id": "debug-summary",
+          "name": "Debug Summary",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: debug-summary.ts"
+        },
+        {
+          "id": "defense-network",
+          "name": "Defense Network",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: defense-network.ts"
+        },
+        {
+          "id": "deployment",
+          "name": "Deployment",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: deployment.ts"
+        },
+        {
+          "id": "desktop",
+          "name": "Desktop",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: desktop.ts"
+        },
+        {
+          "id": "directory",
+          "name": "Directory",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: directory.ts"
+        },
+        {
+          "id": "discovery",
+          "name": "Discovery",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: discovery.ts"
+        },
+        {
+          "id": "dna",
+          "name": "Dna",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: dna.ts"
+        },
+        {
+          "id": "domain-issuance",
+          "name": "Domain Issuance",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: domain-issuance.ts"
+        },
+        {
+          "id": "drone-dome",
+          "name": "Drone Dome",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: drone-dome.ts"
+        },
+        {
+          "id": "echo-score",
+          "name": "Echo Score",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: echo-score.ts"
+        },
+        {
+          "id": "echo",
+          "name": "Echo",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: echo.ts"
+        },
+        {
+          "id": "ecosystem-commands",
+          "name": "Ecosystem Commands",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ecosystem-commands.ts"
+        },
+        {
+          "id": "ecosystem-dashboard",
+          "name": "Ecosystem Dashboard",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ecosystem-dashboard.ts"
+        },
+        {
+          "id": "email",
+          "name": "Email",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: email.ts"
+        },
+        {
+          "id": "env-keeper",
+          "name": "Env Keeper",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: env-keeper.ts"
+        },
+        {
+          "id": "eventPropagation",
+          "name": "EventPropagation",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: eventPropagation.ts"
+        },
+        {
+          "id": "events",
+          "name": "Events",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: events.ts"
+        },
+        {
+          "id": "evolution-engine",
+          "name": "Evolution Engine",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: evolution-engine.ts"
+        },
+        {
+          "id": "evolution-vault",
+          "name": "Evolution Vault",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: evolution-vault.ts"
+        },
+        {
+          "id": "experiences",
+          "name": "Experiences",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: experiences.ts"
+        },
+        {
+          "id": "fleets",
+          "name": "Fleets",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: fleets.ts"
+        },
+        {
+          "id": "forge",
+          "name": "Forge",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: forge.ts"
+        },
+        {
+          "id": "foundry",
+          "name": "Foundry",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: foundry.ts"
+        },
+        {
+          "id": "free-tier-quota",
+          "name": "Free Tier Quota",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: free-tier-quota.ts"
+        },
+        {
+          "id": "fusions",
+          "name": "Fusions",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: fusions.ts"
+        },
+        {
+          "id": "geofence",
+          "name": "Geofence",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: geofence.ts"
+        },
+        {
+          "id": "get-bounties",
+          "name": "Get Bounties",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: get-bounties.ts"
+        },
+        {
+          "id": "god-mode",
+          "name": "God Mode",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: god-mode.ts"
+        },
+        {
+          "id": "google-cloud",
+          "name": "Google Cloud",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: google-cloud.ts"
+        },
+        {
+          "id": "google-integration",
+          "name": "Google Integration",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: google-integration.ts"
+        },
+        {
+          "id": "googleAdsRoutes",
+          "name": "GoogleAdsRoutes",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: googleAdsRoutes.ts"
+        },
+        {
+          "id": "graft",
+          "name": "Graft",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: graft.ts"
+        },
+        {
+          "id": "grafted",
+          "name": "Grafted",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: grafted.ts"
+        },
+        {
+          "id": "grants-mock",
+          "name": "Grants Mock",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: grants-mock.ts"
+        },
+        {
+          "id": "grants",
+          "name": "Grants",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: grants.ts"
+        },
+        {
+          "id": "grid-lines",
+          "name": "Grid Lines",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: grid-lines.ts"
+        },
+        {
+          "id": "guardian",
+          "name": "Guardian",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: guardian.ts"
+        },
+        {
+          "id": "halo",
+          "name": "Halo",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: halo.ts"
+        },
+        {
+          "id": "hash",
+          "name": "Hash",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: hash.ts"
+        },
+        {
+          "id": "health",
+          "name": "Health",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: health.ts"
+        },
+        {
+          "id": "healthcheck",
+          "name": "Healthcheck",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: healthcheck.ts"
+        },
+        {
+          "id": "healthz",
+          "name": "Healthz",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: healthz.ts"
+        },
+        {
+          "id": "heartbeat-cron",
+          "name": "Heartbeat Cron",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: heartbeat-cron.ts"
+        },
+        {
+          "id": "heartbeat",
+          "name": "Heartbeat",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: heartbeat.ts"
+        },
+        {
+          "id": "immune-swarm",
+          "name": "Immune Swarm",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: immune-swarm.ts"
+        },
+        {
+          "id": "inbox-squared",
+          "name": "Inbox Squared",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: inbox-squared.ts"
+        },
+        {
+          "id": "index",
+          "name": "Index",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: index.ts"
+        },
+        {
+          "id": "instant-mesh",
+          "name": "Instant Mesh",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: instant-mesh.ts"
+        },
+        {
+          "id": "integration",
+          "name": "Integration",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: integration.ts"
+        },
+        {
+          "id": "integrations",
+          "name": "Integrations",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: integrations.ts"
+        },
+        {
+          "id": "jaggy",
+          "name": "Jaggy",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: jaggy.ts"
+        },
+        {
+          "id": "keymaster",
+          "name": "Keymaster",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: keymaster.ts"
+        },
+        {
+          "id": "launch-verification",
+          "name": "Launch Verification",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: launch-verification.ts"
+        },
+        {
+          "id": "legal",
+          "name": "Legal",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: legal.ts"
+        },
+        {
+          "id": "live-metrics-aerodrome",
+          "name": "Live Metrics Aerodrome",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: live-metrics-aerodrome.js"
+        },
+        {
+          "id": "live-metrics-velo",
+          "name": "Live Metrics Velo",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: live-metrics-velo.js"
+        },
+        {
+          "id": "live-metrics",
+          "name": "Live Metrics",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: live-metrics.js"
+        },
+        {
+          "id": "load-core",
+          "name": "Load Core",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: load-core.ts"
+        },
+        {
+          "id": "lucid",
+          "name": "Lucid",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: lucid.ts"
+        },
+        {
+          "id": "market-data",
+          "name": "Market Data",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: market-data.ts"
+        },
+        {
+          "id": "media-list",
+          "name": "Media List",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: media-list.ts"
+        },
+        {
+          "id": "media",
+          "name": "Media",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: media.ts"
+        },
+        {
+          "id": "metrics",
+          "name": "Metrics",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: metrics.ts"
+        },
+        {
+          "id": "monitoring",
+          "name": "Monitoring",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: monitoring.ts"
+        },
+        {
+          "id": "namecheap",
+          "name": "Namecheap",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: namecheap.ts"
+        },
+        {
+          "id": "nano",
+          "name": "Nano",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: nano.ts"
+        },
+        {
+          "id": "nerve",
+          "name": "Nerve",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: nerve.ts"
+        },
+        {
+          "id": "nest-security-status",
+          "name": "Nest Security Status",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: nest-security-status.ts"
+        },
+        {
+          "id": "networks",
+          "name": "Networks",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: networks.ts"
+        },
+        {
+          "id": "notifications",
+          "name": "Notifications",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: notifications.ts"
+        },
+        {
+          "id": "onboarding",
+          "name": "Onboarding",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: onboarding.ts"
+        },
+        {
+          "id": "operator",
+          "name": "Operator",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: operator.ts"
+        },
+        {
+          "id": "ops",
+          "name": "Ops",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ops.ts"
+        },
+        {
+          "id": "orders",
+          "name": "Orders",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: orders.ts"
+        },
+        {
+          "id": "ott",
+          "name": "Ott",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ott.ts"
+        },
+        {
+          "id": "passports",
+          "name": "Passports",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: passports.ts"
+        },
+        {
+          "id": "ports-ops",
+          "name": "Ports Ops",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: ports-ops.ts"
+        },
+        {
+          "id": "post-bounty",
+          "name": "Post Bounty",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: post-bounty.ts"
+        },
+        {
+          "id": "poster",
+          "name": "Poster",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: poster.ts"
+        },
+        {
+          "id": "prAgent",
+          "name": "PrAgent",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: prAgent.ts"
+        },
+        {
+          "id": "premiumMetalsAccess",
+          "name": "PremiumMetalsAccess",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: premiumMetalsAccess.ts"
+        },
+        {
+          "id": "priorities",
+          "name": "Priorities",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: priorities.ts"
+        },
+        {
+          "id": "proof",
+          "name": "Proof",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: proof.js"
+        },
+        {
+          "id": "propertiesRoutes",
+          "name": "PropertiesRoutes",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: propertiesRoutes.ts"
+        },
+        {
+          "id": "public",
+          "name": "Public",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: public.ts"
+        },
+        {
+          "id": "rbac",
+          "name": "Rbac",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: rbac.ts"
+        },
+        {
+          "id": "reactivate-core",
+          "name": "Reactivate Core",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: reactivate-core.ts"
+        },
+        {
+          "id": "reputation",
+          "name": "Reputation",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: reputation.ts"
+        },
+        {
+          "id": "resonance",
+          "name": "Resonance",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: resonance.ts"
+        },
+        {
+          "id": "rewards",
+          "name": "Rewards",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: rewards.ts"
+        },
+        {
+          "id": "root",
+          "name": "Root",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: root.ts"
+        },
+        {
+          "id": "save-core",
+          "name": "Save Core",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: save-core.ts"
+        },
+        {
+          "id": "secrets",
+          "name": "Secrets",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: secrets.ts"
+        },
+        {
+          "id": "seoReports",
+          "name": "SeoReports",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: seoReports.ts"
+        },
+        {
+          "id": "seoToolsRoutes",
+          "name": "SeoToolsRoutes",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: seoToolsRoutes.ts"
+        },
+        {
+          "id": "shield-risk",
+          "name": "Shield Risk",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: shield-risk.ts"
+        },
+        {
+          "id": "shield",
+          "name": "Shield",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: shield.ts"
+        },
+        {
+          "id": "sla",
+          "name": "Sla",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: sla.ts"
+        },
+        {
+          "id": "sms",
+          "name": "Sms",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: sms.ts"
+        },
+        {
+          "id": "snapshot",
+          "name": "Snapshot",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: snapshot.ts"
+        },
+        {
+          "id": "social-media-auth",
+          "name": "Social Media Auth",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: social-media-auth.ts"
+        },
+        {
+          "id": "social-media-ops",
+          "name": "Social Media Ops",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: social-media-ops.ts"
+        },
+        {
+          "id": "socialworld",
+          "name": "Socialworld",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: socialworld.ts"
+        },
+        {
+          "id": "solops-hmac",
+          "name": "Solops Hmac",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: solops-hmac.ts"
+        },
+        {
+          "id": "star-bridge",
+          "name": "Star Bridge",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: star-bridge.ts"
+        },
+        {
+          "id": "starbridge",
+          "name": "Starbridge",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: starbridge.ts"
+        },
+        {
+          "id": "status",
+          "name": "Status",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: status.ts"
+        },
+        {
+          "id": "stripe-billing",
+          "name": "Stripe Billing",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: stripe-billing.ts"
+        },
+        {
+          "id": "stripe-checkout",
+          "name": "Stripe Checkout",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: stripe-checkout.ts"
+        },
+        {
+          "id": "stripe-webhook",
+          "name": "Stripe Webhook",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: stripe-webhook.ts"
+        },
+        {
+          "id": "sunrise-report",
+          "name": "Sunrise Report",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: sunrise-report.ts"
+        },
+        {
+          "id": "super-spine",
+          "name": "Super Spine",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: super-spine.ts"
+        },
+        {
+          "id": "swarm-fitness",
+          "name": "Swarm Fitness",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: swarm-fitness.ts"
+        },
+        {
+          "id": "sweet-spot",
+          "name": "Sweet Spot",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: sweet-spot.ts"
+        },
+        {
+          "id": "synthetic",
+          "name": "Synthetic",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: synthetic.ts"
+        },
+        {
+          "id": "system-graph",
+          "name": "System Graph",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: system-graph.ts"
+        },
+        {
+          "id": "system-wakeup",
+          "name": "System Wakeup",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: system-wakeup.ts"
+        },
+        {
+          "id": "systemMapping",
+          "name": "SystemMapping",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: systemMapping.ts"
+        },
+        {
+          "id": "teamConsultation",
+          "name": "TeamConsultation",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: teamConsultation.ts"
+        },
+        {
+          "id": "telemetry",
+          "name": "Telemetry",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: telemetry.ts"
+        },
+        {
+          "id": "threat-memory",
+          "name": "Threat Memory",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: threat-memory.ts"
+        },
+        {
+          "id": "twilio",
+          "name": "Twilio",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: twilio.ts"
+        },
+        {
+          "id": "usage",
+          "name": "Usage",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: usage.ts"
+        },
+        {
+          "id": "vector",
+          "name": "Vector",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: vector.ts"
+        },
+        {
+          "id": "velo",
+          "name": "Velo",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: velo.ts"
+        },
+        {
+          "id": "vercel",
+          "name": "Vercel",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: vercel.ts"
+        },
+        {
+          "id": "video",
+          "name": "Video",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: video.ts"
+        },
+        {
+          "id": "voice",
+          "name": "Voice",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: voice.ts"
+        },
+        {
+          "id": "wallet-scan",
+          "name": "Wallet Scan",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wallet-scan.ts"
+        },
+        {
+          "id": "wallet-score",
+          "name": "Wallet Score",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wallet-score.ts"
+        },
+        {
+          "id": "wallet-scoring",
+          "name": "Wallet Scoring",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wallet-scoring.ts"
+        },
+        {
+          "id": "watchdog",
+          "name": "Watchdog",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: watchdog.ts"
+        },
+        {
+          "id": "webhook-hygiene",
+          "name": "Webhook Hygiene",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: webhook-hygiene.ts"
+        },
+        {
+          "id": "webhook-protection",
+          "name": "Webhook Protection",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: webhook-protection.ts"
+        },
+        {
+          "id": "website-designer",
+          "name": "Website Designer",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: website-designer.ts"
+        },
+        {
+          "id": "whale",
+          "name": "Whale",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: whale.ts"
+        },
+        {
+          "id": "wolf-pack-activate",
+          "name": "Wolf Pack Activate",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wolf-pack-activate.ts"
+        },
+        {
+          "id": "wolf-pack",
+          "name": "Wolf Pack",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wolf-pack.ts"
+        },
+        {
+          "id": "wormhole-express",
+          "name": "Wormhole Express",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wormhole-express.ts"
+        },
+        {
+          "id": "wormhole",
+          "name": "Wormhole",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: wormhole.ts"
+        },
+        {
+          "id": "x402-payment-gateway",
+          "name": "X402 Payment Gateway",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: x402-payment-gateway.ts"
+        },
+        {
+          "id": "zk",
+          "name": "Zk",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Service route: zk.ts"
+        }
+      ],
+      "data": [
+        {
+          "id": "dreamnet_core_db",
+          "name": "dreamnet_core_db",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "PostgreSQL database for core state"
+        }
+      ],
+      "events": [
+        {
+          "id": "dream_lifecycle_events",
+          "name": "dream_lifecycle_events",
+          "status": "unclear",
+          "risk": "unknown",
+          "importance": "supporting",
+          "notes": "Dream lifecycle events - to be expanded by Agent 3"
+        }
+      ],
+      "integrations": [
+        {
+          "id": "economic_engine",
+          "name": "economic_engine",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Economic Engine Core"
+        },
+        {
+          "id": "economic_engine",
+          "name": "economic_engine",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Economic Engine Core"
+        },
+        {
+          "id": "guardian_framework",
+          "name": "guardian_framework",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Guardian Framework Core"
+        },
+        {
+          "id": "base_chain",
+          "name": "base_chain",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Base L2 blockchain"
+        },
+        {
+          "id": "zora",
+          "name": "zora",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Zora protocol integration"
+        },
+        {
+          "id": "netlify",
+          "name": "netlify",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Netlify hosting"
+        },
+        {
+          "id": "gcp",
+          "name": "gcp",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Google Cloud Platform"
+        }
+      ],
+      "infra": [
+        {
+          "id": "docker_build",
+          "name": "docker_build",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Docker containerization for Cloud Run"
+        },
+        {
+          "id": "cloud_build",
+          "name": "cloud_build",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Google Cloud Build for CI/CD"
+        },
+        {
+          "id": "netlify_deploy",
+          "name": "netlify_deploy",
+          "status": "active",
+          "risk": "low",
+          "importance": "supporting",
+          "notes": "Netlify deployment configuration"
+        },
+        {
+          "id": "hosting_stack",
+          "name": "hosting_stack",
+          "status": "unclear",
+          "risk": "high",
+          "importance": "core",
+          "notes": ""
+        }
+      ]
+    }
+  },
+  "version": "1.0.0",
+  "createdAt": "2025-12-02T02:26:29.418Z",
+  "metadata": {
+    "dependencies": [
+      "vertex_fusion_snapshot"
+    ],
+    "notes": "Generated by Drone Dome Scanner (Agent 2)"
+  }
+}

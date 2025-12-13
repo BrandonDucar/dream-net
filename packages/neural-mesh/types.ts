@@ -39,6 +39,8 @@ export interface NeuralMeshStatus {
   memory: {
     count: number;
     last?: MemoryTrace;
+    latentCount?: number;
+    latentAgents?: number;
   };
 }
 

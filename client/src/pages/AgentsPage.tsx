@@ -2,7 +2,9 @@ import React from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { useDreamNetTheme } from '@/contexts/DreamNetThemeContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Bot, Network, Zap } from 'lucide-react';
+import { Bot, Network, Zap, Shield } from 'lucide-react';
+import { AgentMarketplace } from '@/components/AgentMarketplace';
+import { GuardianStatus } from '@/components/GuardianStatus';
 
 const agents = [
   { id: 'dreamops', name: 'DreamOps', role: 'Infra', description: 'Main orchestrator for DreamNet operations' },
@@ -78,6 +80,25 @@ export default function AgentsPage() {
               </Card>
             ))}
           </div>
+        </section>
+
+        {/* GPT Agent Marketplace */}
+        <section className="mb-12">
+          <h2 className={`text-2xl font-semibold mb-6 ${dreamNetMode ? 'text-electric-cyan' : ''}`}>
+            GPT Agent Marketplace
+          </h2>
+          <AgentMarketplace />
+        </section>
+
+        {/* Guardian Framework Status */}
+        <section className="mb-12">
+          <div className="flex items-center gap-3 mb-6">
+            <Shield className={`w-6 h-6 ${dreamNetMode ? 'text-electric-cyan' : 'text-primary'}`} />
+            <h2 className={`text-2xl font-semibold ${dreamNetMode ? 'text-electric-cyan' : ''}`}>
+              Guardian Framework
+            </h2>
+          </div>
+          <GuardianStatus />
         </section>
 
         {/* Biomimetic Systems */}

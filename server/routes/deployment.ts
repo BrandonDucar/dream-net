@@ -11,7 +11,7 @@ const router = Router();
 
 /**
  * POST /api/deployment/deploy
- * Deploy to a specific platform
+ * Deploy to a specific platform (with Spine event emission)
  */
 router.post('/deploy', async (req, res) => {
   try {
@@ -24,10 +24,25 @@ router.post('/deploy', async (req, res) => {
       });
     }
 
-    console.log(`[Deployment] Deploying ${config.projectName} to ${config.platform}`);
+    // Get caller identity from request (if available)
+    const callerId = (req as any).callerIdentity?.callerId || 'anonymous';
 
-    const manager = getDeploymentManager();
-    const result = await manager.deploy(config);
+    console.log(`[Deployment] Deploying ${config.projectName} to ${config.platform} (caller: ${callerId})`);
+
+    // Use DeploymentWrapper for event emission
+    const deploymentWrapper = (global as any).deploymentWrapper;
+    let result;
+    
+    if (deploymentWrapper) {
+      result = await deploymentWrapper.deploy({
+        config,
+        callerId,
+      });
+    } else {
+      // Fallback to direct deployment manager if wrapper not available
+      const manager = getDeploymentManager();
+      result = await manager.deploy(config);
+    }
 
     // If deployment succeeded and it's Vercel, sync domains asynchronously
     if (result.success && config.platform === 'vercel') {
@@ -42,11 +57,28 @@ router.post('/deploy', async (req, res) => {
         });
     }
 
-    res.json({
-      success: result.success,
-      result,
-      timestamp: new Date().toISOString(),
-    });
+    // Return response with wrapper metadata if available
+    if (deploymentWrapper && 'correlationId' in result) {
+      res.json({
+        success: result.success,
+        result: {
+          deploymentId: result.deploymentId,
+          url: result.url,
+          platform: result.platform,
+          error: result.error,
+          logs: result.logs,
+        },
+        correlationId: result.correlationId,
+        emittedEvents: result.emittedEvents,
+        timestamp: new Date().toISOString(),
+      });
+    } else {
+      res.json({
+        success: result.success,
+        result,
+        timestamp: new Date().toISOString(),
+      });
+    }
   } catch (error: any) {
     console.error('[Deployment] Error:', error);
     res.status(500).json({

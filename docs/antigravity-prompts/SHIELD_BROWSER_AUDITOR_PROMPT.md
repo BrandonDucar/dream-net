@@ -13,14 +13,14 @@
    - ✅ Events emitted to Event Fabric + Nerve Bus
    - ⚠️ Missing: Correlation IDs, standardized event envelopes, Spine wrapper
 
-2. **Browser Agent Status:**
+2. **Browser Agent Status:** ✅ **SECURITY HARDENED & SPINE INTEGRATED**
    - ✅ Lighthouse auditor implemented (`server/lighthouse-auditor.ts`)
-   - ❌ **CRITICAL:** No governance middleware on routes
-   - ❌ **CRITICAL:** No domain allowlist
-   - ❌ **CRITICAL:** No internal IP blocking
-   - ❌ **CRITICAL:** Can audit ANY URL including internal IPs (security risk)
-   - ❌ No event emission
-   - ❌ No risk profile updates
+   - ✅ Governance middleware attached to routes (`server/routes.ts`)
+   - ✅ Domain allowlist system (`server/core/browser-agent/domainAllowlist.ts`)
+   - ✅ Internal IP blocking (`server/core/browser-agent/ipBlocking.ts`)
+   - ✅ BrowserAgentWrapper with Event Bus integration (`spine/wrappers/BrowserAgentWrapper.ts`)
+   - ✅ All audits emit events to Event Bus with correlation IDs
+   - ✅ Security checks prevent internal IP access and unauthorized domains
 
 3. **Security Gaps Identified:**
    - Browser Agent routes unprotected (`/api/lighthouse/audit` line 1748)
@@ -28,6 +28,15 @@
    - Can access RFC1918 addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)
    - Can access loopback (127.0.0.1, localhost)
    - No audit logging of navigation attempts
+
+4. **19 New Integrations Security Considerations:**
+   - All 19 integrations need security review
+   - API key handling validation
+   - Input sanitization checks
+   - Error message security (no sensitive data leakage)
+   - Rate limiting for external API calls
+   - Governance middleware for integration endpoints
+   - Security audit required for enterprise readiness
 
 ## What We Think Should Happen Next
 

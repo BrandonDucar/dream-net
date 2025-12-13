@@ -83,6 +83,7 @@ export enum GameType {
   ReactionTestMini = 7,
   DreamSnailDrift = 8,
   DreamCloudBuilder = 9,
+  DreamNebulaExplorer = 10,
 }
 
 export function useGameRegistry() {

@@ -3,7 +3,15 @@
  * Uses Inbox² for intelligent community/network outreach
  */
 
-import { inboxSquared } from '@dreamnet/inbox-squared-core';
+// Dynamic import to avoid ESM resolution issues
+let inboxSquared: any = null;
+async function getInboxSquared() {
+  if (!inboxSquared) {
+    const module = await import('@dreamnet/inbox-squared-core');
+    inboxSquared = module.inboxSquared;
+  }
+  return inboxSquared;
+}
 import type { EmailDraft, DraftGenerationOptions } from '@dreamnet/inbox-squared-core';
 import type { OrcaPostIdea, OrcaNarrativeTheme } from '../types';
 
@@ -38,7 +46,8 @@ export async function generateOrcaOutreachDraft(
   };
 
   try {
-    const draft = await inboxSquared.generateDraft(
+    const inbox = await getInboxSquared();
+    const draft = await inbox.generateDraft(
       target.email,
       target.name,
       target.organization || target.role,
@@ -109,8 +118,9 @@ export async function createOrcaGmailDraft(draft: EmailDraft): Promise<string | 
     // Initialize Gmail if needed
     const oauth2Client = getGmailOAuth2Client();
     if (oauth2Client) {
-      inboxSquared.initializeGmail(oauth2Client);
-      return await inboxSquared.createGmailDraft(draft);
+      const inbox = await getInboxSquared();
+      inbox.initializeGmail(oauth2Client);
+      return await inbox.createGmailDraft(draft);
     }
     return null;
   } catch (error) {

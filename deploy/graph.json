@@ -1,0 +1,105 @@
+{
+  "services": [
+    {
+      "id": "database",
+      "name": "Database (Postgres/Neon)",
+      "dependencies": [],
+      "critical": true,
+      "initModule": "server/db",
+      "initFunction": "initDb",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "checkDatabaseHealth"
+    },
+    {
+      "id": "event-bus",
+      "name": "Spine Event Bus",
+      "dependencies": ["database"],
+      "critical": false,
+      "initModule": "spine/dreamnet-event-bus/DreamEventBus",
+      "initFunction": "init",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "alwaysHealthy"
+    },
+    {
+      "id": "neural-mesh",
+      "name": "Neural Mesh",
+      "dependencies": ["database"],
+      "critical": false,
+      "initModule": "@dreamnet/neural-mesh",
+      "initFunction": "init",
+      "healthCheckModule": "@dreamnet/neural-mesh",
+      "healthCheckFunction": "checkHealth",
+      "conditional": "INIT_SUBSYSTEMS"
+    },
+    {
+      "id": "agent-wallet-manager",
+      "name": "Agent Wallet Manager",
+      "dependencies": ["database"],
+      "critical": false,
+      "initModule": "@dreamnet/agent-wallet-manager",
+      "initFunction": "init",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "alwaysHealthy"
+    },
+    {
+      "id": "latent-collaboration",
+      "name": "Latent Collaboration Core",
+      "dependencies": ["neural-mesh"],
+      "critical": false,
+      "initModule": "packages/latent-collaboration-core",
+      "initFunction": "init",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "alwaysHealthy",
+      "conditional": "USE_LATENT_COLLABORATION"
+    },
+    {
+      "id": "runtime-bridge",
+      "name": "Runtime Bridge Core",
+      "dependencies": ["neural-mesh", "agent-wallet-manager", "latent-collaboration"],
+      "critical": false,
+      "initModule": "@dreamnet/runtime-bridge-core",
+      "initFunction": "initContext",
+      "healthCheckModule": "@dreamnet/runtime-bridge-core",
+      "healthCheckFunction": "getStatus",
+      "conditional": "INIT_SUBSYSTEMS"
+    },
+    {
+      "id": "citadel",
+      "name": "Citadel Agent",
+      "dependencies": ["runtime-bridge"],
+      "critical": false,
+      "initModule": "@dreamnet/citadel-core",
+      "initFunction": "init",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "alwaysHealthy",
+      "conditional": "INIT_SUBSYSTEMS"
+    },
+    {
+      "id": "dreamkeeper",
+      "name": "DreamKeeper Agent",
+      "dependencies": ["runtime-bridge"],
+      "critical": false,
+      "initModule": "packages/dreamkeeper-core",
+      "initFunction": "init",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "alwaysHealthy"
+    },
+    {
+      "id": "drone-dome",
+      "name": "DroneDome Agent",
+      "dependencies": ["runtime-bridge"],
+      "critical": false,
+      "initModule": "packages/drone-dome-core",
+      "initFunction": "init",
+      "healthCheckModule": "server/core/startup-dag",
+      "healthCheckFunction": "alwaysHealthy",
+      "conditional": "INIT_SUBSYSTEMS"
+    }
+  ],
+  "notes": {
+    "conditional": "Services with 'conditional' field only initialize if env var is 'true'",
+    "critical": "Critical services must be ready before accepting traffic",
+    "dependencies": "Services wait for all dependencies to be ready before initializing"
+  }
+}
+

@@ -30,6 +30,11 @@ interface EnvConfig {
   // API Keys (optional - some features may be unavailable)
   OPENAI_API_KEY?: string;
   
+  // Latent Collaboration
+  USE_LATENT_COLLABORATION?: boolean;
+  LATENT_EMBEDDING_MODEL?: string;
+  LATENT_VECTOR_SIZE?: number;
+  
   // CORS & Security
   ALLOWED_ORIGINS?: string[];
   OPERATOR_WALLETS?: string[];
@@ -89,6 +94,9 @@ function loadEnvConfig(): EnvConfig {
     GOOGLE_CLOUD_PROJECT: process.env.GOOGLE_CLOUD_PROJECT,
     GOOGLE_CLOUD_REGION: process.env.GOOGLE_CLOUD_REGION,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    USE_LATENT_COLLABORATION: process.env.USE_LATENT_COLLABORATION === 'true',
+    LATENT_EMBEDDING_MODEL: process.env.LATENT_EMBEDDING_MODEL || 'text-embedding-3-small',
+    LATENT_VECTOR_SIZE: process.env.LATENT_VECTOR_SIZE ? parseInt(process.env.LATENT_VECTOR_SIZE) : 1536,
     ALLOWED_ORIGINS: allowedOrigins,
     OPERATOR_WALLETS: operatorWallets,
     INIT_SUBSYSTEMS: process.env.INIT_SUBSYSTEMS === 'true',
@@ -138,6 +146,9 @@ export const GCP_PROJECT_ID = envConfig.GCP_PROJECT_ID;
 export const GCP_REGION = envConfig.GCP_REGION;
 export const GCP_SERVICE_NAME = envConfig.GCP_SERVICE_NAME;
 export const OPENAI_API_KEY = envConfig.OPENAI_API_KEY;
+export const USE_LATENT_COLLABORATION = envConfig.USE_LATENT_COLLABORATION;
+export const LATENT_EMBEDDING_MODEL = envConfig.LATENT_EMBEDDING_MODEL;
+export const LATENT_VECTOR_SIZE = envConfig.LATENT_VECTOR_SIZE;
 export const ALLOWED_ORIGINS = envConfig.ALLOWED_ORIGINS;
 export const OPERATOR_WALLETS = envConfig.OPERATOR_WALLETS;
 export const INIT_SUBSYSTEMS = envConfig.INIT_SUBSYSTEMS;

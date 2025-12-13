@@ -1,0 +1,163 @@
+{
+  "artifact_id": "dreamnet_paper_v1",
+  "status": "ready_for_manual_publish",
+  "version": "1.0.0",
+  "created_at": "2025-01-27T00:00:00Z",
+  "title": "DreamNet: A Self-Evolving Multi-Agent Ecosystem for Complexity-Aligned AI",
+  "authors": [
+    "Brandon Ducar",
+    "DreamNet Research Group"
+  ],
+  "abstract": "Modern AI systems increasingly resemble complex ecosystems: many models, tools, agents, datasets, and services interact over time, producing behavior that is emergent, nonlinear, and difficult to predict. However, most AI infrastructure is still designed and governed as if it were static software. In this paper we introduce DreamNet, a self-evolving multi-agent ecosystem explicitly aligned with principles from complex systems science, swarm intelligence, and adaptive governance. DreamNet combines a central orchestration core (the Citadel) with a layered defense and monitoring structure (the Dome), a family of specialized agents (for deployment, diagnostics, messaging, and creation), and a stigmergic logging fabric that allows agents to coordinate indirectly over time. The result is an AI infrastructure that functions less like a single model or pipeline and more like a living digital organism: capable of self-monitoring, self-improvement, and controlled evolution under human oversight. We describe the architecture, governance patterns, and implementation details, and we outline concrete use cases in infrastructure automation, Web3 ecosystems, social funnels, and creative tooling.",
+  "packages": {
+    "arxiv": {
+      "status": "ready",
+      "bundle_path": "build/dreamnet_paper_v1/arxiv/dreamnet_paper_v1.tar.gz",
+      "notes": "Upload this .tar.gz to arXiv; select cs.AI primary, cs.MA secondary.",
+      "checklist": [
+        "Log into arxiv.org",
+        "Start new submission",
+        "Upload tar.gz bundle",
+        "Set primary category: cs.AI",
+        "Add secondary category: cs.MA",
+        "Paste abstract from manifest",
+        "Preview PDF and confirm",
+        "Submit for review"
+      ],
+      "metadata": {
+        "primary_category": "cs.AI",
+        "secondary_categories": ["cs.MA"],
+        "title": "DreamNet: A Self-Evolving Multi-Agent Ecosystem for Complexity-Aligned AI",
+        "abstract": "Modern AI systems increasingly resemble complex ecosystems: many models, tools, agents, datasets, and services interact over time, producing behavior that is emergent, nonlinear, and difficult to predict. However, most AI infrastructure is still designed and governed as if it were static software. In this paper we introduce DreamNet, a self-evolving multi-agent ecosystem explicitly aligned with principles from complex systems science, swarm intelligence, and adaptive governance. DreamNet combines a central orchestration core (the Citadel) with a layered defense and monitoring structure (the Dome), a family of specialized agents (for deployment, diagnostics, messaging, and creation), and a stigmergic logging fabric that allows agents to coordinate indirectly over time. The result is an AI infrastructure that functions less like a single model or pipeline and more like a living digital organism: capable of self-monitoring, self-improvement, and controlled evolution under human oversight. We describe the architecture, governance patterns, and implementation details, and we outline concrete use cases in infrastructure automation, Web3 ecosystems, social funnels, and creative tooling.",
+        "authors": [
+          "Brandon Ducar",
+          "DreamNet Research Group"
+        ]
+      }
+    },
+    "zora": {
+      "status": "ready",
+      "assets": [
+        "build/dreamnet_paper_v1/zora/cover_image.png",
+        "build/dreamnet_paper_v1/zora/paper.pdf"
+      ],
+      "metadata": {
+        "name": "DreamNet: A Self-Evolving Multi-Agent Ecosystem for Complexity-Aligned AI",
+        "description": "Modern AI systems increasingly resemble complex ecosystems: many models, tools, agents, datasets, and services interact over time, producing behavior that is emergent, nonlinear, and difficult to predict. However, most AI infrastructure is still designed and governed as if it were static software.\n\nIn this paper we introduce DreamNet, a self-evolving multi-agent ecosystem explicitly aligned with principles from complex systems science, swarm intelligence, and adaptive governance.\n\nAuthors: Brandon Ducar, DreamNet Research Group\n\nPublished by DreamNet Research Group.",
+        "tags": [
+          "DreamNet",
+          "AI",
+          "multi-agent",
+          "complex-systems",
+          "Web3",
+          "Base",
+          "research"
+        ],
+        "edition_size": 333
+      },
+      "notes": "Create new Zora mint; upload cover_image.png as primary visual, attach PDF as downloadable. Set edition size to 333."
+    },
+    "github": {
+      "status": "ready",
+      "repo": "github.com/DreamNetHQ/papers",
+      "branch": "main",
+      "paths_added": [
+        "dreamnet_paper_v1/dreamnet_paper_v1.pdf",
+        "dreamnet_paper_v1/dreamnet_paper_v1.tex",
+        "dreamnet_paper_v1/README.md"
+      ],
+      "commit_message_template": "Add DreamNet paper v1 (PDF + LaTeX + README)"
+    },
+    "website": {
+      "status": "ready",
+      "route": "/papers/dreamnet-paper-v1",
+      "files": [
+        "build/dreamnet_paper_v1/website/index.html",
+        "build/dreamnet_paper_v1/website/cover.png"
+      ],
+      "notes": "Deploy to Vercel/GH Pages. Route will be /papers/dreamnet-paper-v1"
+    },
+    "medium": {
+      "status": "ready",
+      "filename": "build/dreamnet_paper_v1/medium/dreamnet_paper_v1_medium.html",
+      "notes": "Open Medium → New Story → Paste this HTML in code view. Images will auto-import."
+    },
+    "substack": {
+      "status": "ready",
+      "filename": "build/dreamnet_paper_v1/substack/dreamnet_paper_v1_substack.html",
+      "notes": "Open Substack → New Post → Paste this HTML in code view."
+    },
+    "social": {
+      "status": "ready",
+      "caption_templates": [
+        {
+          "platform": "twitter",
+          "caption": "🚀 New paper: \"DreamNet: A Self-Evolving Multi-Agent Ecosystem for Complexity-Aligned AI\"\n\nModern AI systems increasingly resemble complex ecosystems: many models, tools, agents, datasets, and services interact over time, producing behavior that is emergent, nonlinear, and difficult to predict...\n\nRead more: [arXiv/Zora links]\n\n#DreamNet #AI #Web3 #ComplexSystems",
+          "hashtags": [
+            "DreamNet",
+            "AI",
+            "Web3",
+            "ComplexSystems",
+            "Research"
+          ]
+        },
+        {
+          "platform": "farcaster",
+          "caption": "🚀 New paper: \"DreamNet: A Self-Evolving Multi-Agent Ecosystem\"\n\nWe introduce DreamNet, a self-evolving multi-agent ecosystem aligned with complex systems science, swarm intelligence, and adaptive governance.\n\nRead: [arXiv/Zora links]\n\n#DreamNet #farcaster #onchain",
+          "hashtags": [
+            "DreamNet",
+            "farcaster",
+            "onchain",
+            "AI"
+          ]
+        },
+        {
+          "platform": "lens",
+          "caption": "🚀 New paper: \"DreamNet: A Self-Evolving Multi-Agent Ecosystem\"\n\nModern AI systems increasingly resemble complex ecosystems. DreamNet treats agents as participants in a shared ecosystem with memory, roles, incentives, and guardrails.\n\nRead: [arXiv/Zora links]\n\n#DreamNet #lens #web3social",
+          "hashtags": [
+            "DreamNet",
+            "lens",
+            "web3social",
+            "AI"
+          ]
+        }
+      ],
+      "thread_templates": [
+        {
+          "platform": "twitter",
+          "threads": [
+            "1/ DreamNet: A Self-Evolving Multi-Agent Ecosystem for Complexity-Aligned AI 🧵\n\nModern AI systems increasingly resemble complex ecosystems: many models, tools, agents, datasets, and services interact over time, producing behavior that is emergent, nonlinear, and difficult to predict...",
+            "2/ Key insights:\n\n• Complexity alignment: embrace feedback loops, emergence, and adaptation\n• Safety and control: maintain intervention points and rollback mechanisms\n• Composable automation: plug in new agents without redesigning\n• Real-world applicability: deployments, content, Web3, social funnels",
+            "3/ Authors: Brandon Ducar, DreamNet Research Group\n\nRead the full paper: [arXiv link]",
+            "4/ This paper introduces DreamNet's biomimetic architecture for AI + Web3 ecosystems.\n\nCollect on Zora: [Zora link]\n\n#DreamNet #AI #Web3"
+          ]
+        },
+        {
+          "platform": "farcaster",
+          "threads": [
+            "1/ 🚀 New paper: \"DreamNet: A Self-Evolving Multi-Agent Ecosystem\"\n\nWe introduce DreamNet, a self-evolving multi-agent ecosystem aligned with complex systems science, swarm intelligence, and adaptive governance.",
+            "2/ DreamNet combines:\n\n• The Citadel (orchestration core)\n• The Dome (monitoring & defense)\n• Specialized agents (DeployKeeper, ConnectorBot, DreamKeeper, RelayBot, PublishPack, AlgorithmAgent)\n• Stigmergy and event fabric",
+            "3/ Read the full paper: [arXiv link]\n\nCollect on Zora: [Zora link]\n\n#DreamNet #farcaster"
+          ]
+        }
+      ],
+      "quote_hooks": [
+        "Modern AI systems increasingly resemble complex ecosystems: many models, tools, agents, datasets, and services interact over time, producing behavior that is emergent, nonlinear, and difficult to predict.",
+        "DreamNet treats agents as participants in a shared ecosystem with memory, roles, incentives, and guardrails.",
+        "Rather than asking systems to remain simple as they scale, DreamNet accepts and leverages complexity---while giving humans the tools to observe, guide, and, when necessary, intervene."
+      ]
+    }
+  },
+  "next_actions_for_human": [
+    "Upload arXiv tarball (build/dreamnet_paper_v1/arxiv/dreamnet_paper_v1.tar.gz)",
+    "Mint Zora edition (use assets in build/dreamnet_paper_v1/zora/)",
+    "Commit to GitHub repository (github.com/DreamNetHQ/papers)",
+    "Deploy website page (build/dreamnet_paper_v1/website/)",
+    "Publish Medium post (build/dreamnet_paper_v1/medium/dreamnet_paper_v1_medium.html)",
+    "Publish Substack post (build/dreamnet_paper_v1/substack/dreamnet_paper_v1_substack.html)",
+    "Share URLs with SocialOpsBot for distribution (after arXiv/Zora URLs are live)"
+  ],
+  "warnings": [],
+  "notes": "All platform packages are ready. Review each package before publishing. Update manifest with live URLs after publishing."
+}
+

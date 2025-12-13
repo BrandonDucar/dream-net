@@ -24,6 +24,10 @@ export interface RuntimeContext {
 
   // Orchestrator
   OrchestratorCore?: any;
+  
+  // Latent Collaboration
+  LatentCollaboration?: any;
+  AgentWalletManager?: any;
 }
 
 export interface RuntimeSnapshot {

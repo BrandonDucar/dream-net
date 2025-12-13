@@ -1,0 +1,24 @@
+{
+  "name": "@dreamnet/vertex-agent-integration",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@dreamnet/nervous-system-core": "workspace:*",
+    "@dreamnet/citadel-core": "workspace:*",
+    "@dreamnet/latent-collaboration-core": "workspace:*",
+    "@google-cloud/aiplatform": "^5.14.0",
+    "@google-cloud/vertexai": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

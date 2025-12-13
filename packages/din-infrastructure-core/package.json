@@ -1,0 +1,25 @@
+{
+  "name": "@dreamnet/din-infrastructure-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@dreamnet/star-bridge-lungs": "workspace:*",
+    "@dreamnet/dreamnet-control-core": "workspace:*",
+    "@dreamnet/agent-wallet-manager": "workspace:*",
+    "@dreamnet/nervous-system-core": "workspace:*",
+    "@dreamnet/dreamnet-metrics-core": "workspace:*",
+    "ethers": "^6.13.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

@@ -1745,12 +1745,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Lighthouse Website Audit endpoint
-  // Phase I: Add governance middleware for Browser Agent security
-  app.post("/api/lighthouse/audit", 
+  // ✅ SECURED: Uses BrowserAgentWrapper with governance middleware, domain allowlist, and IP blocking
+  app.post("/api/lighthouse/audit",
+    // Import middleware dynamically to avoid circular deps
     async (req, res, next) => {
-      // Attach cluster ID for governance
-      (req as any).clusterId = "BROWSER_AGENT";
-      next();
+      try {
+        const middlewareModule = await import("../packages/dreamnet-control-core/controlCoreMiddleware");
+        const { withGovernance } = middlewareModule;
+        const { controlCoreMiddleware } = middlewareModule;
+        
+        // Chain middleware: withGovernance -> controlCoreMiddleware -> handler
+        const governanceMw = withGovernance({ clusterId: "BROWSER_AGENT" });
+        governanceMw(req, res, () => {
+          controlCoreMiddleware(req, res, next);
+        });
+      } catch (error: any) {
+        console.error("[Lighthouse] Failed to load governance middleware:", error);
+        return res.status(500).json({ error: "Governance middleware unavailable" });
+      }
     },
     async (req, res) => {
     try {
@@ -1763,21 +1775,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      console.log(`[POST /api/lighthouse/audit] Starting audit for URL: ${url}`);
+      // Get caller identity from request (set by controlCoreMiddleware)
+      const callerId = (req as any).callerIdentity?.callerId || 'anonymous';
+      const tierId = (req as any).callerIdentity?.tierId;
+
+      console.log(`[POST /api/lighthouse/audit] Starting secured audit for URL: ${url} (caller: ${callerId})`);
       
-      // Import Lighthouse auditor
-      const { lighthouseAuditor } = await import('./lighthouse-auditor');
+      // Get Event Bus from global (initialized in server/index.ts)
+      const eventBus = (global as any).dreamEventBus || null;
       
-      // Run the audit
-      const auditResult = await lighthouseAuditor.auditWebsite(url);
+      // Import BrowserAgentWrapper
+      const { BrowserAgentWrapper } = await import("../spine/wrappers/BrowserAgentWrapper.js");
+      const browserAgentWrapper = new BrowserAgentWrapper(eventBus);
       
-      console.log(`[POST /api/lighthouse/audit] Audit completed for ${url} - Overall Score: ${auditResult.summary.overallScore}`);
+      // Run audit through wrapper (includes domain allowlist + IP blocking + event emission)
+      const result = await browserAgentWrapper.auditWebsite({
+        url,
+        callerId,
+        tierId,
+      });
+      
+      if (!result.success) {
+        // Audit was blocked by security checks
+        console.warn(`[POST /api/lighthouse/audit] Audit blocked for ${url}: ${result.error}`);
+        return res.status(403).json({
+          success: false,
+          error: result.error,
+          correlationId: result.correlationId,
+          allowlistCheck: result.allowlistCheck,
+          message: 'Audit blocked by security policy. Domain not in allowlist or IP address is internal/private.',
+        });
+      }
+      
+      console.log(`[POST /api/lighthouse/audit] Audit completed for ${url} - Overall Score: ${result.result?.summary?.overallScore}`);
       
       res.json({
         success: true,
-        audit: auditResult,
+        audit: result.result,
+        correlationId: result.correlationId,
+        emittedEvents: result.emittedEvents,
+        allowlistCheck: result.allowlistCheck,
         dreamContext: {
-          category: auditResult.summary.dreamUpgradeCategory,
+          category: result.result?.summary?.dreamUpgradeCategory,
           upgradeType: 'Website Performance Enhancement',
           readyForGPTProcessing: true
         }

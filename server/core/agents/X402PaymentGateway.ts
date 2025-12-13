@@ -13,7 +13,8 @@
  */
 
 import { getAgentWalletManager } from "../../../packages/agent-wallet-manager";
-import { JsonRpcProvider, Contract, Wallet } from "ethers";
+// TODO: Fix ethers v6 compatibility - JsonRpcProvider API changed
+// import { JsonRpcProvider, Contract, Wallet } from "ethers";
 import { broadcastStarbridgeEvent } from "../../starbridge/bus";
 import { StarbridgeTopic, StarbridgeSource } from "../../starbridge/types";
 import { RWACollateralManager } from "./RWACollateralManager";

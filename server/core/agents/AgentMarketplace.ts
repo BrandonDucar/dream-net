@@ -14,7 +14,7 @@
 import { x402PaymentGateway } from "./X402PaymentGateway";
 import { broadcastStarbridgeEvent } from "../../starbridge/bus";
 import { StarbridgeTopic, StarbridgeSource } from "../../starbridge/types";
-import { gptAgentRegistry } from "../gpt-agents/GPTAgentRegistry";
+import { gptAgentRegistry } from "../../gpt-agents/GPTAgentRegistry";
 
 // ============================================================================
 // Types

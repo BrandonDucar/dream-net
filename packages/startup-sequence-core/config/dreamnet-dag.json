@@ -1,0 +1,127 @@
+{
+  "description": "DreamNet Service Dependency DAG",
+  "version": "1.0.0",
+  "services": [
+    {
+      "id": "database",
+      "service": "Neon/Postgres",
+      "dependencies": [],
+      "priority": 0
+    },
+    {
+      "id": "queues",
+      "service": "Kafka/PubSub",
+      "dependencies": [],
+      "priority": 0
+    },
+    {
+      "id": "control-core",
+      "service": "DreamNet Control Core",
+      "dependencies": ["database"],
+      "priority": 1
+    },
+    {
+      "id": "identity-grid",
+      "service": "Identity Grid",
+      "dependencies": ["database"],
+      "priority": 1
+    },
+    {
+      "id": "directory",
+      "service": "Directory",
+      "dependencies": ["database"],
+      "priority": 1
+    },
+    {
+      "id": "nervous-system",
+      "service": "Nervous System Core",
+      "dependencies": ["control-core", "identity-grid"],
+      "priority": 2
+    },
+    {
+      "id": "dreamnet-os",
+      "service": "DreamNet OS Core",
+      "dependencies": ["control-core", "identity-grid"],
+      "priority": 2
+    },
+    {
+      "id": "citadel",
+      "service": "Citadel Core",
+      "dependencies": ["nervous-system"],
+      "priority": 2
+    },
+    {
+      "id": "registry-proofs",
+      "service": "Registry Proofs Core",
+      "dependencies": ["identity-grid"],
+      "priority": 2
+    },
+    {
+      "id": "detector-generator",
+      "service": "Detector Generator Core",
+      "dependencies": ["dreamnet-os"],
+      "priority": 3
+    },
+    {
+      "id": "resilience-warning",
+      "service": "Resilience Early-Warning",
+      "dependencies": ["dreamnet-os"],
+      "priority": 3
+    },
+    {
+      "id": "din-infrastructure",
+      "service": "DIN Infrastructure Core",
+      "dependencies": ["registry-proofs"],
+      "priority": 3
+    },
+    {
+      "id": "intent-router",
+      "service": "Intent Router Core",
+      "dependencies": ["nervous-system"],
+      "priority": 3
+    },
+    {
+      "id": "chain-abstraction",
+      "service": "Chain Abstraction Core",
+      "dependencies": ["intent-router"],
+      "priority": 4
+    },
+    {
+      "id": "star-bridge",
+      "service": "Star Bridge Lungs",
+      "dependencies": ["chain-abstraction"],
+      "priority": 4
+    },
+    {
+      "id": "orchestrator",
+      "service": "Orchestrator Core",
+      "dependencies": ["star-bridge", "citadel"],
+      "priority": 5
+    },
+    {
+      "id": "agent-registry",
+      "service": "Agent Registry Core",
+      "dependencies": ["orchestrator"],
+      "priority": 5
+    },
+    {
+      "id": "super-spine",
+      "service": "Super Spine",
+      "dependencies": ["agent-registry"],
+      "priority": 5
+    },
+    {
+      "id": "apis",
+      "service": "APIs (DreamHub, Agent Gateway)",
+      "dependencies": ["super-spine"],
+      "priority": 6
+    },
+    {
+      "id": "frontends",
+      "service": "Frontends (Mini-Apps)",
+      "dependencies": ["apis"],
+      "priority": 6
+    }
+  ]
+}
+
