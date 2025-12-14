@@ -1,113 +1,99 @@
 /**
  * Environment Variable Validation & Configuration
  * 
- * Lightweight env checker that:
- * - Loads env vars
- * - Asserts presence of required ones for server startup
- * - Exposes a typed config object
+ * Uses Zod for runtime validation of environment variables.
+ * Provides better error messages and type safety.
  * 
  * This module should be imported early in server startup to catch config errors early.
  */
 
-interface EnvConfig {
-  // Core server config
-  NODE_ENV: 'development' | 'production' | 'test';
-  PORT: number;
+import { z } from 'zod';
+
+// Zod schema for environment variables
+const envSchema = z.object({
+  // Core server config (required)
+  NODE_ENV: z.enum(['development', 'production', 'test'], {
+    errorMap: () => ({ message: 'NODE_ENV must be one of: development, production, test' })
+  }),
+  PORT: z.string()
+    .optional()
+    .transform((val) => val ? parseInt(val, 10) : 3000)
+    .pipe(z.number().int().positive().max(65535)),
   
   // Database (optional - server can start without DB)
-  // PRIMARY: Google Cloud SQL / AlloyDB PostgreSQL
-  // LEGACY: Neon PostgreSQL (detected automatically)
-  DATABASE_URL?: string;
-  CLOUD_SQL_INSTANCE_CONNECTION_NAME?: string; // For Cloud SQL Proxy connections
+  DATABASE_URL: z.string().url().optional(),
+  CLOUD_SQL_INSTANCE_CONNECTION_NAME: z.string().optional(),
   
-  // Google Cloud Platform (primary deployment target)
-  GCP_PROJECT_ID?: string;
-  GCP_REGION?: string;
-  GCP_SERVICE_NAME?: string;
-  GOOGLE_CLOUD_PROJECT?: string; // Alternative name for GCP_PROJECT_ID
-  GOOGLE_CLOUD_REGION?: string; // Alternative name for GCP_REGION
+  // Google Cloud Platform (optional)
+  GCP_PROJECT_ID: z.string().optional(),
+  GCP_REGION: z.string().optional(),
+  GCP_SERVICE_NAME: z.string().optional(),
+  GOOGLE_CLOUD_PROJECT: z.string().optional(),
+  GOOGLE_CLOUD_REGION: z.string().optional(),
   
-  // API Keys (optional - some features may be unavailable)
-  OPENAI_API_KEY?: string;
+  // API Keys (optional)
+  OPENAI_API_KEY: z.string().optional(),
   
-  // Latent Collaboration
-  USE_LATENT_COLLABORATION?: boolean;
-  LATENT_EMBEDDING_MODEL?: string;
-  LATENT_VECTOR_SIZE?: number;
+  // Latent Collaboration (optional)
+  USE_LATENT_COLLABORATION: z.string().transform((val) => val === 'true').optional(),
+  LATENT_EMBEDDING_MODEL: z.string().optional(),
+  LATENT_VECTOR_SIZE: z.string()
+    .transform((val) => val ? parseInt(val, 10) : 1536)
+    .pipe(z.number().int().positive())
+    .optional(),
   
-  // CORS & Security
-  ALLOWED_ORIGINS?: string[];
-  OPERATOR_WALLETS?: string[];
+  // CORS & Security (optional)
+  ALLOWED_ORIGINS: z.string()
+    .transform((val) => val ? val.split(',').map(s => s.trim()).filter(Boolean) : undefined)
+    .optional(),
+  OPERATOR_WALLETS: z.string()
+    .transform((val) => val ? val.split(',').map(s => s.trim().toLowerCase()).filter(Boolean) : undefined)
+    .optional(),
   
-  // Feature flags
-  INIT_SUBSYSTEMS?: boolean;
-  MESH_AUTOSTART?: boolean;
-  INIT_HEAVY_SUBSYSTEMS?: boolean; // Set to 'true' to enable DreamState, Directory, Nerve Fabric, etc.
+  // Feature flags (optional)
+  INIT_SUBSYSTEMS: z.string().transform((val) => val === 'true').optional(),
+  MESH_AUTOSTART: z.string().transform((val) => val !== 'false').optional(),
+  INIT_HEAVY_SUBSYSTEMS: z.string().transform((val) => val === 'true').optional(),
   
-  // Legacy provider support (optional - for backward compatibility)
-  VERCEL_TOKEN?: string; // Only needed if using Vercel integration features
-  VERCEL_TEAM_ID?: string;
-  VERCEL_PROJECT_NAME?: string;
-  RAILWAY_TOKEN?: string; // Legacy - not needed for GCP deployment
-}
+  // Legacy provider support (optional)
+  VERCEL_TOKEN: z.string().optional(),
+  VERCEL_TEAM_ID: z.string().optional(),
+  VERCEL_PROJECT_NAME: z.string().optional(),
+  RAILWAY_TOKEN: z.string().optional(),
+});
+
+// Infer TypeScript type from schema
+type EnvConfig = z.infer<typeof envSchema>;
 
 /**
- * Validates and loads environment variables
- * Throws an error if required vars are missing
+ * Validates and loads environment variables using Zod
+ * Throws a ZodError with detailed validation messages if invalid
  */
 function loadEnvConfig(): EnvConfig {
-  const errors: string[] = [];
-  
-  // Required env vars
-  const nodeEnv = process.env.NODE_ENV;
-  if (!nodeEnv || !['development', 'production', 'test'].includes(nodeEnv)) {
-    errors.push('NODE_ENV must be one of: development, production, test');
+  try {
+    // Parse with defaults for optional fields
+    const parsed = envSchema.parse({
+      ...process.env,
+      // Apply defaults
+      LATENT_EMBEDDING_MODEL: process.env.LATENT_EMBEDDING_MODEL || 'text-embedding-3-small',
+    });
+    
+    // Handle alternative env var names
+    return {
+      ...parsed,
+      GCP_PROJECT_ID: parsed.GCP_PROJECT_ID || parsed.GOOGLE_CLOUD_PROJECT,
+      GCP_REGION: parsed.GCP_REGION || parsed.GOOGLE_CLOUD_REGION,
+    };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errorMessages = error.errors.map((err) => {
+        const path = err.path.join('.');
+        return `${path}: ${err.message}`;
+      });
+      throw new Error(`Environment validation failed:\n${errorMessages.join('\n')}`);
+    }
+    throw error;
   }
-  
-  // PORT is optional - defaults to 3000
-  const port = process.env.PORT ? Number(process.env.PORT) : 3000;
-  if (isNaN(port) || port <= 0) {
-    errors.push('PORT must be a valid positive number');
-  }
-  
-  if (errors.length > 0) {
-    throw new Error(`Environment validation failed:\n${errors.join('\n')}`);
-  }
-  
-  // Optional env vars with defaults/parsing
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',').map(s => s.trim()).filter(Boolean)
-    : undefined;
-  
-  const operatorWallets = process.env.OPERATOR_WALLETS
-    ? process.env.OPERATOR_WALLETS.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
-    : undefined;
-  
-  return {
-    NODE_ENV: nodeEnv as 'development' | 'production' | 'test',
-    PORT: port,
-    DATABASE_URL: process.env.DATABASE_URL,
-    CLOUD_SQL_INSTANCE_CONNECTION_NAME: process.env.CLOUD_SQL_INSTANCE_CONNECTION_NAME,
-    GCP_PROJECT_ID: process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT,
-    GCP_REGION: process.env.GCP_REGION || process.env.GOOGLE_CLOUD_REGION,
-    GCP_SERVICE_NAME: process.env.GCP_SERVICE_NAME,
-    GOOGLE_CLOUD_PROJECT: process.env.GOOGLE_CLOUD_PROJECT,
-    GOOGLE_CLOUD_REGION: process.env.GOOGLE_CLOUD_REGION,
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    USE_LATENT_COLLABORATION: process.env.USE_LATENT_COLLABORATION === 'true',
-    LATENT_EMBEDDING_MODEL: process.env.LATENT_EMBEDDING_MODEL || 'text-embedding-3-small',
-    LATENT_VECTOR_SIZE: process.env.LATENT_VECTOR_SIZE ? parseInt(process.env.LATENT_VECTOR_SIZE) : 1536,
-    ALLOWED_ORIGINS: allowedOrigins,
-    OPERATOR_WALLETS: operatorWallets,
-    INIT_SUBSYSTEMS: process.env.INIT_SUBSYSTEMS === 'true',
-    MESH_AUTOSTART: process.env.MESH_AUTOSTART !== 'false',
-    INIT_HEAVY_SUBSYSTEMS: process.env.INIT_HEAVY_SUBSYSTEMS === 'true', // Defaults to false for simplified startup
-    // Legacy provider support
-    VERCEL_TOKEN: process.env.VERCEL_TOKEN,
-    VERCEL_TEAM_ID: process.env.VERCEL_TEAM_ID,
-    VERCEL_PROJECT_NAME: process.env.VERCEL_PROJECT_NAME,
-    RAILWAY_TOKEN: process.env.RAILWAY_TOKEN,
-  };
 }
 
 // Load config on module import (fail fast if invalid)
@@ -115,7 +101,8 @@ let envConfig: EnvConfig;
 try {
   envConfig = loadEnvConfig();
 } catch (error) {
-  console.error('[Env Config] Failed to load environment configuration:', error);
+  const { logger } = await import('../utils/logger');
+  logger.error('Failed to load environment configuration', error instanceof Error ? error : new Error(String(error)));
   throw error;
 }
 
