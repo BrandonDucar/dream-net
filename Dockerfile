@@ -39,9 +39,9 @@ RUN (/app/node_modules/.bin/vite build) || (echo "Admin dashboard build skipped 
 WORKDIR /app
 
 # Build main frontend (client) - REQUIRED for full deployment
-# Allow build to continue even if some dependencies fail (native modules)
+# Fail the build if client/dist is not created successfully
 RUN mkdir -p /app/client/dist
-RUN cd /app && (pnpm --filter "./client" build || echo "Client build had warnings but continuing...") && ls -la /app/client/dist || echo "Client dist directory check"
+RUN cd /app && pnpm --filter "./client" build && test -d /app/client/dist && test -n "$(ls -A /app/client/dist)" || (echo "ERROR: Client build failed - dist directory is missing or empty" && exit 1)
 
 # Build backend (optional - we can use tsx in production)
 RUN (cd /app && pnpm --filter server build) || echo "Server build skipped, will use tsx"
@@ -97,9 +97,11 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
 
 # Start server using tsx (runs TypeScript directly, no compilation needed)
 # Copy tsconfig files so tsx can resolve @shared/* aliases
+# IMPORTANT: Copy base config first, then server config (server/tsconfig.json extends base)
 COPY --from=builder /app/tsconfig.base.json ./tsconfig.base.json
 COPY --from=builder /app/server/tsconfig.json ./server/tsconfig.json
 WORKDIR /app
-# Use tsx with server's tsconfig.json for proper path resolution
-# tsx should auto-detect tsconfig.json in the server directory
-CMD ["/app/node_modules/.bin/tsx", "--tsconfig", "server/tsconfig.json", "server/index.ts"]
+# Use tsx with base tsconfig.json which includes @shared/* path aliases
+# tsx will resolve extends from server/tsconfig.json -> tsconfig.base.json automatically
+# Using base config ensures path aliases are available for @shared/* imports
+CMD ["/app/node_modules/.bin/tsx", "--tsconfig", "tsconfig.base.json", "server/index.ts"]
