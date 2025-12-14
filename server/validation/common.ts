@@ -4,6 +4,8 @@
  * Shared validation functions for API routes
  */
 
+import { logger } from '../utils/logger';
+
 /**
  * Validate pagination parameters
  */
@@ -80,7 +82,12 @@ export function createValidationMiddleware(
     
     if (!result.valid) {
       const traceId = req.traceId || 'unknown';
-      console.warn(`[Validation] ❌ Invalid request (traceId: ${traceId}):`, result.error);
+      logger.warn('Request validation failed', {
+        traceId,
+        route: req.path,
+        method: req.method,
+        error: result.error
+      });
       
       return res.status(400).json({
         ok: false,

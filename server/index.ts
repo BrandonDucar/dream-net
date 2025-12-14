@@ -1,6 +1,7 @@
 
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
+import helmet from "helmet";
 // Lazy import vite.ts to avoid issues in production
 let viteModuleCache: any = null;
 
@@ -189,6 +190,49 @@ app.use((req, res, next) => {
   res.setTimeout(30000);
   next();
 });
+
+// Security headers middleware (helmet)
+// Sets various HTTP headers to help protect the app from well-known web vulnerabilities
+app.use(helmet({
+  // Content Security Policy - configure based on your needs
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"], // Allow inline styles for React/Vite
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Allow inline scripts for Vite HMR
+      imgSrc: ["'self'", "data:", "https:"], // Allow images from self, data URIs, and HTTPS
+      connectSrc: ["'self'", "https:"], // Allow API calls to same origin and HTTPS
+      fontSrc: ["'self'", "data:"], // Allow fonts from self and data URIs
+      objectSrc: ["'none'"], // Disallow plugins
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"], // Disallow iframes
+    },
+  },
+  // Cross-Origin Embedder Policy - can be relaxed if needed for third-party embeds
+  crossOriginEmbedderPolicy: false, // Set to true if you need strict isolation
+  // HSTS - Strict Transport Security (only in production)
+  hsts: NODE_ENV === 'production' ? {
+    maxAge: 31536000, // 1 year
+    includeSubDomains: true,
+    preload: true
+  } : false,
+  // X-Frame-Options - prevent clickjacking
+  frameguard: { action: 'deny' },
+  // X-Content-Type-Options - prevent MIME type sniffing
+  noSniff: true,
+  // X-XSS-Protection (legacy, but still useful)
+  xssFilter: true,
+  // Referrer Policy - control referrer information
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  // Permissions Policy (formerly Feature Policy)
+  permissionsPolicy: {
+    features: {
+      geolocation: ["'none'"],
+      microphone: ["'none'"],
+      camera: ["'none'"],
+    },
+  },
+}));
 
 // CORS configuration
 app.use((req, res, next) => {
