@@ -62,6 +62,18 @@ function percentile(sorted: number[], p: number): number {
 }
 
 /**
+ * Clean up old request timestamps (keep last 60 seconds)
+ */
+function cleanupOldRequests(endpointMetrics: RequestMetrics): void {
+  const now = Date.now();
+  const cutoff = now - 60000; // 60 seconds ago
+  
+  endpointMetrics.recentRequests = endpointMetrics.recentRequests.filter(
+    req => req.timestamp > cutoff
+  );
+}
+
+/**
  * Metrics collection middleware
  */
 export function metricsMiddleware(req: Request, res: Response, next: NextFunction): void {
@@ -72,8 +84,13 @@ export function metricsMiddleware(req: Request, res: Response, next: NextFunctio
   res.on('finish', () => {
     const latency = Date.now() - startTime;
     const endpointMetrics = getMetrics(endpoint);
+    const now = Date.now();
     
     endpointMetrics.count++;
+    
+    // Track request timestamp for RPS calculation
+    endpointMetrics.recentRequests.push({ timestamp: now });
+    cleanupOldRequests(endpointMetrics);
     
     // Track errors
     if (res.statusCode >= 400) {

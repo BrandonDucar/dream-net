@@ -151,6 +151,7 @@ import { traceIdMiddleware } from "./middleware/traceId";
 import { idempotencyMiddleware } from "./middleware/idempotency";
 import { tierResolverMiddleware } from "./middleware/tierResolver";
 import { logger } from "./utils/logger";
+import { errorLogger } from "./middleware/errorLogger";
 // import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
 import { controlCoreMiddleware } from "../packages/dreamnet-control-core/controlCoreMiddleware";
 // Dynamic import to avoid ESM resolution issues
@@ -627,7 +628,7 @@ app.use("/api", createDreamRouter());
         const wolfStatus = WolfPack.status();
         logger.info(`🐺 [Wolf-Pack] Initialized - Active targets: ${wolfStatus.activeTargets.length}`);
       } catch (error) {
-        logSubsystemInit("Wolf-Pack", false, undefined, error);
+        logger.warn("[Wolf-Pack] Initialization warning", { error: error instanceof Error ? error.message : String(error), subsystem: "Wolf-Pack" });
       }
 
   // Initialize Octopus Executor - Tier II Subsystem (8-Arm Runtime)
@@ -2325,7 +2326,7 @@ app.use((req, res, next) => {
         logLine = logLine.slice(0, 79) + "…";
       }
 
-      log(logLine);
+      logger.info(logLine);
     }
   });
 
