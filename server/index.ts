@@ -2323,6 +2323,7 @@ console.log(`[DreamNet] Environment: ${NODE_ENV}, Port: ${ENV_PORT || 8080}`);
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
+    const traceId = (_req as any).traceId || 'unknown';
 
     // Don't expose internal error details in production
     const errorResponse: any = {
