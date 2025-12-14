@@ -208,46 +208,84 @@ app.use((req, res, next) => {
   next();
 });
 
-// Global rate limiting (basic in-memory implementation)
-// Note: For production, consider using Redis-based rate limiting
+// Global rate limiting (enhanced in-memory implementation)
+// Note: For production at scale, consider using Redis-based rate limiting
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 const RATE_LIMIT_MAX_REQUESTS = 100; // 100 requests per window
+const RATE_LIMIT_CLEANUP_THRESHOLD = 10000; // Clean up when store exceeds this size
+const RATE_LIMIT_CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // Clean up every 5 minutes
+
+// Periodic cleanup to prevent memory leaks
+setInterval(() => {
+  const now = Date.now();
+  let cleaned = 0;
+  for (const [key, value] of rateLimitStore.entries()) {
+    if (now > value.resetAt) {
+      rateLimitStore.delete(key);
+      cleaned++;
+    }
+  }
+  if (cleaned > 0) {
+    console.log(`[RateLimit] Cleaned up ${cleaned} expired entries`);
+  }
+}, RATE_LIMIT_CLEANUP_INTERVAL_MS);
 
 app.use((req, res, next) => {
-  // Skip rate limiting for health checks
-  if (req.path === '/health' || req.path === '/ready') {
+  // Skip rate limiting for health checks and internal routes
+  if (req.path === '/health' || req.path === '/health/live' || req.path === '/health/ready' || req.path.startsWith('/api/health')) {
     return next();
   }
   
-  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  const ip = req.ip || req.socket.remoteAddress || req.headers['x-forwarded-for']?.toString().split(',')[0] || 'unknown';
   const now = Date.now();
   const record = rateLimitStore.get(ip);
   
-  // Clean up old entries periodically
-  if (rateLimitStore.size > 10000) {
+  // Clean up old entries if store is getting large
+  if (rateLimitStore.size > RATE_LIMIT_CLEANUP_THRESHOLD) {
+    let cleaned = 0;
     for (const [key, value] of rateLimitStore.entries()) {
       if (now > value.resetAt) {
         rateLimitStore.delete(key);
+        cleaned++;
       }
+    }
+    if (cleaned > 0) {
+      console.warn(`[RateLimit] Emergency cleanup: removed ${cleaned} expired entries`);
     }
   }
   
+  // Initialize or reset window
   if (!record || now > record.resetAt) {
     rateLimitStore.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    res.setHeader('X-RateLimit-Limit', RATE_LIMIT_MAX_REQUESTS.toString());
+    res.setHeader('X-RateLimit-Remaining', (RATE_LIMIT_MAX_REQUESTS - 1).toString());
+    res.setHeader('X-RateLimit-Reset', new Date(now + RATE_LIMIT_WINDOW_MS).toISOString());
     return next();
   }
   
+  // Check if limit exceeded
   if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
+    const retryAfter = Math.ceil((record.resetAt - now) / 1000);
+    res.setHeader('X-RateLimit-Limit', RATE_LIMIT_MAX_REQUESTS.toString());
+    res.setHeader('X-RateLimit-Remaining', '0');
+    res.setHeader('X-RateLimit-Reset', new Date(record.resetAt).toISOString());
+    res.setHeader('Retry-After', retryAfter.toString());
     return res.status(429).json({
       ok: false,
       error: 'rate_limit_exceeded',
       message: 'Too many requests from this IP. Please try again later.',
-      retryAfter: Math.ceil((record.resetAt - now) / 1000)
+      retryAfter,
+      limit: RATE_LIMIT_MAX_REQUESTS,
+      windowMs: RATE_LIMIT_WINDOW_MS
     });
   }
   
+  // Increment counter and add rate limit headers
   record.count++;
+  res.setHeader('X-RateLimit-Limit', RATE_LIMIT_MAX_REQUESTS.toString());
+  res.setHeader('X-RateLimit-Remaining', (RATE_LIMIT_MAX_REQUESTS - record.count).toString());
+  res.setHeader('X-RateLimit-Reset', new Date(record.resetAt).toISOString());
   next();
 });
 
