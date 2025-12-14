@@ -409,7 +409,7 @@ try {
   const { metricsMiddleware } = await import('./middleware/metrics');
   app.use(metricsMiddleware);
 } catch (error: any) {
-  console.warn('[Metrics] Could not load metrics middleware:', error.message);
+  logger.warn('[Metrics] Could not load metrics middleware', { error: error.message });
 }
 
 // Idempotency middleware - handles X-Idempotency-Key header

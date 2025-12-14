@@ -15,6 +15,8 @@ interface RequestMetrics {
   };
   latency: number[]; // Samples for p50/p95/p99 calculation
   startTime: number;
+  // Time-windowed tracking for better RPS calculation
+  recentRequests: Array<{ timestamp: number }>;
 }
 
 // In-memory metrics store (per endpoint)
@@ -36,6 +38,7 @@ function initMetrics(endpoint: string): RequestMetrics {
     },
     latency: [],
     startTime: Date.now(),
+    recentRequests: [],
   };
 }
 
@@ -137,9 +140,18 @@ export function getGoldenSignals(): {
     allLatencies.push(...endpointMetrics.latency);
   }
   
-  // Calculate requests per second (last 60 seconds)
+  // Calculate requests per second (last 60 seconds) - improved calculation
   const now = Date.now();
-  const requestsPerSecond = totalRequests / 60; // Rough estimate
+  const windowStart = now - 60000; // 60 seconds ago
+  
+  // Count requests in the last 60 seconds across all endpoints
+  let requestsInWindow = 0;
+  for (const endpointMetrics of metrics.values()) {
+    cleanupOldRequests(endpointMetrics);
+    requestsInWindow += endpointMetrics.recentRequests.length;
+  }
+  
+  const requestsPerSecond = requestsInWindow / 60; // Actual RPS based on time window
   
   // Calculate error rate
   const errorRate = totalRequests > 0 ? totalErrors / totalRequests : 0;
