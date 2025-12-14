@@ -344,8 +344,17 @@ app.get("/health", async (_req, res) => {
   
   const isHealthy = dbHealthy !== false; // null (not configured) is OK, false is unhealthy
   
-  res.status(isHealthy ? 200 : 503).json({ 
-    ok: isHealthy, 
+  // Include basic system metrics if available (non-blocking)
+  let metrics: any = null;
+  try {
+    const { getGoldenSignals } = await import('./middleware/metrics');
+    metrics = getGoldenSignals();
+  } catch {
+    // Metrics not available - that's OK
+  }
+  
+  const healthResponse: any = {
+    ok: isHealthy,
     service: "dreamnet-api",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
@@ -355,7 +364,26 @@ app.get("/health", async (_req, res) => {
     // - 'unhealthy': Database is configured but not responding (connection failed or timeout)
     // - 'not-configured': DATABASE_URL not set (server can run without DB)
     // - 'checking': Database check timed out (still OK for health check)
-  });
+  };
+  
+  // Add metrics if available (for monitoring/debugging)
+  if (metrics) {
+    healthResponse.metrics = {
+      requestsPerSecond: metrics.traffic.requestsPerSecond,
+      errorRate: metrics.errors.errorRate,
+      latency: {
+        p50: metrics.latency.p50,
+        p95: metrics.latency.p95,
+        p99: metrics.latency.p99
+      },
+      memory: {
+        used: Math.round(metrics.saturation.memory.heapUsed / 1024 / 1024), // MB
+        total: Math.round(metrics.saturation.memory.heapTotal / 1024 / 1024) // MB
+      }
+    };
+  }
+  
+  res.status(isHealthy ? 200 : 503).json(healthResponse);
 });
 
 // Frontend route: /agents - serves agent list (JSON or redirects to frontend)
