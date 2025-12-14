@@ -101,8 +101,9 @@ let envConfig: EnvConfig;
 try {
   envConfig = loadEnvConfig();
 } catch (error) {
-  const { logger } = await import('../utils/logger');
-  logger.error('Failed to load environment configuration', error instanceof Error ? error : new Error(String(error)));
+  // Use console.error here since logger may not be initialized yet
+  // (env config loads very early in startup)
+  console.error('[Env Config] Failed to load environment configuration:', error);
   throw error;
 }
 
