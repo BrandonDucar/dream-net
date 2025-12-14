@@ -1,0 +1,91 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - '.github/workflows/integration-tests.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - '.github/workflows/integration-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.21.0
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Install test dependencies
+        working-directory: server
+        run: pnpm add -D vitest supertest @vitest/ui
+      
+      - name: Start server in background
+        working-directory: server
+        run: |
+          NODE_ENV=test PORT=3000 pnpm dev &
+          echo $! > server.pid
+        env:
+          NODE_ENV: test
+          PORT: '3000'
+          DATABASE_URL: ${{ secrets.DATABASE_URL || '' }}
+      
+      - name: Wait for server to be ready
+        run: |
+          timeout=60
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            if curl -f -s http://localhost:3000/health > /dev/null 2>&1; then
+              echo "✅ Server is healthy!"
+              exit 0
+            fi
+            echo "Waiting for server... ($elapsed/$timeout seconds)"
+            sleep 2
+            elapsed=$((elapsed + 2))
+          done
+          echo "❌ Server failed to become healthy within $timeout seconds"
+          exit 1
+      
+      - name: Run integration tests
+        working-directory: server
+        run: pnpm test
+        env:
+          TEST_BASE_URL: 'http://localhost:3000'
+          NODE_ENV: test
+      
+      - name: Cleanup server
+        if: always()
+        run: |
+          if [ -f server/server.pid ]; then
+            kill $(cat server/server.pid) 2>/dev/null || true
+            rm server/server.pid
+          fi
+          # Also try to kill any remaining node processes
+          pkill -f "tsx.*index.ts" || true
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: server/test-results/
+          if-no-files-found: ignore

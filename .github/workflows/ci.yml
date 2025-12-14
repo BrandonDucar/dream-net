@@ -1,18 +1,24 @@
 name: CI Smoke Test
 
-# DISABLED: This workflow was causing failures on every push
-# Re-enable when server startup is stable
+# Lightweight smoke test - checks server can start and health endpoint works
 on:
-  workflow_dispatch:  # Only runs if manually triggered
-  # push:
-  #   branches: [main, develop]
-  # pull_request:
-  #   branches: [main, develop]
+  workflow_dispatch:  # Can be manually triggered
+  push:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - 'Dockerfile'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - 'Dockerfile'
+      - '.github/workflows/ci.yml'
 
 jobs:
   smoke-test:
     runs-on: ubuntu-latest
-    if: false  # Explicitly disabled
     
     steps:
       - name: Checkout code
@@ -21,12 +27,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+          cache: 'pnpm'
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10.21.0
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
