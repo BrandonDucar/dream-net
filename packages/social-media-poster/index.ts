@@ -66,22 +66,22 @@ export { InstagramPoster } from "./platforms/instagram";
 export { FacebookPoster } from "./platforms/facebook";
 export { LinkedInPoster } from "./platforms/linkedin";
 export { TikTokPoster } from "./platforms/tiktok";
-export { YouTubePoster } from "./platforms/youtube";
-export { GitHubPoster } from "./platforms/github";
-export { NotionPoster } from "./platforms/notion";
-export { SlackPoster } from "./platforms/slack";
-export { DiscordPoster } from "./platforms/discord";
+export { YouTubePoster } from "./src/platforms/youtube";
+export { GitHubPoster } from "./src/platforms/github";
+export { NotionPoster } from "./src/platforms/notion";
+export { SlackPoster } from "./src/platforms/slack";
+export { DiscordPoster } from "./src/platforms/discord";
 
 // Media scanner
-export { MediaScanner, type MediaFile, type MediaScanOptions } from "./media-scanner";
+export { MediaScanner, type MediaFile, type MediaScanOptions } from "./src/media-scanner";
 
 // Media aggregator (Dropbox, OneDrive, iCloud, social media)
-export { MediaAggregator, type AggregatedMedia, type MediaSource } from "./media-aggregator";
+export { MediaAggregator, type AggregatedMedia, type MediaSource } from "./src/media-aggregator";
 
 // Cloud storage access
-export { DropboxMediaAccess, type DropboxFile } from "./platforms/dropbox";
-export { OneDriveMediaAccess, type OneDriveFile } from "./platforms/onedrive";
-export { iCloudPhotosAccess, type iCloudPhoto } from "./platforms/icloud-photos";
+export { DropboxMediaAccess, type DropboxFile } from "./src/platforms/dropbox";
+export { OneDriveMediaAccess, type OneDriveFile } from "./src/platforms/onedrive";
+export { iCloudPhotosAccess, type iCloudPhoto } from "./src/platforms/icloud-photos";
 
 // Main poster class
 export { SocialMediaPoster } from "./SocialMediaPoster";

@@ -3,7 +3,10 @@
     { "name": "dreamkeeper", "path": "./dreamkeeper" },
     { "name": "deploykeeper", "path": "./deploykeeper" },
     { "name": "relaybot", "path": "./relaybot" },
-    { "name": "envkeeper", "path": "./envkeeper" }
+    { "name": "envkeeper", "path": "./envkeeper" },
+    { "name": "openai-react-agent", "path": "./openai-react-agent" },
+    { "name": "openai-assistant-agent", "path": "./openai-assistant-agent" },
+    { "name": "openai-code-agent", "path": "./openai-code-agent" }
   ]
 }
 

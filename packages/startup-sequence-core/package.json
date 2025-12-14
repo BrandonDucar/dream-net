@@ -1,0 +1,21 @@
+{
+  "name": "@dreamnet/startup-sequence-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@dreamnet/nervous-system-core": "workspace:*",
+    "@dreamnet/dreamnet-health-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

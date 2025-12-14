@@ -76,3 +76,33 @@ export interface LiquidityEngineStatus {
   }>;
 }
 
+// Staked Liquidity Units (SLU) Types
+export interface SLUPoolConfig extends LiquidityPoolConfig {
+  stSPKAddress?: string;      // Address of stSPK token contract
+  isStakedPool: boolean;       // True if this is an SLU pool
+  sluPoolAddress?: string;    // Address of SLU pool contract
+  wrapperAddress?: string;    // Address of SLU wrapper contract
+}
+
+export interface SLUInfo {
+  pool: string;
+  stSPKAmount: number;
+  pairedAmount: number;
+  stakingRewards: number;
+  swapFees: number;
+  emissions: number;
+}
+
+export interface SLURewards {
+  totalStakingRewards: number;
+  totalSwapFees: number;
+  totalEmissions: number;
+}
+
+export interface SLUPoolStatus extends LiquidityPoolStatus {
+  sluInfo?: SLUInfo;
+  rewards?: SLURewards;
+  autoCompoundEnabled: boolean;
+  lastCompoundAt?: number;
+}
+

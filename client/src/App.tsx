@@ -54,6 +54,7 @@ import ErrorDemoPage from "@/pages/error-demo";
 import Sidebar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
 import DreamCloudPage from "@/pages/dream-cloud";
+import DreamScopePage from "@/pages/DreamScope";
 import FusePage from "@/pages/fuse";
 import TokenDemo from "@/pages/token-demo";
 import SimpleTokenDemo from "@/pages/simple-token-demo";
@@ -236,6 +237,7 @@ function AuthenticatedApp() {
               <Route path="/revenue-sharing" component={RevenueSharingPage} />
               <Route path="/vault-marketplace" component={VaultMarketplacePage} />
               <Route path="/dream-cloud" component={DreamCloudPage} />
+              <Route path="/dreamscope" component={DreamScopePage} />
               <Route path="/wallet-admin" component={WalletAdmin} />
               <Route path="/feed" component={DreamFeed} />
               <Route path="/dream-network-explorer" component={DreamNetworkExplorer} />

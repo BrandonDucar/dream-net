@@ -15,6 +15,7 @@ import {
   Zap,
   RefreshCw
 } from 'lucide-react';
+import LatentSessionsPanel from '@/components/latent-sessions-panel';
 // Mock EvolutionEngine for now - needs proper implementation
 const EvolutionEngine = {
   run: () => ({ status: 'Evolution Engine running' }),
@@ -405,6 +406,9 @@ export default function DreamScopeUI() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Latent Collaboration Sessions */}
+        <LatentSessionsPanel />
       </div>
     </div>
   );

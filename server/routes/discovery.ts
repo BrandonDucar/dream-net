@@ -5,7 +5,7 @@
 
 import { Router, Request, Response } from "express";
 import type { RequestWithIdentity } from "../../packages/dreamnet-control-core/identityResolver";
-import { listEntriesByType } from "../../packages/directory/src/registry";
+import { listEntriesByType } from "@dreamnet/directory/registry";
 import { withPort } from "../../packages/port-governor/src/withPort";
 import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 

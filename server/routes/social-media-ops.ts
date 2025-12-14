@@ -1,58 +1,25 @@
 import { Router } from "express";
 import BrandGradingCore from "../../packages/dreamnet-video-brand-core/index.js";
 import GeofencingCore from "../../packages/dreamnet-geofence-core/index.js";
-
-// Lazy import Campaign Master Agent (Social Media Ops) - make it optional
-let CampaignMasterAgent: any = null;
-let socialMediaOps: any = null;
+import { socialMediaOps } from "../agents/SocialMediaOps.js";
 
 const brandGrading = new BrandGradingCore();
 const geofencing = new GeofencingCore();
 
-async function initSocialMediaOps() {
-  try {
-    if (!CampaignMasterAgent) {
-      const module = await import("../../agents/CampaignMasterAgent.js");
-      CampaignMasterAgent = module.default || module;
-    }
-    if (!socialMediaOps && CampaignMasterAgent) {
-      socialMediaOps = new CampaignMasterAgent();
-    }
-  } catch (error) {
-    console.warn("[Social Media Ops] CampaignMasterAgent not available:", error instanceof Error ? error.message : error);
-    // Create a stub object so routes don't crash
-    socialMediaOps = {
-      initializeCampaign: async () => ({ message: "CampaignMasterAgent not available" }),
-      activateSocialMediaAutomation: async () => ({ message: "CampaignMasterAgent not available" }),
-      activeOperations: [],
-    };
-  }
-}
-
 export function createSocialMediaOpsRouter(): Router {
   const router = Router();
-
-  // Initialize on first request (lazy loading)
-  router.use(async (req, res, next) => {
-    if (!socialMediaOps) {
-      await initSocialMediaOps();
-    }
-    next();
-  });
 
   // POST /api/social-media-ops/initialize - Initialize social media accounts
   router.post("/social-media-ops/initialize", async (req, res) => {
     try {
-      if (!socialMediaOps) {
-        await initSocialMediaOps();
-      }
-      const config = req.body.config || {
-        focusAreas: ["social_media_automation"],
-        platforms: ["LinkedIn", "Twitter", "Facebook", "Instagram", "Threads"],
-      };
-
-      const result = await socialMediaOps.initializeCampaign(config);
-      res.json({ ok: true, result });
+      const accounts = await socialMediaOps.initializeAccounts();
+      res.json({ 
+        ok: true, 
+        result: {
+          accounts,
+          message: `Initialized ${accounts.length} social media accounts`
+        }
+      });
     } catch (error) {
       console.error("Failed to initialize social media ops:", error);
       res.status(500).json({ error: (error as Error).message });
@@ -62,21 +29,25 @@ export function createSocialMediaOpsRouter(): Router {
   // POST /api/social-media-ops/post - Create and post content
   router.post("/social-media-ops/post", async (req, res) => {
     try {
-      if (!socialMediaOps) {
-        await initSocialMediaOps();
-      }
-      const { content, platforms, mediaUrls } = req.body;
+      const { content, platforms, mediaUrls, scheduledFor } = req.body;
       if (!content) {
         return res.status(400).json({ error: "content is required" });
       }
 
-      // Activate social media automation if not already active
-      if (socialMediaOps.activeOperations && !socialMediaOps.activeOperations.includes("social_media")) {
-        await socialMediaOps.activateSocialMediaAutomation();
-      }
+      // Map platform names to SocialMediaOpsAgent format
+      const platformMap: Record<string, string> = {
+        "Twitter": "twitter",
+        "LinkedIn": "linkedin",
+        "Facebook": "facebook",
+        "Instagram": "instagram",
+        "Threads": "threads",
+        "TikTok": "tiktok",
+        "YouTube": "youtube",
+      };
 
       // Post to specified platforms or all
       const targetPlatforms = platforms || ["LinkedIn", "Twitter", "Facebook", "Instagram", "Threads"];
+      const normalizedPlatforms = targetPlatforms.map((p: string) => platformMap[p] || p.toLowerCase());
       
       // Get geofenced content
       const ipAddress = req.ip || req.headers["x-forwarded-for"] as string;
@@ -107,22 +78,30 @@ export function createSocialMediaOpsRouter(): Router {
         hashtags: regionContent.hashtag_pack?.join(" ") || "",
         emojis: regionContent.emoji_pack?.join(" ") || "",
       };
-      
-      // TODO: Integrate with actual platform APIs
-      // For now, log the post
-      console.log(`📱 [Social Media Ops] Posting to ${targetPlatforms.join(", ")}:`);
-      console.log(`   Content: ${content}`);
-      console.log(`   Region: ${await geofencing.detectRegion(ipAddress)}`);
-      console.log(`   Enhanced: ${JSON.stringify(enhancedContent)}`);
-      if (mediaUrls) {
-        console.log(`   Media: ${mediaUrls.length} files`);
+
+      // Create posts for each platform
+      const posts = [];
+      for (const platform of normalizedPlatforms) {
+        try {
+          const post = await socialMediaOps.createPost(
+            platform as any,
+            content,
+            processedMediaUrls,
+            scheduledFor
+          );
+          posts.push(post);
+        } catch (error: any) {
+          console.error(`[Social Media Ops] Failed to post to ${platform}:`, error.message);
+          posts.push({ platform, error: error.message });
+        }
       }
 
       res.json({
         ok: true,
-        message: "Post created and scheduled",
+        message: "Posts created and scheduled",
         platforms: targetPlatforms,
-        content,
+        posts,
+        enhancedContent,
       });
     } catch (error) {
       console.error("Failed to create post:", error);
@@ -133,19 +112,24 @@ export function createSocialMediaOpsRouter(): Router {
   // POST /api/social-media-ops/start - Start auto-posting
   router.post("/social-media-ops/start", async (req, res) => {
     try {
-      if (!socialMediaOps) {
-        await initSocialMediaOps();
-      }
       const config = req.body.config || {};
-      await socialMediaOps.initializeCampaign({
-        focusAreas: ["social_media_automation"],
-        ...config,
-      });
+      
+      // Initialize accounts if needed
+      await socialMediaOps.initializeAccounts();
+      
+      // Update config if provided
+      if (config.autoPost !== undefined || config.postFrequency) {
+        socialMediaOps.updateConfig(config);
+      }
+      
+      // Start auto-posting
+      socialMediaOps.startAutoPosting();
 
       res.json({
         ok: true,
         message: "Social media automation started",
-        status: socialMediaOps.status || { message: "CampaignMasterAgent not available" },
+        accounts: socialMediaOps.getAccounts(),
+        config: socialMediaOps.config || {},
       });
     } catch (error) {
       console.error("Failed to start social media ops:", error);
@@ -156,10 +140,25 @@ export function createSocialMediaOpsRouter(): Router {
   // GET /api/social-media-ops/status - Get status
   router.get("/social-media-ops/status", async (req, res) => {
     try {
-      if (!socialMediaOps) {
-        await initSocialMediaOps();
-      }
-      const status = socialMediaOps.getDetailedStatus ? socialMediaOps.getDetailedStatus() : { message: "CampaignMasterAgent not available" };
+      const accounts = socialMediaOps.getAccounts();
+      const posts = socialMediaOps.getPosts();
+      
+      const status = {
+        accounts: accounts.length,
+        activeAccounts: accounts.filter(a => a.status === "active").length,
+        totalPosts: posts.length,
+        postedPosts: posts.filter(p => p.status === "posted").length,
+        scheduledPosts: posts.filter(p => p.status === "scheduled").length,
+        failedPosts: posts.filter(p => p.status === "failed").length,
+        config: socialMediaOps.config,
+        platforms: accounts.map(a => ({
+          platform: a.platform,
+          username: a.username,
+          status: a.status,
+          lastPostAt: a.lastPostAt,
+        })),
+      };
+      
       res.json({ ok: true, status });
     } catch (error) {
       console.error("Failed to get status:", error);
@@ -167,14 +166,28 @@ export function createSocialMediaOpsRouter(): Router {
     }
   });
 
-  // GET /api/social-media-ops/messages - Get recent messages
+  // GET /api/social-media-ops/messages - Get recent posts (renamed from messages)
   router.get("/social-media-ops/messages", async (req, res) => {
     try {
-      if (!socialMediaOps) {
-        await initSocialMediaOps();
-      }
-      const messages = socialMediaOps.messages || [];
-      res.json({ ok: true, messages: messages.slice(0, 50) });
+      const posts = socialMediaOps.getPosts();
+      // Return recent posts sorted by creation date
+      const recentPosts = posts
+        .sort((a, b) => {
+          const aTime = a.metadata?.createdAt ? new Date(a.metadata.createdAt as string).getTime() : 0;
+          const bTime = b.metadata?.createdAt ? new Date(b.metadata.createdAt as string).getTime() : 0;
+          return bTime - aTime;
+        })
+        .slice(0, 50)
+        .map(post => ({
+          id: post.id,
+          platform: post.platform,
+          content: post.content,
+          status: post.status,
+          postedAt: post.postedAt,
+          engagement: post.engagement,
+        }));
+      
+      res.json({ ok: true, messages: recentPosts });
     } catch (error) {
       console.error("Failed to get messages:", error);
       res.status(500).json({ error: (error as Error).message });

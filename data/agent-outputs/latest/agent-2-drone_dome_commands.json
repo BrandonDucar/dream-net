@@ -1,0 +1,116 @@
+{
+  "agentId": 2,
+  "outputType": "drone_dome_commands",
+  "data": [
+    {
+      "id": "cmd_001_define_event_fabric",
+      "target_agent": 3,
+      "goal": "Define initial event schemas and monitoring fabric for DreamScope",
+      "context_refs": [
+        "vertex_fusion_snapshot.domains.events",
+        "vertex_fusion_snapshot.domains.services",
+        "drone_dome_report.maps.agents"
+      ],
+      "priority": "high",
+      "steps": [
+        "Review existing event definitions in snapshot",
+        "Design complete event families (dream_lifecycle, agent_activity, deployment_pipeline, etc.)",
+        "Define event schemas with required and optional fields",
+        "Create monitoring blueprint with streams, dashboards, and alerts",
+        "Output event_fabric_spec and monitoring_blueprint"
+      ]
+    },
+    {
+      "id": "cmd_002_design_health_system",
+      "target_agent": 4,
+      "goal": "Design health scores and diagnostic checks for DreamNet entities",
+      "context_refs": [
+        "vertex_fusion_snapshot",
+        "drone_dome_report",
+        "event_fabric_spec"
+      ],
+      "priority": "high",
+      "steps": [
+        "Define health entities (dreams, agents, services, infra)",
+        "Design metrics and scoring models",
+        "Create diagnostic checks",
+        "Design surgeon protocols for automated repair",
+        "Output dreamkeeper_spec and surgeon_protocols"
+      ]
+    },
+    {
+      "id": "cmd_003_unify_deployment",
+      "target_agent": 5,
+      "goal": "Design unified deployment and infrastructure model",
+      "context_refs": [
+        "vertex_fusion_snapshot.domains.infra",
+        "drone_dome_report.risk_zones"
+      ],
+      "priority": "high",
+      "steps": [
+        "Catalog current deployment targets (GCP, Netlify, Vercel)",
+        "Design unified deployment blueprint",
+        "Create infrastructure unification plan",
+        "Define CI/CD flows and config management",
+        "Output deploykeeper_blueprint and infra_unification_plan"
+      ]
+    },
+    {
+      "id": "cmd_004_design_data_spine",
+      "target_agent": 6,
+      "goal": "Transform conceptual domains into concrete data spine",
+      "context_refs": [
+        "vertex_fusion_snapshot.domains"
+      ],
+      "priority": "medium",
+      "steps": [
+        "Define core entities and relations",
+        "Choose storage strategies (OLTP/OLAP)",
+        "Design event data materialization",
+        "Create migration recommendations",
+        "Output data_spine_spec, storage_plan, and migration_recommendations"
+      ]
+    },
+    {
+      "id": "cmd_005_map_external_edges",
+      "target_agent": 7,
+      "goal": "Map external platforms and design social operations playbooks",
+      "context_refs": [
+        "vertex_fusion_snapshot.domains.integrations"
+      ],
+      "priority": "medium",
+      "steps": [
+        "Map all social platforms (X, Base, Farcaster, TikTok, etc.)",
+        "Map content platforms (Canva, Whatnot, Gumroad)",
+        "Map onchain surfaces (Base, Zora, HyperSub)",
+        "Design standardized playbooks",
+        "Output socialops_spec, external_edge_playbooks, and risk_and_safety_guidelines"
+      ]
+    },
+    {
+      "id": "cmd_006_create_master_plan",
+      "target_agent": 8,
+      "goal": "Synthesize all agent outputs into phased build plan",
+      "context_refs": [
+        "All outputs from Agents 1-7"
+      ],
+      "priority": "high",
+      "steps": [
+        "Consume all outputs from Agents 1-7",
+        "Create phased build plan",
+        "Define component dependencies",
+        "Set milestones and success criteria",
+        "Output master_blueprint, evolution_roadmap, and risk_matrix"
+      ]
+    }
+  ],
+  "version": "1.0.0",
+  "createdAt": "2025-12-02T02:26:29.425Z",
+  "metadata": {
+    "dependencies": [
+      "vertex_fusion_snapshot",
+      "drone_dome_report"
+    ],
+    "notes": "Commands for downstream agents (3-8)"
+  }
+}

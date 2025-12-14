@@ -61,6 +61,23 @@ router.get('/ready', async (_req, res) => {
       checks.database = 'not-configured';
     }
     
+    // Check health gates (if enabled)
+    let healthGatesReady = true;
+    try {
+      const { getHealthGates } = await import('../core/health-gates');
+      const gates = getHealthGates();
+      const readiness = await gates.getReadiness();
+      healthGatesReady = readiness.criticalReady;
+      checks.healthGates = {
+        ready: healthGatesReady,
+        gates: readiness.gates.length,
+        criticalReady: readiness.criticalReady,
+      };
+    } catch (error: any) {
+      // Health gates not initialized yet, that's OK
+      checks.healthGates = 'not-initialized';
+    }
+    
     // Check required environment variables
     const requiredEnvVars = ['NODE_ENV'];
     const envCheck = requiredEnvVars.every(v => !!process.env[v]);
@@ -77,10 +94,16 @@ router.get('/ready', async (_req, res) => {
     
     // Determine readiness
     const criticalChecks = ['database', 'environment'];
-    const ready = criticalChecks.every(key => {
+    const basicReady = criticalChecks.every(key => {
       const value = checks[key];
       return value === true || value === 'not-configured'; // not-configured is OK
     });
+    
+    // If health gates are initialized, they must be ready
+    // If not initialized, that's OK (reliability system not enabled)
+    const ready = basicReady && (
+      checks.healthGates === 'not-initialized' || healthGatesReady === true
+    );
     
     const statusCode = ready ? 200 : 503;
     res.status(statusCode).json({

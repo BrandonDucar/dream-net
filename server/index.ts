@@ -1,6 +1,6 @@
 
 import express, { type Express, type Request, Response, NextFunction } from "express";
-import type { Server } from "http";
+import { createServer, type Server } from "http";
 // Lazy import vite.ts to avoid issues in production
 let viteModuleCache: any = null;
 
@@ -71,8 +71,15 @@ import { createBiomimeticSystemsRouter } from "./routes/biomimetic-systems";
 import { createAgentMarketplaceRouter } from "./routes/agent-marketplace";
 import { createOrcaMarketplaceRouter } from "./routes/orca-marketplace";
 import { createX402PaymentGatewayRouter } from "./routes/x402-payment-gateway";
+import { createGuardianRouter } from "./routes/guardian";
 import whaleRouter from "./routes/whale";
 import onboardingRouter from "./routes/onboarding";
+import agentOutputsRouter from "./routes/agent-outputs";
+import snapshotRouter from "./routes/snapshot";
+import droneDomeRouter from "./routes/drone-dome";
+import eventFabricRouter from "./routes/event-fabric";
+import dreamkeeperRouter from "./routes/dreamkeeper";
+import citadelRouter from "./routes/citadel";
 // haloTriggers imported conditionally - see error handler below
 let haloTriggers: { recordError?: () => void } = {};
 // Lazy imports for workspace packages - loaded only when INIT_HEAVY_SUBSYSTEMS=true
@@ -145,6 +152,28 @@ import { idempotencyMiddleware } from "./middleware/idempotency";
 import { tierResolverMiddleware } from "./middleware/tierResolver";
 // import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
 import { controlCoreMiddleware } from "../packages/dreamnet-control-core/controlCoreMiddleware";
+// Dynamic import to avoid ESM resolution issues
+let DreamEventBus: any = null;
+async function getDreamEventBus() {
+  if (!DreamEventBus) {
+    const module = await import("../spine/dreamnet-event-bus/DreamEventBus.js");
+    DreamEventBus = module.DreamEventBus;
+  }
+  return DreamEventBus;
+}
+
+// Initialize Spine Event Bus for agent communication
+let eventBus: any = null;
+(async () => {
+  try {
+    const DreamEventBusClass = await getDreamEventBus();
+    eventBus = new DreamEventBusClass();
+    (global as any).dreamEventBus = eventBus; // Make available globally
+    console.log("🧠 [Spine] Dream Event Bus initialized");
+  } catch (error: any) {
+    console.warn("[Spine] Event Bus initialization warning:", error.message);
+  }
+})();
 
 const app = express();
 
@@ -290,6 +319,35 @@ app.get("/health", async (_req, res) => {
   });
 });
 
+// Frontend route: /agents - serves agent list (JSON or redirects to frontend)
+app.get("/agents", async (req, res, next) => {
+  // If it's an API request (Accept: application/json), return JSON
+  if (req.headers.accept?.includes("application/json") || req.query.format === "json") {
+    try {
+      const { gptAgentRegistry } = await import("./gpt-agents/GPTAgentRegistry");
+      const allGPTs = gptAgentRegistry.getAllGPTs();
+      const activeGPTs = allGPTs.filter(gpt => gpt.status === "Active");
+      res.json({ 
+        ok: true, 
+        agents: activeGPTs.map(gpt => ({
+          id: `gpt-${gpt.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+          name: gpt.name,
+          category: gpt.category,
+          purpose: gpt.purpose,
+          status: gpt.status,
+          link: gpt.link,
+        })),
+        total: activeGPTs.length,
+      });
+    } catch (error: any) {
+      res.status(500).json({ ok: false, error: error.message });
+    }
+  } else {
+    // Otherwise, let frontend handle it (SPA routing)
+    next();
+  }
+});
+
 // Ready endpoint - alias for /health/ready (backward compatible)
 app.get("/ready", async (_req, res) => {
   // Forward to health router's readiness probe
@@ -303,9 +361,17 @@ app.get("/ready", async (_req, res) => {
   });
 });
 
-// Request flow: Trace → Idempotency → Tier Resolver → Control Core → Route Handler
+// Request flow: Trace → Metrics → Idempotency → Tier Resolver → Control Core → Route Handler
 // Trace ID middleware - adds X-Trace-Id to all requests
 app.use(traceIdMiddleware);
+
+// Metrics collection middleware - tracks golden signals
+try {
+  const { metricsMiddleware } = await import('./middleware/metrics');
+  app.use(metricsMiddleware);
+} catch (error: any) {
+  console.warn('[Metrics] Could not load metrics middleware:', error.message);
+}
 
 // Idempotency middleware - handles X-Idempotency-Key header
 app.use(idempotencyMiddleware);
@@ -367,7 +433,7 @@ app.use("/api", createDreamRouter());
   app.use("/api", createCustomGPTFleetsRouter());
   app.use("/api", createGPTAgentsRouter());
   app.use("/api", createSocialMediaOpsRouter());
-  app.use("/api/social-media-auth", createSocialMediaAuthRouter());
+  app.use("/api/social-media-auth", createSocialMediaAuthRouter);
   app.use("/api", createInstantMeshRouter());
   app.use("/api", createFoundryRouter());
   app.use("/api", createMediaListRouter());
@@ -377,6 +443,13 @@ app.use("/api", createDreamRouter());
   app.use("/api/agent-wallets", createAgentWalletRouter);
   app.use("/api/marketplace", createAgentMarketplaceRouter);
   app.use("/api/x402", createX402PaymentGatewayRouter);
+  app.use("/api/guardian", createGuardianRouter());
+  app.use("/api/agent-outputs", agentOutputsRouter);
+  app.use("/api/snapshot", snapshotRouter);
+  app.use("/api/drone-dome", droneDomeRouter);
+  app.use("/api/event-fabric", eventFabricRouter);
+  app.use("/api/dreamkeeper", dreamkeeperRouter);
+  app.use("/api/citadel", citadelRouter);
   
   // Market Data API routes
   const marketDataRouter = (await import("./routes/market-data")).default;
@@ -409,6 +482,40 @@ app.use("/api", createDreamRouter());
   } catch (error: any) {
     console.warn("[BrowserAgentCore] Integration warning:", error.message);
   }
+
+  // Initialize Spine Wrappers and connect to Event Bus
+  const spineEventBus = (global as any).dreamEventBus || eventBus;
+  if (spineEventBus) {
+    // Initialize Shield Core Wrapper
+    try {
+      const { ShieldCoreWrapper } = await import("../spine/wrappers/ShieldCoreWrapper.js");
+      const shieldCoreWrapper = new ShieldCoreWrapper(spineEventBus);
+      (global as any).shieldCoreWrapper = shieldCoreWrapper;
+      console.log("🛡️ [Spine] Shield Core Wrapper initialized and connected to Event Bus");
+    } catch (error: any) {
+      console.warn("[Spine] Shield Core Wrapper initialization warning:", error.message);
+    }
+    
+    // Initialize Browser Agent Wrapper (already initialized in routes, but ensure it's available)
+    try {
+      const { BrowserAgentWrapper } = await import("../spine/wrappers/BrowserAgentWrapper.js");
+      const browserAgentWrapper = new BrowserAgentWrapper(spineEventBus);
+      (global as any).browserAgentWrapper = browserAgentWrapper;
+      console.log("🌐 [Spine] Browser Agent Wrapper initialized and connected to Event Bus");
+    } catch (error: any) {
+      console.warn("[Spine] Browser Agent Wrapper initialization warning:", error.message);
+    }
+    
+    // Initialize Deployment Wrapper
+    try {
+      const { DeploymentWrapper } = await import("../spine/wrappers/DeploymentWrapper.js");
+      const deploymentWrapper = new DeploymentWrapper(spineEventBus);
+      (global as any).deploymentWrapper = deploymentWrapper;
+      console.log("🚀 [Spine] Deployment Wrapper initialized and connected to Event Bus");
+    } catch (error: any) {
+      console.warn("[Spine] Deployment Wrapper initialization warning:", error.message);
+    }
+  }
   
   // Declare variables for systems that need to be shared across initialization
   let ShieldCore: any;
@@ -428,13 +535,9 @@ app.use("/api", createDreamRouter());
     console.log("[Optional Subsystems] Initializing heavy subsystems...");
     
     // Initialize Neural Mesh (N-Mesh) - Tier II Subsystem
-    try {
-        const { dreamNetOS } = await import("./core/dreamnet-os");
-        const meshStatus = NeuralMesh.status();
-        console.log(`🧠 [Neural Mesh] Initialized with ${meshStatus.synapses.count} synapses, ${meshStatus.memory.count} memory traces`);
-      } catch (error) {
-        console.warn("[Neural Mesh] Initialization warning:", error);
-      }
+    // SKIPPED FOR MINIMAL STARTUP - Will add in Layer 6 after other subsystems work
+    // TODO: Re-enable after fixing Neural Mesh initialization
+    console.log(`🧠 [Neural Mesh] Skipped for minimal startup - will add in Layer 6`);
 
       // Initialize Quantum Anticipation Layer (QAL) - Tier II Subsystem
       try {
@@ -1325,12 +1428,25 @@ app.use("/api", createDreamRouter());
   // Initialize Runtime Bridge Core - Runtime Context & Cycle Management 🌉
   try {
     const { RuntimeBridgeCore } = await import("@dreamnet/runtime-bridge-core");
+    const { LatentCollaborationCore } = await import("../packages/latent-collaboration-core");
+    const { getAgentWalletManager } = await import("@dreamnet/agent-wallet-manager");
+    
+    // Initialize Latent Collaboration Core if enabled
+    let latentCollaboration: any = null;
+    if (process.env.USE_LATENT_COLLABORATION === 'true') {
+      latentCollaboration = new LatentCollaborationCore();
+      console.log(`🧠 [Latent Collaboration] Initialized`);
+    }
     
     // Initialize runtime context
     RuntimeBridgeCore.initContext({
       DreamVault: DreamVault,
       DreamShop: DreamShop,
       NeuralMesh: NeuralMesh,
+      LatentCollaboration: latentCollaboration ? {
+        run: (context: any) => latentCollaboration.run(context),
+      } : undefined,
+      AgentWalletManager: getAgentWalletManager(),
     });
     
     // Start runtime loop (runs every 30 seconds)
@@ -1344,6 +1460,291 @@ app.use("/api", createDreamRouter());
   }
   } // End of shouldInitHeavy conditional - heavy subsystems disabled by default
 
+  // ============================================================================
+  // 19 NEW INTEGRATION PACKAGES - Initialized in initOptionalSubsystems
+  // ============================================================================
+  
+  // Agent Foundry Vertical (3)
+  try {
+    const { DreamNetLangChainBridge } = await import("@dreamnet/agent-langchain");
+    const langChainBridge = new DreamNetLangChainBridge();
+    dreamNetOS.langChainBridge = langChainBridge;
+    (global as any).langChainBridge = langChainBridge;
+    console.log(`🤖 [LangChain] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[LangChain] Initialization warning:", error.message);
+  }
+
+  try {
+    const { CrewAICrewOrchestrator } = await import("@dreamnet/agent-crewai");
+    const crewAI = new CrewAICrewOrchestrator({
+      agents: [],
+      tasks: [],
+      process: "sequential",
+    });
+    dreamNetOS.crewAICrewOrchestrator = crewAI;
+    (global as any).crewAICrewOrchestrator = crewAI;
+    console.log(`👥 [CrewAI] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[CrewAI] Initialization warning:", error.message);
+  }
+
+  try {
+    const { SuperAGIMarketplace } = await import("@dreamnet/agent-superagi");
+    const superAGI = new SuperAGIMarketplace({
+      apiUrl: process.env.SUPERAGI_API_URL,
+      apiKey: process.env.SUPERAGI_API_KEY,
+    });
+    dreamNetOS.superAGIMarketplace = superAGI;
+    (global as any).superAGIMarketplace = superAGI;
+    console.log(`🏪 [SuperAGI Marketplace] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[SuperAGI Marketplace] Initialization warning:", error.message);
+  }
+
+  // Crypto Social Vertical (2)
+  try {
+    const { LensProtocolClient } = await import("@dreamnet/social-lens");
+    const lensClient = new LensProtocolClient({
+      rpcUrl: process.env.LENS_RPC_URL || process.env.BASE_MAINNET_RPC_URL,
+      chainId: parseInt(process.env.LENS_CHAIN_ID || "8453"),
+    });
+    await lensClient.initialize();
+    dreamNetOS.lensProtocolClient = lensClient;
+    (global as any).lensProtocolClient = lensClient;
+    console.log(`🔗 [Lens Protocol] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Lens Protocol] Initialization warning:", error.message);
+  }
+
+  try {
+    const { FarcasterClient } = await import("@dreamnet/social-farcaster");
+    const farcasterClient = new FarcasterClient({
+      rpcUrl: process.env.FARCASTER_RPC_URL || process.env.BASE_MAINNET_RPC_URL,
+      chainId: parseInt(process.env.FARCASTER_CHAIN_ID || "8453"),
+      hubUrl: process.env.FARCASTER_HUB_URL,
+    });
+    await farcasterClient.initialize();
+    dreamNetOS.farcasterClient = farcasterClient;
+    (global as any).farcasterClient = farcasterClient;
+    console.log(`📡 [Farcaster Protocol] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Farcaster Protocol] Initialization warning:", error.message);
+  }
+
+  // OTT Streaming Vertical (2)
+  try {
+    const { JellyfinMediaServer } = await import("@dreamnet/media-jellyfin");
+    const jellyfin = new JellyfinMediaServer({
+      serverUrl: process.env.JELLYFIN_SERVER_URL || "",
+      apiKey: process.env.JELLYFIN_API_KEY,
+      username: process.env.JELLYFIN_USERNAME,
+      password: process.env.JELLYFIN_PASSWORD,
+    });
+    await jellyfin.authenticate();
+    dreamNetOS.jellyfinMediaServer = jellyfin;
+    (global as any).jellyfinMediaServer = jellyfin;
+    console.log(`🎬 [Jellyfin Media Server] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Jellyfin Media Server] Initialization warning:", error.message);
+  }
+
+  try {
+    const { PeerTubeClient } = await import("@dreamnet/media-peertube");
+    const peerTube = new PeerTubeClient({
+      instanceUrl: process.env.PEERTUBE_INSTANCE_URL || "",
+      apiKey: process.env.PEERTUBE_API_KEY,
+    });
+    dreamNetOS.peerTubeClient = peerTube;
+    (global as any).peerTubeClient = peerTube;
+    console.log(`📺 [PeerTube P2P] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[PeerTube P2P] Initialization warning:", error.message);
+  }
+
+  // Science Vertical (2)
+  try {
+    const { ResearchHubClient } = await import("@dreamnet/research-researchhub");
+    const researchHub = new ResearchHubClient({
+      apiUrl: process.env.RESEARCHHUB_API_URL,
+      apiKey: process.env.RESEARCHHUB_API_KEY,
+    });
+    dreamNetOS.researchHubClient = researchHub;
+    (global as any).researchHubClient = researchHub;
+    console.log(`🔬 [ResearchHub Platform] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[ResearchHub Platform] Initialization warning:", error.message);
+  }
+
+  try {
+    const { DeSciProtocols } = await import("@dreamnet/research-desci");
+    const deSci = new DeSciProtocols({
+      rpcUrl: process.env.DESCI_RPC_URL || process.env.BASE_MAINNET_RPC_URL,
+      chainId: parseInt(process.env.DESCI_CHAIN_ID || "8453"),
+      ipfsGateway: process.env.IPFS_GATEWAY_URL,
+    });
+    await deSci.initialize();
+    dreamNetOS.deSciProtocols = deSci;
+    (global as any).deSciProtocols = deSci;
+    console.log(`🧪 [DeSci Protocols] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[DeSci Protocols] Initialization warning:", error.message);
+  }
+
+  // Travel Vertical (2)
+  try {
+    const { OpenTripPlannerClient } = await import("@dreamnet/travel-opentripplanner");
+    const otp = new OpenTripPlannerClient({
+      apiUrl: process.env.OPENTRIPPLANNER_API_URL || "",
+      routerId: process.env.OPENTRIPPLANNER_ROUTER_ID,
+    });
+    dreamNetOS.openTripPlannerClient = otp;
+    (global as any).openTripPlannerClient = otp;
+    console.log(`🗺️  [OpenTripPlanner] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[OpenTripPlanner] Initialization warning:", error.message);
+  }
+
+  try {
+    const { ValhallaRouter } = await import("@dreamnet/travel-valhalla");
+    const valhalla = new ValhallaRouter({
+      apiUrl: process.env.VALHALLA_API_URL || "",
+    });
+    dreamNetOS.valhallaRouter = valhalla;
+    (global as any).valhallaRouter = valhalla;
+    console.log(`⚔️  [Valhalla Routing] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Valhalla Routing] Initialization warning:", error.message);
+  }
+
+  // Military Vertical (2)
+  try {
+    const { GhidraSecurityAnalyzer } = await import("@dreamnet/security-ghidra");
+    const ghidra = new GhidraSecurityAnalyzer({
+      serverUrl: process.env.GHIDRA_SERVER_URL,
+      apiKey: process.env.GHIDRA_API_KEY,
+      headless: process.env.GHIDRA_HEADLESS === "true",
+    });
+    dreamNetOS.ghidraSecurityAnalyzer = ghidra;
+    (global as any).ghidraSecurityAnalyzer = ghidra;
+    console.log(`🔒 [Ghidra Security] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Ghidra Security] Initialization warning:", error.message);
+  }
+
+  try {
+    const { MetasploitFramework } = await import("@dreamnet/security-metasploit");
+    const metasploit = new MetasploitFramework({
+      apiUrl: process.env.METASPLOIT_API_URL || "",
+      apiKey: process.env.METASPLOIT_API_KEY || "",
+    });
+    dreamNetOS.metasploitFramework = metasploit;
+    (global as any).metasploitFramework = metasploit;
+    console.log(`🛡️  [Metasploit Framework] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Metasploit Framework] Initialization warning:", error.message);
+  }
+
+  // Government Vertical (2)
+  try {
+    const { AragonGovernanceClient } = await import("@dreamnet/governance-aragon");
+    const aragon = new AragonGovernanceClient({
+      rpcUrl: process.env.ARAGON_RPC_URL || process.env.BASE_MAINNET_RPC_URL,
+      chainId: parseInt(process.env.ARAGON_CHAIN_ID || "8453"),
+      daoAddress: process.env.ARAGON_DAO_ADDRESS,
+      votingAddress: process.env.ARAGON_VOTING_ADDRESS,
+    });
+    await aragon.initialize();
+    dreamNetOS.aragonGovernanceClient = aragon;
+    (global as any).aragonGovernanceClient = aragon;
+    console.log(`🏛️  [Aragon Governance] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Aragon Governance] Initialization warning:", error.message);
+  }
+
+  try {
+    const { SnapshotVoting } = await import("@dreamnet/governance-snapshot");
+    const snapshot = new SnapshotVoting({
+      apiUrl: process.env.SNAPSHOT_API_URL,
+      space: process.env.SNAPSHOT_SPACE,
+    });
+    dreamNetOS.snapshotVoting = snapshot;
+    (global as any).snapshotVoting = snapshot;
+    console.log(`📊 [Snapshot Voting] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Snapshot Voting] Initialization warning:", error.message);
+  }
+
+  // Music Vertical (2)
+  try {
+    const { MusicGenClient } = await import("@dreamnet/music-musicgen");
+    const musicGen = new MusicGenClient({
+      apiUrl: process.env.MUSICGEN_API_URL,
+      apiKey: process.env.MUSICGEN_API_KEY,
+      model: process.env.MUSICGEN_MODEL as any,
+    });
+    dreamNetOS.musicGenClient = musicGen;
+    (global as any).musicGenClient = musicGen;
+    console.log(`🎵 [MusicGen AI] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[MusicGen AI] Initialization warning:", error.message);
+  }
+
+  try {
+    const { MusicLMClient } = await import("@dreamnet/music-musiclm");
+    const musicLM = new MusicLMClient({
+      apiUrl: process.env.MUSICLM_API_URL,
+      apiKey: process.env.MUSICLM_API_KEY,
+    });
+    dreamNetOS.musicLMClient = musicLM;
+    (global as any).musicLMClient = musicLM;
+    console.log(`🎶 [MusicLM] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[MusicLM] Initialization warning:", error.message);
+  }
+
+  // Pods Vertical (2)
+  try {
+    const { MatrixFederationClient } = await import("@dreamnet/chat-matrix");
+    const matrix = new MatrixFederationClient({
+      homeserverUrl: process.env.MATRIX_HOMESERVER_URL || "",
+      accessToken: process.env.MATRIX_ACCESS_TOKEN,
+      userId: process.env.MATRIX_USER_ID,
+      password: process.env.MATRIX_PASSWORD,
+    });
+    dreamNetOS.matrixFederationClient = matrix;
+    (global as any).matrixFederationClient = matrix;
+    console.log(`💬 [Matrix Federation] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Matrix Federation] Initialization warning:", error.message);
+  }
+
+  try {
+    const { RocketChatClient } = await import("@dreamnet/chat-rocketchat");
+    const rocketChat = new RocketChatClient({
+      serverUrl: process.env.ROCKETCHAT_SERVER_URL || "",
+      userId: process.env.ROCKETCHAT_USER_ID,
+      authToken: process.env.ROCKETCHAT_AUTH_TOKEN,
+    });
+    dreamNetOS.rocketChatClient = rocketChat;
+    (global as any).rocketChatClient = rocketChat;
+    console.log(`🚀 [Rocket.Chat] Integration initialized`);
+  } catch (error: any) {
+    console.warn("[Rocket.Chat] Initialization warning:", error.message);
+  }
+
+  console.log(`✅ [Integration Packages] All 19 integrations initialized`);
+
+  // Initialize The Citadel - Strategic command center
+  try {
+    const { CitadelCore } = await import("../packages/citadel-core");
+    dreamNetOS.citadelCore = CitadelCore;
+    (global as any).citadelCore = CitadelCore;
+    console.log(`🏰 [Citadel] Initialized - Strategic command center active`);
+  } catch (error: any) {
+    console.warn("[Citadel] Initialization warning:", error.message);
+  }
+
   // Initialize Orchestrator Core - System Orchestration 🔄
   if (shouldInitHeavy) {
   try {
@@ -1351,6 +1752,7 @@ app.use("/api", createDreamRouter());
     
     // Start orchestrator loop (runs every 60 seconds)
     OrchestratorCore.startIntervalLoop({
+      CitadelCore: dreamNetOS.citadelCore,
       DreamVault: DreamVault,
       DreamShop: DreamShop,
       NeuralMesh: NeuralMesh,
@@ -1457,7 +1859,41 @@ app.use("/api", createDreamRouter());
       console.log(`🤖 [GPT Agent Registry] Auto-registered ${results.success} GPTs (${results.failed} failed)`);
     } else {
       const stats = gptAgentRegistry.getStats();
-      console.log(`🤖 [GPT Agent Registry] Loaded ${stats.total} GPTs (ready for registration via API)`);
+      const activeCount = stats.byStatus?.Active || 0;
+      const draftCount = stats.byStatus?.Draft || 0;
+      console.log(`🤖 [GPT Agent Registry] Loaded ${stats.total} GPTs (${activeCount} Active, ${draftCount} Draft - ready for registration via API)`);
+    }
+
+    // Initialize Guardian Framework with Active agents
+    try {
+      const { guardianFramework } = await import("@dreamnet/guardian-framework-core");
+      const allGPTs = gptAgentRegistry.getAllGPTs();
+      const activeAgents = allGPTs
+        .filter(gpt => gpt.status === "Active")
+        .map(gpt => ({
+          id: `gpt-${gpt.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+          name: gpt.name,
+        }));
+      
+      if (activeAgents.length === 0) {
+        console.warn("[Guardian Framework] No active agents found, skipping initialization");
+      } else {
+        await guardianFramework.initialize(activeAgents);
+        console.log(`🛡️ [Guardian Framework] Initialized with ${activeAgents.length} personal drones`);
+
+        // Start Guardian monitoring cycle (every 5 minutes)
+        setInterval(async () => {
+          try {
+            await guardianFramework.runCycle();
+          } catch (error: any) {
+            console.warn("[Guardian Framework] Cycle warning:", error.message);
+          }
+        }, 5 * 60 * 1000); // Every 5 minutes
+      }
+    } catch (error: any) {
+      console.error("[Guardian Framework] Initialization failed:", error.message);
+      console.error("[Guardian Framework] Stack:", error.stack);
+      console.warn("[Guardian Framework] Guardian routes will return 503 until initialized");
     }
   } catch (error) {
     console.warn("[GPT Agent Registry] Initialization warning:", error);
@@ -1829,11 +2265,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// CRITICAL: Create server IMMEDIATELY - synchronous creation for Cloud Run
+// Cloud Run requires the server to respond to health checks within seconds
+console.log("[DreamNet] 🚀 Starting server initialization...");
+console.log(`[DreamNet] Environment: ${NODE_ENV}, Port: ${ENV_PORT || 8080}`);
+
 (async () => {
-  // CRITICAL: Create server IMMEDIATELY - no async imports
-  // Cloud Run requires the server to respond to health checks within seconds
-  const { createServer } = await import("http");
-  const server = createServer(app);
+  try {
+    console.log("[DreamNet] 📦 Creating HTTP server...");
+    const server = createServer(app);
+    console.log("[DreamNet] ✅ HTTP server created successfully");
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -1885,44 +2326,46 @@ app.use((req, res, next) => {
     // Don't throw - error handler should not throw
   });
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 3000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = ENV_PORT || 8080;
-  const host = "0.0.0.0";
+    // ALWAYS serve the app on the port specified in the environment variable PORT
+    // Other ports are firewalled. Default to 8080 if not specified.
+    // this serves both the API and the client.
+    // It is the only port that is not firewalled.
+    const port = ENV_PORT || 8080;
+    const host = "0.0.0.0";
 
-  // Add error handlers BEFORE listen to catch any errors
-  server.on('error', (error: any) => {
-    console.error('[Server] HTTP server error:', error);
-    if (error.code === 'EADDRINUSE') {
-      console.error(`[Server] Port ${port} is already in use`);
-      process.exit(1);
-    }
-    // Don't exit on other errors - let the server try to recover
-  });
+    console.log(`[DreamNet] 🔧 Configuring server for ${host}:${port}...`);
 
-  process.on('unhandledRejection', (reason, promise) => {
-    console.error('[Server] Unhandled Rejection at:', promise, 'reason:', reason);
-    // Don't exit - log and continue
-  });
+    // Add error handlers BEFORE listen to catch any errors
+    server.on('error', (error: any) => {
+      console.error('[Server] HTTP server error:', error);
+      if (error.code === 'EADDRINUSE') {
+        console.error(`[Server] Port ${port} is already in use`);
+        process.exit(1);
+      }
+      // Don't exit on other errors - let the server try to recover
+    });
 
-  process.on('uncaughtException', (error) => {
-    console.error('[Server] Uncaught Exception:', error);
-    console.error('[Server] Stack:', error.stack);
-    // Don't exit immediately - give server a chance to log
-    setTimeout(() => {
-      console.error('[Server] Exiting due to uncaught exception');
-      process.exit(1);
-    }, 1000);
-  });
+    process.on('unhandledRejection', (reason, promise) => {
+      console.error('[Server] Unhandled Rejection at:', promise, 'reason:', reason);
+      // Don't exit - log and continue
+    });
 
-  // Start listening IMMEDIATELY - don't wait for anything else
-  // This is CRITICAL for Cloud Run - server must respond to health checks quickly
-  console.log(`[DreamNet] Starting server on ${host}:${port}...`);
-  server.listen(port, host, () => {
-    console.log(`[DreamNet] ✅ Server listening on ${host}:${port}`);
-    console.log(`[DreamNet] Server started - /health endpoint available`);
+    process.on('uncaughtException', (error) => {
+      console.error('[Server] Uncaught Exception:', error);
+      console.error('[Server] Stack:', error.stack);
+      // Don't exit immediately - give server a chance to log
+      setTimeout(() => {
+        console.error('[Server] Exiting due to uncaught exception');
+        process.exit(1);
+      }, 1000);
+    });
+
+    // Start listening IMMEDIATELY - don't wait for anything else
+    // This is CRITICAL for Cloud Run - server must respond to health checks quickly
+    console.log(`[DreamNet] 🎯 Starting server.listen() on ${host}:${port}...`);
+    server.listen(port, host, () => {
+      console.log(`[DreamNet] ✅ Server listening on ${host}:${port}`);
+      console.log(`[DreamNet] ✅ Server started - /health endpoint available`);
     
     // Register routes asynchronously AFTER server is listening (non-blocking)
     (async () => {
@@ -2010,14 +2453,45 @@ app.use((req, res, next) => {
       console.error('[WhalePack] Failed to start control loop:', err);
     });
     
+    // Initialize reliability system (if enabled)
+    if (process.env.USE_RELIABILITY_SYSTEM === 'true') {
+      (async () => {
+        try {
+          const { initializeReliabilitySystem } = await import('./core/dag-loader');
+          await initializeReliabilitySystem().catch((error) => {
+            console.warn('[Reliability] Failed to initialize:', error);
+          });
+        } catch (error: any) {
+          console.warn('[Reliability] Could not load reliability system:', error.message);
+        }
+      })();
+    }
+    
     // Initialize optional subsystems asynchronously (non-blocking)
+    // This runs in parallel with reliability system (if enabled)
     initOptionalSubsystems(app, server).catch((error) => {
       console.error("[Optional Subsystems] Failed to initialize:", error);
     });
-  });
-})().catch((error) => {
-  console.error("[DreamNet] Failed to start:", error);
-  console.error("[DreamNet] Error stack:", error.stack);
-  process.exit(1);
-});
+    });
+  } catch (error: any) {
+    console.error("[DreamNet] ❌ Error during server initialization:", error);
+    console.error("[DreamNet] Error stack:", error.stack);
+    // CRITICAL: Even if initialization fails, try to start listening
+    // Cloud Run needs the server to respond to health checks
+    const port = ENV_PORT || 8080;
+    const host = "0.0.0.0";
+    console.log(`[DreamNet] ⚠️  Attempting emergency server start on ${host}:${port}...`);
+    try {
+      const emergencyServer = createServer(app);
+      emergencyServer.listen(port, host, () => {
+        console.log(`[DreamNet] ✅ Emergency server listening on ${host}:${port}`);
+        console.log(`[DreamNet] ⚠️  Server running in degraded mode - some features may be unavailable`);
+      });
+    } catch (emergencyError: any) {
+      console.error("[DreamNet] ❌ CRITICAL: Emergency server start failed:", emergencyError);
+      console.error("[DreamNet] Exiting...");
+      process.exit(1);
+    }
+  }
+})();
 }

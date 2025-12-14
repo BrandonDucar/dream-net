@@ -109,3 +109,29 @@ header h1 {
   border-radius: 8px;
 }
 
+/* Hybrid app environment indicators */
+.app[data-environment="base-app"] {
+  /* Optimized for Base App */
+}
+
+.app[data-environment="browser"] {
+  /* Optimized for standalone browser */
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.wallet-section {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+

@@ -23,6 +23,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../shared'),
       '@dreamnet/base-mini-apps': path.resolve(__dirname, '../packages/base-mini-apps/frontend'),
+      // Stub out Node.js-only packages that shouldn't be in client bundle
+      'googleapis': path.resolve(__dirname, './src/stubs/googleapis-stub.ts'),
+      'googleapis-common': path.resolve(__dirname, './src/stubs/googleapis-stub.ts'),
+      'google-auth-library': path.resolve(__dirname, './src/stubs/googleapis-stub.ts'),
       // Resolve @dreamnet/* packages to their package directories (Vite will resolve via package.json main/types)
       '@dreamnet/shield-core': path.resolve(__dirname, '../packages/shield-core'),
       '@dreamnet/api-keeper-core': path.resolve(__dirname, '../packages/api-keeper-core'),
@@ -102,6 +106,11 @@ export default defineConfig({
         // Exclude server-only packages that have Node.js dependencies
         '@dreamnet/inbox-squared-core',
         'googleapis',
+        'googleapis-common',
+        'google-auth-library',
+        'gaxios',
+        'gcp-metadata',
+        'gtoken',
         'puppeteer',
         'google-trends-api',
         'newsapi',

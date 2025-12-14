@@ -153,8 +153,8 @@ dream-net/
 ## 📦 Mini-Apps Ecosystem
 
 ### Location
-- **Frontend**: `packages/base-mini-apps/frontend/`
-- **Contracts**: `packages/base-mini-apps/contracts/`
+- **Frontend**: `packages/base-mini-apps/frontend/` (includes SLUPoolApp.tsx)
+- **Contracts**: `packages/base-mini-apps/contracts/` (includes StakedSPK.sol, SLUPool.sol, SLUWrapper.sol, ISLUPool.sol)
 - **Deployment**: Integrated into `client/` frontend
 
 ### Active Mini-Apps
@@ -309,6 +309,13 @@ TWILIO_PHONE_NUMBER=...
 
 ## 📊 Package Inventory
 
+### World & Lore Packages (1+)
+- `dreamnet-world` - DreamNet world model, lore, and game mechanics
+  - Codifies Genesis mythology into structured code
+  - Provides world map, factions, creatures, characters
+  - Implements game loop (seeds, quests, branches)
+  - Foundation for games, NFTs, content generation
+
 ### Core Agent Packages (90+)
 - `dreamnet-health-core` - DreamKeeper
 - `dreamnet-vercel-agent` - DeployKeeper
@@ -358,7 +365,8 @@ TWILIO_PHONE_NUMBER=...
 - `init-ritual-core` - Init ritual
 - `internal-ports` - Internal ports
 - `internal-router` - Internal router
-- `liquidity-engine` - Liquidity engine
+- `liquidity-engine` - Liquidity engine (includes SLU pool planner)
+- `liquidity-core` - Liquidity client libraries (includes SLUSystem, SLUSeeder, SOLBridge)
 - `media-vault` - Media vault
 - `metrics-engine` - Metrics engine
 - `network-blueprints` - Network blueprints

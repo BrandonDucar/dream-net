@@ -3,6 +3,10 @@ import { DreamKeeperAgent } from "./agents/dreamkeeper";
 import { DeployKeeperAgent } from "./agents/deploykeeper";
 import { RelayBotAgent } from "./agents/relaybot";
 import { EnvKeeperAgent } from "./agents/envkeeper";
+import { OpenAIReActAgent } from "./agents/openai-react-agent";
+import { OpenAIAssistantAgent } from "./agents/openai-assistant-agent";
+import { OpenAICodeAgent } from "./agents/openai-code-agent";
+import { loadAllGPTAgents } from "./agents/gpt-agent-factory";
 import NeuralMesh from "../../packages/neural-mesh";
 import QuantumAnticipation from "../../packages/quantum-anticipation";
 import SquadAlchemy from "../../packages/squad-alchemy";
@@ -32,6 +36,27 @@ import OrchestratorCore from "../../packages/orchestrator-core";
 import RuntimeBridgeCore from "../../packages/runtime-bridge-core";
 import WolfPackFundingCore from "../../packages/wolfpack-funding-core";
 import WolfPackMailerCore from "../../packages/wolfpack-mailer-core";
+
+// 19 New Integration Packages
+import { DreamNetLangChainBridge } from "@dreamnet/agent-langchain";
+import { CrewAICrewOrchestrator } from "@dreamnet/agent-crewai";
+import { SuperAGIMarketplace } from "@dreamnet/agent-superagi";
+import { LensProtocolClient } from "@dreamnet/social-lens";
+import { FarcasterClient } from "@dreamnet/social-farcaster";
+import { JellyfinMediaServer } from "@dreamnet/media-jellyfin";
+import { PeerTubeClient } from "@dreamnet/media-peertube";
+import { ResearchHubClient } from "@dreamnet/research-researchhub";
+import { DeSciProtocols } from "@dreamnet/research-desci";
+import { OpenTripPlannerClient } from "@dreamnet/travel-opentripplanner";
+import { ValhallaRouter } from "@dreamnet/travel-valhalla";
+import { GhidraSecurityAnalyzer } from "@dreamnet/security-ghidra";
+import { MetasploitFramework } from "@dreamnet/security-metasploit";
+import { AragonGovernanceClient } from "@dreamnet/governance-aragon";
+import { SnapshotVoting } from "@dreamnet/governance-snapshot";
+import { MusicGenClient } from "@dreamnet/music-musicgen";
+import { MusicLMClient } from "@dreamnet/music-musiclm";
+import { MatrixFederationClient } from "@dreamnet/chat-matrix";
+import { RocketChatClient } from "@dreamnet/chat-rocketchat";
 
 export class DreamNetOS {
   private registry: Map<string, Agent> = new Map();
@@ -64,11 +89,53 @@ export class DreamNetOS {
   public runtimeBridgeCore = RuntimeBridgeCore;
   public wolfPackFundingCore = WolfPackFundingCore;
   public wolfPackMailerCore = WolfPackMailerCore;
+  public citadelCore?: any;
+
+  // 19 New Integration Packages
+  public langChainBridge?: DreamNetLangChainBridge;
+  public crewAICrewOrchestrator?: CrewAICrewOrchestrator;
+  public superAGIMarketplace?: SuperAGIMarketplace;
+  public lensProtocolClient?: LensProtocolClient;
+  public farcasterClient?: FarcasterClient;
+  public jellyfinMediaServer?: JellyfinMediaServer;
+  public peerTubeClient?: PeerTubeClient;
+  public researchHubClient?: ResearchHubClient;
+  public deSciProtocols?: DeSciProtocols;
+  public openTripPlannerClient?: OpenTripPlannerClient;
+  public valhallaRouter?: ValhallaRouter;
+  public ghidraSecurityAnalyzer?: GhidraSecurityAnalyzer;
+  public metasploitFramework?: MetasploitFramework;
+  public aragonGovernanceClient?: AragonGovernanceClient;
+  public snapshotVoting?: SnapshotVoting;
+  public musicGenClient?: MusicGenClient;
+  public musicLMClient?: MusicLMClient;
+  public matrixFederationClient?: MatrixFederationClient;
+  public rocketChatClient?: RocketChatClient;
 
   constructor() {
-    [DreamKeeperAgent, DeployKeeperAgent, RelayBotAgent, EnvKeeperAgent].forEach((a) =>
+    // Core agents
+    [
+      DreamKeeperAgent, 
+      DeployKeeperAgent, 
+      RelayBotAgent, 
+      EnvKeeperAgent,
+      OpenAIReActAgent,
+      OpenAIAssistantAgent,
+      OpenAICodeAgent
+    ].forEach((a) =>
       this.registry.set(a.name, a),
     );
+
+    // Load all GPT agents from registry.json
+    try {
+      const gptAgents = loadAllGPTAgents();
+      for (const agent of gptAgents) {
+        this.registry.set(agent.name, agent);
+      }
+      console.log(`✅ [DreamNet OS] Loaded ${gptAgents.length} GPT agents`);
+    } catch (error: any) {
+      console.warn(`⚠️ [DreamNet OS] Failed to load GPT agents: ${error.message}`);
+    }
 
     // Initialize Neural Mesh with subsystems
     this.initializeNeuralMesh();
@@ -76,6 +143,11 @@ export class DreamNetOS {
 
   private initializeNeuralMesh(): void {
     try {
+      // Skip Neural Mesh for minimal startup - will add in Layer 6
+      if (!NeuralMesh || typeof NeuralMesh.link !== 'function') {
+        console.log("[DreamNetOS] Neural Mesh skipped - not available for minimal startup");
+        return;
+      }
       // Link subsystems via Neural Mesh
       NeuralMesh.link({
         swarm: {
@@ -139,6 +211,22 @@ export class DreamNetOS {
   }
 }
 
-export const dreamNetOS = new DreamNetOS();
+// Lazy initialization - only create when accessed
+// This allows minimal server startup without loading all subsystems
+let _dreamNetOSInstance: DreamNetOS | null = null;
+
+export function getDreamNetOS(): DreamNetOS {
+  if (!_dreamNetOSInstance) {
+    _dreamNetOSInstance = new DreamNetOS();
+  }
+  return _dreamNetOSInstance;
+}
+
+// Export for backward compatibility, but it's now lazy
+export const dreamNetOS = new Proxy({} as DreamNetOS, {
+  get(_target, prop) {
+    return getDreamNetOS()[prop as keyof DreamNetOS];
+  }
+});
 
 

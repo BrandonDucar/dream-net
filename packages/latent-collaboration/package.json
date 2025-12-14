@@ -1,0 +1,22 @@
+{
+  "name": "@dreamnet/latent-collaboration",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@dreamnet/neural-mesh": "workspace:*",
+    "@dreamnet/agent-wallet-manager": "workspace:*",
+    "@dreamnet/utils": "workspace:*",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+

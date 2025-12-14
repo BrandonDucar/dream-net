@@ -13,6 +13,25 @@ export async function runCycle(
   let error: string | undefined;
 
   try {
+    // 0) The Citadel - Strategic command center
+    // Generates snapshots and blueprints early to provide foundational data for other systems
+    let citadelState: any = null;
+    if (ctx.CitadelCore?.run) {
+      citadelState = await ctx.CitadelCore.run({
+        neuralMesh: ctx.NeuralMesh,
+      });
+    }
+
+    // 0.5) Latent Collaboration - Agents share reasoning in latent space
+    if (ctx.LatentCollaboration?.run) {
+      await ctx.LatentCollaboration.run({
+        citadelSnapshot: citadelState,
+        agents: ctx.agents,
+        neuralMesh: ctx.NeuralMesh,
+        agentWalletManager: ctx.AgentWalletManager,
+      });
+    }
+
     // 1) FieldLayer first (fields updated, other systems can sample)
     if (ctx.FieldLayer?.run) {
       await ctx.FieldLayer.run({

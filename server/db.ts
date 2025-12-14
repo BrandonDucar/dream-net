@@ -1,76 +1,113 @@
 /**
  * Database Connection Module
  * 
- * PRIMARY TARGET: Google Cloud SQL / AlloyDB PostgreSQL
- * LEGACY SUPPORT: Neon PostgreSQL (for development/backward compatibility)
+ * SUPPORTS MULTIPLE DATABASE PROVIDERS:
+ * 1. Netlify Neon Integration (NETLIFY_DATABASE_URL) - Native Netlify integration
+ * 2. Neon PostgreSQL (DATABASE_URL with neon.tech) - Standard Neon connection
+ * 3. Cloud SQL / AlloyDB / Standard PostgreSQL (DATABASE_URL) - Standard Postgres
  * 
- * This module automatically detects the database provider from DATABASE_URL:
- * - Cloud SQL/AlloyDB: Uses standard pg driver (primary path)
- * - Neon: Uses @neondatabase/serverless driver (legacy path)
+ * Priority order:
+ * 1. NETLIFY_DATABASE_URL (if on Netlify) - Uses @netlify/neon
+ * 2. DATABASE_URL with neon.tech - Uses @neondatabase/serverless
+ * 3. DATABASE_URL (standard) - Uses pg driver
  * 
- * DATABASE_URL format:
- * - Cloud SQL: postgresql://user:pass@host:5432/dbname
- * - Cloud SQL via Proxy: postgresql://user:pass@/dbname?host=/cloudsql/project:region:instance
- * - Neon: postgresql://user:pass@ep-xxx.neon.tech/dbname
- * 
- * The server can start without DATABASE_URL, but database features will be unavailable.
+ * The server can start without database, but database features will be unavailable.
  */
 import * as schema from "@shared/schema";
 import { NODE_ENV } from './config/env';
 
-// DATABASE_URL is optional for startup - server can start without DB
-// Routes that need DB will handle errors gracefully
+// Database connection state
 let _pool: any = null;
 let _db: any = null;
 let _dbInitialized = false;
+let _connectionType: 'netlify-neon' | 'neon-serverless' | 'postgres' | null = null;
 
 // Initialize database connection
 (async () => {
-  if (!process.env.DATABASE_URL) {
+  // Check for Netlify's native Neon integration first
+  const netlifyDbUrl = process.env.NETLIFY_DATABASE_URL;
+  const databaseUrl = process.env.DATABASE_URL;
+
+  if (!netlifyDbUrl && !databaseUrl) {
     if (NODE_ENV === 'production') {
-      console.warn("[Database] ⚠️  Production mode: DATABASE_URL not set - database features will be unavailable");
-      console.warn("[Database] 💡 Set DATABASE_URL to your Cloud SQL connection string");
+      console.warn("[Database] ⚠️  Production mode: No database URL set - database features will be unavailable");
+      console.warn("[Database] 💡 Set NETLIFY_DATABASE_URL (Netlify) or DATABASE_URL (standard)");
     } else {
-      console.warn("[Database] ⚠️  Development mode: DATABASE_URL not set - database features will be unavailable");
+      console.warn("[Database] ⚠️  Development mode: No database URL set - database features will be unavailable");
     }
     return;
   }
 
-  // Detect database provider from connection string
-  // PRIMARY: Cloud SQL / AlloyDB / standard Postgres (default)
-  // LEGACY: Neon (detected by 'neon.tech' in URL)
-  const isNeon = process.env.DATABASE_URL.includes('neon.tech');
-
   try {
-    if (isNeon) {
-      // LEGACY PATH: Neon serverless driver (for backward compatibility)
-      console.log("[Database] 🔄 Detected Neon PostgreSQL (legacy mode)");
-      const { Pool, neonConfig } = await import('@neondatabase/serverless');
-      const { drizzle } = await import('drizzle-orm/neon-serverless');
-      const ws = await import("ws");
-      neonConfig.webSocketConstructor = ws.default;
-      
-      _pool = new Pool({ connectionString: process.env.DATABASE_URL });
-      _db = drizzle({ client: _pool, schema });
-      _dbInitialized = true;
-      console.log("[Database] ✅ Connected to Neon PostgreSQL (legacy)");
-    } else {
-      // PRIMARY PATH: Standard pg driver for Cloud SQL / AlloyDB / standard Postgres
-      const { Pool } = await import('pg');
-      const { drizzle } = await import('drizzle-orm/node-postgres');
-      
-      _pool = new Pool({ connectionString: process.env.DATABASE_URL });
-      _db = drizzle({ client: _pool, schema });
-      _dbInitialized = true;
-      
-      // Detect Cloud SQL by connection name pattern or host
-      const isCloudSQL = process.env.DATABASE_URL.includes('/cloudsql/') || 
-                        process.env.CLOUD_SQL_INSTANCE_CONNECTION_NAME;
-      
-      if (isCloudSQL) {
-        console.log("[Database] ✅ Connected to Google Cloud SQL PostgreSQL");
+    // Priority 1: Netlify's native Neon integration
+    if (netlifyDbUrl) {
+      console.log("[Database] 🔄 Detected Netlify Neon integration (NETLIFY_DATABASE_URL)");
+      try {
+        // Try Netlify's native Neon SDK
+        const { neon } = await import('@netlify/neon');
+        const sql = neon(); // Automatically uses NETLIFY_DATABASE_URL
+        
+        // Test connection
+        await sql`SELECT 1`;
+        
+        // For Drizzle, we still need a pool/client
+        // Netlify's neon() returns a SQL template tag, so we'll use it directly
+        // For Drizzle compatibility, we'll create a wrapper
+        const { drizzle } = await import('drizzle-orm/neon-serverless');
+        
+        // Create a compatible client for Drizzle
+        const { Pool, neonConfig } = await import('@neondatabase/serverless');
+        const ws = await import("ws");
+        neonConfig.webSocketConstructor = ws.default;
+        
+        _pool = new Pool({ connectionString: netlifyDbUrl });
+        _db = drizzle({ client: _pool, schema });
+        _connectionType = 'netlify-neon';
+        _dbInitialized = true;
+        
+        console.log("[Database] ✅ Connected to Neon PostgreSQL via Netlify integration");
+      } catch (netlifyError) {
+        console.warn("[Database] ⚠️  Netlify Neon SDK not available, falling back to standard connection");
+        // Fall through to standard DATABASE_URL handling
+      }
+    }
+
+    // Priority 2 & 3: Standard DATABASE_URL (Neon or standard Postgres)
+    if (!_dbInitialized && databaseUrl) {
+      const isNeon = databaseUrl.includes('neon.tech');
+
+      if (isNeon) {
+        // Neon serverless driver
+        console.log("[Database] 🔄 Detected Neon PostgreSQL (DATABASE_URL)");
+        const { Pool, neonConfig } = await import('@neondatabase/serverless');
+        const { drizzle } = await import('drizzle-orm/neon-serverless');
+        const ws = await import("ws");
+        neonConfig.webSocketConstructor = ws.default;
+        
+        _pool = new Pool({ connectionString: databaseUrl });
+        _db = drizzle({ client: _pool, schema });
+        _connectionType = 'neon-serverless';
+        _dbInitialized = true;
+        console.log("[Database] ✅ Connected to Neon PostgreSQL");
       } else {
-        console.log("[Database] ✅ Connected to PostgreSQL");
+        // Standard PostgreSQL driver
+        const { Pool } = await import('pg');
+        const { drizzle } = await import('drizzle-orm/node-postgres');
+        
+        _pool = new Pool({ connectionString: databaseUrl });
+        _db = drizzle({ client: _pool, schema });
+        _connectionType = 'postgres';
+        _dbInitialized = true;
+        
+        // Detect Cloud SQL
+        const isCloudSQL = databaseUrl.includes('/cloudsql/') || 
+                          process.env.CLOUD_SQL_INSTANCE_CONNECTION_NAME;
+        
+        if (isCloudSQL) {
+          console.log("[Database] ✅ Connected to Google Cloud SQL PostgreSQL");
+        } else {
+          console.log("[Database] ✅ Connected to PostgreSQL");
+        }
       }
       
       if (NODE_ENV === 'production') {
@@ -83,7 +120,7 @@ let _dbInitialized = false;
     
     if (NODE_ENV === 'production') {
       console.error("[Database] ⚠️  Production mode: Database connection failure may impact core functionality");
-      console.error("[Database] 💡 Verify DATABASE_URL points to your Cloud SQL instance");
+      console.error("[Database] 💡 Verify database URL is correct");
     } else {
       console.warn("[Database] ⚠️  Development mode: Continuing without database (some features unavailable)");
     }
@@ -139,11 +176,15 @@ export function getDbStatus(): {
   initialized: boolean;
   available: boolean;
   hasUrl: boolean;
+  connectionType: 'netlify-neon' | 'neon-serverless' | 'postgres' | null;
+  hasNetlifyUrl: boolean;
 } {
   return {
     initialized: _dbInitialized,
     available: isDbAvailable(),
-    hasUrl: !!process.env.DATABASE_URL
+    hasUrl: !!process.env.DATABASE_URL,
+    connectionType: _connectionType,
+    hasNetlifyUrl: !!process.env.NETLIFY_DATABASE_URL
   };
 }
 

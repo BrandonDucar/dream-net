@@ -15,12 +15,19 @@ export interface OrchestratorContext {
   DreamNetOSCore?: any;
   WolfPackFundingCore?: any;
   WolfPackAnalystCore?: any;
+  CitadelCore?: any;
 
   // Shared objects
   IdentityGrid?: any;
   ReputationLattice?: any;
   NarrativeField?: any;
   NeuralMesh?: any;
+
+  // Latent Collaboration
+  LatentCollaboration?: {
+    run: (context: any) => Promise<void>;
+  };
+  AgentWalletManager?: any;
 
   // Optional Tier II/III subsystems (for FieldLayer context)
   QuantumAnticipation?: any;

@@ -55,6 +55,7 @@ export { LabubuPopSmash } from './LabubuPopSmash';
 export { ReactionTestMini } from './ReactionTestMini';
 export { DreamSnailDrift } from './DreamSnailDrift';
 export { DreamCloudBuilder } from './DreamCloudBuilder';
+export { DreamNebulaExplorer } from './DreamNebulaExplorer';
 
 // Practical/Ops/Money Apps
 export { DreamScopeOpsConsoleMini } from './DreamScopeOpsConsoleMini';
@@ -426,6 +427,14 @@ export const MINI_APPS = {
   'dream-cloud-builder': {
     component: 'DreamCloudBuilder',
     name: 'Dream Cloud Builder',
+    category: 'gaming',
+    requiresPassport: false,
+    contractAddress: '0xB38005e10E376D5D43699B45E7fc2f06A8465a5D',
+    contractName: 'GameRegistry',
+  },
+  'dream-nebula-explorer': {
+    component: 'DreamNebulaExplorer',
+    name: 'Dream Nebula Explorer',
     category: 'gaming',
     requiresPassport: false,
     contractAddress: '0xB38005e10E376D5D43699B45E7fc2f06A8465a5D',

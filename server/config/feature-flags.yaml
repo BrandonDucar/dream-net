@@ -1,0 +1,89 @@
+# DreamNet Feature Flags
+# 
+# Controls which features are enabled/disabled and supports brownout mode
+# (graceful degradation instead of full disable)
+
+flags:
+  # Agent Controls
+  - name: "citadel_enabled"
+    default: true
+    description: "Enable Citadel agent (strategic planning)"
+    owner: "orchestrator-core"
+    brownout: false
+    envVar: "CITADEL_ENABLED"
+  
+  - name: "drone_dome_scan_enabled"
+    default: true
+    description: "Enable DroneDome scanning"
+    owner: "drone-dome"
+    brownout: false
+    envVar: "DOME_SCAN_ENABLED"
+  
+  - name: "dreamkeeper_enabled"
+    default: true
+    description: "Enable DreamKeeper agent"
+    owner: "dreamkeeper-core"
+    brownout: false
+    envVar: "DREAMKEEPER_ENABLED"
+  
+  - name: "latent_collaboration_enabled"
+    default: false
+    description: "Enable Latent Collaboration system"
+    owner: "latent-collaboration-core"
+    brownout: true
+    envVar: "USE_LATENT_COLLABORATION"
+    brownoutFallback: "hash-based encoding"
+  
+  # AI/ML Features
+  - name: "ai_embeddings_enabled"
+    default: true
+    description: "Enable expensive AI embeddings (OpenAI API)"
+    owner: "latent-collaboration"
+    brownout: true
+    envVar: "AI_EMBEDDINGS_ENABLED"
+    brownoutFallback: "hash-based latent encoding"
+  
+  - name: "neural_mesh_enabled"
+    default: false
+    description: "Enable Neural Mesh (memory system)"
+    owner: "neural-mesh"
+    brownout: false
+    envVar: "INIT_SUBSYSTEMS"
+  
+  # Subsystem Controls
+  - name: "heavy_subsystems_enabled"
+    default: false
+    description: "Enable heavy subsystems (DreamState, Directory, etc.)"
+    owner: "server"
+    brownout: false
+    envVar: "INIT_HEAVY_SUBSYSTEMS"
+  
+  # Emergency Controls
+  - name: "safe_mode"
+    default: false
+    description: "Safe mode - disables tool use and external calls"
+    owner: "ops"
+    brownout: false
+    envVar: "SAFE_MODE"
+  
+  - name: "write_drain"
+    default: false
+    description: "Write drain - reject new writes, keep reads"
+    owner: "ops"
+    brownout: false
+    envVar: "WRITE_DRAIN"
+
+# Brownout Configuration
+brownout:
+  # When brownout is enabled, these features degrade gracefully
+  enabled: false
+  reason: ""
+  activatedAt: null
+
+# Notes
+notes:
+  - "Flags with brownout: true can degrade instead of fully disabling"
+  - "Set envVar to 'true' to enable, 'false' to disable"
+  - "Safe mode and write drain are emergency controls"
+  - "Owner field indicates who manages this flag"
+

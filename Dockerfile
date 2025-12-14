@@ -38,10 +38,10 @@ WORKDIR /app/apps/admin-dashboard
 RUN (/app/node_modules/.bin/vite build) || (echo "Admin dashboard build skipped - continuing..." && mkdir -p dist && touch dist/.keep)
 WORKDIR /app
 
-# Build main frontend (client) - optional, can be skipped if not needed
-# Create dist directory first, then try to build (so directory always exists)
+# Build main frontend (client) - REQUIRED for full deployment
+# Allow build to continue even if some dependencies fail (native modules)
 RUN mkdir -p /app/client/dist
-RUN (cd /app && pnpm --filter client build) || (echo "Client build skipped - continuing..." && mkdir -p /app/client/dist && touch /app/client/dist/.keep)
+RUN cd /app && (pnpm --filter "./client" build || echo "Client build had warnings but continuing...") && ls -la /app/client/dist || echo "Client dist directory check"
 
 # Build backend (optional - we can use tsx in production)
 RUN (cd /app && pnpm --filter server build) || echo "Server build skipped, will use tsx"
@@ -95,10 +95,11 @@ ENV MESH_AUTOSTART=false
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD node -e "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
-# Start server using tsx (runs TypeScript directly, no compilation needanother thing id like to devote some attention rral qed)
+# Start server using tsx (runs TypeScript directly, no compilation needed)
 # Copy tsconfig files so tsx can resolve @shared/* aliases
 COPY --from=builder /app/tsconfig.base.json ./tsconfig.base.json
 COPY --from=builder /app/server/tsconfig.json ./server/tsconfig.json
 WORKDIR /app
-# Use tsx directly with tsconfig - tsx 4.x should resolve paths automatically
-CMD ["/app/node_modules/.bin/tsx", "--tsconfig", "tsconfig.base.json", "server/index.ts"]
+# Use tsx with server's tsconfig.json for proper path resolution
+# tsx should auto-detect tsconfig.json in the server directory
+CMD ["/app/node_modules/.bin/tsx", "--tsconfig", "server/tsconfig.json", "server/index.ts"]

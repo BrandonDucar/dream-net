@@ -11,11 +11,11 @@ import { InstagramPoster, type InstagramConfig } from "./platforms/instagram";
 import { FacebookPoster, type FacebookConfig } from "./platforms/facebook";
 import { LinkedInPoster, type LinkedInConfig } from "./platforms/linkedin";
 import { TikTokPoster, type TikTokConfig } from "./platforms/tiktok";
-import { YouTubePoster, type YouTubePostOptions } from "./platforms/youtube";
-import { GitHubPoster, type GitHubPostOptions } from "./platforms/github";
-import { NotionPoster, type NotionPostOptions } from "./platforms/notion";
-import { SlackPoster, type SlackPostOptions } from "./platforms/slack";
-import { DiscordPoster, type DiscordPostOptions } from "./platforms/discord";
+import { YouTubePoster, type YouTubePostOptions } from "./src/platforms/youtube";
+import { GitHubPoster, type GitHubPostOptions } from "./src/platforms/github";
+import { NotionPoster, type NotionPostOptions } from "./src/platforms/notion";
+import { SlackPoster, type SlackPostOptions } from "./src/platforms/slack";
+import { DiscordPoster, type DiscordPostOptions } from "./src/platforms/discord";
 
 export class SocialMediaPoster {
   private accounts: Map<string, SocialAccount> = new Map();

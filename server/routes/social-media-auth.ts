@@ -6,10 +6,23 @@
  */
 
 import { Router } from "express";
-import { SocialMediaPoster } from "../../packages/social-media-poster/SocialMediaPoster";
 
 const router = Router();
-const poster = new SocialMediaPoster();
+// Lazy load SocialMediaPoster to avoid startup errors if package is incomplete
+let poster: any = null;
+
+async function getPoster() {
+  if (!poster) {
+    try {
+      const { SocialMediaPoster } = await import("../../packages/social-media-poster/SocialMediaPoster");
+      poster = new SocialMediaPoster();
+    } catch (error: any) {
+      console.warn("[Social Media Auth] SocialMediaPoster not available:", error.message);
+      throw new Error("Social media posting not available");
+    }
+  }
+  return poster;
+}
 
 // ============================================================================
 // Account Management
@@ -31,7 +44,8 @@ router.post("/register", async (req, res) => {
     }
 
     // Register account with poster
-    poster.registerAccount(
+    const posterInstance = await getPoster();
+    posterInstance.registerAccount(
       {
         platform,
         accountId,
@@ -62,7 +76,8 @@ router.post("/register", async (req, res) => {
 router.get("/accounts", async (req, res) => {
   try {
     const platform = req.query.platform as string | undefined;
-    const accounts = poster.getAccounts(platform as any);
+    const posterInstance = await getPoster();
+    const accounts = posterInstance.getAccounts(platform as any);
 
     res.json({
       success: true,

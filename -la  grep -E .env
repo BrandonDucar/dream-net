@@ -1,0 +1,50 @@
+[33m62790d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m feat: Add Staked Liquidity Units (SLU) system
+[33mdf4bd90[m Update lockfile for dreamnet-world package
+[33m141f200[m chore: normalize vercel deployment config
+[33mc69106e[m Fix Netlify build - client not in workspace, install deps explicitly
+[33mab0ffc9[m Simplify Netlify build - root install covers client deps
+[33md0f1018[m Fix Netlify build - install client deps explicitly (Option B)
+[33mb92ec8e[m Fix Netlify build - use cd client && pnpm build
+[33m8d2d109[m Fix Netlify build config - only build client, not server
+[33mf4ee7b6[m Add Netlify SDK integration and deployment support
+[33m79f922e[m Relax pnpm engine requirement and use Vercel's built-in pnpm
+[33m0c1ef46[m Force pnpm 10.21.0 on Vercel and build client/dist
+[33ma4b5756[m fix: Install latest pnpm before install to fix version mismatch
+[33m696a951[m fix: Update Vercel config to use pnpm and fix EOVERRIDE
+[33me298232[m feat: Add DreamNet Interop Spine scaffolding
+[33mbd37e19[m Fix Vercel config: Remove installCommand, add rewrites, let Vercel auto-detect pnpm workspace
+[33m54ca1d1[m Simplify Vercel config and clean lockfile
+[33mf8f792a[m Fix installCommand: Remove cd client since rootDirectory is set to client in dashboard
+[33m77634a8[m Remove redundant pnpm install from buildCommand
+[33mfb87c0b[m Fix installCommand: Install from client directory since it's not in workspace
+[33ma50cdca[m Fix installCommand: Install client dependencies from monorepo root
+[33me33e019[m Remove package-lock.json from client to force pnpm usage, simplify installCommand
+[33m221b914[m Fix vercel.json: Remove cd client from commands since rootDirectory is set to client
+[33m4de5510[m Fix Vercel deployment: Remove rootDirectory and nodeVersion from vercel.json, fix rollup override conflict
+[33m0d2df31[m Clean Vercel configuration: Set rootDirectory to client, simplified build commands
+[33m0cfe316[m Fix Vercel build: Use cd client approach, install only client dependencies
+[33me8745a0[m Simplify Vercel config: Set rootDirectory to client, simplify build command
+[33m35b851a[m Update Vercel deployment configuration: Fix build/install commands for monorepo
+[33md9d365c[m Fix Vercel deployment configuration: Update build/install commands for monorepo structure
+[33m85e2371[m Fix heartbeat workflow: use pnpm and Node 24
+[33m1e6f89e[m Fix heartbeat workflow: use pnpm and Node 24 to match monorepo configuration
+[33mc74f6e7[m Fix GitHub Actions: use pnpm for monorepo and replace deprecated set-output syntax
+[33m3114649[m Fix GitHub Actions workflows: use pnpm instead of npm and replace deprecated set-output syntax
+[33mf595e55[m Remove apps/_site-old-DISABLED: old site causing Vercel build conflicts
+[33ma3cf6a8[m Remove legacy build configs: delete root vite.config.ts and client/build.sh that were interfering with Vercel
+[33m3a065e3[m Simplify Vercel commands: use cd client instead of pnpm filter to avoid truncation
+[33mf254510[m Fix vercel.json: remove --include=optional from buildCommand, add install to installCommand
+[33m1c392ef[m Fix install command: remove --include=optional (pnpm doesn't support it, optional deps install by default)
+[33mbc193b8[m Fix: remove --include=optional (npm flag, pnpm includes optional deps by default)
+[33m871c123[m Fix Vercel commands: use pnpm workspace filtering instead of cd
+[33medea278[m Fix vercel.json: separate install and build commands properly
+[33m51706ed[m Fix Vercel deployment: force pnpm via corepack, set Node 24.x, fix all import issues
+[33m6cc1ca7[m Switch to npm with --include=optional for Vercel deployment
+[33m610c7d5[m Force pnpm usage on Vercel - remove npm lockfiles, update build commands
+[33m4a156cb[m Force pnpm usage on Vercel and ensure rollup native module installs
+[33me37239b[m Fix Node 24 consistency for deployment - update client engines, simplify build script and vercel config
+[33m5ccba85[m Fix pnpm packageExtensions syntax for cloudevents override
+[33m2cb44fd[m Override cloudevents engines constraint and disable engine-strict for client build
+[33m400cc9b[m Update to Node 24 and override cloudevents dependency
+[33mc863b31[m Add GitHub Action to auto-update Vercel Node version
+[33m6bc79cb[m Add Vercel API script to update Node version and fix root package.json engines

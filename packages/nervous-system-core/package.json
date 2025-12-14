@@ -1,0 +1,41 @@
+{
+  "name": "@dreamnet/nervous-system-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "types": "./index.ts"
+    },
+    "./messageBus": {
+      "import": "./messageBus.ts",
+      "types": "./messageBus.ts"
+    },
+    "./sharedMemory": {
+      "import": "./sharedMemory.ts",
+      "types": "./sharedMemory.ts"
+    },
+    "./types": {
+      "import": "./types.ts",
+      "types": "./types.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@dreamnet/nerve": "workspace:*",
+    "@dreamnet/neural-mesh": "workspace:*",
+    "@dreamnet/citadel-core": "workspace:*",
+    "@dreamnet/spider-web-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

@@ -47,6 +47,8 @@ export async function runRuntimeCycleOnce() {
         ReputationLattice: ctx.ReputationLattice,
         NarrativeField: ctx.NarrativeField,
         NeuralMesh: ctx.NeuralMesh,
+        LatentCollaboration: ctx.LatentCollaboration,
+        AgentWalletManager: ctx.AgentWalletManager,
       });
     }
 

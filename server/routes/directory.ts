@@ -10,7 +10,7 @@ import {
   listEntriesByType,
   listAllEntries,
   searchEntries,
-} from "../../packages/directory/src/registry";
+} from "@dreamnet/directory/registry";
 import { withPort } from "../../packages/port-governor/src/withPort";
 import { withGovernance } from "../../packages/dreamnet-control-core/controlCoreMiddleware";
 

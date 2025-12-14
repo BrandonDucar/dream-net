@@ -150,12 +150,21 @@ export default function HubOverview() {
               </div>
             </a>
             <a
-              href="/hub/apps"
+              href="/miniapps"
               className="block p-3 rounded-lg border border-border hover:bg-zinc-800/50 transition-colors"
             >
               <div className="font-medium">Browse Mini-Apps</div>
               <div className="text-sm text-muted-foreground">
                 Access all available mini-apps
+              </div>
+            </a>
+            <a
+              href="/hub/apps"
+              className="block p-3 rounded-lg border border-border hover:bg-zinc-800/50 transition-colors"
+            >
+              <div className="font-medium">Hub App Catalog</div>
+              <div className="text-sm text-muted-foreground">
+                View all apps including mock apps
               </div>
             </a>
           </CardContent>

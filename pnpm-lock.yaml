@@ -760,6 +760,28 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
+  packages/chain-abstraction-core:
+    dependencies:
+      '@dreamnet/base-mini-apps':
+        specifier: workspace:*
+        version: link:../base-mini-apps
+      '@dreamnet/intent-router-core':
+        specifier: workspace:*
+        version: link:../intent-router-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+      '@dreamnet/star-bridge-lungs':
+        specifier: workspace:*
+        version: link:../star-bridge-lungs
+      ethers:
+        specifier: ^6.13.0
+        version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/chat-matrix:
     dependencies:
       axios:
@@ -788,6 +810,8 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  packages/citadel-core: {}
 
   packages/civic-panel-core:
     dependencies:
@@ -917,6 +941,44 @@ importers:
       netlify:
         specifier: ^11.0.0
         version: 11.0.4
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/detector-generator-core:
+    dependencies:
+      '@dreamnet/dreamnet-metrics-core':
+        specifier: workspace:*
+        version: link:../dreamnet-metrics-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/din-infrastructure-core:
+    dependencies:
+      '@dreamnet/agent-wallet-manager':
+        specifier: workspace:*
+        version: link:../agent-wallet-manager
+      '@dreamnet/dreamnet-control-core':
+        specifier: workspace:*
+        version: link:../dreamnet-control-core
+      '@dreamnet/dreamnet-metrics-core':
+        specifier: workspace:*
+        version: link:../dreamnet-metrics-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+      '@dreamnet/star-bridge-lungs':
+        specifier: workspace:*
+        version: link:../star-bridge-lungs
+      ethers:
+        specifier: ^6.13.0
+        version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     devDependencies:
       typescript:
         specifier: ^5.9.3
@@ -1436,6 +1498,19 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
 
+  packages/guardian-framework-core:
+    dependencies:
+      '@dreamnet/shield-core':
+        specifier: workspace:*
+        version: link:../shield-core
+      '@dreamnet/spider-web-core':
+        specifier: workspace:*
+        version: link:../spider-web-core
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/halo-loop:
     dependencies:
       axios:
@@ -1469,6 +1544,28 @@ importers:
       googleapis:
         specifier: ^128.0.0
         version: 128.0.0(encoding@0.1.13)
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/incident-runbook-core:
+    dependencies:
+      '@dreamnet/dreamnet-control-core':
+        specifier: workspace:*
+        version: link:../dreamnet-control-core
+      '@dreamnet/dreamnet-incident-core':
+        specifier: workspace:*
+        version: link:../dreamnet-incident-core
+      '@dreamnet/dreamnet-metrics-core':
+        specifier: workspace:*
+        version: link:../dreamnet-metrics-core
+      '@dreamnet/dreamnet-os-core':
+        specifier: workspace:*
+        version: link:../dreamnet-os-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
     devDependencies:
       typescript:
         specifier: ^5.9.3
@@ -1509,6 +1606,25 @@ importers:
     devDependencies:
       typescript:
         specifier: ^5.0.0
+        version: 5.9.3
+
+  packages/intent-router-core:
+    dependencies:
+      '@dreamnet/base-mini-apps':
+        specifier: workspace:*
+        version: link:../base-mini-apps
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+      '@dreamnet/star-bridge-lungs':
+        specifier: workspace:*
+        version: link:../star-bridge-lungs
+      ethers:
+        specifier: ^6.13.0
+        version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
         version: 5.9.3
 
   packages/internal-ports:
@@ -1553,6 +1669,38 @@ importers:
         version: 20.19.25
       typescript:
         specifier: ^5.3.0
+        version: 5.9.3
+
+  packages/latent-collaboration:
+    dependencies:
+      '@dreamnet/agent-wallet-manager':
+        specifier: workspace:*
+        version: link:../agent-wallet-manager
+      '@dreamnet/neural-mesh':
+        specifier: workspace:*
+        version: link:../neural-mesh
+      '@dreamnet/utils':
+        specifier: workspace:*
+        version: link:../utils
+      openai:
+        specifier: ^4.0.0
+        version: 4.104.0(encoding@0.1.13)(ws@8.18.3(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.25.76)
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
+  packages/latent-collaboration-core:
+    dependencies:
+      '@dreamnet/latent-collaboration':
+        specifier: workspace:*
+        version: link:../latent-collaboration
+      '@dreamnet/utils':
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
         version: 5.9.3
 
   packages/liquidity-core:
@@ -1776,6 +1924,25 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/nervous-system-core:
+    dependencies:
+      '@dreamnet/citadel-core':
+        specifier: workspace:*
+        version: link:../citadel-core
+      '@dreamnet/nerve':
+        specifier: workspace:*
+        version: link:../nerve
+      '@dreamnet/neural-mesh':
+        specifier: workspace:*
+        version: link:../neural-mesh
+      '@dreamnet/spider-web-core':
+        specifier: workspace:*
+        version: link:../spider-web-core
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/network-blueprints:
     dependencies:
       '@dreamnet/directory':
@@ -1946,6 +2113,12 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
+  packages/prediction-core:
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
   packages/quantum-anticipation:
     dependencies:
       '@dreamnet/event-wormholes':
@@ -1985,6 +2158,28 @@ importers:
         version: 20.19.25
       typescript:
         specifier: ^5.3.0
+        version: 5.9.3
+
+  packages/registry-proofs-core:
+    dependencies:
+      '@dreamnet/base-mini-apps':
+        specifier: workspace:*
+        version: link:../base-mini-apps
+      '@dreamnet/dream-state-core':
+        specifier: workspace:*
+        version: link:../dream-state-core
+      '@dreamnet/identity-grid':
+        specifier: workspace:*
+        version: link:../identity-grid
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+      ethers:
+        specifier: ^6.13.0
+        version: 6.15.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
         version: 5.9.3
 
   packages/reputation-lattice:
@@ -2042,6 +2237,25 @@ importers:
         version: 5.9.3
 
   packages/resend-core:
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/resilience-early-warning:
+    dependencies:
+      '@dreamnet/dreamnet-autoscale-core':
+        specifier: workspace:*
+        version: link:../dreamnet-autoscale-core
+      '@dreamnet/dreamnet-control-core':
+        specifier: workspace:*
+        version: link:../dreamnet-control-core
+      '@dreamnet/dreamnet-metrics-core':
+        specifier: workspace:*
+        version: link:../dreamnet-metrics-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
     devDependencies:
       typescript:
         specifier: ^5.9.3
@@ -2310,6 +2524,19 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
+  packages/startup-sequence-core:
+    dependencies:
+      '@dreamnet/dreamnet-health-core':
+        specifier: workspace:*
+        version: link:../dreamnet-health-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+    devDependencies:
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   packages/sync-automerge-core:
     dependencies:
       '@automerge/automerge':
@@ -2424,6 +2651,28 @@ importers:
       '@types/node':
         specifier: ^24.10.0
         version: 24.10.1
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  packages/vertex-agent-integration:
+    dependencies:
+      '@dreamnet/citadel-core':
+        specifier: workspace:*
+        version: link:../citadel-core
+      '@dreamnet/latent-collaboration-core':
+        specifier: workspace:*
+        version: link:../latent-collaboration-core
+      '@dreamnet/nervous-system-core':
+        specifier: workspace:*
+        version: link:../nervous-system-core
+      '@google-cloud/aiplatform':
+        specifier: ^5.14.0
+        version: 5.14.0
+      '@google-cloud/vertexai':
+        specifier: ^1.0.0
+        version: 1.10.0(encoding@0.1.13)
+    devDependencies:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -3759,6 +4008,10 @@ packages:
     peerDependencies:
       viem: '>=2.0.0'
 
+  '@google-cloud/aiplatform@5.14.0':
+    resolution: {integrity: sha512-Bh36aXsH/CkWfw/Sm7M2j56Ozi+nV5aVcVGmGsRn1M5espcFo2eEbG5zsHvdJ/RJrQc+R/Q8jLqaovfhEy1tHw==}
+    engines: {node: '>=18'}
+
   '@google-cloud/cloudbuild@5.3.1':
     resolution: {integrity: sha512-j6Rl1di6XqT/Oj8uofB/K7l/uOwfbOF+uJZbxRnf91IDzsUsu9RdozstwxZq6RaVotl/m5UCtrmVRw6Eky96XQ==}
     engines: {node: '>=18'}
@@ -3799,6 +4052,10 @@ packages:
   '@google-cloud/storage@7.17.3':
     resolution: {integrity: sha512-gOnCAbFgAYKRozywLsxagdevTF7Gm+2Ncz5u5CQAuOv/2VCa0rdGJWvJFDOftPx1tc+q8TXiC2pEJfFKu+yeMQ==}
     engines: {node: '>=14'}
+
+  '@google-cloud/vertexai@1.10.0':
+    resolution: {integrity: sha512-HqYqoivNtkq59po8m7KI0n+lWKdz4kabENncYQXZCX/hBWJfXtKAfR/2nUQsP+TwSfHKoA7zDL2RrJYIv/j3VQ==}
+    engines: {node: '>=18.0.0'}
 
   '@gql.tada/cli-utils@1.7.2':
     resolution: {integrity: sha512-Qbc7hbLvCz6IliIJpJuKJa9p05b2Jona7ov7+qofCsMRxHRZE1kpAmZMvL8JCI4c0IagpIlWNaMizXEQUe8XjQ==}
@@ -17002,6 +17259,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@google-cloud/aiplatform@5.14.0':
+    dependencies:
+      google-gax: 5.0.6
+    transitivePeerDependencies:
+      - supports-color
+
   '@google-cloud/cloudbuild@5.3.1':
     dependencies:
       google-gax: 5.0.6
@@ -17072,6 +17335,13 @@ snapshots:
       retry-request: 7.0.2(encoding@0.1.13)
       teeny-request: 9.0.0(encoding@0.1.13)
       uuid: 8.3.2
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@google-cloud/vertexai@1.10.0(encoding@0.1.13)':
+    dependencies:
+      google-auth-library: 9.15.1(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
       - supports-color

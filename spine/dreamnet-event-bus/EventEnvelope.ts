@@ -90,3 +90,21 @@ export function createBrowserEvent(
   });
 }
 
+/**
+ * Helper: Create a deployment event envelope
+ */
+export function createDeploymentEvent(
+  type: string,
+  source: string,
+  payload: unknown,
+  correlationId?: string
+): EventEnvelope {
+  return createEventEnvelope({
+    type: `Deployment.${type}`,
+    source,
+    payload,
+    correlationId,
+    metadata: { category: 'deployment' },
+  });
+}
+

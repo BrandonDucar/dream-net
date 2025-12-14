@@ -68,5 +68,7 @@ export const BaseMiniApps = {
 };
 
 export * from "./types";
+// Re-export frontend components for convenience
+export { DreamNetHubWrapper } from "./frontend/DreamNetHubWrapper";
 export default BaseMiniApps;
 
