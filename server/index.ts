@@ -150,6 +150,7 @@ import discoveryRouter from "./routes/discovery";
 import { traceIdMiddleware } from "./middleware/traceId";
 import { idempotencyMiddleware } from "./middleware/idempotency";
 import { tierResolverMiddleware } from "./middleware/tierResolver";
+import { logger } from "./utils/logger";
 // import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
 import { controlCoreMiddleware } from "../packages/dreamnet-control-core/controlCoreMiddleware";
 // Dynamic import to avoid ESM resolution issues
@@ -169,9 +170,9 @@ let eventBus: any = null;
     const DreamEventBusClass = await getDreamEventBus();
     eventBus = new DreamEventBusClass();
     (global as any).dreamEventBus = eventBus; // Make available globally
-    console.log("🧠 [Spine] Dream Event Bus initialized");
+    logger.info("🧠 [Spine] Dream Event Bus initialized");
   } catch (error: any) {
-    console.warn("[Spine] Event Bus initialization warning:", error.message);
+    logger.warn("[Spine] Event Bus initialization warning", { error: error.message });
   }
 })();
 
@@ -251,7 +252,7 @@ app.use((req, res, next) => {
       }
     }
     if (cleaned > 0) {
-      console.warn(`[RateLimit] Emergency cleanup: removed ${cleaned} expired entries`);
+      logger.warn(`[RateLimit] Emergency cleanup: removed ${cleaned} expired entries`);
     }
   }
   
@@ -580,9 +581,9 @@ app.use("/api", createDreamRouter());
       // Initialize Quantum Anticipation Layer (QAL) - Tier II Subsystem
       try {
         const qalStatus = QuantumAnticipation.status();
-        console.log(`🔮 [Quantum Anticipation] Initialized - Last run: ${qalStatus.lastRunAt ? new Date(qalStatus.lastRunAt).toISOString() : "never"}`);
+        logger.info(`🔮 [Quantum Anticipation] Initialized - Last run: ${qalStatus.lastRunAt ? new Date(qalStatus.lastRunAt).toISOString() : "never"}`);
       } catch (error) {
-        console.warn("[Quantum Anticipation] Initialization warning:", error);
+        logSubsystemInit("Quantum Anticipation", false, undefined, error);
       }
 
       // Initialize Squad Alchemy Engine - Tier II Subsystem
@@ -596,9 +597,9 @@ app.use("/api", createDreamRouter());
       // Initialize Wolf-Pack Protocol (WPP) - Tier II Subsystem
       try {
         const wolfStatus = WolfPack.status();
-        console.log(`🐺 [Wolf-Pack] Initialized - Active targets: ${wolfStatus.activeTargets.length}`);
+        logger.info(`🐺 [Wolf-Pack] Initialized - Active targets: ${wolfStatus.activeTargets.length}`);
       } catch (error) {
-        console.warn("[Wolf-Pack] Initialization warning:", error);
+        logSubsystemInit("Wolf-Pack", false, undefined, error);
       }
 
   // Initialize Octopus Executor - Tier II Subsystem (8-Arm Runtime)
@@ -2314,28 +2315,14 @@ console.log(`[DreamNet] Environment: ${NODE_ENV}, Port: ${ENV_PORT || 8080}`);
     const server = createServer(app);
     console.log("[DreamNet] ✅ HTTP server created successfully");
 
+  // Error handling middleware - must be last
+  // Use centralized errorLogger for consistent error logging
+  app.use(errorLogger);
+  
+  // Final error response handler (runs after errorLogger logs the error)
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-    
-    // Log error with structured logging
-    const traceId = (_req as any).traceId || 'unknown';
-    const logEntry = {
-      timestamp: new Date().toISOString(),
-      level: 'error',
-      traceId,
-      method: _req.method,
-      path: _req.path,
-      ip: _req.ip || _req.socket.remoteAddress,
-      userAgent: _req.get('user-agent'),
-      error: {
-        name: err.name || 'Error',
-        message: err.message || String(err),
-        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-      },
-      statusCode: status
-    };
-    console.error('[ERROR]', JSON.stringify(logEntry, null, 2));
 
     // Don't expose internal error details in production
     const errorResponse: any = {
