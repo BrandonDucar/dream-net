@@ -16,10 +16,10 @@ export function errorLogger(err: any, req: Request, res: Response, next: NextFun
     error,
     {
       requestId: traceId,
-      method: req.method,
+    method: req.method,
       route: req.path,
-      ip: req.ip || req.socket.remoteAddress,
-      userAgent: req.get('user-agent'),
+    ip: req.ip || req.socket.remoteAddress,
+    userAgent: req.get('user-agent'),
       statusCode: err.status || err.statusCode || 500,
       // Include error details for debugging
       errorName: error.name,

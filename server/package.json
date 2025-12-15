@@ -26,6 +26,7 @@
     "@dreamnet/ops-sentinel": "workspace:*",
     "axios": "^1.13.2",
     "blake3": "^2.1.7",
+    "compression": "^1.8.1",
     "googleapis": "^128.0.0",
     "helmet": "^8.1.0",
     "multer": "^1.4.5-lts.1",
