@@ -1,5 +1,5 @@
-import type { QALContext, QALPrediction } from "./types";
-import { runQALCycle, qalStatus } from "./scheduler/qalScheduler";
+import type { QALContext, QALPrediction } from './types.js';
+import { runQALCycle, qalStatus } from './scheduler/qalScheduler.js';
 
 export const QuantumAnticipation = {
   run(context: QALContext): QALPrediction[] {
@@ -11,6 +11,6 @@ export const QuantumAnticipation = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default QuantumAnticipation;
 

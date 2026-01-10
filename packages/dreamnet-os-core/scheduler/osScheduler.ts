@@ -1,10 +1,10 @@
-import type { DreamNetOSContext, DreamNetOSStatus } from "../types";
-import { OSStore } from "../store/osStore";
-import { buildOSSnapshot } from "../logic/osAggregator";
-import { analyzeHeartbeat, getHealthStats } from "../logic/heartbeatAlerts";
-import { generateRecoveryActions } from "../logic/autoRecovery";
-import { detectIntegrationGaps, autoFixIntegrationGaps } from "../logic/autoIntegration";
-import { notifyAlert } from "../logic/alertNotifier";
+import type { DreamNetOSContext, DreamNetOSStatus } from '../types.js';
+import { OSStore } from '../store/osStore.js';
+import { buildOSSnapshot } from '../logic/osAggregator.js';
+import { analyzeHeartbeat, getHealthStats } from '../logic/heartbeatAlerts.js';
+import { generateRecoveryActions } from '../logic/autoRecovery.js';
+import { detectIntegrationGaps, autoFixIntegrationGaps } from '../logic/autoIntegration.js';
+import { notifyAlert } from '../logic/alertNotifier.js';
 
 let previousSnapshot: any = null;
 

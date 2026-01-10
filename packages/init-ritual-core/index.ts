@@ -6,14 +6,14 @@ import type {
   IdentityInitState,
   InitRitualContext,
   InitRitualStatus,
-} from "./types";
-import { InitStore } from "./store/initStore";
+} from './types.js';
+import { InitStore } from './store/initStore.js';
 import {
   ensureDefaultTemplateSeeded,
   advanceIdentityInit,
   completeInitStepForIdentity,
-} from "./logic/ritualEngine";
-import { runInitRitualCycle } from "./scheduler/initScheduler";
+} from './logic/ritualEngine.js';
+import { runInitRitualCycle } from './scheduler/initScheduler.js';
 
 export const InitRitualCore = {
   // Templates
@@ -61,6 +61,7 @@ export const InitRitualCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
+export * from './logic/GenesisCeremony.js';
 export default InitRitualCore;
 

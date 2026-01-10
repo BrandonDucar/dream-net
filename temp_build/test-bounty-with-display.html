@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Bounty System with Display</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #000;
+            color: #0ff;
+            padding: 20px;
+        }
+        .dream-card {
+            background: #000;
+            border: 2px solid #0ff;
+            box-shadow: 0 0 24px #0ff;
+            width: 512px;
+            height: 512px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: monospace;
+        }
+        .nightmare-card {
+            background: #200;
+            box-shadow: 0 0 16px red;
+        }
+        .nightmare-warning {
+            background: #200;
+            color: #f00;
+            padding: 10px;
+            border: 2px dashed #f00;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .bounty-button {
+            background: #500;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .active-bounty {
+            background: #300;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .test-controls {
+            background: #111;
+            padding: 20px;
+            border: 1px solid #0ff;
+            margin: 20px 0;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            background: #222;
+            color: #0ff;
+            border: 1px solid #0ff;
+        }
+        button {
+            background: #f00;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>💀 Complete Nightmare Bounty System Test</h1>
+    
+    <!-- Test Dream Card with Nightmare -->
+    <div id="test-dream" class="dream-card nightmare-card">
+        <div class="nightmare-warning">
+            ⚠️ This dream has entered Nightmare Mode.
+            <br />
+            Remix at your own risk.
+        </div>
+        
+        <button class="bounty-button" onclick="showBountyForm()">
+            💼 Post Bounty to Cure This Nightmare
+        </button>
+        
+        <div id="active-bounty" class="active-bounty" style="display: none;">
+            🎯 Active Bounty: <span id="bounty-reward">0</span> $SHEEP  
+            <br />
+            💬 "<span id="bounty-note">No message</span>"
+        </div>
+        
+        <div>
+            <h2>Corrupted Neural Pattern</h2>
+            <p style="opacity: 0.7">nightmare, broken, corrupted</p>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div style="font-size: 12px; opacity: 0.6;">
+                🌙 Original | Wallet: 0x1234...  
+            </div>
+            <div style="width: 64px; height: 64px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 10px;">
+                QR
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bounty Form -->
+    <div id="bounty-form" class="test-controls" style="display: none;">
+        <h3>💀 Nightmare Bounty</h3>
+        <p>Offer a reward to inspire Dream Teams to remix and save this corrupted dream.</p>
+        
+        <input type="number" id="reward-input" placeholder="Reward Amount (e.g. 100)" value="250">
+        <textarea id="note-input" placeholder="Optional challenge message" rows="3">This neural pattern is severely corrupted. Need experienced Dream Team to restore original functionality and eliminate nightmare mode.</textarea>
+        
+        <button onclick="postBounty()">🎯 Launch Bounty</button>
+        <button onclick="hideBountyForm()" style="background: #666;">Cancel</button>
+    </div>
+    
+    <!-- Results -->
+    <div id="result" style="background: #222; padding: 10px; margin: 10px 0; border: 1px solid #0ff; display: none; white-space: pre-wrap;"></div>
+
+    <script>
+        function showBountyForm() {
+            document.getElementById('bounty-form').style.display = 'block';
+        }
+        
+        function hideBountyForm() {
+            document.getElementById('bounty-form').style.display = 'none';
+        }
+        
+        async function postBounty() {
+            const reward = parseInt(document.getElementById('reward-input').value);
+            const note = document.getElementById('note-input').value;
+            
+            const payload = {
+                dreamId: 'test-nightmare-123',
+                reward,
+                note,
+                wallet: '0x1234567890abcdef'
+            };
+            
+            try {
+                const response = await fetch('/api/post-bounty', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('result').textContent = 'Bounty Response:\n' + JSON.stringify(result, null, 2);
+                
+                if (result.success) {
+                    // Show active bounty on card
+                    document.getElementById('bounty-reward').textContent = reward;
+                    document.getElementById('bounty-note').textContent = note;
+                    document.getElementById('active-bounty').style.display = 'block';
+                    
+                    // Hide form
+                    hideBountyForm();
+                    
+                    document.getElementById('result').style.borderColor = '#0f0';
+                } else {
+                    document.getElementById('result').style.borderColor = '#f00';
+                }
+                
+            } catch (error) {
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('result').textContent = 'Error:\n' + error.message;
+                document.getElementById('result').style.borderColor = '#f00';
+            }
+        }
+    </script>
+</body>
+</html>

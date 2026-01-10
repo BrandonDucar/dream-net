@@ -3,7 +3,7 @@
  * Executes scheduled tasks
  */
 
-import type { ScheduledTask, TaskExecution } from "../types";
+import type { ScheduledTask, TaskExecution } from '../types.js';
 import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
 import { DreamNetAuditCore } from "@dreamnet/dreamnet-audit-core";
 import { bridgeToSpiderWeb } from "@dreamnet/dreamnet-operational-bridge";
@@ -92,9 +92,12 @@ export class TaskScheduler {
 
       case "rate_limit":
         if (operation === "update" && params.clusterId && params.limit) {
-          const rateLimits = DreamNetControlCore.listRateLimits(params.clusterId as any);
-          if (rateLimits.length > 0) {
-            DreamNetControlCore.updateRateLimit(rateLimits[0].id, { limit: params.limit });
+          const rateLimit = DreamNetControlCore.getRateLimit(params.clusterId as any);
+          if (rateLimit) {
+            DreamNetControlCore.setRateLimit({
+              ...rateLimit,
+              requestsPerMinute: params.limit,
+            });
             return { updated: true };
           }
         }

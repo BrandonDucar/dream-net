@@ -3,7 +3,7 @@
  * Suggests and executes recovery actions for failed subsystems
  */
 
-import type { SubsystemSummary } from "../types";
+import type { SubsystemSummary } from '../types.js';
 
 export interface RecoveryAction {
   id: string;

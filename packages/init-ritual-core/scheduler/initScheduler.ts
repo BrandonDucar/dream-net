@@ -1,6 +1,6 @@
-import type { InitRitualContext, InitRitualStatus } from "../types";
-import { InitStore } from "../store/initStore";
-import { ensureDefaultTemplateSeeded } from "../logic/ritualEngine";
+import type { InitRitualContext, InitRitualStatus } from '../types.js';
+import { InitStore } from '../store/initStore.js';
+import { ensureDefaultTemplateSeeded } from '../logic/ritualEngine.js';
 
 export function runInitRitualCycle(ctx: InitRitualContext): InitRitualStatus {
   const now = Date.now();

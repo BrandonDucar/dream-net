@@ -5,8 +5,8 @@
  * Each port can receive, send, or handle bidirectional communication.
  */
 
-import type { DreamPacket } from './packets';
-import type { FiberChannel } from './fibers';
+import type { DreamPacket } from './packets.js';
+import type { FiberChannel } from './fibers.js';
 
 /**
  * DreamPort interface for internal communication endpoints

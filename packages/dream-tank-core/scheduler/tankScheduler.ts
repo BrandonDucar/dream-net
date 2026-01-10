@@ -1,6 +1,6 @@
-import type { DreamTankContext, DreamTankStatus } from "../types";
-import { TankStore } from "../store/tankStore";
-import { runProgressionCycle } from "../logic/progressionEngine";
+import type { DreamTankContext, DreamTankStatus } from '../types.js';
+import { TankStore } from '../store/tankStore.js';
+import { runProgressionCycle } from '../logic/progressionEngine.js';
 
 export function runDreamTankCycle(ctx: DreamTankContext): DreamTankStatus {
   const now = Date.now();

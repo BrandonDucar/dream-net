@@ -3,7 +3,7 @@
  * Tracks recent tool executions for DreamScope/Civic Panel
  */
 
-import type { ToolId } from "./tools";
+import type { ToolId } from './tools.js';
 
 export interface AgentActivityRecord {
   id: string;

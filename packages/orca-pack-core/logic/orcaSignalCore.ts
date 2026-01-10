@@ -5,8 +5,8 @@ import {
   OrcaPostPlan,
   OrcaChannel,
   OrcaContentKind,
-} from "../types";
-import { OrcaStore } from "../store/orcaStore";
+} from '../types.js';
+import { OrcaStore } from '../store/orcaStore.js';
 
 let ideaCounter = 0;
 let planCounter = 0;

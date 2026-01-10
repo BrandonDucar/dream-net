@@ -11,10 +11,10 @@ import type {
   FeedQuery,
   SocialHubContext,
   SocialHubStatus,
-} from "./types";
-import { SocialStore } from "./store/socialStore";
-import { buildFeed } from "./logic/feedAssembler";
-import { runSocialHubCycle } from "./scheduler/socialScheduler";
+} from './types.js';
+import { SocialStore } from './store/socialStore.js';
+import { buildFeed } from './logic/feedAssembler.js';
+import { runSocialHubCycle } from './scheduler/socialScheduler.js';
 
 let postCounter = 0;
 let commentCounter = 0;
@@ -124,8 +124,8 @@ export const SocialHubCore = {
   },
 
   // Orchestration
-  run(context: SocialHubContext): SocialHubStatus {
-    return runSocialHubCycle(context);
+  async run(context: SocialHubContext): Promise<SocialHubStatus> {
+    return await runSocialHubCycle(context);
   },
 
   status(): SocialHubStatus {
@@ -135,6 +135,6 @@ export const SocialHubCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default SocialHubCore;
 

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # 🧠 THE CORTEX (DreamNet Core)
+  dreamnet-core:
+    build:
+      context: ../../
+      dockerfile: packages/dreamnet-control-core/Dockerfile
+    image: dreamnet-core:sovereign-v1
+    container_name: dreamnet_prime
+    restart: always  # 🛡️ THE NIGHT WATCHMAN POLICY
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL}
+      - PHANTOM_PRIVATE_KEY=${PHANTOM_PRIVATE_KEY}
+      - NEAR_ACCOUNT_ID=${NEAR_ACCOUNT_ID}
+      - NEAR_PRIVATE_KEY=${NEAR_PRIVATE_KEY}
+      - VECHAIN_WALLET_ADDRESS=${VECHAIN_WALLET_ADDRESS}
+    volumes:
+      # Persistent Brain Storage (If using local JSON files)
+      - ./brain_data:/app/brain_data
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+
+  # 🩸 THE EVENT BUS (Redis - Optional/Future Proofing)
+  # redis:
+  #   image: redis:alpine
+  #   restart: always

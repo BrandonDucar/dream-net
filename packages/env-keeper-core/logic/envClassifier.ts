@@ -3,7 +3,8 @@
  * Classifies environment variables by sensitivity (public/internal/secret)
  */
 
-import type { EnvSensitivity, EnvVarDescriptor } from "../types";
+import type { EnvSensitivity, EnvVarDescriptor } from '../types.js';
+import { ENV_REGISTRY } from '../types.js';
 
 /**
  * Secret key patterns
@@ -84,7 +85,6 @@ export function createEnvVarDescriptor(
  * Update registry with descriptor
  */
 export function updateEnvRegistry(descriptor: EnvVarDescriptor): void {
-  const { ENV_REGISTRY } = require("../types");
   ENV_REGISTRY[descriptor.key] = descriptor;
 }
 
@@ -92,7 +92,6 @@ export function updateEnvRegistry(descriptor: EnvVarDescriptor): void {
  * Get descriptor from registry
  */
 export function getEnvDescriptor(key: string): EnvVarDescriptor | undefined {
-  const { ENV_REGISTRY } = require("../types");
   return ENV_REGISTRY[key];
 }
 
@@ -102,7 +101,5 @@ export function getEnvDescriptor(key: string): EnvVarDescriptor | undefined {
 export function getDescriptorsBySensitivity(
   sensitivity: EnvSensitivity
 ): EnvVarDescriptor[] {
-  const { ENV_REGISTRY } = require("../types");
-  return Object.values(ENV_REGISTRY).filter((d: EnvVarDescriptor) => d.sensitivity === sensitivity) as EnvVarDescriptor[];
+  return Object.values(ENV_REGISTRY).filter((d) => d.sensitivity === sensitivity);
 }
-

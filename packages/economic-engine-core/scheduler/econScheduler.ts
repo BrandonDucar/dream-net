@@ -1,15 +1,20 @@
-import type { EconomicEngineContext, EconomicEngineStatus, RawRewardEvent } from "../types";
-import { EconStore } from "../store/econStore";
-import { ensureEconomicConfig, applyEmissionForReward } from "../logic/rewardIngestion";
+import type { EconomicEngineContext, EconomicEngineStatus, RawRewardEvent } from '../types.js';
+import { EconStore } from '../store/econStore.js';
+import { ensureEconomicConfig, applyEmissionForReward } from '../logic/rewardIngestion.js';
 
 export function runEconomicEngineCycle(ctx: EconomicEngineContext): EconomicEngineStatus {
   const now = Date.now();
 
   ensureEconomicConfig(ctx);
 
-  // In the future, we could poll other subsystems for queued rewards.
-  // For now, we only operate on already-added RawRewardEvent entries
-  // when someone explicitly calls applyEmissionForReward.
+  // Automatically process unprocessed rewards
+  const rawRewards = EconStore.listRawRewards();
+  rawRewards.forEach((ev) => {
+    if (!ev.processed) {
+      applyEmissionForReward(ev);
+      EconStore.markRewardProcessed(ev.id);
+    }
+  });
 
   EconStore.setLastRunAt(now);
   const status = EconStore.status();

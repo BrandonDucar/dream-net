@@ -6,10 +6,10 @@ import type {
   RewardRecommendation,
   ZenGardenContext,
   ZenGardenStatus,
-} from "./types";
-import { GardenStore } from "./store/gardenStore";
-import { runZenGardenCycle } from "./scheduler/gardenScheduler";
-import { computeRewardsForSession } from "./logic/rewardEngine";
+} from './types.js';
+import { GardenStore } from './store/gardenStore.js';
+import { runZenGardenCycle } from './scheduler/gardenScheduler.js';
+import { computeRewardsForSession } from './logic/rewardEngine.js';
 
 export const ZenGardenCore = {
   upsertSession(
@@ -18,7 +18,12 @@ export const ZenGardenCore = {
       startedAt?: number;
     }
   ): ZenSession {
-    return GardenStore.upsertSession(session);
+    const fullSession: ZenSession = {
+      ...session,
+      activityIds: session.activityIds ?? [],
+      startedAt: session.startedAt ?? Date.now(),
+    };
+    return GardenStore.upsertSession(fullSession);
   },
 
   getSession(id: string): ZenSession | undefined {
@@ -53,6 +58,6 @@ export const ZenGardenCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default ZenGardenCore;
 

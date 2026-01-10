@@ -1,4 +1,4 @@
-import type { Squad, SquadAlchemyDecision } from "../types";
+import type { Squad, SquadAlchemyDecision } from '../types.js';
 
 export function proposeMergeStrategy(squads: Squad[]): SquadAlchemyDecision {
   if (squads.length < 2) {

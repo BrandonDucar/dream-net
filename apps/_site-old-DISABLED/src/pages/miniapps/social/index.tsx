@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Heart, MessageCircle, Share2, Repeat2, TrendingUp, Filter, Sparkles, X } from "lucide-react";
 import { ethers } from "ethers";
-import { DreamContributionWidget } from "../../../components/DreamContributionWidget";
+import { DreamContributionWidget } from '../../../components/DreamContributionWidget.js';
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 

@@ -3,7 +3,7 @@ import type {
   ReputationScore,
   ReputationConfig,
   RepEntityType,
-} from "../types";
+} from '../types.js';
 
 const signals: ReputationSignal[] = [];
 const scores: Map<string, ReputationScore> = new Map();

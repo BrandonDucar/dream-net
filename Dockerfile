@@ -1,54 +1,69 @@
-# DreamNet Dockerfile for Google Cloud Run
-# Optimized for serverless deployment
+# Multi-Stage Dockerfile for DreamNet
+# Stage 1: Build
+FROM node:22-slim AS builder
 
-FROM node:20-slim
+# Install system dependencies
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
 
 # Install pnpm
-RUN npm install -g pnpm@10.21.0
+RUN npm install -g pnpm
 
-# Set working directory
-WORKDIR /app
-
-# Copy package files
+# Copy only workspace-defining files first
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY client/package.json ./client/
-COPY server/package.json ./server/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
-
-# Copy source code
+# Copy all source code (Nuclear option for monorepo stability)
 COPY . .
 
-# Build frontend (client is not in workspace, build directly)
-WORKDIR /app/client
-ENV CI=true
-# Install client dependencies (regexparam is now in package.json)
-RUN pnpm install --frozen-lockfile
-RUN pnpm build
+# Install dependencies (no-frozen-lockfile to handle workspace changes)
+RUN pnpm install --no-frozen-lockfile
+
+
+
+
+
+# -----------------------------------------------------------------------------
+# Sovereign Integration: Recursive Topological Build
+# -----------------------------------------------------------------------------
+
+# Build everything from foundations up to the server core
+RUN pnpm --filter "...@dreamnet/server" build
+
+# Build everything from foundations up to the client core
+RUN pnpm --filter "...@dreamnet/client" build
+
+# -----------------------------------------------------------------------------
+
+# Build Frontend
+WORKDIR /app/packages/client
+ENV VITE_API_URL=/api
+RUN pnpm run build
+
+# Build Backend
+WORKDIR /app/packages/server
+RUN pnpm run build
+
+# Stage 2: Runtime
+FROM node:22-slim
+
 WORKDIR /app
 
-# Build backend
-RUN cd server && pnpm build || true
+# Copy production artifacts from builder
+COPY --from=builder /app/packages/server/dist ./server/dist
+COPY --from=builder /app/packages/client/dist ./client/dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
-# Copy vite.ts to dist/vite.js (needed for production static file serving)
-# TypeScript may not compile vite.ts due to import.meta.dirname, so we copy it manually
-# Node.js ESM will execute .js files directly
-RUN mkdir -p server/dist && \
-    if [ -f server/vite.ts ]; then \
-      cp server/vite.ts server/dist/vite.js; \
-      echo "✅ Copied vite.ts to dist/vite.js"; \
-    else \
-      echo "⚠️ Warning: server/vite.ts not found"; \
-    fi
-
-# Expose port (Cloud Run uses PORT env var)
-EXPOSE 8080
+# Copy package.jsons for runtime resolution if needed
+COPY --from=builder /app/packages ./packages
 
 # Set environment
 ENV NODE_ENV=production
 ENV PORT=8080
 
-# Start server (serves both frontend and backend)
-CMD ["node", "server/dist/index.js"]
+# Expose Cloud Run port
+EXPOSE 8080
 
+# Start server
+CMD ["node", "server/dist/index.js"]

@@ -3,8 +3,8 @@
  * Tracks dynamic metrics for conduit "heat" visualization
  */
 
-import { CONDUITS, type ConduitId } from "./conduits";
-import { getAllConduitUsage } from "./conduitGovernor";
+import { CONDUITS, type ConduitId } from './conduits.js';
+import { getAllConduitUsage } from './conduitGovernor.js';
 
 export type ConduitStatus = "ok" | "hot" | "throttled" | "blocked";
 

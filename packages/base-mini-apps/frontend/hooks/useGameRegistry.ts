@@ -4,7 +4,7 @@
  */
 
 import { useContractWrite, useContractRead, useAccount } from 'wagmi';
-import { CONTRACT_ADDRESSES } from '../config';
+import { CONTRACT_ADDRESSES } from '../config.js';
 
 // GameRegistry ABI (simplified - full ABI would be generated from contract)
 const GAME_REGISTRY_ABI = [

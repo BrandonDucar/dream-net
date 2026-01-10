@@ -12,7 +12,7 @@ import type {
   NerveContext,
   NerveEventPayload,
   NervePriority,
-} from "./types";
+} from './types.js';
 
 /**
  * Generate a unique ID (UUID v4)

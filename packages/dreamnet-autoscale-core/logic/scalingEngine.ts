@@ -3,7 +3,7 @@
  * Makes intelligent scaling decisions
  */
 
-import type { ScalingRule, ScalingMetrics, ScalingDecision } from "../types";
+import type { ScalingRule, ScalingMetrics, ScalingDecision } from '../types.js';
 import { DreamNetMetricsCore } from "@dreamnet/dreamnet-metrics-core";
 import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
 
@@ -93,11 +93,11 @@ export class ScalingEngine {
 
   async applyScaling(decision: ScalingDecision): Promise<void> {
     // Update rate limit in control core
-    const rateLimits = DreamNetControlCore.listRateLimits(decision.clusterId as any);
-    if (rateLimits.length > 0) {
-      const rateLimit = rateLimits[0];
-      DreamNetControlCore.updateRateLimit(rateLimit.id, {
-        limit: decision.newLimit,
+    const rateLimit = DreamNetControlCore.getRateLimit(decision.clusterId as any);
+    if (rateLimit) {
+      DreamNetControlCore.setRateLimit({
+        ...rateLimit,
+        requestsPerMinute: decision.newLimit,
       });
     }
   }

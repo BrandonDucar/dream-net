@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { GraftModel, GraftValidator, ValidationResult } from "../types";
+import type { GraftModel, GraftValidator, ValidationResult } from '../types.js';
 
 export class EndpointValidator implements GraftValidator {
   async validate(graft: GraftModel): Promise<ValidationResult> {

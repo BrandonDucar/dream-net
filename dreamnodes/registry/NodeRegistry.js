@@ -1,4 +1,7 @@
-export class DreamNodeRegistryImpl {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.nodeRegistry = exports.DreamNodeRegistryImpl = void 0;
+class DreamNodeRegistryImpl {
     nodes = new Map();
     usageStats = new Map();
     constructor() {
@@ -104,5 +107,6 @@ export class DreamNodeRegistryImpl {
         return node?.agentVisibility ?? [];
     }
 }
+exports.DreamNodeRegistryImpl = DreamNodeRegistryImpl;
 // Global registry instance
-export const nodeRegistry = new DreamNodeRegistryImpl();
+exports.nodeRegistry = new DreamNodeRegistryImpl();

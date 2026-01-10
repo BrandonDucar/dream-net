@@ -1,0 +1,10 @@
+{
+    "sites": [
+        {
+            "slug": "dreamnet-sovereign-ui",
+            "distDir": "packages/client/dist",
+            "buildCommand": "cd packages/client && npm install && npm run build",
+            "baseDir": "."
+        }
+    ]
+}

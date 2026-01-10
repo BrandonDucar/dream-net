@@ -4,7 +4,7 @@ import {
   APIRequest,
   APIRailGuard,
   APIKeeperStatus,
-} from "../types";
+} from '../types.js';
 
 const providers: Map<string, APIProvider> = new Map();
 const keys: Map<string, APIKey> = new Map();

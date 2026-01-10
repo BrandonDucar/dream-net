@@ -1,6 +1,10 @@
-import type { SporeModel } from "./types";
+import type { SporeModel } from './types.js';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const SPORE_STORE_PATH = join(__dirname, "../store/sporeStore.json");
 

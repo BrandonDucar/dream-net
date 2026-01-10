@@ -1,8 +1,8 @@
-import type { QALContext, QALPrediction } from "../types";
-import { predictWorkloadSpikes } from "../predictors/workloadPredictor";
-import { predictFailureRisk } from "../predictors/failurePredictor";
-import { predictRoutingBottlenecks } from "../predictors/routingPredictor";
-import { predictPRHotspots } from "../predictors/prPredictor";
+import type { QALContext, QALPrediction } from '../types.js';
+import { predictWorkloadSpikes } from '../predictors/workloadPredictor.js';
+import { predictFailureRisk } from '../predictors/failurePredictor.js';
+import { predictRoutingBottlenecks } from '../predictors/routingPredictor.js';
+import { predictPRHotspots } from '../predictors/prPredictor.js';
 
 let lastRunAt: number | null = null;
 let lastPredictions: QALPrediction[] = [];

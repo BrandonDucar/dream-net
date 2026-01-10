@@ -1,11 +1,11 @@
-import { RuntimeContext, RuntimeBridgeStatus } from "./types";
-import { RuntimeStore } from "./store/runtimeStore";
+import { RuntimeContext, RuntimeBridgeStatus } from './types.js';
+import { RuntimeStore } from './store/runtimeStore.js';
 import {
   initRuntimeContext,
   runRuntimeCycleOnce,
   startRuntimeLoop,
   stopRuntimeLoop,
-} from "./logic/runtimeHarness";
+} from './logic/runtimeHarness.js';
 
 export const RuntimeBridgeCore = {
   initContext(ctx: RuntimeContext) {
@@ -29,7 +29,7 @@ export const RuntimeBridgeCore = {
   },
 };
 
-export * from "./types";
-export * from "./adapters/runtimeStatusAdapter";
+export * from './types.js';
+export * from './adapters/runtimeStatusAdapter.js';
 export default RuntimeBridgeCore;
 

@@ -1,17 +1,34 @@
 {
-  "name": "@dreamnet/inbox-squared-core",
-  "version": "1.0.0",
-  "description": "AI-powered communication copilot for intelligent email outreach",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "googleapis": "^128.0.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name":  "@dreamnet/inbox-squared-core",
+    "version":  "1.0.0",
+    "description":  "AI-powered communication copilot for intelligent email outreach",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "googleapis":  "^128.0.0"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
 }
-

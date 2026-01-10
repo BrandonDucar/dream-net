@@ -2,8 +2,8 @@ import type {
   EconTokenConfig,
   EconTokenSymbol,
   EmissionRule,
-} from "../types";
-import { EconStore } from "../store/econStore";
+} from '../types.js';
+import { EconStore } from '../store/econStore.js';
 
 let initialized = false;
 

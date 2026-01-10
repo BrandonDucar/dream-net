@@ -28,7 +28,7 @@ export function createVeChainClient(
   customRpcUrl?: string
 ): VeChainClient {
   const rpcUrl = customRpcUrl || VECHAIN_RPC_URLS[network];
-  
+
   return {
     async getBestBlock() {
       const response = await fetch(`${rpcUrl}/blocks/best`);
@@ -67,7 +67,7 @@ export function getVeChainConfig(): VeChainConfig {
 /**
  * Initialize VeChain client from environment
  */
-export function initVeChainClient(): ThorClient {
+export function initVeChainClient(): VeChainClient {
   const config = getVeChainConfig();
   return createVeChainClient(config.network, config.rpcUrl);
 }

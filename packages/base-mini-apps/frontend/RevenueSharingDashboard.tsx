@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CONTRACT_ADDRESSES } from './config';
+import { CONTRACT_ADDRESSES } from './config.js';
 
 export function RevenueSharingDashboard() {
   const [splits, setSplits] = useState<any[]>([]);

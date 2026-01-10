@@ -3,8 +3,8 @@
  * High-bandwidth, AI-native ingress for ChatGPT, Cursor, Replit agents
  */
 
-export * from "./tools";
-export * from "./router";
-export * from "./executor";
-export * from "./activity";
+export * from './tools.js';
+export * from './router.js';
+export * from './executor.js';
+export * from './activity.js';
 

@@ -1,4 +1,4 @@
-import type { NarrativeEntry, NarrativeFilter, NarrativeSeverity, NarrativeStatus } from "../types";
+import type { NarrativeEntry, NarrativeFilter, NarrativeSeverity, NarrativeStatus } from '../types.js';
 
 const entries: NarrativeEntry[] = [];
 const MAX_ENTRIES = 1000;

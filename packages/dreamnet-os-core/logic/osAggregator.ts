@@ -4,7 +4,7 @@ import type {
   DreamNetVersionInfo,
   GlobalHealthScores,
   SubsystemSummary,
-} from "../types";
+} from '../types.js';
 
 function clamp01(x: number): number {
   return Math.max(0, Math.min(1, x));

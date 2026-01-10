@@ -1,0 +1,93 @@
+# DreamNet Main Orchestrator
+# Pattern: Fan-Out / Fan-In
+# Goal: Coordinate the Twin System Agents (Wolf, Octopus, Shield)
+
+main:
+  params: [input]
+  steps:
+    - init:
+        assign:
+          - project_id: ${sys.get_env("GOOGLE_CLOUD_PROJECT_ID")}
+          - service_url: "https://api.dreamnet.ink"
+          # Default to 'nightly' if not provided
+          - execution_mode: ${default(map.get(input, "mode"), "standard")}
+
+    # Phase 1: Immune System Check (Negative Selection)
+    - check_immunity:
+        call: http.get
+        args:
+          url: ${service_url + "/api/shield"}
+          auth:
+            type: OIDC
+        result: shield_status
+
+    - validate_immunity:
+        switch:
+          - condition: ${shield_status.body.success != true}
+            return:
+              error: "Immune System Reject"
+              details: ${shield_status.body}
+
+    # Phase 2: Biological Fan-Out (Agents Awake)
+    - wake_agents:
+        parallel:
+          branches:
+            - wolf_pack:
+                steps:
+                  - engage_wolf:
+                      try:
+                        call: http.post
+                        args:
+                          url: ${service_url + "/api/wolf-pack/activate"}
+                          auth:
+                            type: OIDC
+                        result: wolf_res
+                      retry:
+                        max_retries: 3
+                        backoff:
+                          initial_delay: 2
+                          max_delay: 30
+                          multiplier: 2
+
+            - octopus:
+                steps:
+                  - engage_octo:
+                      try:
+                        call: http.post
+                        args:
+                          url: ${service_url + "/api/octopus/tick"}
+                          auth:
+                            type: OIDC
+                        result: octo_res
+                      retry:
+                        max_retries: 3
+
+            - dream_keeper:
+                steps:
+                  - engage_keeper:
+                      call: http.post
+                      args:
+                        url: ${service_url + "/api/agents/dreamkeeper/status"}
+                        auth:
+                          type: OIDC
+                      result: keeper_res
+
+    # Phase 3: Synthesis (Fan-In)
+    - synthesize:
+        assign:
+          - ecosystem_state:
+              timestamp: ${time.format(sys.now())}
+              wolf_pack: ${wolf_res.body}
+              octopus: ${octo_res.body}
+              dream_keeper: ${keeper_res.body}
+              metrics:
+                da_nsa: ${default(map.get(wolf_res.body, "metrics.da_nsa"), 0)}
+
+    - log_synthesis:
+        call: sys.log
+        args:
+          text: ${"DreamNet Synthesis Complete: " + json.encode(ecosystem_state)}
+          severity: INFO
+
+    - return_result:
+        return: ${ecosystem_state}

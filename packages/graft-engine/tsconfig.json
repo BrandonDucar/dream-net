@@ -1,13 +1,43 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./",
-    "tsBuildInfoFile": "../../node_modules/.cache/graft-engine.tsbuildinfo"
-  },
-  "include": ["./**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "graftEngine.ts",
+        "registry.ts",
+        "types.ts",
+        "logic/**/*",
+        "processors/**/*",
+        "validators/**/*",
+        "events/**/*"
+    ],
+    "references": [
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../shared"
+        },
+        
+        {
+            "path": "../internal-ports"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
-

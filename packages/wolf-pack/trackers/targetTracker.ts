@@ -1,4 +1,4 @@
-import type { WolfSignal } from "../types";
+import type { WolfSignal } from '../types.js';
 
 const activeTargetIds = new Set<string>();
 

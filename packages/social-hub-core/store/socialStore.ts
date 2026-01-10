@@ -4,7 +4,7 @@ import type {
   SocialReaction,
   FeedItem,
   SocialHubStatus,
-} from "../types";
+} from '../types.js';
 
 const posts: Map<string, SocialPost> = new Map();
 const comments: Map<string, SocialComment> = new Map();

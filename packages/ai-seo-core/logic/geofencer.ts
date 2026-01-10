@@ -1,5 +1,5 @@
-import { Geofence, GeofenceRule } from "../types";
-import { SEOStore } from "../store/seoStore";
+import { Geofence, GeofenceRule } from '../types.js';
+import { SEOStore } from '../store/seoStore.js';
 
 let geofenceCounter = 0;
 function nextGeofenceId() {

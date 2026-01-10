@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
-import { getOnchainAccount, upsertOnchainAccount, recordDreamTokenEvent } from "./store";
+import { getOnchainAccount, upsertOnchainAccount, recordDreamTokenEvent } from './store.js';
 import { getUserBalance } from "@dreamnet/rewards-engine";
-import type { DreamOnchainAccount } from "./types";
+import type { DreamOnchainAccount } from './types.js';
 
 // DREAM Token contract address on Base
 // Deployed to Base Mainnet: 0x4a6775abfD8CC67cBe9585c95C089FDc2Ae81C77

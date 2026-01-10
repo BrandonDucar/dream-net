@@ -1,21 +1,26 @@
-import { FLUTTERBY_NODE } from '../node.config';
-export function checkMessageUnlock(userTrustScore, messageAgentSource) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkMessageUnlock = checkMessageUnlock;
+exports.getUnlockProgress = getUnlockProgress;
+exports.analyzeMessagePattern = analyzeMessagePattern;
+const node_config_1 = require("../node.config");
+function checkMessageUnlock(userTrustScore, messageAgentSource) {
     // Base trust requirement for FlutterBye node
-    if (userTrustScore < FLUTTERBY_NODE.trustBoundary) {
+    if (userTrustScore < node_config_1.FLUTTERBY_NODE.trustBoundary) {
         return {
             unlocked: false,
             reason: `Trust score ${userTrustScore} below FlutterBye threshold`,
-            requiredTrust: FLUTTERBY_NODE.trustBoundary,
+            requiredTrust: node_config_1.FLUTTERBY_NODE.trustBoundary,
             currentTrust: userTrustScore
         };
     }
     // Agent visibility check for isolated node
-    if (FLUTTERBY_NODE.isolation && messageAgentSource) {
-        if (!FLUTTERBY_NODE.agentVisibility.includes(messageAgentSource)) {
+    if (node_config_1.FLUTTERBY_NODE.isolation && messageAgentSource) {
+        if (!node_config_1.FLUTTERBY_NODE.agentVisibility.includes(messageAgentSource)) {
             return {
                 unlocked: false,
                 reason: `Agent ${messageAgentSource} not visible in isolated node`,
-                requiredTrust: FLUTTERBY_NODE.trustBoundary,
+                requiredTrust: node_config_1.FLUTTERBY_NODE.trustBoundary,
                 currentTrust: userTrustScore,
                 agentRequired: messageAgentSource
             };
@@ -24,12 +29,12 @@ export function checkMessageUnlock(userTrustScore, messageAgentSource) {
     return {
         unlocked: true,
         reason: 'Trust threshold met and agent accessible',
-        requiredTrust: FLUTTERBY_NODE.trustBoundary,
+        requiredTrust: node_config_1.FLUTTERBY_NODE.trustBoundary,
         currentTrust: userTrustScore
     };
 }
-export function getUnlockProgress(userTrustScore) {
-    const threshold = FLUTTERBY_NODE.trustBoundary;
+function getUnlockProgress(userTrustScore) {
+    const threshold = node_config_1.FLUTTERBY_NODE.trustBoundary;
     if (userTrustScore >= threshold) {
         return {
             percentage: 100,
@@ -44,7 +49,7 @@ export function getUnlockProgress(userTrustScore) {
         description: `${threshold - userTrustScore} trust points needed for full access`
     };
 }
-export function analyzeMessagePattern(message) {
+function analyzeMessagePattern(message) {
     const supportiveKeywords = ['got this', 'you can', 'believe', 'strength', 'support'];
     const supportive = supportiveKeywords.some(keyword => message.toLowerCase().includes(keyword));
     const emoji = /[\uD83C-\uDBFF\uDC00-\uDFFF]+/.test(message);

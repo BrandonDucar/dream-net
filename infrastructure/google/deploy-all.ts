@@ -16,8 +16,9 @@ import { join } from 'path';
 
 const PROJECT_ID = process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT || 'aqueous-tube-470317-m6';
 const REGION = process.env.GCP_REGION || process.env.GOOGLE_CLOUD_REGION || 'us-central1';
-const SERVICE_NAME = process.env.GCP_SERVICE_NAME || 'dreamnet';
-const IMAGE_NAME = `gcr.io/${PROJECT_ID}/${SERVICE_NAME}`;
+const SERVICE_NAME = process.env.GCP_SERVICE_NAME || 'dreamnet-api';
+const REGISTRY = `${REGION}-docker.pkg.dev/${PROJECT_ID}/dreamnet-images`;
+const IMAGE_NAME = `${REGISTRY}/${SERVICE_NAME}:latest`;
 
 console.log('🚀 Starting Google Cloud Platform deployment...\n');
 console.log(`📋 Configuration:`);
@@ -44,10 +45,10 @@ console.log('✅ Skipping local build (Docker will handle it)\n');
 console.log('🐳 Building Docker image...');
 try {
   execSync(
-    `gcloud builds submit --tag ${IMAGE_NAME} --project ${PROJECT_ID}`,
+    `gcloud builds submit --tag ${IMAGE_NAME} --project ${PROJECT_ID} --machine-type=e2-highcpu-8`,
     { stdio: 'inherit', cwd: process.cwd() }
   );
-  console.log('✅ Docker image built successfully\n');
+  console.log('✅ Docker image built and pushed to Artifact Registry\n');
 } catch (error) {
   console.error('❌ Docker build failed');
   process.exit(1);
@@ -58,7 +59,7 @@ console.log('☁️  Deploying to Cloud Run...');
 try {
   const envVars = loadEnvVars();
   const envFlags = envVars.map(([key, value]) => `--set-env-vars=${key}=${value}`).join(' ');
-  
+
   execSync(
     `gcloud run deploy ${SERVICE_NAME} ` +
     `--image ${IMAGE_NAME} ` +
@@ -88,7 +89,7 @@ try {
     `gcloud run services describe ${SERVICE_NAME} --region ${REGION} --project ${PROJECT_ID} --format="value(status.url)"`,
     { encoding: 'utf-8', stdio: 'pipe' }
   ).trim();
-  
+
   console.log('\n✅ Deployment complete!');
   console.log(`\n🌐 Service URL: ${url}`);
   console.log(`\n📊 View logs: gcloud run services logs read ${SERVICE_NAME} --region ${REGION}`);
@@ -99,7 +100,7 @@ try {
 
 function loadEnvVars(): Array<[string, string]> {
   const envVars: Array<[string, string]> = [];
-  
+
   // Load from .env.gcp if it exists
   const envGcpPath = join(process.cwd(), '.env.gcp');
   if (existsSync(envGcpPath)) {
@@ -114,7 +115,7 @@ function loadEnvVars(): Array<[string, string]> {
       }
     }
   }
-  
+
   // Also check for common env vars in process.env
   const commonVars = [
     'DATABASE_URL',
@@ -137,13 +138,13 @@ function loadEnvVars(): Array<[string, string]> {
     'ALLOWED_ORIGINS',
     'OPERATOR_WALLETS',
   ];
-  
+
   for (const key of commonVars) {
     if (process.env[key] && !envVars.some(([k]) => k === key)) {
       envVars.push([key, process.env[key]!]);
     }
   }
-  
+
   return envVars;
 }
 

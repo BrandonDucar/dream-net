@@ -1,4 +1,4 @@
-import { FundingLead, WolfPackFundingContext } from "../types";
+import { FundingLead, WolfPackFundingContext } from '../types.js';
 
 /**
  * Score a lead using heuristics and ecosystem context.

@@ -1,5 +1,5 @@
-import { ShieldLayer, ShieldFrequency, ShieldPhase } from "../types";
-import { ShieldStore } from "../store/shieldStore";
+import { ShieldLayer, ShieldFrequency, ShieldPhase } from '../types.js';
+import { ShieldStore } from '../store/shieldStore.js';
 
 /**
  * Rotate shield frequencies to prevent pattern detection

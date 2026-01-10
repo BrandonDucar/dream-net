@@ -1,0 +1,56 @@
+steps:
+  # Build the container image using Dockerfile.minimal
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile.minimal'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:$SHORT_SHA'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:latest'
+      - '.'
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:$SHORT_SHA'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:latest'
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'dreamnet-api-minimal'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:$SHORT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--port'
+      - '8080'
+      - '--memory'
+      - '512Mi'
+      - '--cpu'
+      - '1'
+      - '--max-instances'
+      - '10'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/dreamnet/dreamnet-api-minimal:latest'
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: '600s'

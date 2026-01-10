@@ -1,6 +1,6 @@
-import { FundingLead, SendQueueItem, LeadStage } from "../../wolfpack-funding-core";
-import { LearnedPattern } from "../types";
-import { AnalystStore } from "../store/analystStore";
+import { FundingLead, SendQueueItem, LeadStage } from '../../wolfpack-funding-core.js';
+import { LearnedPattern } from '../types.js';
+import { AnalystStore } from '../store/analystStore.js';
 
 /**
  * Train on lead scoring patterns

@@ -1,5 +1,5 @@
-import { OrcaPackCore } from "../index";
-import { OrcaPackStatus } from "../types";
+import { OrcaPackCore } from '../index.js';
+import { OrcaPackStatus } from '../types.js';
 
 export interface OrcaDashboardView {
   themeCount: number;

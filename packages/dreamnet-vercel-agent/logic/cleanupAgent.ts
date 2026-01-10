@@ -12,9 +12,9 @@ import {
   getProjectDomains,
   removeDomain,
   addDomain,
-} from "./vercelClient";
-import type { VercelProject, VercelDeployment, CleanupAction } from "../types";
-import { bridgeToSpiderWeb } from "../../dreamnet-operational-bridge";
+} from './vercelClient.js';
+import type { VercelProject, VercelDeployment, CleanupAction } from '../types.js';
+import { bridgeToSpiderWeb } from '@dreamnet/dreamnet-operational-bridge';
 
 /**
  * Analyze projects and find cleanup opportunities
@@ -29,7 +29,7 @@ export async function analyzeCleanup(targetDomain: string = "dreamnet.ink"): Pro
     // Find projects with old deployments
     for (const project of projects) {
       const deployments = await listDeployments(project.id, 50);
-      
+
       // Find old/non-production deployments
       const oldDeployments = deployments.filter(
         d => d.state !== "READY" || (d.target !== "production" && d.createdAt < Date.now() - 7 * 24 * 60 * 60 * 1000)
@@ -84,7 +84,7 @@ export async function analyzeCleanup(targetDomain: string = "dreamnet.ink"): Pro
         // Sort by updatedAt, keep newest
         group.sort((a, b) => b.updatedAt - a.updatedAt);
         const toDelete = group.slice(1); // All except newest
-        
+
         for (const oldProject of toDelete) {
           actions.push({
             type: "delete_project",

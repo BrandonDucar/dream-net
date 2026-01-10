@@ -1,5 +1,5 @@
-import { FundingLead, GrantApplicationDraft } from "../types";
-import { FundingStore } from "../store/fundingStore";
+import { FundingLead, GrantApplicationDraft } from '../types.js';
+import { FundingStore } from '../store/fundingStore.js';
 
 /**
  * Ensure grant application drafts exist for relevant leads.

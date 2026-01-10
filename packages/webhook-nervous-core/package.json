@@ -1,22 +1,41 @@
 {
-  "name": "@dreamnet/webhook-nervous-core",
-  "version": "0.1.0",
-  "description": "Biomimetic webhook management system - zero-touch webhook orchestration",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "webhook",
-    "biomimetic",
-    "nervous-system",
-    "immune-system",
-    "mycelium",
-    "ant-colony",
-    "zero-touch"
-  ],
-  "author": "",
-  "license": "ISC"
+    "name":  "@dreamnet/webhook-nervous-core",
+    "version":  "0.1.0",
+    "description":  "Biomimetic webhook management system - zero-touch webhook orchestration",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "clean":  "rm -rf dist",
+                    "test":  "echo \"Error: no test specified\" \u0026\u0026 exit 1"
+                },
+    "keywords":  [
+                     "webhook",
+                     "biomimetic",
+                     "nervous-system",
+                     "immune-system",
+                     "mycelium",
+                     "ant-colony",
+                     "zero-touch"
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     }
 }
-

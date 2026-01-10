@@ -1,4 +1,4 @@
-import { useWallet } from "../contexts/WalletContext";
+import { useWallet } from '../contexts/WalletContext.js';
 import { Wallet, LogOut, Loader2 } from "lucide-react";
 
 export function WalletButton() {

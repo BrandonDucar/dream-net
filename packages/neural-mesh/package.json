@@ -1,23 +1,38 @@
 {
-  "name": "@dreamnet/neural-mesh",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "private": true,
-  "dependencies": {
-    "@dreamnet/utils": "workspace:*",
-    "@dreamnet/halo-loop": "workspace:*",
-    "@dreamnet/event-wormholes": "workspace:*",
-    "@dreamnet/governance": "workspace:*",
-    "@dreamnet/squad-builder": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0"
-  }
+    "name":  "@dreamnet/neural-mesh",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "private":  true,
+    "dependencies":  {
+                         "@dreamnet/event-wormholes":  "workspace:*",
+                         "@dreamnet/governance":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/squad-builder":  "workspace:*",
+                         "@dreamnet/utils":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.0.0"
+                        }
 }
-

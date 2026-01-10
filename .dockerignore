@@ -1,66 +1,64 @@
-# DreamNet Docker Ignore
+# .dockerignore for DreamNet - Universal Workspace Strategy
 
-# Dependencies
-node_modules
-.pnpm-store
+# 1. Exclude Everything by default
+**
 
-# Build outputs
-dist
-client/dist
-server/dist
-*.tsbuildinfo
+# 2. Re-include Monorepo Manifests (Required for Turbo/Pnpm)
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!turbo.json
+!tsconfig.json
+!tsconfig.base.json
 
-# Environment files
-.env
-.env.*
-!.env.example
+# 3. Re-include ALL Workspace Source Code (Global Whitelist)
+# This is the most reliable way to handle deep recursive workspace dependencies.
+!packages/**
+!apps/**
 
-# Git
-.git
-.gitignore
-.gitattributes
+# 4. Global Exclude Overrides (Crucial for Context Size & Security)
+# We exclude the HEAVY generated artifacts but keep the SOURCE.
+**/node_modules/
+**/dist/
+**/.turbo/
+**/build/
+**/out/
+**/*.log
+**/.env
+**/.env.*
+**/.replit
+**/.idx
+**/temp_build/
+**/*_extracted/
+**/*.zip
+**/*.tar.gz
+**/*.md
+**/*.txt
+**/LICENSE
+**/.gitignore
+**/.dockerignore
+**/.gcloudignore
+**/backups/
+**/cache/
+**/logs/
+**/reports/
 
-# IDE
-.vscode
-.idea
-*.swp
-*.swo
-*~
+# Explicitly exclude common non-code folders to keep context small
+**/docs/
+**/tests/
+**/examples/
+**/benchmarks/
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Documentation
-docs
-*.md
-!README.md
-
-# Tests
-coverage
-*.test.ts
-*.test.tsx
-*.spec.ts
-*.spec.tsx
-
-# Scripts (not needed in container)
-scripts
-infrastructure
-
-# Contracts (not needed in runtime)
-contracts
-hardhat.config.*
-
-# Legacy/experimental
-apps
-*.replit
-
-# Logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-
-# Temporary files
-tmp
-temp
-*.tmp
+# Specific App/Package Exclusions (Optional, to prune further if needed)
+# We keep apps/ server-related items whitelisted via !apps/**
+# but can explicitly exclude known heavy apps if they are NOT server-dependent.
+apps/sitebuilder/**
+apps/seo/**
+apps/hub/**
+apps/dreamos/**
+apps/api-forge/**
+apps/dreamnet-quest/**
+# apps/oharas-eye/ is left whitelisted as it might be a dependency.
+!packages/nerve/src/**
+!packages/nerve/package.json
+!packages/nerve/tsconfig.json

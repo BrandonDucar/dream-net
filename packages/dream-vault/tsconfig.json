@@ -1,10 +1,48 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "."
-  },
-  "include": ["./**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "./src/**/*.ts",
+        "logic/**/*",
+        "types.ts"
+    ],
+    "references": [
+        {
+            "path": "../dream-cortex"
+        },
+        {
+            "path": "../identity-grid"
+        },
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../narrative-field"
+        },
+        
+        {
+            "path": "../shared"
+        },
+        {
+            "path": "../utils"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
-

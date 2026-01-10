@@ -1,7 +1,7 @@
-import { db } from "../../server/db";
-import { metricsDaily, mediaAssets, postQueue } from "@shared/schema";
+import { db } from "@dreamnet/database";
+import { metricsDaily, mediaAssets, postQueue } from "@dreamnet/shared/schema";
 import { eq, sql, and, gte, count } from "drizzle-orm";
-import type { MetricsSnapshot, MetricsDaily } from "./types";
+import type { MetricsSnapshot, MetricsDaily } from './types.js';
 
 // In-memory cache for rolling aggregates (last 5 minutes)
 interface LatencyEntry {
@@ -61,8 +61,7 @@ async function getOrCreateTodayRecord(): Promise<MetricsDaily> {
 
   const [existing] = await db
     .select()
-    .from(metricsDaily)
-    .where(eq(metricsDaily.date, today))
+    .where(eq(metricsDaily.date as any, today))
     .limit(1);
 
   if (existing) {
@@ -102,7 +101,7 @@ async function updateTodayRecord(updates: Partial<MetricsDaily>) {
       ...updates,
       updatedAt: new Date().toISOString(),
     })
-    .where(eq(metricsDaily.date, today));
+    .where(eq(metricsDaily.date as any, today));
 }
 
 // Get current system phase
@@ -129,7 +128,7 @@ export async function getMetrics(): Promise<MetricsSnapshot> {
   const [todayRecord] = await db
     .select()
     .from(metricsDaily)
-    .where(eq(metricsDaily.date, today))
+    .where(eq(metricsDaily.date as any, today))
     .limit(1);
 
   // Calculate uptime percent (based on system start time)
@@ -155,27 +154,27 @@ export async function getMetrics(): Promise<MetricsSnapshot> {
   // Get media counts from database
   const [mediaCountResult] = await db.select({ count: count() }).from(mediaAssets);
   const mediaCount = mediaCountResult?.count ?? 0;
-  
+
   // Count public media (media with public collections)
   // For now, we'll count all media as public if they have any collections
   // You can refine this logic later
   const [mediaPublicResult] = await db
     .select({ count: count() })
     .from(mediaAssets)
-    .where(sql`array_length(${mediaAssets.collections}, 1) > 0`);
+    .where(sql`array_length(${mediaAssets.collections as any}, 1) > 0`);
   const mediaPublic = mediaPublicResult?.count ?? 0;
 
   // Get post counts from database
   const [postsQueuedResult] = await db
     .select({ count: count() })
     .from(postQueue)
-    .where(eq(postQueue.status, "scheduled"));
+    .where(eq(postQueue.status as any, "scheduled" as any));
   const postsQueued = postsQueuedResult?.count ?? 0;
-  
+
   const [postsPostedResult] = await db
     .select({ count: count() })
     .from(postQueue)
-    .where(eq(postQueue.status, "posted"));
+    .where(eq(postQueue.status as any, "posted" as any));
   const postsPosted = postsPostedResult?.count ?? 0;
 
   const phase = await getSystemPhase();
@@ -192,6 +191,7 @@ export async function getMetrics(): Promise<MetricsSnapshot> {
     mediaPublic,
     postsQueued,
     postsPosted,
+    daNsaCount: todayRecord?.daNsaCount ?? 0,
     phase,
   };
 }
@@ -280,9 +280,8 @@ export async function getMetricsHistory(days: number = 7): Promise<MetricsDaily[
   const records = await db
     .select()
     .from(metricsDaily)
-    .where(gte(metricsDaily.date, cutoffStr))
-    .orderBy(sql`${metricsDaily.date} DESC`);
+    .where(gte(metricsDaily.date as any, cutoffStr))
+    .orderBy(sql`${metricsDaily.date as any} DESC`);
 
   return records as MetricsDaily[];
 }
-

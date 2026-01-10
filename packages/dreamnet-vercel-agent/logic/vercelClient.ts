@@ -3,8 +3,8 @@
  * Uses API Keeper to discover Vercel token automatically
  */
 
-import { APIKeeperCore } from "../../api-keeper-core";
-import type { VercelConfig, VercelProject, VercelDeployment } from "../types";
+import { APIKeeperCore } from "@dreamnet/api-keeper-core";
+import type { VercelConfig, VercelProject, VercelDeployment } from '../types.js';
 
 let config: VercelConfig | null = null;
 const VERCEL_API_BASE = "https://api.vercel.com";
@@ -15,8 +15,8 @@ const VERCEL_API_BASE = "https://api.vercel.com";
 export async function initializeVercel(): Promise<boolean> {
   try {
     // Get Vercel token from API Keeper or env
-    const vercelKeys = APIKeeperCore.listKeys("vercel");
-    const token = 
+    const vercelKeys = APIKeeperCore.listKeysForProvider("vercel");
+    const token =
       vercelKeys.find(k => k.name.includes("TOKEN") || k.name.includes("API"))?.key ||
       process.env.VERCEL_TOKEN ||
       process.env.VERCEL_API_TOKEN;

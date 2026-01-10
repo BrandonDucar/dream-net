@@ -1,19 +1,35 @@
 {
-  "name": "@dreamnet/squad-builder",
-  "version": "1.0.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "private": true,
-  "dependencies": {
-    "@dreamnet/utils": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0"
-  }
+    "name": "@dreamnet/squad-builder",
+    "version": "1.0.0",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit",
+        "clean": "rm -rf dist"
+    },
+    "private": true,
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@dreamnet/utils": "workspace:*",
+        "@dreamnet/halo-loop": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "exports": {
+        ".": {
+            "source": "./index.ts",
+            "import": "./index.ts",
+            "require": "./index.ts",
+            "default": "./index.ts"
+        },
+        "./*": {
+            "source": "./src/*.ts",
+            "import": "./src/*.ts",
+            "default": "./src/*.ts"
+        }
+    },
+    "type": "module"
 }
-

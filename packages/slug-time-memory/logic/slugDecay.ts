@@ -1,5 +1,5 @@
-import { SlugMemoryStore } from "../store/slugMemoryStore";
-import type { SlugTimeConfig } from "../types";
+import { SlugMemoryStore } from '../store/slugMemoryStore.js';
+import type { SlugTimeConfig } from '../types.js';
 
 export function applyDecay(now: number, config: SlugTimeConfig) {
   const halfLife = config.decayHalfLifeMs;

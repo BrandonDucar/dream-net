@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
-import type { DreamOnchainAccount, DreamTokenEvent } from "./types";
+import type { DreamOnchainAccount, DreamTokenEvent } from './types.js';
 
 const STORE_DIR = join(process.cwd(), "packages/dream-token/store");
 const ACCOUNTS_FILE = join(STORE_DIR, "dream_onchain_accounts.json");

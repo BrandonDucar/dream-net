@@ -17,6 +17,8 @@
 import { Wallet, HDNodeWallet, randomBytes } from 'ethers';
 import type { JsonRpcProvider } from 'ethers';
 
+export * from'./src/OctopusController.js';
+
 /**
  * Agent Wallet (INTERNAL USE ONLY)
  * NEVER exposed to CoinSensei or user-facing APIs
@@ -67,7 +69,7 @@ export class AgentWalletManager {
     label?: string
   ): Promise<AgentWalletPublic> {
     const key = `${agentId}-${chain}`;
-    
+
     let wallet: AgentWalletInternal;
     if (this.wallets.has(key)) {
       wallet = this.wallets.get(key)!;
@@ -75,7 +77,7 @@ export class AgentWalletManager {
       wallet = await this.createWallet(agentId, chain, label);
       this.wallets.set(key, wallet);
     }
-    
+
     // Return public interface only (no private key)
     return this.toPublic(wallet);
   }
@@ -93,7 +95,8 @@ export class AgentWalletManager {
 
     if (this.mnemonic) {
       // Deterministic wallet generation from mnemonic
-      const hdNode = HDNodeWallet.fromPhrase(this.mnemonic);
+      // Must specify "m" path to get the master node, otherwise it defaults to first account
+      const hdNode = HDNodeWallet.fromPhrase(this.mnemonic, undefined, "m");
       // Use agentId hash as derivation path
       const path = `m/44'/60'/0'/0/${this.hashAgentId(agentId)}`;
       wallet = hdNode.derivePath(path);
@@ -110,12 +113,12 @@ export class AgentWalletManager {
       createdAt: new Date(),
       label: label || `${agentId} ${chain} wallet`,
     };
-    
+
     // SECURITY: Never log private keys
     if (process.env.NODE_ENV === 'development') {
       console.log(`[AgentWallet] Created wallet for ${agentId} on ${chain}: ${wallet.address}`);
     }
-    
+
     return internalWallet;
   }
 
@@ -144,7 +147,7 @@ export class AgentWalletManager {
   ): Promise<string> {
     const key = `${agentId}-${chain}`;
     const wallet = this.wallets.get(key);
-    
+
     if (!wallet) {
       // Create wallet if doesn't exist
       await this.getOrCreateWallet(agentId, chain);
@@ -155,7 +158,7 @@ export class AgentWalletManager {
       const balance = await provider.getBalance(newWallet.address);
       return balance.toString();
     }
-    
+
     const balance = await provider.getBalance(wallet.address);
     return balance.toString();
   }

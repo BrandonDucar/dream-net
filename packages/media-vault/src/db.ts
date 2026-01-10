@@ -1,8 +1,8 @@
-// Import db from server
-import { db } from "../../../server/db";
-import { mediaAssets, postQueue } from "../../../shared/schema";
-import { eq, and, or, ilike, sql, gte, lte, inArray } from "drizzle-orm";
-import type { MediaAsset, PostQueueItem, SearchFilters } from "./types";
+// Import db from database workspace
+import { db } from "@dreamnet/database";
+import { mediaAssets, postQueue } from '@dreamnet/shared/schema';
+import { eq, and, or, ilike, sql, gte, lte, inArray, asc, desc } from "drizzle-orm";
+import type { MediaAsset, PostQueueItem, SearchFilters } from './types.js';
 import { randomUUID } from "node:crypto";
 
 export async function getMediaById(id: string): Promise<MediaAsset | null> {
@@ -128,22 +128,22 @@ export async function searchMedia(filters: SearchFilters, limit = 50, offset = 0
 
 export async function getPublicMedia(collection?: string, limit = 100, offset = 0): Promise<MediaAsset[]> {
   let query = db.select().from(mediaAssets);
-  
+
   const conditions: any[] = [];
-  
+
   // Filter by collection if provided
   if (collection && collection !== "all") {
     conditions.push(sql`${mediaAssets.collections} && ARRAY[${collection}]::text[]`);
   }
-  
+
   // Only return media with public collections or specific public flag
   // For now, we'll use collections as the public indicator
   // You can add a public flag to the schema later if needed
-  
+
   if (conditions.length > 0) {
     query = query.where(and(...conditions)) as any;
   }
-  
+
   const results = await query.limit(limit).offset(offset).orderBy(sql`${mediaAssets.created_at} DESC`);
   return results.map(mapMediaRecord);
 }
@@ -208,26 +208,25 @@ export async function getPostQueueItems(filters?: { status?: PostQueueItem["stat
   }
 
   if (conditions.length > 0) {
-    query = query.where(and(...conditions)) as any;
+    query = query.where(and(...conditions));
   }
 
-  const results = await query.orderBy(sql`${postQueue.scheduled_at} ASC NULLS LAST`);
+  const results = await query.orderBy(asc(postQueue.scheduled_at));
   return results.map(mapPostRecord);
 }
 
 export async function updatePostQueueItem(id: string, updates: Partial<PostQueueItem>): Promise<PostQueueItem | null> {
-  const [result] = await db
+  const results = await db
     .update(postQueue)
     .set({
       ...updates,
       updated_at: new Date(),
-      id: undefined,
-      created_at: undefined,
     } as any)
     .where(eq(postQueue.id, id))
     .returning();
-  if (!result) return null;
-  return mapPostRecord(result);
+
+  if (results.length === 0) return null;
+  return mapPostRecord(results[0]);
 }
 
 function mapPostRecord(row: any): PostQueueItem {

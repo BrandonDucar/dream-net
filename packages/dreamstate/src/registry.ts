@@ -13,7 +13,7 @@ import type {
   CitizenId,
   OfficeId,
   CabinetId,
-} from "./types";
+} from './types.js';
 import type { TierId } from "@dreamnet/dreamnet-control-core/tierConfig";
 import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
 

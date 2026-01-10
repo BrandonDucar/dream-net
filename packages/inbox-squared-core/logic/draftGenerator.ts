@@ -10,20 +10,13 @@ import type {
   GeoContext,
   EmailVariant,
   ContentTwin,
-} from '../types';
-import { researchEngine } from './researchEngine';
-import { relevanceEngine } from './relevanceEngine';
-import { geoAwareness } from './geoAwareness';
-import { learningLoop } from './learningLoop';
+  DraftGenerationOptions,
+} from '../types.js';
+import { researchEngine } from './researchEngine.js';
+import { relevanceEngine } from './relevanceEngine.js';
+import { geoAwareness } from './geoAwareness.js';
+import { learningLoop } from './learningLoop.js';
 
-export interface DraftGenerationOptions {
-  fromName: string;
-  fromEmail: string;
-  tone?: 'casual' | 'consultative' | 'executive';
-  includeOptOut?: boolean;
-  generateVariants?: boolean;
-  generateContentTwins?: boolean;
-}
 
 export class DraftGenerator {
   /**
@@ -31,9 +24,12 @@ export class DraftGenerator {
    */
   async generateDraft(
     recipientEmail: string,
+    options: DraftGenerationOptions = {
+      fromName: 'DreamNet Team',
+      fromEmail: 'dreamnetgmo@gmail.com',
+    },
     recipientName?: string,
-    recipientCompany?: string,
-    options: DraftGenerationOptions
+    recipientCompany?: string
   ): Promise<EmailDraft> {
     // Layer 1: Research
     const research = await researchEngine.researchRecipient(
@@ -66,12 +62,12 @@ export class DraftGenerator {
 
     // Generate body
     const body = this.generateBody(
-      recipientName,
-      recipientCompany,
       research,
       topics,
       geoContext,
-      options
+      options,
+      recipientName,
+      recipientCompany
     );
 
     // Generate HTML version
@@ -88,7 +84,7 @@ export class DraftGenerator {
       : undefined;
 
     const draft: EmailDraft = {
-      id: `draft-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `draft-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       toEmail: recipientEmail,
       subject,
       body,
@@ -139,12 +135,12 @@ export class DraftGenerator {
    * Generate email body
    */
   private generateBody(
-    name?: string,
-    company?: string,
     research: RecipientResearch,
     topics: RelevantTopics,
     geoContext: GeoContext,
-    options: DraftGenerationOptions
+    options: DraftGenerationOptions,
+    name?: string,
+    company?: string
   ): string {
     const greeting = name ? `Hi ${name},` : 'Hello,';
     const tone = options.tone || 'consultative';

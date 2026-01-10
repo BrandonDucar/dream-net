@@ -1,7 +1,11 @@
-import type { SporeModel, SporeDistribution } from "./types";
-import { getSporeById, incrementUsage } from "./registry";
+import type { SporeModel, SporeDistribution } from './types.js';
+import { getSporeById, incrementUsage } from './registry.js';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const DISTRIBUTION_LOG_PATH = join(__dirname, "../store/distributionLog.json");
 
@@ -20,7 +24,7 @@ function loadDistributions(): SporeDistribution[] {
   }
 }
 
-import { mkdirSync } from "node:fs";
+
 
 function saveDistributions(distributions: SporeDistribution[]): void {
   const dir = join(DISTRIBUTION_LOG_PATH, "..");

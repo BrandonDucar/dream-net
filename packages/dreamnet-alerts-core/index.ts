@@ -3,8 +3,8 @@
  * Unified alerting system for Slack, Discord, Email, and webhooks
  */
 
-import { AlertSender } from "./logic/alertSender";
-import type { Alert, AlertRule, AlertConfig, AlertSeverity, AlertContext } from "./types";
+import { AlertSender } from './logic/alertSender.js';
+import type { Alert, AlertRule, AlertConfig, AlertSeverity, AlertContext } from './types.js';
 
 class AlertsCore {
   private sender: AlertSender;
@@ -137,6 +137,6 @@ export function createAlertsCore(config: AlertConfig): AlertsCore {
   return new AlertsCore(config);
 }
 
-export * from "./types";
+export * from './types.js';
 export default AlertsCore;
 

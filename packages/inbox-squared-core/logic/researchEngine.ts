@@ -3,7 +3,7 @@
  * Gathers 3-5 recent, credible facts about recipient or company
  */
 
-import type { RecipientResearch, ResearchFact } from '../types';
+import type { RecipientResearch, ResearchFact } from '../types.js';
 
 export class ResearchEngine {
   private cache: Map<string, RecipientResearch> = new Map();

@@ -1,29 +1,32 @@
 {
-  "name": "@dreamnet/dreamnet-agent-client",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./dreamnet-agent.ts",
-  "types": "./dreamnet-agent.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name": "@dreamnet/dreamnet-agent-client",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "./dist/dreamnet-agent.js",
+    "types": "./dist/dreamnet-agent.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3"
+    },
+    "exports": {
+        ".": {
+            "source": "./dreamnet-agent.ts",
+            "import": "./dist/dreamnet-agent.js",
+            "require": "./dist/dreamnet-agent.js",
+            "default": "./dist/dreamnet-agent.js"
+        },
+        "./*": {
+            "source": "./*.ts",
+            "import": "./*.ts",
+            "default": "./*.ts"
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

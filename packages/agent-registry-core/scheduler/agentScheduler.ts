@@ -1,6 +1,6 @@
-import type { AgentRegistryContext, AgentRegistryStatus } from "../types";
-import { AgentStore } from "../store/agentStore";
-import { ensureDefaultAgentsSeeded, refreshAgentScores } from "../logic/healthUpdater";
+import type { AgentRegistryContext, AgentRegistryStatus } from '../types.js';
+import { AgentStore } from '../store/agentStore.js';
+import { ensureDefaultAgentsSeeded, refreshAgentScores } from '../logic/healthUpdater.js';
 
 export function runAgentRegistryCycle(ctx: AgentRegistryContext): AgentRegistryStatus {
   const now = Date.now();

@@ -12,8 +12,8 @@ import type {
   WormholePacketEnvelope,
   WormholeResult,
   WormholeStats
-} from './types';
-import type { DreamPacket } from '../../internal-ports/src/index.ts';
+} from'./types.js';
+import type { DreamPacket } from '@dreamnet/internal-ports';
 
 /**
  * In-memory wormhole registry
@@ -65,10 +65,10 @@ export function registerWormhole(endpoint: WormholeEndpoint): void {
   if (wormholeRegistry.has(endpoint.id)) {
     throw new Error(`Wormhole with ID "${endpoint.id}" is already registered`);
   }
-  
+
   wormholeRegistry.set(endpoint.id, endpoint);
   wormholeBuffers.set(endpoint.id, []);
-  
+
   if (wormholeConfig.enableMetrics) {
     wormholeStats.set(endpoint.id, {
       buffered: 0,
@@ -135,33 +135,33 @@ export function enqueueToWormhole(id: WormholeId, packet: DreamPacket): Wormhole
   if (!wormhole) {
     return { ok: false, reason: `Wormhole not found: ${id}` };
   }
-  
+
   // Check direction
   if (wormhole.direction === 'in') {
     return { ok: false, reason: `Wormhole "${id}" is input-only, cannot enqueue` };
   }
-  
+
   // Get or create buffer
   let buffer = wormholeBuffers.get(id);
   if (!buffer) {
     buffer = [];
     wormholeBuffers.set(id, buffer);
   }
-  
+
   // Create envelope
   const envelope: WormholePacketEnvelope = {
     wormholeId: id,
     packet,
     createdAt: Date.now()
   };
-  
+
   // Check buffer limit
   if (buffer.length >= wormholeConfig.bufferLimit) {
     if (wormholeConfig.dropPolicy === 'drop-oldest') {
       // Remove oldest packet
       buffer.shift();
       buffer.push(envelope);
-      
+
       // Update stats
       if (wormholeConfig.enableMetrics) {
         const stats = wormholeStats.get(id);
@@ -171,7 +171,7 @@ export function enqueueToWormhole(id: WormholeId, packet: DreamPacket): Wormhole
           stats.buffered = buffer.length;
         }
       }
-      
+
       return { ok: true };
     } else {
       // drop-newest: reject new packet
@@ -181,14 +181,14 @@ export function enqueueToWormhole(id: WormholeId, packet: DreamPacket): Wormhole
           stats.dropped++;
         }
       }
-      
+
       return { ok: false, reason: 'Buffer full, drop-newest policy' };
     }
   }
-  
+
   // Add to buffer
   buffer.push(envelope);
-  
+
   // Update stats
   if (wormholeConfig.enableMetrics) {
     const stats = wormholeStats.get(id);
@@ -197,7 +197,7 @@ export function enqueueToWormhole(id: WormholeId, packet: DreamPacket): Wormhole
       stats.buffered = buffer.length;
     }
   }
-  
+
   return { ok: true };
 }
 
@@ -236,11 +236,11 @@ export function clearWormholeBuffer(id: WormholeId): void {
  */
 export function getWormholeStats(): Record<string, WormholeStats> {
   const stats: Record<string, WormholeStats> = {};
-  
+
   for (const [id, stat] of wormholeStats.entries()) {
     stats[id] = { ...stat };
   }
-  
+
   return stats;
 }
 

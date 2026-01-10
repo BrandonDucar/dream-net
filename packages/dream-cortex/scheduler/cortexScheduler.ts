@@ -1,6 +1,6 @@
-import type { CortexContext, CortexStatus, CortexDirective } from "../types";
-import { DreamRegistry } from "../store/dreamRegistry";
-import { synthesizeDirectives } from "../logic/intentSynthesizer";
+import type { CortexContext, CortexStatus, CortexDirective } from '../types.js';
+import { DreamRegistry } from '../store/dreamRegistry.js';
+import { synthesizeDirectives } from '../logic/intentSynthesizer.js';
 
 let lastRunAt: number | null = null;
 let lastDirectives: CortexDirective[] = [];

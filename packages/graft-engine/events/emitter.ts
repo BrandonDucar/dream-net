@@ -1,5 +1,5 @@
 import EventEmitter from "eventemitter3";
-import type { GraftModel } from "../types";
+import type { GraftModel } from '../types.js';
 
 type EventMap = {
   "graft:registered": [GraftModel];

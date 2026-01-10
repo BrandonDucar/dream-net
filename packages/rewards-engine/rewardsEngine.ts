@@ -1,7 +1,7 @@
-import { getUserBalance, setUserBalance, recordRewardEvent, listRewardEvents } from "./store";
-import { defaultConfig } from "./config";
+import { getUserBalance, setUserBalance, recordRewardEvent, listRewardEvents } from './store.js';
+import { defaultConfig } from './config.js';
 import { randomUUID } from "node:crypto";
-import type { UserBalances, RewardEvent, RewardType } from "./types";
+import type { UserBalances, RewardEvent, RewardType } from './types.js';
 
 export function calculateDailyReward(streakDays: number = 0): { dream: number; sheep: number } {
   const baseDream = defaultConfig.dailyBaseDream;
@@ -137,6 +137,26 @@ export async function grantReward(
       deltaSheep = 50;
       break;
 
+    case "privacy-trail":
+      deltaDream = 1;
+      deltaSheep = 5;
+      break;
+
+    case "data-integrity":
+      deltaDream = 10;
+      deltaSheep = 20;
+      break;
+
+    case "discovery-app":
+      deltaDream = 5;
+      deltaSheep = 50; // Higher sheep reward for discovery
+      break;
+
+    case "deployment-success":
+      deltaDream = 50; // High energy for successful sprawl
+      deltaSheep = 500; // Large sheep reward for deployment
+      break;
+
     case "admin-adjust":
       deltaDream = options?.deltaDream ?? 0;
       deltaSheep = options?.deltaSheep ?? 0;
@@ -180,5 +200,5 @@ export async function grantReward(
 }
 
 // Re-export for convenience
-export { listRewardEvents, getUserBalance } from "./store";
+export { listRewardEvents, getUserBalance } from './store.js';
 

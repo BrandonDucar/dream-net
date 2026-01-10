@@ -3,9 +3,9 @@
  * Agent to manage Vercel deployments and clean up old projects
  */
 
-import { initializeVercel, listProjects, getProject } from "./logic/vercelClient";
-import { analyzeCleanup, executeCleanup, executeCleanupAction } from "./logic/cleanupAgent";
-import type { VercelAgentStatus, CleanupAction, VercelProject } from "./types";
+import { initializeVercel, listProjects, getProject } from './logic/vercelClient.js';
+import { analyzeCleanup, executeCleanup, executeCleanupAction } from './logic/cleanupAgent.js';
+import type { VercelAgentStatus, CleanupAction, VercelProject } from './types.js';
 
 export const DreamNetVercelAgent = {
   /**
@@ -73,7 +73,7 @@ export const DreamNetVercelAgent = {
   },
 };
 
-export * from "./types";
-export * from "./summary";
+export * from './types.js';
+export * from './summary.js';
 export default DreamNetVercelAgent;
 

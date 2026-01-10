@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { load } from "js-yaml";
 import { z } from "zod";
-import type { PolicyTable, PolicyRule, ActorContext, CapabilityType, ScopeType } from "./types";
+import type { PolicyTable, PolicyRule, ActorContext, CapabilityType, ScopeType } from './types.js';
 
 const PolicyRuleSchema = z.object({
   actor: z.enum(["agent", "wallet", "system", "admin"]),

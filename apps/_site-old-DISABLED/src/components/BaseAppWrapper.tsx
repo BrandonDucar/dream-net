@@ -4,7 +4,7 @@
  */
 
 import { useEffect, ReactNode } from "react";
-import { isBaseApp, getBaseAppContext, trackBaseAppEvent } from "../lib/base-app";
+import { isBaseApp, getBaseAppContext, trackBaseAppEvent } from '../lib/base-app.js';
 
 interface BaseAppWrapperProps {
   children: ReactNode;

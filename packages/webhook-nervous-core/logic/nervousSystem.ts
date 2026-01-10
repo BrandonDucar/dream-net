@@ -3,7 +3,7 @@
  * Central coordination like a biological nervous system
  */
 
-import type { WebhookNeuron, WebhookSynapse, ReflexArc, WebhookEvent } from "../types";
+import type { WebhookNeuron, WebhookSynapse, ReflexArc, WebhookEvent, WebhookMemory } from '../types.js';
 
 let neurons: Map<string, WebhookNeuron> = new Map();
 let synapses: Map<string, WebhookSynapse> = new Map();
@@ -218,10 +218,11 @@ function strengthenSynapses(neuronId: string, success: boolean) {
  * Add memory to neuron (pattern recognition)
  */
 function addMemory(neuron: WebhookNeuron, pattern: any, success: boolean) {
-  const memory = {
+  const memory: WebhookMemory = {
     id: `memory:${Date.now()}`,
     pattern: JSON.stringify(pattern),
-    response: success,
+    response: success, // Keep success as response for now if that was intended
+    success,
     timestamp: Date.now(),
     strength: 1.0,
   };
@@ -361,13 +362,13 @@ export function healNeurons() {
     if (neuron.status === "damaged" || neuron.status === "healing") {
       // Gradually heal
       neuron.health = Math.min(100, neuron.health + 1);
-      
+
       if (neuron.health >= 80) {
         neuron.status = "active";
       } else if (neuron.health >= 50) {
         neuron.status = "healing";
       }
-      
+
       neuron.updatedAt = now;
     }
   }

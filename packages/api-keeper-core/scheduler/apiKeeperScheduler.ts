@@ -1,8 +1,8 @@
-import { APIKeeperContext, APIKeeperStatus } from "../types";
-import { APIStore } from "../store/apiStore";
-import { discoverAPIs } from "../logic/apiDiscoverer";
-import { ensureDefaultRailGuards } from "../logic/railGuards";
-import { autoDiscoverAllKeys } from "../logic/keyAutoDiscoverer";
+import { APIKeeperContext, APIKeeperStatus } from '../types.js';
+import { APIStore } from '../store/apiStore.js';
+import { discoverAPIs } from '../logic/apiDiscoverer.js';
+import { ensureDefaultRailGuards } from '../logic/railGuards.js';
+import { autoDiscoverAllKeys } from '../logic/keyAutoDiscoverer.js';
 
 /**
  * Run API Keeper cycle

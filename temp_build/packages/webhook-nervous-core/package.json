@@ -1,0 +1,25 @@
+{
+  "name": "@dreamnet/webhook-nervous-core",
+  "version": "0.1.0",
+  "description": "Biomimetic webhook management system - zero-touch webhook orchestration",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webhook",
+    "biomimetic",
+    "nervous-system",
+    "immune-system",
+    "mycelium",
+    "ant-colony",
+    "zero-touch"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/shared": "workspace:*"
+  }
+}

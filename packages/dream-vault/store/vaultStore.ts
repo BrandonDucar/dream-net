@@ -2,7 +2,7 @@ import type {
   VaultItem,
   VaultIndexEntry,
   VaultStatus,
-} from "../types";
+} from '../types.js';
 
 const items: Map<string, VaultItem> = new Map();
 const index: Map<string, VaultIndexEntry> = new Map();

@@ -5,9 +5,9 @@ import type {
   CortexContext,
   CortexStatus,
   CortexDirective,
-} from "./types";
-import { DreamRegistry } from "./store/dreamRegistry";
-import { runCortexCycle, cortexStatus } from "./scheduler/cortexScheduler";
+} from './types.js';
+import { DreamRegistry } from './store/dreamRegistry.js';
+import { runCortexCycle, cortexStatus } from './scheduler/cortexScheduler.js';
 
 export const DreamCortex = {
   upsertDream(dream: Partial<DreamNode> & { id: string; name: string }) {
@@ -35,7 +35,7 @@ export const DreamCortex = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export { DreamRegistry };
 export default DreamCortex;
 

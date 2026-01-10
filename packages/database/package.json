@@ -1,0 +1,29 @@
+{
+    "name": "@dreamnet/database",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": "./dist/index.js",
+        "./*": "./dist/*.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@dreamnet/shared": "workspace:*",
+        "drizzle-orm": "^0.44.7",
+        "pg": "^8.11.3",
+        "@neondatabase/serverless": "^0.6.1",
+        "ws": "^8.16.0"
+    },
+    "devDependencies": {
+        "@types/pg": "^8.10.9",
+        "@types/ws": "^8.5.10",
+        "typescript": "^5.3.3"
+    }
+}

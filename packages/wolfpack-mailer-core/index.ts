@@ -1,7 +1,7 @@
-import { MailerConfig, MailSendResult } from "./types";
-import { createMailerFromEnv, sendMail } from "./logic/mailer";
-import { processSendQueueOnce } from "./logic/sendLoop";
-import * as rateLimiter from "./logic/rateLimiter";
+import { MailerConfig, MailSendResult } from './types.js';
+import { createMailerFromEnv, sendMail } from './logic/mailer.js';
+import { processSendQueueOnce } from './logic/sendLoop.js';
+import * as rateLimiter from './logic/rateLimiter.js';
 
 export const WolfPackMailerCore = {
   createMailerFromEnv,
@@ -11,6 +11,6 @@ export const WolfPackMailerCore = {
   rateLimiter,
 };
 
-export * from "./types";
+export * from './types.js';
 export default WolfPackMailerCore;
 

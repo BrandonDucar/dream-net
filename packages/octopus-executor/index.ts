@@ -3,9 +3,9 @@ import type {
   OctopusTask,
   OctopusContext,
   OctopusRuntimeStatus,
-} from "./types";
-import { enqueueTask } from "./engine/octopusEngine";
-import { runOctopusScheduler, octopusStatus, ensureOctopusInitialized } from "./scheduler/octopusScheduler";
+} from './types.js';
+import { enqueueTask } from './engine/octopusEngine.js';
+import { runOctopusScheduler, octopusStatus, ensureOctopusInitialized } from './scheduler/octopusScheduler.js';
 
 export const OctopusExecutor = {
   async init() {
@@ -25,6 +25,6 @@ export const OctopusExecutor = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default OctopusExecutor;
 

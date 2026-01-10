@@ -1,4 +1,4 @@
-import type { DreamNetOSStatus, DreamNetOSSnapshot, DreamNetVersionInfo, GlobalHealthScores } from "../types";
+import type { DreamNetOSStatus, DreamNetOSSnapshot, DreamNetVersionInfo, GlobalHealthScores } from '../types.js';
 
 let lastRunAt: number | null = null;
 let lastSnapshot: DreamNetOSSnapshot | null = null;

@@ -1,12 +1,21 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "./dist",
-    "rootDir": "."
-  },
-  "include": ["./**/*"],
-  "references": [
-    { "path": "../../packages/utils" }
-  ]
+    "extends":  "../../tsconfig.json",
+    "compilerOptions":  {
+                            "composite":  true,
+                            "outDir":  "./dist",
+                            "rootDir":  ".",
+                            "types":  [
+                                          "node"
+                                      ],
+                            "skipLibCheck": true
+                        },
+    "include":  [
+                    "./**/*"
+                ],
+    "references":  [
+                       {
+                           "path":  "../../packages/utils"
+                       }
+                   ]
 }
+

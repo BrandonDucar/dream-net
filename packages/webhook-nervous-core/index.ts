@@ -9,7 +9,7 @@ import type {
   ReflexArc,
   WebhookEvent,
   NervousSystemStatus,
-} from "./types";
+} from './types.js';
 
 // Nervous System
 import {
@@ -23,7 +23,7 @@ import {
   getReflexArcs,
   getNeuron,
   healNeurons,
-} from "./logic/nervousSystem";
+} from './logic/nervousSystem.js';
 
 // Immune System
 import {
@@ -34,7 +34,7 @@ import {
   getAntibodies,
   getMemoryCells,
   decayMemoryCells,
-} from "./logic/immuneSystem";
+} from './logic/immuneSystem.js';
 
 // Mycelium Network
 import {
@@ -46,7 +46,7 @@ import {
   getHyphae,
   getMycelia,
   updateHyphaLoad,
-} from "./logic/myceliumNetwork";
+} from './logic/myceliumNetwork.js';
 
 // Ant Colony
 import {
@@ -60,13 +60,13 @@ import {
   getActiveAnts,
   getStuckAnts,
   markAntStuck,
-} from "./logic/antColony";
+} from './logic/antColony.js';
 
 // Auto-Discovery
 import {
   autoDiscoverAllWebhooks,
   autoCreateDefaultAntibodies,
-} from "./logic/webhookAutoDiscoverer";
+} from './logic/webhookAutoDiscoverer.js';
 
 export const WebhookNervousCore = {
   // ===== NERVOUS SYSTEM =====
@@ -156,7 +156,7 @@ export const WebhookNervousCore = {
     };
 
     const myceliumStats = {
-      networks: mycelia.size,
+      networks: mycelia.length,
       totalHyphae: hyphae.length,
       healthyPaths: hyphae.filter((h) => h.health > 80).length,
       alternativePaths: hyphae.reduce((sum, h) => sum + h.alternativePaths.length, 0),
@@ -220,6 +220,6 @@ export const WebhookNervousCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default WebhookNervousCore;
 

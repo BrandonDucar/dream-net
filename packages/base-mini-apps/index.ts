@@ -2,9 +2,9 @@ import {
   BaseMiniApp,
   MiniAppManifest,
   MiniAppCategory,
-} from "./types";
-import { MiniAppStore } from "./store/miniAppStore";
-import { createMiniApp, deployMiniApp, createDefaultMiniApps } from "./logic/miniAppFactory";
+} from './types.js';
+import { MiniAppStore } from './store/miniAppStore.js';
+import { createMiniApp, deployMiniApp, createDefaultMiniApps } from './logic/miniAppFactory.js';
 
 export const BaseMiniApps = {
   // Factory
@@ -67,6 +67,6 @@ export const BaseMiniApps = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default BaseMiniApps;
 

@@ -1,0 +1,15 @@
+{
+  "id": "aaf9a907-9fa7-4a43-9df3-2fbe756d05df",
+  "timestamp": "2025-12-20T17:15:37.284Z",
+  "actor": {
+    "id": "Foreman_Dave",
+    "role": "field"
+  },
+  "delta": {
+    "scope": "Unknown",
+    "type": "modify",
+    "description": "Drywall blocked by plumbing"
+  },
+  "confidence": 0.9,
+  "impact": []
+}

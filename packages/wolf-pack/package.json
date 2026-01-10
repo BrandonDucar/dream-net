@@ -1,22 +1,37 @@
 {
-  "name": "@dreamnet/wolf-pack",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "private": true,
-  "dependencies": {
-    "@dreamnet/utils": "workspace:*",
-    "@dreamnet/halo-loop": "workspace:*",
-    "@dreamnet/neural-mesh": "workspace:*",
-    "@dreamnet/quantum-anticipation": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0"
-  }
+    "name":  "@dreamnet/wolf-pack",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "private":  true,
+    "dependencies":  {
+                         "@dreamnet/halo-loop":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/neural-mesh":  "workspace:*",
+                         "@dreamnet/quantum-anticipation":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/utils":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.0.0"
+                        }
 }
-

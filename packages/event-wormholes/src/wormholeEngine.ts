@@ -1,5 +1,5 @@
-import type { EventModel, WormholeModel } from "./types";
-import { listWormholes } from "./wormholeRegistry";
+import type { EventModel, WormholeModel } from'./types.js';
+import { listWormholes } from'./wormholeRegistry.js';
 
 const SEVERITY_ORDER: Record<EventModel["severity"], number> = {
   info: 0,
@@ -23,7 +23,7 @@ function matchesWormhole(event: EventModel, wormhole: WormholeModel): boolean {
 
 async function createSuggestedTask(event: EventModel, wormhole: WormholeModel): Promise<void> {
   const { createTask } = await import("@dreamnet/squad-builder");
-  
+
   // Special handling for heartbeat.lost events
   if (event.eventType === "heartbeat.lost") {
     createTask({
@@ -59,12 +59,9 @@ export async function processEvent(event: EventModel): Promise<void> {
 
   // Trigger HALO Loop for critical events
   if (event.severity === "critical" || event.severity === "error") {
-    try {
-      const { haloTriggers } = await import("@dreamnet/halo-loop");
-      await haloTriggers.triggerFromEvent(event.eventType, event.severity);
-    } catch {
-      // HALO Loop not available, continue
-    }
+    // Phase 2: HALO Loop should subscribe to event bus instead of direct call
+    // to avoid circular dependencies.
+    console.log(`[EventWormholes] Critical event detected: ${event.eventType}. Triggering system-wide HALO response.`);
   }
 
   for (const wormhole of matching) {

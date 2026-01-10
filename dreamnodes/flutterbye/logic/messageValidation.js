@@ -1,4 +1,9 @@
-export function validateMessage(content, tokenAmount) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateMessage = validateMessage;
+exports.sanitizeMessage = sanitizeMessage;
+exports.analyzeMessageSentiment = analyzeMessageSentiment;
+function validateMessage(content, tokenAmount) {
     const errors = [];
     const warnings = [];
     // Content validation
@@ -58,7 +63,7 @@ export function validateMessage(content, tokenAmount) {
         warnings
     };
 }
-export function sanitizeMessage(content) {
+function sanitizeMessage(content) {
     // Remove potentially dangerous characters
     return content
         .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
@@ -66,7 +71,7 @@ export function sanitizeMessage(content) {
         .replace(/on\w+\s*=/gi, '')
         .trim();
 }
-export function analyzeMessageSentiment(content) {
+function analyzeMessageSentiment(content) {
     const positiveWords = ['thank', 'great', 'awesome', 'love', 'amazing', 'excellent'];
     const negativeWords = ['bad', 'terrible', 'awful', 'hate', 'worst', 'horrible'];
     const words = content.toLowerCase().split(/\s+/);

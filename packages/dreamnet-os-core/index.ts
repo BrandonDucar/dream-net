@@ -5,9 +5,9 @@ import type {
   DreamNetOSSnapshot,
   DreamNetOSContext,
   DreamNetOSStatus,
-} from "./types";
-import { OSStore } from "./store/osStore";
-import { runDreamNetOSCycle } from "./scheduler/osScheduler";
+} from './types.js';
+import { OSStore } from './store/osStore.js';
+import { runDreamNetOSCycle } from './scheduler/osScheduler.js';
 import {
   getActiveAlerts,
   getRecentAlerts,
@@ -15,13 +15,13 @@ import {
   getHealthStats,
   detectTrends,
   resolveAlert,
-} from "./logic/heartbeatAlerts";
-import { generateRecoveryActions } from "./logic/autoRecovery";
+} from './logic/heartbeatAlerts.js';
+import { generateRecoveryActions } from './logic/autoRecovery.js';
 import {
   detectIntegrationGaps,
   autoFixIntegrationGaps,
   getIntegrationGaps,
-} from "./logic/autoIntegration";
+} from './logic/autoIntegration.js';
 
 export const DreamNetOSCore = {
   run(context: DreamNetOSContext): DreamNetOSStatus {
@@ -53,9 +53,11 @@ export const DreamNetOSCore = {
   getIntegrationGaps,
 };
 
-export * from "./types";
-export * from "./logic/heartbeatAlerts";
-export * from "./logic/autoRecovery";
-export * from "./logic/autoIntegration";
+export * from './types.js';
+export * from './src/bio-core.js';
+export * from './logic/heartbeatAlerts.js';
+export * from './logic/autoRecovery.js';
+export * from './logic/autoIntegration.js';
+export * from './logic/alertNotifier.js';
 export default DreamNetOSCore;
 

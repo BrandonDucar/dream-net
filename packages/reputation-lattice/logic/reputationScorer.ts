@@ -3,8 +3,8 @@ import type {
   ReputationScore,
   ReputationConfig,
   RepEntityType,
-} from "../types";
-import { ReputationStore } from "../store/reputationStore";
+} from '../types.js';
+import { ReputationStore } from '../store/reputationStore.js';
 
 export function recomputeReputation(now: number) {
   const cfg: ReputationConfig = ReputationStore.getConfig();

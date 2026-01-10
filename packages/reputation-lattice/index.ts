@@ -5,9 +5,9 @@ import type {
   ReputationConfig,
   ReputationContext,
   ReputationStatus,
-} from "./types";
-import { ReputationStore } from "./store/reputationStore";
-import { runReputationCycle, reputationStatus } from "./scheduler/reputationScheduler";
+} from './types.js';
+import { ReputationStore } from './store/reputationStore.js';
+import { runReputationCycle, reputationStatus } from './scheduler/reputationScheduler.js';
 
 export const ReputationLattice = {
   configure(config: Partial<ReputationConfig>) {
@@ -31,6 +31,6 @@ export const ReputationLattice = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default ReputationLattice;
 

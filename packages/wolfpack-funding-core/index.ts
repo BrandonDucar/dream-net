@@ -6,11 +6,11 @@ import {
   SendQueueItem,
   WolfPackFundingContext,
   WolfPackFundingStatus,
-} from "./types";
-import { FundingStore } from "./store/fundingStore";
-import { runWolfPackFundingCycle } from "./scheduler/fundingScheduler";
-import { generateEmailDraftForLead } from "./logic/emailDraftEngine";
-import { generateEmailDraftForLeadEnhanced } from "./logic/emailDraftEngineEnhanced";
+} from './types.js';
+import { FundingStore } from './store/fundingStore.js';
+import { runWolfPackFundingCycle } from './scheduler/fundingScheduler.js';
+import { generateEmailDraftForLead } from './logic/emailDraftEngine.js';
+import { generateEmailDraftForLeadEnhanced } from './logic/emailDraftEngineEnhanced.js';
 
 export const WolfPackFundingCore = {
   // Leads
@@ -18,7 +18,7 @@ export const WolfPackFundingCore = {
   // Example: upsertLead(partial, identityId?: string)
   upsertLead(partial: Partial<FundingLead> & { id: string; name: string; type: LeadType }): FundingLead {
     // TODO: When identityId is provided, validate agent ownership via IdentityGrid
-    // import { identityControlsAgent } from "@shared/identity";
+    // import { identityControlsAgent } from "@dreamnet/shared/identity";
     // if (identityId && !identityControlsAgent(identityId, "agent:WolfPackFunding")) {
     //   throw new Error("Identity does not control WolfPackFunding agent");
     // }
@@ -95,10 +95,10 @@ export const WolfPackFundingCore = {
   },
 };
 
-export * from "./types";
-export * from "./adapters/fundingStatusAdapter";
-export * from "./logic/grantDraftEngine";
-export * from "./logic/followUpDraftEngine";
-export * from "./logic/emailDraftEngineEnhanced";
+export * from './types.js';
+export * from './adapters/fundingStatusAdapter.js';
+export * from './logic/grantDraftEngine.js';
+export * from './logic/followUpDraftEngine.js';
+export * from './logic/emailDraftEngineEnhanced.js';
 export default WolfPackFundingCore;
 

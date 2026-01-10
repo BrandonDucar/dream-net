@@ -4,9 +4,9 @@ import type {
   SquadMember,
   SquadAlchemyContext,
   SquadAlchemyDecision,
-} from "./types";
-import { SquadRegistry } from "./registry/squadRegistry";
-import { runSquadAlchemyCycle } from "./engine/squadAlchemy";
+} from './types.js';
+import { SquadRegistry } from './registry/squadRegistry.js';
+import { runSquadAlchemyCycle } from './engine/squadAlchemy.js';
 
 export const SquadAlchemy = {
   registerSquad(squad: Squad) {
@@ -30,8 +30,8 @@ export const SquadAlchemy = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export { SquadRegistry };
-export { syncSquadBuilderSquads } from "./bridge/squadBuilderBridge";
+export { syncSquadBuilderSquads } from './bridge/squadBuilderBridge.js';
 export default SquadAlchemy;
 

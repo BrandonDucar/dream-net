@@ -1,4 +1,4 @@
-import type { SlugMetricSample, SlugMetricSnapshot, SlugTimeConfig } from "../types";
+import type { SlugMetricSample, SlugMetricSnapshot, SlugTimeConfig } from '../types.js';
 
 const samplesByKey: Map<string, SlugMetricSample[]> = new Map();
 const snapshotsByKey: Map<string, SlugMetricSnapshot> = new Map();

@@ -18,6 +18,7 @@ export type LeadStage =
 export interface FundingLead {
   id: string;             // lead id, e.g. "lead:a16z-crypto"
   name: string;           // "a16z Crypto", "Base Ecosystem Fund", etc.
+  company?: string;
   type: LeadType;
   email?: string;
   website?: string;

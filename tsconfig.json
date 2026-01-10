@@ -1,17 +1,58 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "incremental": true,
-    "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
-    "noEmit": true,
-    "jsx": "preserve",
-    "types": ["node", "vite/client"]
-  },
-  "include": [
-    "shared/**/*",
-    "server/**/*",
-    "apps/**/*",
-    "packages/**/*"
-  ],
-  "exclude": ["node_modules", "build", "dist", "**/*.test.ts"]
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "incremental": true,
+        "tsBuildInfoFile": "./node_modules/typescript/tsbuildinfo",
+        "noEmit": true,
+        "jsx": "preserve",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "files": [],
+    "references": [
+        {
+            "path": "./packages/shared"
+        },
+        {
+            "path": "./packages/halo-loop"
+        },
+        {
+            "path": "./packages/shield-core"
+        },
+        {
+            "path": "./packages/memory-dna"
+        },
+        {
+            "path": "./packages/wolf-pack"
+        },
+        {
+            "path": "./packages/star-bridge-lungs"
+        },
+        {
+            "path": "./packages/dreamnet-control-core"
+        },
+        {
+            "path": "./packages/internal-ports"
+        },
+        {
+            "path": "./packages/internal-router"
+        },
+        {
+            "path": "./packages/event-wormholes"
+        },
+        {
+            "path": "./packages/jaggy-core"
+        },
+        {
+            "path": "./packages/dream-state-core"
+        },
+        {
+            "path": "./packages/base-mini-apps"
+        },
+        {
+            "path": "./packages/nerve"
+        }
+    ]
 }

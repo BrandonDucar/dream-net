@@ -1,5 +1,5 @@
-import type { ChainBreathMetrics } from "../types";
-import { createGenericChainMetrics } from "./genericAdapter";
+import type { ChainBreathMetrics } from '../types.js';
+import { createGenericChainMetrics } from './genericAdapter.js';
 
 export function getBaseMetrics(): ChainBreathMetrics {
   // Placeholder: specialize later with real Base telemetry

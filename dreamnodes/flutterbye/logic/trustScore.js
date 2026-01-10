@@ -1,8 +1,12 @@
-import { getWalletData } from '../../../shared/wallet';
-import { FLUTTERBY_NODE } from '../node.config';
-export async function validateTrustScore(walletAddress) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateTrustScore = validateTrustScore;
+exports.calculateMessageTrustImpact = calculateMessageTrustImpact;
+const wallet_1 = require("../../../shared/wallet");
+const node_config_1 = require("../node.config");
+async function validateTrustScore(walletAddress) {
     try {
-        const walletData = getWalletData(walletAddress);
+        const walletData = (0, wallet_1.getWalletData)(walletAddress);
         if (!walletData) {
             return {
                 valid: false,
@@ -35,7 +39,7 @@ export async function validateTrustScore(walletAddress) {
         }
         const finalScore = Math.max(0, Math.min(100, adjustedScore));
         return {
-            valid: finalScore >= FLUTTERBY_NODE.trustBoundary,
+            valid: finalScore >= node_config_1.FLUTTERBY_NODE.trustBoundary,
             score: finalScore,
             level: getTrustLevel(finalScore),
             reasons
@@ -65,7 +69,7 @@ function getTrustLevel(score) {
         return 'Novice';
     return 'Unverified';
 }
-export function calculateMessageTrustImpact(messageContent, tokenAmount, recipientTrust) {
+function calculateMessageTrustImpact(messageContent, tokenAmount, recipientTrust) {
     let impact = 0;
     // Positive content analysis (simplified)
     if (messageContent.includes('thank') || messageContent.includes('great')) {

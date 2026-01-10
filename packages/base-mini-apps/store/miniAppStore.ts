@@ -1,4 +1,4 @@
-import { BaseMiniApp, MiniAppManifest } from "../types";
+import { BaseMiniApp, MiniAppManifest } from '../types.js';
 
 const miniApps: Map<string, BaseMiniApp> = new Map();
 const manifests: Map<string, MiniAppManifest> = new Map();

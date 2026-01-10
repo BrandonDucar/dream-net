@@ -3,48 +3,19 @@
  * Biomimetic: Converts operational events into Spider Web threads (nervous system)
  */
 
-import { SpiderWebCore } from "../../spider-web-core";
-import type { SignalThread, Fly, FlyType, FlyPriority, ThreadPriority } from "../../spider-web-core/types";
-
-export type OperationalEventType =
-  | "health_check_failed"
-  | "health_check_recovered"
-  | "incident_created"
-  | "incident_resolved"
-  | "audit_event"
-  | "rate_limit_exceeded"
-  | "rate_limit_reset"
-  | "circuit_breaker_tripped"
-  | "circuit_breaker_reset"
-  | "cost_threshold_exceeded"
-  | "cost_budget_alert"
-  | "auto_scaling_decision"
-  | "auto_scaling_applied"
-  | "scheduled_task_executed"
-  | "scheduled_task_failed"
-  | "kill_switch_enabled"
-  | "kill_switch_disabled"
-  | "cluster_enabled"
-  | "cluster_disabled";
-
-export interface OperationalEvent {
-  type: OperationalEventType;
-  clusterId?: string;
-  severity: "low" | "medium" | "high" | "critical";
-  message: string;
-  metadata?: Record<string, any>;
-  timestamp: number;
-}
+import { SpiderWebCore } from "@dreamnet/spider-web-core";
+import { type SignalThread, type Fly, type FlyType, type FlyPriority, type ThreadPriority } from "@dreamnet/spider-web-core";
+import { type OperationalEvent, type OperationalEventType } from '../types.js';
 
 /**
  * Convert operational event to Spider Web Fly
  */
 export function operationalEventToFly(event: OperationalEvent): Fly {
   const flyType: FlyType = event.severity === "critical" ? "alert" : "metric";
-  const priority: FlyPriority = 
+  const priority: FlyPriority =
     event.severity === "critical" ? "high" :
-    event.severity === "high" ? "medium" :
-    "low";
+      event.severity === "high" ? "medium" :
+        "low";
 
   return SpiderWebCore.createFly(
     flyType,
@@ -66,11 +37,11 @@ export function operationalEventToFly(event: OperationalEvent): Fly {
  * Convert operational event directly to Spider Web Thread
  */
 export function operationalEventToThread(event: OperationalEvent): SignalThread {
-  const threadPriority: ThreadPriority = 
+  const threadPriority: ThreadPriority =
     event.severity === "critical" ? "critical" :
-    event.severity === "high" ? "high" :
-    event.severity === "medium" ? "medium" :
-    "low";
+      event.severity === "high" ? "high" :
+        event.severity === "medium" ? "medium" :
+          "low";
 
   const threadKind = getThreadKindForEvent(event.type);
 
@@ -134,6 +105,7 @@ function getThreadKindForEvent(eventType: OperationalEventType): SignalThread["k
     case "kill_switch_disabled":
     case "cluster_enabled":
     case "cluster_disabled":
+    case "agent_minted":
       return "control";
     default:
       return "signal";
@@ -260,14 +232,14 @@ function getExecutionPlanForEvent(event: OperationalEvent): SignalThread["execut
 export function bridgeToSpiderWeb(event: OperationalEvent): SignalThread {
   // Create thread from event
   const thread = operationalEventToThread(event);
-  
+
   // Add thread to Spider Web
   SpiderWebCore.addThread(thread);
-  
+
   // Also create fly for pattern learning
   const fly = operationalEventToFly(event);
   SpiderWebCore.catchFly(fly);
-  
+
   // Auto-record in Dream Snail (if available) - async import
   import("@dreamnet/dreamnet-snail-core/logic/autoRecord")
     .then(({ autoRecordOperationalEvent }) => {
@@ -281,14 +253,14 @@ export function bridgeToSpiderWeb(event: OperationalEvent): SignalThread {
   // Route to Voice (Twilio SMS) - Phase 2 - One Mouth
   import("@dreamnet/dreamnet-voice-twilio")
     .then(({ DreamNetVoiceTwilio }) => {
-      DreamNetVoiceTwilio.routeEvent(event).catch((err) => {
-        console.warn("[SpiderWebBridge] Failed to route event to Voice:", err.message);
+      DreamNetVoiceTwilio.routeEvent(event).catch((err: any) => {
+        console.warn("[SpiderWebBridge] Failed to route event to Voice:", err?.message);
       });
     })
     .catch(() => {
       // Voice not available, skip silently
     });
-  
+
   return thread;
 }
 

@@ -1,0 +1,1 @@
+User confirmed DreamNet full deployment. Pushing repaired scaffold with supported Replit file extensions (.ts, .js, .html). Includes pages, agents, middleware, schema, mesh UI, feed view. Build inspired by Halo + Foundation, running as a digital organism with modular agents, billing, and swarm behaviors.

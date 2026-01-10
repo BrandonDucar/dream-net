@@ -1,4 +1,4 @@
-import type { AliveStatus, AliveSubsystemStatus } from "./types";
+import type { AliveStatus, AliveSubsystemStatus } from './types.js';
 
 const API_BASE = process.env.ALIVE_INTERNAL_URL ?? `http://127.0.0.1:${process.env.PORT ?? 5000}`;
 

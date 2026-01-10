@@ -3,7 +3,7 @@
  * Decentralized webhook routing with pheromone trails
  */
 
-import type { PheromoneTrail, WebhookAnt } from "../types";
+import type { PheromoneTrail, WebhookAnt } from '../types.js';
 
 let pheromoneTrails: Map<string, PheromoneTrail> = new Map();
 let activeAnts: Map<string, WebhookAnt> = new Map();

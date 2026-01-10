@@ -1,0 +1,19 @@
+{
+  "name": "@dreamnet/graft-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "types": "./index.ts"
+    }
+  },
+  "dependencies": {
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/shared": "workspace:*",
+    "eventemitter3": "^5.0.1"
+  }
+}

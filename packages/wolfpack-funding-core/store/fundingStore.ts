@@ -1,4 +1,4 @@
-import { FundingLead, EmailDraft, SendQueueItem, WolfPackFundingStatus, GrantApplicationDraft } from "../types";
+import { FundingLead, EmailDraft, SendQueueItem, WolfPackFundingStatus, GrantApplicationDraft } from '../types.js';
 
 const leads: Map<string, FundingLead> = new Map();
 const emailDrafts: Map<string, EmailDraft> = new Map();

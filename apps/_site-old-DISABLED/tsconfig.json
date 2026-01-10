@@ -1,14 +1,24 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["vite/client"],
-    "baseUrl": ".",
-    "jsx": "react-jsx",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["src"],
-  "exclude": ["dist", "node_modules"]
+    "extends":  "../../tsconfig.base.json",
+    "compilerOptions":  {
+                            "types":  [
+                                          "node"
+                                      ],
+                            "baseUrl":  ".",
+                            "jsx":  "react-jsx",
+                            "paths":  {
+                                          "@/*":  [
+                                                      "./src/*"
+                                                  ]
+                                      },
+                            "skipLibCheck": true
+                        },
+    "include":  [
+                    "src"
+                ],
+    "exclude":  [
+                    "dist",
+                    "node_modules"
+                ]
 }
 

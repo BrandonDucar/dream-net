@@ -1,16 +1,16 @@
 import { randomUUID } from "node:crypto";
-import type { GraftModel, GraftProcessor, GraftValidator, ValidationResult } from "./types";
-import { registerGraft, getGraftById, updateGraftStatus } from "./registry";
-import { EndpointValidator } from "./validators/validatorEndpoint";
-import { AgentValidator } from "./validators/validatorAgent";
-import { UIValidator } from "./validators/validatorUI";
-import { ModuleValidator } from "./validators/validatorModule";
-import { EndpointProcessor } from "./processors/processorEndpoint";
-import { AgentProcessor } from "./processors/processorAgent";
-import { UIProcessor } from "./processors/processorUI";
-import { ModuleProcessor } from "./processors/processorModule";
-import * as graftEvents from "./events/emitter";
-import { updateTraitsFromEvent } from "../memory-dna";
+import type { GraftModel, GraftProcessor, GraftValidator, ValidationResult } from './types.js';
+import { registerGraft, getGraftById, updateGraftStatus } from './registry.js';
+import { EndpointValidator } from './validators/validatorEndpoint.js';
+import { AgentValidator } from './validators/validatorAgent.js';
+import { UIValidator } from './validators/validatorUI.js';
+import { ModuleValidator } from './validators/validatorModule.js';
+import { EndpointProcessor } from './processors/processorEndpoint.js';
+import { AgentProcessor } from './processors/processorAgent.js';
+import { UIProcessor } from './processors/processorUI.js';
+import { ModuleProcessor } from './processors/processorModule.js';
+import * as graftEvents from './events/emitter.js';
+import { updateTraitsFromEvent } from '@dreamnet/memory-dna';
 
 const validators: Record<string, GraftValidator> = {
   endpoint: new EndpointValidator(),
@@ -96,7 +96,7 @@ export async function installGraft(graft: GraftModel): Promise<void> {
     });
     // Emit Event Wormhole event
     try {
-      const { emitEvent } = await import("../event-wormholes");
+      const { emitEvent } = await import('@dreamnet/event-wormholes');
       await emitEvent({
         sourceType: "graft",
         eventType: "graft.install.failed",
@@ -133,10 +133,10 @@ export async function installGraft(graft: GraftModel): Promise<void> {
     status: "installed",
     logs: result.logs,
   };
-  graftEvents.emit("graft:installed", installedPayload);
+  graftEvents.emit("graft:installed", installedPayload as any);
   // Emit Event Wormhole event
   try {
-    const { emitEvent } = await import("../event-wormholes");
+    const { emitEvent } = await import('@dreamnet/event-wormholes');
     await emitEvent({
       sourceType: "graft",
       eventType: "graft.installed",

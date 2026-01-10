@@ -13,7 +13,7 @@ export type {
   RouteEntry,
   RouterConfig,
   RouteResult
-} from './types';
+} from './types.js';
 
 // Export router functions
 export {
@@ -26,7 +26,7 @@ export {
   hasRoute,
   routePacket,
   clearRoutes
-} from './router';
+} from './router.js';
 
 // Export metrics
 export {
@@ -34,12 +34,12 @@ export {
   getRouteStats,
   getRouteCount,
   resetMetrics
-} from './metrics';
+} from './metrics.js';
 
 // Import for default route registration
-import { FIBERS, PORT_IDS } from '../../internal-ports/src/index.ts';
-import { registerRoute, configureRouter } from './router';
-import type { RouteEntry } from './types';
+import { FIBERS, PORT_IDS } from '@dreamnet/internal-ports';
+import { registerRoute, configureRouter } from './router.js';
+import type { RouteEntry } from './types.js';
 
 /**
  * Default port IDs from @dreamnet/internal-ports
@@ -71,7 +71,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'DreamNet Core system events'
   });
-  
+
   // Shield Core routes (FIBER.BETA)
   registerRoute({
     key: {
@@ -83,7 +83,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'Shield Core security events'
   });
-  
+
   // Mesh Core routes (FIBER.GAMMA)
   registerRoute({
     key: {
@@ -95,7 +95,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'Mesh Core network events'
   });
-  
+
   // Event Wormhole routes (FIBER.OMEGA)
   registerRoute({
     key: {
@@ -107,7 +107,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'Event Wormhole cross-system events'
   });
-  
+
   // TravelNet Core routes (FIBER.GAMMA)
   registerRoute({
     key: {
@@ -119,7 +119,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'TravelNet Core event route'
   });
-  
+
   // MILNET Core routes (FIBER.BETA)
   registerRoute({
     key: {
@@ -131,7 +131,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'MILNET Core event route'
   });
-  
+
   // OTTNET Core routes (FIBER.GAMMA)
   registerRoute({
     key: {
@@ -143,7 +143,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'OTTNET Core event route'
   });
-  
+
   // METALNET Core routes (FIBER.ALPHA)
   registerRoute({
     key: {
@@ -155,7 +155,7 @@ function registerDefaultRoutes(): void {
     },
     description: 'METALNET Core event route'
   });
-  
+
   console.log('[Laser Router] Default routes registered');
 }
 
@@ -168,7 +168,7 @@ function configureDefaultRouter(): void {
     allowFallback: true,
     strict: false
   });
-  
+
   console.log('[Laser Router] Router configured with defaults');
 }
 

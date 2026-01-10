@@ -3,8 +3,8 @@
  * Tracks API costs and spending
  */
 
-import type { CostRecord, CostSummary, CostAlert, CostBudget } from "../types";
-import { bridgeCostAlertToEconomicEngine } from "@dreamnet/cost-economic-bridge";
+import type { CostRecord, CostSummary, CostAlert, CostBudget } from '../types.js';
+// import { bridgeCostAlertToEconomicEngine } from "@dreamnet/cost-economic-bridge";
 
 class CostStore {
   private records: CostRecord[] = [];
@@ -14,7 +14,7 @@ class CostStore {
 
   recordCost(record: CostRecord): void {
     this.records.push(record);
-    
+
     // Keep only recent records
     if (this.records.length > this.maxRecords) {
       this.records = this.records.slice(-this.maxRecords);
@@ -126,12 +126,12 @@ class CostStore {
     this.alerts.push(alert);
 
     // Bridge alert to Economic Engine
-    bridgeCostAlertToEconomicEngine({
-      clusterId: budget.clusterId,
-      threshold: alert.threshold,
-      currentCost: alert.currentCost,
-      period: alert.period,
-    });
+    // bridgeCostAlertToEconomicEngine({
+    //   clusterId: budget.clusterId,
+    //   threshold: alert.threshold,
+    //   currentCost: alert.currentCost,
+    //   period: alert.period,
+    // });
   }
 
   getActiveAlerts(): CostAlert[] {

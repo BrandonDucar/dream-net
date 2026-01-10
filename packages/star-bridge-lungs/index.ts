@@ -5,12 +5,12 @@ import type {
   BreathSnapshot,
   StarBridgeContext,
   StarBridgeStatus,
-} from "./types";
-import { runStarBridgeCycle, starBridgeStatus } from "./scheduler/breathScheduler";
+} from './types.js';
+import { runStarBridgeCycle, starBridgeStatus } from './scheduler/breathScheduler.js';
 
 export const StarBridgeLungs = {
-  run(context: StarBridgeContext): StarBridgeStatus {
-    return runStarBridgeCycle(context);
+  async run(context: StarBridgeContext): Promise<StarBridgeStatus> {
+    return await runStarBridgeCycle(context);
   },
 
   status(): StarBridgeStatus {
@@ -18,6 +18,7 @@ export const StarBridgeLungs = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
+export * from './engine/resonance.js';
 export default StarBridgeLungs;
 

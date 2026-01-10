@@ -7,10 +7,10 @@ import type {
   OfferRecommendation,
   ShopContext,
   ShopStatus,
-} from "./types";
-import { ShopStore } from "./store/shopStore";
-import { runShopCycle } from "./scheduler/shopScheduler";
-import { computeRecommendations } from "./logic/shopRecommender";
+} from './types.js';
+import { ShopStore } from './store/shopStore.js';
+import { runShopCycle } from './scheduler/shopScheduler.js';
+import { computeRecommendations } from './logic/shopRecommender.js';
 
 export const DreamShop = {
   upsertOffer(
@@ -40,6 +40,6 @@ export const DreamShop = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamShop;
 

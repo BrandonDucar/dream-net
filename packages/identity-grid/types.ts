@@ -19,6 +19,7 @@ export interface IdentityNode {
   createdAt: number;
   updatedAt: number;
   tags?: string[];
+  trustScore?: number;
   meta?: Record<string, any>;
 }
 

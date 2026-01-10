@@ -8,27 +8,27 @@
  * 4. Learning Loop - Adjusts based on engagement
  */
 
-export * from './types';
-export * from './adapters/gmailApiAdapter';
-export * from './logic/researchEngine';
-export * from './logic/relevanceEngine';
-export * from './logic/geoAwareness';
-export * from './logic/learningLoop';
-export * from './logic/draftGenerator';
+export * from './types.js';
+export * from './adapters/gmailApiAdapter.js';
+export * from './logic/researchEngine.js';
+export * from './logic/relevanceEngine.js';
+export * from './logic/geoAwareness.js';
+export * from './logic/learningLoop.js';
+export * from './logic/draftGenerator.js';
 
 // Main Inbox² class
-import { GmailApiAdapter } from './adapters/gmailApiAdapter';
-import { researchEngine } from './logic/researchEngine';
-import { relevanceEngine } from './logic/relevanceEngine';
-import { geoAwareness } from './logic/geoAwareness';
-import { learningLoop } from './logic/learningLoop';
-import { draftGenerator } from './logic/draftGenerator';
+import { GmailApiAdapter } from './adapters/gmailApiAdapter.js';
+import { researchEngine } from './logic/researchEngine.js';
+import { relevanceEngine } from './logic/relevanceEngine.js';
+import { geoAwareness } from './logic/geoAwareness.js';
+import { learningLoop } from './logic/learningLoop.js';
+import { draftGenerator } from './logic/draftGenerator.js';
 import type {
   EmailDraft,
   EngagementMetrics,
   DraftGenerationOptions,
   InboxSquaredConfig,
-} from './types';
+} from './types.js';
 
 export class InboxSquared {
   private gmailAdapter?: GmailApiAdapter;
@@ -50,18 +50,18 @@ export class InboxSquared {
    */
   async generateDraft(
     recipientEmail: string,
-    recipientName?: string,
-    recipientCompany?: string,
     options: DraftGenerationOptions = {
       fromName: 'DreamNet Team',
       fromEmail: 'dreamnetgmo@gmail.com',
-    }
+    },
+    recipientName?: string,
+    recipientCompany?: string
   ): Promise<EmailDraft> {
     return await draftGenerator.generateDraft(
       recipientEmail,
+      options,
       recipientName,
-      recipientCompany,
-      options
+      recipientCompany
     );
   }
 
@@ -122,6 +122,23 @@ export class InboxSquared {
    */
   getLearningLoop() {
     return learningLoop;
+  }
+
+  /**
+   * Send email directly
+   */
+  async sendEmail(
+    to: string,
+    subject: string,
+    body: string,
+    html?: string,
+    from?: string
+  ): Promise<{ messageId: string; threadId?: string }> {
+    if (!this.gmailAdapter) {
+      throw new Error('Gmail API not initialized. Direct send requires an adapter.');
+    }
+
+    return await this.gmailAdapter.sendEmail(to, subject, body, html, from);
   }
 }
 

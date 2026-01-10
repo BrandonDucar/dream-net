@@ -1,25 +1,40 @@
 {
-  "name": "@dreamnet/narrative-field",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "private": true,
-  "dependencies": {
-    "@dreamnet/utils": "workspace:*",
-    "@dreamnet/dream-cortex": "workspace:*",
-    "@dreamnet/reputation-lattice": "workspace:*",
-    "@dreamnet/wolf-pack": "workspace:*",
-    "@dreamnet/star-bridge-lungs": "workspace:*",
-    "@dreamnet/slug-time-memory": "workspace:*",
-    "@dreamnet/neural-mesh": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0"
-  }
+    "name":  "@dreamnet/narrative-field",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "private":  true,
+    "dependencies":  {
+                         "@dreamnet/dream-cortex":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/neural-mesh":  "workspace:*",
+                         "@dreamnet/reputation-lattice":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/slug-time-memory":  "workspace:*",
+                         "@dreamnet/star-bridge-lungs":  "workspace:*",
+                         "@dreamnet/utils":  "workspace:*",
+                         "@dreamnet/wolf-pack":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.0.0"
+                        }
 }
-

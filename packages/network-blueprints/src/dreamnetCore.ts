@@ -3,8 +3,8 @@
  * The canonical bootstrap configuration for DreamNet Core network
  */
 
-import type { NetworkBlueprint } from "./types";
-import { registerBlueprint } from "./registry";
+import type { NetworkBlueprint } from './types.js';
+import { registerBlueprint } from './registry.js';
 
 export const DreamNetCoreBlueprint: NetworkBlueprint = {
   id: "DREAMNET_CORE",

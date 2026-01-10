@@ -2,8 +2,8 @@ import type {
   VaultSearchQuery,
   VaultItem,
   VaultIndexEntry,
-} from "../types";
-import { VaultStore } from "../store/vaultStore";
+} from '../types.js';
+import { VaultStore } from '../store/vaultStore.js';
 
 export function searchVault(query: VaultSearchQuery): VaultItem[] {
   const index = VaultStore.getIndex();

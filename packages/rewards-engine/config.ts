@@ -1,4 +1,4 @@
-import type { RewardConfig } from "./types";
+import type { RewardConfig } from './types.js';
 
 export const defaultConfig: RewardConfig = {
   dailyBaseDream: 10,

@@ -1,6 +1,6 @@
-import type { ActorContext, CapabilityType, ScopeType } from "./types";
-import { findMatchingRule, requiresQuorum, isReversible } from "./policyTable";
-import { quorumEngine } from "./quorumEngine";
+import type { ActorContext, CapabilityType, ScopeType } from './types.js';
+import { findMatchingRule, requiresQuorum, isReversible } from './policyTable.js';
+import { quorumEngine } from './quorumEngine.js';
 
 export interface PolicyCheckResult {
   allowed: boolean;

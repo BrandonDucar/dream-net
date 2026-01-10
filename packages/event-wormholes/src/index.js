@@ -1,0 +1,104 @@
+/**
+ * @dreamnet/event-wormholes
+ *
+ * Event Wormholes - Teleport Channels for Packet Transportation
+ *
+ * Provides wormhole endpoints for moving packets across clusters, nodes,
+ * or external transports. Integrates with internal-router for routing.
+ */
+// Export registry functions
+export { configureWormholes, getWormholeConfig, registerWormhole, getWormhole, listWormholes, unregisterWormhole, hasWormhole } from './wormholes.js';
+// Export buffering functions
+export { enqueueToWormhole, getWormholeBuffer, clearWormholeBuffer, getWormholeStats, getWormholeStat, resetWormholeStats, resetAllStats, clearAllWormholes } from './wormholes.js';
+// Export dispatcher functions
+export { sendThroughWormhole, flushWormhole, flushAllWormholes, getBufferedCount, getTotalBufferedCount } from './dispatcher.js';
+// Export event bus functions
+export { emitEvent, getRecentEvents, getEventById, markEventHandled } from './eventBus.js';
+// Export analysis functions
+export { ThermodynamicAnalyzer } from './analysis.js';
+// Import for default setup
+import { FIBERS } from '@dreamnet/internal-ports';
+import { configureWormholes, registerWormhole } from './wormholes.js';
+/**
+ * Configure wormholes with sensible defaults
+ */
+function configureDefaultWormholes() {
+    configureWormholes({
+        bufferLimit: 100,
+        dropPolicy: 'drop-oldest',
+        enableMetrics: true
+    });
+    console.log('[Event Wormholes] Default configuration applied');
+}
+/**
+ * Register default wormhole endpoints
+ */
+function registerDefaultWormholes() {
+    // Core Omega Wormhole - primary event teleportation channel
+    registerWormhole({
+        id: 'WH-CORE-OMEGA',
+        label: 'Core Omega Wormhole',
+        direction: 'bidirectional',
+        fiber: FIBERS.OMEGA
+    });
+    // TravelNet Wormhole - travel network teleportation channel
+    registerWormhole({
+        id: 'WH-TRAVELNET-GAMMA',
+        label: 'TravelNet Gamma Wormhole',
+        direction: 'bidirectional',
+        fiber: FIBERS.GAMMA,
+        remoteHint: {
+            region: 'global',
+            cluster: 'travelnet'
+        }
+    });
+    // MILNET Wormhole - military/defense network teleportation channel
+    registerWormhole({
+        id: 'WH-MILNET-BETA',
+        label: 'MILNET Beta Wormhole',
+        direction: 'bidirectional',
+        fiber: FIBERS.BETA,
+        remoteHint: {
+            region: 'secure',
+            cluster: 'milnet'
+        }
+    });
+    // OTTNET Wormhole - streaming/media network teleportation channel
+    registerWormhole({
+        id: 'WH-OTTNET-GAMMA',
+        label: 'OTTNET Gamma Wormhole',
+        direction: 'bidirectional',
+        fiber: FIBERS.GAMMA,
+        remoteHint: {
+            region: 'edge',
+            cluster: 'media'
+        }
+    });
+    // METALNET Wormhole - precious metals network teleportation channel
+    registerWormhole({
+        id: 'WH-METALNET-ALPHA',
+        label: 'METALNET Alpha Wormhole',
+        direction: 'bidirectional',
+        fiber: FIBERS.ALPHA,
+        remoteHint: {
+            region: 'vault',
+            cluster: 'metals'
+        }
+    });
+    // ARCHIMEDES Wormhole - science/research network teleportation channel
+    registerWormhole({
+        id: 'WH-ARCHIMEDES-EPSILON',
+        label: 'Archimedes Epsilon Wormhole',
+        direction: 'bidirectional',
+        fiber: FIBERS.EPSILON, // Research/science semantics
+        remoteHint: {
+            region: 'lab',
+            cluster: 'archimedes'
+        }
+    });
+    console.log('[Event Wormholes] Default wormholes registered');
+}
+// Auto-configure and register defaults on module load
+configureDefaultWormholes();
+registerDefaultWormholes();
+//# sourceMappingURL=index.js.map

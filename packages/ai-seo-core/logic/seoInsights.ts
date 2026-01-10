@@ -1,5 +1,5 @@
-import { SEOInsight, SEOOptimization, SEOKeyword } from "../types";
-import { SEOStore } from "../store/seoStore";
+import { SEOInsight, SEOOptimization, SEOKeyword } from '../types.js';
+import { SEOStore } from '../store/seoStore.js';
 
 let insightCounter = 0;
 function nextInsightId() {

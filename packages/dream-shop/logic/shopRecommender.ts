@@ -2,8 +2,8 @@ import type {
   DreamShopOffer,
   OfferRecommendation,
   ShopContext,
-} from "../types";
-import { ShopStore } from "../store/shopStore";
+} from '../types.js';
+import { ShopStore } from '../store/shopStore.js';
 
 export function computeRecommendations(
   ctx: ShopContext

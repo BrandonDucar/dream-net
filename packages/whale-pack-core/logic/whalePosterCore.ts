@@ -1,5 +1,5 @@
-import { WhalePackContext, WhaleContentPlan } from "../types";
-import { WhaleStore } from "../store/whaleStore";
+import { WhalePackContext, WhaleContentPlan } from '../types.js';
+import { WhaleStore } from '../store/whaleStore.js';
 
 export async function simulateWhalePosting(ctx: WhalePackContext): Promise<void> {
   const plans = WhaleStore.listPlans();

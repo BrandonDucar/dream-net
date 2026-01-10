@@ -3,11 +3,11 @@
  * Integration layer between Trusted Agent Gateway (TAG) and DreamNet
  */
 
-import { initializeTagClient, getConfig } from "./logic/tagClient";
-import { enableSnailBridge, signSnailTrail } from "./logic/snailBridge";
-import { enableShieldBridge, verifyRequestSignature } from "./logic/shieldBridge";
-import { enableWebhookBridge, inspectWebhookCall } from "./logic/webhookBridge";
-import type { TagConfig, TagBridgeStatus } from "./types";
+import { initializeTagClient, getConfig } from './logic/tagClient.js';
+import { enableSnailBridge, signSnailTrail } from './logic/snailBridge.js';
+import { enableShieldBridge, verifyRequestSignature } from './logic/shieldBridge.js';
+import { enableWebhookBridge, inspectWebhookCall } from './logic/webhookBridge.js';
+import type { TagConfig, TagBridgeStatus } from './types.js';
 
 let isInitialized = false;
 let receiptsSigned = 0;
@@ -62,11 +62,11 @@ export const TagBridgeCore = {
   inspectWebhookCall,
 };
 
-export * from "./types";
-export * from "./logic/tagClient";
-export * from "./logic/snailBridge";
-export * from "./logic/shieldBridge";
-export * from "./logic/webhookBridge";
+export * from './types.js';
+export * from './logic/tagClient.js';
+export * from './logic/snailBridge.js';
+export * from './logic/shieldBridge.js';
+export * from './logic/webhookBridge.js';
 
 export default TagBridgeCore;
 

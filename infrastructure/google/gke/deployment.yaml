@@ -19,7 +19,9 @@ spec:
     spec:
       containers:
       - name: dreamnet-api
-        image: gcr.io/aqueous-tube-470317-m6/dreamnet:latest
+        # Note: Image name will be replaced by deploy script with actual PROJECT_ID
+        # Frontend is served by the API server (built into same Docker image)
+        image: gcr.io/aqueous-tube-470317-m6/dreamnet-api:latest
         ports:
         - containerPort: 8080
           name: http
@@ -52,18 +54,6 @@ spec:
             port: 8080
           initialDelaySeconds: 10
           periodSeconds: 5
-      - name: dreamnet-frontend
-        image: gcr.io/aqueous-tube-470317-m6/dreamnet-frontend:latest
-        ports:
-        - containerPort: 80
-          name: http
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "256Mi"
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler

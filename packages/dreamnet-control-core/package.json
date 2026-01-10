@@ -1,51 +1,32 @@
 {
-  "name": "@dreamnet/dreamnet-control-core",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "exports": {
-    ".": {
-      "import": "./index.ts",
-      "types": "./index.ts"
+    "name": "@dreamnet/dreamnet-control-core",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "main": "./index.ts",
+    "types": "./index.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./*.js": "./src/*.ts",
+        "./*": "./src/*.ts"
     },
-    "./controlCoreMiddleware": {
-      "import": "./controlCoreMiddleware.ts",
-      "types": "./controlCoreMiddleware.ts"
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "build": "tsc"
     },
-    "./identityResolver": {
-      "import": "./identityResolver.ts",
-      "types": "./identityResolver.ts"
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@dreamnet/types": "workspace:*",
+        "@types/socket.io": "^3.0.2",
+        "@virtuals-protocol/acp-node": "0.3.0-beta.17",
+        "express": "^4.18.2",
+        "octokit": "^5.0.5",
+        "openai": "^6.15.0",
+        "socket.io": "^4.8.3"
     },
-    "./clusters": {
-      "import": "./clusters.ts",
-      "types": "./clusters.ts"
-    },
-    "./conduits": {
-      "import": "./src/conduits.ts",
-      "types": "./src/conduits.ts"
-    },
-    "./conduitGovernor": {
-      "import": "./src/conduitGovernor.ts",
-      "types": "./src/conduitGovernor.ts"
-    },
-    "./deadLetter": {
-      "import": "./src/deadLetter.ts",
-      "types": "./src/deadLetter.ts"
-    },
-    "./conduitMetrics": {
-      "import": "./src/conduitMetrics.ts",
-      "types": "./src/conduitMetrics.ts"
+    "devDependencies": {
+        "@types/express": "4.17.21",
+        "typescript": "^5.9.3"
     }
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "echo 'Build step - using TypeScript directly for now'"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
 }
-

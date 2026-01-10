@@ -1,5 +1,5 @@
-export * from "./types";
-export * from "./config";
-export * from "./store";
-export * from "./dreamTokenBridge";
+export * from './types.js';
+export * from './config.js';
+export * from './store.js';
+export * from './dreamTokenBridge.js';
 

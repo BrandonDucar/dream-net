@@ -3,7 +3,7 @@
  * Adjusts tone and structure based on engagement/feedback
  */
 
-import type { EngagementMetrics, EmailDraft, EmailVariant } from '../types';
+import type { EngagementMetrics, EmailDraft, EmailVariant } from '../types.js';
 
 export interface LearningPattern {
   patternType: 'subject_line' | 'cta' | 'tone' | 'length' | 'timing';

@@ -8,10 +8,10 @@ import type {
   EvaluationKind,
   DreamTankContext,
   DreamTankStatus,
-} from "./types";
-import { TankStore } from "./store/tankStore";
-import { runDreamTankCycle } from "./scheduler/tankScheduler";
-import { evaluateDream } from "./logic/evaluationEngine";
+} from './types.js';
+import { TankStore } from './store/tankStore.js';
+import { runDreamTankCycle } from './scheduler/tankScheduler.js';
+import { evaluateDream } from './logic/evaluationEngine.js';
 
 export const DreamTankCore = {
   // Dreams
@@ -61,6 +61,6 @@ export const DreamTankCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamTankCore;
 

@@ -5,7 +5,7 @@ import {
   WhaleEngagementStats,
   WhaleInsight,
   WhalePackStatus,
-} from "../types";
+} from '../types.js';
 
 const products: Map<string, WhaleProduct> = new Map();
 const audiences: Map<string, WhaleAudience> = new Map();

@@ -4,9 +4,9 @@
  * Like API keys - no manual setup needed
  */
 
-import { createNeuron } from "./nervousSystem";
-import { createAntibody } from "./immuneSystem";
-import type { WebhookNeuron } from "../types";
+import { createNeuron } from './nervousSystem.js';
+import { createAntibody } from './immuneSystem.js';
+import type { WebhookNeuron } from '../types.js';
 
 /**
  * Auto-discover webhooks from environment variables

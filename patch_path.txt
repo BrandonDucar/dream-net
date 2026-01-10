@@ -1,0 +1,3 @@
+ ERR_PNPM_EDIT_DIR_NOT_EMPTY  The directory C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm_patches\@noble\hashes@1.1.5 is not empty
+
+Either run `pnpm patch-commit "C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm_patches\@noble\hashes@1.1.5"` to commit or delete it then run `pnpm patch` to recreate it

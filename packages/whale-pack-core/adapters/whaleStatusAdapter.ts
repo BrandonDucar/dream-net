@@ -1,5 +1,5 @@
-import { WhalePackCore } from "../index";
-import { WhalePackStatus } from "../types";
+import { WhalePackCore } from '../index.js';
+import { WhalePackStatus } from '../types.js';
 
 export interface WhaleDashboardView {
   productCount: number;

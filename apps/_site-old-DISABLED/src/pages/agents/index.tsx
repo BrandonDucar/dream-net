@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useWallet } from "../../contexts/WalletContext";
+import { useWallet } from '../../contexts/WalletContext.js';
 import { Brain, Lock, Unlock, Zap, Shield, Code, Palette, Search, Filter } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";

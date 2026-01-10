@@ -1,0 +1,266 @@
+diff --git a/_blake.d.ts.map b/_blake.d.ts.map
+deleted file mode 100644
+index 7b11ac1f5ee3cbe7d69b1b4e3b44ef0f70f33a7f..0000000000000000000000000000000000000000
+diff --git a/_blake.js.map b/_blake.js.map
+deleted file mode 100644
+index 4a418be44fc04acdb9acc2946cd7b338edf973a0..0000000000000000000000000000000000000000
+diff --git a/_md.d.ts.map b/_md.d.ts.map
+deleted file mode 100644
+index 6e142896203203ed83ed79e666895e066f1eb75b..0000000000000000000000000000000000000000
+diff --git a/_md.js.map b/_md.js.map
+deleted file mode 100644
+index b2c29d693616d845f09ad96c360fc88a312b2315..0000000000000000000000000000000000000000
+diff --git a/_u64.d.ts.map b/_u64.d.ts.map
+deleted file mode 100644
+index 211a4c691318fed673b7a60dc5db5bc3969739c2..0000000000000000000000000000000000000000
+diff --git a/_u64.js.map b/_u64.js.map
+deleted file mode 100644
+index 558394bd466c8598b33d41b027d96422cabe42a9..0000000000000000000000000000000000000000
+diff --git a/argon2.d.ts.map b/argon2.d.ts.map
+deleted file mode 100644
+index 9d1bbbf653f762494dc4d4ebe676235e51edcb7f..0000000000000000000000000000000000000000
+diff --git a/argon2.js.map b/argon2.js.map
+deleted file mode 100644
+index 5620e5cc35bfbaa7c8254a4e44dec473feb219ce..0000000000000000000000000000000000000000
+diff --git a/blake1.d.ts.map b/blake1.d.ts.map
+deleted file mode 100644
+index be0fe26229096ef785a26608396ec4b5c9470007..0000000000000000000000000000000000000000
+diff --git a/blake1.js.map b/blake1.js.map
+deleted file mode 100644
+index a97bd58d9c049ec1027b56ba6ecb5780fdd6966a..0000000000000000000000000000000000000000
+diff --git a/blake2.d.ts.map b/blake2.d.ts.map
+deleted file mode 100644
+index 63d03f2ff7af9d9f861a09c655ee38298fe41557..0000000000000000000000000000000000000000
+diff --git a/blake2.js.map b/blake2.js.map
+deleted file mode 100644
+index a1ed307271abd154622504fa2267e545948acc87..0000000000000000000000000000000000000000
+diff --git a/blake3.d.ts.map b/blake3.d.ts.map
+deleted file mode 100644
+index 2bf8358b3092759ec833b18d7ae44fa36bfeb68a..0000000000000000000000000000000000000000
+diff --git a/blake3.js.map b/blake3.js.map
+deleted file mode 100644
+index abba8c047f60eac92115824678aea07c2b75d1a6..0000000000000000000000000000000000000000
+diff --git a/eskdf.d.ts.map b/eskdf.d.ts.map
+deleted file mode 100644
+index cb9bd4ee1687c7875bdb6c59029af5ba0988cbe0..0000000000000000000000000000000000000000
+diff --git a/eskdf.js.map b/eskdf.js.map
+deleted file mode 100644
+index 1e00dceef2b0cfac9e9b34a7eff16d6e94541866..0000000000000000000000000000000000000000
+diff --git a/hkdf.d.ts.map b/hkdf.d.ts.map
+deleted file mode 100644
+index 988766950bbc4765e103888314ca9021b2e96224..0000000000000000000000000000000000000000
+diff --git a/hkdf.js.map b/hkdf.js.map
+deleted file mode 100644
+index 00bc982e815abd97910d38d54199e006959964fd..0000000000000000000000000000000000000000
+diff --git a/hmac.d.ts.map b/hmac.d.ts.map
+deleted file mode 100644
+index 24bf50931e90f848943215633c2adf8c0596ddbc..0000000000000000000000000000000000000000
+diff --git a/hmac.js.map b/hmac.js.map
+deleted file mode 100644
+index 5e2b11e76d977df2c34c3d01335b40b5619a3836..0000000000000000000000000000000000000000
+diff --git a/index.d.ts.map b/index.d.ts.map
+deleted file mode 100644
+index 4e8c5816b41ae88c764eefae33e5eb965d87148b..0000000000000000000000000000000000000000
+diff --git a/index.js.map b/index.js.map
+deleted file mode 100644
+index d0d21b94873534c8d0c763acff056002df9a09f3..0000000000000000000000000000000000000000
+diff --git a/legacy.d.ts.map b/legacy.d.ts.map
+deleted file mode 100644
+index 344bcccfd589dd594ab98d68a6567837f6544481..0000000000000000000000000000000000000000
+diff --git a/legacy.js.map b/legacy.js.map
+deleted file mode 100644
+index dda38088868e938981bdd35abe71f5c096e3ba3a..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index dc8e6730fdcacb272febc7e0c4fd15309f0e9329..c5d25b7fab11f7ad408d41e32ddade9b94da3a8d 100644
+--- a/package.json
++++ b/package.json
+@@ -1,41 +1,33 @@
+ {
+   "name": "@noble/hashes",
+   "version": "2.0.1",
+-  "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
++  "description": "Audited & minimal 0-dependency JS implementation of SHA2, SHA3, RIPEMD, BLAKE2/3, HMAC, HKDF, PBKDF2, Scrypt",
+   "files": [
+     "*.js",
+-    "*.js.map",
+     "*.d.ts",
+-    "*.d.ts.map",
+     "src"
+   ],
+-  "devDependencies": {
+-    "@paulmillr/jsbt": "0.4.4",
+-    "@types/node": "24.2.1",
+-    "fast-check": "4.2.0",
+-    "prettier": "3.6.2",
+-    "typescript": "5.9.2"
+-  },
+-  "scripts": {
+-    "bench": "node test/benchmark/noble.ts",
+-    "bench:compare": "MBENCH_DIMS='algorithm,buffer,library' node test/benchmark/hashes.ts",
+-    "bench:compare-scrypt": "MBENCH_DIMS='iters,library' MBENCH_FILTER='async' node test/benchmark/scrypt.ts",
+-    "bench:install": "cd test/benchmark; npm install",
+-    "build": "tsc",
+-    "build:release": "npx --no @paulmillr/jsbt esbuild test/build",
+-    "build:clean": "rm *.{js,js.map,d.ts,d.ts.map} 2> /dev/null",
+-    "format": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
+-    "test": "node --experimental-strip-types --no-warnings test/index.ts",
+-    "test:bun": "bun test/index.ts",
+-    "test:deno": "deno --allow-env --allow-read test/index.ts",
+-    "test:node20": "cd test; npx tsc; node compiled/test/index.js",
+-    "test:dos": "node --experimental-strip-types test/slow-dos.test.ts",
+-    "test:big": "node --experimental-strip-types test/slow-big.test.ts",
+-    "test:acvp": "node --experimental-strip-types test/slow-acvp.test.ts",
+-    "test:kdf": "node --experimental-strip-types test/slow-kdf.test.ts"
+-  },
+   "exports": {
+     ".": "./index.js",
++    "./sha256": "./sha256.js",
++    "./sha512": "./sha512.js",
++    "./sha3": "./sha3.js",
++    "./utils": "./utils.js",
++    "./hmac": "./hmac.js",
++    "./pbkdf2": "./pbkdf2.js",
++    "./ripemd160": "./ripemd160.js",
++    "./sha1": "./sha1.js",
++    "./keccak": "./sha3.js",
++    "./scrypt": "./scrypt.js",
++    "./argon2": "./argon2.js",
++    "./blake1": "./blake1.js",
++    "./blake2": "./blake2.js",
++    "./blake3": "./blake3.js",
++    "./hkdf": "./hkdf.js",
++    "./legacy": "./legacy.js",
++    "./webcrypto": "./webcrypto.js",
++    "./eskdf": "./eskdf.js",
++    "./sha3-addons": "./sha3-addons.js",
+     "./_md.js": "./_md.js",
+     "./argon2.js": "./argon2.js",
+     "./blake1.js": "./blake1.js",
+@@ -57,28 +49,9 @@
+     "node": ">= 20.19.0"
+   },
+   "keywords": [
+-    "sha1",
+-    "sha2",
+-    "sha3",
+-    "blake",
+-    "blake2",
+-    "blake3",
+-    "hmac",
+-    "hkdf",
+-    "pbkdf2",
+-    "scrypt",
+-    "sha256",
+-    "sha512",
+-    "keccak",
+-    "ripemd160",
+-    "kdf",
+-    "hash",
+-    "cryptography",
+-    "security",
+-    "noble"
++    "sha", "sha2", "sha3", "hmac", "kdf", "cryptography", "noble"
+   ],
+   "homepage": "https://paulmillr.com/noble/",
+-  "funding": "https://paulmillr.com/funding/",
+   "repository": {
+     "type": "git",
+     "url": "git+https://github.com/paulmillr/noble-hashes.git"
+diff --git a/pbkdf2.d.ts.map b/pbkdf2.d.ts.map
+deleted file mode 100644
+index 9932d1646fc1697812499c73d30839ff664f801c..0000000000000000000000000000000000000000
+diff --git a/pbkdf2.js.map b/pbkdf2.js.map
+deleted file mode 100644
+index 73a5afb0315d69428417b7635186bc6c44c90a1c..0000000000000000000000000000000000000000
+diff --git a/ripemd160.d.ts b/ripemd160.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..43cc3e0a4745e12604326259631dea84fe1fd409
+--- /dev/null
++++ b/ripemd160.d.ts
+@@ -0,0 +1 @@
++export * from './legacy.d.ts';
+diff --git a/ripemd160.js b/ripemd160.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6853dd07fcdfd5f69a5a03513526f18e293f987a
+--- /dev/null
++++ b/ripemd160.js
+@@ -0,0 +1 @@
++export * from './legacy.js';
+diff --git a/scrypt.d.ts.map b/scrypt.d.ts.map
+deleted file mode 100644
+index 2d178f1a88190d64f4cdd1b5f6a9eac2d1961854..0000000000000000000000000000000000000000
+diff --git a/scrypt.js.map b/scrypt.js.map
+deleted file mode 100644
+index ddb00d536657fecfc0297c7f0429f541365e29e7..0000000000000000000000000000000000000000
+diff --git a/sha1.d.ts b/sha1.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..43cc3e0a4745e12604326259631dea84fe1fd409
+--- /dev/null
++++ b/sha1.d.ts
+@@ -0,0 +1 @@
++export * from './legacy.d.ts';
+diff --git a/sha1.js b/sha1.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..6853dd07fcdfd5f69a5a03513526f18e293f987a
+--- /dev/null
++++ b/sha1.js
+@@ -0,0 +1 @@
++export * from './legacy.js';
+diff --git a/sha2.d.ts.map b/sha2.d.ts.map
+deleted file mode 100644
+index 6096ce09a38f89cafc6166b1d260a78581b1a818..0000000000000000000000000000000000000000
+diff --git a/sha2.js.map b/sha2.js.map
+deleted file mode 100644
+index 4ddb77e8609471eb17094be5e96cb4b9c4607053..0000000000000000000000000000000000000000
+diff --git a/sha256.d.ts b/sha256.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..734d32b548746764d8bba2f374d88bd47bdd3831
+--- /dev/null
++++ b/sha256.d.ts
+@@ -0,0 +1 @@
++export * from './sha2.d.ts';
+diff --git a/sha256.js b/sha256.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..2925fd648fa0a63e6d4054b48af0e2eb75fdf753
+--- /dev/null
++++ b/sha256.js
+@@ -0,0 +1 @@
++export * from './sha2.js';
+diff --git a/sha3-addons.d.ts.map b/sha3-addons.d.ts.map
+deleted file mode 100644
+index ed38b7c18249cb96392586261744cca2b54786b0..0000000000000000000000000000000000000000
+diff --git a/sha3-addons.js.map b/sha3-addons.js.map
+deleted file mode 100644
+index f31932f334aff1ecf023e396d5a6288038d9fefd..0000000000000000000000000000000000000000
+diff --git a/sha3.d.ts.map b/sha3.d.ts.map
+deleted file mode 100644
+index 0d85d5ec22ddb61e84b04ef45ce13674fc7ec324..0000000000000000000000000000000000000000
+diff --git a/sha3.js.map b/sha3.js.map
+deleted file mode 100644
+index 2a8e80f17418eb86f1977ab7140c1cd3ab4c0403..0000000000000000000000000000000000000000
+diff --git a/sha512.d.ts b/sha512.d.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..734d32b548746764d8bba2f374d88bd47bdd3831
+--- /dev/null
++++ b/sha512.d.ts
+@@ -0,0 +1 @@
++export * from './sha2.d.ts';
+diff --git a/sha512.js b/sha512.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..2925fd648fa0a63e6d4054b48af0e2eb75fdf753
+--- /dev/null
++++ b/sha512.js
+@@ -0,0 +1 @@
++export * from './sha2.js';
+diff --git a/utils.d.ts.map b/utils.d.ts.map
+deleted file mode 100644
+index 40bbb0c4d2ac6e611512096ca985146f96f63387..0000000000000000000000000000000000000000
+diff --git a/utils.js.map b/utils.js.map
+deleted file mode 100644
+index de76cb1c5e7406c1ff8485b21c83e22b1ffde9c4..0000000000000000000000000000000000000000
+diff --git a/webcrypto.d.ts.map b/webcrypto.d.ts.map
+deleted file mode 100644
+index f9fe0b02eef035d16107db11288b4839b5256a94..0000000000000000000000000000000000000000
+diff --git a/webcrypto.js.map b/webcrypto.js.map
+deleted file mode 100644
+index 53fa3ef82fef1742a40cfe5e926f19a5a6ee850b..0000000000000000000000000000000000000000

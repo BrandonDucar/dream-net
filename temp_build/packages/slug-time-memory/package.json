@@ -1,0 +1,23 @@
+{
+  "name": "@dreamnet/slug-time-memory",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@dreamnet/halo-loop": "workspace:*",
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/neural-mesh": "workspace:*",
+    "@dreamnet/quantum-anticipation": "workspace:*",
+    "@dreamnet/shared": "workspace:*",
+    "@dreamnet/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,14 +1,30 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": ".",
-    "module": "commonjs",
-    "target": "es2019",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "strict": true
-  },
-  "include": ["./**/*.ts"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "types.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "logic",
+        "store",
+        "adapters",
+        "scheduler",
+        "src"
+    ]
 }
-

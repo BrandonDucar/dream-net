@@ -3,8 +3,8 @@
  * Cron-based scheduled operations
  */
 
-import { TaskScheduler } from "./logic/scheduler";
-import type { ScheduledTask, TaskExecution } from "./types";
+import { TaskScheduler } from './logic/scheduler.js';
+import type { ScheduledTask, TaskExecution } from './types.js';
 
 const scheduler = new TaskScheduler();
 const tasks: Map<string, ScheduledTask> = new Map();
@@ -104,6 +104,6 @@ export const DreamNetSchedulerCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamNetSchedulerCore;
 

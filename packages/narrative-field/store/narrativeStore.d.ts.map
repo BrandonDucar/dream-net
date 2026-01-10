@@ -1,0 +1,1 @@
+{"version":3,"file":"narrativeStore.d.ts","sourceRoot":"","sources":["narrativeStore.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,cAAc,EAAE,eAAe,EAAsC,MAAM,aAAa,CAAC;AAevG,eAAO,MAAM,cAAc;eACd,cAAc;kBASX,eAAe,GAAG,cAAc,EAAE;cAuBtC;QAAE,UAAU,EAAE,MAAM,CAAC;QAAC,aAAa,EAAE,cAAc,EAAE,CAAA;KAAE;CAOlE,CAAC"}

@@ -6,7 +6,7 @@ import type {
   EmissionRule,
   AppliedReward,
   EconomicEngineStatus,
-} from "../types";
+} from '../types.js';
 
 const tokenConfigs: Map<EconTokenSymbol, EconTokenConfig> = new Map();
 const balances: Map<string, BalanceRecord> = new Map(); // key: identityId:token
@@ -100,6 +100,11 @@ export const EconStore = {
 
   setLastRunAt(ts: number | null) {
     lastRunAt = ts;
+  },
+
+  markRewardProcessed(id: string) {
+    const r = rawRewards.find((x) => x.id === id);
+    if (r) r.processed = true;
   },
 
   status(): EconomicEngineStatus {

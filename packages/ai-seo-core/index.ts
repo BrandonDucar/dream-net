@@ -8,12 +8,12 @@ import {
   SEOInsight,
   AISEOCoreContext,
   AISEOCoreStatus,
-} from "./types";
-import { SEOStore } from "./store/seoStore";
-import { runAISEOCycle } from "./scheduler/seoScheduler";
-import { optimizeContent } from "./logic/seoOptimizer";
-import { createGeofence, checkGeofence, applyGeofenceRules, createGeofenceRule, ensureDefaultGeofences } from "./logic/geofencer";
-import { generateSEOInsights } from "./logic/seoInsights";
+} from './types.js';
+import { SEOStore } from './store/seoStore.js';
+import { runAISEOCycle } from './scheduler/seoScheduler.js';
+import { optimizeContent } from './logic/seoOptimizer.js';
+import { createGeofence, checkGeofence, applyGeofenceRules, createGeofenceRule, ensureDefaultGeofences } from './logic/geofencer.js';
+import { generateSEOInsights } from './logic/seoInsights.js';
 
 export const AISEOCore = {
   // Orchestration
@@ -132,7 +132,7 @@ export const AISEOCore = {
   },
 };
 
-export * from "./types";
-export * from "./logic/autoSEO";
+export * from './types.js';
+export * from './logic/autoSEO.js';
 export default AISEOCore;
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"processorEndpoint.d.ts","sourceRoot":"","sources":["processorEndpoint.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,UAAU,EAAE,cAAc,EAAE,aAAa,EAAE,MAAM,aAAa,CAAC;AAuB7E,qBAAa,iBAAkB,YAAW,cAAc;IAChD,OAAO,CAAC,KAAK,EAAE,UAAU,GAAG,OAAO,CAAC,aAAa,CAAC;CA0BzD"}

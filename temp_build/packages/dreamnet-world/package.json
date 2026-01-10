@@ -1,0 +1,11 @@
+{
+    "name": "@dreamnet/dreamnet-world",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "dependencies": {
+        "@dreamnet/nerve": "workspace:*"
+    },
+    "scripts": {
+        "build": "tsc"
+    }
+}

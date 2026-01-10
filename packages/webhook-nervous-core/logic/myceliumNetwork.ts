@@ -3,8 +3,8 @@
  * Distributed webhook routing with self-healing paths
  */
 
-import type { WebhookHypha, WebhookMycelium, WebhookNeuron } from "../types";
-import { getNeurons } from "./nervousSystem";
+import type { WebhookHypha, WebhookMycelium, WebhookNeuron } from '../types.js';
+import { getNeurons } from './nervousSystem.js';
 
 let hyphae: Map<string, WebhookHypha> = new Map();
 let mycelia: Map<string, WebhookMycelium> = new Map();

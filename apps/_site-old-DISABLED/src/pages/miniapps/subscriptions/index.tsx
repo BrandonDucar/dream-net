@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { useWallet } from "../../../contexts/WalletContext";
+import { useWallet } from '../../../contexts/WalletContext.js';
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const SUBSCRIPTION_HUB_ADDRESS = "0x740f36295D7E474c2E4a26C92Dd116f72eb575A6";

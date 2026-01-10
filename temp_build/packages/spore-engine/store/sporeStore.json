@@ -1,0 +1,25 @@
+{
+  "spores": [
+    {
+      "id": "default-prompt-spore",
+      "name": "Default Prompt Spore",
+      "description": "Basic prompt template for agent interactions",
+      "type": "prompt",
+      "status": "published",
+      "content": "You are a helpful AI assistant. Please respond to the user's request.",
+      "metadata": {
+        "tags": ["default", "prompt"],
+        "version": "1.0.0"
+      },
+      "stats": {
+        "usageCount": 0,
+        "successCount": 0,
+        "failureCount": 0
+      },
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "publishedAt": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}
+

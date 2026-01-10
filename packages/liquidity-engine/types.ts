@@ -76,3 +76,10 @@ export interface LiquidityEngineStatus {
   }>;
 }
 
+export interface SLUPoolConfig extends LiquidityPoolConfig {
+  isStakedPool: boolean;
+  stSPKAddress?: string;
+  sluPoolAddress?: string;
+  wrapperAddress?: string;
+}
+

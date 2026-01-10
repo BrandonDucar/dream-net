@@ -1,18 +1,35 @@
 {
-  "name": "@dreamnet/env-keeper-core",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "crypto": "^1.0.1"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name":  "@dreamnet/env-keeper-core",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/nerve":  "workspace:*",
+                         "crypto":  "^1.0.1"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
 }
-

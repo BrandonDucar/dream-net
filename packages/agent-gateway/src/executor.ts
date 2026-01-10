@@ -3,15 +3,15 @@
  * Executes tools by calling underlying DreamNet organs
  */
 
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
-import type { ToolId } from "./tools";
-import { getToolConfig } from "./tools";
-import { recordAgentActivity } from "./activity";
-import { evaluateConduit, getConduitConfig, recordConduitFailure } from "@dreamnet/dreamnet-control-core/conduitGovernor";
-import { getConduitConfig as getConduitConfigFromRegistry } from "@dreamnet/dreamnet-control-core/conduits";
-import { addDeadLetterRecord } from "@dreamnet/dreamnet-control-core/deadLetter";
+import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core";
+import type { ToolId } from './tools.js';
+import { getToolConfig } from './tools.js';
+import { recordAgentActivity } from './activity.js';
+import { evaluateConduit, getConduitConfig, recordConduitFailure } from "@dreamnet/dreamnet-control-core";
+import { getConduitConfig as getConduitConfigFromRegistry } from "@dreamnet/dreamnet-control-core";
+import { addDeadLetterRecord } from "@dreamnet/dreamnet-control-core";
 import type { PortId } from "@dreamnet/port-governor/types";
-import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
+import type { ClusterId } from "@dreamnet/dreamnet-control-core";
 
 /**
  * Emit Nerve event for tool execution
@@ -25,8 +25,7 @@ async function emitToolExecutionEvent(
   isTimeout?: boolean
 ): Promise<void> {
   try {
-    const { NERVE_BUS } = await import("@dreamnet/nerve/bus");
-    const { createNerveEvent } = await import("@dreamnet/nerve/factory");
+    const { NERVE_BUS, createNerveEvent } = await import("@dreamnet/nerve");
     const toolConfig = getToolConfig(toolId);
     const risk = toolConfig?.riskLevel ?? "medium";
 
@@ -35,10 +34,10 @@ async function emitToolExecutionEvent(
       risk === "low"
         ? 0.2
         : risk === "medium"
-        ? 0.5
-        : risk === "high"
-        ? 0.8
-        : 0.95;
+          ? 0.5
+          : risk === "high"
+            ? 0.8
+            : 0.95;
 
     const event = createNerveEvent({
       channelId: ok && !isTimeout ? "HTTP_REQUEST" : "SHIELD_EVENT",
@@ -161,7 +160,7 @@ export async function executeTool(
     // Route to appropriate executor based on tool ID
     // Wrap in timeout if conduit has maxExecutionTimeMs
     let executionPromise: Promise<ToolExecutionResult>;
-    
+
     if (toolId.startsWith("env.")) {
       executionPromise = executeEnvTool(toolId, payload, req);
     } else if (toolId.startsWith("api.")) {
@@ -217,7 +216,7 @@ export async function executeTool(
       recordConduitFailure(
         conduitDecision.conduitId,
         result.error || "UNKNOWN_ERROR",
-        isTimeout
+        !!isTimeout
       );
     }
 
@@ -459,7 +458,7 @@ async function executeApiTool(
 
     if (toolId === "api.listKeys") {
       const keys = APIKeeperCore.listKeys();
-      
+
       // Return summary (no raw keys)
       const summary = keys.map((key) => ({
         id: key.id,

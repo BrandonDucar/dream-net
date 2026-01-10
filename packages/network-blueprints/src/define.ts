@@ -3,8 +3,8 @@
  * Provides a simplified API for defining network blueprints
  */
 
-import type { NetworkBlueprint } from "./types";
-import { registerBlueprint } from "./registry";
+import type { NetworkBlueprint } from './types.js';
+import { registerBlueprint } from './registry.js';
 
 interface DefineBlueprintInput {
   id: string;

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
-import { DreamPassportNFT, DreamStateGovernance } from "../typechain-types";
+import { DreamPassportNFT, DreamStateGovernance } from '../typechain-types.js';
 
 describe("DreamStateGovernance", function () {
   let passport: DreamPassportNFT;

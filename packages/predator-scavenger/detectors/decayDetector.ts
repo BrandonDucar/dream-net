@@ -1,4 +1,4 @@
-import type { PSLContext, DecaySignal } from "../types";
+import type { PSLContext, DecaySignal } from '../types.js';
 
 export function detectDecay(ctx: PSLContext): DecaySignal[] {
   const now = Date.now();

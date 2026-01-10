@@ -3,14 +3,14 @@
  * Bootstraps DreamNet entities from a network blueprint
  */
 
-import type { NetworkBlueprint } from "./types";
+import type { NetworkBlueprint } from './types.js';
 import {
   registerCitizen,
   registerAgent,
   registerDream,
   registerPort,
   registerConduit,
-} from "../../directory/src/registry";
+} from "@dreamnet/directory/src/registry";
 
 export interface BootstrapResult {
   blueprintId: string;

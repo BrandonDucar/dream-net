@@ -3,8 +3,8 @@
  * Resolves intents to tools and checks permissions
  */
 
-import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core/identityResolver";
-import { getToolConfig, type ToolId } from "./tools";
+import type { RequestWithIdentity } from "@dreamnet/dreamnet-control-core";
+import { getToolConfig, type ToolId } from './tools.js';
 
 export interface AgentGatewayRequestBody {
   intent: string;
@@ -52,7 +52,7 @@ export function resolveIntentToTool(body: AgentGatewayRequestBody): IntentResolu
 
   // Natural language patterns (can be expanded)
   const lowerIntent = intent.toLowerCase();
-  
+
   if (lowerIntent.includes("env") && (lowerIntent.includes("get") || lowerIntent.includes("read"))) {
     return { tool: "env.get" };
   }

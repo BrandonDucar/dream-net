@@ -3,14 +3,14 @@
  * Upgrades existing emailDraftEngine.ts with Inbox² intelligence
  */
 
-import { FundingLead, EmailDraft } from '../types';
+import { FundingLead, EmailDraft } from '../types.js';
 // Lazy import to avoid ESM resolution issues
 let inboxSquared: any = null;
 let DraftGenerationOptions: any = null;
 
 async function getInboxSquared() {
   if (!inboxSquared) {
-    const module = await import('../../inbox-squared-core/index.ts');
+    const module = await import('../../inbox-squared-core/index.js');
     inboxSquared = new module.InboxSquared();
     DraftGenerationOptions = module.DraftGenerationOptions;
   }
@@ -34,8 +34,6 @@ export async function generateEmailDraftForLeadEnhanced(
     const { inboxSquared: inbox } = await getInboxSquared();
     const draft = await inbox.generateDraft(
       lead.email,
-      lead.name,
-      lead.company || lead.type,
       {
         fromName: opts.fromName,
         fromEmail: opts.fromEmail,
@@ -43,16 +41,22 @@ export async function generateEmailDraftForLeadEnhanced(
         includeOptOut: true,
         generateVariants: true,
         generateContentTwins: false, // Can enable later
-      }
+      },
+      lead.name,
+      lead.company || lead.type
     );
 
-    // Add lead ID to draft
-    draft.leadId = lead.id;
+    // Add lead ID and ensure toEmail is present
+    const finalDraft: EmailDraft = {
+      ...draft,
+      leadId: lead.id,
+      toEmail: draft.toEmail || lead.email
+    };
 
-    return draft;
+    return finalDraft;
   } catch (error) {
     console.error('[Inbox²] Error generating draft, falling back to basic:', error);
-    
+
     // Fallback to basic draft
     return generateBasicDraft(lead, opts);
   }

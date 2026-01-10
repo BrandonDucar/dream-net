@@ -1,5 +1,5 @@
-import { SlugMemoryStore } from "../store/slugMemoryStore";
-import type { SlugMetricSnapshot } from "../types";
+import { SlugMemoryStore } from '../store/slugMemoryStore.js';
+import type { SlugMetricSnapshot } from '../types.js';
 
 export function recomputeSnapshots(now: number) {
   const samplesByKey = SlugMemoryStore.getSamples();

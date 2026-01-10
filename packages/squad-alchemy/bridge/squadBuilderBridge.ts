@@ -1,6 +1,6 @@
-import type { Squad } from "../types";
-import { SquadRegistry } from "../registry/squadRegistry";
-import { getSquads } from "@dreamnet/squad-builder/src/registry";
+import type { Squad } from '../types.js';
+import { SquadRegistry } from '../registry/squadRegistry.js';
+import { getSquads } from "@dreamnet/squad-builder";
 
 /**
  * Bridge between Squad-Builder and Squad Alchemy
@@ -21,7 +21,7 @@ export function syncSquadBuilderSquads(): number {
           capabilities: agent.capabilities || [],
           loadFactor: agent.loadFactor,
         })),
-        tags: builderSquad.tags || [],
+        tags: (builderSquad as any).tags || [],
         createdAt: builderSquad.createdAt?.getTime() || Date.now(),
         updatedAt: builderSquad.updatedAt?.getTime() || Date.now(),
         lineage: {

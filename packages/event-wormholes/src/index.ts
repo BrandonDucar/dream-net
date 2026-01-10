@@ -16,7 +16,7 @@ export type {
   WormholePacketEnvelope,
   WormholeResult,
   WormholeStats
-} from './types';
+} from './types.js';
 
 // Export registry functions
 export {
@@ -27,7 +27,7 @@ export {
   listWormholes,
   unregisterWormhole,
   hasWormhole
-} from './wormholes';
+} from './wormholes.js';
 
 // Export buffering functions
 export {
@@ -39,7 +39,7 @@ export {
   resetWormholeStats,
   resetAllStats,
   clearAllWormholes
-} from './wormholes';
+} from './wormholes.js';
 
 // Export dispatcher functions
 export {
@@ -48,12 +48,24 @@ export {
   flushAllWormholes,
   getBufferedCount,
   getTotalBufferedCount
-} from './dispatcher';
+} from './dispatcher.js';
+
+// Export event bus functions
+export {
+  emitEvent,
+  getRecentEvents,
+  getEventById,
+  markEventHandled
+} from './eventBus.js';
+
+// Export analysis functions
+export { ThermodynamicAnalyzer } from './analysis.js';
+export type { Thermodynamics } from './analysis.js';
 
 // Import for default setup
-import { FIBERS } from '../../internal-ports/src/index.ts';
-import { configureWormholes, registerWormhole } from './wormholes';
-import type { WormholeEndpoint } from './types';
+import { FIBERS } from '@dreamnet/internal-ports';
+import { configureWormholes, registerWormhole } from './wormholes.js';
+import type { WormholeEndpoint } from './types.js';
 
 /**
  * Configure wormholes with sensible defaults
@@ -64,7 +76,7 @@ function configureDefaultWormholes(): void {
     dropPolicy: 'drop-oldest',
     enableMetrics: true
   });
-  
+
   console.log('[Event Wormholes] Default configuration applied');
 }
 
@@ -79,7 +91,7 @@ function registerDefaultWormholes(): void {
     direction: 'bidirectional',
     fiber: FIBERS.OMEGA
   });
-  
+
   // TravelNet Wormhole - travel network teleportation channel
   registerWormhole({
     id: 'WH-TRAVELNET-GAMMA',
@@ -91,7 +103,7 @@ function registerDefaultWormholes(): void {
       cluster: 'travelnet'
     }
   });
-  
+
   // MILNET Wormhole - military/defense network teleportation channel
   registerWormhole({
     id: 'WH-MILNET-BETA',
@@ -103,7 +115,7 @@ function registerDefaultWormholes(): void {
       cluster: 'milnet'
     }
   });
-  
+
   // OTTNET Wormhole - streaming/media network teleportation channel
   registerWormhole({
     id: 'WH-OTTNET-GAMMA',
@@ -115,7 +127,7 @@ function registerDefaultWormholes(): void {
       cluster: 'media'
     }
   });
-  
+
   // METALNET Wormhole - precious metals network teleportation channel
   registerWormhole({
     id: 'WH-METALNET-ALPHA',
@@ -127,7 +139,7 @@ function registerDefaultWormholes(): void {
       cluster: 'metals'
     }
   });
-  
+
   // ARCHIMEDES Wormhole - science/research network teleportation channel
   registerWormhole({
     id: 'WH-ARCHIMEDES-EPSILON',
@@ -139,7 +151,7 @@ function registerDefaultWormholes(): void {
       cluster: 'archimedes'
     }
   });
-  
+
   console.log('[Event Wormholes] Default wormholes registered');
 }
 

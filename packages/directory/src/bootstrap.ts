@@ -3,8 +3,8 @@
  * Registers existing entities (agents, ports, conduits, founder citizen) on startup
  */
 
-import { registerCitizen, registerPort, registerConduit, registerNode } from "./registry";
-import { wrapNodeId } from "./idGenerator";
+import { registerCitizen, registerPort, registerConduit, registerNode } from './registry.js';
+import { wrapNodeId } from './idGenerator.js';
 
 /**
  * Initialize Directory with existing entities
@@ -87,7 +87,7 @@ export async function initDirectory(): Promise<void> {
   // For now, we'll skip agents until the agent registry is available
 
   // Count ports and conduits after registration
-  const { listEntriesByType } = await import("./registry");
+  const { listEntriesByType } = await import('./registry.js');
   const portCount = listEntriesByType("port").length;
   const conduitCount = listEntriesByType("conduit").length;
   

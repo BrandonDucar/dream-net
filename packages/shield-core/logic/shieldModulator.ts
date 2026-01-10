@@ -1,5 +1,5 @@
-import { ShieldModulator, ShieldPhase, ShieldLayer } from "../types";
-import { ShieldStore } from "../store/shieldStore";
+import { ShieldModulator, ShieldPhase, ShieldLayer } from '../types.js';
+import { ShieldStore } from '../store/shieldStore.js';
 
 let modulatorCounter = 0;
 function nextModulatorId() {

@@ -3,8 +3,8 @@
  * A stub blueprint for a travel-focused DreamNet vertical
  */
 
-import { defineNetworkBlueprint } from "./define";
-import { TRAVELNET_CORE_ID } from "./constants";
+import { defineNetworkBlueprint } from './define.js';
+import { TRAVELNET_CORE_ID } from './constants.js';
 
 export const TravelNetBlueprint = defineNetworkBlueprint({
   id: TRAVELNET_CORE_ID,

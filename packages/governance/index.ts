@@ -1,5 +1,5 @@
-export * from "./types";
-export * from "./policyTable";
-export * from "./quorumEngine";
-export * from "./policyEnforcer";
+export * from './types.js';
+export * from './policyTable.js';
+export * from './quorumEngine.js';
+export * from './policyEnforcer.js';
 

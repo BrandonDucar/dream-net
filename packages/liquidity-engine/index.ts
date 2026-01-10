@@ -7,10 +7,10 @@ import type {
   LiquidityPoolStatus,
   LiquidityEngineContext,
   LiquidityEngineStatus,
-} from "./types";
-import { LiquidityStore } from "./store/liquidityStore";
-import { runLiquidityEngineCycle, ensureLiquidityConfigsInitialized } from "./scheduler/liquidityScheduler";
-import { markPoolDeployed, markPoolActive } from "./logic/poolPlanner";
+} from './types.js';
+import { LiquidityStore } from './store/liquidityStore.js';
+import { runLiquidityEngineCycle, ensureLiquidityConfigsInitialized } from './scheduler/liquidityScheduler.js';
+import { markPoolDeployed, markPoolActive } from './logic/poolPlanner.js';
 
 export const LiquidityEngine = {
   initConfigs() {
@@ -54,6 +54,7 @@ export const LiquidityEngine = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default LiquidityEngine;
+export { createLiquidityRouter } from './src/router.js';
 

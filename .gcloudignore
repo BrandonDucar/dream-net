@@ -1,0 +1,22 @@
+.gcloudignore
+.git
+.gitignore
+.next/
+**/ .next/
+.vercel/
+**/ .vercel/
+dist/
+**/dist/
+node_modules/
+**/node_modules/
+.vscode/
+.gemini/
+*.log
+.pnpm-debug.log
+.env
+.env.*
+!.env.gcp
+temp_build/
+client/dist/
+server/dist/
+packages/*/dist/

@@ -4,7 +4,7 @@ import type {
   LiquidityEngineStatus,
   PoolState,
   PoolHealth,
-} from "../types";
+} from '../types.js';
 
 const configs: Map<string, LiquidityPoolConfig> = new Map();
 const statuses: Map<string, LiquidityPoolStatus> = new Map();

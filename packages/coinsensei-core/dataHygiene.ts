@@ -3,7 +3,7 @@
  * Detects duplicates, ticker mismatches, impossible quantities, etc.
  */
 
-import type { DataHygieneIssue, ManualEntry, CEXTransaction, TokenPosition } from './types';
+import type { DataHygieneIssue, ManualEntry, CEXTransaction, TokenPosition } from './types.js';
 
 export class DataHygieneEngine {
   detectIssues(

@@ -1,6 +1,6 @@
-import type { VaultContext, VaultStatus, VaultItem } from "../types";
-import { VaultStore } from "../store/vaultStore";
-import { rebuildVaultIndex } from "../logic/vaultIndexer";
+import type { VaultContext, VaultStatus, VaultItem } from '../types.js';
+import { VaultStore } from '../store/vaultStore.js';
+import { rebuildVaultIndex } from '../logic/vaultIndexer.js';
 
 let lastRunAt: number | null = null;
 

@@ -60,7 +60,7 @@ export interface TokenPosition {
 }
 
 export interface Trade {
-  date: Date | string;
+  date: Date;
   type: 'buy' | 'sell';
   amount: number;
   price: number;

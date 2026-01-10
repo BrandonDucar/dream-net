@@ -1,4 +1,4 @@
-import type { Squad } from "../types";
+import type { Squad } from '../types.js';
 
 const squadMap: Map<string, Squad> = new Map();
 

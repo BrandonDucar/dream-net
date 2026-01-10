@@ -1,5 +1,5 @@
-import type { QuorumDecision, QuorumVote, QuorumType, ActorContext } from "./types";
-import { getMinApprovals } from "./policyTable";
+import type { QuorumDecision, QuorumVote, QuorumType, ActorContext } from './types.js';
+import { getMinApprovals } from './policyTable.js';
 
 interface QuorumStore {
   [policyId: string]: QuorumDecision;

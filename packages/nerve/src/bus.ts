@@ -4,7 +4,7 @@
  * @module @dreamnet/nerve/bus
  */
 
-import type { NerveEvent, NerveChannelId, NervePriority } from "./types";
+import type { NerveEvent, NerveChannelId, NervePriority } from './types.js';
 
 /**
  * Nerve Subscriber - Callback function for event handling
@@ -17,7 +17,7 @@ export type NerveSubscriber = (event: NerveEvent) => void | Promise<void>;
 export interface NerveTransport {
   /** Transport name */
   name: string;
-  
+
   /**
    * Send event to transport
    * 
@@ -37,10 +37,10 @@ export type DropPolicy = "drop_oldest" | "drop_lowest_priority" | "block";
 export interface NerveBusOptions {
   /** Maximum queue size per priority tier */
   maxQueueSize?: number;
-  
+
   /** Drop policy when queue is full */
   dropPolicy?: DropPolicy;
-  
+
   /** Default sample rate (0-1) */
   defaultSampleRate?: number;
 }
@@ -51,19 +51,19 @@ export interface NerveBusOptions {
 export interface NerveBusStats {
   /** Total events published */
   published: number;
-  
+
   /** Total events dropped */
   dropped: number;
-  
+
   /** Events by channel */
   byChannel: Record<string, number>;
-  
+
   /** Events by kind */
   byKind: Record<string, number>;
-  
+
   /** Events by priority */
   byPriority: Record<string, number>;
-  
+
   /** Current queue size */
   queueSize: number;
 }
@@ -78,7 +78,7 @@ export interface NerveBus {
    * @param event - Nerve event to publish
    */
   publish(event: NerveEvent): void;
-  
+
   /**
    * Subscribe to events on a specific channel
    * 
@@ -87,7 +87,7 @@ export interface NerveBus {
    * @returns Unsubscribe function
    */
   subscribe(channelId: NerveChannelId, subscriber: NerveSubscriber): () => void;
-  
+
   /**
    * Subscribe to all events across all channels
    * 
@@ -95,21 +95,21 @@ export interface NerveBus {
    * @returns Unsubscribe function
    */
   subscribeAll(subscriber: NerveSubscriber): () => void;
-  
+
   /**
    * Register a transport for external event routing
    * 
    * @param transport - Transport implementation
    */
   registerTransport(transport: NerveTransport): void;
-  
+
   /**
    * Get bus statistics
    * 
    * @returns Bus stats
    */
   getStats(): NerveBusStats;
-  
+
   /**
    * Get subscriber count for a channel (for debugging)
    * 
@@ -117,6 +117,13 @@ export interface NerveBus {
    * @returns Number of subscribers
    */
   getSubscriberCount(channelId?: NerveChannelId): number;
+
+  /**
+   * Set metabolic pressure for systemic task shedding
+   * 
+   * @param score - Pressure score (0-100)
+   */
+  setMetabolicPressure(score: number): void;
 }
 
 /**
@@ -131,19 +138,19 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
     dropPolicy = "drop_lowest_priority",
     defaultSampleRate = 0.1,
   } = options;
-  
+
   // Map of channel ID to set of subscribers
   const channelSubscribers: Map<NerveChannelId, Set<NerveSubscriber>> = new Map();
-  
+
   // Global subscribers (subscribe to all channels)
   const globalSubscribers: Set<NerveSubscriber> = new Set();
-  
+
   // Registered transports
   const transports: Set<NerveTransport> = new Set();
-  
+
   // Event queue (priority-ordered)
   const eventQueue: NerveEvent[] = [];
-  
+
   // Stats tracking
   const stats: NerveBusStats = {
     published: 0,
@@ -153,7 +160,20 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
     byPriority: {},
     queueSize: 0,
   };
-  
+
+  /**
+   * 🌀 METABOLIC PRESSURE
+   * High pressure triggers task shedding in the laminar flow loop.
+   */
+  let metabolicPressure = 0; // 0-100 scale
+
+  function setMetabolicPressure(score: number): void {
+    metabolicPressure = Math.min(100, Math.max(0, score));
+    if (metabolicPressure > 80) {
+      console.warn(`[🌀 MetabolicCortex] CRITICAL PRESSURE: ${metabolicPressure}% - Initiating systemic task shedding.`);
+    }
+  }
+
   /**
    * Process an event (fan-out to subscribers and transports)
    */
@@ -162,7 +182,7 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
     if (event.context.sampled === false) {
       return;
     }
-    
+
     // Notify global subscribers first
     for (const subscriber of globalSubscribers) {
       try {
@@ -177,7 +197,7 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
         console.error(`[NerveBus] Global subscriber error:`, error);
       }
     }
-    
+
     // Notify channel-specific subscribers
     const channelSubs = channelSubscribers.get(event.channelId);
     if (channelSubs) {
@@ -195,7 +215,7 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
         }
       }
     }
-    
+
     // Send to transports
     for (const transport of transports) {
       try {
@@ -211,13 +231,13 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
       }
     }
   }
-  
+
   /**
    * Drop an event based on drop policy
    */
   function dropEvent(): void {
     stats.dropped++;
-    
+
     if (dropPolicy === "drop_oldest") {
       // Remove oldest event
       eventQueue.shift();
@@ -225,30 +245,58 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
       // Find and remove lowest priority event
       let lowestIndex = 0;
       let lowestPriority: NervePriority = 5;
-      
+
       for (let i = 0; i < eventQueue.length; i++) {
         if (eventQueue[i].priority < lowestPriority) {
           lowestPriority = eventQueue[i].priority;
           lowestIndex = i;
         }
       }
-      
+
       eventQueue.splice(lowestIndex, 1);
     }
     // "block" policy: don't drop, just don't add (handled in publish)
   }
-  
+
   /**
    * Process queue (drain events)
    */
-  function processQueue(): void {
-    while (eventQueue.length > 0) {
-      const event = eventQueue.shift()!;
-      stats.queueSize = eventQueue.length;
+  /**
+   * Process queue with Laminar Flow (Batching)
+   * Hijacked Wisdom: Fluid Dynamics (Navier-Stokes)
+   */
+  async function processBatchQueue(): Promise<void> {
+    if (eventQueue.length === 0) return;
+
+    // Create a Laminar Batch
+    const BATCH_SIZE = 50; // Laminar limit
+    const batch = eventQueue.splice(0, BATCH_SIZE);
+
+    // Process batch elements with Shedding Logic
+    for (const event of batch) {
+      // Metabolic Task Shedding:
+      // If pressure > 80, drop priority < 3
+      // If pressure > 50, drop priority < 2
+      if (metabolicPressure > 80 && event.priority < 3) {
+        stats.dropped++;
+        continue;
+      }
+      if (metabolicPressure > 50 && event.priority < 2) {
+        stats.dropped++;
+        continue;
+      }
+
       processEvent(event);
     }
+
+    stats.queueSize = eventQueue.length;
+
+    // If queue still has turbulence, schedule next micro-batch immediately
+    if (eventQueue.length > 0) {
+      setImmediate(processBatchQueue);
+    }
   }
-  
+
   return {
     publish(event: NerveEvent): void {
       // Update stats
@@ -256,7 +304,7 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
       stats.byChannel[event.channelId] = (stats.byChannel[event.channelId] || 0) + 1;
       stats.byKind[event.kind] = (stats.byKind[event.kind] || 0) + 1;
       stats.byPriority[event.priority.toString()] = (stats.byPriority[event.priority.toString()] || 0) + 1;
-      
+
       // Check if queue is full
       if (eventQueue.length >= maxQueueSize) {
         if (dropPolicy === "block") {
@@ -269,7 +317,7 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
           dropEvent();
         }
       }
-      
+
       // Add to queue (priority-ordered insertion)
       // Higher priority events go to front
       let inserted = false;
@@ -283,22 +331,24 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
       if (!inserted) {
         eventQueue.push(event);
       }
-      
+
       stats.queueSize = eventQueue.length;
-      
-      // Process queue synchronously (for now)
-      // TODO: Could be async/batched in production
-      processQueue();
+
+      // Process with Laminar Flow (Non-blocking batching)
+      if (eventQueue.length === 1) {
+        // Only trigger the flow loop if it wasn't already running
+        setImmediate(processBatchQueue);
+      }
     },
-    
+
     subscribe(channelId: NerveChannelId, subscriber: NerveSubscriber): () => void {
       if (!channelSubscribers.has(channelId)) {
         channelSubscribers.set(channelId, new Set());
       }
-      
+
       const subs = channelSubscribers.get(channelId)!;
       subs.add(subscriber);
-      
+
       // Return unsubscribe function
       return () => {
         subs.delete(subscriber);
@@ -307,34 +357,36 @@ export function createInMemoryNerveBus(options: NerveBusOptions = {}): NerveBus 
         }
       };
     },
-    
+
     subscribeAll(subscriber: NerveSubscriber): () => void {
       globalSubscribers.add(subscriber);
-      
+
       // Return unsubscribe function
       return () => {
         globalSubscribers.delete(subscriber);
       };
     },
-    
+
     registerTransport(transport: NerveTransport): void {
       transports.add(transport);
       console.info(`[NerveBus] Registered transport: ${transport.name}`);
     },
-    
+
     getStats(): NerveBusStats {
       return {
         ...stats,
         queueSize: eventQueue.length,
       };
     },
-    
+
     getSubscriberCount(channelId?: NerveChannelId): number {
       if (channelId) {
         return channelSubscribers.get(channelId)?.size || 0;
       }
       return globalSubscribers.size;
     },
+
+    setMetabolicPressure,
   };
 }
 

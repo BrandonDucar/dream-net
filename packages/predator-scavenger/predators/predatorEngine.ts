@@ -1,4 +1,4 @@
-import type { DecaySignal, PredatorAction, PSLContext } from "../types";
+import type { DecaySignal, PredatorAction, PSLContext } from '../types.js';
 
 export function runPredatorEngine(
   decaySignals: DecaySignal[],

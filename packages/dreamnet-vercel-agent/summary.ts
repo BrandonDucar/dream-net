@@ -3,7 +3,7 @@
  * Provides summary statistics for Ports Ops Panel
  */
 
-import { DreamNetVercelAgent } from "./index";
+import { DreamNetVercelAgent } from './index.js';
 
 export interface VercelAgentSummary {
   projectsTracked: number;

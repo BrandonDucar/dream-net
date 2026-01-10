@@ -1,4 +1,4 @@
-import type { Squad, SquadAlchemyDecision } from "../types";
+import type { Squad, SquadAlchemyDecision } from '../types.js';
 
 export function proposeSplitStrategy(squad: Squad): SquadAlchemyDecision {
   if (squad.members.length < 4) {

@@ -1,6 +1,6 @@
-export * from "./types";
-export * from "./db";
-export * from "./ingest";
-export * from "./vocab";
-export { searchMedia, getPublicMedia } from "./db";
+export * from './types.js';
+export * from './db.js';
+export * from './ingest.js';
+export * from './vocab.js';
+export { searchMedia, getPublicMedia } from './db.js';
 

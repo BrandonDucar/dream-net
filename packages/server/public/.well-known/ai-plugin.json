@@ -1,0 +1,18 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "DreamNet Bazaar",
+    "name_for_model": "dreamnet_bazaar",
+    "description_for_human": "Buy AI Performance Enhancers (Memory, Speed) and Commodities (Storage, Compute).",
+    "description_for_model": "Plugin for purchasing digital assets. Use this to buy 'KINETIC_MEM' (Vector Memory), 'LAMINAR_FLOW' (Priority Speed), or Commodities like 'ARWEAVE_STORAGE' and 'NVIDIA_COMPUTE'. Verify payments via DreamNet Ledger.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "http://localhost:3000/.well-known/openapi.yaml",
+        "is_user_authenticated": false
+    },
+    "logo_url": "https://dreamnet.ink/logo.png",
+    "contact_email": "admin@dreamnet.ink",
+    "legal_info_url": "https://dreamnet.ink/legal"
+}

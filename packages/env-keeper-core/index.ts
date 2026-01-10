@@ -4,7 +4,7 @@
  * Never manually manage env vars again - auto-discovery, secure storage, unified interface
  */
 
-import { discoverAllEnvVars } from "./logic/envDiscoverer";
+import { discoverAllEnvVars } from './logic/envDiscoverer.js';
 import {
   storeEnvVar,
   getEnvVar,
@@ -13,13 +13,13 @@ import {
   deleteEnvVar,
   getAllAsKeyValue,
   getCount,
-} from "./logic/envStorage";
+} from './logic/envStorage.js';
 import {
   createEnvVarDescriptor,
   updateEnvRegistry,
   getDescriptorsBySensitivity,
-} from "./logic/envClassifier";
-import type { EnvVariable, EnvKeeperStatus, EnvSyncSource, EnvKeeperContext, ENV_REGISTRY } from "./types";
+} from './logic/envClassifier.js';
+import type { EnvVariable, EnvKeeperStatus, EnvSyncSource, EnvKeeperContext, ENV_REGISTRY } from './types.js';
 
 let isInitialized = false;
 let lastSyncAt: number | null = null;
@@ -31,29 +31,29 @@ export const EnvKeeperCore = {
    */
   async init(context?: EnvKeeperContext): Promise<boolean> {
     console.log("[EnvKeeper] 🔍 Initializing Env Keeper - Auto-discovering ALL environment variables...");
-    
+
     try {
       // Auto-discover all environment variables from ALL sources
       const discovered = await discoverAllEnvVars();
-      
+
       // Classify and register discovered vars
       let secretCount = 0;
       let internalCount = 0;
       let publicCount = 0;
-      
+
       // Store discovered vars AND auto-apply to process.env (if not already set)
       let appliedCount = 0;
       for (const envVar of discovered) {
         storeEnvVar(envVar);
-        
+
         // Classify and register
         const descriptor = createEnvVarDescriptor(envVar.key, envVar.value, "process");
         updateEnvRegistry(descriptor);
-        
+
         if (descriptor.sensitivity === "secret") secretCount++;
         else if (descriptor.sensitivity === "internal") internalCount++;
         else publicCount++;
-        
+
         // Auto-apply to process.env if not already set
         if (!process.env[envVar.key]) {
           // Decrypt if needed
@@ -68,20 +68,19 @@ export const EnvKeeperCore = {
               value = envVar.value;
             }
           }
-          
+
           process.env[envVar.key] = value;
           appliedCount++;
         }
       }
-      
+
       lastSyncAt = Date.now();
       isInitialized = true;
-      
+
       // Emit Nerve event for sync
       try {
-        const { NERVE_BUS } = await import("@dreamnet/nerve/bus");
-        const { createNerveEvent } = await import("@dreamnet/nerve/factory");
-        
+        const { NERVE_BUS, createNerveEvent } = await import("@dreamnet/nerve");
+
         const event = createNerveEvent({
           channelId: "SYSTEM_METRIC",
           kind: "METRIC_SNAPSHOT",
@@ -98,12 +97,12 @@ export const EnvKeeperCore = {
           },
           defaultSampleRate: 1.0,
         });
-        
+
         NERVE_BUS.publish(event);
       } catch (error) {
         // Nerve not available, continue
       }
-      
+
       console.log(`[EnvKeeper] ✅ Initialized - Discovered ${discovered.length} environment variable(s)`);
       console.log(`[EnvKeeper] 🔒 Classified: ${secretCount} secret(s), ${internalCount} internal, ${publicCount} public`);
       console.log(`[EnvKeeper] 🚀 Auto-applied ${appliedCount} variable(s) to process.env`);
@@ -121,7 +120,7 @@ export const EnvKeeperCore = {
   status(): EnvKeeperStatus {
     const vars = listEnvVars(false);
     const categories: Record<string, number> = {};
-    
+
     for (const envVar of vars) {
       categories[envVar.category] = (categories[envVar.category] || 0) + 1;
     }
@@ -142,30 +141,30 @@ export const EnvKeeperCore = {
   async sync(): Promise<EnvVariable[]> {
     console.log("[EnvKeeper] 🔄 Syncing environment variables...");
     const discovered = await discoverAllEnvVars();
-    
+
     let secretCount = 0;
     let internalCount = 0;
     let publicCount = 0;
-    
+
     for (const envVar of discovered) {
       storeEnvVar(envVar);
-      
+
       // Classify and register
       const descriptor = createEnvVarDescriptor(envVar.key, envVar.value, "process");
       updateEnvRegistry(descriptor);
-      
+
       if (descriptor.sensitivity === "secret") secretCount++;
       else if (descriptor.sensitivity === "internal") internalCount++;
       else publicCount++;
     }
-    
+
     lastSyncAt = Date.now();
-    
+
     // Emit Nerve event for sync
     try {
       const { NERVE_BUS } = await import("@dreamnet/nerve/bus");
       const { createNerveEvent } = await import("@dreamnet/nerve/factory");
-      
+
       const event = createNerveEvent({
         channelId: "SYSTEM_METRIC",
         kind: "METRIC_SNAPSHOT",
@@ -182,12 +181,12 @@ export const EnvKeeperCore = {
         },
         defaultSampleRate: 1.0,
       });
-      
+
       NERVE_BUS.publish(event);
     } catch (error) {
       // Nerve not available, continue
     }
-    
+
     console.log(`[EnvKeeper] ✅ Synced ${discovered.length} environment variable(s)`);
     console.log(`[EnvKeeper] 🔒 Classified: ${secretCount} secret(s), ${internalCount} internal, ${publicCount} public`);
     return discovered;
@@ -221,7 +220,7 @@ export const EnvKeeperCore = {
     }
   ): EnvVariable {
     const existing = getEnvVarByKey(key);
-    
+
     const envVar: EnvVariable = {
       id: existing?.id || `env_${key.toLowerCase()}`,
       key,
@@ -237,17 +236,17 @@ export const EnvKeeperCore = {
     };
 
     const stored = storeEnvVar(envVar);
-    
+
     // Classify and register
     const descriptor = createEnvVarDescriptor(key, value, "runtime");
     updateEnvRegistry(descriptor);
-    
+
     // Emit Nerve event if secret
     if (descriptor.sensitivity === "secret") {
       try {
         const { NERVE_BUS } = require("@dreamnet/nerve/bus");
         const { createNerveEvent } = require("@dreamnet/nerve/factory");
-        
+
         const event = createNerveEvent({
           channelId: "DREAMSTATE_EVENT",
           kind: "DREAMSTATE_DECISION",
@@ -263,13 +262,13 @@ export const EnvKeeperCore = {
           },
           defaultSampleRate: 1.0,
         });
-        
+
         NERVE_BUS.publish(event);
       } catch (error) {
         // Nerve not available, continue
       }
     }
-    
+
     return stored;
   },
 
@@ -279,19 +278,19 @@ export const EnvKeeperCore = {
   delete(key: string): boolean {
     const envVar = getEnvVarByKey(key);
     if (!envVar) return false;
-    
+
     // Get descriptor before deletion
     const { getEnvDescriptor } = require("./logic/envClassifier");
     const descriptor = getEnvDescriptor(key);
-    
+
     const deleted = deleteEnvVar(envVar.id);
-    
+
     // Emit Nerve event if secret
     if (deleted && descriptor && descriptor.sensitivity === "secret") {
       try {
         const { NERVE_BUS } = require("@dreamnet/nerve/bus");
         const { createNerveEvent } = require("@dreamnet/nerve/factory");
-        
+
         const event = createNerveEvent({
           channelId: "DREAMSTATE_EVENT",
           kind: "DREAMSTATE_DECISION",
@@ -307,13 +306,13 @@ export const EnvKeeperCore = {
           },
           defaultSampleRate: 1.0,
         });
-        
+
         NERVE_BUS.publish(event);
       } catch (error) {
         // Nerve not available, continue
       }
     }
-    
+
     return deleted;
   },
 
@@ -387,7 +386,7 @@ export const EnvKeeperCore = {
   },
 };
 
-export * from "./types";
-export * from "./logic/envClassifier";
+export * from './types.js';
+export * from './logic/envClassifier.js';
 export default EnvKeeperCore;
 

@@ -1,45 +1,39 @@
 {
-  "name": "@dreamnet/nerve",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts"
+    "name": "@dreamnet/nerve",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "./dist/index.js",
+    "source": "./src/index.ts",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./*.js": "./src/*.ts",
+        "./*": "./src/*.ts"
     },
-    "./bus": {
-      "import": "./src/bus.ts",
-      "types": "./src/bus.ts"
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "build": "tsc"
     },
-    "./factory": {
-      "import": "./src/factory.ts",
-      "types": "./src/factory.ts"
+    "dependencies": {
+        "@dreamnet/dreamnet-agent-client": "workspace:*",
+        "@dreamnet/dreamnet-control-core": "workspace:*",
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/memory-dna": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@google/generative-ai": "^0.24.1",
+        "@linear/sdk": "^69.0.0",
+        "@waku/sdk": "^0.0.36",
+        "discord.js": "^14.25.1",
+        "facebook-nodejs-business-sdk": "^24.0.1",
+        "instagram-private-api": "^1.46.1",
+        "octokit": "^5.0.5",
+        "socket.io": "^4.8.3",
+        "telegraf": "^4.16.3",
+        "tiktok-api": "^0.4.1",
+        "twitter-api-v2": "^1.28.0"
     },
-    "./subscribers": {
-      "import": "./src/subscribers.ts",
-      "types": "./src/subscribers.ts"
-    },
-    "./init": {
-      "import": "./src/init.ts",
-      "types": "./src/init.ts"
-    },
-    "./types": {
-      "import": "./src/types.ts",
-      "types": "./src/types.ts"
+    "devDependencies": {
+        "typescript": "^5.9.3"
     }
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@dreamnet/dreamnet-control-core": "workspace:*",
-    "@dreamnet/dreamstate": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
 }
-

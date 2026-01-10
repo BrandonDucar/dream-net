@@ -1,4 +1,4 @@
-import type { ChainBreathMetrics, ChainId } from "../types";
+import type { ChainBreathMetrics, ChainId } from '../types.js';
 
 export function createGenericChainMetrics(chain: ChainId): ChainBreathMetrics {
   const now = Date.now();

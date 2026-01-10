@@ -1,5 +1,5 @@
-import { ArmRegistry, type OctopusArmHandler } from "./armRegistry";
-import type { OctopusArmConfig, OctopusArmId, OctopusTask, OctopusContext } from "../types";
+import { ArmRegistry, type OctopusArmHandler } from './armRegistry.js';
+import type { OctopusArmConfig, OctopusArmId, OctopusTask, OctopusContext } from '../types.js';
 
 function createNoopHandler(name: string): OctopusArmHandler {
   return async (task: OctopusTask, ctx: OctopusContext) => {

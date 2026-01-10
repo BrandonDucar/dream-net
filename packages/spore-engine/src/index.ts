@@ -1,6 +1,6 @@
-export * from "./types";
-export * from "./registry";
-export * from "./lineage";
-export * from "./distribution";
-export { createSporeRouter } from "./router";
+export * from './types.js';
+export * from './registry.js';
+export * from './lineage.js';
+export * from './distribution.js';
+export { createSporeRouter } from './router.js';
 

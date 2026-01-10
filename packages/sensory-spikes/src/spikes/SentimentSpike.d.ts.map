@@ -1,0 +1,1 @@
+{"version":3,"file":"SentimentSpike.d.ts","sourceRoot":"","sources":["SentimentSpike.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,YAAY,EAAE,WAAW,EAAE,MAAM,aAAa,CAAC;AAExD,qBAAa,cAAe,YAAW,YAAY;IAC/C,IAAI,SAAoB;IACxB,IAAI,EAAG,MAAM,CAAU;IACvB,OAAO,CAAC,MAAM,CAA+C;IAEvD,KAAK,IAAI,OAAO,CAAC,WAAW,CAAC;CA6CtC"}

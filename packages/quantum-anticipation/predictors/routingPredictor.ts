@@ -1,4 +1,4 @@
-import type { QALContext, QALPrediction } from "../types";
+import type { QALContext, QALPrediction } from '../types.js';
 
 export function predictRoutingBottlenecks(ctx: QALContext): QALPrediction[] {
   const now = Date.now();

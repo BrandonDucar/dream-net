@@ -3,8 +3,8 @@
  * Incident management system
  */
 
-import { incidentStore } from "./store/incidentStore";
-import type { Incident, IncidentEvent, IncidentQuery, IncidentStatus, IncidentSeverity } from "./types";
+import { incidentStore } from './store/incidentStore.js';
+import type { Incident, IncidentEvent, IncidentQuery, IncidentStatus, IncidentSeverity } from './types.js';
 import { bridgeToSpiderWeb } from "@dreamnet/dreamnet-operational-bridge";
 
 export const DreamNetIncidentCore = {
@@ -140,6 +140,6 @@ export const DreamNetIncidentCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamNetIncidentCore;
 

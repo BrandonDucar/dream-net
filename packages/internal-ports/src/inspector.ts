@@ -5,9 +5,9 @@
  * for monitoring and debugging purposes.
  */
 
-import { listPorts } from './registry';
-import type { DreamPort } from './ports';
-import { PORT_IDS, type PortId } from './port-ids';
+import { listPorts } from './registry.js';
+import type { DreamPort } from './ports.js';
+import { PORT_IDS, type PortId } from './port-ids.js';
 
 /**
  * Default port IDs registered by @dreamnet/internal-ports
@@ -44,7 +44,7 @@ export interface PortSnapshot {
  */
 export function getPortsSnapshot(): PortSnapshot[] {
   const ports = listPorts();
-  
+
   return ports.map((port: DreamPort) => ({
     id: port.id,
     label: port.label,
@@ -69,17 +69,15 @@ export interface RouteSnapshot {
  * 
  * @returns Array of route snapshots
  */
+/**
+ * Get a snapshot of all registered routes
+ * 
+ * @returns Array of route snapshots
+ */
 export async function getRoutesSnapshot(): Promise<RouteSnapshot[]> {
-  // Dynamic import to avoid circular dependencies
-  const router = await import('@dreamnet/internal-router');
-  const routes = router.listRoutes();
-  
-  return routes.map((route) => ({
-    fiber: route.key.fiber,
-    type: route.key.type,
-    targetPortId: route.target.portId,
-    description: route.description
-  }));
+  // Stubbed to break circular dependency during build stabilization
+  // TODO: Re-enable once @dreamnet/internal-router is stable and types are shared
+  return [];
 }
 
 /**
@@ -103,21 +101,8 @@ export interface WormholeSnapshot {
  * @returns Array of wormhole snapshots
  */
 export async function getWormholesSnapshot(): Promise<WormholeSnapshot[]> {
-  // Dynamic import to avoid circular dependencies
-  const wormholesModule = await import('@dreamnet/event-wormholes');
-  const wormholes = wormholesModule.listWormholes();
-  const stats = wormholesModule.getWormholeStats();
-  
-  return wormholes.map((wormhole) => ({
-    id: wormhole.id,
-    label: wormhole.label,
-    direction: wormhole.direction,
-    fiber: wormhole.fiber,
-    stats: stats[wormhole.id] || {
-      buffered: 0,
-      enqueued: 0,
-      dropped: 0
-    }
-  }));
+  // Stubbed to break circular dependency during build stabilization
+  // TODO: Re-enable once @dreamnet/event-wormholes is stable and types are shared
+  return [];
 }
 

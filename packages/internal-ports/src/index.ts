@@ -8,13 +8,13 @@
  */
 
 // Export fibers
-export { FIBERS, type FiberChannel, getAllFibers, isValidFiber } from './fibers';
+export { FIBERS, type FiberChannel, getAllFibers, isValidFiber } from './fibers.js';
 
 // Export packets
-export { createPacket, isValidPacket, type DreamPacket } from './packets';
+export { createPacket, isValidPacket, type DreamPacket } from './packets.js';
 
 // Export ports
-export { createPort, isValidPort, type DreamPort } from './ports';
+export { createPort, isValidPort, type DreamPort } from './ports.js';
 
 // Export registry
 export {
@@ -27,7 +27,7 @@ export {
   getPortsByFiber,
   getPortsByDirection,
   getRegistryStats
-} from './registry';
+} from './registry.js';
 
 // Export inspector
 export {
@@ -37,17 +37,17 @@ export {
   type PortSnapshot,
   type RouteSnapshot,
   type WormholeSnapshot
-} from './inspector';
+} from './inspector.js';
 
 // Export port IDs
-export { PORT_IDS, type PortId } from './port-ids';
+export { PORT_IDS, type PortId } from './port-ids.js';
 
 // Import for default port registration
-import { FIBERS } from './fibers';
-import { createPacket, type DreamPacket } from './packets';
-import { createPort, type DreamPort } from './ports';
-import { registerPort } from './registry';
-import { PORT_IDS } from './port-ids';
+import { FIBERS } from './fibers.js';
+import { createPacket, type DreamPacket } from './packets.js';
+import { createPort, type DreamPort } from './ports.js';
+import { registerPort } from './registry.js';
+import { PORT_IDS } from './port-ids.js';
 
 /**
  * Default placeholder handler for ports

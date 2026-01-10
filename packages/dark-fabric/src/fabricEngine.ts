@@ -1,10 +1,14 @@
-import type { FabricTask, DiffResult, SandboxResult } from "./types";
+import type { FabricTask, DiffResult, SandboxResult } from './types.js';
 import { randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
-import { runSandbox } from "./sandbox";
-import { computeFileDiff } from "./diffEngine";
-import { validateTask, validateCodeSafety } from "./validators";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+import { runSandbox } from './sandbox.js';
+import { computeFileDiff } from './diffEngine.js';
+import { validateTask, validateCodeSafety } from './validators.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const FABRIC_STORE_PATH = join(__dirname, "../store/fabricStore.json");
 

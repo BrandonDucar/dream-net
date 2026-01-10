@@ -15,8 +15,8 @@ import type {
   CoinSenseiConfig,
   ManualEntry,
   CEXTransaction,
-} from './types';
-import { PriceProvider } from './priceProvider';
+} from './types.js';
+import { PriceProvider } from './priceProvider.js';
 
 export class PortfolioEngine {
   private config: Required<CoinSenseiConfig>;

@@ -1,8 +1,13 @@
 /**
- * DreamNet Operational Bridge
- * Biomimetic integration layer connecting operational systems to DreamNet organs
+ * DreamNet Operational Bridge Stub
  */
 
-export * from "./logic/spiderWebBridge";
-export * from "./logic/packSignalFeeders";
+export const OperationalBridge = {
+    sync: () => Promise.resolve({ ok: true }),
+};
 
+export const bridgeToSpiderWeb = (data: any) => {
+    console.log("[OperationalBridge] Stub bridgeToSpiderWeb:", data);
+};
+
+export default OperationalBridge;

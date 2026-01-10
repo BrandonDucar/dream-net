@@ -1,5 +1,5 @@
-import { ShieldEmitter, ShieldPhase, ThreatType } from "../types";
-import { ShieldStore } from "../store/shieldStore";
+import { ShieldEmitter, ShieldPhase, ThreatType } from '../types.js';
+import { ShieldStore } from '../store/shieldStore.js';
 
 let emitterCounter = 0;
 function nextEmitterId() {
