@@ -1,12 +1,16 @@
-import type { LiquidityEngineContext, LiquidityEngineStatus } from "../types";
-import { LiquidityStore } from "../store/liquidityStore";
-import { seedInitialLiquidityConfigs } from "../logic/poolPlanner";
+import type { LiquidityEngineContext, LiquidityEngineStatus } from '../types.js';
+import { LiquidityStore } from '../store/liquidityStore.js';
+import { seedInitialLiquidityConfigs } from '../logic/poolPlanner.js';
+import { seedSLUPoolConfigs } from '../logic/sluPoolPlanner.js';
 
 let initialized = false;
 
 export function ensureLiquidityConfigsInitialized() {
   if (initialized) return;
   seedInitialLiquidityConfigs();
+  // Seeding SLU Pools with placeholder Staked SPK address
+  // In production, this would come from EnvKeeper or a registry
+  seedSLUPoolConfigs("0x0000000000000000000000000000000000000000");
   initialized = true;
 }
 

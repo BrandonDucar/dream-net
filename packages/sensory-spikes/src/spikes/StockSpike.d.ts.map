@@ -1,0 +1,1 @@
+{"version":3,"file":"StockSpike.d.ts","sourceRoot":"","sources":["StockSpike.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,YAAY,EAAE,WAAW,EAAE,MAAM,aAAa,CAAC;AAExD,qBAAa,UAAW,YAAW,YAAY;IAC3C,IAAI,SAAgB;IACpB,IAAI,EAAG,WAAW,CAAU;IAC5B,OAAO,CAAC,MAAM,CAA+C;IAEvD,KAAK,IAAI,OAAO,CAAC,WAAW,CAAC;CAyCtC"}

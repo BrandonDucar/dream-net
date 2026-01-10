@@ -1,0 +1,1 @@
+{"version":3,"file":"errorRateTrigger.d.ts","sourceRoot":"","sources":["errorRateTrigger.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAChD,OAAO,KAAK,EAAE,mBAAmB,EAAE,MAAM,UAAU,CAAC;AAKpD,wBAAgB,wBAAwB,CAAC,OAAO,EAAE,UAAU,GAAG,mBAAmB,CAOjF;AAED,wBAAgB,WAAW,CAAC,MAAM,EAAE,UAAU,GAAG,IAAI,CAMpD"}

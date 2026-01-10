@@ -1,4 +1,4 @@
-import { RuntimeSnapshot, RuntimeBridgeStatus } from "../types";
+import { RuntimeSnapshot, RuntimeBridgeStatus } from '../types.js';
 
 let initialized = false;
 

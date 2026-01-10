@@ -13,7 +13,7 @@ import type {
   NodeDirectoryEntry,
   PortDirectoryEntry,
   ConduitDirectoryEntry,
-} from "./types";
+} from './types.js';
 
 const DIRECTORY: Map<DirectoryId, DirectoryEntry> = new Map();
 

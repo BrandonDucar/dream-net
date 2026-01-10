@@ -1,5 +1,5 @@
-import type { ReputationContext, ReputationSignal, RepEntityType } from "../types";
-import { ReputationStore } from "../store/reputationStore";
+import type { ReputationContext, ReputationSignal, RepEntityType } from '../types.js';
+import { ReputationStore } from '../store/reputationStore.js';
 
 export function ingestExternalSignals(ctx: ReputationContext) {
   const now = Date.now();

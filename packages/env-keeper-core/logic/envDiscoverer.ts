@@ -3,7 +3,7 @@
  * Automatically discovers environment variables from all sources
  */
 
-import { EnvVariable, EnvCategory } from "../types";
+import { EnvVariable, EnvCategory } from '../types.js';
 import fs from "fs";
 import path from "path";
 
@@ -236,7 +236,7 @@ export function discoverFromEnvFiles(): EnvVariable[] {
  */
 export async function discoverFromVercel(): Promise<EnvVariable[]> {
   try {
-    const { discoverFromVercel: vercelDiscover } = await import("./vercelSync");
+    const { discoverFromVercel: vercelDiscover } = await import('./vercelSync.js');
     return await vercelDiscover();
   } catch (error: any) {
     console.warn("[EnvKeeper] Vercel discovery error:", error.message);

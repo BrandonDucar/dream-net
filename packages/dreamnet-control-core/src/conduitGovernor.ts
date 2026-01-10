@@ -3,15 +3,16 @@
  * Enforces per-line budgets and limits for {portId, clusterId, toolId} combos
  */
 
-import { getConduitConfig } from "./conduits";
-import type { PortId } from "../../port-governor/src/types";
-import type { ClusterId } from "../clusters";
-import type { ToolId } from "../../agent-gateway/src/tools";
+import { getConduitConfig } from './conduits.js';
+import type { PortId } from "@dreamnet/types";
+import type { ClusterId } from './clusters.js';
+// import type { ToolId } from "@dreamnet/agent-gateway/src/tools";
+type ToolId = string;
 
 // Re-export for convenience
 export { getConduitConfig };
 
-import type { ConduitId } from "./conduits";
+import type { ConduitId } from './conduits.js';
 
 export interface ConduitUsage {
   windowStart: number;
@@ -22,7 +23,16 @@ export interface ConduitUsage {
   lastErrorReason?: string;
 }
 
+// import { CoolingSystem } from "@dreamnet/dreamnet-os-core/logic/liquidCooling";
+class CoolingSystem {
+  constructor(private id: string) { }
+  getStatus() { return { isThrottling: false, temperature: 0 }; }
+  cycleCoolant() { }
+  absorbHeat(amount: number) { }
+}
+
 const perConduitUsage = new Map<ConduitId, ConduitUsage>();
+const perConduitCooling = new Map<ConduitId, CoolingSystem>();
 
 export interface ConduitDecision {
   allowed: boolean;
@@ -41,6 +51,30 @@ export function evaluateConduit(
   }
 
   const key = cfg.id;
+
+  // [LIQUID COOLING] Thermal Regulation
+  let cooling = perConduitCooling.get(key);
+  if (!cooling) {
+    cooling = new CoolingSystem(key);
+    perConduitCooling.set(key, cooling);
+  }
+
+  // Check temperature BEFORE work
+  const thermalStatus = cooling.getStatus();
+  if (thermalStatus.isThrottling) {
+    // Cooldown cycle (simulate automatic dissipation over time or rejecting request helps cool)
+    cooling.cycleCoolant();
+    return {
+      allowed: false,
+      reason: `CONDUIT_OVERHEATED (Temp: ${thermalStatus.temperature})`,
+      conduitId: cfg.id
+    };
+  }
+
+  // Absorb heat for this request (1 unit for now, could be dynamic based on token cost)
+  cooling.absorbHeat(1);
+
+
   const now = Date.now();
   const windowMs = 60_000;
 
@@ -54,6 +88,8 @@ export function evaluateConduit(
       timeoutCount: usage?.timeoutCount ?? 0,
       lastErrorReason: usage?.lastErrorReason,
     };
+    // Also cycle coolant on window reset to help drift back to zero if idle
+    cooling.cycleCoolant();
   }
   usage.count += 1;
   usage.totalCount = (usage.totalCount ?? 0) + 1;

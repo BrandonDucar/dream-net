@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { operatorApi } from "./api";
-import { usePolling } from "./usePolling";
-import { useHeartbeat } from "../hooks/useHeartbeat";
-import { MediaTab } from "./MediaTab";
-import { MetricsOverlay } from "./MetricsOverlay";
-import { OrdersTab } from "./OrdersTab";
-import { ContactsTab } from "./ContactsTab";
-import { RewardsTab } from "./RewardsTab";
-import { DreamTokenTab } from "./DreamTokenTab";
+import { operatorApi } from './api.js';
+import { usePolling } from './usePolling.js';
+import { useHeartbeat } from '../hooks/useHeartbeat.js';
+import { MediaTab } from './MediaTab.js';
+import { MetricsOverlay } from './MetricsOverlay.js';
+import { OrdersTab } from './OrdersTab.js';
+import { ContactsTab } from './ContactsTab.js';
+import { RewardsTab } from './RewardsTab.js';
+import { DreamTokenTab } from './DreamTokenTab.js';
 
 type AliveStatus = {
   alive: boolean;

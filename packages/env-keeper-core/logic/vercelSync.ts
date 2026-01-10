@@ -3,7 +3,7 @@
  * Syncs environment variables from Vercel projects
  */
 
-import { EnvVariable, EnvCategory } from "../types";
+import { EnvVariable, EnvCategory } from '../types.js';
 
 /**
  * Discover environment variables from Vercel

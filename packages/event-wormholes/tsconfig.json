@@ -1,12 +1,39 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
-  },
-  "include": ["src/types.ts", "src/wormholes.ts", "src/dispatcher.ts", "src/index.ts"],
-  "exclude": ["node_modules", "dist", "src/eventBus.ts", "src/slimeRouter.ts", "src/wormholeEngine.ts", "src/wormholeRegistry.ts", "src/router.ts"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@dreamnet/internal-ports": [
+                "../internal-ports"
+            ],
+            "@dreamnet/internal-router": [
+                "../internal-router"
+            ],
+            "@dreamnet/lib": [
+                "../lib"
+            ],
+            "@dreamnet/shared": [
+                "../shared"
+            ]
+        }
+    },
+    "include": [
+        "index.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "src",
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }

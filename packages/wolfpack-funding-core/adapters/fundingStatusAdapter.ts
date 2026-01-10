@@ -4,9 +4,9 @@
  * Provides a clean view model for the funding dashboard UI.
  */
 
-import { WolfPackFundingCore } from "../index";
-import { FundingStore } from "../store/fundingStore";
-import type { FundingLead, SendQueueItem } from "../types";
+import { WolfPackFundingCore } from '../index.js';
+import { FundingStore } from '../store/fundingStore.js';
+import type { FundingLead, SendQueueItem } from '../types.js';
 
 export interface FundingDashboardView {
   leadCount: number;

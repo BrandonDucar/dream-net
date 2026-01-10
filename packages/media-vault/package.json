@@ -1,20 +1,38 @@
 {
-  "name": "@dreamnet/media-vault",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "dependencies": {
-    "sharp": "^0.33.0",
-    "crypto": "^1.0.1"
-  },
-  "devDependencies": {
-    "@types/sharp": "^0.32.0"
-  },
-  "private": true
+    "name":  "@dreamnet/media-vault",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "dependencies":  {
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/database":  "workspace:*",
+                         "drizzle-orm":  "^0.29.3",
+                         "crypto":  "^1.0.1",
+                         "sharp":  "^0.33.0"
+                     },
+    "devDependencies":  {
+                            "@types/sharp":  "^0.32.0",
+                            "typescript":  "^5.9.3"
+                        },
+    "private":  true
 }
-

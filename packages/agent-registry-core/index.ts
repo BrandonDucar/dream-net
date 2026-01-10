@@ -5,14 +5,14 @@ import type {
   AgentHealth,
   AgentRegistryContext,
   AgentRegistryStatus,
-} from "./types";
-import { AgentStore } from "./store/agentStore";
+} from './types.js';
+import { AgentStore } from './store/agentStore.js';
 import {
   ensureDefaultAgentsSeeded,
   recordAgentSuccess,
   recordAgentError,
-} from "./logic/healthUpdater";
-import { runAgentRegistryCycle } from "./scheduler/agentScheduler";
+} from './logic/healthUpdater.js';
+import { runAgentRegistryCycle } from './scheduler/agentScheduler.js';
 
 export const AgentRegistryCore = {
   // Config
@@ -55,6 +55,6 @@ export const AgentRegistryCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default AgentRegistryCore;
 

@@ -5,13 +5,16 @@ import {
   OrcaEngagement,
   OrcaInsight,
   OrcaPackStatus,
-} from "../types";
+} from '../types.js';
 
 const themes: Map<string, OrcaNarrativeTheme> = new Map();
 const ideas: Map<string, OrcaPostIdea> = new Map();
 const plans: Map<string, OrcaPostPlan> = new Map();
 const engagements: OrcaEngagement[] = [];
 const insights: OrcaInsight[] = [];
+
+const storeInstanceId = Math.random().toString(36).substring(7);
+console.log(`[OrcaStore] 🐳 Module Initialized. Instance ID: ${storeInstanceId}`);
 
 let lastRunAt: number | null = null;
 

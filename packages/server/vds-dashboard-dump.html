@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" >
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>VDS Apps</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="referrer" content="never">
+
+    
+    <meta content="RapIDAdmin" name="description" />
+    <meta content="RapIDAdmin" name="keywords">
+    <meta content="RapIDAdmin" name="author" />
+
+    
+    <link rel="shortcut icon" href="data:,">
+
+    <link href="/RapIDAdmin/Content/fonts-open-sans.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/Content/font-awesome.min.css?v=639017879920000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/libs/simple-line-icons/simple-line-icons.min.css?v=639017879940000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/libs/bootstrap/css/bootstrap.min.css?v=639017879940000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/libs/jquery-uniform/css/uniform.default.css?v=639017879940000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/libs/toastr/toastr.min.css?v=639017879940000000" />
+    
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/Content/flags/famfamfam-flags.css?v=639017879920000000" />
+
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/metronic/assets/global/css/components-md.css?v=639017879960000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/metronic/assets/global/css/plugins-md.css?v=639017879960000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/metronic/assets/admin/layout/css/layout.css?v=639017879940000000" />
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/metronic/assets/admin/layout/css/themes/default.css?v=639017879940000000" />
+
+    <link href="/RapIDAdmin/Bundles/Common/css?v=fjNq2nJuyRXP2EcPzIQ0lFoXWRMmfqoxAFGQlwVBRGY1" rel="stylesheet"/>
+
+
+    <link rel="stylesheet" type="text/css" href="/RapIDAdmin/Views/Account/_Layout.css?v=639017879940000000" />
+
+    
+
+    <script type="text/javascript">
+        
+        var abp = abp || {}; abp.appPath = '/RapIDAdmin/';
+    </script>
+
+</head>
+<body class="page-md login">
+
+    <div class="menu-toggler sidebar-toggler">
+    </div>
+    <div class="logo">
+        <img src="/RapIDAdmin/Common/Images/VdsApps_Login.svg" alt="VDS Apps Login" style="width: 100%;" />
+    </div>
+    <div class="content">
+        
+<h3 class="form-title">Secure Sign In</h3>
+
+<div class="alert alert-danger display-hide">
+    <button class="close" data-close="alert"></button>
+    <span>
+        <i class="fa fa-warning"></i> Please enter login information
+    </span>
+</div>
+
+
+<form class="login-form" action="/RapIDAdmin/Account/Login" method="post">
+    <input type="hidden" name="returnUrlHash" />
+    <input type="hidden" name="returnUrl" value="" />
+    <div class="form-group">
+        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+        <label class="control-label visible-ie8 visible-ie9">User name or email</label>
+        <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="User name or email" name="usernameOrEmailAddress" value="" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label visible-ie8 visible-ie9">Password</label>
+        <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" />
+    </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Take Me To:</label>
+            <select class="form-control" id="takeMeToApplicationId" name="takeMeToApplicationId" autocomplete="off">
+                        <option data-supports-kiosk="true" value="0dcb265f-9495-49c3-9292-925f84b00077" selected>PerfectPass</option>
+                        <option data-supports-kiosk="false" value="ef5e0e2d-e424-403c-9800-8c38e28f36d5">RapIDAdmin</option>
+                        <option data-supports-kiosk="false" value="d7de1d75-c685-4c5c-b1fc-c613b31f1ee9">EliteID</option>
+            </select>
+        </div>
+    <div class="row">
+        <div class="col-sm-5 form-group">
+            <button type="submit" class="btn btn-success btn-lg uppercase">Log in</button>
+        </div>
+        <div class="col-sm-7 form-group">
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="check">
+                            <input type="checkbox" name="rememberMe" value="true" />
+Remember me                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="check">
+                        <input type="checkbox" id="kiosk" name="kioskMode" value="true"  /> Kiosk Mode
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-right">
+            <a href="/RapIDAdmin/Account/ForgotPassword" id="forget-password" class="forget-password">Forgot password?</a>
+        </div>
+    </div>
+    <div class="form-actions">
+
+    </div>
+</form>
+
+
+
+
+<div class="create-account">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-xs-2">
+                    <h3>
+                        <i class="icon-speech"></i>
+                    </h3>
+                </div>
+                <div class="col-xs-10">
+                    <strong>We're aware that some customers are currently experiencing issues. Our development team is working diligently to resolve this issue as quickly as possible.  We apologize for any inconvenience this may cause and will provide further updates as soon as possible.</strong>  1/06/2026 8:00am Eastern</p>
+
+                </div>
+            </div>
+        </div>
+
+
+</div>
+
+
+    </div>
+    
+    <div class="copyright">
+        2026 © Vision Database Systems
+    </div>
+
+    <!--[if lt IE 9]>
+        <script src="~/libs/respond/respond.min.js"></script>
+        <script src="~/libs/excanvas/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="/RapIDAdmin/libs/json2/json2.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/jquery/jquery.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/jquery/jquery-migrate.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/bootstrap/js/bootstrap.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/jquery-blockui/jquery.blockui.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/jquery-uniform/jquery.uniform.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/jquery-cookie/jquery.cookie.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/toastr/toastr.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/spinjs/spin.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/spinjs/jquery.spin.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/sweetalert/sweet-alert.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/Abp/Framework/scripts/abp.js?v=639017879920000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/Abp/Framework/scripts/libs/abp.jquery.js?v=639017879920000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/Abp/Framework/scripts/libs/abp.blockUI.js?v=639017879920000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/Abp/Framework/scripts/libs/abp.spin.js?v=639017879920000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/Abp/Framework/scripts/libs/abp.toastr.js?v=639017879920000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/Abp/Framework/scripts/libs/abp.sweet-alert.js?v=639017879920000000" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        abp.localization.defaultSourceName = 'RapIDAdmin';
+    </script>
+
+    <!-- Dynamic scripts of ABP system (They are created on runtime and can not be bundled) -->
+    <script src="/RapIDAdmin/AbpScripts/GetScripts?v=639033274318471624" type="text/javascript"></script>
+
+    <script src="/RapIDAdmin/libs/jquery-validation/js/jquery.validate.min.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="/RapIDAdmin/libs/jquery-validation/js/localization/_messages_empty.js?v=639017879940000000" type="text/javascript"></script>
+
+    <script src="/RapIDAdmin/metronic/assets/global/scripts/app.js?v=639017879960000000" type="text/javascript"></script>
+    <script type="text/javascript">
+        App.setAssetsPath(abp.appPath + 'metronic/assets/');
+    </script>
+
+    <script src="/RapIDAdmin/Bundles/Common/js?v=FqGSmteoDs7pmR-N4Ixbr7Mggz60tMiRw7r_HLlYRTQ1"></script>
+
+
+    <script src="/RapIDAdmin/metronic/assets/admin/layout/scripts/layout.js?v=639017879940000000" type="text/javascript"></script>
+
+    
+    <script src="/RapIDAdmin/Views/Account/Login.js?v=639017879940000000" type="text/javascript"></script>
+    <script src="https://visiondatabasesystems.statuspage.io/embed/script.js"></script>
+
+
+    <script>
+        jQuery(document).ready(function () {
+            if (CurrentPage) {
+                CurrentPage.init();
+            }
+        });
+    </script>
+</body>
+</html>

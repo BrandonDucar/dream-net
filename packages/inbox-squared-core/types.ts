@@ -112,3 +112,11 @@ export interface InboxSquaredConfig {
   };
 }
 
+export interface DraftGenerationOptions {
+  fromName: string;
+  fromEmail: string;
+  tone?: 'casual' | 'consultative' | 'executive';
+  includeOptOut?: boolean;
+  generateVariants?: boolean;
+  generateContentTwins?: boolean;
+}

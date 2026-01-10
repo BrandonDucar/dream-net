@@ -1,4 +1,4 @@
-import type { DreamShopOffer, ShopStatus } from "../types";
+import type { DreamShopOffer, ShopStatus } from '../types.js';
 
 const offers: Map<string, DreamShopOffer> = new Map();
 let lastRunAt: number | null = null;

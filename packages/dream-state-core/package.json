@@ -1,18 +1,36 @@
 {
-  "name": "@dreamnet/dream-state-core",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@dreamnet/wolfpack-funding-core": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name": "@dreamnet/dream-state-core",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "source": "./src/index.ts",
+            "import": "./src/index.ts",
+            "require": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./*": {
+            "source": "./src/*.ts",
+            "import": "./src/*.ts",
+            "default": "./src/*.ts"
+        },
+        "./src/index.ts": "./src/index.ts",
+        "./src/*": "./src/*.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@dreamnet/wolfpack-funding-core": "workspace:*",
+        "@dreamnet/dreambet-core": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3"
+    }
 }
-

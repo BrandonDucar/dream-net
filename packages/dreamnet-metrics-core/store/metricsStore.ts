@@ -3,7 +3,7 @@
  * Stores and aggregates performance metrics
  */
 
-import type { RequestMetric, ClusterMetrics, PerformanceSnapshot } from "../types";
+import type { RequestMetric, ClusterMetrics, PerformanceSnapshot } from '../types.js';
 
 class MetricsStore {
   private metrics: RequestMetric[] = [];

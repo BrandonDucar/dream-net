@@ -1,4 +1,4 @@
-import type { FabricTask } from "./types";
+import type { FabricTask } from './types.js';
 
 export interface ValidationResult {
   passed: boolean;

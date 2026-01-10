@@ -1,14 +1,34 @@
 {
-  "name": "@dreamnet/utils",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\""
-  }
+    "name":  "@dreamnet/utils",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "main":  "dist/index.js",
+    "types":  "dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "build":  "tsc -p tsconfig.json",
+                    "typecheck":  "tsc --noEmit -p tsconfig.json",
+                    "clean":  "node -e \"require(\u0027fs\u0027).rmSync(\u0027dist\u0027, { recursive: true, force: true })\""
+                },
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
 }
-

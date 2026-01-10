@@ -1,0 +1,30 @@
+{
+    "name":  "@dreamnet/right-sphere-core",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "dependencies":  {
+                         "@dreamnet/memory-dna":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/economic-engine-core":  "workspace:*"
+                     }
+}

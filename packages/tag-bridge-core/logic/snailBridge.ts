@@ -3,8 +3,8 @@
  * Signs all Dream Snail trails with TAG cryptographic signatures
  */
 
-import { signAction, getReceipt } from "./tagClient";
-import type { ProofOfActionReceipt } from "../types";
+import { signAction, getReceipt } from './tagClient.js';
+import type { ProofOfActionReceipt } from '../types.js';
 import type { SnailTrail } from "@dreamnet/dreamnet-snail-core/types";
 
 let enabled = false;

@@ -2,8 +2,8 @@ import type {
   AgentRegistryContext,
   AgentConfig,
   AgentHealth,
-} from "../types";
-import { AgentStore } from "../store/agentStore";
+} from '../types.js';
+import { AgentStore } from '../store/agentStore.js';
 
 /**
  * Seed known agents (config only).

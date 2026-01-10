@@ -1,24 +1,35 @@
 {
-  "name": "@dreamnet/network-blueprints",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts"
-    }
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@dreamnet/directory": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name":  "@dreamnet/network-blueprints",
+    "version":  "0.0.1",
+    "private":  true,
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "dependencies":  {
+                         "@dreamnet/directory":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
 }
-

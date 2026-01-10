@@ -4,11 +4,11 @@
  */
 
 import type { Request, Response, NextFunction } from "express";
-import type { PortId } from "./types";
-import { getPortProfile } from "./ports";
-import type { RequestWithIdentity, CallerIdentity } from "../../dreamnet-control-core/identityResolver";
-import { checkAndConsume } from "../../dreamnet-control-core/rateLimiter";
-import type { OfficeId, CabinetId } from "../../dream-state-core/types";
+import type { PortId } from './types.js';
+import { getPortProfile } from './ports.js';
+import type { RequestWithIdentity, CallerIdentity } from '@dreamnet/dreamnet-control-core/identityResolver';
+import { checkAndConsume } from '@dreamnet/dreamnet-control-core/rateLimiter';
+import type { OfficeId, CabinetId } from '@dreamnet/dreamstate';
 
 // Shield Core risk tracking (optional import)
 let getRiskProfile: ((callerId: string) => any) | null = null;
@@ -122,15 +122,25 @@ export function withPort(portId: PortId) {
     // Risk-based adaptive limits (if Shield Core risk tracking available)
     let riskLevel: string = "low";
     let effectivePortLimit = portProfile.limits.maxRequestsPerMinute;
-    
+
     if (!isGodVault && getRiskProfile) {
       const callerId =
         callerIdentity.passport?.citizenId ||
         callerIdentity.apiKeyId ||
         "anonymous";
-      
+
       const riskProfile = callerId !== "anonymous" ? getRiskProfile(callerId) : undefined;
       riskLevel = riskProfile?.level ?? "low";
+
+      // 🌀 METABOLIC BRIDGE: Report pressure to Nerve Bus
+      try {
+        const { NERVE_BUS } = require("@dreamnet/nerve");
+        const pressureMap: Record<string, number> = { low: 0, medium: 30, high: 60, critical: 100 };
+        const pressure = pressureMap[riskLevel] || 0;
+        NERVE_BUS.setMetabolicPressure(pressure);
+      } catch (e) {
+        // Fallback if Nerve Bus is not available in current context
+      }
 
       // Adaptive throttling based on risk
       if (riskLevel === "critical" && portId !== "AGENT_GATEWAY") {
@@ -183,7 +193,7 @@ export function withPort(portId: PortId) {
         });
         return res.status(429).json({
           error: reason,
-          message: riskLevel === "high" 
+          message: riskLevel === "high"
             ? `Rate limit exceeded for port ${portId} (risk-based throttling)`
             : `Rate limit exceeded for port ${portId}`,
           traceId,

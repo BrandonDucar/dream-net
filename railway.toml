@@ -1,13 +1,20 @@
-# LEGACY: Railway configuration
-# This file configures Railway deployment settings (legacy provider)
-# PRIMARY DEPLOYMENT: Google Cloud Run (see deploy:gcp script)
-# This file is kept for backward compatibility but is not required for GCP deployment.
-
 [build]
 builder = "nixpacks"
-buildCommand = "cd .. && npx pnpm --filter client build && cd server && npx pnpm build"
+# Build the server and its dependencies (skipping client)
+buildCommand = "pnpm install && pnpm --filter @dreamnet/server... run build"
 
 [deploy]
-startCommand = "cd server && npx pnpm start"
-restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 10
+startCommand = "pnpm --filter @dreamnet/server run start"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "keystone-core"
+# Use Repo Root so pnpm workspace is visible
+root = "."
+
+[[services]]
+name = "god-view-client"
+root = "client"
+buildCommand = "pnpm install && pnpm run build"
+startCommand = "pnpm run start"

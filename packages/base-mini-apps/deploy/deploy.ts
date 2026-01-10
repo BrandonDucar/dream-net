@@ -3,7 +3,7 @@
  * Deploys all contracts to Base (Chain ID: 8453)
  */
 
-import { BaseMiniApps } from '../index';
+import { BaseMiniApps } from '../index.js';
 
 export async function deployAllMiniApps() {
   console.log('🚀 Deploying all Base mini-apps...\n');

@@ -1,0 +1,19 @@
+{
+  "name": "@dreamnet/env-keeper-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/shared": "workspace:*",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

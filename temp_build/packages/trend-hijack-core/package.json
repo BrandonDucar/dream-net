@@ -1,0 +1,11 @@
+{
+    "name": "@dreamnet/trend-hijack-core",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.ts",
+    "dependencies": {
+        "@dreamnet/memory-dna": "workspace:*",
+        "@dreamnet/star-bridge-lungs": "workspace:*",
+        "@dreamnet/shared": "workspace:*"
+    }
+}

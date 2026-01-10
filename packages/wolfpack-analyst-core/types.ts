@@ -1,4 +1,4 @@
-import { FundingLead, SendQueueItem, LeadStage, LeadType } from "../wolfpack-funding-core";
+import { FundingLead, SendQueueItem, LeadStage, LeadType } from '../wolfpack-funding-core.js';
 
 /**
  * Pattern learned from historical data

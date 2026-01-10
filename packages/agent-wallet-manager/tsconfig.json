@@ -1,16 +1,35 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "lib": ["ES2022"],
-    "moduleResolution": "bundler",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
-  },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "sourceMap": true,
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "src/**/*.ts",
+        "types.ts"
+    ],
+    "references": [
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../shared"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
-

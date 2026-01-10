@@ -1,6 +1,10 @@
-import type { AgentModel, SquadModel } from "./types";
+import type { AgentModel, SquadModel } from './types.js';
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const STORE_PATH = join(__dirname, "../store/squadStore.json");
 

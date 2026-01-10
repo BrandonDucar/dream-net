@@ -4,9 +4,11 @@
  * "Supercharges" lines that branch out from ports with power profiles, budgets, and transforms
  */
 
-import type { PortId } from "../../port-governor/src/types";
-import type { ClusterId } from "../clusters";
-import type { ToolId } from "../../agent-gateway/src/tools";
+import { type PortId } from '@dreamnet/types';
+export { type PortId };
+import type { ClusterId } from './clusters.js';
+// import type { ToolId } from '@dreamnet/agent-gateway';
+type ToolId = string;
 
 export interface ConduitIdParts {
   portId: PortId;
@@ -159,6 +161,41 @@ addConduit({
     normalizePayload: true,
     enrichForAgents: true,
   },
+});
+
+// GITHUB MECH SUIT (The Hands)
+addConduit({
+  portId: "AGENT_GATEWAY",
+  clusterId: "WOLF_PACK" as ClusterId, // Wolves hunt for code
+  toolId: "github.scanIssues" as ToolId,
+  label: "Agent → GitHub → Scan Issues",
+  priorityLane: 2,
+  budgets: {
+    maxCallsPerMinute: 20,
+    maxCallsPerHour: 200,
+    maxConcurrent: 2,
+  },
+  transforms: {
+    enrichForAgents: true,
+  }
+});
+
+addConduit({
+  portId: "AGENT_GATEWAY",
+  clusterId: "WOLF_PACK" as ClusterId,
+  toolId: "github.openPR" as ToolId,
+  label: "Agent → GitHub → Open PR",
+  // High Priority / Dangerous
+  priorityLane: 4,
+  budgets: {
+    maxCallsPerMinute: 2,
+    maxCallsPerHour: 10,
+    maxConcurrent: 1,
+  },
+  transforms: {
+    normalizePayload: true,
+    scrubSecrets: true, // Scrub tokens from logs
+  }
 });
 
 export function getConduitConfig(

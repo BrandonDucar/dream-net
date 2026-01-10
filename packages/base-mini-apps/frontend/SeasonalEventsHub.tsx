@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CONTRACT_ADDRESSES } from './config';
+import { CONTRACT_ADDRESSES } from './config.js';
 
 export function SeasonalEventsHub() {
   const [events, setEvents] = useState<any[]>([]);

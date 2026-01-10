@@ -1,6 +1,6 @@
-import type { OrchestratorContext, CycleTelemetry, OrchestratorStatus } from "./types";
-import { runCycle } from "./logic/runCycle";
-import { OrchestratorStore } from "./store/orchestratorStore";
+import type { OrchestratorContext, CycleTelemetry, OrchestratorStatus } from './types.js';
+import { runCycle } from './logic/runCycle.js';
+import { OrchestratorStore } from './store/orchestratorStore.js';
 
 export const OrchestratorCore = {
   async runSingleCycle(context: OrchestratorContext): Promise<CycleTelemetry> {
@@ -24,6 +24,6 @@ export const OrchestratorCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default OrchestratorCore;
 

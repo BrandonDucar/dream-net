@@ -4,8 +4,8 @@ import {
   WhaleAudience,
   WhaleContentPlan,
   HookStyle,
-} from "../types";
-import { WhaleStore } from "../store/whaleStore";
+} from '../types.js';
+import { WhaleStore } from '../store/whaleStore.js';
 
 let planCounter = 0;
 function nextPlanId() {

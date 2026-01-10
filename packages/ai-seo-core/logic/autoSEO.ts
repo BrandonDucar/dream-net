@@ -3,8 +3,8 @@
  * Automatically optimizes ALL content without manual calls
  */
 
-import { AISEOCore } from "../index";
-import type { SEOContentType, SEOPlatform } from "../types";
+import { AISEOCore } from '../index.js';
+import type { SEOContentType, SEOPlatform } from '../types.js';
 
 /**
  * Auto-optimize content based on context
@@ -48,7 +48,7 @@ export function autoOptimizeContent(
     // Apply geofence rules
     if (geofences.length > 0) {
       const rules = AISEOCore.applyGeofenceRules(geofences, contentType, platform);
-      
+
       // Apply customizations from rules
       for (const rule of rules) {
         if (rule.action === "customize" && rule.customizations) {
@@ -60,12 +60,12 @@ export function autoOptimizeContent(
   }
 
   return {
-    optimizedTitle: seoOptimization.title,
-    optimizedDescription: seoOptimization.description,
+    optimizedTitle: seoOptimization.title ?? title,
+    optimizedDescription: seoOptimization.description ?? description,
     seoScore: seoOptimization.score,
     keywords: seoOptimization.keywords.map((k) => k.keyword),
     geofences,
-    metaTags: seoOptimization.metaTags,
+    metaTags: seoOptimization.metaTags ?? [],
   };
 }
 
@@ -113,16 +113,13 @@ export function autoOptimizeDream(
   return autoOptimizeContent("post", dreamId, title, description, "web", userLocation);
 }
 
-/**
- * Auto-optimize social post
- */
 export function autoOptimizeSocialPost(
   postId: string,
   platform: SEOPlatform,
   text: string,
   userLocation?: any
 ) {
-  return autoOptimizeContent("post", postId, platform, text, text, userLocation);
+  return autoOptimizeContent("post", postId, text, text, platform, userLocation);
 }
 
 /**
@@ -135,6 +132,6 @@ export function autoOptimizeProduct(
   platform: SEOPlatform = "web",
   userLocation?: any
 ) {
-  return autoOptimizeContent("product", productId, platform, name, description, userLocation);
+  return autoOptimizeContent("product", productId, name, description, platform, userLocation);
 }
 

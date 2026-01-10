@@ -1,5 +1,5 @@
-import { APIProvider, APICategory } from "../types";
-import { APIStore } from "../store/apiStore";
+import { APIProvider, APICategory } from '../types.js';
+import { APIStore } from '../store/apiStore.js';
 
 /**
  * Discover and register known API providers
@@ -155,6 +155,7 @@ export function discoverAPIs(): APIProvider[] {
         requests: Infinity,
         features: ["messaging", "files"],
       },
+      paidTiers: [],
     },
     features: ["messaging", "files", "groups"],
     reliability: 0.99,
@@ -207,6 +208,7 @@ export function discoverAPIs(): APIProvider[] {
         requests: Infinity,
         features: ["deployments", "projects"],
       },
+      paidTiers: [],
     },
     features: ["deployments", "projects", "domains"],
     reliability: 0.99,

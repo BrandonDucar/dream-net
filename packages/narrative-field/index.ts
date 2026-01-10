@@ -6,9 +6,9 @@ import type {
   NarrativeSeverity,
   NarrativeDomain,
   NarrativeReference,
-} from "./types";
-import { NarrativeStore } from "./store/narrativeStore";
-import { runNarrativeCycle, narrativeStatus } from "./scheduler/narrativeScheduler";
+} from './types.js';
+import { NarrativeStore } from './store/narrativeStore.js';
+import { runNarrativeCycle, narrativeStatus } from './scheduler/narrativeScheduler.js';
 
 export const NarrativeField = {
   add(entry: NarrativeEntry) {
@@ -28,6 +28,6 @@ export const NarrativeField = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default NarrativeField;
 

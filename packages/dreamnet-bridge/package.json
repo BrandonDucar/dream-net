@@ -1,21 +1,35 @@
 {
-  "name": "@dreamnet/dreamnet-bridge",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "tsc",
-    "prepublishOnly": "pnpm build"
-  },
-  "dependencies": {
-    "@dreamnet/dreamnet-agent-client": "workspace:*",
-    "@dreamnet/ops-sentinel": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name":  "@dreamnet/dreamnet-bridge",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "scripts":  {
+                    "typecheck":  "tsc --noEmit",
+                    "build":  "tsc",
+                    "prepublishOnly":  "pnpm build"
+                },
+    "dependencies":  {
+                         "@dreamnet/dreamnet-agent-client":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/ops-sentinel":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        },
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                }
 }
-

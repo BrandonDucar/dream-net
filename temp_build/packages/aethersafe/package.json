@@ -1,0 +1,20 @@
+{
+    "name": "@dreamnet/aethersafe",
+    "version": "0.1.0",
+    "main": "src/index.ts",
+    "types": "src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "echo 'Error: no test specified'"
+    },
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}

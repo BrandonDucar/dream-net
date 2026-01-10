@@ -1,4 +1,4 @@
-import type { DreamNode, DreamStatus, DreamPriority } from "../types";
+import type { DreamNode, DreamStatus, DreamPriority } from '../types.js';
 
 const dreams: Map<string, DreamNode> = new Map();
 

@@ -1,4 +1,4 @@
-import type { DiffResult } from "./types";
+import type { DiffResult } from './types.js';
 import { readFileSync, existsSync } from "node:fs";
 
 // Simple diff implementation (Phase 1)

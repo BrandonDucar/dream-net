@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { X, Sparkles, ArrowRight, CheckCircle } from "lucide-react";
-import { useFirstVisit } from "../hooks/useFirstVisit";
+import { useFirstVisit } from '../hooks/useFirstVisit.js';
 
 interface WelcomeStep {
   id: string;

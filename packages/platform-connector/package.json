@@ -1,0 +1,30 @@
+{
+    "name": "@dreamnet/platform-connector",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "source": "./src/index.ts",
+            "import": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./NeynarClient": "./src/NeynarClient.ts"
+    },
+    "scripts": {
+        "build": "tsc -b",
+        "dev": "tsc -b -w",
+        "typecheck": "tsc --noEmit",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@dreamnet/agent-wallet-manager": "workspace:*",
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@neynar/nodejs-sdk": "^3.115.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}

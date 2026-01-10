@@ -13,6 +13,7 @@ spec:
   - host: dreamnet.ink
     http:
       paths:
+      # API routes
       - path: /api/*
         pathType: Prefix
         backend:
@@ -20,11 +21,12 @@ spec:
             name: dreamnet-api-service
             port:
               number: 80
+      # Frontend routes (served by API server)
       - path: /*
         pathType: Prefix
         backend:
           service:
-            name: dreamnet-frontend-service
+            name: dreamnet-api-service
             port:
               number: 80
 ---

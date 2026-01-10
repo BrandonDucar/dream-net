@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { MailerConfig, MailSendResult } from "../types";
+import { MailerConfig, MailSendResult } from '../types.js';
 
 /**
  * Create mailer configuration from environment variables.

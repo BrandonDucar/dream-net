@@ -5,9 +5,7 @@
  * @module @dreamnet/nerve/types
  */
 
-import type { ClusterId } from "../../dreamnet-control-core/clusters";
-import type { TierId } from "../../dreamnet-control-core/tierConfig";
-import type { CitizenId, OfficeId, CabinetId } from "../../dreamstate/src/types";
+import type { ClusterId, TierId, CitizenId, OfficeId, CabinetId } from "@dreamnet/shared";
 
 /**
  * Nerve Channel ID - Routing channels for events
@@ -55,16 +53,16 @@ export type NervePriority = 0 | 1 | 2 | 3 | 4 | 5;
 export interface NerveSpan {
   /** Unique span ID */
   spanId: string;
-  
+
   /** Parent span ID (for nested spans) */
   parentSpanId?: string;
-  
+
   /** Span name/operation */
   name?: string;
-  
+
   /** When span started */
   startedAt: string;
-  
+
   /** When span ended (if completed) */
   endedAt?: string;
 }
@@ -75,44 +73,44 @@ export interface NerveSpan {
 export interface NerveContext {
   /** Trace ID for request tracking */
   traceId?: string;
-  
+
   /** Span information for distributed tracing */
   span?: NerveSpan;
-  
+
   /** Timestamp of the event */
   timestamp: string;
-  
+
   /** Cluster ID if applicable */
   clusterId?: ClusterId;
-  
+
   /** Tier ID if applicable */
   tierId?: TierId;
-  
+
   /** Citizen ID if applicable */
   citizenId?: CitizenId;
-  
+
   /** Office IDs if applicable */
   officeIds?: OfficeId[];
-  
+
   /** Cabinet IDs if applicable */
   cabinetIds?: CabinetId[];
-  
+
   /** Geographic information */
   geo?: {
     country?: string;
     region?: string;
     city?: string;
   };
-  
+
   /** Risk score (0-100) */
   riskScore?: number;
-  
+
   /** Cost estimate (tokens, dollars, etc.) */
   costEstimate?: number;
-  
+
   /** Sample rate (0-1) */
   sampleRate?: number;
-  
+
   /** Whether this event was sampled */
   sampled?: boolean;
 }
@@ -232,16 +230,16 @@ export type NerveEventPayload =
 export interface NerveEventBase {
   /** Unique event ID (UUID) */
   id: string;
-  
+
   /** Channel ID for routing */
   channelId: NerveChannelId;
-  
+
   /** Event kind/type */
   kind: NerveEventKind;
-  
+
   /** Event priority (0=lowest, 5=highest) */
   priority: NervePriority;
-  
+
   /** Contextual information */
   context: NerveContext;
 }

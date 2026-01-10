@@ -203,3 +203,5 @@ export class CardForgePro {
 
 export const cardForgePro = new CardForgePro();
 
+export { createForgeRouter } from './router.js';
+

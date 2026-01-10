@@ -1,0 +1,5 @@
+
+export * from './logic/cellular.js';
+export * from './logic/mutation.js';
+export * from './logic/flocking.js';
+export * from './src/types.js';

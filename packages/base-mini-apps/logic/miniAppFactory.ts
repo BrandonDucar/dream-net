@@ -1,5 +1,5 @@
-import { BaseMiniApp, MiniAppManifest } from "../types";
-import { MiniAppStore } from "../store/miniAppStore";
+import { BaseMiniApp, MiniAppManifest } from '../types.js';
+import { MiniAppStore } from '../store/miniAppStore.js';
 
 let appCounter = 0;
 function nextAppId() {

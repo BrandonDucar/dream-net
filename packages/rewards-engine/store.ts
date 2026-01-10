@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
-import type { UserBalances, RewardEvent } from "./types";
+import type { UserBalances, RewardEvent } from './types.js';
 
 const STORE_DIR = join(process.cwd(), "packages/rewards-engine/store");
 const BALANCES_FILE = join(STORE_DIR, "rewards_balances.json");

@@ -4,71 +4,72 @@
  */
 
 // Original apps
-export { PassportMintApp } from './PassportMintApp';
-export { GovernanceApp } from './GovernanceApp';
-export { APIKeeperDashboard } from './APIKeeperDashboard';
-export { APIKeeperGovernmentOffice } from './APIKeeperGovernmentOffice';
-export { JaggyGovernmentOffice } from './JaggyGovernmentOffice';
-export { MyceliumGovernmentOffice } from './MyceliumGovernmentOffice';
-export { WolfPackPortal } from './WolfPackPortal';
-export { SocialHub } from './SocialHub';
-export { WhalePackCommerce } from './WhalePackCommerce';
-export { Treasury } from './Treasury';
-export { ShieldMonitor } from './ShieldMonitor';
+export { PassportMintApp } from './PassportMintApp.js';
+export { GovernanceApp } from './GovernanceApp.js';
+export { APIKeeperDashboard } from './APIKeeperDashboard.js';
+export { APIKeeperGovernmentOffice } from './APIKeeperGovernmentOffice.js';
+export { JaggyGovernmentOffice } from './JaggyGovernmentOffice.js';
+export { MyceliumGovernmentOffice } from './MyceliumGovernmentOffice.js';
+export { WolfPackPortal } from './WolfPackPortal.js';
+export { SocialHub } from './SocialHub.js';
+export { WhalePackCommerce } from './WhalePackCommerce.js';
+export { Treasury } from './Treasury.js';
+export { ShieldMonitor } from './ShieldMonitor.js';
 
 // Quick win apps (no contracts)
-export { DreamGalleryExplorer } from './DreamGalleryExplorer';
-export { EcosystemDashboardMini } from './EcosystemDashboardMini';
-export { DreamNetworkExplorer } from './DreamNetworkExplorer';
-export { AgentDashboardMini } from './AgentDashboardMini';
-export { BadgeBoardMini } from './BadgeBoardMini';
+export { DreamGalleryExplorer } from './DreamGalleryExplorer.js';
+export { EcosystemDashboardMini } from './EcosystemDashboardMini.js';
+export { DreamNetworkExplorer } from './DreamNetworkExplorer.js';
+export { AgentDashboardMini } from './AgentDashboardMini.js';
+export { BadgeBoardMini } from './BadgeBoardMini.js';
 
 // Contract-based apps
-export { DreamVaultMini } from './DreamVaultMini';
-export { BountyBoardMini } from './BountyBoardMini';
-export { DreamRemixStudio } from './DreamRemixStudio';
-export { WhisperMessengerApp } from './WhisperMessengerApp';
-export { SeasonalEventsHub } from './SeasonalEventsHub';
-export { NightmareNetwork } from './NightmareNetwork';
-export { MissionCenter } from './MissionCenter';
-export { RevenueSharingDashboard } from './RevenueSharingDashboard';
-export { ProgressionTracker } from './ProgressionTracker';
-export { DreamDriftersDAO } from './DreamDriftersDAO';
-export { DreamTimeCapsuleApp } from './DreamTimeCapsuleApp';
-export { DreamDNASequencerApp } from './DreamDNASequencerApp';
-export { DreamPredictionMarketApp } from './DreamPredictionMarketApp';
-export { DreamNetHub } from './DreamNetHub';
-export { DreamNetHubWrapper } from './DreamNetHubWrapper';
-export { DreamScopeOpsConsole } from './DreamScopeOpsConsole';
-export { OnboardingWizard } from './OnboardingWizard';
-export { CreatorStudio } from './CreatorStudio';
+export { DreamVaultMini } from './DreamVaultMini.js';
+export { BountyBoardMini } from './BountyBoardMini.js';
+export { DreamRemixStudio } from './DreamRemixStudio.js';
+export { WhisperMessengerApp } from './WhisperMessengerApp.js';
+export { SeasonalEventsHub } from './SeasonalEventsHub.js';
+export { NightmareNetwork } from './NightmareNetwork.js';
+export { MissionCenter } from './MissionCenter.js';
+export { RevenueSharingDashboard } from './RevenueSharingDashboard.js';
+export { ProgressionTracker } from './ProgressionTracker.js';
+export { DreamDriftersDAO } from './DreamDriftersDAO.js';
+export { DreamTimeCapsuleApp } from './DreamTimeCapsuleApp.js';
+export { DreamDNASequencerApp } from './DreamDNASequencerApp.js';
+export { DreamPredictionMarketApp } from './DreamPredictionMarketApp.js';
+export { DreamNetHub } from './DreamNetHub.js';
+export { DreamNetHubWrapper } from './DreamNetHubWrapper.js';
+export { DreamScopeOpsConsole } from './DreamScopeOpsConsole.js';
+export { OnboardingWizard } from './OnboardingWizard.js';
+export { CreatorStudio } from './CreatorStudio.js';
 
 // Fun/Game Apps
-export { JaggyStealthRun } from './JaggyStealthRun';
-export { DreamDNASequencerGame } from './DreamDNASequencerGame';
-export { DreamLatticeGame } from './DreamLatticeGame';
-export { WormholeEscape } from './WormholeEscape';
-export { DreamBetArcade } from './DreamBetArcade';
-export { OctopusPatternMaster } from './OctopusPatternMaster';
-export { LabubuPopSmash } from './LabubuPopSmash';
-export { ReactionTestMini } from './ReactionTestMini';
-export { DreamSnailDrift } from './DreamSnailDrift';
-export { DreamCloudBuilder } from './DreamCloudBuilder';
+export { JaggyStealthRun } from './JaggyStealthRun.js';
+export { DreamDNASequencerGame } from './DreamDNASequencerGame.js';
+export { DreamLatticeGame } from './DreamLatticeGame.js';
+export { WormholeEscape } from './WormholeEscape.js';
+export { DreamBetArcade } from './DreamBetArcade.js';
+export { OctopusPatternMaster } from './OctopusPatternMaster.js';
+export { LabubuPopSmash } from './LabubuPopSmash.js';
+export { ReactionTestMini } from './ReactionTestMini.js';
+export { DreamSnailDrift } from './DreamSnailDrift.js';
+export { DreamCloudBuilder } from './DreamCloudBuilder.js';
+export { DinoBaseRunner } from './DinoBaseRunner.js';
 
 // Practical/Ops/Money Apps
-export { DreamScopeOpsConsoleMini } from './DreamScopeOpsConsoleMini';
-export { ShieldMonitorMini } from './ShieldMonitorMini';
-export { WormholeRouterMini } from './WormholeRouterMini';
-export { OnboardingWizardMini } from './OnboardingWizardMini';
-export { CreatorStudioMini } from './CreatorStudioMini';
-export { DreamShopMini } from './DreamShopMini';
-export { TributeGateMini } from './TributeGateMini';
-export { WalletScoreDashboard } from './WalletScoreDashboard';
-export { SocialOpsMini } from './SocialOpsMini';
-export { WolfPackFundingHUD } from './WolfPackFundingHUD';
-export { InboxSquaredMini } from './InboxSquaredMini';
-export { CoinSenseiMini } from './CoinSenseiMini';
-export { CardForgeProMini } from './CardForgeProMini';
+export { DreamScopeOpsConsoleMini } from './DreamScopeOpsConsoleMini.js';
+export { ShieldMonitorMini } from './ShieldMonitorMini.js';
+export { WormholeRouterMini } from './WormholeRouterMini.js';
+export { OnboardingWizardMini } from './OnboardingWizardMini.js';
+export { CreatorStudioMini } from './CreatorStudioMini.js';
+export { DreamShopMini } from './DreamShopMini.js';
+export { TributeGateMini } from './TributeGateMini.js';
+export { WalletScoreDashboard } from './WalletScoreDashboard.js';
+export { SocialOpsMini } from './SocialOpsMini.js';
+export { WolfPackFundingHUD } from './WolfPackFundingHUD.js';
+export { InboxSquaredMini } from './InboxSquaredMini.js';
+export { CoinSenseiMini } from './CoinSenseiMini.js';
+export { CardForgeProMini } from './CardForgeProMini.js';
 
 // App registry for routing
 export const MINI_APPS = {
@@ -344,6 +345,12 @@ export const MINI_APPS = {
   'dream-cloud-builder': {
     component: 'DreamCloudBuilder',
     name: 'Dream Cloud Builder',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'dino-runner': {
+    component: 'DinoBaseRunner',
+    name: 'Dino Base Runner',
     category: 'gaming',
     requiresPassport: false,
   },

@@ -1,5 +1,5 @@
-import type { OrchestratorContext, CycleTelemetry } from "../types";
-import { OrchestratorStore } from "../store/orchestratorStore";
+import type { OrchestratorContext, CycleTelemetry } from '../types.js';
+import { OrchestratorStore } from '../store/orchestratorStore.js';
 
 /**
  * Main runtime cycle.

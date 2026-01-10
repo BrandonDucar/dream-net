@@ -3,9 +3,9 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join, dirname, extname, basename } from "node:path";
 import { existsSync } from "node:fs";
 import sharp from "sharp";
-import type { IngestOptions, MediaAsset } from "./types";
-import { getMediaByHash, createMediaAsset } from "./db";
-import { extractTagsFromFilename, extractTagsFromPrompt, normalizeEntity } from "./vocab";
+import type { IngestOptions, MediaAsset } from './types.js';
+import { getMediaByHash, createMediaAsset } from './db.js';
+import { extractTagsFromFilename, extractTagsFromPrompt, normalizeEntity } from './vocab.js';
 import { randomUUID } from "node:crypto";
 
 // Use absolute path outside of iCloud-synced directories

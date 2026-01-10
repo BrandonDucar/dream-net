@@ -1,0 +1,1 @@
+{"version":3,"file":"requestVolumeTrigger.d.ts","sourceRoot":"","sources":["requestVolumeTrigger.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAChD,OAAO,KAAK,EAAE,mBAAmB,EAAE,MAAM,UAAU,CAAC;AAKpD,wBAAgB,4BAA4B,CAAC,OAAO,EAAE,UAAU,GAAG,mBAAmB,CAOrF;AAED,wBAAgB,aAAa,CAAC,MAAM,EAAE,UAAU,GAAG,IAAI,CAMtD"}

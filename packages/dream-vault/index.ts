@@ -7,10 +7,10 @@ import type {
   VaultIndexEntry,
   VaultContext,
   VaultStatus,
-} from "./types";
-import { VaultStore } from "./store/vaultStore";
-import { runVaultCycle, vaultStatus } from "./scheduler/vaultScheduler";
-import { searchVault } from "./logic/vaultSearch";
+} from './types.js';
+import { VaultStore } from './store/vaultStore.js';
+import { runVaultCycle, vaultStatus } from './scheduler/vaultScheduler.js';
+import { searchVault } from './logic/vaultSearch.js';
 
 export const DreamVault = {
   upsertItem(item: Omit<VaultItem, "createdAt" | "updatedAt" | "version">): VaultItem {
@@ -38,6 +38,6 @@ export const DreamVault = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamVault;
 

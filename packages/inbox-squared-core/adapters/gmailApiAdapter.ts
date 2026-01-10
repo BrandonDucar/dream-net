@@ -4,7 +4,7 @@
  */
 
 import { google } from 'googleapis';
-import type { EngagementMetrics, EmailDraft } from '../types';
+import type { EngagementMetrics, EmailDraft } from '../types.js';
 
 export class GmailApiAdapter {
   private gmail: any;

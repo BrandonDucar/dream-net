@@ -4,9 +4,9 @@
  * Moves silently, works alone, answers to few
  */
 
-import type { JaggyStatus, JaggyAlert, JaggyTerritory } from "../types";
-import { watchMesh } from "./jaggyHunter";
-import { WebhookNervousCore } from "../../webhook-nervous-core";
+import type { JaggyStatus, JaggyAlert, JaggyTerritory } from '../types.js';
+import { watchMesh } from './jaggyHunter.js';
+import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
 
 let jaggyStatus: JaggyStatus = {
   status: "watching",
@@ -44,7 +44,7 @@ export function watchEvent(event: any, source: string = "mesh"): JaggyAlert[] {
   // Watch mesh for webhook opportunities
   if (source === "mesh") {
     const discoveries = watchMesh(event);
-    
+
     if (discoveries.length > 0) {
       jaggyStatus.status = "hunting";
       jaggyStatus.webhooksDiscovered += discoveries.length;
@@ -109,7 +109,7 @@ function implementSilently(discovery: any) {
   try {
     // Auto-discover and register webhook
     WebhookNervousCore.autoDiscoverWebhooks();
-    
+
     jaggyStatus.webhooksImplemented += 1;
     jaggyStatus.kills += 1;
     jaggyStatus.status = "watching"; // Return to watching after kill
@@ -160,17 +160,17 @@ function neutralizeThreat(threatName: string) {
  */
 export async function prowlTerritories(): Promise<void> {
   const territories = getTerritories();
-  
+
   for (const territory of territories) {
     if (territory.watched) {
       // Hunt in this territory
-      const { huntWebhooks } = await import("./jaggyHunter");
+      const { huntWebhooks } = await import('./jaggyHunter.js');
       const discoveries = await huntWebhooks(territory);
-      
+
       if (discoveries.length > 0) {
         jaggyStatus.status = "hunting";
         jaggyStatus.webhooksDiscovered += discoveries.length;
-        
+
         // Silently implement
         for (const discovery of discoveries) {
           implementSilently(discovery);

@@ -1,5 +1,5 @@
-import type { SporeModel, SporeLineage } from "./types";
-import { listSpores, getSporeById, createSpore, updateSpore } from "./registry";
+import type { SporeModel, SporeLineage } from './types.js';
+import { listSpores, getSporeById, createSpore, updateSpore } from './registry.js';
 
 export function getSporeLineage(sporeId: string): SporeLineage | null {
   const spore = getSporeById(sporeId);

@@ -16,7 +16,7 @@ import type {
   TagRbacCheckResponse,
   TagLedgerQuery,
   TagLedgerEntry,
-} from "../types";
+} from '../types.js';
 
 let config: TagConfig | null = null;
 

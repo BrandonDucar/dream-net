@@ -1,4 +1,4 @@
-import type { CycleTelemetry, OrchestratorStatus } from "../types";
+import type { CycleTelemetry, OrchestratorStatus } from '../types.js';
 
 let lastCycle: CycleTelemetry | undefined;
 let totalCycles = 0;

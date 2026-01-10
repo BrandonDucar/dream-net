@@ -1,4 +1,4 @@
-import type { WolfContext, WolfSignal } from "../types";
+import type { WolfContext, WolfSignal } from '../types.js';
 
 export function detectAnomalies(ctx: WolfContext): WolfSignal[] {
   const now = Date.now();

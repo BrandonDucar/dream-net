@@ -1,10 +1,36 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "."
-  },
-  "include": ["./**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "./**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../shared"
+        },
+        {
+            "path": "../utils"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
-

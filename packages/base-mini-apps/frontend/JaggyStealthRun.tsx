@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useGameRegistry, GameType } from './hooks/useGameRegistry';
+import { useGameRegistry, GameType } from './hooks/useGameRegistry.js';
 import { useAccount } from 'wagmi';
 import { Button } from '@/components/ui/button';
 import { Trophy, TrendingUp } from 'lucide-react';

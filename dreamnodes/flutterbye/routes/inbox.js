@@ -1,5 +1,7 @@
-import { Router } from 'express';
-const router = Router();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const router = (0, express_1.Router)();
 // Get incoming messages for a wallet
 router.get('/inbox/:walletAddress', async (req, res) => {
     try {
@@ -101,4 +103,4 @@ router.post('/inbox/:messageId/claim', async (req, res) => {
         });
     }
 });
-export default router;
+exports.default = router;

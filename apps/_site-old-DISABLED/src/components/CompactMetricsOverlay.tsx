@@ -1,5 +1,5 @@
 import React from "react";
-import { useMetrics } from "../hooks/useMetrics";
+import { useMetrics } from '../hooks/useMetrics.js';
 import { Activity, Clock, Zap, Server } from "lucide-react";
 
 export function CompactMetricsOverlay() {

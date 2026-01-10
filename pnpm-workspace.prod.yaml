@@ -1,0 +1,6 @@
+packages:
+  - "packages/*"
+  - "server"
+  - "shared"
+  - "lib"
+  - "spine"

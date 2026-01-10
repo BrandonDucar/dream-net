@@ -9,9 +9,9 @@ import {
   WhaleInsight,
   WhalePackContext,
   WhalePackStatus,
-} from "./types";
-import { WhaleStore } from "./store/whaleStore";
-import { runWhalePackCycle } from "./scheduler/whaleScheduler";
+} from './types.js';
+import { WhaleStore } from './store/whaleStore.js';
+import { runWhalePackCycle } from './scheduler/whaleScheduler.js';
 
 export const WhalePackCore = {
   run(context: WhalePackContext): Promise<WhalePackStatus> {
@@ -56,8 +56,8 @@ export const WhalePackCore = {
   },
 };
 
-export * from "./types";
-export * from "./logic/whaleOutreachCore";
+export * from './types.js';
+export * from './logic/whaleOutreachCore.js';
 export default WhalePackCore;
 
 

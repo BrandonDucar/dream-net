@@ -3,7 +3,7 @@
  * Stores environment variables securely (encrypted)
  */
 
-import { EnvVariable } from "../types";
+import { EnvVariable } from '../types.js';
 import crypto from "crypto";
 
 // In-memory storage (in production, use database)

@@ -3,11 +3,11 @@ import type {
   ChainId,
   BreathSnapshot,
   BreathDirection,
-} from "../types";
-import { getBaseMetrics } from "../adapters/baseAdapter";
-import { getEthereumMetrics } from "../adapters/ethereumAdapter";
-import { getSolanaMetrics } from "../adapters/solanaAdapter";
-import { createGenericChainMetrics } from "../adapters/genericAdapter";
+} from '../types.js';
+import { getBaseMetrics } from '../adapters/baseAdapter.js';
+import { getEthereumMetrics } from '../adapters/ethereumAdapter.js';
+import { getSolanaMetrics } from '../adapters/solanaAdapter.js';
+import { createGenericChainMetrics } from '../adapters/genericAdapter.js';
 
 let chainMetricsCache: ChainBreathMetrics[] = [];
 let lastBreathSnapshots: BreathSnapshot[] = [];
@@ -47,7 +47,11 @@ export function collectChainMetrics(): ChainBreathMetrics[] {
   return metrics;
 }
 
-function computePressureScore(from: ChainBreathMetrics, to: ChainBreathMetrics): number {
+export async function computePressureScore(
+  from: ChainBreathMetrics,
+  to: ChainBreathMetrics,
+  resonance: number = 1.0
+): Promise<number> {
   // Simple heuristic:
   // prefer high reliability and lower congestion/gas pressure on destination
   const reliabilityFactor = to.reliability;
@@ -59,21 +63,30 @@ function computePressureScore(from: ChainBreathMetrics, to: ChainBreathMetrics):
   // penalize if from-chain liquidity pressure is very low
   const liquidityPenalty = from.liquidityPressure < 0.2 ? 0.2 : 0;
 
-  return Math.max(0, Math.min(1, baseScore - liquidityPenalty));
+  // Apply Social Resonance Multiplier ("The Voice")
+  // If the destination is "Resonant", we push harder.
+  return Math.max(0, Math.min(1, (baseScore - liquidityPenalty) * resonance));
 }
 
-export function computeBreathSnapshots(
+
+export async function computeBreathSnapshots(
   metrics: ChainBreathMetrics[]
-): BreathSnapshot[] {
+): Promise<BreathSnapshot[]> {
   const snapshots: BreathSnapshot[] = [];
   const now = Date.now();
+
+  // Lazy load to avoid circular deps if any
+  const { ResonanceOptimizer } = await import('./resonance.js');
 
   for (const from of metrics) {
     for (const to of metrics) {
       if (from.chain === to.chain) continue;
 
-      const inhaleScore = computePressureScore(to, from); // value flowing back in
-      const exhaleScore = computePressureScore(from, to); // value flowing outward
+      // Get Social Resonance for Destination
+      const resonance = await ResonanceOptimizer.getResonance(to.chain);
+
+      const inhaleScore = await computePressureScore(to, from, resonance.resonanceScore); // value flowing back in
+      const exhaleScore = await computePressureScore(from, to, resonance.resonanceScore); // value flowing outward
 
       const inhale: BreathSnapshot = {
         id: `inhale-${from.chain}-${to.chain}-${now}`,
@@ -85,6 +98,7 @@ export function computeBreathSnapshots(
         createdAt: now,
         meta: {
           note: "Inbound breath (liquidity/value moving toward target chain)",
+          resonance: resonance.resonanceScore.toFixed(2)
         },
       };
 
@@ -98,6 +112,7 @@ export function computeBreathSnapshots(
         createdAt: now,
         meta: {
           note: "Outbound breath (liquidity/value moving away from source chain)",
+          resonance: resonance.resonanceScore.toFixed(2)
         },
       };
 

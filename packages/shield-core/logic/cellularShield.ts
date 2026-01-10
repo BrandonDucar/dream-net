@@ -1,5 +1,5 @@
-import { CellularShield, CellType, ShieldPhase, WormholeShieldSignal } from "../types";
-import { ShieldStore } from "../store/shieldStore";
+import { CellularShield, CellType, ShieldPhase, WormholeShieldSignal } from '../types.js';
+import { ShieldStore } from '../store/shieldStore.js';
 
 let cellularShieldCounter = 0;
 function nextCellularShieldId() {

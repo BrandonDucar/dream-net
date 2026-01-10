@@ -1,5 +1,5 @@
-import { RuntimeContext } from "../types";
-import { RuntimeStore } from "../store/runtimeStore";
+import { RuntimeContext } from '../types.js';
+import { RuntimeStore } from '../store/runtimeStore.js';
 
 /**
  * This module wires OrchestratorCore + OSCore + CivicPanelCore + EconCore together.

@@ -1,0 +1,1 @@
+{"version":3,"file":"eventWormholeTrigger.d.ts","sourceRoot":"","sources":["eventWormholeTrigger.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAChD,OAAO,KAAK,EAAE,mBAAmB,EAAE,MAAM,UAAU,CAAC;AAKpD,wBAAgB,4BAA4B,CAAC,MAAM,EAAE,UAAU,GAAG,mBAAmB,CAWpF;AAED,wBAAsB,oBAAoB,CAAC,SAAS,EAAE,MAAM,EAAE,QAAQ,EAAE,MAAM,GAAG,OAAO,CAAC,IAAI,CAAC,CAmB7F"}

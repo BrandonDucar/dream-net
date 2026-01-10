@@ -14,3 +14,33 @@ artifacts
 typechain-types
 coverage
 coverage.json
+
+# Local Netlify folder
+.netlify
+
+# Build and Temp
+.turbo
+.esbuild
+.next
+.cache
+build/
+temp/
+tmp/
+*.tsbuildinfo
+
+# Logs
+*.log
+*_errors.txt
+errors.txt
+output.txt
+debug_log_full.txt
+
+# Infrastructure/OS
+.vscode/
+.idea/
+Thumbs.db
+
+# Project specific
+data/
+db/
+!docs/*.txt

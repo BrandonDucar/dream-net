@@ -1,4 +1,4 @@
-import { FundingLead, EmailDraft, SendQueueItem } from "../types";
+import { FundingLead, EmailDraft, SendQueueItem } from '../types.js';
 
 /**
  * Generate an email draft for a funding lead.

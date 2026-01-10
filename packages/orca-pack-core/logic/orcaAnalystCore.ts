@@ -1,5 +1,5 @@
-import { OrcaPackContext, OrcaInsight } from "../types";
-import { OrcaStore } from "../store/orcaStore";
+import { OrcaPackContext, OrcaInsight } from '../types.js';
+import { OrcaStore } from '../store/orcaStore.js';
 
 let insightCounter = 0;
 function nextInsightId() {

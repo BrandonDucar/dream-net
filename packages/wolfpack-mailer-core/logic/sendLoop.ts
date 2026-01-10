@@ -1,12 +1,12 @@
-import { createMailerFromEnv, sendMail } from "./mailer";
-import { WolfPackFundingCore } from "../../wolfpack-funding-core";
+import { createMailerFromEnv, sendMail } from './mailer.js';
+import { WolfPackFundingCore } from "@dreamnet/wolfpack-funding-core";
 import {
   getMaxEmailsPerCycle,
   getMaxEmailsPerDay,
   getRemainingToday,
   canSendMoreToday,
   incrementTodayCount,
-} from "./rateLimiter";
+} from './rateLimiter.js';
 
 /**
  * Process the send queue once with safety limits:
@@ -66,29 +66,29 @@ export async function processSendQueueOnce(): Promise<void> {
 
     if (result.success) {
       WolfPackFundingCore.updateQueueItemStatus(item.id, "sent");
-      
+
       // Update follow-up metadata (B)
       const lead = WolfPackFundingCore.getLead(item.leadId);
       if (lead) {
         const now = Date.now();
         const followupDays = Number(process.env.WOLF_FUNDING_FOLLOWUP_DAYS || "5");
         const ms = followupDays * 24 * 60 * 60 * 1000;
-        
+
         const updatedLead = {
           ...lead,
           lastContactedAt: now,
           contactCount: (lead.contactCount ?? 0) + 1,
           nextFollowUpAt: now + ms,
         };
-        
+
         // Optional: upgrade stage
         if (updatedLead.stage === "new" || updatedLead.stage === "qualified") {
           updatedLead.stage = "contacted";
         }
-        
+
         WolfPackFundingCore.upsertLead(updatedLead);
       }
-      
+
       incrementTodayCount();
       sentCount += 1;
       console.log(`[WolfPackMailer] ✓ Email sent successfully to ${item.toEmail}`);

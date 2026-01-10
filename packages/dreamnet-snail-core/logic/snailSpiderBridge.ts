@@ -4,7 +4,7 @@
  */
 
 import { bridgeToSpiderWeb } from "@dreamnet/dreamnet-operational-bridge";
-import type { SnailTrail, SnailInsight } from "../types";
+import type { SnailTrail, SnailInsight } from '../types.js';
 
 /**
  * Bridge Snail trail events to Spider Web threads

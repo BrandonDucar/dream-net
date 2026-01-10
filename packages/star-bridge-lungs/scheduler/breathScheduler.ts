@@ -1,16 +1,16 @@
-import type { StarBridgeContext, StarBridgeStatus } from "../types";
+import type { StarBridgeContext, StarBridgeStatus, BreathSnapshot } from '../types.js';
 import {
   collectChainMetrics,
   computeBreathSnapshots,
   getCachedChainMetrics,
   getLastBreaths,
-} from "../engine/breathEngine";
+} from '../engine/breathEngine.js';
 
 let lastRunAt: number | null = null;
 
-export function runStarBridgeCycle(ctx: StarBridgeContext): StarBridgeStatus {
+export async function runStarBridgeCycle(ctx: StarBridgeContext): Promise<StarBridgeStatus> {
   const metrics = collectChainMetrics();
-  const breaths = computeBreathSnapshots(metrics);
+  const breaths = await computeBreathSnapshots(metrics);
   lastRunAt = Date.now();
 
   // Optional: push into Neural Mesh / Slug-Time / QAL
@@ -39,8 +39,8 @@ export function runStarBridgeCycle(ctx: StarBridgeContext): StarBridgeStatus {
   // Optional: inform slime router about "preferred paths"
   if (ctx.slimeRouter?.setPreferredChains && breaths.length) {
     const preferredPairs = breaths
-      .filter((b) => b.recommended && b.direction === "exhale")
-      .map((b) => ({ from: b.fromChain, to: b.toChain, score: b.pressureScore }));
+      .filter((b: BreathSnapshot) => b.recommended && b.direction === "exhale")
+      .map((b: BreathSnapshot) => ({ from: b.fromChain, to: b.toChain, score: b.pressureScore }));
 
     ctx.slimeRouter.setPreferredChains(preferredPairs);
   }

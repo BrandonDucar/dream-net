@@ -1,6 +1,6 @@
-import { FundingLead, SendQueueItem, LeadStage } from "../../wolfpack-funding-core";
-import { AnalystInsight, LeadPrediction, EmailEffectiveness } from "../types";
-import { AnalystStore } from "../store/analystStore";
+import { FundingLead, SendQueueItem, LeadStage, WolfPackFundingCore } from "@dreamnet/wolfpack-funding-core";
+import { AnalystInsight, LeadPrediction, EmailEffectiveness } from '../types.js';
+import { AnalystStore } from '../store/analystStore.js';
 
 /**
  * Generate insights from current data and learned patterns
@@ -120,7 +120,7 @@ export function generatePredictions(leads: FundingLead[], patterns: any[]): Lead
 
   // Predict stage progression for new/qualified leads
   const candidates = leads.filter((l) => l.stage === "new" || l.stage === "qualified");
-  
+
   for (const lead of candidates) {
     let predictedStage: LeadStage = lead.stage;
     let probability = 0.5;
@@ -200,7 +200,7 @@ export function analyzeEmailEffectiveness(
     const subjectLineScore = item.subject.length < 50 ? 0.8 : item.subject.length < 100 ? 0.6 : 0.4;
     const bodyLengthScore = item.body.length > 200 && item.body.length < 1000 ? 0.8 : 0.5;
     const personalizationScore = item.body.includes(lead.name) ? 0.9 : 0.5;
-    
+
     // Timing score (simplified - could be enhanced with actual send time)
     const timeSinceCreated = Date.now() - item.createdAt;
     const timingScore = timeSinceCreated < 24 * 60 * 60 * 1000 ? 0.8 : 0.5;

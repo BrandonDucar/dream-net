@@ -9,9 +9,9 @@
  * - Provider-specific locations
  */
 
-import { APIKey, APIProvider } from "../types";
-import { APIStore } from "../store/apiStore";
-import { registerKey } from "./keyManager";
+import { APIKey, APIProvider } from '../types.js';
+import { APIStore } from '../store/apiStore.js';
+import { registerKey } from './keyManager.js';
 
 /**
  * Comprehensive environment variable patterns

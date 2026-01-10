@@ -5,8 +5,11 @@ export {
   applyGraft,
   runPostInstallTasks,
   broadcastGraftEvent,
-} from "./graftEngine";
-export { registerGraft, getGrafts, getGraftById, updateGraftStatus, removeGraft } from "./registry";
-export type { GraftModel, GraftStatus, GraftType } from "./types";
-
-
+} from './graftEngine.js';
+export * from './logic/graft.js';
+export * from './logic/fusion.js';
+export * from './logic/chimera.js';
+export * from './logic/chemistry.js';
+export * from './types.js';
+export * from './registry.js';
+export { createGraftRouter } from './src/router.js';

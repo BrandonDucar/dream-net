@@ -1,0 +1,1 @@
+{"version":3,"file":"squadRegistry.d.ts","sourceRoot":"","sources":["squadRegistry.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,KAAK,EAAE,MAAM,aAAa,CAAC;AAIzC,eAAO,MAAM,aAAa;kBACV,KAAK;YAcX,MAAM,GAAG,KAAK,GAAG,SAAS;cAIxB,KAAK,EAAE;eAIN,MAAM;;;;;;CAclB,CAAC"}

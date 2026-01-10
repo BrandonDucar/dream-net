@@ -3,7 +3,7 @@ import type {
   DreamMilestone,
   DreamEvaluation,
   DreamTankStatus,
-} from "../types";
+} from '../types.js';
 
 const dreams: Map<string, DreamIncubation> = new Map();
 const milestones: Map<string, DreamMilestone> = new Map();

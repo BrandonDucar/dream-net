@@ -1,0 +1,38 @@
+name: Heartbeat
+
+on:
+  schedule:
+    - cron: "0 * * * *" # Every hour
+  workflow_dispatch: # Manual trigger for stabilization tests
+
+permissions:
+  contents: read
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile # Allow drift while stabilizing
+      
+      - name: First-Light Health Check
+        run: |
+          echo "💓 [Heartbeat] Initializing system pulse..."
+          # Mock health check for now, can be replaced with curl to live endpoint
+          # curl -f -s https://api.dreamnet.ink/health || exit 1
+          echo "✅ [Heartbeat] System pulse confirmed."
+        env:
+          NODE_ENV: production

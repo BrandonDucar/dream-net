@@ -3,7 +3,7 @@
  * Automatically detects systems that aren't integrated and suggests/adds them
  */
 
-import type { DreamNetOSContext } from "../types";
+import type { DreamNetOSContext } from '../types.js';
 
 export interface IntegrationGap {
   system: string;
@@ -32,13 +32,13 @@ export function detectIntegrationGaps(ctx: DreamNetOSContext): IntegrationGap[] 
 
   // Check if systems have status methods but aren't in context
   if (typeof (global as any).DREAMKEEPER_CORE !== "undefined") {
-    if (!ctx.dreamKeeperCore) {
+    if (!ctx.apiKeeperCore) {
       gaps.push({
         system: "DREAMKEEPER_CORE",
         type: "missing_from_heartbeat",
         severity: "high",
         description: "DREAMKEEPER Core is available but not tracked in heartbeat",
-        suggestedFix: "Add dreamKeeperCore to DreamNetOSContext",
+        suggestedFix: "Add apiKeeperCore to DreamNetOSContext",
         autoFixable: true,
       });
     }

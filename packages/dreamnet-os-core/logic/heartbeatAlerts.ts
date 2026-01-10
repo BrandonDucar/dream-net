@@ -3,7 +3,7 @@
  * Detects degradation, failures, and trends before they become critical
  */
 
-import type { DreamNetOSSnapshot, SubsystemSummary } from "../types";
+import type { DreamNetOSSnapshot, SubsystemSummary } from '../types.js';
 
 export interface HeartbeatAlert {
   id: string;

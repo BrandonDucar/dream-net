@@ -1,5 +1,5 @@
-import { APIKey, APIKeyStatus } from "../types";
-import { APIStore } from "../store/apiStore";
+import { APIKey, APIKeyStatus } from '../types.js';
+import { APIStore } from '../store/apiStore.js';
 
 let keyCounter = 0;
 function nextKeyId() {

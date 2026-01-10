@@ -1,0 +1,21 @@
+{
+    "name": "@dreamnet/legal-core",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "types": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit",
+        "clean": "rm -rf dist"
+    },
+    "private": true,
+    "dependencies": {
+        "@dreamnet/shared": "workspace:*",
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/utils": "workspace:*",
+        "@dreamnet/dream-state-core": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}

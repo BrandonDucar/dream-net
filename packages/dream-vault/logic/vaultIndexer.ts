@@ -1,5 +1,5 @@
-import { VaultStore } from "../store/vaultStore";
-import type { VaultIndexEntry } from "../types";
+import { VaultStore } from '../store/vaultStore.js';
+import type { VaultIndexEntry } from '../types.js';
 
 export function rebuildVaultIndex() {
   const all = VaultStore.listAll();

@@ -1,17 +1,25 @@
 {
-  "name": "@dreamnet/shield-core",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@dreamnet/dreamnet-control-core": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name": "@dreamnet/shield-core",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@dreamnet/dreamnet-control-core": "workspace:*",
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3"
+    },
+    "exports": {
+        ".": "./src/index.ts",
+        "./*.js": "./*.ts",
+        "./*": "./*.ts"
+    }
 }

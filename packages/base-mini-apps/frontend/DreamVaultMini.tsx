@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CONTRACT_ADDRESSES } from './config';
+import { CONTRACT_ADDRESSES } from './config.js';
 import { ethers } from 'ethers';
 
 // Try to import BaseProvider, fallback to direct ethers if not available

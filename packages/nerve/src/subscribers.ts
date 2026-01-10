@@ -5,8 +5,8 @@
  * @module @dreamnet/nerve/subscribers
  */
 
-import type { NerveBus } from "./bus";
-import type { NerveEvent } from "./types";
+import type { NerveBus } from './bus.js';
+import type { NerveEvent } from './types.js';
 
 // Shield Core risk tracking (optional import)
 let updateRiskProfile: ((params: {

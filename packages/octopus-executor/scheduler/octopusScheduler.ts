@@ -1,7 +1,7 @@
-import type { OctopusContext, OctopusRuntimeStatus } from "../types";
-import { runOctopusCycle, getQueuedTaskCount } from "../engine/octopusEngine";
-import { ArmRegistry } from "../arms/armRegistry";
-import { registerDefaultArms } from "../arms/defaultArms";
+import type { OctopusContext, OctopusRuntimeStatus } from '../types.js';
+import { runOctopusCycle, getQueuedTaskCount } from '../engine/octopusEngine.js';
+import { ArmRegistry } from '../arms/armRegistry.js';
+import { registerDefaultArms } from '../arms/defaultArms.js';
 
 let initialized = false;
 let lastRunAt: number | null = null;

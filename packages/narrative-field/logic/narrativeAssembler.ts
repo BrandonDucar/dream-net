@@ -3,7 +3,7 @@ import type {
   NarrativeEntry,
   NarrativeSeverity,
   NarrativeDomain,
-} from "../types";
+} from '../types.js';
 
 let counter = 0;
 

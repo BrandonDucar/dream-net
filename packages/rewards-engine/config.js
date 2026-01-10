@@ -7,3 +7,4 @@ export const defaultConfig = {
     maxDailySheep: 500,
     loginCooldownHours: 12,
 };
+//# sourceMappingURL=config.js.map

@@ -1,0 +1,30 @@
+{
+    "extends":  "../../tsconfig.base.json",
+    "compilerOptions":  {
+                            "outDir":  "./dist",
+                            "rootDir":  "./src",
+                            "declaration":  true,
+                            "declarationMap":  true,
+                            "sourceMap":  true,
+                            "types":  [
+                                          "node"
+                                      ],
+                            "skipLibCheck": true
+                        },
+    "include":  [
+                    "src/types.ts",
+                    "src/wormholes.ts",
+                    "src/dispatcher.ts",
+                    "src/index.ts"
+                ],
+    "exclude":  [
+                    "node_modules",
+                    "dist",
+                    "src/eventBus.ts",
+                    "src/slimeRouter.ts",
+                    "src/wormholeEngine.ts",
+                    "src/wormholeRegistry.ts",
+                    "src/router.ts"
+                ]
+}
+

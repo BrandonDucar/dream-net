@@ -3,7 +3,8 @@
  * Sends alerts to Slack, Discord, Email, and webhooks
  */
 
-import type { Alert, AlertChannel, AlertConfig } from "../types";
+import { createHmac } from "crypto";
+import type { Alert, AlertChannel, AlertConfig, AlertSeverity } from '../types.js';
 
 export class AlertSender {
   private config: AlertConfig;
@@ -131,7 +132,7 @@ export class AlertSender {
     // Email sending would use nodemailer or similar
     // For now, just log
     console.log(`📧 [Email Alert] ${alert.severity.toUpperCase()}: ${alert.title} - ${alert.message}`);
-    
+
     // TODO: Implement actual email sending with nodemailer
     // const transporter = nodemailer.createTransport(this.config.email.smtp);
     // await transporter.sendMail({
@@ -219,9 +220,8 @@ export class AlertSender {
   }
 
   private generateSignature(payload: string, secret: string): string {
-    // Simple HMAC signature (use crypto in production)
-    const crypto = require("crypto");
-    return crypto.createHmac("sha256", secret).update(payload).digest("hex");
+    // Standard HMAC signature using ESM crypto
+    return createHmac("sha256", secret).update(payload).digest("hex");
   }
 }
 

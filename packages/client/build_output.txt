@@ -1,0 +1,97 @@
+﻿
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+node.exe : 
+At 
+C:\Users\brand\AppData\Roaming\npm\pnpm.ps1:24 
+char:5
++     & "node$exe"  
+"$basedir/node_modules/pnpm/bin/pnpm.cjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:St 
+   ring) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[1m[33mwarn[39m[22m - The `content` option 
+in your Tailwind CSS configuration is missing or 
+empty.
+[1m[33mwarn[39m[22m - Configure your content 
+sources or your generated CSS will be missing 
+styles.
+[1m[33mwarn[39m[22m - https://tailwindcss.com
+/docs/content-configuration
+[33m[plugin vite:esbuild] 
+src/components/hero/DreamCube.tsx: 
+[33mDuplicate "style" attribute in JSX 
+element[33m
+191 |                              ease: 
+"linear",
+192 |                          }}
+193 |                          style={{ left: 
+`-20%`, top: `-20%` }}
+    |                          ^
+194 |                      />
+195 |                  ))}
+[39m
+[32mΓ£ô[39m 3295 modules transformed.
+[31mΓ£ù[39m Build failed in 12.04s
+[31merror during build:
+[31msrc/components/ui/toast.tsx (6:9): "cn" is 
+not exported by "src/lib/utils.js", imported by 
+"src/components/ui/toast.tsx".[31m
+file: [36mC:/Users/brand/OneDrive/Documents/GitH
+ub/dream-net/client/src/components/ui/toast.tsx:6
+:9[31m
+[33m
+4: import { X } from "lucide-react"
+5: 
+6: import { cn } from "@/lib/utils"
+            ^
+7: 
+8: const ToastProvider = ToastPrimitives.Provider
+[31m
+    at getRollupError (file:///C:/Users/brand/One
+Drive/Documents/GitHub/dream-net/node_modules/.pn
+pm/rollup@4.53.2/node_modules/rollup/dist/es/shar
+ed/parseAst.js:401:41)
+    at error (file:///C:/Users/brand/OneDrive/Doc
+uments/GitHub/dream-net/node_modules/.pnpm/rollup
+@4.53.2/node_modules/rollup/dist/es/shared/parseA
+st.js:397:42)
+    at Module.error (file:///C:/Users/brand/OneDr
+ive/Documents/GitHub/dream-net/node_modules/.pnpm
+/rollup@4.53.2/node_modules/rollup/dist/es/shared
+/node-entry.js:16946:16)
+    at Module.traceVariable (file:///C:/Users/bra
+nd/OneDrive/Documents/GitHub/dream-net/node_modul
+es/.pnpm/rollup@4.53.2/node_modules/rollup/dist/e
+s/shared/node-entry.js:17400:29)
+    at ModuleScope.findVariable (file:///C:/Users
+/brand/OneDrive/Documents/GitHub/dream-net/node_m
+odules/.pnpm/rollup@4.53.2/node_modules/rollup/di
+st/es/shared/node-entry.js:15067:39)
+    at ReturnValueScope.findVariable (file:///C:/
+Users/brand/OneDrive/Documents/GitHub/dream-net/n
+ode_modules/.pnpm/rollup@4.53.2/node_modules/roll
+up/dist/es/shared/node-entry.js:5641:38)
+    at FunctionBodyScope.findVariable (file:///C:
+/Users/brand/OneDrive/Documents/GitHub/dream-net/
+node_modules/.pnpm/rollup@4.53.2/node_modules/rol
+lup/dist/es/shared/node-entry.js:5641:38)
+    at Identifier.bind (file:///C:/Users/brand/On
+eDrive/Documents/GitHub/dream-net/node_modules/.p
+npm/rollup@4.53.2/node_modules/rollup/dist/es/sha
+red/node-entry.js:5415:40)
+    at CallExpression.bind (file:///C:/Users/bran
+d/OneDrive/Documents/GitHub/dream-net/node_module
+s/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es
+/shared/node-entry.js:2806:23)
+    at CallExpression.bind (file:///C:/Users/bran
+d/OneDrive/Documents/GitHub/dream-net/node_module
+s/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es
+/shared/node-entry.js:12114:15)[39m
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.

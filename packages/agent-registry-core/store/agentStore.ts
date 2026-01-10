@@ -3,7 +3,7 @@ import type {
   AgentHealth,
   AgentRegistryStatus,
   AgentState,
-} from "../types";
+} from '../types.js';
 
 const configs: Map<string, AgentConfig> = new Map();
 const healthMap: Map<string, AgentHealth> = new Map();

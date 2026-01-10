@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # THE NERVOUS SYSTEM (Redis / Nerve)
+  # ---------------------------------------------------------------------------
+  nerve:
+    image: redis:alpine
+    container_name: dreamnet_nerve
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - nerve_data:/data
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE BRAIN (Control Core)
+  # ---------------------------------------------------------------------------
+  control-core:
+    build:
+      context: .
+      dockerfile: packages/dreamnet-control-core/Dockerfile
+    container_name: dreamnet_control_core
+    restart: on-failure
+    labels:
+      - "dreamnet.role=sacred"      # PREDATOR PROTOCOL: DO NOT TOUCH
+      - "dreamnet.protection=max"
+    depends_on:
+      - nerve
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://nerve:6379
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - HOT_SENDER_PK=${HOT_SENDER_PK}
+    volumes:
+      #- ./packages/dreamnet-control-core:/app
+      #- /app/node_modules
+      - passports_data:/root/.dreamnet/passports
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE MUSCLE (WoolyAI - GPU Hypervisor)
+  # ---------------------------------------------------------------------------
+  wooly-ai:
+    # UPDATED: 'client' was not found. Using 'controller' as the primary interface.
+    image: woolyai/controller:latest
+    container_name: dreamnet_wooly_ai
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=worker"      # PREDATOR PROTOCOL: RESTART ON FAILURE
+      - "dreamnet.protection=standard"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      # Controller manages the GPU pool
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - wooly_data:/data
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE NEURAL INTERFACE (Portainer / Neurontainer Stand-in)
+  # ---------------------------------------------------------------------------
+  # NOTE: 'neurontainer' extension runs inside Docker Desktop itself.
+  # This service provides a web UI for container management if needed.
+  local-manager:
+    image: portainer/portainer-ce:latest
+    container_name: dreamnet_neurontainer_ui
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - dream_network
+
+volumes:
+  nerve_data:
+  passports_data:
+  wooly_data:
+  portainer_data:
+
+networks:
+  dream_network:
+    driver: bridge

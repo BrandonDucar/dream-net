@@ -3,5 +3,7 @@
  * Multi-phase shield system with risk tracking
  */
 
-export * from "./risk";
+export * from './risk.js';
+export * from './watchtower.js';
+export { ShieldStore } from '../store/shieldStore.js';
 

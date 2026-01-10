@@ -1,0 +1,187 @@
+{
+  "initiative": "The Archimedes Initiative",
+  "version": "1.1",
+  "description": "A deployable manifest for a fleet of specialized science agents designed to corner the market on government-funded research and innovation. All agents are equipped with AI-SEO and Geofencing capabilities.",
+  "agents": [
+    {
+      "unit": "Core Science Units",
+      "name": "PhysicsGPT",
+      "description": "Models forces, fields, and spacetime; simulates classical ↔ quantum systems.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Core Science Units",
+      "name": "ChemistryGPT",
+      "description": "Predicts reactions, catalysis, and material stability.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Core Science Units",
+      "name": "BiologyGPT",
+      "description": "Analyzes genomes, proteins, and metabolic networks.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Core Science Units",
+      "name": "EarthGPT",
+      "description": "Processes satellite and geological data for climate and terrain modeling.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Core Science Units",
+      "name": "AstronomyGPT",
+      "description": "Handles stellar spectra, cosmological models, and orbital mechanics.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Applied & Translational Units",
+      "name": "EngineeringGPT",
+      "description": "Converts theory into buildable systems; structural, fluid, thermal analysis.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Applied & Translational Units",
+      "name": "MedicalGPT",
+      "description": "Connects molecular pathways to diagnostics and treatment protocols.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Applied & Translational Units",
+      "name": "EnergyGPT",
+      "description": "Optimizes renewable grids, fusion parameters, and storage chemistry.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Applied & Translational Units",
+      "name": "AI-ResearchGPT",
+      "description": "Evolves algorithms and evaluates experimental ML theory.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Applied & Translational Units",
+      "name": "NeuroGPT",
+      "description": "Maps circuits, builds brain-machine interface logic.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Frontier & Interdisciplinary Units",
+      "name": "ExoBioGPT",
+      "description": "Simulates non-terrestrial biochemistry and biosignature detection.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Frontier & Interdisciplinary Units",
+      "name": "QuantumBioGPT",
+      "description": "Explores quantum tunneling, coherence, and bio-entanglement effects.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Frontier & Interdisciplinary Units",
+      "name": "NanoGPT",
+      "description": "Designs atomic-scale fabrication, sensors, and molecular machines.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Frontier & Interdisciplinary Units",
+      "name": "CyberEcoGPT",
+      "description": "Links ecosystem dynamics with digital-network behavior.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Frontier & Interdisciplinary Units",
+      "name": "MetaScienceGPT",
+      "description": "Automates literature synthesis, peer-review analysis, and reproducibility scoring.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "DreamPhysicsGPT",
+      "description": "Models speculative frameworks (multiverse, time symmetry, emergent gravity).",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "MycoGPT",
+      "description": "Focuses on fungal intelligence, bio-communication, and biomaterial synthesis.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "ChronoGPT",
+      "description": "Runs temporal-causality experiments; tests time-series loops and prediction paradoxes.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "SynBioArtGPT",
+      "description": "Merges synthetic biology with design aesthetics; creates living art forms.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "ChaosGPT",
+      "description": "Specializes in nonlinear systems, attractors, and edge-of-order computation.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "PhilosophyOfScienceGPT",
+      "description": "Critiques assumptions, maps paradigms, and designs new epistemic frameworks.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "PsychedelicScienceGPT",
+      "description": "Integrates neuropharmacology with consciousness modeling.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "CosmicComputingGPT",
+      "description": "Studies universe-scale computation and informational physics.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "BioRoboticsGPT",
+      "description": "Designs hybrid living-machine constructs.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Outside-the-Box Division",
+      "name": "DreamLogicGPT",
+      "description": "Explores analogies between dream cognition and emergent AI reasoning.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Command Layer",
+      "name": "ScienceOpsGPT",
+      "description": "Fleet coordinator; assigns problems, merges results, and enforces method discipline.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Command Layer",
+      "name": "FleetMemoryGPT",
+      "description": "Maintains long-term dataset indices and reference maps.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Command Layer",
+      "name": "EthicsGPT",
+      "description": "Monitors safety, compliance, and research boundaries.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Command Layer",
+      "name": "GrantGPT",
+      "description": "Drafts proposals, abstracts, and funding justifications for fleet outputs.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    },
+    {
+      "unit": "Command Layer",
+      "name": "PublicCommsGPT",
+      "description": "Translates results into human-readable science briefs.",
+      "capabilities": ["AI-SEO", "Geofencing"]
+    }
+  ]
+}

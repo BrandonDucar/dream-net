@@ -1,5 +1,5 @@
-import { WhalePackContext, WhaleInsight } from "../types";
-import { WhaleStore } from "../store/whaleStore";
+import { WhalePackContext, WhaleInsight } from '../types.js';
+import { WhaleStore } from '../store/whaleStore.js';
 
 let insightCounter = 0;
 function nextInsightId() {

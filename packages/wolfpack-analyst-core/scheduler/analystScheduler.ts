@@ -1,11 +1,11 @@
-import { WolfPackAnalystContext, WolfPackAnalystStatus } from "../types";
-import { AnalystStore } from "../store/analystStore";
-import { trainOnLeadScoring, trainOnEmailEffectiveness } from "../logic/patternTrainer";
+import { WolfPackAnalystContext, WolfPackAnalystStatus } from '../types.js';
+import { AnalystStore } from '../store/analystStore.js';
+import { trainOnLeadScoring, trainOnEmailEffectiveness } from '../logic/patternTrainer.js';
 import {
   generateInsights,
   generatePredictions,
   analyzeEmailEffectiveness,
-} from "../logic/insightEngine";
+} from '../logic/insightEngine.js';
 
 /**
  * Run the analyst cycle:

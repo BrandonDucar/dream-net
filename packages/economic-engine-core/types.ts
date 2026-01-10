@@ -28,6 +28,7 @@ export type RewardSource =
   | "socialhub"
   | "dreamtank"
   | "init-ritual"
+  | "ai-factory"
   | "system";
 
 export type RewardKind =
@@ -38,6 +39,7 @@ export type RewardKind =
   | "purchase"
   | "contribution"
   | "milestone"
+  | "emission"
   | "bonus";
 
 export interface RawRewardEvent {
@@ -48,6 +50,7 @@ export interface RawRewardEvent {
   baseValue: number;           // abstract value [0,inf), used by emission rules
   meta?: Record<string, any>;
   createdAt: number;
+  processed?: boolean;
 }
 
 export interface EmissionRule {

@@ -4,7 +4,7 @@ import type {
   IdentityInitState,
   InitStage,
   InitRitualStatus,
-} from "../types";
+} from '../types.js';
 
 const templates: Map<string, InitFlowTemplate> = new Map();
 const identityStates: Map<string, IdentityInitState> = new Map();

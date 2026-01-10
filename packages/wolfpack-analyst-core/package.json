@@ -1,16 +1,32 @@
 {
-  "name": "@dreamnet/wolfpack-analyst-core",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  }
+    "name":  "@dreamnet/wolfpack-analyst-core",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "typecheck":  "tsc --noEmit"
+                },
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
 }
-

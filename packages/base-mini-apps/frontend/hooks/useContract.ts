@@ -1,6 +1,6 @@
-import { useBase } from '../../../client/src/providers/BaseProvider';
+import { useBase } from '../../../client/src/providers/BaseProvider.js';
 import { ethers } from 'ethers';
-import { CONTRACT_ADDRESSES } from '../config';
+import { CONTRACT_ADDRESSES } from '../config.js';
 
 /**
  * Hook to get contract instance using ethers.js

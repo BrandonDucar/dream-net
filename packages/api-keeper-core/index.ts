@@ -7,14 +7,14 @@ import {
   APICategory,
   APIKeeperContext,
   APIKeeperStatus,
-} from "./types";
-import { APIStore } from "./store/apiStore";
-import { runAPIKeeperCycle } from "./scheduler/apiKeeperScheduler";
-import { discoverAPIs, searchProviders } from "./logic/apiDiscoverer";
-import { registerKey, updateKeyStatus, recordUsage, getBestKey } from "./logic/keyManager";
-import { routeRequest } from "./logic/apiRouter";
-import { ensureDefaultRailGuards, createRailGuard, checkRailGuards } from "./logic/railGuards";
-import { autoDiscoverAllKeys, autoDiscoverKeysFromEnv } from "./logic/keyAutoDiscoverer";
+} from './types.js';
+import { APIStore } from './store/apiStore.js';
+import { runAPIKeeperCycle } from './scheduler/apiKeeperScheduler.js';
+import { discoverAPIs, searchProviders } from './logic/apiDiscoverer.js';
+import { registerKey, updateKeyStatus, recordUsage, getBestKey } from './logic/keyManager.js';
+import { routeRequest } from './logic/apiRouter.js';
+import { ensureDefaultRailGuards, createRailGuard, checkRailGuards } from './logic/railGuards.js';
+import { autoDiscoverAllKeys, autoDiscoverKeysFromEnv } from './logic/keyAutoDiscoverer.js';
 
 export const APIKeeperCore = {
   // Orchestration
@@ -173,7 +173,7 @@ export const APIKeeperCore = {
   },
 };
 
-export * from "./types";
-export * from "./summary";
+export * from './types.js';
+export * from './summary.js';
 export default APIKeeperCore;
 

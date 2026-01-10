@@ -1,0 +1,26 @@
+{
+    "name": "@dreamnet/agents",
+    "version": "1.0.0",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./*.js": "./src/*.ts",
+        "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w"
+    },
+    "dependencies": {
+        "zod": "^3.24.1",
+        "@dreamnet/construction-core": "workspace:*",
+        "@dreamnet/nerve": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@dreamnet/platform-connector": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.5.4"
+    },
+    "type": "module"
+}

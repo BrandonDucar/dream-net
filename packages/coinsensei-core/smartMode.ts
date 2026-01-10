@@ -9,7 +9,7 @@ import type {
   Anomaly,
   TokenPosition,
   PortfolioSummary,
-} from './types';
+} from './types.js';
 
 export class SmartModeEngine {
   private concentrationThreshold: number;

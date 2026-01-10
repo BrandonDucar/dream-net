@@ -1,24 +1,45 @@
 {
-  "name": "@dreamnet/jaggy-core",
-  "version": "0.1.0",
-  "description": "Jaggy - The Silent Sentinel. A digitized cat agent that watches, hunts, and implements webhooks silently. Base Famous 🐱",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "jaggy",
-    "cat",
-    "agent",
-    "sentinel",
-    "guard",
-    "webhook",
-    "hunter",
-    "base-famous",
-    "stealth"
-  ],
-  "author": "",
-  "license": "ISC"
+    "name":  "@dreamnet/jaggy-core",
+    "version":  "0.1.0",
+    "description":  "Jaggy - The Silent Sentinel. A digitized cat agent that watches, hunts, and implements webhooks silently. Base Famous 🐱",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist",
+                    "test":  "echo \"Error: no test specified\" \u0026\u0026 exit 1"
+                },
+    "keywords":  [
+                     "jaggy",
+                     "cat",
+                     "agent",
+                     "sentinel",
+                     "guard",
+                     "webhook",
+                     "hunter",
+                     "base-famous",
+                     "stealth"
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/webhook-nervous-core":  "workspace:*"
+                     }
 }
-

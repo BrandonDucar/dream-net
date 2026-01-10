@@ -4,10 +4,10 @@ import {
   APICategory,
   APIProvider,
   APIKey,
-} from "../types";
-import { APIStore } from "../store/apiStore";
-import { getBestKey } from "./keyManager";
-import { checkRailGuards } from "./railGuards";
+} from '../types.js';
+import { APIStore } from '../store/apiStore.js';
+import { getBestKey } from './keyManager.js';
+import { checkRailGuards } from './railGuards.js';
 
 /**
  * Route an API request to the best provider/key based on cost, quality, availability

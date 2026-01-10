@@ -1,5 +1,5 @@
-import { SEOOptimization, SEOContentType, SEOPlatform, SEOKeyword } from "../types";
-import { SEOStore } from "../store/seoStore";
+import { SEOOptimization, SEOContentType, SEOPlatform, SEOKeyword } from '../types.js';
+import { SEOStore } from '../store/seoStore.js';
 
 let optimizationCounter = 0;
 function nextOptimizationId() {

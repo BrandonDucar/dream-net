@@ -5,7 +5,7 @@ import {
   EmailEffectiveness,
   TrainingMetrics,
   WolfPackAnalystStatus,
-} from "../types";
+} from '../types.js';
 
 const patterns: Map<string, LearnedPattern> = new Map();
 const insights: Map<string, AnalystInsight> = new Map();

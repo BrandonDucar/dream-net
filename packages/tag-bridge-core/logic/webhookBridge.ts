@@ -3,8 +3,8 @@
  * Routes webhooks through TAG's Trusted Webhook IDE
  */
 
-import { inspectWebhook } from "./tagClient";
-import type { TagWebhookInspectRequest, TagWebhookInspectResponse } from "../types";
+import { inspectWebhook } from './tagClient.js';
+import type { TagWebhookInspectRequest, TagWebhookInspectResponse } from '../types.js';
 import type { WebhookEvent } from "@dreamnet/webhook-nervous-core/types";
 
 let enabled = false;

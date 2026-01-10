@@ -5,7 +5,7 @@
 
 import { inboxSquared } from '@dreamnet/inbox-squared-core';
 import type { EmailDraft, DraftGenerationOptions } from '@dreamnet/inbox-squared-core';
-import type { WhaleProduct, WhaleAudience } from '../types';
+import type { WhaleProduct, WhaleAudience } from '../types.js';
 
 export interface WhaleOutreachTarget {
   email: string;
@@ -40,9 +40,9 @@ export async function generateWhaleOutreachDraft(
   try {
     const draft = await inboxSquared.generateDraft(
       target.email,
+      draftOptions,
       target.name,
-      target.company || target.role,
-      draftOptions
+      target.company || target.role
     );
 
     // Enhance with Whale Pack context

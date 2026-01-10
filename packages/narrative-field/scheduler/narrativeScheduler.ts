@@ -1,6 +1,6 @@
-import type { NarrativeContext, NarrativeStatus } from "../types";
-import { assembleNarratives } from "../logic/narrativeAssembler";
-import { NarrativeStore } from "../store/narrativeStore";
+import type { NarrativeContext, NarrativeStatus } from '../types.js';
+import { assembleNarratives } from '../logic/narrativeAssembler.js';
+import { NarrativeStore } from '../store/narrativeStore.js';
 
 let lastRunAt: number | null = null;
 

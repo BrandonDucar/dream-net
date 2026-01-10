@@ -173,4 +173,4 @@ export function getMetric(_name: string): any | null {
 }
 
 // Re-export types
-export * from "./types";
+export * from './types.js';

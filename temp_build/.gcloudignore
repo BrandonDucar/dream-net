@@ -1,0 +1,73 @@
+# Exclude node_modules
+node_modules/
+**/node_modules/
+
+# Exclude client contents but keep package.json for workspace
+client/*
+!client/package.json
+
+# Exclude apps contents but keep package.json for workspace
+apps/*
+!apps/*/package.json
+
+# Exclude build artifacts
+dist/
+**/dist/
+build/
+**/build/
+.next/
+**/.next/
+
+# Exclude IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Exclude git
+.git/
+.gitignore
+
+# Exclude logs
+*.log
+logs/
+tmp/
+temp/
+
+# Exclude Netlify
+.netlify/
+
+# Exclude docs
+docs/
+*.md
+!README.md
+
+# Exclude test files
+**/*.test.ts
+**/*.test.tsx
+**/*.test.js
+**/*.spec.ts
+**/*.spec.tsx
+**/*.spec.js
+__tests__/
+**/__tests__/
+
+# Exclude CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Exclude environment files
+.env
+.env.*
+!.env.example
+
+# Exclude Docker files (except Dockerfile)
+# Dockerfile
+Dockerfile.*
+.dockerignore
+
+# Exclude Cloud Build configs (except the one we're using)
+# cloudbuild.yaml
+cloudbuild-backend.yaml

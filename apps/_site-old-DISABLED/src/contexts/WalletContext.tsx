@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { OnchainKitProvider, OnchainKitConfig } from "@coinbase/onchainkit";
-import { getBaseAppContext, isBaseApp } from "../lib/base-app";
+import { getBaseAppContext, isBaseApp } from '../lib/base-app.js';
 
 interface WalletContextType {
   address: string | null;

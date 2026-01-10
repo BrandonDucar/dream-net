@@ -1,0 +1,33 @@
+{
+    "name":  "@dreamnet/quantum-shield",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
+}

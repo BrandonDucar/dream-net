@@ -27,6 +27,8 @@ export interface SquadModel {
   createdAt: Date;
   updatedAt: Date;
   agents: AgentModel[];
+  role?: string;
+  tags?: string[];
   activeTaskId: string | null;
 }
 

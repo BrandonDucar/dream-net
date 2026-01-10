@@ -1,0 +1,72 @@
+"use strict";
+/**
+ * Audit Store
+ * Stores audit logs (in-memory for now, should use database in production)
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.auditStore = void 0;
+class AuditStore {
+    logs = [];
+    maxLogs = 100000; // Keep last 100k logs
+    recordLog(log) {
+        this.logs.push(log);
+        // Keep only recent logs
+        if (this.logs.length > this.maxLogs) {
+            this.logs = this.logs.slice(-this.maxLogs);
+        }
+    }
+    queryLogs(query) {
+        let filtered = [...this.logs];
+        if (query.userId) {
+            filtered = filtered.filter((log) => log.userId === query.userId);
+        }
+        if (query.walletAddress) {
+            filtered = filtered.filter((log) => log.walletAddress === query.walletAddress);
+        }
+        if (query.action) {
+            filtered = filtered.filter((log) => log.action === query.action);
+        }
+        if (query.clusterId) {
+            filtered = filtered.filter((log) => log.clusterId === query.clusterId);
+        }
+        if (query.startTime) {
+            filtered = filtered.filter((log) => log.timestamp >= query.startTime);
+        }
+        if (query.endTime) {
+            filtered = filtered.filter((log) => log.timestamp <= query.endTime);
+        }
+        // Sort by timestamp descending
+        filtered.sort((a, b) => b.timestamp - a.timestamp);
+        // Apply pagination
+        const offset = query.offset || 0;
+        const limit = query.limit || 100;
+        return filtered.slice(offset, offset + limit);
+    }
+    getStats() {
+        const actionsByType = {};
+        const actionsByCluster = {};
+        const actionsByUser = {};
+        for (const log of this.logs) {
+            actionsByType[log.action] = (actionsByType[log.action] || 0) + 1;
+            if (log.clusterId) {
+                actionsByCluster[log.clusterId] = (actionsByCluster[log.clusterId] || 0) + 1;
+            }
+            const userKey = log.userId || log.walletAddress || "anonymous";
+            actionsByUser[userKey] = (actionsByUser[userKey] || 0) + 1;
+        }
+        return {
+            totalLogs: this.logs.length,
+            actionsByType: actionsByType,
+            actionsByCluster,
+            actionsByUser,
+            recentActivity: this.logs.slice(-50).reverse(),
+        };
+    }
+    exportLogs(query) {
+        if (query) {
+            return this.queryLogs(query);
+        }
+        return [...this.logs];
+    }
+}
+exports.auditStore = new AuditStore();

@@ -5,9 +5,9 @@ import type {
   SlugTimeConfig,
   SlugTimeContext,
   SlugTimeStatus,
-} from "./types";
-import { SlugMemoryStore } from "./store/slugMemoryStore";
-import { runSlugTimeCycle, slugTimeStatus } from "./scheduler/slugScheduler";
+} from './types.js';
+import { SlugMemoryStore } from './store/slugMemoryStore.js';
+import { runSlugTimeCycle, slugTimeStatus } from './scheduler/slugScheduler.js';
 
 export const SlugTimeMemory = {
   configure(config: Partial<SlugTimeConfig>) {
@@ -27,6 +27,6 @@ export const SlugTimeMemory = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default SlugTimeMemory;
 

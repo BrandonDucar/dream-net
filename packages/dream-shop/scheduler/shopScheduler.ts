@@ -1,6 +1,6 @@
-import type { ShopContext, ShopStatus } from "../types";
-import { ShopStore } from "../store/shopStore";
-import { computeRecommendations, syncOffersWithReputation } from "../logic/shopRecommender";
+import type { ShopContext, ShopStatus } from '../types.js';
+import { ShopStore } from '../store/shopStore.js';
+import { computeRecommendations, syncOffersWithReputation } from '../logic/shopRecommender.js';
 
 export function runShopCycle(ctx: ShopContext): ShopStatus {
   const now = Date.now();

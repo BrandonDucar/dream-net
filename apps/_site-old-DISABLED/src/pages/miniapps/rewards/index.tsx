@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import type { UserBalances } from "@dreamnet/rewards-engine";
-import { RewardsLeaderboard } from "../../../components/RewardsLeaderboard";
-import { Achievements } from "../../../components/Achievements";
+import { RewardsLeaderboard } from '../../../components/RewardsLeaderboard.js';
+import { Achievements } from '../../../components/Achievements.js';
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
 const DREAM_TOKEN_ADDRESS = "0x4a6775abfD8CC67cBe9585c95C089FDc2Ae81C77";

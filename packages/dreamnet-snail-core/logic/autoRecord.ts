@@ -3,8 +3,8 @@
  * Biomimetic: All events leave a trail
  */
 
-import { DreamSnailCore } from "../index";
-import type { OperationalEvent } from "@dreamnet/dreamnet-operational-bridge/logic/spiderWebBridge";
+import { DreamSnailCore } from '../index.js';
+import type { OperationalEvent } from "@dreamnet/shared";
 
 /**
  * Auto-record operational events in Dream Snail

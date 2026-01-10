@@ -1,20 +1,22 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "declarationMap": false,
-    "outDir": "./dist",
-    "rootDir": "./",
-    "tsBuildInfoFile": "../../node_modules/.cache/halo-loop.tsbuildinfo"
-  },
-  "include": [
-    "./**/*.ts",
-    "./**/*.tsx"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": false,
+        "declaration": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "tsBuildInfoFile": "../../node_modules/.cache/halo-loop.tsbuildinfo",
+        "skipLibCheck": true
+    },
+    "references": [],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
 }
-

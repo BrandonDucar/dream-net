@@ -1,4 +1,4 @@
-import type { WolfContext, WolfSignal } from "../types";
+import type { WolfContext, WolfSignal } from '../types.js';
 
 export interface WolfStrikeResult {
   signalId: string;

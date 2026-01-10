@@ -1,6 +1,6 @@
-import type { ZenGardenContext, ZenGardenStatus } from "../types";
-import { GardenStore } from "../store/gardenStore";
-import { computeRewardsForSession } from "../logic/rewardEngine";
+import type { ZenGardenContext, ZenGardenStatus } from '../types.js';
+import { GardenStore } from '../store/gardenStore.js';
+import { computeRewardsForSession } from '../logic/rewardEngine.js';
 
 export function runZenGardenCycle(ctx: ZenGardenContext): ZenGardenStatus {
   const now = Date.now();

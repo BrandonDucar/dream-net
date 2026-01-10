@@ -5,7 +5,7 @@ import {
   GeofenceRule,
   SEOInsight,
   AISEOCoreStatus,
-} from "../types";
+} from '../types.js';
 
 const optimizations: Map<string, SEOOptimization> = new Map();
 const keywords: Map<string, SEOKeyword> = new Map();

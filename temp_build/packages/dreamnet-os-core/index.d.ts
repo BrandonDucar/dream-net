@@ -1,0 +1,24 @@
+import type { DreamNetOSSnapshot, DreamNetOSContext, DreamNetOSStatus } from "./types";
+import { getActiveAlerts, getRecentAlerts, getHealthHistory, getHealthStats, detectTrends, resolveAlert } from "./logic/heartbeatAlerts";
+import { generateRecoveryActions } from "./logic/autoRecovery";
+import { detectIntegrationGaps, autoFixIntegrationGaps, getIntegrationGaps } from "./logic/autoIntegration";
+export declare const DreamNetOSCore: {
+    run(context: DreamNetOSContext): DreamNetOSStatus;
+    status(): DreamNetOSStatus;
+    getSnapshot(): DreamNetOSSnapshot;
+    getActiveAlerts: typeof getActiveAlerts;
+    getRecentAlerts: typeof getRecentAlerts;
+    getHealthHistory: typeof getHealthHistory;
+    getHealthStats: typeof getHealthStats;
+    detectTrends: typeof detectTrends;
+    resolveAlert: typeof resolveAlert;
+    generateRecoveryActions: typeof generateRecoveryActions;
+    detectIntegrationGaps: typeof detectIntegrationGaps;
+    autoFixIntegrationGaps: typeof autoFixIntegrationGaps;
+    getIntegrationGaps: typeof getIntegrationGaps;
+};
+export * from "./types";
+export * from "./logic/heartbeatAlerts";
+export * from "./logic/autoRecovery";
+export * from "./logic/autoIntegration";
+export default DreamNetOSCore;

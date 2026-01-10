@@ -1,4 +1,7 @@
-export const FLUTTERBY_NODE = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.flutterbeyeNodeConfig = exports.FLUTTERBY_NODE = void 0;
+exports.FLUTTERBY_NODE = {
     id: 'flutterbye',
     name: 'Flutterbye',
     token: 'FLBY',
@@ -15,7 +18,7 @@ export const FLUTTERBY_NODE = {
     description: 'Secure messaging node with butterfly emoji support and trust-based unlocking',
     version: '1.0.0'
 };
-export const flutterbeyeNodeConfig = {
+exports.flutterbeyeNodeConfig = {
     id: 'flutterbye',
     name: 'FlutterBye Messenger Node',
     version: '1.0.0',
@@ -30,7 +33,7 @@ export const flutterbeyeNodeConfig = {
     ],
     // Access requirements - Updated with trust boundary
     requirements: {
-        minimumTrustScore: FLUTTERBY_NODE.trustBoundary,
+        minimumTrustScore: exports.FLUTTERBY_NODE.trustBoundary,
         requiredTokens: {
             FLBY: 500,
             SHEEP: 200
@@ -55,7 +58,7 @@ export const flutterbeyeNodeConfig = {
         chains: ['ethereum', 'solana'],
         walletRequired: true,
         realTimeUpdates: true,
-        isolation: FLUTTERBY_NODE.isolation,
-        agentVisibility: FLUTTERBY_NODE.agentVisibility
+        isolation: exports.FLUTTERBY_NODE.isolation,
+        agentVisibility: exports.FLUTTERBY_NODE.agentVisibility
     }
 };

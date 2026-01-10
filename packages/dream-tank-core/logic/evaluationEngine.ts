@@ -3,8 +3,8 @@ import type {
   DreamIncubation,
   DreamEvaluation,
   EvaluationKind,
-} from "../types";
-import { TankStore } from "../store/tankStore";
+} from '../types.js';
+import { TankStore } from '../store/tankStore.js';
 
 let evalCounter = 0;
 function nextEvalId(): string {

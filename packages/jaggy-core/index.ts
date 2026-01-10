@@ -5,7 +5,7 @@
  * Base Famous 🐱
  */
 
-import type { JaggyStatus, JaggyHunt, JaggyTerritory, JaggyAlert, JaggyMemory } from "./types";
+import type { JaggyStatus, JaggyHunt, JaggyTerritory, JaggyAlert, JaggyMemory } from './types.js';
 
 // Hunter
 import {
@@ -16,7 +16,7 @@ import {
   getMemories,
   createTerritory,
   getTerritories,
-} from "./logic/jaggyHunter";
+} from './logic/jaggyHunter.js';
 
 // Sentinel
 import {
@@ -26,7 +26,7 @@ import {
   getAlerts,
   increaseFame,
   rest,
-} from "./logic/jaggySentinel";
+} from './logic/jaggySentinel.js';
 
 export const JaggyCore = {
   // ===== STATUS =====
@@ -76,6 +76,6 @@ export const JaggyCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default JaggyCore;
 

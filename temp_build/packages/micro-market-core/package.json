@@ -1,0 +1,13 @@
+{
+    "name": "@dreamnet/micro-market-core",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "dependencies": {
+        "@dreamnet/nerve": "workspace:*",
+        "@dreamnet/dream-token": "workspace:*",
+        "ethers": "^6.0.0"
+    },
+    "scripts": {
+        "build": "tsc"
+    }
+}

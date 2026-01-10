@@ -3,7 +3,7 @@
  * Manages registered network blueprints
  */
 
-import type { NetworkBlueprint } from "./types";
+import type { NetworkBlueprint } from './types.js';
 
 const blueprints = new Map<string, NetworkBlueprint>();
 

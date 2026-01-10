@@ -3,7 +3,7 @@ import type {
   ActivityRecord,
   RewardRecommendation,
   ZenGardenStatus,
-} from "../types";
+} from '../types.js';
 
 const sessions: Map<string, ZenSession> = new Map();
 const activities: Map<string, ActivityRecord> = new Map();

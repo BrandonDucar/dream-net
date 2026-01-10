@@ -3,7 +3,7 @@
  * Stores incidents and their events
  */
 
-import type { Incident, IncidentEvent, IncidentQuery } from "../types";
+import type { Incident, IncidentEvent, IncidentQuery } from '../types.js';
 
 class IncidentStore {
   private incidents: Map<string, Incident> = new Map();

@@ -1,0 +1,27 @@
+{
+  "name": "@dreamnet/event-wormholes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dreamnet/internal-ports": "workspace:*",
+    "@dreamnet/internal-router": "workspace:*",
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

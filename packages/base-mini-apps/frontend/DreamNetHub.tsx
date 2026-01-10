@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { MINI_APPS } from './index';
-import { CONTRACT_ADDRESSES, BASE_CHAIN_ID } from './config';
+import { MINI_APPS } from './index.js';
+import { CONTRACT_ADDRESSES, BASE_CHAIN_ID } from './config.js';
 
 interface SystemGraph {
   ports: Array<{

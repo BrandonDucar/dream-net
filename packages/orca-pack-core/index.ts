@@ -9,9 +9,9 @@ import {
   OrcaInsight,
   OrcaPackContext,
   OrcaPackStatus,
-} from "./types";
-import { OrcaStore } from "./store/orcaStore";
-import { runOrcaPackCycle } from "./scheduler/orcaScheduler";
+} from './types.js';
+import { OrcaStore } from './store/orcaStore.js';
+import { runOrcaPackCycle } from './scheduler/orcaScheduler.js';
 
 export const OrcaPackCore = {
   run(context: OrcaPackContext): Promise<OrcaPackStatus> {
@@ -51,8 +51,8 @@ export const OrcaPackCore = {
   },
 };
 
-export * from "./types";
-export * from "./logic/orcaOutreachCore";
+export * from './types.js';
+export * from './logic/orcaOutreachCore.js';
 export default OrcaPackCore;
 
 

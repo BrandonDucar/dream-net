@@ -1,0 +1,25 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext"
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [
+        {
+            "path": "../agent-gateway"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

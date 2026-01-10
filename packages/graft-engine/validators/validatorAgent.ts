@@ -1,15 +1,16 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { GraftModel, GraftValidator, ValidationResult } from "../types";
+import type { GraftModel, GraftValidator, ValidationResult } from '../types.js';
 
 export class AgentValidator implements GraftValidator {
   async validate(graft: GraftModel): Promise<ValidationResult> {
     const issues: string[] = [];
 
-    if (!graft.metadata?.role || typeof graft.metadata.role !== "string") {
+    const metadata = graft.metadata as any;
+    if (!metadata?.role || typeof metadata.role !== "string") {
       issues.push("Agent grafts require metadata.role");
     }
-    if (!graft.metadata?.capabilities || !Array.isArray(graft.metadata.capabilities)) {
+    if (!metadata?.capabilities || !Array.isArray(metadata.capabilities)) {
       issues.push("Agent grafts require metadata.capabilities array");
     }
 

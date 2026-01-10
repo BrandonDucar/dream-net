@@ -1,0 +1,24 @@
+{
+    "name": "DreamNet Sovereign Hub",
+    "iconUrl": "https://dreamnet.ink/logo.png",
+    "appUrl": "https://dreamnet.ink",
+    "description": "Biomimetic Digital Organism for Sovereign Builders",
+    "manifestVersion": "2024-11-20",
+    "screens": [
+        {
+            "name": "Rewards Hub",
+            "route": "/miniapps/rewards",
+            "farcasterAction": "earning"
+        },
+        {
+            "name": "Shadow Probe",
+            "route": "/miniapps/shadow-probe",
+            "farcasterAction": "utility"
+        },
+        {
+            "name": "Social Mesh",
+            "route": "/miniapps/social",
+            "farcasterAction": "social"
+        }
+    ]
+}

@@ -1,30 +1,45 @@
 {
-  "name": "@dreamnet/economic-engine-core",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "private": true,
-  "dependencies": {
-    "@dreamnet/utils": "workspace:*",
-    "@dreamnet/identity-grid": "workspace:*",
-    "@dreamnet/zen-garden-core": "workspace:*",
-    "@dreamnet/dreambet-core": "workspace:*",
-    "@dreamnet/dream-vault": "workspace:*",
-    "@dreamnet/dream-shop": "workspace:*",
-    "@dreamnet/social-hub-core": "workspace:*",
-    "@dreamnet/dream-tank-core": "workspace:*",
-    "@dreamnet/init-ritual-core": "workspace:*",
-    "@dreamnet/field-layer": "workspace:*",
-    "@dreamnet/narrative-field": "workspace:*",
-    "@dreamnet/neural-mesh": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0"
-  }
+    "name":  "@dreamnet/economic-engine-core",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "private":  true,
+    "dependencies":  {
+                         "@dreamnet/dream-shop":  "workspace:*",
+                         "@dreamnet/dream-tank-core":  "workspace:*",
+                         "@dreamnet/dream-vault":  "workspace:*",
+                         "@dreamnet/dreambet-core":  "workspace:*",
+                         "@dreamnet/field-layer":  "workspace:*",
+                         "@dreamnet/identity-grid":  "workspace:*",
+                         "@dreamnet/init-ritual-core":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/narrative-field":  "workspace:*",
+                         "@dreamnet/neural-mesh":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/social-hub-core":  "workspace:*",
+                         "@dreamnet/utils":  "workspace:*",
+                         "@dreamnet/zen-garden-core":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.0.0"
+                        }
 }
-

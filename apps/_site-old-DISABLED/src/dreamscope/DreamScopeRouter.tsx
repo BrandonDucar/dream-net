@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useHeartbeat } from "../hooks/useHeartbeat";
+import { useHeartbeat } from '../hooks/useHeartbeat.js';
 
 type EntityType = "agent" | "squad" | "endpoint" | "spore";
 

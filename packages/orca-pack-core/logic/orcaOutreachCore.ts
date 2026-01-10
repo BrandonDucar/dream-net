@@ -5,7 +5,7 @@
 
 import { inboxSquared } from '@dreamnet/inbox-squared-core';
 import type { EmailDraft, DraftGenerationOptions } from '@dreamnet/inbox-squared-core';
-import type { OrcaPostIdea, OrcaNarrativeTheme } from '../types';
+import type { OrcaPostIdea, OrcaNarrativeTheme } from '../types.js';
 
 export interface OrcaOutreachTarget {
   email: string;
@@ -40,9 +40,9 @@ export async function generateOrcaOutreachDraft(
   try {
     const draft = await inboxSquared.generateDraft(
       target.email,
+      draftOptions,
       target.name,
-      target.organization || target.role,
-      draftOptions
+      target.organization || target.role
     );
 
     // Enhance with Orca Pack context

@@ -3,7 +3,7 @@
  * Sends notifications when critical alerts are detected
  */
 
-import type { HeartbeatAlert } from "./heartbeatAlerts";
+import type { HeartbeatAlert } from './heartbeatAlerts.js';
 
 let notificationCallbacks: Array<(alert: HeartbeatAlert) => void> = [];
 

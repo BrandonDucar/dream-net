@@ -3,7 +3,7 @@
  * Charged ports for Env Keeper, API Keeper, and Vercel Agent
  */
 
-import type { PortProfile } from "./types";
+import type { PortProfile } from './types.js';
 
 export const PORT_PROFILES: Record<string, PortProfile> = {
   ENVKEEPER_PORT: {

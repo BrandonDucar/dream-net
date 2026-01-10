@@ -1,7 +1,7 @@
-import type { PSLContext, PSLStatus } from "../types";
-import { detectDecay } from "../detectors/decayDetector";
-import { runPredatorEngine } from "../predators/predatorEngine";
-import { runScavengerEngine } from "../scavengers/scavengerEngine";
+import type { PSLContext, PSLStatus } from '../types.js';
+import { detectDecay } from '../detectors/decayDetector.js';
+import { runPredatorEngine } from '../predators/predatorEngine.js';
+import { runScavengerEngine } from '../scavengers/scavengerEngine.js';
 
 let lastRunAt: number | null = null;
 let lastDecay: any[] = [];

@@ -1,4 +1,7 @@
-export const DEFI_LAB_NODE = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DEFI_LAB_NODE = void 0;
+exports.DEFI_LAB_NODE = {
     id: 'defi-lab',
     name: 'My DeFi Lab',
     token: 'DEFI',

@@ -1,7 +1,7 @@
-import { AISEOCoreContext, AISEOCoreStatus } from "../types";
-import { SEOStore } from "../store/seoStore";
-import { ensureDefaultGeofences } from "../logic/geofencer";
-import { generateSEOInsights } from "../logic/seoInsights";
+import { AISEOCoreContext, AISEOCoreStatus } from '../types.js';
+import { SEOStore } from '../store/seoStore.js';
+import { ensureDefaultGeofences } from '../logic/geofencer.js';
+import { generateSEOInsights } from '../logic/seoInsights.js';
 
 /**
  * Run AI SEO cycle

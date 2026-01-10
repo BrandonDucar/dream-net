@@ -3,8 +3,8 @@ import type {
   ZenSession,
   ActivityRecord,
   RewardRecommendation,
-} from "../types";
-import { GardenStore } from "../store/gardenStore";
+} from '../types.js';
+import { GardenStore } from '../store/gardenStore.js';
 
 let rewardCounter = 0;
 function nextRewardId() {

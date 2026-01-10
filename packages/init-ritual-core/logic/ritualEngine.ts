@@ -4,8 +4,8 @@ import type {
   InitStep,
   IdentityInitState,
   InitStage,
-} from "../types";
-import { InitStore } from "../store/initStore";
+} from '../types.js';
+import { InitStore } from '../store/initStore.js';
 
 let templateInitialized = false;
 

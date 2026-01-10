@@ -1,5 +1,5 @@
-import { FundingLead, EmailDraft } from "../types";
-import { FundingStore } from "../store/fundingStore";
+import { FundingLead, EmailDraft } from '../types.js';
+import { FundingStore } from '../store/fundingStore.js';
 
 /**
  * Generate a follow-up email draft for a lead.

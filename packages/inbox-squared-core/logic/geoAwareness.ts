@@ -3,7 +3,7 @@
  * Adds local or event-based personalization
  */
 
-import type { GeoContext, LocalEvent } from '../types';
+import type { GeoContext, LocalEvent } from '../types.js';
 
 export class GeoAwareness {
   /**

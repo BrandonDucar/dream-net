@@ -3,8 +3,8 @@
  * Adaptive rate limiting and auto-scaling
  */
 
-import { ScalingEngine } from "./logic/scalingEngine";
-import type { ScalingRule, ScalingMetrics, ScalingDecision } from "./types";
+import { ScalingEngine } from './logic/scalingEngine.js';
+import type { ScalingRule, ScalingMetrics, ScalingDecision } from './types.js';
 import { DreamNetMetricsCore } from "@dreamnet/dreamnet-metrics-core";
 import { bridgeToSpiderWeb } from "@dreamnet/dreamnet-operational-bridge";
 
@@ -138,6 +138,6 @@ export const DreamNetAutoScaleCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamNetAutoScaleCore;
 

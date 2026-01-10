@@ -3,9 +3,9 @@ import type {
   RawRewardEvent,
   EmissionRule,
   AppliedReward,
-} from "../types";
-import { EconStore } from "../store/econStore";
-import { ensureDefaultEconomicConfigSeeded } from "./emissionRules";
+} from '../types.js';
+import { EconStore } from '../store/econStore.js';
+import { ensureDefaultEconomicConfigSeeded } from './emissionRules.js';
 
 let rewardCounter = 0;
 function nextRewardId() {

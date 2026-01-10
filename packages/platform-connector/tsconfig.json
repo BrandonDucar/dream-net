@@ -1,0 +1,36 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true,
+        "noEmit": false
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../shared"
+        },
+        {
+            "path": "../agent-wallet-manager"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

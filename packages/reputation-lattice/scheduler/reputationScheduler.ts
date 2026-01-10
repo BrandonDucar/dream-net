@@ -1,7 +1,7 @@
-import type { ReputationContext, ReputationStatus } from "../types";
-import { ReputationStore } from "../store/reputationStore";
-import { ingestExternalSignals } from "../logic/reputationAggregator";
-import { recomputeReputation } from "../logic/reputationScorer";
+import type { ReputationContext, ReputationStatus } from '../types.js';
+import { ReputationStore } from '../store/reputationStore.js';
+import { ingestExternalSignals } from '../logic/reputationAggregator.js';
+import { recomputeReputation } from '../logic/reputationScorer.js';
 
 let lastRunAt: number | null = null;
 

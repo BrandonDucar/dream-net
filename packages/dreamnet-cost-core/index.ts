@@ -3,9 +3,9 @@
  * API cost tracking and optimization
  */
 
-import { costStore } from "./store/costStore";
-import type { CostRecord, CostSummary, CostAlert, CostBudget } from "./types";
-import { bridgeCostToEconomicEngine, bridgeCostAlertToEconomicEngine } from "@dreamnet/cost-economic-bridge";
+import { costStore } from './store/costStore.js';
+import type { CostRecord, CostSummary, CostAlert, CostBudget } from './types.js';
+// import { bridgeCostToEconomicEngine, bridgeCostAlertToEconomicEngine } from "@dreamnet/cost-economic-bridge";
 
 export const DreamNetCostCore = {
   /**
@@ -13,16 +13,16 @@ export const DreamNetCostCore = {
    */
   recordCost(record: CostRecord): void {
     costStore.recordCost(record);
-    
+
     // Bridge to Economic Engine
-    bridgeCostToEconomicEngine({
-      clusterId: record.clusterId,
-      provider: record.provider,
-      operation: record.operation,
-      cost: record.cost,
-      currency: record.currency,
-      timestamp: record.timestamp,
-    });
+    // bridgeCostToEconomicEngine({
+    //   clusterId: record.clusterId,
+    //   provider: record.provider,
+    //   operation: record.operation,
+    //   cost: record.cost,
+    //   currency: record.currency,
+    //   timestamp: record.timestamp,
+    // });
   },
 
   /**
@@ -75,6 +75,6 @@ export const DreamNetCostCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default DreamNetCostCore;
 

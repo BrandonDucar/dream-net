@@ -43,6 +43,7 @@ export interface SnailInsight {
   relatedTrails: string[];
   actionable: boolean;
   actionUrl?: string;
+  status: "active" | "resolved" | "dismissed";
 }
 
 export interface SnailStatus {
@@ -51,5 +52,6 @@ export interface SnailStatus {
   privacyScore: number;
   integrityValid: boolean;
   lastTrailAt: number;
+  linkedTokenContract?: string;
 }
 

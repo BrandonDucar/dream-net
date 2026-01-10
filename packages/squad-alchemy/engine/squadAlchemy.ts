@@ -2,11 +2,11 @@ import type {
   Squad,
   SquadAlchemyContext,
   SquadAlchemyDecision,
-} from "../types";
-import { SquadRegistry } from "../registry/squadRegistry";
-import { proposeMergeStrategy } from "../strategies/mergeStrategy";
-import { proposeSplitStrategy } from "../strategies/splitStrategy";
-import { proposeCloneStrategy } from "../strategies/cloneStrategy";
+} from '../types.js';
+import { SquadRegistry } from '../registry/squadRegistry.js';
+import { proposeMergeStrategy } from '../strategies/mergeStrategy.js';
+import { proposeSplitStrategy } from '../strategies/splitStrategy.js';
+import { proposeCloneStrategy } from '../strategies/cloneStrategy.js';
 
 export function runSquadAlchemyCycle(
   ctx: SquadAlchemyContext
@@ -18,7 +18,7 @@ export function runSquadAlchemyCycle(
   // The sync will happen lazily when the bridge is first accessed
   try {
     // Use dynamic import without await - will be handled asynchronously
-    import("../bridge/squadBuilderBridge").then((module) => {
+    import('../bridge/squadBuilderBridge.js').then((module) => {
       const synced = module.syncSquadBuilderSquads();
       if (synced > 0) {
         console.log(`[SquadAlchemy] Synced ${synced} squads from Squad-Builder`);

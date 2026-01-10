@@ -1,7 +1,11 @@
-import type { SandboxResult } from "./types";
+import type { SandboxResult } from './types.js';
 import { randomUUID } from "node:crypto";
 import { writeFileSync, existsSync, mkdirSync, rmSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const SANDBOX_DIR = join(__dirname, "../sandbox");
 
@@ -76,7 +80,7 @@ export async function runSandbox(
       // Simulate successful execution if no syntax errors
       if (errors.length === 0) {
         output = "Sandbox validation passed (Phase 1: syntax check only)";
-        
+
         // Simulate test results if test code provided
         if (testCode) {
           testResults = {

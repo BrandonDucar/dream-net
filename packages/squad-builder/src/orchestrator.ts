@@ -1,7 +1,11 @@
-import type { TaskModel, AgentModel } from "./types";
-import { getAgents, getSquadById } from "./registry";
+import type { TaskModel, AgentModel } from './types.js';
+import { getAgents, getSquadById } from './registry.js';
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const TASKS_PATH = join(__dirname, "../store/tasks.json");
 
@@ -135,12 +139,27 @@ export async function dispatchTask(taskId: string): Promise<{ success: boolean; 
   updateTaskStatus(taskId, "running", `Assigned to ${agent.name}`);
   assignTaskToAgent(taskId, agent.id);
 
+  // Mark agent as busy (Congestion Tax)
+  try {
+    const { depositPheromone, buildPath } = await import("@dreamnet/halo-loop");
+    const path = buildPath({
+      agent: agent.id,
+      time: new Date().getHours() < 12 ? "morning" : "afternoon",
+      provider: agent.role.includes("Keeper") ? "dreamnet" : "external"
+    });
+    depositPheromone(path, true, 0, { loadDelta: 1 });
+  } catch {
+    // Halo-loop not available
+  }
+
   // Execute agent via DreamNet OS
   try {
     // Use dynamic import with proper path resolution
-    const dreamNetOSModule = await import("../../../server/core/dreamnet-os");
+    // @ts-ignore - Reaching into server src for runtime integration
+    const dreamNetOSModule = await import('../../../../server/src/core/dreamnet-os.js');
     const dreamNetOS = dreamNetOSModule.dreamNetOS;
-    
+    const startTime = Date.now();
+
     // Map agent roles to DreamNet OS agent names
     const agentNameMap: Record<string, string> = {
       "DreamKeeper": "dreamkeeper",
@@ -152,8 +171,8 @@ export async function dispatchTask(taskId: string): Promise<{ success: boolean; 
       "BuildKeeper": "deploykeeper", // Fallback to DeployKeeper for BuildKeeper
     };
 
-    const osAgentName = agentNameMap[agent.role] || agentName;
-    
+    const osAgentName = agentNameMap[agent.role] || agent.name;
+
     const result = await dreamNetOS.runAgent({
       agent: osAgentName,
       input: task.payload,
@@ -166,10 +185,23 @@ export async function dispatchTask(taskId: string): Promise<{ success: boolean; 
 
     if (result.ok) {
       updateTaskStatus(taskId, "success", `Completed by ${agent.name}: ${result.messages?.join(", ") || "Success"}`);
-      
+
       // Emit Event Wormhole event for successful task completion
       try {
         const { emitEvent } = await import("@dreamnet/event-wormholes");
+        const { depositPheromone, buildPath } = await import("@dreamnet/halo-loop");
+
+        const latency = Date.now() - startTime;
+        const reward = 1.0; // Base reward for success
+
+        const path = buildPath({
+          agent: agent.id,
+          time: new Date().getHours() < 12 ? "morning" : "afternoon", // Simplified
+          provider: agent.role.includes("Keeper") ? "dreamnet" : "external"
+        });
+
+        depositPheromone(path, true, 0.1, { latency, reward, loadDelta: -1 });
+
         await emitEvent({
           sourceType: "squad",
           eventType: "squad.task.completed",
@@ -187,10 +219,20 @@ export async function dispatchTask(taskId: string): Promise<{ success: boolean; 
       }
     } else {
       updateTaskStatus(taskId, "failed", `Failed: ${result.error || "Unknown error"}`);
-      
+
       // Emit Event Wormhole event for failed task
       try {
         const { emitEvent } = await import("@dreamnet/event-wormholes");
+        const { depositPheromone, buildPath } = await import("@dreamnet/halo-loop");
+
+        const path = buildPath({
+          agent: agent.id,
+          time: new Date().getHours() < 12 ? "morning" : "afternoon",
+          provider: agent.role.includes("Keeper") ? "dreamnet" : "external"
+        });
+
+        depositPheromone(path, false, 0.05, { loadDelta: -1 });
+
         await emitEvent({
           sourceType: "squad",
           eventType: "squad.task.failed",

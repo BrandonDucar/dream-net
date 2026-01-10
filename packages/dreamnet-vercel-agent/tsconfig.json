@@ -1,0 +1,42 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "src/**/*",
+        "logic/**/*",
+        "summary.ts",
+        "types.ts"
+    ],
+    "references": [
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../shared"
+        },
+        {
+            "path": "../api-keeper-core"
+        },
+        {
+            "path": "../dreamnet-operational-bridge"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

@@ -1,4 +1,4 @@
-import type { DecaySignal, ScavengerAction, PSLContext } from "../types";
+import type { DecaySignal, ScavengerAction, PSLContext } from '../types.js';
 
 export function runScavengerEngine(
   decaySignals: DecaySignal[],

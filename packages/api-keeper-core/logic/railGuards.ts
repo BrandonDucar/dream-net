@@ -1,5 +1,5 @@
-import { APIRequest, APIRailGuard } from "../types";
-import { APIStore } from "../store/apiStore";
+import { APIRequest, APIRailGuard } from '../types.js';
+import { APIStore } from '../store/apiStore.js';
 
 let guardCounter = 0;
 function nextGuardId() {

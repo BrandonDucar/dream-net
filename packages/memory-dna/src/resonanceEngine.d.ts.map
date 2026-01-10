@@ -1,0 +1,1 @@
+{"version":3,"file":"resonanceEngine.d.ts","sourceRoot":"","sources":["resonanceEngine.ts"],"names":[],"mappings":"AAIA,OAAO,KAAK,EAA4B,gBAAgB,EAAqB,MAAM,YAAY,CAAC;AA8ChG,wBAAsB,wBAAwB,IAAI,OAAO,CAAC,gBAAgB,EAAE,CAAC,CA4D5E;AAED,wBAAsB,qBAAqB,CAAC,QAAQ,EAAE,gBAAgB,EAAE,GAAG,OAAO,CAAC,IAAI,CAAC,CAGvF;AAED,wBAAsB,iBAAiB,CAAC,KAAK,SAAK,GAAG,OAAO,CAAC,gBAAgB,EAAE,CAAC,CAG/E"}

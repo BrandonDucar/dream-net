@@ -10,22 +10,22 @@
  * - Educational analytics only (no financial/tax/legal advice)
  */
 
-export * from './types';
-export * from './priceProvider';
-export * from './portfolioEngine';
-export * from './dataHygiene';
-export * from './smartMode';
+export * from './types.js';
+export * from './priceProvider.js';
+export * from './portfolioEngine.js';
+export * from './dataHygiene.js';
+export * from './smartMode.js';
 
-import { PortfolioEngine } from './portfolioEngine';
-import { DataHygieneEngine } from './dataHygiene';
-import { SmartModeEngine } from './smartMode';
-import { PriceProvider } from './priceProvider';
+import { PortfolioEngine } from './portfolioEngine.js';
+import { DataHygieneEngine } from './dataHygiene.js';
+import { SmartModeEngine } from './smartMode.js';
+import { PriceProvider } from './priceProvider.js';
 import type {
   CoinSenseiInput,
   CoinSenseiOutput,
   CoinSenseiConfig,
   SEOSummary,
-} from './types';
+} from './types.js';
 
 export class CoinSensei {
   private portfolioEngine: PortfolioEngine;

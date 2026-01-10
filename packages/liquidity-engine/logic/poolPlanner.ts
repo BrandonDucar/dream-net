@@ -1,5 +1,5 @@
-import type { LiquidityPoolConfig } from "../types";
-import { LiquidityStore } from "../store/liquidityStore";
+import type { LiquidityPoolConfig } from '../types.js';
+import { LiquidityStore } from '../store/liquidityStore.js';
 
 export function seedInitialLiquidityConfigs() {
   // NOTE:

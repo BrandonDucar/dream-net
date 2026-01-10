@@ -130,12 +130,87 @@ kubectl logs -f deployment/dreamnet-api
 - `infrastructure/google/gke/ingress.yaml` - Load balancer and SSL
 - `infrastructure/google/gke/deploy.ts` - Automated deployment script
 
+## Prerequisites (Before Deploying)
+
+Before running `pnpm deploy:gke`, you need to set up:
+
+### 1. Static IP Address
+
+Create a static IP address for the ingress:
+
+```bash
+gcloud compute addresses create dreamnet-ip --global --project=YOUR_PROJECT_ID
+```
+
+Verify it was created:
+```bash
+gcloud compute addresses describe dreamnet-ip --global
+```
+
+### 2. Managed SSL Certificate
+
+Create a managed certificate for your domain:
+
+```bash
+kubectl apply -f infrastructure/google/gke/ingress.yaml
+```
+
+The certificate will be automatically provisioned by GKE. It may take 10-60 minutes to provision.
+
+Check certificate status:
+```bash
+kubectl describe managedcertificate dreamnet-ssl
+```
+
+### 3. DNS Configuration
+
+Point your domain to the static IP:
+
+1. Get the static IP address:
+   ```bash
+   gcloud compute addresses describe dreamnet-ip --global --format="value(address)"
+   ```
+
+2. Update your DNS records:
+   - Create an A record: `dreamnet.ink` → `<static-ip>`
+   - Create an A record: `www.dreamnet.ink` → `<static-ip>`
+
+3. Wait for DNS propagation (can take up to 48 hours, usually much faster)
+
+### 4. Kubernetes Secrets
+
+Create secrets for environment variables:
+
+```bash
+kubectl create secret generic dreamnet-secrets \
+  --from-literal=database-url="YOUR_DATABASE_URL" \
+  --from-literal=openai-api-key="YOUR_OPENAI_KEY" \
+  --from-literal=admin-token="YOUR_ADMIN_TOKEN"
+```
+
+Or create a `secrets.yaml` file (don't commit secrets to git!):
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dreamnet-secrets
+type: Opaque
+stringData:
+  database-url: "postgresql://..."
+  openai-api-key: "sk-..."
+  admin-token: "your-secret-token"
+```
+
+Then apply it:
+```bash
+kubectl apply -f infrastructure/google/gke/secrets.yaml
+```
+
 ## Next Steps
 
-1. **Update cluster name** in deployment scripts to match your cluster
-2. **Set up secrets** for environment variables
-3. **Configure domain** in ingress.yaml (currently set to dreamnet.ink)
-4. **Deploy** using `pnpm deploy:gke` or manual steps above
+1. **Complete prerequisites** (static IP, certificate, DNS, secrets)
+2. **Set environment variables** (`GCP_PROJECT_ID`, `GCP_REGION`, `GKE_CLUSTER_NAME`)
+3. **Deploy** using `pnpm deploy:gke`
 
 ## Useful Commands
 

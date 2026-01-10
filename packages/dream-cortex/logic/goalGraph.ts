@@ -1,5 +1,5 @@
-import type { DreamNode } from "../types";
-import { DreamRegistry } from "../store/dreamRegistry";
+import type { DreamNode } from '../types.js';
+import { DreamRegistry } from '../store/dreamRegistry.js';
 
 export interface GoalGraphEdge {
   from: string;

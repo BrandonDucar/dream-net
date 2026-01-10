@@ -1,8 +1,14 @@
-import type { EventModel } from "./types";
+import type { EventModel } from './types.js';
 import { randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
-import { processEvent } from "./wormholeEngine";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from 'url';
+import { processEvent } from './wormholeEngine.js';
+import { ThermodynamicAnalyzer } from './analysis.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const analyzer = new ThermodynamicAnalyzer();
 
 const EVENT_LOG_PATH = join(__dirname, "../store/eventLog.json");
 
@@ -45,12 +51,15 @@ export async function emitEvent(
   const trimmed = events.slice(0, 1000);
   saveEvents(trimmed);
 
-  // Process through wormholes (async, don't await)
-  processEvent(fullEvent).catch((err) => {
-    console.error("[EventWormholes] Error processing event:", err);
-  });
+  // Perform thermodynamic analysis
+  const thermodynamics = analyzer.analyze(fullEvent);
+  (fullEvent as any).thermodynamics = thermodynamics;
 
   return fullEvent;
+}
+
+export function getSystemThermodynamics() {
+  return analyzer.analyze({}); // Heuristic return of current window
 }
 
 export function getRecentEvents(limit: number = 50): EventModel[] {

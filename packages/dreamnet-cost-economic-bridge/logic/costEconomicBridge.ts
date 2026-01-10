@@ -4,7 +4,7 @@
  */
 
 import { DreamNetCostCore } from "@dreamnet/dreamnet-cost-core";
-import type { CostTransaction, BudgetAllocation } from "../types";
+import type { CostTransaction, BudgetAllocation } from '../types.js';
 
 /**
  * Bridge cost record to Economic Engine transaction
@@ -73,10 +73,11 @@ export function bridgeCostAlertToEconomicEngine(alert: {
 export function syncCostSummariesToEconomicEngine(): void {
   const summaries = DreamNetCostCore.getAllCostSummaries();
 
-  for (const [clusterId, summary] of Object.entries(summaries)) {
+  for (const [clusterId, s] of Object.entries(summaries)) {
     // Bridge each summary as economic data
+    const summary = s as any;
     console.log(`💰 [Cost-Economic Bridge] Syncing cost summary for ${clusterId}: $${summary.totalCost} total`);
-    
+
     // In production, would update Economic Engine with cost data
     // EconomicEngineCore.updateClusterEconomics(clusterId, {
     //   totalCost: summary.totalCost,

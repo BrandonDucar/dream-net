@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { GraftModel, GraftProcessor, InstallResult } from "../types";
+import type { GraftModel, GraftProcessor, InstallResult } from '../types.js';
 
 export class ModuleProcessor implements GraftProcessor {
   async install(graft: GraftModel): Promise<InstallResult> {

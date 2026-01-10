@@ -1,0 +1,13 @@
+{
+    "name": "@dreamnet/forge-fix-core",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.ts",
+    "scripts": {
+        "test": "tsx tests/test-mechanic.ts"
+    },
+    "dependencies": {
+        "@dreamnet/memory-dna": "workspace:*",
+        "@dreamnet/shared": "workspace:*"
+    }
+}

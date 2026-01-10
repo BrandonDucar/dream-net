@@ -1,0 +1,23 @@
+import type { Issue, SquadTask } from "../types";
+
+export function repairGraftStrategy(issue: Issue): SquadTask | null {
+  if (issue.analyzer !== "graft") return null;
+  const graftId = issue.data?.graftId as string | undefined;
+  if (!graftId) return null;
+
+  if (issue.description.includes("pending")) {
+    return {
+      type: "graft.install",
+      payload: { graftId },
+      priority: "high",
+    };
+  }
+
+  return {
+    type: "graft.repair",
+    payload: { graftId },
+    priority: "critical",
+  };
+}
+
+

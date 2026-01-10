@@ -3,7 +3,7 @@
  * Finds trending topics/keywords to align outreach with real-world relevance
  */
 
-import type { RelevantTopics, NewsItem } from '../types';
+import type { RelevantTopics, NewsItem } from '../types.js';
 
 export class RelevanceEngine {
   /**

@@ -4,6 +4,7 @@ export interface DreamTokenConfig {
   symbol: "DREAM";
   name: "DreamNet Token";
   emissionModel: "fixed" | "emissions" | "manual";
+  tokenAddress?: string;
 }
 
 export interface DreamOnchainAccount {
@@ -24,4 +25,3 @@ export interface DreamTokenEvent {
   createdAt: string;
   meta?: Record<string, unknown>;
 }
-

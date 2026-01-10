@@ -1,0 +1,25 @@
+{
+  "name": "@dreamnet/star-bridge-lungs",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/memory-dna": "workspace:*",
+    "@dreamnet/neural-mesh": "workspace:*",
+    "@dreamnet/quantum-anticipation": "workspace:*",
+    "@dreamnet/shared": "workspace:*",
+    "@dreamnet/slug-time-memory": "workspace:*",
+    "@dreamnet/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

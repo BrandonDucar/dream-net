@@ -1,13 +1,38 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./",
-    "tsBuildInfoFile": "../../node_modules/.cache/memory-dna.tsbuildinfo"
-  },
-  "include": ["./**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": false,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "rootDir": ".",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@dreamnet/internal-ports": [
+                "../internal-ports/dist/index.d.ts"
+            ],
+            "@dreamnet/lib": [
+                "../lib/dist/index.d.ts"
+            ],
+            "@dreamnet/shared": [
+                "../shared/dist/index.d.ts"
+            ]
+        }
+    },
+    "include": [
+        "index.ts",
+        "./src/**/*.ts"
+    ],
+    "references": [],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
 }
-

@@ -3,7 +3,7 @@
  * Provides summary statistics for Ports Ops Panel
  */
 
-import { APIKeeperCore } from "./index";
+import { APIKeeperCore } from './index.js';
 
 export interface APIKeeperSummary {
   totalKeys: number;

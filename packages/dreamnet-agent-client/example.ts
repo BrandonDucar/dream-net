@@ -3,7 +3,7 @@
  * TypeScript/JavaScript example
  */
 
-import { DreamNetAgent } from "./dreamnet-agent";
+import { DreamNetAgent } from './dreamnet-agent.js';
 
 async function main() {
   const apiKey = process.env.DREAMNET_API_KEY;

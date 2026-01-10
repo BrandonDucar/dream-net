@@ -3,8 +3,8 @@
  * Verifies cryptographic signatures before threat detection
  */
 
-import { verifySignature } from "./tagClient";
-import type { TagSignature, TagVerifyRequest } from "../types";
+import { verifySignature } from './tagClient.js';
+import type { TagSignature, TagVerifyRequest } from '../types.js';
 import type { Threat } from "@dreamnet/shield-core/types";
 
 let enabled = false;

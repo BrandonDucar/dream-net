@@ -1,0 +1,19 @@
+{
+    "name": "@dreamnet/spine",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "main": "index.ts",
+    "types": "index.ts",
+    "scripts": {
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    },
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@modelcontextprotocol/sdk": "^1.24.2"
+    }
+}

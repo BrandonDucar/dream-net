@@ -1,0 +1,30 @@
+diff --git a/package.json b/package.json
+index 37fc423df0f0413e1f43c373120904c2df5a5a63..ea01269e412bb1f7e6ffdf84c4689f70abffab26 100644
+--- a/package.json
++++ b/package.json
+@@ -66,6 +66,13 @@
+       "import": "./esm/_sha2.js",
+       "default": "./_sha2.js"
+     },
++    "./sha2": "./esm/_sha2.js",
++    "./sha2.js": "./esm/_sha2.js",
++    "./utils.js": {
++      "types": "./utils.d.ts",
++      "import": "./esm/utils.js",
++      "default": "./utils.js"
++    },
+     "./blake2b": {
+       "types": "./blake2b.d.ts",
+       "import": "./esm/blake2b.js",
+@@ -140,6 +147,11 @@
+       "types": "./utils.d.ts",
+       "import": "./esm/utils.js",
+       "default": "./utils.js"
++    },
++    "./*.js": {
++      "types": "./*.d.ts",
++      "import": "./esm/*.js",
++      "default": "./*.js"
+     }
+   },
+   "keywords": [

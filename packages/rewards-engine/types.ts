@@ -18,6 +18,10 @@ export type RewardType =
   | "procurement"
   | "halo-contrib"
   | "referral"
+  | "privacy-trail"
+  | "data-integrity"
+  | "discovery-app"
+  | "deployment-success"
   | "admin-adjust";
 
 export interface RewardEvent {

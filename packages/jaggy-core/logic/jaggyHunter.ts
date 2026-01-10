@@ -4,8 +4,8 @@
  * Like Wolf Pack but for webhooks - silent and deadly
  */
 
-import type { JaggyHunt, JaggyTerritory, JaggyMemory } from "../types";
-import { WebhookNervousCore } from "../../webhook-nervous-core";
+import type { JaggyHunt, JaggyTerritory, JaggyMemory } from '../types.js';
+import { WebhookNervousCore } from "@dreamnet/webhook-nervous-core";
 
 let activeHunts: Map<string, JaggyHunt> = new Map();
 let territories: Map<string, JaggyTerritory> = new Map();

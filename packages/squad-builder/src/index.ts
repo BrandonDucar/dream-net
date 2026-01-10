@@ -1,6 +1,6 @@
-export * from "./types";
-export * from "./registry";
-export * from "./orchestrator";
-export { createSquadRouter } from "./router";
-export { createTask, getTasks, getTaskById, updateTaskStatus, dispatchTask } from "./orchestrator";
+export * from './types.js';
+export * from './registry.js';
+export * from './orchestrator.js';
+export { createSquadRouter } from './router.js';
+export { createTask, getTasks, getTaskById, updateTaskStatus, dispatchTask } from './orchestrator.js';
 

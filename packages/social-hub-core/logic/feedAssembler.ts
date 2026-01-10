@@ -5,8 +5,8 @@ import type {
   SocialPost,
   SocialComment,
   SocialReaction,
-} from "../types";
-import { SocialStore } from "../store/socialStore";
+} from '../types.js';
+import { SocialStore } from '../store/socialStore.js';
 
 /**
  * Compute a simple ranking score for a post.

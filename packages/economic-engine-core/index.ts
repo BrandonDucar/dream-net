@@ -9,11 +9,11 @@ import type {
   AppliedReward,
   EconomicEngineContext,
   EconomicEngineStatus,
-} from "./types";
-import { EconStore } from "./store/econStore";
-import { ensureEconomicConfig, applyEmissionForReward } from "./logic/rewardIngestion";
-import { ensureDefaultEconomicConfigSeeded } from "./logic/emissionRules";
-import { runEconomicEngineCycle } from "./scheduler/econScheduler";
+} from './types.js';
+import { EconStore } from './store/econStore.js';
+import { ensureEconomicConfig, applyEmissionForReward } from './logic/rewardIngestion.js';
+import { ensureDefaultEconomicConfigSeeded } from './logic/emissionRules.js';
+import { runEconomicEngineCycle } from './scheduler/econScheduler.js';
 
 let rawRewardCounter = 0;
 function nextRawRewardId() {
@@ -78,6 +78,6 @@ export const EconomicEngineCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default EconomicEngineCore;
 

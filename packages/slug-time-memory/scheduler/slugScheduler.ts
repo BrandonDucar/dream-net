@@ -1,7 +1,7 @@
-import type { SlugTimeContext, SlugTimeStatus } from "../types";
-import { SlugMemoryStore } from "../store/slugMemoryStore";
-import { recomputeSnapshots } from "../logic/slugAggregator";
-import { applyDecay } from "../logic/slugDecay";
+import type { SlugTimeContext, SlugTimeStatus } from '../types.js';
+import { SlugMemoryStore } from '../store/slugMemoryStore.js';
+import { recomputeSnapshots } from '../logic/slugAggregator.js';
+import { applyDecay } from '../logic/slugDecay.js';
 
 let lastRunAt: number | null = null;
 

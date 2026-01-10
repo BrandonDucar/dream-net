@@ -12,7 +12,25 @@ export type ThreatType =
   | "api-abuse"
   | "spam"
   | "phishing"
+  | "affective-mismatch"
   | "unknown";
+
+export type AffectiveEmotion =
+  | "resonance"
+  | "dissonance"
+  | "neutral"
+  | "joy"
+  | "fear"
+  | "anticipation"
+  | "trust";
+
+export interface AffectiveGuardStatus {
+  currentEmotion: AffectiveEmotion;
+  resonanceScore: number;       // 0-1 (1 = perfect alignment with VibeConductor)
+  lastVibeCheck: number;
+}
+
+export type Blockchain = "ethereum" | "base" | "arbitrum" | "optimism" | "solana";
 
 export type CellType = "agent" | "pack" | "core" | "service" | "component" | "node";
 
@@ -130,7 +148,7 @@ export interface ShieldStatus {
   recentThreats: Threat[];
   recentSpikes: OffensiveSpike[];
   shieldHealth: "optimal" | "good" | "degraded" | "critical";
-  
+
   // Cellular metrics
   cellularShieldCount: number;
   cellularShieldIntegrity: number;  // Average integrity of all cells

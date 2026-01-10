@@ -1,21 +1,37 @@
 {
-  "name": "@dreamnet/governance",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "types": "index.ts",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
-  },
-  "private": true,
-  "dependencies": {
-    "@dreamnet/utils": "workspace:*",
-    "js-yaml": "^4.1.0",
-    "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0"
-  }
+    "name":  "@dreamnet/governance",
+    "version":  "1.0.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./*.ts",
+                                "import":  "./*.ts",
+                                "default":  "./*.ts"
+                            }
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "typecheck":  "tsc --noEmit",
+                    "clean":  "rm -rf dist"
+                },
+    "private":  true,
+    "dependencies":  {
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*",
+                         "@dreamnet/utils":  "workspace:*",
+                         "js-yaml":  "^4.1.0",
+                         "zod":  "^3.24.2"
+                     },
+    "devDependencies":  {
+                            "@types/js-yaml":  "^4.0.9",
+                            "typescript":  "^5.0.0"
+                        }
 }
-

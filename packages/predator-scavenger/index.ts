@@ -1,5 +1,5 @@
-import type { PSLContext, PSLStatus } from "./types";
-import { runPSLCycle, pslStatus } from "./scheduler/pslScheduler";
+import type { PSLContext, PSLStatus } from './types.js';
+import { runPSLCycle, pslStatus } from './scheduler/pslScheduler.js';
 
 export const PredatorScavengerLoop = {
   run(context: PSLContext): PSLStatus {
@@ -11,6 +11,6 @@ export const PredatorScavengerLoop = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default PredatorScavengerLoop;
 

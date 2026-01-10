@@ -1,0 +1,31 @@
+{
+    "name": "@dreamnet/factory",
+    "version": "1.0.0",
+    "description": "DreamNet AI Factory - Metabolic Production Engine",
+    "type": "module",
+    "exports": {
+        ".": {
+            "source": "./src/index.ts",
+            "import": "./src/index.ts",
+            "require": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./*": {
+            "source": "./src/*.ts",
+            "import": "./src/*.ts",
+            "default": "./src/*.ts"
+        },
+        "./src/*": "./src/*.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "@dreamnet/dreamnet-control-core": "workspace:*",
+        "@dreamnet/agents": "workspace:*",
+        "@dreamnet/wolf-pack": "workspace:*",
+        "@dreamnet/wolfpack-mailer-core": "workspace:*",
+        "@dreamnet/spider-web-core": "workspace:*"
+    }
+}

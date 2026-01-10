@@ -8,7 +8,7 @@
  */
 
 import { execSync } from 'child_process';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 const PROJECT_ID = process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT || 'aqueous-tube-470317-m6';
@@ -83,24 +83,30 @@ try {
 // Step 5: Build and push Docker images
 console.log('🐳 Building Docker images...');
 try {
-  // Build API image
+  // Build API image - Dockerfile is at root level
   const apiImage = `gcr.io/${PROJECT_ID}/dreamnet-api:latest`;
+  console.log(`   Building ${apiImage}...`);
   execSync(
-    `gcloud builds submit --tag ${apiImage} --project=${PROJECT_ID} -f server/Dockerfile .`,
-    { stdio: 'inherit' }
+    `gcloud builds submit --tag ${apiImage} --project=${PROJECT_ID} -f Dockerfile .`,
+    { stdio: 'inherit', cwd: process.cwd() }
   );
   console.log(`✅ API image built: ${apiImage}\n`);
   
   // Build frontend image (if separate)
   const frontendImage = `gcr.io/${PROJECT_ID}/dreamnet-frontend:latest`;
-  execSync(
-    `gcloud builds submit --tag ${frontendImage} --project=${PROJECT_ID} -f client/Dockerfile .`,
-    { stdio: 'inherit' }
-  ).catch(() => {
-    console.log('⚠️  Frontend Dockerfile not found, skipping frontend image');
-  });
+  if (existsSync(join(process.cwd(), 'client', 'Dockerfile'))) {
+    console.log(`   Building ${frontendImage}...`);
+    execSync(
+      `gcloud builds submit --tag ${frontendImage} --project=${PROJECT_ID} -f client/Dockerfile .`,
+      { stdio: 'inherit', cwd: process.cwd() }
+    );
+    console.log(`✅ Frontend image built: ${frontendImage}\n`);
+  } else {
+    console.log('⚠️  Frontend Dockerfile not found, skipping frontend image\n');
+  }
 } catch (error) {
   console.error('❌ Failed to build images');
+  console.error(error);
   process.exit(1);
 }
 
@@ -119,28 +125,27 @@ if (existsSync(secretsPath)) {
 }
 
 // Step 7: Deploy application
-console.log('📦 Deploying application...');
+console.log('📦 Deploying DreamNet Fleet System...');
 const deploymentPath = join(process.cwd(), 'infrastructure', 'google', 'gke', 'deployment.yaml');
 if (existsSync(deploymentPath)) {
   try {
     // Update image references in deployment
     let deployment = readFileSync(deploymentPath, 'utf-8');
+    // Replace hardcoded project ID with actual PROJECT_ID
     deployment = deployment.replace(
-      /gcr.io\/dreamnet-62b49\/dreamnet:latest/g,
+      /gcr.io\/aqueous-tube-470317-m6\/dreamnet-api:latest/g,
       `gcr.io/${PROJECT_ID}/dreamnet-api:latest`
     );
-    deployment = deployment.replace(
-      /gcr.io\/dreamnet-62b49\/dreamnet-frontend:latest/g,
-      `gcr.io/${PROJECT_ID}/dreamnet-frontend:latest`
-    );
+    // Note: Frontend is served by API server, no separate frontend image needed
     
     const tempPath = join(process.cwd(), 'infrastructure', 'google', 'gke', 'deployment-temp.yaml');
-    require('fs').writeFileSync(tempPath, deployment);
+    writeFileSync(tempPath, deployment);
     
     execSync(`kubectl apply -f ${tempPath}`, { stdio: 'inherit' });
     console.log('✅ Deployment applied\n');
   } catch (error) {
     console.error('❌ Failed to deploy');
+    console.error(error);
     process.exit(1);
   }
 } else {

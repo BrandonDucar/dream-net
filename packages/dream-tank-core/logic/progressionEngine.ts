@@ -2,9 +2,9 @@ import type {
   DreamTankContext,
   DreamIncubation,
   DreamStage,
-} from "../types";
-import { TankStore } from "../store/tankStore";
-import { evaluateDream } from "./evaluationEngine";
+} from '../types.js';
+import { TankStore } from '../store/tankStore.js';
+import { evaluateDream } from './evaluationEngine.js';
 
 export function runProgressionCycle(ctx: DreamTankContext) {
   const dreams = TankStore.listDreams();

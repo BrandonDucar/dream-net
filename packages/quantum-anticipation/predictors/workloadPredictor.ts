@@ -1,4 +1,4 @@
-import type { QALContext, QALPrediction } from "../types";
+import type { QALContext, QALPrediction } from '../types.js';
 
 export function predictWorkloadSpikes(ctx: QALContext): QALPrediction[] {
   // TODO: pull real metrics from haloLoop / pheromoneStore when available

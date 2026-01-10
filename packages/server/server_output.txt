@@ -1,0 +1,56 @@
+﻿
+> @dreamnet/server@0.1.0 dev C:\Users\brand\OneDrive\Documents\GitHub\dream-net\server
+> tsx src/index.ts
+
+node.exe : C:\Users\brand\OneDrive\Documents\GitH
+ub\dream-net\node_modules\.pnpm\@langchain+openai
+@0.0.14_ws_c0c8311a8f3c03ddc160e0c4beefab16\node_
+modules\@langchain\openai\dist\embeddings.cjs:117
+At 
+C:\Users\brand\AppData\Roaming\npm\pnpm.ps1:24 
+char:5
++     & "node$exe"  
+"$basedir/node_modules/pnpm/bin/pnpm.cjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\ 
+   Users\brand\...eddings.cjs:117:String) [], R  
+  emoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+            throw new Error("OpenAI or Azure 
+OpenAI API key not found");
+                  ^
+
+Error: OpenAI or Azure OpenAI API key not found
+    at new OpenAIEmbeddings (C:\Users\brand\OneDr
+ive\Documents\GitHub\dream-net\node_modules\.pnpm
+\@langchain+openai@0.0.14_ws_c0c8311a8f3c03ddc160
+e0c4beefab16\node_modules\@langchain\openai\dist\
+embeddings.cjs:117:19)
+    at new VectorStore (C:\Users\brand\OneDrive\D
+ocuments\GitHub\dream-net\packages\memory-dna\dis
+t\store\VectorStore.js:17:27)
+    at fs (C:\Users\brand\OneDrive\Documents\GitH
+ub\dream-net\packages\memory-dna\dist\store\Vecto
+rStore.js:78:28)
+    at Object.<anonymous> (C:\Users\brand\OneDriv
+e\Documents\GitHub\dream-net\packages\memory-dna\
+dist\store\VectorStore.js:78:32)
+    at Module._compile 
+(node:internal/modules/cjs/loader:1688:14)
+    at Object.transformer (C:\Users\brand\OneDriv
+e\Documents\GitHub\dream-net\node_modules\.pnpm\t
+sx@4.20.6\node_modules\tsx\dist\register-D46fvsV_
+.cjs:3:1104)
+    at Module.load 
+(node:internal/modules/cjs/loader:1423:32)
+    at Function._load 
+(node:internal/modules/cjs/loader:1246:12)
+    at TracingChannel.traceSync 
+(node:diagnostics_channel:322:14)
+    at wrapModuleLoad 
+(node:internal/modules/cjs/loader:235:24)
+
+Node.js v22.18.0
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.

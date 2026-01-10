@@ -1,5 +1,5 @@
-import type { OctopusTask, OctopusContext, OctopusArmId } from "../types";
-import { ArmRegistry } from "../arms/armRegistry";
+import type { OctopusTask, OctopusContext, OctopusArmId } from '../types.js';
+import { ArmRegistry } from '../arms/armRegistry.js';
 
 const taskQueue: OctopusTask[] = [];
 

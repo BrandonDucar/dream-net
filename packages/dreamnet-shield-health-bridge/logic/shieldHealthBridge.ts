@@ -5,7 +5,7 @@
 
 import { ShieldCore } from "@dreamnet/shield-core";
 import { DreamNetHealthCore } from "@dreamnet/dreamnet-health-core";
-import type { HealthFailureEvent, ShieldThreatEvent, RecoveryAction } from "../types";
+import type { HealthFailureEvent, ShieldThreatEvent, RecoveryAction } from '../types.js';
 
 /**
  * Bridge health failures to Shield Core threat detection

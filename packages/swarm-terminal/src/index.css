@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+    --neon-green: #00FF41;
+    --neon-green-glow: rgba(0, 255, 65, 0.3);
+    --neon-red: #FF3131;
+    --bg-black: #020202;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-black);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+#root {
+    height: 100%;
+}
+
+.mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glassmorphism */
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Animations */
+@keyframes flicker {
+    0% {
+        opacity: 0.9;
+    }
+
+    5% {
+        opacity: 0.8;
+    }
+
+    10% {
+        opacity: 0.9;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0.9;
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0.9;
+    }
+}
+
+.flicker {
+    animation: flicker 4s infinite;
+}
+
+.neon-text {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green-glow);
+}
+
+.border-glow {
+    border: 1px solid var(--neon-green);
+    box-shadow: 0 0 15px var(--neon-green-glow);
+}
+
+/* Terminal Scrolling Customization */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}

@@ -1,8 +1,8 @@
-import { OrcaPackContext, OrcaPackStatus } from "../types";
-import { OrcaStore } from "../store/orcaStore";
-import { ensureSeedThemes, generateNewOrcaIdeas, generateOrcaPlansFromIdeas } from "../logic/orcaSignalCore";
-import { simulateOrcaPosting } from "../logic/orcaPosterCore";
-import { runOrcaAnalysis } from "../logic/orcaAnalystCore";
+import { OrcaPackContext, OrcaPackStatus } from '../types.js';
+import { OrcaStore } from '../store/orcaStore.js';
+import { ensureSeedThemes, generateNewOrcaIdeas, generateOrcaPlansFromIdeas } from '../logic/orcaSignalCore.js';
+import { simulateOrcaPosting } from '../logic/orcaPosterCore.js';
+import { runOrcaAnalysis } from '../logic/orcaAnalystCore.js';
 
 export async function runOrcaPackCycle(ctx: OrcaPackContext): Promise<OrcaPackStatus> {
   const now = Date.now();

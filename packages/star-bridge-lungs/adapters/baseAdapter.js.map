@@ -1,0 +1,1 @@
+{"version":3,"file":"baseAdapter.js","sourceRoot":"","sources":["baseAdapter.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,yBAAyB,EAAE,MAAM,qBAAqB,CAAC;AAEhE,MAAM,UAAU,cAAc;IAC5B,yDAAyD;IACzD,iFAAiF;IACjF,MAAM,OAAO,GAAG,yBAAyB,CAAC,MAAM,CAAC,CAAC;IAClD,OAAO;QACL,GAAG,OAAO;QACV,WAAW,EAAE,GAAG;KACjB,CAAC;AACJ,CAAC"}

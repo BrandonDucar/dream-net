@@ -1,5 +1,5 @@
-import type { CortexContext, CortexDirective, DreamNode } from "../types";
-import { buildGoalGraph } from "./goalGraph";
+import type { CortexContext, CortexDirective, DreamNode } from '../types.js';
+import { buildGoalGraph } from './goalGraph.js';
 
 function computeDreamScore(node: DreamNode, ctx: CortexContext): number {
   // Placeholder heuristic:

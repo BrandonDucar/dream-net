@@ -1,7 +1,7 @@
-import type { WolfContext, WolfPackStatus, WolfSignal } from "../types";
-import { detectAnomalies } from "../detectors/anomalyDetector";
-import { TargetTracker } from "../trackers/targetTracker";
-import { performPackStrikes, type WolfStrikeResult } from "../strategies/strikeStrategy";
+import type { WolfContext, WolfPackStatus, WolfSignal } from '../types.js';
+import { detectAnomalies } from '../detectors/anomalyDetector.js';
+import { TargetTracker } from '../trackers/targetTracker.js';
+import { performPackStrikes, type WolfStrikeResult } from '../strategies/strikeStrategy.js';
 
 let lastRunAt: number | null = null;
 let lastSignals: WolfSignal[] = [];

@@ -1,5 +1,5 @@
-import { AnalystStore } from "./store/analystStore";
-import { runWolfPackAnalystCycle } from "./scheduler/analystScheduler";
+import { AnalystStore } from './store/analystStore.js';
+import { runWolfPackAnalystCycle } from './scheduler/analystScheduler.js';
 import type {
   WolfPackAnalystContext,
   WolfPackAnalystStatus,
@@ -7,7 +7,7 @@ import type {
   AnalystInsight,
   LeadPrediction,
   EmailEffectiveness,
-} from "./types";
+} from './types.js';
 
 export const WolfPackAnalystCore = {
   // Patterns
@@ -56,6 +56,6 @@ export const WolfPackAnalystCore = {
   },
 };
 
-export * from "./types";
+export * from './types.js';
 export default WolfPackAnalystCore;
 

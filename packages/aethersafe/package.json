@@ -1,0 +1,24 @@
+{
+    "name": "@dreamnet/aethersafe",
+    "version": "0.1.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./*.js": "./src/*.ts",
+        "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\""
+    },
+    "dependencies": {
+        "@dreamnet/lib": "workspace:*",
+        "@dreamnet/shared": "workspace:*",
+        "@dreamnet/agents": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}

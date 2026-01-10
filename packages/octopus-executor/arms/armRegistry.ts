@@ -1,4 +1,4 @@
-import type { OctopusArmConfig, OctopusArmId, OctopusArmStatus, OctopusTask, OctopusContext } from "../types";
+import type { OctopusArmConfig, OctopusArmId, OctopusArmStatus, OctopusTask, OctopusContext } from '../types.js';
 
 export type OctopusArmHandler = (task: OctopusTask, ctx: OctopusContext) => Promise<void> | void;
 

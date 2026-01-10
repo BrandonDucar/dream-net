@@ -1,15 +1,41 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./",
-    "module": "ESNext",
-    "target": "ES2022",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-  },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "target": "ES2022",
+        "moduleResolution": "bundler",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../dreamnet-agent-client"
+        },
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../ops-sentinel"
+        },
+        {
+            "path": "../shared"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
-

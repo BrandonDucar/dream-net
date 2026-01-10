@@ -1,0 +1,1619 @@
+﻿---------------------------------- REMOTE BUILD OUTPUT ----------------------------------
+starting build "334d496b-79e7-47f3-81f7-ae91132e1226"
+
+FETCHSOURCE
+Fetching storage object: gs://aqueous-tube-470317-m6_cloudbuild/source/1767164255.526028-11284df385bd43ec83a3c3b429b7cbbe.tgz#1767164268641157
+Copying gs://aqueous-tube-470317-m6_cloudbuild/source/1767164255.526028-11284df385bd43ec83a3c3b429b7cbbe.tgz#1767164268641157...
+/ [0 files][    0.0 B/  8.4 MiB]                                                
+/ [1 files][  8.4 MiB/  8.4 MiB]                                                
+
+Operation completed over 1 objects/8.4 MiB.                                      
+BUILD
+Already have image (with digest): gcr.io/cloud-builders/gcb-internal
+Sending build context to Docker daemon  68.14MB
+
+
+Step 1/25 : FROM node:22-slim AS builder
+22-slim: Pulling from library/node
+0347dcb76707: Pulling fs layer
+38ca042e42a0: Pulling fs layer
+0c4f12201926: Pulling fs layer
+a9a89bdca035: Pulling fs layer
+6f05612e2534: Pulling fs layer
+38ca042e42a0: Verifying Checksum
+38ca042e42a0: Download complete
+6f05612e2534: Verifying Checksum
+6f05612e2534: Download complete
+a9a89bdca035: Verifying Checksum
+a9a89bdca035: Download complete
+0347dcb76707: Verifying Checksum
+0347dcb76707: Download complete
+0c4f12201926: Verifying Checksum
+0c4f12201926: Download complete
+0347dcb76707: Pull complete
+38ca042e42a0: Pull complete
+0c4f12201926: Pull complete
+a9a89bdca035: Pull complete
+6f05612e2534: Pull complete
+Digest: sha256:7378f5a4830ef48eb36d1abf4ef398391db562b5c41a0bded83192fbcea21cc8
+Status: Downloaded newer image for node:22-slim
+ ---> f9834cd4819c
+Step 2/25 : RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+ ---> Running in a2a7e67c1bee
+Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8791 kB]
+Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [290 kB]
+Fetched 9342 kB in 2s (5722 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu ca-certificates cpp
+  cpp-12 fontconfig-config fonts-dejavu-core g++-12 gcc gcc-12 krb5-locales
+  libabsl20220623 libaom3 libasan8 libatomic1 libavif15 libbinutils libbrotli1
+  libbsd0 libc-dev-bin libc-devtools libc6-dev libcc1-0 libcrypt-dev
+  libctf-nobfd0 libctf0 libdav1d6 libde265-0 libdeflate0 libexpat1
+  libfontconfig1 libfreetype6 libgav1-1 libgcc-12-dev libgd3 libgomp1 libgpm2
+  libgprofng0 libgssapi-krb5-2 libheif1 libisl23 libitm1 libjansson4 libjbig0
+  libjpeg62-turbo libk5crypto3 libkeyutils1 libkrb5-3 libkrb5support0 liblerc4
+  liblsan0 libmpc3 libmpfr6 libncursesw6 libnsl-dev libnsl2 libnuma1
+  libpng16-16 libpython3-stdlib libpython3.11-minimal libpython3.11-stdlib
+  libquadmath0 librav1e0 libreadline8 libsqlite3-0 libssl3 libstdc++-12-dev
+  libsvtav1enc1 libtiff6 libtirpc-common libtirpc-dev libtirpc3 libtsan2
+  libubsan1 libwebp7 libx11-6 libx11-data libx265-199 libxau6 libxcb1
+  libxdmcp6 libxpm4 libyuv0 linux-libc-dev manpages manpages-dev media-types
+  openssl python3-minimal python3.11 python3.11-minimal readline-common
+  rpcsvc-proto
+Suggested packages:
+  binutils-doc cpp-doc gcc-12-locales cpp-12-doc g++-multilib g++-12-multilib
+  gcc-12-doc gcc-multilib autoconf automake libtool flex bison gdb gcc-doc
+  gcc-12-multilib glibc-doc libgd-tools gpm krb5-doc krb5-user
+  libstdc++-12-doc make-doc man-browser python3-doc python3-tk python3-venv
+  python3.11-venv python3.11-doc binfmt-support readline-doc
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu ca-certificates cpp
+  cpp-12 fontconfig-config fonts-dejavu-core g++ g++-12 gcc gcc-12
+  krb5-locales libabsl20220623 libaom3 libasan8 libatomic1 libavif15
+  libbinutils libbrotli1 libbsd0 libc-dev-bin libc-devtools libc6-dev libcc1-0
+  libcrypt-dev libctf-nobfd0 libctf0 libdav1d6 libde265-0 libdeflate0
+  libexpat1 libfontconfig1 libfreetype6 libgav1-1 libgcc-12-dev libgd3
+  libgomp1 libgpm2 libgprofng0 libgssapi-krb5-2 libheif1 libisl23 libitm1
+  libjansson4 libjbig0 libjpeg62-turbo libk5crypto3 libkeyutils1 libkrb5-3
+  libkrb5support0 liblerc4 liblsan0 libmpc3 libmpfr6 libncursesw6 libnsl-dev
+  libnsl2 libnuma1 libpng16-16 libpython3-stdlib libpython3.11-minimal
+  libpython3.11-stdlib libquadmath0 librav1e0 libreadline8 libsqlite3-0
+  libssl3 libstdc++-12-dev libsvtav1enc1 libtiff6 libtirpc-common libtirpc-dev
+  libtirpc3 libtsan2 libubsan1 libwebp7 libx11-6 libx11-data libx265-199
+  libxau6 libxcb1 libxdmcp6 libxpm4 libyuv0 linux-libc-dev make manpages
+  manpages-dev media-types openssl python3 python3-minimal python3.11
+  python3.11-minimal readline-common rpcsvc-proto
+0 upgraded, 97 newly installed, 0 to remove and 0 not upgraded.
+Need to get 91.3 MB of archives.
+After this operation, 354 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian-security bookworm-security/main amd64 libssl3 amd64 3.0.17-1~deb12u3 [2028 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 libpython3.11-minimal amd64 3.11.2-6+deb12u6 [817 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 libexpat1 amd64 2.5.0-1+deb12u2 [99.9 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 python3.11-minimal amd64 3.11.2-6+deb12u6 [2064 kB]
+Get:5 http://deb.debian.org/debian bookworm/main amd64 python3-minimal amd64 3.11.2-1+b1 [26.3 kB]
+Get:6 http://deb.debian.org/debian bookworm/main amd64 media-types all 10.0.0 [26.1 kB]
+Get:7 http://deb.debian.org/debian bookworm/main amd64 libncursesw6 amd64 6.4-4 [134 kB]
+Get:8 http://deb.debian.org/debian bookworm/main amd64 libkrb5support0 amd64 1.20.1-2+deb12u4 [33.2 kB]
+Get:9 http://deb.debian.org/debian bookworm/main amd64 libk5crypto3 amd64 1.20.1-2+deb12u4 [79.8 kB]
+Get:10 http://deb.debian.org/debian bookworm/main amd64 libkeyutils1 amd64 1.6.3-2 [8808 B]
+Get:11 http://deb.debian.org/debian bookworm/main amd64 libkrb5-3 amd64 1.20.1-2+deb12u4 [334 kB]
+Get:12 http://deb.debian.org/debian bookworm/main amd64 libgssapi-krb5-2 amd64 1.20.1-2+deb12u4 [135 kB]
+Get:13 http://deb.debian.org/debian bookworm/main amd64 libtirpc-common all 1.3.3+ds-1 [14.0 kB]
+Get:14 http://deb.debian.org/debian bookworm/main amd64 libtirpc3 amd64 1.3.3+ds-1 [85.2 kB]
+Get:15 http://deb.debian.org/debian bookworm/main amd64 libnsl2 amd64 1.3.0-2 [39.5 kB]
+Get:16 http://deb.debian.org/debian bookworm/main amd64 readline-common all 8.2-1.3 [69.0 kB]
+Get:17 http://deb.debian.org/debian bookworm/main amd64 libreadline8 amd64 8.2-1.3 [166 kB]
+Get:18 http://deb.debian.org/debian bookworm/main amd64 libsqlite3-0 amd64 3.40.1-2+deb12u2 [839 kB]
+Get:19 http://deb.debian.org/debian bookworm/main amd64 libpython3.11-stdlib amd64 3.11.2-6+deb12u6 [1798 kB]
+Get:20 http://deb.debian.org/debian bookworm/main amd64 python3.11 amd64 3.11.2-6+deb12u6 [573 kB]
+Get:21 http://deb.debian.org/debian bookworm/main amd64 libpython3-stdlib amd64 3.11.2-1+b1 [9312 B]
+Get:22 http://deb.debian.org/debian bookworm/main amd64 python3 amd64 3.11.2-1+b1 [26.3 kB]
+Get:23 http://deb.debian.org/debian-security bookworm-security/main amd64 openssl amd64 3.0.17-1~deb12u3 [1434 kB]
+Get:24 http://deb.debian.org/debian bookworm/main amd64 ca-certificates all 20230311+deb12u1 [155 kB]
+Get:25 http://deb.debian.org/debian bookworm/main amd64 krb5-locales all 1.20.1-2+deb12u4 [63.4 kB]
+Get:26 http://deb.debian.org/debian bookworm/main amd64 manpages all 6.03-2 [1332 kB]
+Get:27 http://deb.debian.org/debian bookworm/main amd64 binutils-common amd64 2.40-2 [2487 kB]
+Get:28 http://deb.debian.org/debian bookworm/main amd64 libbinutils amd64 2.40-2 [572 kB]
+Get:29 http://deb.debian.org/debian bookworm/main amd64 libctf-nobfd0 amd64 2.40-2 [153 kB]
+Get:30 http://deb.debian.org/debian bookworm/main amd64 libctf0 amd64 2.40-2 [89.8 kB]
+Get:31 http://deb.debian.org/debian bookworm/main amd64 libgprofng0 amd64 2.40-2 [812 kB]
+Get:32 http://deb.debian.org/debian bookworm/main amd64 libjansson4 amd64 2.14-2 [40.8 kB]
+Get:33 http://deb.debian.org/debian bookworm/main amd64 binutils-x86-64-linux-gnu amd64 2.40-2 [2246 kB]
+Get:34 http://deb.debian.org/debian bookworm/main amd64 binutils amd64 2.40-2 [65.0 kB]
+Get:35 http://deb.debian.org/debian bookworm/main amd64 libisl23 amd64 0.25-1.1 [683 kB]
+Get:36 http://deb.debian.org/debian bookworm/main amd64 libmpfr6 amd64 4.2.0-1 [701 kB]
+Get:37 http://deb.debian.org/debian bookworm/main amd64 libmpc3 amd64 1.3.1-1 [51.5 kB]
+Get:38 http://deb.debian.org/debian bookworm/main amd64 cpp-12 amd64 12.2.0-14+deb12u1 [9768 kB]
+Get:39 http://deb.debian.org/debian bookworm/main amd64 cpp amd64 4:12.2.0-3 [6836 B]
+Get:40 http://deb.debian.org/debian bookworm/main amd64 fonts-dejavu-core all 2.37-6 [1068 kB]
+Get:41 http://deb.debian.org/debian bookworm/main amd64 fontconfig-config amd64 2.14.1-4 [315 kB]
+Get:42 http://deb.debian.org/debian bookworm/main amd64 libcc1-0 amd64 12.2.0-14+deb12u1 [41.7 kB]
+Get:43 http://deb.debian.org/debian bookworm/main amd64 libgomp1 amd64 12.2.0-14+deb12u1 [116 kB]
+Get:44 http://deb.debian.org/debian bookworm/main amd64 libitm1 amd64 12.2.0-14+deb12u1 [26.1 kB]
+Get:45 http://deb.debian.org/debian bookworm/main amd64 libatomic1 amd64 12.2.0-14+deb12u1 [9376 B]
+Get:46 http://deb.debian.org/debian bookworm/main amd64 libasan8 amd64 12.2.0-14+deb12u1 [2193 kB]
+Get:47 http://deb.debian.org/debian bookworm/main amd64 liblsan0 amd64 12.2.0-14+deb12u1 [969 kB]
+Get:48 http://deb.debian.org/debian bookworm/main amd64 libtsan2 amd64 12.2.0-14+deb12u1 [2197 kB]
+Get:49 http://deb.debian.org/debian bookworm/main amd64 libubsan1 amd64 12.2.0-14+deb12u1 [883 kB]
+Get:50 http://deb.debian.org/debian bookworm/main amd64 libquadmath0 amd64 12.2.0-14+deb12u1 [145 kB]
+Get:51 http://deb.debian.org/debian bookworm/main amd64 libgcc-12-dev amd64 12.2.0-14+deb12u1 [2437 kB]
+Get:52 http://deb.debian.org/debian bookworm/main amd64 gcc-12 amd64 12.2.0-14+deb12u1 [19.3 MB]
+Get:53 http://deb.debian.org/debian bookworm/main amd64 gcc amd64 4:12.2.0-3 [5216 B]
+Get:54 http://deb.debian.org/debian bookworm/main amd64 libc-dev-bin amd64 2.36-9+deb12u13 [47.4 kB]
+Get:55 http://deb.debian.org/debian-security bookworm-security/main amd64 linux-libc-dev amd64 6.1.158-1 [2204 kB]
+Get:56 http://deb.debian.org/debian bookworm/main amd64 libcrypt-dev amd64 1:4.4.33-2 [118 kB]
+Get:57 http://deb.debian.org/debian bookworm/main amd64 libtirpc-dev amd64 1.3.3+ds-1 [191 kB]
+Get:58 http://deb.debian.org/debian bookworm/main amd64 libnsl-dev amd64 1.3.0-2 [66.4 kB]
+Get:59 http://deb.debian.org/debian bookworm/main amd64 rpcsvc-proto amd64 1.4.3-1 [63.3 kB]
+Get:60 http://deb.debian.org/debian bookworm/main amd64 libc6-dev amd64 2.36-9+deb12u13 [1904 kB]
+Get:61 http://deb.debian.org/debian bookworm/main amd64 libstdc++-12-dev amd64 12.2.0-14+deb12u1 [2047 kB]
+Get:62 http://deb.debian.org/debian bookworm/main amd64 g++-12 amd64 12.2.0-14+deb12u1 [10.7 MB]
+Get:63 http://deb.debian.org/debian bookworm/main amd64 g++ amd64 4:12.2.0-3 [1356 B]
+Get:64 http://deb.debian.org/debian bookworm/main amd64 libabsl20220623 amd64 20220623.1-1+deb12u2 [391 kB]
+Get:65 http://deb.debian.org/debian bookworm/main amd64 libaom3 amd64 3.6.0-1+deb12u2 [1850 kB]
+Get:66 http://deb.debian.org/debian bookworm/main amd64 libdav1d6 amd64 1.0.0-2+deb12u1 [513 kB]
+Get:67 http://deb.debian.org/debian bookworm/main amd64 libgav1-1 amd64 0.18.0-1+b1 [332 kB]
+Get:68 http://deb.debian.org/debian bookworm/main amd64 librav1e0 amd64 0.5.1-6 [763 kB]
+Get:69 http://deb.debian.org/debian bookworm/main amd64 libsvtav1enc1 amd64 1.4.1+dfsg-1 [2121 kB]
+Get:70 http://deb.debian.org/debian bookworm/main amd64 libjpeg62-turbo amd64 1:2.1.5-2 [166 kB]
+Get:71 http://deb.debian.org/debian bookworm/main amd64 libyuv0 amd64 0.0~git20230123.b2528b0-1 [168 kB]
+Get:72 http://deb.debian.org/debian bookworm/main amd64 libavif15 amd64 0.11.1-1+deb12u1 [94.4 kB]
+Get:73 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+Get:74 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
+Get:75 http://deb.debian.org/debian-security bookworm-security/main amd64 libpng16-16 amd64 1.6.39-2+deb12u1 [276 kB]
+Get:76 http://deb.debian.org/debian bookworm/main amd64 libfreetype6 amd64 2.12.1+dfsg-5+deb12u4 [398 kB]
+Get:77 http://deb.debian.org/debian bookworm/main amd64 libfontconfig1 amd64 2.14.1-4 [386 kB]
+Get:78 http://deb.debian.org/debian bookworm/main amd64 libde265-0 amd64 1.0.11-1+deb12u2 [185 kB]
+Get:79 http://deb.debian.org/debian bookworm/main amd64 libnuma1 amd64 2.0.16-1 [21.0 kB]
+Get:80 http://deb.debian.org/debian bookworm/main amd64 libx265-199 amd64 3.5-2+b1 [1150 kB]
+Get:81 http://deb.debian.org/debian bookworm/main amd64 libheif1 amd64 1.15.1-1+deb12u1 [215 kB]
+Get:82 http://deb.debian.org/debian bookworm/main amd64 libdeflate0 amd64 1.14-1 [61.4 kB]
+Get:83 http://deb.debian.org/debian bookworm/main amd64 libjbig0 amd64 2.1-6.1 [31.7 kB]
+Get:84 http://deb.debian.org/debian bookworm/main amd64 liblerc4 amd64 4.0.0+ds-2 [170 kB]
+Get:85 http://deb.debian.org/debian bookworm/main amd64 libwebp7 amd64 1.2.4-0.2+deb12u1 [286 kB]
+Get:86 http://deb.debian.org/debian-security bookworm-security/main amd64 libtiff6 amd64 4.5.0-6+deb12u3 [316 kB]
+Get:87 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
+Get:88 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
+Get:89 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
+Get:90 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
+Get:91 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
+Get:92 http://deb.debian.org/debian bookworm/main amd64 libxpm4 amd64 1:3.5.12-1.1+deb12u1 [48.6 kB]
+Get:93 http://deb.debian.org/debian bookworm/main amd64 libgd3 amd64 2.3.3-9 [124 kB]
+Get:94 http://deb.debian.org/debian bookworm/main amd64 libc-devtools amd64 2.36-9+deb12u13 [55.0 kB]
+Get:95 http://deb.debian.org/debian bookworm/main amd64 libgpm2 amd64 1.20.7-10+b1 [14.2 kB]
+Get:96 http://deb.debian.org/debian bookworm/main amd64 make amd64 4.3-4.1 [396 kB]
+Get:97 http://deb.debian.org/debian bookworm/main amd64 manpages-dev all 6.03-2 [2030 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 91.3 MB in 1s (122 MB/s)
+Selecting previously unselected package libssl3:amd64.
+
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6095 files and directories currently installed.)
+
+Preparing to unpack .../libssl3_3.0.17-1~deb12u3_amd64.deb ...
+
+Unpacking libssl3:amd64 (3.0.17-1~deb12u3) ...
+
+Selecting previously unselected package libpython3.11-minimal:amd64.
+
+Preparing to unpack .../libpython3.11-minimal_3.11.2-6+deb12u6_amd64.deb ...
+
+Unpacking libpython3.11-minimal:amd64 (3.11.2-6+deb12u6) ...
+
+Selecting previously unselected package libexpat1:amd64.
+
+Preparing to unpack .../libexpat1_2.5.0-1+deb12u2_amd64.deb ...
+
+Unpacking libexpat1:amd64 (2.5.0-1+deb12u2) ...
+
+Selecting previously unselected package python3.11-minimal.
+
+Preparing to unpack .../python3.11-minimal_3.11.2-6+deb12u6_amd64.deb ...
+
+Unpacking python3.11-minimal (3.11.2-6+deb12u6) ...
+
+Setting up libssl3:amd64 (3.0.17-1~deb12u3) ...
+
+Setting up libpython3.11-minimal:amd64 (3.11.2-6+deb12u6) ...
+
+Setting up libexpat1:amd64 (2.5.0-1+deb12u2) ...
+
+Setting up python3.11-minimal (3.11.2-6+deb12u6) ...
+
+Selecting previously unselected package python3-minimal.
+
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6423 files and directories currently installed.)
+
+Preparing to unpack .../00-python3-minimal_3.11.2-1+b1_amd64.deb ...
+
+Unpacking python3-minimal (3.11.2-1+b1) ...
+
+Selecting previously unselected package media-types.
+
+Preparing to unpack .../01-media-types_10.0.0_all.deb ...
+
+Unpacking media-types (10.0.0) ...
+
+Selecting previously unselected package libncursesw6:amd64.
+
+Preparing to unpack .../02-libncursesw6_6.4-4_amd64.deb ...
+
+Unpacking libncursesw6:amd64 (6.4-4) ...
+
+Selecting previously unselected package libkrb5support0:amd64.
+
+Preparing to unpack .../03-libkrb5support0_1.20.1-2+deb12u4_amd64.deb ...
+
+Unpacking libkrb5support0:amd64 (1.20.1-2+deb12u4) ...
+
+Selecting previously unselected package libk5crypto3:amd64.
+
+Preparing to unpack .../04-libk5crypto3_1.20.1-2+deb12u4_amd64.deb ...
+
+Unpacking libk5crypto3:amd64 (1.20.1-2+deb12u4) ...
+
+Selecting previously unselected package libkeyutils1:amd64.
+
+Preparing to unpack .../05-libkeyutils1_1.6.3-2_amd64.deb ...
+
+Unpacking libkeyutils1:amd64 (1.6.3-2) ...
+
+Selecting previously unselected package libkrb5-3:amd64.
+
+Preparing to unpack .../06-libkrb5-3_1.20.1-2+deb12u4_amd64.deb ...
+
+Unpacking libkrb5-3:amd64 (1.20.1-2+deb12u4) ...
+
+Selecting previously unselected package libgssapi-krb5-2:amd64.
+
+Preparing to unpack .../07-libgssapi-krb5-2_1.20.1-2+deb12u4_amd64.deb ...
+
+Unpacking libgssapi-krb5-2:amd64 (1.20.1-2+deb12u4) ...
+
+Selecting previously unselected package libtirpc-common.
+
+Preparing to unpack .../08-libtirpc-common_1.3.3+ds-1_all.deb ...
+
+Unpacking libtirpc-common (1.3.3+ds-1) ...
+
+Selecting previously unselected package libtirpc3:amd64.
+
+Preparing to unpack .../09-libtirpc3_1.3.3+ds-1_amd64.deb ...
+
+Unpacking libtirpc3:amd64 (1.3.3+ds-1) ...
+
+Selecting previously unselected package libnsl2:amd64.
+
+Preparing to unpack .../10-libnsl2_1.3.0-2_amd64.deb ...
+
+Unpacking libnsl2:amd64 (1.3.0-2) ...
+
+Selecting previously unselected package readline-common.
+
+Preparing to unpack .../11-readline-common_8.2-1.3_all.deb ...
+
+Unpacking readline-common (8.2-1.3) ...
+
+Selecting previously unselected package libreadline8:amd64.
+
+Preparing to unpack .../12-libreadline8_8.2-1.3_amd64.deb ...
+
+Unpacking libreadline8:amd64 (8.2-1.3) ...
+
+Selecting previously unselected package libsqlite3-0:amd64.
+
+Preparing to unpack .../13-libsqlite3-0_3.40.1-2+deb12u2_amd64.deb ...
+
+Unpacking libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+
+Selecting previously unselected package libpython3.11-stdlib:amd64.
+
+Preparing to unpack .../14-libpython3.11-stdlib_3.11.2-6+deb12u6_amd64.deb ...
+
+Unpacking libpython3.11-stdlib:amd64 (3.11.2-6+deb12u6) ...
+
+Selecting previously unselected package python3.11.
+
+Preparing to unpack .../15-python3.11_3.11.2-6+deb12u6_amd64.deb ...
+
+Unpacking python3.11 (3.11.2-6+deb12u6) ...
+
+Selecting previously unselected package libpython3-stdlib:amd64.
+
+Preparing to unpack .../16-libpython3-stdlib_3.11.2-1+b1_amd64.deb ...
+
+Unpacking libpython3-stdlib:amd64 (3.11.2-1+b1) ...
+
+Setting up python3-minimal (3.11.2-1+b1) ...
+
+Selecting previously unselected package python3.
+
+(Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 6931 files and directories currently installed.)
+
+Preparing to unpack .../00-python3_3.11.2-1+b1_amd64.deb ...
+
+Unpacking python3 (3.11.2-1+b1) ...
+
+Selecting previously unselected package openssl.
+
+Preparing to unpack .../01-openssl_3.0.17-1~deb12u3_amd64.deb ...
+
+Unpacking openssl (3.0.17-1~deb12u3) ...
+
+Selecting previously unselected package ca-certificates.
+
+Preparing to unpack .../02-ca-certificates_20230311+deb12u1_all.deb ...
+
+Unpacking ca-certificates (20230311+deb12u1) ...
+
+Selecting previously unselected package krb5-locales.
+
+Preparing to unpack .../03-krb5-locales_1.20.1-2+deb12u4_all.deb ...
+
+Unpacking krb5-locales (1.20.1-2+deb12u4) ...
+
+Selecting previously unselected package manpages.
+
+Preparing to unpack .../04-manpages_6.03-2_all.deb ...
+
+Unpacking manpages (6.03-2) ...
+
+Selecting previously unselected package binutils-common:amd64.
+
+Preparing to unpack .../05-binutils-common_2.40-2_amd64.deb ...
+
+Unpacking binutils-common:amd64 (2.40-2) ...
+
+Selecting previously unselected package libbinutils:amd64.
+
+Preparing to unpack .../06-libbinutils_2.40-2_amd64.deb ...
+
+Unpacking libbinutils:amd64 (2.40-2) ...
+
+Selecting previously unselected package libctf-nobfd0:amd64.
+
+Preparing to unpack .../07-libctf-nobfd0_2.40-2_amd64.deb ...
+
+Unpacking libctf-nobfd0:amd64 (2.40-2) ...
+
+Selecting previously unselected package libctf0:amd64.
+
+Preparing to unpack .../08-libctf0_2.40-2_amd64.deb ...
+
+Unpacking libctf0:amd64 (2.40-2) ...
+
+Selecting previously unselected package libgprofng0:amd64.
+
+Preparing to unpack .../09-libgprofng0_2.40-2_amd64.deb ...
+
+Unpacking libgprofng0:amd64 (2.40-2) ...
+
+Selecting previously unselected package libjansson4:amd64.
+
+Preparing to unpack .../10-libjansson4_2.14-2_amd64.deb ...
+
+Unpacking libjansson4:amd64 (2.14-2) ...
+
+Selecting previously unselected package binutils-x86-64-linux-gnu.
+
+Preparing to unpack .../11-binutils-x86-64-linux-gnu_2.40-2_amd64.deb ...
+
+Unpacking binutils-x86-64-linux-gnu (2.40-2) ...
+
+Selecting previously unselected package binutils.
+
+Preparing to unpack .../12-binutils_2.40-2_amd64.deb ...
+
+Unpacking binutils (2.40-2) ...
+
+Selecting previously unselected package libisl23:amd64.
+
+Preparing to unpack .../13-libisl23_0.25-1.1_amd64.deb ...
+
+Unpacking libisl23:amd64 (0.25-1.1) ...
+
+Selecting previously unselected package libmpfr6:amd64.
+
+Preparing to unpack .../14-libmpfr6_4.2.0-1_amd64.deb ...
+
+Unpacking libmpfr6:amd64 (4.2.0-1) ...
+
+Selecting previously unselected package libmpc3:amd64.
+
+Preparing to unpack .../15-libmpc3_1.3.1-1_amd64.deb ...
+
+Unpacking libmpc3:amd64 (1.3.1-1) ...
+
+Selecting previously unselected package cpp-12.
+
+Preparing to unpack .../16-cpp-12_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking cpp-12 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package cpp.
+
+Preparing to unpack .../17-cpp_4%3a12.2.0-3_amd64.deb ...
+
+Unpacking cpp (4:12.2.0-3) ...
+
+Selecting previously unselected package fonts-dejavu-core.
+
+Preparing to unpack .../18-fonts-dejavu-core_2.37-6_all.deb ...
+
+Unpacking fonts-dejavu-core (2.37-6) ...
+
+Selecting previously unselected package fontconfig-config.
+
+Preparing to unpack .../19-fontconfig-config_2.14.1-4_amd64.deb ...
+
+Unpacking fontconfig-config (2.14.1-4) ...
+
+Selecting previously unselected package libcc1-0:amd64.
+
+Preparing to unpack .../20-libcc1-0_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libcc1-0:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libgomp1:amd64.
+
+Preparing to unpack .../21-libgomp1_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libgomp1:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libitm1:amd64.
+
+Preparing to unpack .../22-libitm1_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libitm1:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libatomic1:amd64.
+
+Preparing to unpack .../23-libatomic1_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libatomic1:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libasan8:amd64.
+
+Preparing to unpack .../24-libasan8_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libasan8:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package liblsan0:amd64.
+
+Preparing to unpack .../25-liblsan0_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking liblsan0:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libtsan2:amd64.
+
+Preparing to unpack .../26-libtsan2_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libtsan2:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libubsan1:amd64.
+
+Preparing to unpack .../27-libubsan1_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libubsan1:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libquadmath0:amd64.
+
+Preparing to unpack .../28-libquadmath0_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package libgcc-12-dev:amd64.
+
+Preparing to unpack .../29-libgcc-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libgcc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package gcc-12.
+
+Preparing to unpack .../30-gcc-12_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking gcc-12 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package gcc.
+
+Preparing to unpack .../31-gcc_4%3a12.2.0-3_amd64.deb ...
+
+Unpacking gcc (4:12.2.0-3) ...
+
+Selecting previously unselected package libc-dev-bin.
+
+Preparing to unpack .../32-libc-dev-bin_2.36-9+deb12u13_amd64.deb ...
+
+Unpacking libc-dev-bin (2.36-9+deb12u13) ...
+
+Selecting previously unselected package linux-libc-dev:amd64.
+
+Preparing to unpack .../33-linux-libc-dev_6.1.158-1_amd64.deb ...
+
+Unpacking linux-libc-dev:amd64 (6.1.158-1) ...
+
+Selecting previously unselected package libcrypt-dev:amd64.
+
+Preparing to unpack .../34-libcrypt-dev_1%3a4.4.33-2_amd64.deb ...
+
+Unpacking libcrypt-dev:amd64 (1:4.4.33-2) ...
+
+Selecting previously unselected package libtirpc-dev:amd64.
+
+Preparing to unpack .../35-libtirpc-dev_1.3.3+ds-1_amd64.deb ...
+
+Unpacking libtirpc-dev:amd64 (1.3.3+ds-1) ...
+
+Selecting previously unselected package libnsl-dev:amd64.
+
+Preparing to unpack .../36-libnsl-dev_1.3.0-2_amd64.deb ...
+
+Unpacking libnsl-dev:amd64 (1.3.0-2) ...
+
+Selecting previously unselected package rpcsvc-proto.
+
+Preparing to unpack .../37-rpcsvc-proto_1.4.3-1_amd64.deb ...
+
+Unpacking rpcsvc-proto (1.4.3-1) ...
+
+Selecting previously unselected package libc6-dev:amd64.
+
+Preparing to unpack .../38-libc6-dev_2.36-9+deb12u13_amd64.deb ...
+
+Unpacking libc6-dev:amd64 (2.36-9+deb12u13) ...
+
+Selecting previously unselected package libstdc++-12-dev:amd64.
+
+Preparing to unpack .../39-libstdc++-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking libstdc++-12-dev:amd64 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package g++-12.
+
+Preparing to unpack .../40-g++-12_12.2.0-14+deb12u1_amd64.deb ...
+
+Unpacking g++-12 (12.2.0-14+deb12u1) ...
+
+Selecting previously unselected package g++.
+
+Preparing to unpack .../41-g++_4%3a12.2.0-3_amd64.deb ...
+
+Unpacking g++ (4:12.2.0-3) ...
+
+Selecting previously unselected package libabsl20220623:amd64.
+
+Preparing to unpack .../42-libabsl20220623_20220623.1-1+deb12u2_amd64.deb ...
+
+Unpacking libabsl20220623:amd64 (20220623.1-1+deb12u2) ...
+
+Selecting previously unselected package libaom3:amd64.
+
+Preparing to unpack .../43-libaom3_3.6.0-1+deb12u2_amd64.deb ...
+
+Unpacking libaom3:amd64 (3.6.0-1+deb12u2) ...
+
+Selecting previously unselected package libdav1d6:amd64.
+
+Preparing to unpack .../44-libdav1d6_1.0.0-2+deb12u1_amd64.deb ...
+
+Unpacking libdav1d6:amd64 (1.0.0-2+deb12u1) ...
+
+Selecting previously unselected package libgav1-1:amd64.
+
+Preparing to unpack .../45-libgav1-1_0.18.0-1+b1_amd64.deb ...
+
+Unpacking libgav1-1:amd64 (0.18.0-1+b1) ...
+
+Selecting previously unselected package librav1e0:amd64.
+
+Preparing to unpack .../46-librav1e0_0.5.1-6_amd64.deb ...
+
+Unpacking librav1e0:amd64 (0.5.1-6) ...
+
+Selecting previously unselected package libsvtav1enc1:amd64.
+
+Preparing to unpack .../47-libsvtav1enc1_1.4.1+dfsg-1_amd64.deb ...
+
+Unpacking libsvtav1enc1:amd64 (1.4.1+dfsg-1) ...
+
+Selecting previously unselected package libjpeg62-turbo:amd64.
+
+Preparing to unpack .../48-libjpeg62-turbo_1%3a2.1.5-2_amd64.deb ...
+
+Unpacking libjpeg62-turbo:amd64 (1:2.1.5-2) ...
+
+Selecting previously unselected package libyuv0:amd64.
+
+Preparing to unpack .../49-libyuv0_0.0~git20230123.b2528b0-1_amd64.deb ...
+
+Unpacking libyuv0:amd64 (0.0~git20230123.b2528b0-1) ...
+
+Selecting previously unselected package libavif15:amd64.
+
+Preparing to unpack .../50-libavif15_0.11.1-1+deb12u1_amd64.deb ...
+
+Unpacking libavif15:amd64 (0.11.1-1+deb12u1) ...
+
+Selecting previously unselected package libbrotli1:amd64.
+
+Preparing to unpack .../51-libbrotli1_1.0.9-2+b6_amd64.deb ...
+
+Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+
+Selecting previously unselected package libbsd0:amd64.
+
+Preparing to unpack .../52-libbsd0_0.11.7-2_amd64.deb ...
+
+Unpacking libbsd0:amd64 (0.11.7-2) ...
+
+Selecting previously unselected package libpng16-16:amd64.
+
+Preparing to unpack .../53-libpng16-16_1.6.39-2+deb12u1_amd64.deb ...
+
+Unpacking libpng16-16:amd64 (1.6.39-2+deb12u1) ...
+
+Selecting previously unselected package libfreetype6:amd64.
+
+Preparing to unpack .../54-libfreetype6_2.12.1+dfsg-5+deb12u4_amd64.deb ...
+
+Unpacking libfreetype6:amd64 (2.12.1+dfsg-5+deb12u4) ...
+
+Selecting previously unselected package libfontconfig1:amd64.
+
+Preparing to unpack .../55-libfontconfig1_2.14.1-4_amd64.deb ...
+
+Unpacking libfontconfig1:amd64 (2.14.1-4) ...
+
+Selecting previously unselected package libde265-0:amd64.
+
+Preparing to unpack .../56-libde265-0_1.0.11-1+deb12u2_amd64.deb ...
+
+Unpacking libde265-0:amd64 (1.0.11-1+deb12u2) ...
+
+Selecting previously unselected package libnuma1:amd64.
+
+Preparing to unpack .../57-libnuma1_2.0.16-1_amd64.deb ...
+
+Unpacking libnuma1:amd64 (2.0.16-1) ...
+
+Selecting previously unselected package libx265-199:amd64.
+
+Preparing to unpack .../58-libx265-199_3.5-2+b1_amd64.deb ...
+
+Unpacking libx265-199:amd64 (3.5-2+b1) ...
+
+Selecting previously unselected package libheif1:amd64.
+
+Preparing to unpack .../59-libheif1_1.15.1-1+deb12u1_amd64.deb ...
+
+Unpacking libheif1:amd64 (1.15.1-1+deb12u1) ...
+
+Selecting previously unselected package libdeflate0:amd64.
+
+Preparing to unpack .../60-libdeflate0_1.14-1_amd64.deb ...
+
+Unpacking libdeflate0:amd64 (1.14-1) ...
+
+Selecting previously unselected package libjbig0:amd64.
+
+Preparing to unpack .../61-libjbig0_2.1-6.1_amd64.deb ...
+
+Unpacking libjbig0:amd64 (2.1-6.1) ...
+
+Selecting previously unselected package liblerc4:amd64.
+
+Preparing to unpack .../62-liblerc4_4.0.0+ds-2_amd64.deb ...
+
+Unpacking liblerc4:amd64 (4.0.0+ds-2) ...
+
+Selecting previously unselected package libwebp7:amd64.
+
+Preparing to unpack .../63-libwebp7_1.2.4-0.2+deb12u1_amd64.deb ...
+
+Unpacking libwebp7:amd64 (1.2.4-0.2+deb12u1) ...
+
+Selecting previously unselected package libtiff6:amd64.
+
+Preparing to unpack .../64-libtiff6_4.5.0-6+deb12u3_amd64.deb ...
+
+Unpacking libtiff6:amd64 (4.5.0-6+deb12u3) ...
+
+Selecting previously unselected package libxau6:amd64.
+
+Preparing to unpack .../65-libxau6_1%3a1.0.9-1_amd64.deb ...
+
+Unpacking libxau6:amd64 (1:1.0.9-1) ...
+
+Selecting previously unselected package libxdmcp6:amd64.
+
+Preparing to unpack .../66-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
+
+Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
+
+Selecting previously unselected package libxcb1:amd64.
+
+Preparing to unpack .../67-libxcb1_1.15-1_amd64.deb ...
+
+Unpacking libxcb1:amd64 (1.15-1) ...
+
+Selecting previously unselected package libx11-data.
+
+Preparing to unpack .../68-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
+
+Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
+
+Selecting previously unselected package libx11-6:amd64.
+
+Preparing to unpack .../69-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
+
+Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+
+Selecting previously unselected package libxpm4:amd64.
+
+Preparing to unpack .../70-libxpm4_1%3a3.5.12-1.1+deb12u1_amd64.deb ...
+
+Unpacking libxpm4:amd64 (1:3.5.12-1.1+deb12u1) ...
+
+Selecting previously unselected package libgd3:amd64.
+
+Preparing to unpack .../71-libgd3_2.3.3-9_amd64.deb ...
+
+Unpacking libgd3:amd64 (2.3.3-9) ...
+
+Selecting previously unselected package libc-devtools.
+
+Preparing to unpack .../72-libc-devtools_2.36-9+deb12u13_amd64.deb ...
+
+Unpacking libc-devtools (2.36-9+deb12u13) ...
+
+Selecting previously unselected package libgpm2:amd64.
+
+Preparing to unpack .../73-libgpm2_1.20.7-10+b1_amd64.deb ...
+
+Unpacking libgpm2:amd64 (1.20.7-10+b1) ...
+
+Selecting previously unselected package make.
+
+Preparing to unpack .../74-make_4.3-4.1_amd64.deb ...
+
+Unpacking make (4.3-4.1) ...
+
+Selecting previously unselected package manpages-dev.
+
+Preparing to unpack .../75-manpages-dev_6.03-2_all.deb ...
+
+Unpacking manpages-dev (6.03-2) ...
+
+Setting up media-types (10.0.0) ...
+
+Setting up libaom3:amd64 (3.6.0-1+deb12u2) ...
+
+Setting up libabsl20220623:amd64 (20220623.1-1+deb12u2) ...
+
+Setting up libxau6:amd64 (1:1.0.9-1) ...
+
+Setting up libkeyutils1:amd64 (1.6.3-2) ...
+
+Setting up libgpm2:amd64 (1.20.7-10+b1) ...
+
+Setting up liblerc4:amd64 (4.0.0+ds-2) ...
+
+Setting up manpages (6.03-2) ...
+
+Setting up libtirpc-common (1.3.3+ds-1) ...
+
+Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+
+Setting up libsqlite3-0:amd64 (3.40.1-2+deb12u2) ...
+
+Setting up binutils-common:amd64 (2.40-2) ...
+
+Setting up libdeflate0:amd64 (1.14-1) ...
+
+Setting up linux-libc-dev:amd64 (6.1.158-1) ...
+
+Setting up libctf-nobfd0:amd64 (2.40-2) ...
+
+Setting up krb5-locales (1.20.1-2+deb12u4) ...
+
+Setting up libsvtav1enc1:amd64 (1.4.1+dfsg-1) ...
+
+Setting up libgomp1:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libjbig0:amd64 (2.1-6.1) ...
+
+Setting up librav1e0:amd64 (0.5.1-6) ...
+
+Setting up libjansson4:amd64 (2.14-2) ...
+
+Setting up libkrb5support0:amd64 (1.20.1-2+deb12u4) ...
+
+Setting up rpcsvc-proto (1.4.3-1) ...
+
+Setting up libjpeg62-turbo:amd64 (1:2.1.5-2) ...
+
+Setting up libx11-data (2:1.8.4-2+deb12u2) ...
+
+Setting up make (4.3-4.1) ...
+
+Setting up libmpfr6:amd64 (4.2.0-1) ...
+
+Setting up libquadmath0:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libpng16-16:amd64 (1.6.39-2+deb12u1) ...
+
+Setting up libmpc3:amd64 (1.3.1-1) ...
+
+Setting up libatomic1:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up fonts-dejavu-core (2.37-6) ...
+
+Setting up libgav1-1:amd64 (0.18.0-1+b1) ...
+
+Setting up libncursesw6:amd64 (6.4-4) ...
+
+Setting up libk5crypto3:amd64 (1.20.1-2+deb12u4) ...
+
+Setting up libdav1d6:amd64 (1.0.0-2+deb12u1) ...
+
+Setting up libwebp7:amd64 (1.2.4-0.2+deb12u1) ...
+
+Setting up libubsan1:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libnuma1:amd64 (2.0.16-1) ...
+
+Setting up libcrypt-dev:amd64 (1:4.4.33-2) ...
+
+Setting up libtiff6:amd64 (4.5.0-6+deb12u3) ...
+
+Setting up libasan8:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libkrb5-3:amd64 (1.20.1-2+deb12u4) ...
+
+Setting up libtsan2:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libbinutils:amd64 (2.40-2) ...
+
+Setting up libisl23:amd64 (0.25-1.1) ...
+
+Setting up libde265-0:amd64 (1.0.11-1+deb12u2) ...
+
+Setting up libc-dev-bin (2.36-9+deb12u13) ...
+
+Setting up openssl (3.0.17-1~deb12u3) ...
+
+Setting up libbsd0:amd64 (0.11.7-2) ...
+
+Setting up libyuv0:amd64 (0.0~git20230123.b2528b0-1) ...
+
+Setting up readline-common (8.2-1.3) ...
+
+Setting up libcc1-0:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up liblsan0:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libitm1:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libctf0:amd64 (2.40-2) ...
+
+Setting up manpages-dev (6.03-2) ...
+
+Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
+
+Setting up cpp-12 (12.2.0-14+deb12u1) ...
+
+Setting up libxcb1:amd64 (1.15-1) ...
+
+Setting up libavif15:amd64 (0.11.1-1+deb12u1) ...
+
+Setting up fontconfig-config (2.14.1-4) ...
+
+debconf: unable to initialize frontend: Dialog
+
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+
+debconf: falling back to frontend: Readline
+
+debconf: unable to initialize frontend: Readline
+
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+
+debconf: falling back to frontend: Teletype
+
+Setting up libreadline8:amd64 (8.2-1.3) ...
+
+Setting up ca-certificates (20230311+deb12u1) ...
+
+debconf: unable to initialize frontend: Dialog
+
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+
+debconf: falling back to frontend: Readline
+
+debconf: unable to initialize frontend: Readline
+
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.36.0 /usr/local/share/perl/5.36.0 /usr/lib/x86_64-linux-gnu/perl5/5.36 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.36 /usr/share/perl/5.36 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+
+debconf: falling back to frontend: Teletype
+
+Updating certificates in /etc/ssl/certs...
+
+142 added, 0 removed; done.
+
+Setting up libgprofng0:amd64 (2.40-2) ...
+
+Setting up libfreetype6:amd64 (2.12.1+dfsg-5+deb12u4) ...
+
+Setting up libgcc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up libgssapi-krb5-2:amd64 (1.20.1-2+deb12u4) ...
+
+Setting up libx265-199:amd64 (3.5-2+b1) ...
+
+Setting up cpp (4:12.2.0-3) ...
+
+Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+
+Setting up libfontconfig1:amd64 (2.14.1-4) ...
+
+Setting up binutils-x86-64-linux-gnu (2.40-2) ...
+
+Setting up libtirpc3:amd64 (1.3.3+ds-1) ...
+
+Setting up libxpm4:amd64 (1:3.5.12-1.1+deb12u1) ...
+
+Setting up libheif1:amd64 (1.15.1-1+deb12u1) ...
+
+Setting up binutils (2.40-2) ...
+
+Setting up libtirpc-dev:amd64 (1.3.3+ds-1) ...
+
+Setting up gcc-12 (12.2.0-14+deb12u1) ...
+
+Setting up libgd3:amd64 (2.3.3-9) ...
+
+Setting up libnsl2:amd64 (1.3.0-2) ...
+
+Setting up libc-devtools (2.36-9+deb12u13) ...
+
+Setting up libpython3.11-stdlib:amd64 (3.11.2-6+deb12u6) ...
+
+Setting up gcc (4:12.2.0-3) ...
+
+Setting up libnsl-dev:amd64 (1.3.0-2) ...
+
+Setting up libc6-dev:amd64 (2.36-9+deb12u13) ...
+
+Setting up libpython3-stdlib:amd64 (3.11.2-1+b1) ...
+
+Setting up python3.11 (3.11.2-6+deb12u6) ...
+
+Setting up libstdc++-12-dev:amd64 (12.2.0-14+deb12u1) ...
+
+Setting up python3 (3.11.2-1+b1) ...
+
+running python rtupdate hooks for python3.11...
+
+running python post-rtupdate hooks for python3.11...
+
+Setting up g++-12 (12.2.0-14+deb12u1) ...
+
+Setting up g++ (4:12.2.0-3) ...
+
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+
+Processing triggers for libc-bin (2.36-9+deb12u13) ...
+
+Processing triggers for ca-certificates (20230311+deb12u1) ...
+
+Updating certificates in /etc/ssl/certs...
+
+0 added, 0 removed; done.
+
+Running hooks in /etc/ca-certificates/update.d...
+
+done.
+
+Removing intermediate container a2a7e67c1bee
+ ---> ab1267fb94c9
+Step 3/25 : WORKDIR /app
+ ---> Running in fd0739b08bbc
+Removing intermediate container fd0739b08bbc
+ ---> cb5491d784f1
+Step 4/25 : RUN npm install -g pnpm
+ ---> Running in 871bf2949145
+
+added 1 package in 2s
+
+1 package is looking for funding
+  run `npm fund` for details
+[91mnpm notice
+npm notice New major version of npm available! 10.9.4 -> 11.7.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
+npm notice To update run: npm install -g npm@11.7.0
+npm notice
+[0mRemoving intermediate container 871bf2949145
+ ---> ab95830ea277
+Step 5/25 : COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+ ---> a34c5b2d0883
+Step 6/25 : COPY . .
+ ---> f2943d2ec284
+Step 7/25 : RUN pnpm install --no-frozen-lockfile
+ ---> Running in 7f3ec1fc0f3b
+Scope: all 126 workspace projects
+?WARN? There are cyclic workspace dependencies: /app/packages/agent-registry-core, /app/packages/field-layer, /app/packages/predator-scavenger, /app/packages/halo-loop
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Progress: resolved 7, reused 0, downloaded 6, added 0
+Progress: resolved 11, reused 0, downloaded 10, added 0
+Progress: resolved 25, reused 0, downloaded 24, added 0
+packages/env-keeper-core                 | ?WARN? deprecated crypto@1.0.1
+packages/media-vault                     | ?WARN? deprecated @types/sharp@0.32.0
+Progress: resolved 38, reused 0, downloaded 37, added 0
+packages/server                          | ?WARN? deprecated multer@1.4.5-lts.2
+?WARN? deprecated @types/glob@9.0.0: This is a stub types definition. glob provides its own type definitions, so you do not need this installed.
+?WARN? deprecated @types/minimatch@6.0.0: This is a stub types definition. minimatch provides its own type definitions, so you do not need this installed.
+Progress: resolved 78, reused 0, downloaded 77, added 0
+Progress: resolved 131, reused 0, downloaded 130, added 0
+Progress: resolved 140, reused 0, downloaded 139, added 0
+Progress: resolved 150, reused 0, downloaded 149, added 0
+packages/client                          | ?WARN? deprecated eslint@8.57.1
+packages/client                          | ?WARN? deprecated eslint-plugin-react-refresh@0.4.25
+Progress: resolved 164, reused 0, downloaded 163, added 0
+Progress: resolved 177, reused 0, downloaded 177, added 0
+Progress: resolved 183, reused 0, downloaded 183, added 0
+Progress: resolved 221, reused 0, downloaded 205, added 0
+Progress: resolved 260, reused 0, downloaded 244, added 0
+Progress: resolved 326, reused 0, downloaded 310, added 0
+Progress: resolved 403, reused 0, downloaded 387, added 0
+Progress: resolved 552, reused 0, downloaded 536, added 0
+Progress: resolved 584, reused 0, downloaded 568, added 0
+Progress: resolved 692, reused 0, downloaded 676, added 0
+Progress: resolved 722, reused 0, downloaded 710, added 0
+Progress: resolved 804, reused 0, downloaded 792, added 0
+Progress: resolved 980, reused 0, downloaded 962, added 0
+Progress: resolved 1072, reused 0, downloaded 991, added 0
+Progress: resolved 1093, reused 0, downloaded 991, added 0
+Progress: resolved 1115, reused 0, downloaded 1018, added 0
+Progress: resolved 1163, reused 0, downloaded 1070, added 0
+Progress: resolved 1174, reused 0, downloaded 1081, added 0
+Progress: resolved 1178, reused 0, downloaded 1085, added 0
+Progress: resolved 1361, reused 0, downloaded 1221, added 0
+Progress: resolved 1380, reused 0, downloaded 1235, added 0
+Progress: resolved 1461, reused 0, downloaded 1321, added 0
+Progress: resolved 1544, reused 0, downloaded 1405, added 0
+Progress: resolved 1653, reused 0, downloaded 1515, added 0
+Progress: resolved 1730, reused 0, downloaded 1592, added 0
+Progress: resolved 1774, reused 0, downloaded 1636, added 0
+Progress: resolved 1862, reused 0, downloaded 1718, added 0
+Progress: resolved 1870, reused 0, downloaded 1728, added 0
+Progress: resolved 1980, reused 0, downloaded 1842, added 0
+Progress: resolved 2019, reused 0, downloaded 1880, added 0
+Progress: resolved 2083, reused 0, downloaded 1943, added 0
+Progress: resolved 2131, reused 0, downloaded 1955, added 0
+Progress: resolved 2163, reused 0, downloaded 1995, added 0
+Progress: resolved 2237, reused 0, downloaded 1995, added 0
+Progress: resolved 2301, reused 0, downloaded 2000, added 0
+Progress: resolved 2308, reused 0, downloaded 2110, added 0
+Progress: resolved 2376, reused 0, downloaded 2188, added 0
+Progress: resolved 2401, reused 0, downloaded 2246, added 0
+Progress: resolved 2412, reused 0, downloaded 2275, added 0
+?WARN? 19 deprecated subdependencies found: @esbuild-kit/core-utils@3.3.2, @esbuild-kit/esm-loader@2.6.5, @humanwhocodes/config-array@0.13.0, @humanwhocodes/object-schema@2.0.3, @paulmillr/qr@0.2.1, @walletconnect/ethereum-provider@2.21.1, @walletconnect/sign-client@2.21.0, @walletconnect/sign-client@2.21.1, @walletconnect/universal-provider@2.21.0, @walletconnect/universal-provider@2.21.1, glob@5.0.15, glob@7.1.7, glob@7.2.3, glob@8.1.0, inflight@1.0.6, lodash.isequal@4.5.0, node-domexception@1.0.0, rimraf@3.0.2, uuid@2.0.1
+Progress: resolved 2414, reused 0, downloaded 2275, added 0
+Packages: +2328
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 2414, reused 0, downloaded 2277, added 0
+Progress: resolved 2414, reused 0, downloaded 2277, added 569
+Progress: resolved 2414, reused 0, downloaded 2277, added 817
+Progress: resolved 2414, reused 0, downloaded 2277, added 1039
+Progress: resolved 2414, reused 0, downloaded 2277, added 1194
+Progress: resolved 2414, reused 0, downloaded 2277, added 1506
+Progress: resolved 2414, reused 0, downloaded 2277, added 1914
+Progress: resolved 2414, reused 0, downloaded 2277, added 2298
+Progress: resolved 2414, reused 0, downloaded 2277, added 2328, done
+?WARN? Issues with peer dependencies found
+.
+??? vite 7.2.2
+? ??? ? unmet peer @types/node@"^20.19.0 || >=22.12.0": found 22.7.5
+??? react-native 0.82.1
+? ??? ? unmet peer @types/react@^19.1.1: found 18.3.26
+? ??? ? unmet peer react@^19.1.1: found 18.3.1
+? ??? @react-native/virtualized-lists 0.82.1
+?   ??? ? unmet peer @types/react@^19.1.1: found 18.3.26
+??? @solana/wallet-adapter-react 0.15.39
+  ??? @solana-mobile/wallet-adapter-mobile 2.2.5
+    ??? @solana-mobile/wallet-standard-mobile 0.4.4
+      ??? @solana-mobile/mobile-wallet-adapter-protocol 2.2.5
+        ??? @solana/wallet-standard 1.1.4
+          ??? @solana/wallet-standard-wallet-adapter 1.1.4
+            ??? @solana/wallet-standard-wallet-adapter-base 1.1.4
+              ??? ? unmet peer bs58@^6.0.0: found 5.0.0 in @solana-mobile/wallet-standard-mobile
+
+packages/antigravity-core
+??? langchain 0.0.186
+  ??? ? unmet peer @google-cloud/storage@^6.10.1: found 7.17.3
+
+packages/base-mini-apps
+??? react-native 0.82.1
+  ??? ? unmet peer react@^19.1.1: found 18.3.1
+
+packages/client
+??? @farcaster/frame-sdk 0.1.12
+? ??? @farcaster/miniapp-sdk 0.2.1
+? ? ??? @farcaster/quick-auth 0.0.6
+? ?   ??? ? unmet peer typescript@5.8.3: found 5.9.3
+? ??? @farcaster/quick-auth 0.0.8
+?   ??? ? unmet peer typescript@5.8.3: found 5.9.3
+??? react-native 0.82.1
+  ??? ? unmet peer @types/react@^19.1.1: found 18.3.26
+  ??? ? unmet peer react@^19.1.1: found 18.3.1
+  ??? @react-native/virtualized-lists 0.82.1
+    ??? ? unmet peer @types/react@^19.1.1: found 18.3.26
+
+packages/database
+??? drizzle-orm 0.44.7
+  ??? ? unmet peer @neondatabase/serverless@>=0.10.0: found 0.6.1
+
+packages/memory-dna
+??? @browserbasehq/stagehand 1.14.0
+? ??? ? unmet peer openai@^4.62.1: found 6.14.0
+??? @langchain/community 1.1.0
+  ??? ? unmet peer @lancedb/lancedb@^0.19.1: found 0.23.0
+
+dependencies:
++ @anthropic-ai/sdk 0.37.0
++ @coinbase/onchainkit 0.2.1
++ @google-cloud/cloudbuild 5.3.1
++ @google-cloud/functions 4.2.1
++ @google-cloud/functions-framework 3.5.1
++ @google-cloud/resource-manager 6.2.1
++ @google-cloud/run 3.0.1
++ @google-cloud/secret-manager 5.6.0
++ @google-cloud/storage 7.17.3 (7.18.0 is available)
++ @hookform/resolvers 3.10.0
++ @jridgewell/trace-mapping 0.3.31
++ @neondatabase/serverless 0.10.4 (1.0.2 is available)
++ @noble/hashes 2.0.1
++ @radix-ui/react-accordion 1.2.12
++ @radix-ui/react-alert-dialog 1.1.15
++ @radix-ui/react-aspect-ratio 1.1.8
++ @radix-ui/react-avatar 1.1.11
++ @radix-ui/react-checkbox 1.3.3
++ @radix-ui/react-collapsible 1.1.12
++ @radix-ui/react-context-menu 2.2.16
++ @radix-ui/react-dialog 1.1.15
++ @radix-ui/react-dropdown-menu 2.1.16
++ @radix-ui/react-hover-card 1.1.15
++ @radix-ui/react-label 2.1.8
++ @radix-ui/react-menubar 1.1.16
++ @radix-ui/react-navigation-menu 1.2.14
++ @radix-ui/react-popover 1.1.15
++ @radix-ui/react-progress 1.1.8
++ @radix-ui/react-radio-group 1.3.8
++ @radix-ui/react-scroll-area 1.2.10
++ @radix-ui/react-select 2.2.6
++ @radix-ui/react-separator 1.1.8
++ @radix-ui/react-slider 1.3.6
++ @radix-ui/react-slot 1.2.4
++ @radix-ui/react-switch 1.2.6
++ @radix-ui/react-tabs 1.1.13
++ @radix-ui/react-toast 1.2.15
++ @radix-ui/react-toggle 1.1.10
++ @radix-ui/react-toggle-group 1.1.11
++ @radix-ui/react-tooltip 1.2.8
++ @solana/wallet-adapter-base 0.9.27
++ @solana/wallet-adapter-react 0.15.39
++ @solana/wallet-adapter-react-ui 0.9.39
++ @solana/web3.js 1.98.4
++ @tanstack/query-core 5.90.10 (5.90.16 is available)
++ @tanstack/react-query 5.90.10 (5.90.16 is available)
++ @types/html2canvas 0.5.35
++ @types/jsonwebtoken 9.0.10
++ @types/qrcode.react 1.0.5
++ chrome-launcher 1.2.1
++ class-variance-authority 0.7.1
++ clsx 2.1.1
++ cmdk 1.1.1
++ connect-pg-simple 10.0.0
++ date-fns 3.6.0
++ drizzle-orm 0.44.7
++ drizzle-zod 0.8.3
++ embla-carousel-react 8.6.0
++ ethers 6.15.0
++ express 4.21.2
++ express-session 1.18.2
++ framer-motion 11.18.2
++ html2canvas 1.4.1
++ input-otp 1.4.2
++ jsonwebtoken 9.0.2
++ lighthouse 12.8.2
++ lucide-react 0.553.0
++ memorystore 1.6.7
++ nanoid 5.1.6
++ next-themes 0.4.6
++ openai 6.8.1
++ passport 0.7.0
++ passport-local 1.0.0
++ pg 8.16.3
++ qrcode.react 4.2.0
++ react 18.3.1
++ react-day-picker 8.10.1
++ react-dom 18.3.1
++ react-hook-form 7.66.0
++ react-icons 5.5.0
++ react-resizable-panels 3.0.6
++ recharts 3.4.1
++ siwe 3.0.0
++ tailwind-merge 3.4.0
++ tailwindcss-animate 1.0.7
++ tw-animate-css 1.4.0
++ twilio 5.10.5
++ vaul 1.1.2
++ vis-network 10.0.2
++ wouter 3.7.1
++ ws 8.18.3
++ zod 3.23.8 (4.3.2 is available)
++ zod-validation-error 3.5.4
+
+optionalDependencies:
++ bufferutil 4.0.9 (4.1.0 is available)
+
+devDependencies:
++ @nomicfoundation/hardhat-toolbox 5.0.0
++ @openzeppelin/contracts 5.4.0
++ @replit/vite-plugin-cartographer 0.2.8
++ @replit/vite-plugin-runtime-error-modal 0.0.3
++ @tailwindcss/typography 0.5.19
++ @tailwindcss/vite 4.1.17
++ @types/connect-pg-simple 7.0.3
++ @types/express 4.17.21
++ @types/express-session 1.18.2
++ @types/glob 9.0.0 deprecated
++ @types/minimatch 6.0.0 deprecated
++ @types/node 22.7.5
++ @types/passport 1.0.17
++ @types/passport-local 1.0.38
++ @types/pg 8.15.6 (8.16.0 is available)
++ @types/react 18.3.26
++ @types/react-dom 18.3.7
++ @types/ws 8.18.1
++ @vitejs/plugin-react 5.1.0
++ autoprefixer 10.4.22
++ cross-env 10.1.0
++ dotenv 16.6.1 (17.2.3 is available)
++ drizzle-kit 0.31.6
++ esbuild 0.27.0
++ glob 13.0.0
++ hardhat 2.27.0
++ minimatch 10.1.1
++ postcss 8.5.6
++ tailwindcss 3.4.18
++ tsx 4.20.6
++ turbo 2.6.3
++ typescript 5.9.3
++ vite 7.2.2
++ zod-to-json-schema 3.25.1
+
+? Warning ??????????????????????????????????????????????????????????????????????
+?                                                                              ?
+?   Ignored build scripts: @nestjs/core,                                       ?
+?   @openapitools/openapi-generator-cli, blake3, bufferutil, esbuild,          ?
+?   ffi-napi, keccak, protobufjs, ref-napi, secp256k1, sharp,                  ?
+?   utf-8-validate.                                                            ?
+?   Run "pnpm approve-builds" to pick which dependencies should be allowed     ?
+?   to run scripts.                                                            ?
+?                                                                              ?
+????????????????????????????????????????????????????????????????????????????????
+
+Done in 1m 2.1s using pnpm v10.21.0
+Removing intermediate container 7f3ec1fc0f3b
+ ---> eab02a4844d5
+Step 8/25 : RUN pnpm --filter "...@dreamnet/server" build
+ ---> Running in b8ec806f6ba7
+
+> @dreamnet/server@0.1.0 build /app/packages/server
+> tsup
+
+CLI Building entry: src/index.ts, src/vite.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /app/packages/server/tsup.config.ts
+CLI Target: node20
+CLI Cleaning output folder
+CJS Build start
+[91m? [ERROR] Could not resolve "@dreamnet/organ-nerve"
+
+    src/routes/god-view.ts:3:26:
+      3 ? import { NERVE_BUS } from "@dreamnet/organ-nerve";
+        ?                           ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-nerve" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-nerve"
+
+    src/core/organs.ts:6:25:
+      6 ? import { MANIFOLD } from '@dreamnet/organ-nerve';
+        ?                          ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-nerve" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-gut"
+
+    src/core/organs.ts:7:20:
+      7 ? import { GUT } from '@dreamnet/organ-gut';
+        ?                     ~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-gut" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-eyes"
+
+    src/core/organs.ts:8:21:
+      8 ? import { EYES } from '@dreamnet/organ-eyes';
+        ?                      ~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-eyes" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-heart"
+
+    src/core/organs.ts:9:22:
+      9 ? import { HEART } from '@dreamnet/organ-heart';
+        ?                       ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-heart" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-lung"
+
+    src/core/organs.ts:10:21:
+      10 ? import { LUNG } from '@dreamnet/organ-lung';
+         ?                      ~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-lung" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-skin"
+
+    src/core/organs.ts:11:21:
+      11 ? import { SKIN } from '@dreamnet/organ-skin';
+         ?                      ~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-skin" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-immune"
+
+    src/core/organs.ts:12:23:
+      12 ? import { IMMUNE } from '@dreamnet/organ-immune';
+         ?                        ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-immune" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-brain"
+
+    src/core/organs.ts:13:22:
+      13 ? import { BRAIN } from '@dreamnet/organ-brain';
+         ?                       ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-brain" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-dna"
+
+    src/core/organs.ts:14:20:
+      14 ? import { DNA } from '@dreamnet/organ-dna';
+         ?                     ~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-dna" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-muscles"
+
+    src/core/organs.ts:15:24:
+      15 ? import { MUSCLES } from '@dreamnet/organ-muscles';
+         ?                         ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-muscles" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-nerve"
+
+    src/agents/vibe-conductor.ts:15:25:
+      15 ? import { MANIFOLD } from '@dreamnet/organ-nerve';
+         ?                          ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-nerve" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-units"
+
+    src/core/organs.ts:16:22:
+      16 ? import { UNITS } from '@dreamnet/organ-units';
+         ?                       ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-units" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-voice"
+
+    src/core/organs.ts:17:22:
+      17 ? import { VOICE } from '@dreamnet/organ-voice';
+         ?                       ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-voice" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/dreamnet-agent-client"
+
+    ../nerve/src/bridges/core.ts:12:30:
+      12 ? import { DreamNetAgent } from "@dreamnet/dreamnet-agent-client";
+         ?                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  The module "./src/index.ts" was not found on the file system:
+
+    ../../node_modules/@dreamnet/dreamnet-agent-client/package.json:21:41:
+      21 ?                               "source":  "./src/index.ts",
+         ?                                          ~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/dreamnet-agent-client" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-heart"
+
+    src/services/CirculatorySystem.ts:9:22:
+      9 ? import { HEART } from '@dreamnet/organ-heart';
+        ?                       ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-heart" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "../../inbox-squared-core/index.ts.js"
+
+    ../wolfpack-funding-core/logic/emailDraftEngineEnhanced.js:46:79:
+      46 ? ...=> __importStar(require('../../inbox-squared-core/index.ts.js')));
+         ?                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/dreamnet-os-core/logic/liquidCooling"
+
+    ../dreamnet-control-core/src/conduitGovernor.ts:25:30:
+      25 ? ...ingSystem } from "@dreamnet/dreamnet-os-core/logic/liquidCooling";
+         ?                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  The module "./src/logic/liquidCooling.ts" was not found on the file system:
+
+    ../dreamnet-control-core/node_modules/@dreamnet/dreamnet-os-core/package.json:14:43:
+      14 ?                                 "source":  "./src/*.ts",
+         ?                                            ~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/dreamnet-os-core/logic/liquidCooling" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-lung"
+
+    src/services/CirculatorySystem.ts:10:21:
+      10 ? import { LUNG } from '@dreamnet/organ-lung';
+         ?                      ~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-lung" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "./logic/index.js"
+
+    ../nerve/src/spider-web/index.ts:165:14:
+      165 ? export * from './logic/index.js';
+          ?               ~~~~~~~~~~~~~~~~~~
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-gut"
+
+    src/services/CirculatorySystem.ts:11:20:
+      11 ? import { GUT } from '@dreamnet/organ-gut';
+         ?                     ~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-gut" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91m? [ERROR] Could not resolve "./adapters/index.js"
+
+    ../nerve/src/spider-web/index.ts:166:14:
+      166 ? export * from './adapters/index.js';
+          ?               ~~~~~~~~~~~~~~~~~~~~~
+
+[0m[91m? [ERROR] Could not resolve "./scheduler/index.js"
+
+    ../nerve/src/spider-web/index.ts:167:14:
+      167 ? export * from './scheduler/index.js';
+          ?               ~~~~~~~~~~~~~~~~~~~~~~
+
+[0m[91m? [ERROR] Could not resolve "./store/index.js"
+
+    ../nerve/src/spider-web/index.ts:168:14:
+      168 ? export * from './store/index.js';
+          ?               ~~~~~~~~~~~~~~~~~~
+
+[0m[91m? [ERROR] Could not resolve "@dreamnet/organ-nerve"
+
+    src/services/SensoryCortex.ts:1:25:
+      1 ? import { MANIFOLD } from '@dreamnet/organ-nerve';
+        ?                          ~~~~~~~~~~~~~~~~~~~~~~~
+
+  You can mark the path "@dreamnet/organ-nerve" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[0m[91mCJS Build failed
+[0m[91mError: Build failed with 25 errors:
+../dreamnet-control-core/src/conduitGovernor.ts:25:30: ERROR: Could not resolve "@dreamnet/dreamnet-os-core/logic/liquidCooling"
+../nerve/src/bridges/core.ts:12:30: ERROR: Could not resolve "@dreamnet/dreamnet-agent-client"
+../nerve/src/spider-web/index.ts:165:14: ERROR: Could not resolve "./logic/index.js"
+../nerve/src/spider-web/index.ts:166:14: ERROR: Could not resolve "./adapters/index.js"
+../nerve/src/spider-web/index.ts:167:14: ERROR: Could not resolve "./scheduler/index.js"
+...
+    at failureErrorWithLog (/app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:1467:15)
+    at /app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:926:25
+    at runOnEndCallbacks (/app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:1307:45)
+    at buildResponseToResult (/app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:924:7)
+    at /app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:951:16
+    at responseCallbacks.<computed> (/app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (/app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (/app/node_modules/.pnpm/esbuild@0.27.0/node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+[0m/app/packages/server:
+?ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL? @dreamnet/server@0.1.0 build: `tsup`
+Exit status 1
+The command '/bin/sh -c pnpm --filter "...@dreamnet/server" build' returned a non-zero code: 1
+ERROR
+ERROR: build step 0 "gcr.io/cloud-builders/gcb-internal" failed: step exited with non-zero status: 1
+-----------------------------------------------------------------------------------------

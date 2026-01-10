@@ -1,15 +1,40 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": ".",
-    "module": "commonjs",
-    "target": "es2019",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "strict": true
-  },
-  "include": ["./**/*.ts"]
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "./src/**/*.ts",
+        "logic/**/*",
+        "scheduler/**/*",
+        "store/**/*",
+        "types.ts"
+    ],
+    "references": [
+        {
+            "path": "../inbox-squared-core"
+        },
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../shared"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
 }
-
-

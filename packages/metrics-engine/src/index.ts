@@ -1,119 +1,58 @@
 /**
- * Metrics Engine
- * TEMPORARY: No-op placeholder to avoid blocking server startup
- * TODO: Implement full metrics engine
+ * Metrics Engine (Sovereign Implementation)
+ * Stores time-series data in-memory (Active RAM).
+ * Future Upgrade: Persist to SQLite/JSON.
  */
-
-export interface MetricsSnapshot {
-  status: string;
-  message?: string;
-  metrics?: any[];
-  timestamp?: string;
-  [key: string]: any;
-}
 
 export interface MetricEvent {
   name: string;
-  value?: number;
+  value: number;
   tags?: Record<string, string>;
-  timestamp?: string;
-  [key: string]: any;
+  timestamp?: number;
 }
 
-export interface HaloCycleEvent {
-  success?: boolean;
-  timestamp?: string;
-  [key: string]: any;
-}
+// The Black Box (In-Memory Store)
+const METRIC_STORE: MetricEvent[] = [];
+const MAX_HISTORY = 1000; // Keep last 1000 points per boot
 
-/**
- * Get metrics snapshot
- * TEMPORARY: Returns placeholder data
- */
-export function getMetricsSnapshot(): MetricsSnapshot {
-  return {
-    status: "placeholder",
-    message: "Metrics Engine not implemented yet.",
-    metrics: [],
-    timestamp: new Date().toISOString(),
+export function recordMetric(event: MetricEvent): void {
+  const entry = {
+    ...event,
+    timestamp: event.timestamp || Date.now(),
   };
+
+  METRIC_STORE.push(entry);
+
+  // Prune if too large (Amor Fati - Let go of the old)
+  if (METRIC_STORE.length > MAX_HISTORY) {
+    METRIC_STORE.shift();
+  }
+
+  console.log(`[Metrics] Recorded: ${entry.name} = ${entry.value}`);
 }
 
-/**
- * Record a metric event
- * TEMPORARY: No-op placeholder
- */
-export function recordMetric(_event: MetricEvent): void {
-  // No-op: metrics engine not implemented yet
-  return;
+export function getMetricsHistory(options?: { name?: string; limit?: number }): MetricEvent[] {
+  let data = METRIC_STORE;
+
+  if (options?.name) {
+    data = data.filter(m => m.name === options.name);
+  }
+
+  if (options?.limit) {
+    data = data.slice(-options.limit);
+  }
+
+  return data;
 }
 
-/**
- * Record an event (alias for recordMetric)
- * TEMPORARY: No-op placeholder
- */
-export function recordEvent(_event: MetricEvent): void {
-  // No-op: metrics engine not implemented yet
-  return;
-}
+// -- Legacy Stubs (Kept for compatibility) --
+export function getMetricsSnapshot() { return { status: "Active", count: METRIC_STORE.length }; }
+export function recordEvent(e: any) { recordMetric({ name: e.name || "unknown", value: 1 }); }
+export function recordHaloCycle(e: any) { recordMetric({ name: "halo_cycle", value: e.success ? 1 : 0 }); }
+export function recordHeartbeat() { /* pulse */ }
+export function recordTaskCompletion() { recordMetric({ name: "task_complete", value: 1 }); }
+export function updateTaskCounts() { }
+export function getMetrics() { return METRIC_STORE; }
+export function getMetric(name: string) { return METRIC_STORE.find(m => m.name === name); }
 
-/**
- * Record HALO cycle
- * TEMPORARY: No-op placeholder
- */
-export async function recordHaloCycle(_event: HaloCycleEvent): Promise<void> {
-  // No-op: metrics engine not implemented yet
-  return;
-}
-
-/**
- * Record heartbeat
- * TEMPORARY: No-op placeholder
- */
-export function recordHeartbeat(_data?: any): void {
-  // No-op: metrics engine not implemented yet
-  return;
-}
-
-/**
- * Record task completion
- * TEMPORARY: No-op placeholder
- */
-export function recordTaskCompletion(_data?: any): void {
-  // No-op: metrics engine not implemented yet
-  return;
-}
-
-/**
- * Get metrics for a specific time range
- * TEMPORARY: Returns empty array
- */
-export function getMetrics(_startTime?: number, _endTime?: number): any[] {
-  return [];
-}
-
-/**
- * Get metrics history
- * TEMPORARY: Returns empty array
- */
-export function getMetricsHistory(_options?: any): any[] {
-  return [];
-}
-
-/**
- * Update task counts
- * TEMPORARY: No-op placeholder
- */
-export function updateTaskCounts(_data?: any): void {
-  // No-op: metrics engine not implemented yet
-  return;
-}
-
-/**
- * Get metric by name
- * TEMPORARY: Returns null
- */
-export function getMetric(_name: string): any | null {
-  return null;
-}
-
+export { createMetricsRouter } from './router.js';

@@ -5,10 +5,10 @@
  * Routes packets to ports based on fiber channel and packet type.
  */
 
-import type { DreamPacket } from '../../internal-ports/src/index.ts';
-import { getPort } from '../../internal-ports/src/index.ts';
-import type { RouteKey, RouteTarget, RouteEntry, RouterConfig } from './types';
-import { incrementRouteCount } from './metrics';
+import type { DreamPacket } from '@dreamnet/internal-ports';
+import { getPort } from '@dreamnet/internal-ports';
+import type { RouteKey, RouteTarget, RouteEntry, RouterConfig } from './types.js';
+import { incrementRouteCount } from './metrics.js';
 
 /**
  * In-memory routing table
@@ -49,11 +49,11 @@ export function getRouterConfig(): RouterConfig {
  */
 export function registerRoute(entry: RouteEntry): void {
   const key = `${entry.key.fiber}:${entry.key.type}`;
-  
+
   if (routingTable.has(key)) {
     throw new Error(`Route already exists: ${key}`);
   }
-  
+
   routingTable.set(key, entry);
 }
 
@@ -116,7 +116,7 @@ export async function routePacket(
 ): Promise<any> {
   // Determine effective fiber
   let effectiveFiber: string;
-  
+
   if (options?.fiber) {
     effectiveFiber = options.fiber;
   } else if (routerConfig.defaultFiber) {
@@ -130,10 +130,10 @@ export async function routePacket(
     }
     return { ok: false, reason: 'No fiber specified' };
   }
-  
+
   // Look up route
   let route = getRoute(effectiveFiber, packet.type);
-  
+
   // Fallback routing if enabled
   if (!route && routerConfig.allowFallback && routerConfig.defaultFiber) {
     const fallbackFiber = routerConfig.defaultFiber;
@@ -141,7 +141,7 @@ export async function routePacket(
       route = getRoute(fallbackFiber, packet.type);
     }
   }
-  
+
   // Handle missing route
   if (!route) {
     if (routerConfig.strict) {
@@ -149,10 +149,10 @@ export async function routePacket(
     }
     return { ok: false, reason: `Route not found: ${effectiveFiber}:${packet.type}` };
   }
-  
+
   // Find port
   const port = getPort(route.target.portId);
-  
+
   if (!port) {
     // Port not found
     if (routerConfig.strict) {
@@ -161,10 +161,10 @@ export async function routePacket(
     console.warn(`[Router] Port not found: ${route.target.portId} (route: ${effectiveFiber}:${packet.type})`);
     return { ok: false, reason: `Port not found: ${route.target.portId}` };
   }
-  
+
   // Increment metrics (even if handler throws)
   incrementRouteCount(effectiveFiber, packet.type);
-  
+
   // Call port handler
   try {
     const result = await port.handler(packet);

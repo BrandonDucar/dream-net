@@ -8,7 +8,7 @@ import type {
   WebhookAntibody,
   WebhookMemoryCell,
   WebhookEvent,
-} from "../types";
+} from '../types.js';
 
 let antigens: Map<string, WebhookAntigen> = new Map();
 let antibodies: Map<string, WebhookAntibody> = new Map();

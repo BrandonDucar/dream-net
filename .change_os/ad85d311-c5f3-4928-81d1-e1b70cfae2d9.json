@@ -1,0 +1,15 @@
+{
+  "id": "ad85d311-c5f3-4928-81d1-e1b70cfae2d9",
+  "timestamp": "2025-12-20T17:15:37.286Z",
+  "actor": {
+    "id": "PM_Sarah",
+    "role": "pm"
+  },
+  "delta": {
+    "scope": "Unknown",
+    "type": "modify",
+    "description": "Schedule Update v2"
+  },
+  "confidence": 0.45,
+  "impact": []
+}

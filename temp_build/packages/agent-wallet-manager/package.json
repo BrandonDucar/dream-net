@@ -1,0 +1,19 @@
+{
+  "name": "@dreamnet/agent-wallet-manager",
+  "version": "1.0.0",
+  "description": "Wallet management system for AI agents",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dreamnet/lib": "workspace:*",
+    "@dreamnet/shared": "workspace:*",
+    "ethers": "^6.15.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

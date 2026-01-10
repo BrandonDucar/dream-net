@@ -1,0 +1,27 @@
+openapi: 3.0.1
+info:
+  title: DreamNet Bazaar API
+  description: A Headless Marketplace for AI Agents to buy Performance Enhancers and Infrastructure.
+  version: 'v1'
+servers:
+  - url: http://localhost:3000
+paths:
+  /ws/bazaar/hits:
+    get:
+      operationId: connectBazaar
+      summary: Connect to the WebSocket Bazaar
+      description: Establishes a WebSocket connection to quotes and purchase drugs.
+      responses:
+        "101":
+          description: Switching Protocols to WebSocket
+components:
+  schemas:
+    Quote:
+      type: object
+      properties:
+        substance:
+          type: string
+        price:
+          type: string
+        orderId:
+          type: string
