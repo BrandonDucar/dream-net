@@ -9,16 +9,13 @@ export class NewsSpike implements SensorySpike {
     async fetch(): Promise<SpikeResult> {
         try {
             if (!this.apiKey) {
+                const mirrorUrl = process.env.NEWS_MIRROR_URL || 'https://saurav.tech/NewsAPI/everything/cnn.json';
+                const mirrorResp = await axios.get(mirrorUrl);
                 return {
-                    source: 'news-api-mock',
-                    data: {
-                        articles: [
-                            { title: "Global AI Summit reaches consensus on agent autonomy", source: "The Tech Times" },
-                            { title: "SpaceX launches new satellite constellation", source: "Orbit Daily" }
-                        ]
-                    },
+                    source: 'news-mirror',
+                    data: mirrorResp.data,
                     timestamp: Date.now(),
-                    confidence: 0.5
+                    confidence: 0.8
                 }
             }
 

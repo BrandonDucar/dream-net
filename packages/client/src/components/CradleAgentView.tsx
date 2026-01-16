@@ -3,9 +3,9 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+// import { Progress } from '@/components/ui/progress';
 import { Zap, Sparkles, ArrowUp, RefreshCw, Eye, ChevronDown, ChevronUp } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '../hooks/use-toast';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface EvolutionStage {
@@ -43,12 +43,12 @@ export default function CradleAgentView() {
 
   const fetchCradleData = async () => {
     if (!publicKey) return;
-    
+
     setLoading(true);
     try {
       const response = await fetch(`/api/wallet-scoring/${publicKey.toBase58()}`);
       const scoreData = await response.json();
-      
+
       // Generate mock evolution chains for demonstration
       const mockEvolutionChains: EvolutionStage[] = [
         {
@@ -59,7 +59,7 @@ export default function CradleAgentView() {
           active: true
         },
         {
-          id: 'evo-2', 
+          id: 'evo-2',
           name: 'Quantum Dreams',
           description: 'Multi-dimensional dream states',
           progress: 45,
@@ -95,11 +95,11 @@ export default function CradleAgentView() {
     try {
       // Simulate evolution process
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       setCradleData(prev => prev ? {
         ...prev,
-        evolutionChains: prev.evolutionChains.map(chain => 
-          chain.id === chainId 
+        evolutionChains: prev.evolutionChains.map(chain =>
+          chain.id === chainId
             ? { ...chain, progress: Math.min(100, chain.progress + 15) }
             : chain
         ),
@@ -192,7 +192,12 @@ export default function CradleAgentView() {
                     <span className="text-xs">Progress</span>
                     <span className="text-xs font-mono">{chain.progress}%</span>
                   </div>
-                  <Progress value={chain.progress} className="h-2" />
+                  <div className="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-cyan-500 transition-all duration-500"
+                      style={{ width: `${chain.progress}%` }}
+                    />
+                  </div>
                   {chain.active && (
                     <Button
                       variant="outline"
@@ -224,7 +229,7 @@ export default function CradleAgentView() {
           <CollapsibleContent>
             <div className="grid grid-cols-1 gap-2">
               {evolutionStages.map((stage, index) => (
-                <div 
+                <div
                   key={stage.name}
                   className="p-2 rounded border border-border bg-card/20 flex items-center gap-3"
                 >

@@ -14,4 +14,3 @@ export declare const DreamBetCore: {
 };
 export * from './types.js';
 export default DreamBetCore;
-//# sourceMappingURL=index.d.ts.map

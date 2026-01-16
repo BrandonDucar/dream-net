@@ -24,4 +24,3 @@ export declare class ResearchEngine {
     setCacheHours(hours: number): void;
 }
 export declare const researchEngine: ResearchEngine;
-//# sourceMappingURL=researchEngine.d.ts.map

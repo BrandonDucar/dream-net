@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response } from 'express';
-import { randomUUID as uuidv4 } from 'node:crypto';
+import { uuidv7 } from "uuidv7";
 
 const router = Router();
 
@@ -201,7 +201,7 @@ router.post('/', (req: Request, res: Response) => {
     }
 
     const newNotification: Notification = {
-      id: uuidv4(),
+      id: uuidv7(),
       title,
       message,
       type,

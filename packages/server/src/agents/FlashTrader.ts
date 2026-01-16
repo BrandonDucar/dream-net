@@ -166,7 +166,7 @@ export class FlashTraderAgent implements Agent {
             const totalVolume = tweetCount + redditCount;
 
             // Normalize: 30 signals = 1.0 Authority (High)
-            const authorityScore = Math.min(totalVolume / 30, 1.0);
+            const authorityScore = totalVolume > 0 ? Math.min(totalVolume / 30, 1.0) : 0;
 
             return {
                 farcasterSentiment: 0.0, // Deprecated until Neynar keys added
@@ -186,6 +186,17 @@ export class FlashTraderAgent implements Agent {
                 error: true
             };
         }
+    }
+
+    /**
+     * Guild Interface Compatibility
+     */
+    public async boot() {
+        console.log(`[FlashTrader] Boot sequence initiated...`);
+    }
+
+    public checkHealth() {
+        return { status: 'WORKING', lastHeartbeat: Date.now(), errorCount: 0, memoryUsage: 0 };
     }
 }
 

@@ -26,3 +26,4 @@ export declare function updateTraitsFromTaskResult(task: TaskModel): Promise<voi
 export declare function deriveChildMemory(entityType: EntityType, parentId: string, childId: string): Promise<void>;
 export declare function listAllRecords(): Promise<Record<EntityType, MemoryRecord[]>>;
 export declare function logSystemMemory(action: string, metadata?: any): Promise<void>;
+//# sourceMappingURL=dnaEngine.d.ts.map

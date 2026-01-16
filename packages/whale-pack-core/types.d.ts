@@ -72,4 +72,3 @@ export interface WhalePackStatus {
     samplePlans: WhaleContentPlan[];
     sampleInsights: WhaleInsight[];
 }
-//# sourceMappingURL=types.d.ts.map

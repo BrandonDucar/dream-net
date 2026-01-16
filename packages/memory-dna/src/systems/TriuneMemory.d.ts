@@ -70,3 +70,4 @@ export declare class TriuneMemory {
     remember(key: string, value: any, context: 'SURVIVAL' | 'SOCIAL' | 'WISDOM'): Promise<void>;
 }
 export declare const memorySystem: TriuneMemory;
+//# sourceMappingURL=TriuneMemory.d.ts.map

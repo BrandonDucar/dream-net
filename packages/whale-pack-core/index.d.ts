@@ -14,4 +14,3 @@ export declare const WhalePackCore: {
 export * from './types.js';
 export * from './logic/whaleOutreachCore.js';
 export default WhalePackCore;
-//# sourceMappingURL=index.d.ts.map

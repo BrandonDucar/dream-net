@@ -61,4 +61,3 @@ export interface DreamBetStatus {
     fairnessCount: number;
     sampleGames: GameSession[];
 }
-//# sourceMappingURL=types.d.ts.map

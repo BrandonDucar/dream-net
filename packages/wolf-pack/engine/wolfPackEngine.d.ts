@@ -5,4 +5,3 @@ export declare function runWolfPackCycle(ctx: WolfContext): {
     strikes: WolfStrikeResult[];
 };
 export declare function wolfPackStatus(): WolfPackStatus;
-//# sourceMappingURL=wolfPackEngine.d.ts.map

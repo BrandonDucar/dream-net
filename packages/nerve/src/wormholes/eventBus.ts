@@ -1,8 +1,11 @@
-import type { EventModel } from'./types.js';
+import type { EventModel } from './types.js';
 import { randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
-import { processEvent } from'./wormholeEngine.js';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const EVENT_LOG_PATH = join(__dirname, "../store/eventLog.json");
 

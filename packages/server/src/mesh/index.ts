@@ -1,4 +1,11 @@
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 import type { StarbridgeEvent } from "../starbridge/types";
+import { randomUUID } from "node:crypto";
 import { legacyImport } from "../legacy/loader";
 import { BudgetControlService } from "../services/BudgetControlService";
 import { broadcastStarbridgeEvent, onStarbridgeEvent } from "../starbridge/bus";

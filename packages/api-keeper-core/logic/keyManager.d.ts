@@ -19,4 +19,3 @@ export declare function recordUsage(keyId: string, cost?: number): boolean;
  * Get best available key for a provider
  */
 export declare function getBestKey(providerId: string): APIKey | null;
-//# sourceMappingURL=keyManager.d.ts.map

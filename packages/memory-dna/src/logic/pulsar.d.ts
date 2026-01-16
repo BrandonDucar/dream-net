@@ -30,3 +30,4 @@ export declare class Pulsar {
     private static pulse;
     private static broadcastThought;
 }
+//# sourceMappingURL=pulsar.d.ts.map

@@ -24,28 +24,27 @@ export class CryptoSpike implements SensorySpike {
         try {
             console.log('[CryptoSpike] 📡 Vacuuming global crypto sentiment and prices...');
 
-            // 1. CoinGecko (Macro Sentiment)
+            // 1. CoinGecko (Wide Mode - Top 100)
             const coingeckoP = axios.get(
-                'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,matic-network&vs_currencies=usd&include_24hr_change=true'
-            ).catch(() => ({ data: {} }));
+                'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1'
+            ).catch(() => ({ data: [] }));
 
             // 2. Jupiter Price API (Solana Precision)
             const jupiterP = axios.get(
                 'https://api.jupiter.ag/price/v2?ids=SOL,USDC,WEN,JLP'
             ).catch(() => ({ data: { data: {} } }));
 
-            // 3. DexScreener (Base/Polygon Alpha)
-            // We scan the latest high-volume pairs on Base to avoid blindness
+            // 3. DexScreener (Base/Polygon/Solana Alpha)
             const dexscreenerP = axios.get(
-                'https://api.dexscreener.com/latest/dex/tokens/eth,usdc'
+                'https://api.dexscreener.com/latest/dex/search?q=solana'
             ).catch(() => ({ data: { pairs: [] } }));
 
             const [cg, jup, dex] = await Promise.all([coingeckoP, jupiterP, dexscreenerP]);
 
             const mergedData = {
-                macro: cg.data,
-                precision: jup.data.data,
-                alpha_liquidity: dex.data.pairs?.slice(0, 5), // Top 5 pairs for sentiment
+                macro: cg.data || [],
+                precision: jup.data?.data || {},
+                alpha_liquidity: dex.data?.pairs?.slice(0, 10) || [],
                 timestamp: Date.now()
             };
 

@@ -16,3 +16,4 @@ export declare function getSpiralCoordinate(n: number): HexCoordinates;
  * Basic equality check for coordinates
  */
 export declare function areHexEqual(a: HexCoordinates, b: HexCoordinates): boolean;
+//# sourceMappingURL=honeycomb.d.ts.map

@@ -108,4 +108,3 @@ export interface DraftGenerationOptions {
     generateVariants?: boolean;
     generateContentTwins?: boolean;
 }
-//# sourceMappingURL=types.d.ts.map

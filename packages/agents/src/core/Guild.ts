@@ -29,16 +29,17 @@ export class AgentGuild {
      */
     public async boot() {
         console.log(`[🌿 Guild] Awakening ${this.name}...`);
-        const results = await Promise.allSettled(
-            Array.from(this.members.values()).map(m => m.boot())
-        );
 
-        const failures = results.filter(r => r.status === 'rejected');
-        if (failures.length > 0) {
-            console.warn(`[🌿 Guild] Warning: ${failures.length} seeds failed to germinate in ${this.name}.`);
-        } else {
-            console.log(`[🌿 Guild] ${this.name} is in full bloom.`);
+        for (const [role, agent] of this.members) {
+            try {
+                await agent.boot();
+            } catch (err: any) {
+                console.warn(`[🌿 Guild] 🛑 Component failed to germinate: ${role}. Error: ${err.message}`);
+                // Non-critical components are allowed to fail to keep the hive alive.
+            }
         }
+
+        console.log(`[🌿 Guild] ${this.name} ecosystem check complete.`);
     }
 
     /**

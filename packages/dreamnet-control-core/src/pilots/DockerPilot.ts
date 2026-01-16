@@ -1,5 +1,5 @@
-
 import { DockerSuit } from '../suits/DockerSuit.js';
+import { swarmLog } from '../server.js';
 
 /**
  * DockerPilot
@@ -14,7 +14,7 @@ export class DockerPilot {
     }
 
     public async wake() {
-        console.log(`🤖 [${this.name}] Starting local orchestration pulse...`);
+        swarmLog('DOCKER', `🤖 [${this.name}] Starting local orchestration pulse...`);
         this.monitorInfrastructure();
     }
 
@@ -28,7 +28,7 @@ export class DockerPilot {
 
     private runPulse() {
         const containers = this.suit.listContainers();
-        console.log(`🤖 [${this.name}] Active Containers: ${containers.length}`);
+        swarmLog('DOCKER', `🤖 [${this.name}] Active Containers: ${containers.length}`);
 
         // Logic to ensure critical containers are healthy
         const criticalImages = ['redis', 'postgres', 'portainer/portainer-ce'];
@@ -36,12 +36,12 @@ export class DockerPilot {
         for (const image of criticalImages) {
             const running = containers.find(c => c.image.includes(image));
             if (!running) {
-                console.warn(`🤖 [${this.name}] CRITICAL INFRASTRUCTURE MISSING: ${image}`);
+                swarmLog('DOCKER_WARNING', `🤖 [${this.name}] CRITICAL INFRASTRUCTURE MISSING: ${image}`);
                 // In a real scenario, we might try to start it if we have the compose config
             } else {
                 const health = this.suit.getHealth(running.name);
                 if (health !== 'running') {
-                    console.log(`🤖 [${this.name}] Container ${running.name} is ${health}. Restarting...`);
+                    swarmLog('DOCKER', `🤖 [${this.name}] Container ${running.name} is ${health}. Restarting...`);
                     this.suit.restartContainer(running.name);
                 }
             }

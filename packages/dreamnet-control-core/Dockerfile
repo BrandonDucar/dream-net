@@ -5,21 +5,42 @@ WORKDIR /app
 
 # Copy Configs
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml tsconfig.base.json ./
-COPY packages/dreamnet-control-core/package.json ./packages/dreamnet-control-core/
-COPY packages/dreamnet-types/package.json ./packages/dreamnet-types/
 
-# Install Dependencies (Frozen for Security)
+# Copy Package Manifests (For Dependency Cache)
+COPY packages/dreamnet-types/package.json ./packages/dreamnet-types/
+COPY packages/dreamnet-control-core/package.json ./packages/dreamnet-control-core/
+COPY packages/lib/package.json ./packages/lib/
+COPY packages/shared/package.json ./packages/shared/
+COPY packages/dreamnet-snail-core/package.json ./packages/dreamnet-snail-core/
+COPY packages/sensory-spikes/package.json ./packages/sensory-spikes/
+
+# Install Dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy Source
+# Copy Source Code
 COPY packages/dreamnet-types ./packages/dreamnet-types
 COPY packages/dreamnet-control-core ./packages/dreamnet-control-core
+COPY packages/lib ./packages/lib
+COPY packages/shared ./packages/shared
+COPY packages/dreamnet-snail-core ./packages/dreamnet-snail-core
+COPY packages/sensory-spikes ./packages/sensory-spikes
 
-# Build The Spine (Types First)
+# Build The Spine (Order Matters)
+# 1. Base Layers
 WORKDIR /app/packages/dreamnet-types
 RUN pnpm build
+WORKDIR /app/packages/lib
+RUN pnpm build || echo "Lib build skipped"
+WORKDIR /app/packages/shared
+RUN pnpm build || echo "Shared build skipped"
 
-# Build The Cortex (Control Core)
+# 2. Advanced Layers (Shield & Senses)
+WORKDIR /app/packages/dreamnet-snail-core
+RUN pnpm build
+WORKDIR /app/packages/sensory-spikes
+RUN pnpm build
+
+# 3. The Cortex (Control Core)
 WORKDIR /app/packages/dreamnet-control-core
 RUN pnpm build
 
@@ -27,21 +48,31 @@ RUN pnpm build
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Harden System: Run as non-root
+# Harden System
 RUN addgroup --system --gid 1001 dreamnet && \
     adduser --system --uid 1001 dreamnet
 
-# Install Production Deps Only (To keep image small)
-# Note: In a monorepo this can be tricky, typically we copy node_modules from builder
-# or prune. For stability, we copy the built artifacts and node_modules for now.
+# Install Production Deps
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/packages/dreamnet-control-core/dist ./packages/dreamnet-control-core/dist
-COPY --from=builder /app/packages/dreamnet-control-core/package.json ./packages/dreamnet-control-core/
+
+# Copy Artifacts (All Dependencies)
 COPY --from=builder /app/packages/dreamnet-types/dist ./packages/dreamnet-types/dist
 COPY --from=builder /app/packages/dreamnet-types/package.json ./packages/dreamnet-types/
 
-# Copy Environment (Will be overridden by Docker Compose / Secret Injection)
-# COPY .env .env  <-- NEVER COPY .ENV IN PRODUCTION IMAGE
+COPY --from=builder /app/packages/lib/dist ./packages/lib/dist
+COPY --from=builder /app/packages/lib/package.json ./packages/lib/
+
+COPY --from=builder /app/packages/shared/dist ./packages/shared/dist
+COPY --from=builder /app/packages/shared/package.json ./packages/shared/
+
+COPY --from=builder /app/packages/dreamnet-snail-core/dist ./packages/dreamnet-snail-core/dist
+COPY --from=builder /app/packages/dreamnet-snail-core/package.json ./packages/dreamnet-snail-core/
+
+COPY --from=builder /app/packages/sensory-spikes/dist ./packages/sensory-spikes/dist
+COPY --from=builder /app/packages/sensory-spikes/package.json ./packages/sensory-spikes/
+
+COPY --from=builder /app/packages/dreamnet-control-core/dist ./packages/dreamnet-control-core/dist
+COPY --from=builder /app/packages/dreamnet-control-core/package.json ./packages/dreamnet-control-core/
 
 # Set Permissions
 RUN chown -R dreamnet:dreamnet /app
@@ -49,7 +80,7 @@ RUN chown -R dreamnet:dreamnet /app
 # Switch to Sovereign User
 USER dreamnet
 
-# Environment Optimization
+# Environment
 ENV NODE_ENV=production
 ENV PORT=3000
 

@@ -14,4 +14,3 @@ export declare function ensureDefaultRailGuards(): APIRailGuard[];
  * Create a custom rail guard
  */
 export declare function createRailGuard(name: string, type: APIRailGuard["type"], limit: number, action: APIRailGuard["action"]): APIRailGuard;
-//# sourceMappingURL=railGuards.d.ts.map

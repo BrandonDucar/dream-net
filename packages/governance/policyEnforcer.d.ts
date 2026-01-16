@@ -22,4 +22,3 @@ export declare function requestQuorumApproval(policyId: string, actor: ActorCont
  * Express middleware for policy enforcement
  */
 export declare function policyMiddleware(capability: CapabilityType, scope: ScopeType): (req: any, res: any, next: any) => Promise<any>;
-//# sourceMappingURL=policyEnforcer.d.ts.map

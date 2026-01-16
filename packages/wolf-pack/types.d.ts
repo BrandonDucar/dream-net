@@ -21,4 +21,3 @@ export interface WolfPackStatus {
     lastSignalsCount: number;
     activeTargets: string[];
 }
-//# sourceMappingURL=types.d.ts.map

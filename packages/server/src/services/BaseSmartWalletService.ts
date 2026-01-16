@@ -1,4 +1,4 @@
-import { dreamEventBus } from '@dreamnet/nerve/spine/index.js';
+import { dreamEventBus } from '@dreamnet/nerve';
 
 export interface BSWTransactionRequest {
     to: string;

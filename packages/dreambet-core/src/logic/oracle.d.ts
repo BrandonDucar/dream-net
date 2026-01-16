@@ -21,4 +21,3 @@ export declare class OracleEngine {
      */
     static predict(req: PredictionRequest): Promise<PredictionResult>;
 }
-//# sourceMappingURL=oracle.d.ts.map

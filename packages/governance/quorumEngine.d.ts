@@ -48,4 +48,3 @@ export declare function checkSafetyQuorum(votes: Array<{
     guardId: string;
     decision: "approve" | "reject";
 }>, requireUnanimous?: boolean): boolean;
-//# sourceMappingURL=quorumEngine.d.ts.map

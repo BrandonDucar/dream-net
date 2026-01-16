@@ -76,67 +76,69 @@ export function AntikytheraWidget() {
     const typeXData = history.filter(m => m.name === 'typex_box_mined').slice(-20);
 
     return (
-        <div className="p-6 bg-black text-green-500 font-mono border border-green-900 rounded-lg shadow-[0_0_20px_rgba(0,255,0,0.1)]">
-            <div className="flex justify-between items-center mb-6 border-b border-green-900 pb-2">
-                <h2 className="text-xl font-bold tracking-widest">AHAB'S DASHBOARD // GLOBAL_OVERWATCH</h2>
+        <Card className="p-6 bg-black text-green-500 font-mono border border-green-900 rounded-lg shadow-[0_0_20px_rgba(0,255,0,0.1)]">
+            <CardHeader className="flex justify-between items-center mb-6 border-b border-green-900 pb-2">
+                <CardTitle className="text-xl font-bold tracking-widest text-green-500">AHAB'S DASHBOARD // GLOBAL_OVERWATCH</CardTitle>
                 <div className="flex gap-4 text-xs">
                     <span className="animate-pulse">● LIVE</span>
                     <span>Systems: OPTIMAL</span>
                 </div>
-            </div>
+            </CardHeader>
 
-            <div className="grid grid-cols-3 gap-4 mb-6">
-                {/* ISOMORPH NODE: CRYPTO */}
-                <div className="border border-green-800 p-4 rounded bg-green-900/10">
-                    <h3 className="text-xs text-green-400 mb-1">BITCOIN PULSE</h3>
-                    <div className="text-2xl font-bold">
-                        {btcPrice ? `$${btcPrice.toLocaleString()}` : "SCANNING..."}
+            <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    {/* ISOMORPH NODE: CRYPTO */}
+                    <div className="border border-green-800 p-4 rounded bg-green-900/10">
+                        <h3 className="text-xs text-green-400 mb-1">BITCOIN PULSE</h3>
+                        <div className="text-2xl font-bold">
+                            {btcPrice ? `$${btcPrice.toLocaleString()}` : "SCANNING..."}
+                        </div>
+                        <div className="text-xs text-green-600 mt-1">SOURCE: COINGECKO_ISO</div>
                     </div>
-                    <div className="text-xs text-green-600 mt-1">SOURCE: COINGECKO_ISO</div>
+
+                    {/* ISOMORPH NODE: WEATHER */}
+                    <div className="border border-green-800 p-4 rounded bg-green-900/10">
+                        <h3 className="text-xs text-green-400 mb-1">ATMOSPHERIC STATE (NY)</h3>
+                        <div className="text-2xl font-bold">
+                            {weather ? `${weather.temp}°C` : "CALIBRATING..."}
+                        </div>
+                        <div className="text-xs text-green-600 mt-1">
+                            WIND: {weather ? `${weather.wind} km/h` : "--"} | OPEN_METEO_ISO
+                        </div>
+                    </div>
+
+                    {/* ACTIVE NODE: TYPEX */}
+                    <div className="border border-green-800 p-4 rounded bg-green-900/10">
+                        <h3 className="text-xs text-green-400 mb-1">TYPEX YIELD</h3>
+                        <div className="text-2xl font-bold">
+                            {typeXData.length > 0 ? typeXData[typeXData.length - 1].value : 0}
+                        </div>
+                        <div className="text-xs text-green-600 mt-1">AUTO-MINER ACTIVE</div>
+                    </div>
                 </div>
 
-                {/* ISOMORPH NODE: WEATHER */}
-                <div className="border border-green-800 p-4 rounded bg-green-900/10">
-                    <h3 className="text-xs text-green-400 mb-1">ATMOSPHERIC STATE (NY)</h3>
-                    <div className="text-2xl font-bold">
-                        {weather ? `${weather.temp}°C` : "CALIBRATING..."}
-                    </div>
-                    <div className="text-xs text-green-600 mt-1">
-                        WIND: {weather ? `${weather.wind} km/h` : "--"} | OPEN_METEO_ISO
-                    </div>
+                <div className="h-64 w-full border border-green-900/50 bg-black/50 rounded p-2">
+                    <h3 className="text-xs text-green-600 mb-2 ml-2">TYPEX VELOCITY (Boxes/Time)</h3>
+                    <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={typeXData}>
+                            <XAxis dataKey="timestamp" hide />
+                            <YAxis stroke="#15803d" fontSize={10} />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#000', borderColor: '#15803d' }}
+                                itemStyle={{ color: '#22c55e' }}
+                            />
+                            <Line
+                                type="step"
+                                dataKey="value"
+                                stroke="#22c55e"
+                                strokeWidth={2}
+                                dot={{ fill: '#22c55e', r: 2 }}
+                                activeDot={{ r: 4, fill: '#fff' }}
+                                isAnimationActive={false}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
                 </div>
-
-                {/* ACTIVE NODE: TYPEX */}
-                <div className="border border-green-800 p-4 rounded bg-green-900/10">
-                    <h3 className="text-xs text-green-400 mb-1">TYPEX YIELD</h3>
-                    <div className="text-2xl font-bold">
-                        {typeXData.length > 0 ? typeXData[typeXData.length - 1].value : 0}
-                    </div>
-                    <div className="text-xs text-green-600 mt-1">AUTO-MINER ACTIVE</div>
-                </div>
-            </div>
-
-            <div className="h-64 w-full border border-green-900/50 bg-black/50 rounded p-2">
-                <h3 className="text-xs text-green-600 mb-2 ml-2">TYPEX VELOCITY (Boxes/Time)</h3>
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={typeXData}>
-                        <XAxis dataKey="timestamp" hide />
-                        <YAxis stroke="#15803d" fontSize={10} />
-                        <Tooltip
-                            contentStyle={{ backgroundColor: '#000', borderColor: '#15803d' }}
-                            itemStyle={{ color: '#22c55e' }}
-                        />
-                        <Line
-                            type="step"
-                            dataKey="value"
-                            stroke="#22c55e"
-                            strokeWidth={2}
-                            dot={{ fill: '#22c55e', r: 2 }}
-                            activeDot={{ r: 4, fill: '#fff' }}
-                            isAnimationActive={false}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
             </CardContent>
         </Card>
     );

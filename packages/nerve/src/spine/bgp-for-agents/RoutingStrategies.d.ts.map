@@ -1,0 +1,1 @@
+{"version":3,"file":"RoutingStrategies.d.ts","sourceRoot":"","sources":["RoutingStrategies.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAExD,qBAAa,iBAAiB;WACZ,gBAAgB,CAAC,MAAM,EAAE,WAAW,EAAE,MAAM,EAAE,UAAU,EAAE,GAAG,UAAU,GAAG,SAAS;WAInF,wBAAwB,CAAC,MAAM,EAAE,WAAW,EAAE,MAAM,EAAE,UAAU,EAAE,GAAG,UAAU,GAAG,SAAS;CAc5G"}

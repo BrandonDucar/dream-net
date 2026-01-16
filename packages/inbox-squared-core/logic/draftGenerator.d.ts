@@ -30,4 +30,3 @@ export declare class DraftGenerator {
     private generateContentTwins;
 }
 export declare const draftGenerator: DraftGenerator;
-//# sourceMappingURL=draftGenerator.d.ts.map

@@ -20,3 +20,4 @@ export declare class VectorStore {
     }>>;
 }
 export declare const vectorStore: VectorStore;
+//# sourceMappingURL=VectorStore.d.ts.map

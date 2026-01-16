@@ -2,7 +2,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
-// Assumes CJS environment (enforced by package.json "type": "commonjs")
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const currentDir = __dirname;
 const serverRoot = path.resolve(currentDir, "..");
 const requireFromServer = createRequire(path.join(serverRoot, "index.ts"));

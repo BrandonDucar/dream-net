@@ -5,4 +5,3 @@ import type { FairnessRecord, GameRound } from '../types.js';
  * - ensures resultHex looks like hex
  */
 export declare function auditRoundRNG(round: GameRound): FairnessRecord;
-//# sourceMappingURL=fairnessAuditor.d.ts.map

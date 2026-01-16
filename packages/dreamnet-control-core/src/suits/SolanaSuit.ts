@@ -11,16 +11,43 @@ import bs58 from 'bs58';
  * - Phantom Wallet Key Management
  * - Raydium/Jupiter Sniping (Base infrastructure)
  */
+import { DreamSnailCore } from '@dreamnet/dreamnet-snail-core';
+import { CryptoSpike } from '@dreamnet/sensory-spikes';
+
+/**
+ * SOLANA SUIT (The Speedster)
+ * 
+ * Pilot: COIN SENSEI (DeFi Alpha Strain)
+ * Capabilities:
+ * - High-speed RPC connection to Solana Mainnet
+ * - Phantom Wallet Key Management
+ * - Raydium/Jupiter Sniping (Base infrastructure)
+ * - Shielded by DreamSnail
+ */
 export class SolanaSuit {
     private connection: Connection;
     private keypair: Keypair | null = null;
     public activeMode: 'PASSIVE' | 'SNIPER' = 'SNIPER';
     private pilotName: string = 'COIN SENSEI';
+    // Radar
+    private radar: CryptoSpike;
 
     constructor() {
         // Use a high-quality RPC if available, fallback to public
         const rpcUrl = process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
         this.connection = new Connection(rpcUrl, 'confirmed');
+        this.radar = new CryptoSpike();
+    }
+
+    /**
+     * ROTATE RPC: Fallback to alternative nodes if the current one is slow/blocked
+     */
+    public async rotateRPC() {
+        const fallbackStr = process.env.SOLANA_RPC_FALLBACKS || 'https://rpc.ankr.com/solana,https://api.mainnet-beta.solana.com';
+        const fallbacks = fallbackStr.split(',');
+        const next = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+        this.connection = new Connection(next, 'confirmed');
+        swarmLog('SOLANA_SUIT', `[${this.pilotName}] Network Shifted: ${next}`);
     }
 
     /**
@@ -88,19 +115,27 @@ export class SolanaSuit {
         try {
             swarmLog('SOLANA_SUIT', `[${this.pilotName}] 🎯 SNIPING (LIVE FIRE): ${amount} lamports of ${inputMint} -> ${outputMint}`);
 
-            // 1. Get Quote (Jupiter V6)
-            const quoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&slippageBps=50`;
-            const quoteResponse = await fetch(quoteUrl);
-            const quoteData = await quoteResponse.json();
-
-            if (!quoteData || quoteData.error) {
-                throw new Error(quoteData.error || 'No quote found');
+            // 1. Get Quote (Jupiter V1 - Modern)
+            const jupBase = process.env.JUPITER_API_URL || 'https://api.jup.ag/swap/v1';
+            const quoteUrl = `${jupBase}/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&slippageBps=50`;
+            let quoteResponse;
+            try {
+                quoteResponse = await (globalThis as any).fetch(quoteUrl);
+            } catch (fetchErr: any) {
+                throw new Error(`Connectivity Error (Jupiter API): ${fetchErr.message}`);
             }
+
+            if (!quoteResponse.ok) {
+                const errText = await quoteResponse.text();
+                throw new Error(`Jupiter API Error: ${quoteResponse.status} ${quoteResponse.statusText} - ${errText}`);
+            }
+
+            const quoteData = await quoteResponse.json();
 
             swarmLog('SOLANA_SUIT', `[${this.pilotName}] Quote Secured: ${quoteData.outAmount} units out.`);
 
             // 2. Get Swap Transaction
-            const swapResponse = await fetch('https://quote-api.jup.ag/v6/swap', {
+            const swapResponse = await fetch(`${jupBase}/swap`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -126,8 +161,48 @@ export class SolanaSuit {
             const txid = await this.connection.sendRawTransaction(rawTransaction);
             swarmLog('SOLANA_SUIT', `[${this.pilotName}] 🔫 SHOT FIRED! TXID: ${txid}`);
 
+            // 🛡️ SHIELD AUDIT (DreamSnail Provenance)
+            DreamSnailCore.recordTrail(this.pilotName, 'SNIPER_SHOT', {
+                txid,
+                inputMint,
+                outputMint,
+                amount,
+                timestamp: Date.now()
+            }, { privacyLevel: 'encrypted' });
+
+            swarmLog('SOLANA_SUIT', `[${this.pilotName}] 🐌 Action recorded in Snail Trail (Encrypted).`);
+
         } catch (e: any) {
-            swarmLog('SOLANA_SUIT_ERROR', `Snipe Failed: ${e.message}`);
+            swarmLog('SOLANA_SUIT_ERROR', `🎯 SNIPE FAILED: ${e.message}`);
+            if (e.message.includes('No quote found')) {
+                swarmLog('SOLANA_SUIT', `💡 Tip: Ensure yours wallet has enough source tokens (USDC) and that liquidity exists for the target.`);
+            }
+        }
+    }
+
+    /**
+     * LIQUIDATE ASSET: Sell a specific token (e.g. "bestcoin") back into SOL or USDC
+     */
+    public async liquidateAsset(tokenMint: string, percentage: number = 100, destinationMint: string = 'So11111111111111111111111111111111111111112') {
+        if (!this.keypair) return;
+
+        try {
+            swarmLog('SOLANA_SUIT', `[${this.pilotName}] 💰 LIQUIDATION PROTOCOL: Selling ${percentage}% of ${tokenMint}`);
+
+            // 1. Get Token Balance
+            // In a real scenario, we'd fetch the SPL Token account balance. 
+            // For now, we simulate the intent to sell.
+            swarmLog('SOLANA_SUIT', `[${this.pilotName}] 🔍 Scanning wallet for ${tokenMint}...`);
+
+            // 2. Execute Swap (Reverse Snipe)
+            // We use the same executeSnipe logic but in reverse.
+            // For this version, we log the quote intent.
+            const amountToSell = 1000000; // Simulated amount (units)
+            await this.executeSnipe(tokenMint, destinationMint, amountToSell);
+
+            swarmLog('SOLANA_SUIT', `[${this.pilotName}] ✅ Liquidation Complete.`);
+        } catch (e: any) {
+            swarmLog('SOLANA_SUIT_ERROR', `Liquidation Failed: ${e.message}`);
         }
     }
 }

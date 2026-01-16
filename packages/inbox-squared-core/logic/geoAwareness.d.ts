@@ -30,4 +30,3 @@ export declare class GeoAwareness {
     private calculateOptimalSendTime;
 }
 export declare const geoAwareness: GeoAwareness;
-//# sourceMappingURL=geoAwareness.d.ts.map

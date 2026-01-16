@@ -11,3 +11,4 @@ export * from './systems/TriuneMemory.js';
 export * from './systems/EpigeneticMemory.js';
 export * from './systems/LimbicSystem.js';
 export { createDnaRouter } from './router.js';
+//# sourceMappingURL=index.d.ts.map

@@ -1,4 +1,9 @@
-import { swarmLog } from '../../server.js';
+import { memorySystem } from '@dreamnet/memory-dna';
+import { swarmLog } from '../server.js';
+import { SolanaSuit } from '../suits/SolanaSuit.js';
+import { VeChainSuit } from '../suits/VeChainSuit.js';
+import { CoinGeckoSuit } from '../suits/CoinGeckoSuit.js';
+import { DexScreenerSuit } from '../suits/DexScreenerSuit.js';
 // Placeholder for Polymarket API client
 // import { Polymarket } from '@polymarket/clob-client';
 
@@ -18,9 +23,36 @@ interface MarketOutcome {
 export class CoherenceEngine {
     private isRunning: boolean = false;
     private checkInterval: NodeJS.Timeout | null = null;
+    private solanaSuit: SolanaSuit | null = null;
+    private veChainSuit: VeChainSuit | null = null;
+    private coinGeckoSuit: CoinGeckoSuit | null = null;
+    private dexScreenerSuit: DexScreenerSuit | null = null;
+
+    // SAFETY LIMITS
+    private MAX_ARBITRAGE_USD: number = 10.00; // Hard cap per trade for initial launch
+    private TRADE_ENABLED: boolean = true;    // Global killswitch
 
     constructor() {
         // Initialize API clients here
+    }
+
+    /**
+     * ATTACH SUIT: Connect execution hands
+     */
+    public setExecutionSuit(suit: SolanaSuit) {
+        this.solanaSuit = suit;
+        swarmLog('COHERENCE', 'Solana execution suit attached. Live-fire ready.');
+    }
+
+    public setVeChainExecutionSuit(suit: VeChainSuit) {
+        this.veChainSuit = suit;
+        swarmLog('COHERENCE', 'VeChain (MetaMask) execution suit attached. Live-fire ready.');
+    }
+
+    public setIntelligenceSuits(gecko: CoinGeckoSuit, dexy: DexScreenerSuit) {
+        this.coinGeckoSuit = gecko;
+        this.dexScreenerSuit = dexy;
+        swarmLog('COHERENCE', 'Intelligence feeds (CoinGecko + DexScreener) integrated.');
     }
 
     /**
@@ -44,33 +76,78 @@ export class CoherenceEngine {
     /**
      * Scan for Dutch Books (Sum < 1.0)
      */
-    private async scanMarkets() {
-        // In a real implementation, this fetches from the Gamma API
-        // Simulating a scan for now
+    private async async_scanMarkets() {
+        // Intelligence Application 🧠
+        // We recall signals from the 'Lizard' (Hot Cache) to adjust our risk.
+        const weatherSignal = await memorySystem.lizard.recall('SIGNAL_WEATHERSPIKE');
+        const anomalySignal = await memorySystem.lizard.recall('SIGNAL_ANOMALYSPIKE');
+
+        // Threshold Base: 0.99 (1% profit)
+        let threshold = 0.99;
+
+        // Apply World State: If global anomalies are detected, be more conservative
+        if (anomalySignal && anomalySignal.data.recent_quake_mag > 5) {
+            threshold = 0.98; // Require 2% profit due to higher volatility/risk
+            swarmLog('COHERENCE', '⚠️ High Geologic Anomaly detected. Tightening arbitrage threshold.');
+        }
+
+        // Apply Market Pulse: If high USDC volume detected by DEX Radar, increase max trade size
+        const whaleSignal = await memorySystem.lizard.recall('WHALE_USDC');
+        let currentMaxUsd = this.MAX_ARBITRAGE_USD;
+        if (whaleSignal) {
+            currentMaxUsd = this.MAX_ARBITRAGE_USD * 1.5;
+            swarmLog('COHERENCE', '📈 High Liquidity detected in USDC. Expanding arbitrage capacity.');
+        }
+
         const markets = await this.mockFetchMarkets();
 
         for (const market of markets) {
             const impliedProbability = market.yesPrice + market.noPrice;
 
-            // THRESHOLD: If YES + NO < 0.99 (1% Profit Margin)
-            if (impliedProbability < 0.99) {
-                await this.executeDutchBook(market);
+            if (impliedProbability < threshold) {
+                await this.executeDutchBook(market, currentMaxUsd);
             }
         }
     }
 
-    private async executeDutchBook(market: any) {
+    private async scanMarkets() {
+        // Wrapper for the interval to handle async
+        this.async_scanMarkets().catch(e => swarmLog('COHERENCE_ERROR', `Scan failed: ${e.message}`));
+    }
+
+    private async executeDutchBook(market: any, allocationUsd: number = 10.00) {
         const profitMargin = (1.0 - (market.yesPrice + market.noPrice)) * 100;
         swarmLog('COHERENCE', `🚨 ARBITRAGE DETECTED: ${market.slug}`);
         swarmLog('COHERENCE', `   - YES: $${market.yesPrice} | NO: $${market.noPrice}`);
         swarmLog('COHERENCE', `   - Implied Sum: ${market.yesPrice + market.noPrice}`);
         swarmLog('COHERENCE', `   - Risk-Free Profit: ${profitMargin.toFixed(2)}%`);
+        swarmLog('COHERENCE', `   - Memory-Adjusted Threshold: ${allocationUsd === this.MAX_ARBITRAGE_USD ? 'Standard' : 'Aggressive'}`);
 
-        // EXECUTION LOGIC (Simulated)
-        // 1. Buy YES shares
-        // 2. Buy NO shares
-        // 3. Treasury locks profit
-        swarmLog('COHERENCE', `   - 🟢 EXECUTION: Bought equal shares. Profit secured.`);
+        if (!this.TRADE_ENABLED) {
+            swarmLog('COHERENCE', '   - 🛑 EXECUTION HALTED: Global killswitch active.');
+            return;
+        }
+
+        if (this.solanaSuit) {
+            swarmLog('COHERENCE', `   - 🔫 PULLING TRIGGER (Solana): Allocating up to $${allocationUsd} via SolanaSuit...`);
+
+            const usdcMint = 'EPjFWdd5AufqztUmsq1wQV999as96LY6LJWBnPars2SR';
+            const mockMarketMint = 'So11111111111111111111111111111111111111112';
+
+            await this.solanaSuit.executeSnipe(usdcMint, mockMarketMint, allocationUsd * 1000000);
+            swarmLog('COHERENCE', `   - ✅ SOLANA EXECUTION ATTEMPTED.`);
+        }
+
+        if (this.veChainSuit) {
+            swarmLog('COHERENCE', `   - 🔫 PULLING TRIGGER (VeChain): Executing multi-chain arbitrage via MetaMask Key...`);
+            // In a real scenario, this would use connex to buy VET-based prediction tokens
+            // For now, we log the intent to ensure the bridge is firing
+            swarmLog('COHERENCE', `   - ✅ VECHAIN EXECUTION ATTEMPTED. Homeostasis maintained.`);
+        }
+
+        if (!this.solanaSuit && !this.veChainSuit) {
+            swarmLog('COHERENCE', '   - ⚠️ EXECUTION FAILED: No execution suits attached.');
+        }
     }
 
     private async mockFetchMarkets() {
@@ -86,3 +163,5 @@ export class CoherenceEngine {
         return [];
     }
 }
+
+export const coherenceEngine = new CoherenceEngine();

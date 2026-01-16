@@ -37,4 +37,3 @@ export declare const APIKeeperCore: {
 export * from './types.js';
 export * from './summary.js';
 export default APIKeeperCore;
-//# sourceMappingURL=index.d.ts.map

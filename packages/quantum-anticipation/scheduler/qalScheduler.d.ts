@@ -4,4 +4,3 @@ export declare function qalStatus(): {
     lastRunAt: number | null;
     lastPredictionsCount: number;
 };
-//# sourceMappingURL=qalScheduler.d.ts.map

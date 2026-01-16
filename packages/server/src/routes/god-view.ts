@@ -1,42 +1,31 @@
-import { Router } from "express";
-import { VibeConductor } from "../agents/vibe-conductor.js";
-import { NERVE_BUS } from "@dreamnet/nerve";
 
-// GOD VIEW ROUTER
-// "See what the Machine sees."
+import { Router } from 'express';
+import { sensoryMemory } from '../services/SensoryMemory.js';
+import { aliveMode } from '../core/AliveMode.js';
 
-const router = Router();
-const conductor = new VibeConductor(); // Connect to the hive mind instance
+export const createGodViewRouter = () => {
+    const router = Router();
 
-router.get("/stream", (req, res) => {
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
-
-    res.write(`data: ${JSON.stringify({ type: 'INIT', msg: 'Connected to DreamNet Observatory' })}\n\n`);
-
-    conductor.start(); // Ensure the engine is running
-    const bioStream = conductor.getBioStream();
-
-    // 1. Listen to Legacy Vibe pulses
-    const legacyListener = (event: any) => {
-        if (event.type === 'PULSE') {
-            res.write(`data: ${JSON.stringify(event)}\n\n`);
-        }
-    };
-
-    // 2. Listen to NEW Nerve Spine events (The 12 Organs)
-    const nerveUnsubscribe = NERVE_BUS.subscribeAll((event) => {
-        res.write(`data: ${JSON.stringify({ type: 'NERVE_EVENT', ...event })}\n\n`);
+    router.get('/sync', (req, res) => {
+        const snapshot = sensoryMemory.getSnapshot();
+        res.json({
+            mode: 'GOD_MODE',
+            telemetry: snapshot
+        });
     });
 
-    bioStream.on('event', legacyListener);
+    // Manual Pulse Trigger from Dashboard
+    router.post('/pulse', async (req, res) => {
+        const { GlobalScanningService } = await import('../services/GlobalScanningService.js');
+        const { dreamEventBus } = await import('@dreamnet/nerve');
 
-    req.on("close", () => {
-        bioStream.off('event', legacyListener);
-        nerveUnsubscribe();
-        res.end();
+        // This is a bit dirty re-instantiating, but effectively triggers the pulse logic
+        // Ideally we grab the singleton instance if exported, but GSS manages its own state well enough for this.
+        const scanner = new GlobalScanningService(dreamEventBus as any);
+        scanner.triggerReconPulse().catch(console.error);
+
+        res.json({ status: 'PULSE_INITIATED' });
     });
-});
 
-export const createGodViewRouter = () => router;
+    return router;
+};

@@ -40,4 +40,3 @@ export interface ActorContext {
     completedDreams?: number;
     badges?: string[];
 }
-//# sourceMappingURL=types.d.ts.map

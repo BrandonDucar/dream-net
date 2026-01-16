@@ -8,6 +8,11 @@
     "types": "./dist/index.d.ts",
     "exports": {
         ".": "./src/index.ts",
+        "./spine/*.js": "./src/spine/*.ts",
+        "./wormholes/*.js": "./src/wormholes/*.ts",
+        "./bridges/*.js": "./src/bridges/*.ts",
+        "./spider-web/*.js": "./src/spider-web/*.ts",
+        "./solver/*.js": "./src/solver/*.ts",
         "./*.js": "./src/*.ts",
         "./*": "./src/*.ts"
     },

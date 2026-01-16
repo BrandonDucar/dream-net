@@ -1,5 +1,11 @@
-import { Router } from "express";
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+import { Router } from "express";
+import { join } from "node:path";
 import { meshEvents, meshStatus } from "./index";
 import { fetchEvents } from "../starbridge";
 

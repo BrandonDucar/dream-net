@@ -24,4 +24,3 @@ export declare const APIStore: {
     setLastRunAt(ts: number | null): void;
     status(): APIKeeperStatus;
 };
-//# sourceMappingURL=apiStore.d.ts.map

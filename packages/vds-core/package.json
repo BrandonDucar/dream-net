@@ -1,0 +1,12 @@
+{
+    "name": "@dreamnet/vds-core",
+    "version": "1.0.0",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "ethers": "^6.0.0"
+    }
+}

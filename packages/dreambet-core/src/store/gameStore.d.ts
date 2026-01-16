@@ -9,4 +9,3 @@ export declare const GameStore: {
     setLastRunAt(ts: number | null): void;
     status(): DreamBetStatus;
 };
-//# sourceMappingURL=gameStore.d.ts.map
