@@ -1,4 +1,4 @@
-import { DreamEventBus } from '@dreamnet/nerve/spine/index.js';
+import { DreamEventBus } from '@dreamnet/nerve';
 import { GlobalScanningService } from '../services/GlobalScanningService.js';
 import { AuditorAgent } from '../agents/Auditor.js';
 

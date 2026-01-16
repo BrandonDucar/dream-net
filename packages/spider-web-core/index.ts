@@ -21,6 +21,12 @@ export const SpiderWebCore = {
     createFly: (type: any, source: string, payload: any) => ({
         id: "stub", type, source, payload, caughtAt: Date.now(), priority: "medium", sticky: false, processed: false
     } as any),
+    ensureDefaultSensors: () => { console.log("[SpiderWeb] Default Sensors Ensured (Stub)"); },
+    ensureDefaultTemplates: () => { console.log("[SpiderWeb] Default Templates Ensured (Stub)"); },
+    listRecentInsights: (count: number) => {
+        console.log(`[SpiderWeb] Stub listRecentInsights called for ${count} items`);
+        return []; // Return empty array to satisfy the loop in VibeConductor
+    }
 };
 
 export default SpiderWebCore;

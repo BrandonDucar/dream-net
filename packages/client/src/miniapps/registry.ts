@@ -10,8 +10,11 @@ import SimpleSwapApp from './template/SimpleSwapApp.js';
 import SubscriptionApp from './subscriptions/SubscriptionApp.js';
 import ShadowProbeApp from './shadow/ShadowProbeApp.js';
 
+import { OHARA_APPS } from './ohara-registry.js';
+
 // Import your mini apps here
 export const MINI_APPS: MiniAppConfig[] = [
+  ...OHARA_APPS,
   {
     id: 'token-balance',
     name: 'Token Balance',

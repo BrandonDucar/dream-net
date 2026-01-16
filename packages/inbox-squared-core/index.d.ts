@@ -38,19 +38,19 @@ export declare class InboxSquared {
     /**
      * Get research engine
      */
-    getResearchEngine(): import("./logic/researchEngine.js").ResearchEngine;
+    getResearchEngine(): import("./index.js").ResearchEngine;
     /**
      * Get relevance engine
      */
-    getRelevanceEngine(): import("./logic/relevanceEngine.js").RelevanceEngine;
+    getRelevanceEngine(): import("./index.js").RelevanceEngine;
     /**
      * Get geo awareness
      */
-    getGeoAwareness(): import("./logic/geoAwareness.js").GeoAwareness;
+    getGeoAwareness(): import("./index.js").GeoAwareness;
     /**
      * Get learning loop
      */
-    getLearningLoop(): import("./logic/learningLoop.js").LearningLoop;
+    getLearningLoop(): import("./index.js").LearningLoop;
     /**
      * Send email directly
      */
@@ -60,4 +60,3 @@ export declare class InboxSquared {
     }>;
 }
 export declare const inboxSquared: InboxSquared;
-//# sourceMappingURL=index.d.ts.map

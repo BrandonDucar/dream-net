@@ -1,0 +1,1 @@
+{"version":3,"file":"ProviderDescriptor.d.ts","sourceRoot":"","sources":["ProviderDescriptor.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,kBAAkB;IAC/B,IAAI,EAAE,MAAM,CAAC;IACb,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,YAAY,EAAE,MAAM,EAAE,CAAC;IACvB,QAAQ,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,CAAC;CACtC"}

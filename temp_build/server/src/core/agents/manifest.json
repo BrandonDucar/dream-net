@@ -1,9 +1,0 @@
-{
-  "agents": [
-    { "name": "dreamkeeper", "path": "./dreamkeeper" },
-    { "name": "deploykeeper", "path": "./deploykeeper" },
-    { "name": "relaybot", "path": "./relaybot" },
-    { "name": "envkeeper", "path": "./envkeeper" }
-  ]
-}
-

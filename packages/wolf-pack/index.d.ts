@@ -19,4 +19,3 @@ export declare const WolfPack: {
 };
 export * from './types.js';
 export default WolfPack;
-//# sourceMappingURL=index.d.ts.map

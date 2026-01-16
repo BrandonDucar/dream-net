@@ -14,4 +14,3 @@ export interface QALPrediction {
     meta?: Record<string, any>;
     createdAt: number;
 }
-//# sourceMappingURL=types.d.ts.map

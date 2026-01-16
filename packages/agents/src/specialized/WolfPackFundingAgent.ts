@@ -1,6 +1,8 @@
 import { dreamEventBus } from '@dreamnet/nerve';
 import { Genome } from '@dreamnet/shared/genetic/Genome.js';
 import { nursery } from '@dreamnet/nerve';
+import { nursery } from '@dreamnet/nerve';
+import { GrantSpike } from '@dreamnet/sensory-spikes';
 
 export interface FundingOpportunity {
     id: string;
@@ -56,49 +58,43 @@ export class WolfPackFundingAgent {
         });
     }
 
-    private scout() {
-        // Scanned Frequency: Jan 2026 Base & AI Ecosystem
-        const opportunities: FundingOpportunity[] = [
-            {
-                id: `ARC-AGENTIC-COMMERCE-2026`,
-                source: "Arc & Google DeepMind",
-                title: "Agentic Commerce on Arc",
-                description: "Build next-gen agentic commerce systems. $10k USDC + $10k GCP Credits.",
-                deadline: "Jan 24, 2026",
-                rewardAmount: "$20,000",
-                link: "https://lablab.ai/event/agentic-commerce-on-arc"
-            },
-            {
-                id: `ENCODE-COMMIT-CHANGE-2026`,
-                source: "Encode Club",
-                title: "Commit To Change: AI Agents Hackathon",
-                description: "AI-powered apps to help users achieve 2026 goals. $30k in prizes.",
-                deadline: "Feb 2026",
-                rewardAmount: "$30,000",
-                link: "https://www.encode.club"
-            },
-            {
-                id: `GOOGLE-LAKECITY-2026`,
-                source: "Google Lakecity",
-                title: "MSME Automation & Business AI Agents",
-                description: "Building autonomous agents for SMB automation using Gemini/Vertex AI.",
-                deadline: "Jan 30, 2026",
-                rewardAmount: "Google Cloud Credits + Funding",
-                link: "https://community.dev/events/details/google-lakecity-hackathon"
-            },
-            {
-                id: `IMMUNEFI-BASE-CRITICAL`,
-                source: "Immunefi",
-                title: "Base Protocol: Critical Smart Contract Vulnerability",
-                description: "Identify critical reentrancy or logic flaws in Base core contracts.",
-                deadline: "Ongoing - Jan 2026",
-                rewardAmount: "$100,000 - $1,000,000",
-                link: "https://immunefi.com/bounty/base/"
-            }
-        ];
+    private async scout() {
+        // Dynamic import to avoid circular deps during boot
+        const { aliveMode } = await import('../../../server/src/core/AliveMode.js');
+        aliveMode.pulse('WolfPackFundingAgent');
+
+        console.log(`[🐺 WolfPackFundingAgent:${this.name}] INITIATING LIVE SENSORY SWEEP (GrantSpike)...`);
+
+        const grantSpike = new GrantSpike();
+        const spikeResult = await grantSpike.fetch();
+
+        if (spikeResult.difficulty || spikeResult.data?.error) {
+            console.warn(`[🐺 WolfPackFundingAgent] Sensory Sweep returned low confidence or error.`);
+        }
+
+        const opportunities: FundingOpportunity[] = [];
+
+        if (spikeResult.data?.opportunities) {
+            spikeResult.data.opportunities.forEach((raw: any, idx: number) => {
+                opportunities.push({
+                    id: `LIVE-GRANT-${Date.now()}-${idx}`,
+                    source: raw.source || 'Unknown Vector',
+                    title: raw.title,
+                    description: raw.description || 'No intel available.',
+                    link: raw.link,
+                    rewardAmount: raw.reward,
+                    deadline: 'ASAP'
+                });
+            });
+        }
+
+        if (opportunities.length === 0) {
+            console.log(`[🐺 WolfPackFundingAgent] No new prey detected in this cycle.`);
+            return;
+        }
 
         for (const opp of opportunities) {
-            console.log(`[🐺 WolfPackFundingAgent:${this.name}] 2026 OPPORTUNITY SPOTTED: ${opp.title} on ${opp.source}.`);
+            console.log(`[🐺 WolfPackFundingAgent:${this.name}] 🎯 LIVE TARGET ACQUIRED: ${opp.title} (${opp.source})`);
 
             const eventId = crypto.randomUUID();
             dreamEventBus.publish({
@@ -111,8 +107,9 @@ export class WolfPackFundingAgent {
             });
 
             // AUTOMATIC EXTRACTION: Trigger drafting for high-value targets
-            if (opp.rewardAmount?.includes('$') || opp.source === 'Immunefi') {
-                console.log(`[🐺 WolfPackFundingAgent] HIGH-VALUE TARGET DETECTED: Triggering HACK-MECH drafting limb for ${opp.id}...`);
+            // We loosen the filter since live data might vary in format
+            if (opp.title.toLowerCase().includes('hackathon') || opp.title.toLowerCase().includes('grant')) {
+                console.log(`[🐺 WolfPackFundingAgent] PRIME TARGET DETECTED: Triggering HACK-MECH drafting limb for ${opp.title}...`);
                 dreamEventBus.publish({
                     type: 'WolfPack.ActionRequested',
                     payload: {
@@ -139,5 +136,16 @@ export class WolfPackFundingAgent {
                 this.genome = newGenome;
             }
         });
+    }
+
+    /**
+     * Guild Interface Compatibility
+     */
+    public async boot() {
+        return this.ignite();
+    }
+
+    public checkHealth() {
+        return { status: 'WORKING', lastHeartbeat: Date.now(), errorCount: 0, memoryUsage: 0 };
     }
 }

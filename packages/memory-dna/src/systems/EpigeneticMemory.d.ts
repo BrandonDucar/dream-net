@@ -35,3 +35,4 @@ export declare class EpigeneticMemory {
 }
 export declare const epigenetics: EpigeneticMemory;
 export {};
+//# sourceMappingURL=EpigeneticMemory.d.ts.map

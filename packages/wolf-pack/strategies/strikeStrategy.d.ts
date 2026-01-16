@@ -7,4 +7,3 @@ export interface WolfStrikeResult {
     meta?: Record<string, any>;
 }
 export declare function performPackStrikes(ctx: WolfContext, signals: WolfSignal[]): WolfStrikeResult[];
-//# sourceMappingURL=strikeStrategy.d.ts.map

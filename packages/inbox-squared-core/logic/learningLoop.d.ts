@@ -43,4 +43,3 @@ export declare class LearningLoop {
     setMinSampleSize(size: number): void;
 }
 export declare const learningLoop: LearningLoop;
-//# sourceMappingURL=learningLoop.d.ts.map

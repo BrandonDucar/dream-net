@@ -19,4 +19,3 @@ export declare function generateWhaleOutreachDraft(target: WhaleOutreachTarget, 
  * Create Gmail draft for Whale Pack outreach
  */
 export declare function createWhaleGmailDraft(draft: EmailDraft): Promise<string | null>;
-//# sourceMappingURL=whaleOutreachCore.d.ts.map

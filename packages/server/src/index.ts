@@ -1,3 +1,9 @@
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 import path from 'path';
 import { existsSync } from 'fs';
 import dotenv from 'dotenv';
@@ -9,6 +15,9 @@ dotenv.config();
 
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import { Router } from "express";
+import { ReliabilityGuard } from "./agents/reliability-guard.js";
+import { SentinelAgent } from "./agents/sentinel-agent.js";
+import { ForgeService } from "./services/ForgeService.js";
 import { startMesh } from './mesh/index.js';
 import { createMeshRouter } from './mesh/router.js';
 import { getEnvConfig, PORT as ENV_PORT, ALLOWED_ORIGINS, OPERATOR_WALLETS, INIT_SUBSYSTEMS, MESH_AUTOSTART, INIT_HEAVY_SUBSYSTEMS, NODE_ENV } from './config/env.js';
@@ -32,6 +41,7 @@ import { createOrdersRouter } from "@dreamnet/orders";
 import { createRewardsRouter } from "@dreamnet/rewards-engine";
 import { createLiquidityRouter } from "@dreamnet/liquidity-engine";
 import { createMetricsRouter } from "@dreamnet/metrics-engine";
+import ntagRouter from './routes/ntag.js';
 
 // Lazy import vite.ts to avoid issues in production
 let viteModuleCache: any = null;
@@ -64,9 +74,20 @@ import { Telepathy, QuantumMechanic } from "@dreamnet/nerve";
 // VibeConductor is now real and imported
 
 // Initialize Express
+// Initialize Reliability Guard (Night Watchman)
+const reliabilityGuard = new ReliabilityGuard();
+
+// Initialize Sentinel (Build Watcher)
+const sentinel = new SentinelAgent();
+
+console.log("🦾 [DreamNet] Core Systems Online.");
 // Initialize Organism (DreamNet)
 async function bootstrap() {
   console.log("🌌 DreamNet Awakening Protocol Initiated...");
+
+  // 0. Sovereign Validation (Masters of the Stack Principle)
+  const { BootGuard } = await import('./core/BootGuard.js');
+  BootGuard.validate();
 
   // 1. Ignite the Spine (Nervous System)
   const { NERVE_BUS } = await import('@dreamnet/nerve');
@@ -135,6 +156,7 @@ async function bootstrap() {
   apiRouter.use("/ops", opsRouter);
   apiRouter.use("/god-view", createGodViewRouter()); // The Observatory
   apiRouter.use("/factory", factoryRouter);
+  apiRouter.use("/ntag", ntagRouter);
 
   // Welcome Agent
   apiRouter.post("/agents/welcome", async (req, res) => {
@@ -208,15 +230,17 @@ async function bootstrap() {
     const { AgentGuild, WolfPackFundingAgent } = await import('@dreamnet/agents');
     const { FlashTrader: flashTraderInstance } = await import('./agents/FlashTrader.js');
     const { wolfPackOutreachService } = await import('./services/WolfPackOutreachService.js');
+    const { submissionEngine } = await import('./services/HackathonSubmissionService.js');
 
     const coreGuild = new AgentGuild("CoreGuild");
-    coreGuild.addAgent(flashTraderInstance as any);
+    coreGuild.addMember("FlashTrader", flashTraderInstance as any);
 
     const wolfFundingAgent = new WolfPackFundingAgent("HungryWolf");
-    coreGuild.addAgent(wolfFundingAgent as any);
+    coreGuild.addMember("WolfPackFunding", wolfFundingAgent as any);
 
     coreGuild.boot(); // Initializes the garden bed
     wolfFundingAgent.ignite();
+    console.log("   - [WolfPack] Funding Agent Ignite + Submission Engine Linked");
     // 9. Economic Synchronization (Avenue 21)
     const { clanker } = await import('./services/ClankerService.js');
     console.log("   - [Clanker] Economic Spine Synchronized (Base V4)");
@@ -231,11 +255,20 @@ async function bootstrap() {
     }
     console.log("   - [Sensorium] Global Scanning Team Active (Avenue 28)");
 
+    // 11. Activate OnchainTV (The Sovereign Stream) 📺
+    const { streamerAgent } = await import('./agents/StreamerAgent.js');
+    streamerAgent.startBroadcast();
+    console.log("   - [OnchainTV] Sovereign Stream LIVE (Avenue 14)");
+
     console.log("   - [6/6] Agent Guilds Blooming (Companion Planting)");
   });
 }
 
-bootstrap().catch(err => {
-  console.error("[Fatal] Boot failed:", err);
-  process.exit(1);
-});
+const isMain = import.meta.url === `file://${fileURLToPath(import.meta.url)}` || process.argv[1]?.endsWith('index.ts') || process.argv[1]?.endsWith('server/src/index.js');
+
+if (isMain) {
+  bootstrap().catch(err => {
+    console.error("[Fatal] Boot failed:", err);
+    process.exit(1);
+  });
+}

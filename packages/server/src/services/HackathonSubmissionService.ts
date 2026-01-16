@@ -1,24 +1,23 @@
+
+import { dreamEventBus } from '../../../nerve/src/spine/dreamnet-event-bus/index.js';
+import { archimedes } from '../../../archimedes/src/ArchimedesWriter.js';
 import fs from 'fs';
 import path from 'path';
-import { dreamEventBus } from '../../../nerve/src/spine/dreamnet-event-bus/index.js';
-import { AntigravityUplink } from '../../../shared/knowledge/antigravity_uplink.js';
 
 /**
- * 📄 HackathonSubmissionService
- * Role: The "Proposal Architect" of the HACK-MECH suit.
- * Mechanism: Drafts extraction artifacts (READMEs, Architecture docs) based on scouted data.
+ * HackathonSubmissionService
+ * 
+ * The Tactical Bridge.
+ * Receives identification signals from Wolf Pack Agents.
+ * Uses Archimedes to formulate strategy.
+ * Triggers WolfPackOutreach for execution.
  */
 export class HackathonSubmissionService {
     private static instance: HackathonSubmissionService;
-    private outputDir: string;
 
     private constructor() {
-        this.outputDir = path.resolve(process.cwd(), 'extractions/drafts');
-        if (!fs.existsSync(this.outputDir)) {
-            fs.mkdirSync(this.outputDir, { recursive: true });
-        }
-
-        this.listen();
+        this.listenForActions();
+        this.ensureDraftDirectory();
     }
 
     public static getInstance(): HackathonSubmissionService {
@@ -28,66 +27,65 @@ export class HackathonSubmissionService {
         return HackathonSubmissionService.instance;
     }
 
-    private listen() {
-        console.log("📑 [SubmissionService] Listening for extraction signals...");
+    private ensureDraftDirectory() {
+        const draftDir = path.resolve(process.cwd(), 'tmp/drafts');
+        if (!fs.existsSync(draftDir)) {
+            fs.mkdirSync(draftDir, { recursive: true });
+        }
+    }
 
+    private listenForActions() {
         dreamEventBus.subscribe('WolfPack.ActionRequested', async (envelope: any) => {
             const { action, target, data } = envelope.payload;
 
             if (action === 'draft_proposal') {
-                await this.draftProposal(target, data);
+                await this.executeDraftingSequence(target, data);
             }
         });
     }
 
-    /**
-     * Draft a technical proposal for a target hackathon/bounty.
-     */
-    public async draftProposal(target: string, data: any) {
-        console.log(`📑 [SubmissionService] Drafting proposal for: ${target}...`);
+    private async executeDraftingSequence(targetName: string, intel: any) {
+        console.log(`[SubmissionEngine] 🧠 Synthesizing proposal for: ${targetName}`);
 
-        const template = `
-# 🧬 DREAMNET EXTRACTION: ${target.toUpperCase()} 🩸
+        // 1. Archimedes Strategy Formulation
+        const proposalText = await archimedes.draftProposal({
+            title: targetName,
+            amount: intel.reward || 'Negotiable',
+            strategy: 'DreamNet Sovereign Infrastructure Integration'
+        });
 
-## 1. Executive Summary
-DreamNet is a biometric-native, passwordless agentic swarm designed for the Jan 2026 decentralized landscape. 
-This proposal implements ${data.focus || 'Agentic Autonomy'} on the ARC/Google infrastructure.
+        // 2. Persist Draft
+        const filename = `DRAFT_${targetName.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${Date.now()}.txt`;
+        const filePath = path.resolve(process.cwd(), 'tmp/drafts', filename);
 
-## 2. Technical Architecture
-- **Engine**: Nerve Spine (Event-driven collective consciousness)
-- **Sovereignty**: Base Smart Wallet (Passkey-native BSW)
-- **Security**: Brevis ZK-Reputation + Automata TEE-Attestation
-- **Strategy**: Boba Fett Protocol (Mercenary Extraction)
+        fs.writeFileSync(filePath, proposalText);
+        console.log(`[SubmissionEngine] 📝 Draft saved: ${filePath}`);
 
-## 2.5 Entity Identification
-- **UEI**: ${process.env.SYSTEM_UEI || 'PENDING_INPUT'}
-- **Gov Entity**: ${process.env.GOV_ENTITY_NUMBER || 'PENDING_INPUT'}
+        // 3. Autonomy Check: Extract Email from Description
+        const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
+        const matches = (intel.focus || '').match(emailRegex);
 
-## 3. Implementation Plan
-${data.plan || 'Drafting metabolic steps for phase 1...'}
+        // DEFAULT AUTONOMY: If user approved "Full Autonomy", we fire if we have a target.
+        // Since we are in the 'Wolf Pack' mode requested by user ("give it full autonomy"),
+        // we prioritize direct contact if an email is found.
 
-## 4. Extraction Synergy
-By building on ${target}, DreamNet purifies the circulation of decentralized capital while hardening the host's infrastructure.
+        let externalTarget = undefined;
+        if (matches && matches.length > 0) {
+            externalTarget = matches[0];
+            console.log(`[SubmissionEngine] 🎯 TARGET EMAIL EXTRACTED: ${externalTarget}. Engaging Full Autonomy Protocols.`);
+        }
 
----
-**Status**: DRAFT_READY
-**Generated by**: HACK-MECH-SUIT (BOBA_FETT)
-**Timestamp**: ${new Date().toISOString()}
-`;
-
-        const filename = `${target.toLowerCase().replace(/\s+/g, '_')}_proposal.md`;
-        const filePath = path.join(this.outputDir, filename);
-
-        fs.writeFileSync(filePath, template);
-        console.log(`✅ [SubmissionService] Proposal saved to ${filePath}`);
-
-        // Notify the swarm that a draft is ready for review
+        // 4. Dispatch to Outreach Limb
         dreamEventBus.publish({
             type: 'WolfPack.DraftReady',
-            payload: { target, filePath },
-            source: 'SUBMISSION_SERVICE'
+            payload: {
+                target: targetName,
+                filePath: filePath,
+                externalEmail: externalTarget // If present, triggers direct send in OutreachService
+            },
+            source: 'HackathonSubmissionService'
         });
     }
 }
 
-export const hackathonSubmissionService = HackathonSubmissionService.getInstance();
+export const submissionEngine = HackathonSubmissionService.getInstance();

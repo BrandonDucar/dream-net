@@ -17,19 +17,23 @@ export class GoogleAuthService {
         const clientId = process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_OAUTH_CLIENT_ID;
         const clientSecret = process.env.GOOGLE_CLIENT_SECRET || process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 
-        console.log(`[📧 GoogleAuth] Initializing Service. ClientID present: ${!!clientId}`);
+        try {
+            console.log(`[📧 GoogleAuth] Initializing Service. ClientID present: ${!!clientId}`);
 
-        // Prioritize localhost callback for "Scan-In" ritual, fallback to .env or OOB
-        const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'http://localhost:5000/api/auth/google/callback';
+            // Prioritize localhost callback for "Scan-In" ritual, fallback to .env or OOB
+            const redirectUri = process.env.GOOGLE_REDIRECT_URI || 'http://localhost:5000/api/auth/google/callback';
 
-        this.oauth2Client = new google.auth.OAuth2(
-            clientId,
-            clientSecret,
-            redirectUri
-        );
+            this.oauth2Client = new google.auth.OAuth2(
+                clientId,
+                clientSecret,
+                redirectUri
+            );
 
-        this.tokenPath = path.resolve(process.cwd(), '.google-tokens.json');
-        this.loadTokens();
+            this.tokenPath = path.resolve(process.cwd(), '.google-tokens.json');
+            this.loadTokens();
+        } catch (e: any) {
+            console.warn(`[📧 GoogleAuth] Service initialization soft-failed: ${e.message}. Email scouts limited.`);
+        }
     }
 
     public static getInstance(): GoogleAuthService {

@@ -1,23 +1,19 @@
-export {
-  SpiderNodeKind,
-  SpiderNodeRef,
-  SignalKind,
-  SignalStatus,
-  SignalThread,
-  SpiderInsightType,
-  SpiderInsight,
+import type {
   SpiderWebContext,
   SpiderWebStatus,
+  SignalStatus,
+  SignalThread,
   Fly,
   FlyType,
   FlyPriority,
   WebSensor,
-  SensorType,
   ThreadTemplate,
-  ThreadPattern,
-  FlyPattern,
   ThreadPriority,
+  SpiderInsight,
+  ThreadPattern,
+  FlyPattern
 } from './types.js';
+export type * from './types.js';
 import { SpiderStore } from './store/spiderStore.js';
 import { runSpiderWebCycle } from './scheduler/spiderScheduler.js';
 import { catchFly, createFly } from './logic/flyCatcher.js';

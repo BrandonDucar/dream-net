@@ -13,4 +13,3 @@ export interface APIKeeperSummary {
  * Get API Keeper summary for Ports Ops Panel
  */
 export declare function getApiKeeperSummary(): APIKeeperSummary;
-//# sourceMappingURL=summary.d.ts.map

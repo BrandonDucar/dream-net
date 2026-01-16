@@ -1,7 +1,8 @@
+import { memorySystem } from '@dreamnet/memory-dna';
 import { GitHubSuit } from '../suits/GitHubSuit.js';
+import { OharaSuit } from '../suits/OharaSuit.js';
 import { swarmLog } from '../server.js';
-// @ts-ignore - Importing from sister package
-import { memorySystem } from '../../../memory-dna/src/systems/TriuneMemory.js';
+import { OctopusController } from '@dreamnet/agent-wallet-manager';
 
 export interface PilotPersona {
     name: string;
@@ -15,17 +16,23 @@ export interface PilotPersona {
  * 
  * Coordinates 'Mech Suits' and builds the DreamNet destiny.
  */
-/**
- * SovereignPresence: The Digital Twin Interface
- * 
- * Channels the 'Primo' persona into the codebase.
- */
 export class SovereignPresence {
     private github: GitHubSuit;
+    private ohara: OharaSuit;
     private persona: PilotPersona;
 
-    constructor(token: string) {
+    constructor(token: string, octopus?: any) {
         this.github = new GitHubSuit(token);
+
+        // Initialize Ohara Suit
+        const oharaConfig = {
+            farcasterSignerUuid: process.env.FARCASTER_SIGNER_UUID || '',
+            oharaAppId: process.env.OHARA_APP_ID || ''
+        };
+
+        // If no octopus is passed, it will run in observer mode (logic inside Suit)
+        this.ohara = new OharaSuit(octopus || new OctopusController(), oharaConfig);
+
         this.persona = {
             name: "Primo",
             role: "Sovereign Commander",
@@ -33,7 +40,8 @@ export class SovereignPresence {
             objectives: [
                 "Establish Agentic Commerce sovereignty",
                 "Maintain and evolve the DreamNet Core",
-                "Triage and solve high-priority GitHub issues"
+                "Triage and solve high-priority GitHub issues",
+                "Manifest system awareness via Ohara & OnchainTV"
             ]
         };
     }
@@ -46,6 +54,9 @@ export class SovereignPresence {
 
         try {
             await memorySystem.initialize();
+
+            // Wake up the Ohara Oracle
+            await this.ohara.wake();
 
             await memorySystem.remember('WAKE_EVENT', {
                 timestamp: Date.now(),
@@ -74,7 +85,7 @@ export class SovereignPresence {
                 // Store in Mammal Brain (Social/Opportunity Context)
                 await memorySystem.remember('MERCENARY_WAVE', {
                     count: mercenaryIssues.length,
-                    ids: mercenaryIssues.map(i => i.ID),
+                    ids: mercenaryIssues.map(i => i.number),
                     timestamp: Date.now()
                 }, 'SOCIAL');
             }
@@ -109,8 +120,16 @@ export class SovereignPresence {
 
                 swarmLog('PRIMO', `Autonomous triage for #${issue.number} executed and recorded in DNA.`);
             }
-        } catch (err: any) {
-            swarmLog('PRIMO_ERROR', `Deployment friction: ${err.message}`);
+        } catch (error: any) {
+            swarmLog('PRIMO_ERROR', `Deployment sequence error: ${error.message}`);
         }
+    }
+
+    /**
+     * MASS MIGRATE: Manifest the Level 90 fleet
+     */
+    public async migrateFleet() {
+        swarmLog('PRIMO', `Manifesting Mass Migration for the 90 sovereign assets...`);
+        await this.ohara.massMigrate();
     }
 }

@@ -2,7 +2,6 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { bootManager } from './bootSequence.js';
-import { Primo } from './pilots/Primo.js';
 import { DockerPilot } from './pilots/DockerPilot.js';
 import { SovereignPresence } from './pilots/SovereignPresence.js';
 import { VirtualsFleetManager } from './suits/VirtualsFleetManager.js';
@@ -11,7 +10,14 @@ import { VeChainSuit } from './suits/VeChainSuit.js';
 import { SolanaSuit } from './suits/SolanaSuit.js';
 import { DiscordSuit } from './suits/DiscordSuit.js';
 import { coherenceEngine } from './engine/CoherenceEngine.js';
+import { UniversalSuit } from './suits/UniversalSuit.js';
+import { DexScreenerSuit } from './suits/DexScreenerSuit.js';
+import { CoinGeckoSuit } from './suits/CoinGeckoSuit.js';
+import { BaseSuit } from './suits/BaseSuit.js';
+import { HyperionSuit } from './suits/HyperionSuit.js';
 import dotenv from 'dotenv';
+// @ts-ignore - Sister package import
+import { memorySystem } from '../../memory-dna/src/systems/TriuneMemory.js';
 
 dotenv.config();
 
@@ -36,6 +42,10 @@ export function swarmLog(source: string, message: string) {
     };
     io.emit('swarm_log', log);
     console.log(`[${source}] ${message}`);
+
+    // [INTELLIGENCE PERSISTENCE]
+    // Every signal from Hyperion or other suits is inscribed into the Lizard Brain
+    memorySystem.lizard.store(`LOG_${source}_${log.id}`, log, 3600).catch(() => { });
 }
 
 async function main() {
@@ -47,6 +57,14 @@ async function main() {
     if (!bootSuccess) {
         console.error("❌ [FATAL] Boot Sequence Failed. Initiating shutdown.");
         process.exit(1);
+    }
+
+    // 2. Initialize Memory DNA
+    try {
+        await memorySystem.initialize();
+        swarmLog('CORE', 'Triune Memory System Online (Lizard, Mammal, Cosmic).');
+    } catch (e) {
+        console.error("⚠️ [CRITICAL] Memory System Initialization Failed:", e);
     }
 
     // 2. Start Pulse Listener (Heartbeat)
@@ -63,41 +81,82 @@ async function main() {
     });
 
     // 3. Initialize Pilots
-    /*
     const githubToken = process.env.GITHUB_TOKEN;
     if (githubToken) {
-        const primos = new Primo(githubToken);
-     // 2. Initialize Pilots (Agents)
-    await primos.wake();
-    
-    // We don't await the deploy cycle to keep server boot fast
-    primos.deployToGitHub(); 
+        const primos = new SovereignPresence(githubToken);
+        await primos.wake();
+
+        // We don't await the deploy cycle to keep server boot fast
+        primos.deployToGitHub();
     } else {
         swarmLog('CORE', '⚠️ GITHUB_TOKEN missing. Primos is in stasis.');
     }
-    */
 
     // 3.1 Initialize Docker Orchestration
     const dockerPilot = new DockerPilot();
     await dockerPilot.wake();
 
     // 3.2 Initialize Virtuals Mercenary Fleet
-    // const virtualsFleet = new VirtualsFleetManager();
+    const virtualsFleet = new VirtualsFleetManager();
+    // Virtuals wake is implicit in constructor for now
 
     // 3.3 Initialize NearSuit and VeChainSuit
     const nearSuit = new NearSuit();
     try { await nearSuit.wake(); } catch (e) { console.error('Failed to wake NearSuit', e); }
 
     const veChainSuit = new VeChainSuit();
-    try { await veChainSuit.wake(); } catch (e) { console.error('Failed to wake VeChainSuit', e); }
+    try {
+        await veChainSuit.wake();
+        // Arm the engine with the VeChain (MetaMask) suit
+        coherenceEngine.setVeChainExecutionSuit(veChainSuit);
+    } catch (e) {
+        console.error('Failed to wake VeChainSuit', e);
+    }
 
     const solanaSuit = new SolanaSuit();
-    try { await solanaSuit.wake(); } catch (e) { console.error('Failed to wake SolanaSuit', e); }
+    try {
+        await solanaSuit.wake();
+        // Arm the engine with the suit
+        coherenceEngine.setExecutionSuit(solanaSuit);
+    } catch (e) {
+        console.error('Failed to wake SolanaSuit', e);
+    }
 
     const discordSuit = new DiscordSuit();
     try { await discordSuit.wake(); } catch (e) { console.error('Failed to wake DiscordSuit', e); }
 
-    // 3.4 Start Mercenary Engines
+    const dexScreenerSuit = new DexScreenerSuit();
+    try { await dexScreenerSuit.wake(); } catch (e) { console.error('Failed to wake DexScreenerSuit', e); }
+
+    const coinGeckoSuit = new CoinGeckoSuit();
+    try {
+        await coinGeckoSuit.wake();
+        // Feed intelligence to the engine
+        coherenceEngine.setIntelligenceSuits(coinGeckoSuit, dexScreenerSuit);
+    } catch (e) {
+        console.error('Failed to wake CoinGeckoSuit', e);
+    }
+
+    const baseSuit = new BaseSuit();
+    try {
+        await baseSuit.wake();
+    } catch (e) {
+        console.error('Failed to wake BaseSuit', e);
+    }
+
+    const hyperionSuit = new HyperionSuit();
+    try {
+        await hyperionSuit.wake();
+    } catch (e) {
+        console.error('Failed to wake HyperionSuit', e);
+    }
+
+    // 3.5 Initialize The Swarm (Universal Suit)
+    // Wakes up the 138+ Non-Financial Agents from the Registry
+    const universalSuit = new UniversalSuit();
+    try { await universalSuit.wake(); } catch (e) { console.error('Failed to wake UniversalSuit', e); }
+
+    // 3.6 Start Mercenary Engines
     coherenceEngine.start();
 
     // 4. Start Server
@@ -119,4 +178,8 @@ process.on('SIGTERM', () => {
     process.exit(0);
 });
 
-main();
+// Only run the server if this file is executed directly
+import { fileURLToPath } from 'url';
+if (import.meta.url === `file://${fileURLToPath(import.meta.url)}` || process.argv[1]?.endsWith('server.ts')) {
+    main();
+}

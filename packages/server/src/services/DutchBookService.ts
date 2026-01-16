@@ -30,8 +30,13 @@ export class DutchBookService {
         // User confirmed '.env.gcp' uses generic 'PRIVATE_KEY' for the second wallet
         const metaMaskKey = process.env.METAMASK_PRIVATE_KEY || process.env.PRIVATE_KEY;
 
-        if (!phantomKey) console.warn('[DutchBook] ⚠️ PHANTOM_PRIVATE_KEY missing. Polygon ops limited.');
-        else this.phantomSigner = new ethers.Wallet(phantomKey, this.polygonProvider);
+        if (!phantomKey) {
+            console.warn('[DutchBook] ⚠️ PHANTOM_PRIVATE_KEY missing. Polygon ops limited.');
+        } else if (phantomKey.startsWith('0x')) {
+            this.phantomSigner = new ethers.Wallet(phantomKey, this.polygonProvider);
+        } else {
+            console.warn('[DutchBook] ⚠️ PHANTOM_PRIVATE_KEY is not an Ethereum key (Solana detected?). Polygon ops limited.');
+        }
 
         if (!metaMaskKey) console.warn('[DutchBook] ⚠️ METAMASK_PRIVATE_KEY (or PRIVATE_KEY) missing. Base ops limited.');
         else this.metaMaskSigner = new ethers.Wallet(metaMaskKey, this.baseProvider);
@@ -186,8 +191,19 @@ export class DutchBookService {
 
             console.log(`[DutchBook] 🚀 PULLING THE TRIGGER: ${amount} USDC on ${targetChain}`);
 
-            // 1. Check Balance
-            // (Stub: In a real implementation, we fetch the USDC balance of 'signer.address')
+            // 1. Check Balance (Active Reality Warp)
+            const usdcContract = new ethers.Contract(this.POLY_USDC, [
+                'function balanceOf(address) view returns (uint256)'
+            ], signer);
+
+            const rawBalance = await usdcContract.balanceOf(signer.address);
+            const balance = ethers.formatUnits(rawBalance, 6);
+
+            console.log(`[DutchBook] 💰 REAL BALANCE: ${balance} USDC on ${targetChain}`);
+
+            if (parseFloat(balance) < parseFloat(amount)) {
+                throw new Error(`Insufficient Balance: ${balance} USDC available, ${amount} requested.`);
+            }
 
             // 2. Execute Transaction via MEV Shield
             const response = await mevShield.executePrivateTx(signer, tx);

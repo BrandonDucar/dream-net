@@ -8,4 +8,3 @@ export declare function rngToUnit(resultHex: string): number;
  * Helper: pick an integer in [0, n)
  */
 export declare function rngToInt(resultHex: string, n: number): number;
-//# sourceMappingURL=rngEngine.d.ts.map

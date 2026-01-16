@@ -27,10 +27,10 @@ RUN pnpm install --no-frozen-lockfile
 # Sovereign Integration: Recursive Topological Build
 # -----------------------------------------------------------------------------
 
-# Build everything from foundations up to the server core
-RUN pnpm --filter "...@dreamnet/server" build
+# Build everything from foundations up to the control core
+RUN pnpm --filter "...@dreamnet/dreamnet-control-core" build
 
-# Build everything from foundations up to the client core
+# Build the client if needed
 RUN pnpm --filter "...@dreamnet/client" build
 
 # -----------------------------------------------------------------------------
@@ -40,8 +40,8 @@ WORKDIR /app/packages/client
 ENV VITE_API_URL=/api
 RUN pnpm run build
 
-# Build Backend
-WORKDIR /app/packages/server
+# Build Control Core
+WORKDIR /app/packages/dreamnet-control-core
 RUN pnpm run build
 
 # Stage 2: Runtime
@@ -50,7 +50,7 @@ FROM node:22-slim
 WORKDIR /app
 
 # Copy production artifacts from builder
-COPY --from=builder /app/packages/server/dist ./server/dist
+COPY --from=builder /app/packages/dreamnet-control-core/dist ./control-core/dist
 COPY --from=builder /app/packages/client/dist ./client/dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
@@ -65,5 +65,5 @@ ENV PORT=8080
 # Expose Cloud Run port
 EXPOSE 8080
 
-# Start server
-CMD ["node", "server/dist/index.js"]
+# Start server using tsx for parity with local stability
+CMD ["npx", "tsx", "packages/dreamnet-control-core/src/server.ts"]

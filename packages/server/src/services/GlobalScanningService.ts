@@ -1,5 +1,26 @@
-import { DreamEventBus } from '@dreamnet/nerve/spine/index.js';
+import { DreamEventBus } from '@dreamnet/nerve';
 import axios from 'axios';
+
+/**
+ * Global Scanning Service (The Syndicate's Recon Team)
+ * 
+ * Avenue 28: Deploys high-speed recon nodes (Masscan/Nuclei)
+ * Avenue 29: Hooks sensory leads to DreamEventBus
+ */
+import { DreamEventBus } from '@dreamnet/nerve';
+import {
+    SensorySpike,
+    EarthquakeSpike,
+    GitHubTrendSpike,
+    RedditSpike,
+    SolarSpike,
+    GrantSpike,
+    CryptoSpike,
+    NewsSpike,
+    ScienceSpike,
+    UniversalSpike,
+    FlightSpike
+} from '@dreamnet/sensory-spikes';
 
 /**
  * Global Scanning Service (The Syndicate's Recon Team)
@@ -10,9 +31,28 @@ import axios from 'axios';
 export class GlobalScanningService {
     private eventBus: DreamEventBus;
     private isScanning: boolean = false;
+    private spikes: SensorySpike[] = [];
 
     constructor(eventBus: DreamEventBus) {
         this.eventBus = eventBus;
+        this.initializeSpikes();
+    }
+
+    private initializeSpikes() {
+        // Initialize the sensory organs
+        this.spikes = [
+            new EarthquakeSpike(),
+            new GitHubTrendSpike(),
+            new RedditSpike(),
+            new SolarSpike(),
+            new GrantSpike(),
+            new CryptoSpike(),
+            new NewsSpike(), // Requires Key
+            new ScienceSpike(), // Requires Key
+            new UniversalSpike(),
+            new FlightSpike()
+        ];
+        console.log(`[ScanningEngine] 🧠 Loaded ${this.spikes.length} Sensory Spikes.`);
     }
 
     /**
@@ -23,71 +63,52 @@ export class GlobalScanningService {
         if (this.isScanning) return;
         this.isScanning = true;
 
+        const { aliveMode } = await import('../core/AliveMode.js');
+        aliveMode.pulse('GlobalScanningService');
+
         console.log('[ScanningEngine] 📡 Initiating Universal Recon Pulse...');
 
         try {
-            // 1. Mocked Masscan/Nuclei leads for Phase I
-            const rawLeads = await this.gatherLeads();
+            const results = await Promise.all(
+                this.spikes.map(async (spike) => {
+                    console.log(`[ScanningEngine] Pinging ${spike.name}...`);
+                    const result = await spike.fetch();
+                    return { spike, result };
+                })
+            );
 
-            // Avenue 33: "Information Scent" Filtering
-            // We only process leads that smell like HIGH VALUE.
-            const scentedLeads = rawLeads.map(lead => {
-                let scentScore = 0;
-                if (lead.severity === 'critical') scentScore += 50;
-                if (lead.severity === 'high') scentScore += 30;
-                if (lead.potential_reward.includes('$50,000+')) scentScore += 50;
-                if (lead.potential_reward.includes('$30,000')) scentScore += 20;
+            for (const { spike, result } of results) {
+                if (result.confidence > 0.5) {
+                    // 🧠 Update Sensory Memory (God View)
+                    const { sensoryMemory } = await import('./SensoryMemory.js');
+                    if (spike.name === 'EarthquakeSpike') sensoryMemory.update('earthquakes', result.data);
+                    if (spike.name === 'FlightSpike') sensoryMemory.update('flights', result.data);
+                    if (spike.name === 'SolarSpike') sensoryMemory.update('solar', result.data);
+                    if (spike.name === 'GitHubTrendSpike') sensoryMemory.update('trends', { ...sensoryMemory.getSnapshot().trends, github: result.data });
+                    if (spike.name === 'RedditSpike') sensoryMemory.update('trends', { ...sensoryMemory.getSnapshot().trends, reddit: result.data });
+                    if (spike.name === 'UniversalSpike') sensoryMemory.update('trends', { ...sensoryMemory.getSnapshot().trends, universal: result.data });
 
-                return { ...lead, scentScore };
-            }).sort((a, b) => b.scentScore - a.scentScore); // Predator sorts by strongest scent
+                    // Publish raw sensory data
+                    this.eventBus.publish(this.eventBus.createEnvelope(
+                        'Sensory.Pulse',
+                        spike.name,
+                        result,
+                        { type: spike.type, confidence: result.confidence }
+                    ));
 
-            console.log(`[ScanningEngine] 👃 Information Scent Analysis Complete. Top Target Score: ${scentedLeads[0]?.scentScore}`);
-
-            for (const lead of scentedLeads) {
-                if (lead.scentScore < 20) {
-                    console.log(`[ScanningEngine] 🌫️ Ignoring Low Scent Trace: ${lead.target}`);
-                    continue;
+                    // If high value, log it
+                    console.log(`[ScanningEngine] ✅ ${spike.name} returned valid signal.`);
+                } else {
+                    console.warn(`[ScanningEngine] ⚠️ ${spike.name} returned weak signal or error.`);
                 }
-
-                console.log(`[ScanningEngine] 🎯 TARGET ACQUIRED (Scent: ${lead.scentScore}): ${lead.target}`);
-
-                // 2. Publish to Sensorium (DreamEventBus)
-                this.eventBus.publish(this.eventBus.createEnvelope(
-                    'EVENT_SCAN_MATCH',
-                    'GlobalScanningService',
-                    lead,
-                    { severity: lead.severity as any, category: 'BOUNTY_LEAD', scent: lead.scentScore }
-                ));
             }
 
-            console.log(`[ScanningEngine] ✅ Pulse complete. Processed ${scentedLeads.length} scent trails.`);
+            console.log(`[ScanningEngine] ✅ Pulse complete. Processed ${results.length} sensory vectors.`);
         } catch (error) {
             console.error('[ScanningEngine] ❌ Pulse failed:', error);
         } finally {
             this.isScanning = false;
         }
     }
-
-    private async gatherLeads() {
-        // In a real scenario, this involves calling external binaries:
-        // exec('nuclei -target google.com ...')
-
-        // Mocked real-world signals for the Sovereign Monolith:
-        return [
-            {
-                target: 'google.com',
-                vulnerability: 'AI Alignment Variance (Gemini)',
-                platform: 'Google VRP',
-                severity: 'high',
-                potential_reward: '$30,000'
-            },
-            {
-                target: 'immunefi.com/bounty/aave',
-                vulnerability: 'Logic Gap in V3 Pool (Staked Assets)',
-                platform: 'Immunefi',
-                severity: 'critical',
-                potential_reward: '$50,000+'
-            }
-        ];
-    }
 }
+

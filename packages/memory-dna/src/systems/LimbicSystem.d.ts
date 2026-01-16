@@ -37,3 +37,4 @@ export declare class LimbicSystem {
     private load;
 }
 export declare const limbicSystem: LimbicSystem;
+//# sourceMappingURL=LimbicSystem.d.ts.map

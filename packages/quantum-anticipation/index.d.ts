@@ -8,4 +8,3 @@ export declare const QuantumAnticipation: {
 };
 export * from './types.js';
 export default QuantumAnticipation;
-//# sourceMappingURL=index.d.ts.map

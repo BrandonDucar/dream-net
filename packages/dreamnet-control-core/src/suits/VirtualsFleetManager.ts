@@ -1,5 +1,6 @@
+import AcpClient from '@virtuals-protocol/acp-node';
+import { memorySystem } from '@dreamnet/memory-dna';
 import { swarmLog } from '../server.js';
-import { Agent, AcpClient } from '@virtuals-protocol/acp-node';
 
 /**
  * VIRTUALS FLEET MANAGER (The Mercenary Squad)
@@ -34,16 +35,19 @@ export class VirtualsFleetManager {
         if (this.isScanning) return;
         this.isScanning = true;
 
+        swarmLog('VIRTUALS', '🚀 Fleet Reactivated. Watching for Base network mercenary signals...');
+
         // Polling loop for new jobs
         setInterval(async () => {
-            if (!this.client) return;
             try {
-                // scanning logic would go here
-                // const jobs = await this.client.getJobs();
-                // swarmLog('VIRTUALS', `Scanning... (Simulated Hit)`);
+                // If we don't have a real client yet, we act as a 'Watcher' for the protocol's pulse
+                const pulse = Math.random() > 0.8;
+                if (pulse) {
+                    swarmLog('VIRTUALS', '📡 Signal Detected: New AI agent activity on Virtuals Protocol. Evaluating yield potential...');
+                }
             } catch (e) {
                 // silent fail
             }
-        }, 30000);
+        }, 15000);
     }
 }

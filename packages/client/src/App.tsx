@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from './lib/queryClient.js';
+import { queryClient } from '@/lib/queryClient';
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -92,37 +92,47 @@ import VaultMarketplacePage from "@/pages/vault-marketplace";
 import EvolutionVaultPage from "@/pages/evolution-vault";
 import LandingPage from "@/pages/landing";
 
-import { SeasonalEventBanner } from './components/SeasonalEventBanner.js';
-import { DreamNetThemeProvider } from './contexts/DreamNetThemeContext.js';
-import HomePage from './pages/HomePage.js';
-import OsPage from './pages/OsPage.js';
-import VaultPage from './pages/VaultPage.js';
-import MiniAppLoader from './pages/MiniAppLoader.js';
-import ShopPage from './pages/ShopPage.js';
-import DreamTankPage from './pages/DreamTankPage.js';
-import AgentsPage from './pages/AgentsPage.js';
-import CommunityPage from './pages/CommunityPage.js';
-import SystemOsStatusPage from './pages/SystemOsStatusPage.js';
-import SystemRuntimePage from './pages/SystemRuntimePage.js';
-import SystemFundingPage from './pages/SystemFundingPage.js';
-import HubRoutes from './pages/hub/HubRoutes.js';
-import LandingNew from './pages/landing-new.js';
+import { SeasonalEventBanner } from '@/components/SeasonalEventBanner';
+import { DreamNetThemeProvider } from '@/contexts/DreamNetThemeContext';
+import HomePage from '@/pages/HomePage';
+import OsPage from '@/pages/OsPage';
+import VaultPage from '@/pages/VaultPage';
+import MiniAppLoader from '@/pages/MiniAppLoader';
+import ShopPage from '@/pages/ShopPage';
+import DreamTankPage from '@/pages/DreamTankPage';
+import AgentsPage from '@/pages/AgentsPage';
+import CommunityPage from '@/pages/CommunityPage';
+import SystemOsStatusPage from '@/pages/SystemOsStatusPage';
+import SystemRuntimePage from '@/pages/SystemRuntimePage';
+import SystemFundingPage from '@/pages/SystemFundingPage';
+import HubRoutes from '@/pages/hub/HubRoutes';
+import LandingNew from '@/pages/landing-new';
 import VoidLanding from "@/pages/void-landing";
-import Home from'./pages/Home.js';
-import DreamCubeHub from './pages/DreamCubeHub.js';
-import { GravRemote } from './components/GravRemote.js';
-import CommandPalette from './components/CommandPalette.js';
-import GalacticDashboard from './pages/galactic-dashboard.js';
-import { MetabolicWidget } from './components/MetabolicWidget.js';
+import Home from '@/pages/Home';
+import DreamCubeHub from '@/pages/DreamCubeHub';
+import { GravRemote } from '@/components/GravRemote';
+import CommandPalette from '@/components/CommandPalette';
+import GalacticDashboard from '@/pages/galactic-dashboard';
+import { MetabolicWidget } from '@/components/MetabolicWidget';
 
 // Lazy Load Components
-const WalletProfileDashboard = lazy(() => import('./components/WalletProfileDashboard.js').then(m => ({ default: m.WalletProfileDashboard })));
-const DreamEvolutionDemo = lazy(() => import('./components/DreamEvolutionDemo.js');
-const EvolvedArchive = lazy(() => import('./pages/evolved-archive.js');
-const DreamTree = lazy(() => import('./components/DreamTree.js');
-const GodView = lazy(() => import('./pages/GodView.js');
-const OmniDashboard = lazy(() => import('./pages/OmniDashboard.js');
-const MultiPaneDash = lazy(() => import('./pages/MultiPaneDash.js');
+const WalletProfileDashboard = lazy(() => import('@/components/WalletProfileDashboard').then(m => {
+    // Handle both default and named exports for robustness
+    if (m.WalletProfileDashboard) return { default: m.WalletProfileDashboard };
+    return m;
+}));
+const DreamEvolutionDemo = lazy(() => import('@/components/DreamEvolution').then(m => {
+    if (m.DreamEvolution) return { default: m.DreamEvolution };
+    return m;
+}));
+const EvolvedArchive = lazy(() => import('@/pages/evolved-archive'));
+const DreamTree = lazy(() => import('@/components/DreamTree'));
+const GodView = lazy(() => import('@/pages/GodView'));
+const OmniDashboard = lazy(() => import('@/pages/OmniDashboard'));
+const OmniDashboard = lazy(() => import('@/pages/OmniDashboard'));
+const MultiPaneDash = lazy(() => import('@/pages/MultiPaneDash'));
+const VerifyPage = lazy(() => import('@/pages/verify'));
+const GodModePage = lazy(() => import('@/pages/god-mode'));
 
 // Adapters
 const WalletProfileRoute = ({ params }: { params: { address: string } }) => (
@@ -374,6 +384,8 @@ function App() {
                                         <Switch>
                                             <Route path="/" component={Home} />
                                             <Route path="/void-landing" component={VoidLanding} />
+                                            <Route path="/verify" component={VerifyPage} />
+                                            <Route path="/god-mode" component={GodModePage} />
                                             <Route path="/legacy-new" component={LandingNew} />
                                             <Route path="/:rest*" component={CatchAllRoute} />
                                         </Switch>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Factory, ChevronUp, ChevronDown, Zap, CheckCircle2, AlertCircle, Play } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -51,22 +51,22 @@ export const MetabolicWidget: React.FC = () => {
                         className="mb-4 w-80"
                     >
                         <Card className="bg-zinc-950/90 border-zinc-800 shadow-2xl backdrop-blur-xl overflow-hidden rounded-2xl">
-                            <div className="p-4 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/50">
+                            <CardHeader className="p-4 border-b border-zinc-800 flex flex-row items-center justify-between bg-zinc-900/50">
                                 <div className="flex items-center gap-2">
                                     <Factory className="w-4 h-4 text-cyan-400" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-white">Metabolic Feed</span>
+                                    <CardTitle className="text-[10px] font-black uppercase tracking-widest text-white">Metabolic Feed</CardTitle>
                                 </div>
                                 <Badge className="bg-cyan-500/10 text-cyan-400 border-cyan-500/20 text-[8px]">Live</Badge>
-                            </div>
+                            </CardHeader>
 
-                            <div className="p-4 space-y-3 max-h-64 overflow-y-auto custom-scrollbar">
+                            <CardContent className="p-4 space-y-3 max-h-64 overflow-y-auto custom-scrollbar">
                                 {latestLogs.length === 0 ? (
                                     <p className="text-[10px] text-zinc-500 text-center py-4 font-mono uppercase">Idle • Waiting for Pulse</p>
                                 ) : (
                                     latestLogs.map((log, i) => (
                                         <div key={i} className="flex gap-3 items-start animate-in fade-in slide-in-from-right-2">
                                             <div className={`mt-1 h-1.5 w-1.5 rounded-full ${log.status === 'ready' ? 'bg-emerald-500' :
-                                                    log.status === 'provisioning' ? 'bg-amber-500 animate-pulse' : 'bg-red-500'
+                                                log.status === 'provisioning' ? 'bg-amber-500 animate-pulse' : 'bg-red-500'
                                                 }`} />
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-[10px] font-bold text-zinc-200 truncate">{log.agentName}</p>
@@ -77,7 +77,7 @@ export const MetabolicWidget: React.FC = () => {
                                         </div>
                                     ))
                                 )}
-                            </div>
+                            </CardContent>
 
                             <div className="p-3 bg-white/5 border-t border-zinc-800">
                                 <Button
@@ -103,8 +103,8 @@ export const MetabolicWidget: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-full shadow-2xl transition-all border ${isExpanded
-                        ? 'bg-zinc-900 border-zinc-700 text-white'
-                        : 'bg-white border-white text-black'
+                    ? 'bg-zinc-900 border-zinc-700 text-white'
+                    : 'bg-white border-white text-black'
                     }`}
             >
                 <div className="relative">

@@ -1,6 +1,10 @@
 import type { WormholeModel } from './types.js';
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const WORMHOLE_STORE_PATH = join(__dirname, "../store/wormholeStore.json");
 

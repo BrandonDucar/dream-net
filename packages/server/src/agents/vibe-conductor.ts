@@ -13,6 +13,7 @@ import { customGPTFleetSystem } from '../fleets/CustomGPTFleetSystem';
 import { getAgentWalletManager } from '@dreamnet/agent-wallet-manager';
 import { OctopusController } from '@dreamnet/agent-wallet-manager/src/OctopusController';
 import { MANIFOLD } from '@dreamnet/nerve';
+import { ForgeService } from '../services/ForgeService.js';
 
 /**
  * VIBE CONDUCTOR (The Truth Arbiter)
@@ -138,6 +139,10 @@ export class VibeConductor {
             }),
             import('@dreamnet/star-bridge-lungs').then(({ StarBridgeLungs }) => {
                 StarBridgeLungs.run({ focus: 'stability', breadth: 5 });
+            }),
+            import('@dreamnet/halo-loop').then(async ({ haloEngine }) => {
+                const cycle = await haloEngine.runCycle('metabolic_pulse');
+                await ForgeService.synthesizeOpportunities(cycle);
             })
         ]).catch(err => console.error("[VibeConductor] Organism Integration Error:", err));
 

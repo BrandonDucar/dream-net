@@ -13,6 +13,7 @@ export interface SnailTrail {
   previousHash: string | null;
   encrypted: boolean;
   encryptionKey?: string;
+  zkProof?: string;
   metadata: {
     source: string;
     agent?: string;

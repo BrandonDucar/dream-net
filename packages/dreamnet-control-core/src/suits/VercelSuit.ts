@@ -60,6 +60,36 @@ export class VercelSuit {
         return await response.json();
     }
 
+    public async listProjects(): Promise<any> {
+        if (!this.token) throw new Error("Vercel token not found.");
+
+        const endpoint = "https://api.vercel.com/v9/projects";
+        const url = this.teamId ? `${endpoint}?teamId=${this.teamId}` : endpoint;
+
+        const response = await fetch(url, {
+            headers: { 'Authorization': `Bearer ${this.token}` }
+        });
+
+        return await response.json();
+    }
+
+    public async listDeployments(projectId?: string): Promise<any> {
+        if (!this.token) throw new Error("Vercel token not found.");
+
+        let url = "https://api.vercel.com/v6/deployments";
+        const params = new URLSearchParams();
+        if (this.teamId) params.append("teamId", this.teamId);
+        if (projectId) params.append("projectId", projectId);
+
+        if (params.toString()) url += `?${params.toString()}`;
+
+        const response = await fetch(url, {
+            headers: { 'Authorization': `Bearer ${this.token}` }
+        });
+
+        return await response.json();
+    }
+
     public async status(deploymentId: string): Promise<any> {
         if (!this.token) throw new Error("Vercel token not found.");
 

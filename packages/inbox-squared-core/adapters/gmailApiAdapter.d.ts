@@ -51,4 +51,3 @@ export declare class GmailApiAdapter {
      */
     private encodeMessage;
 }
-//# sourceMappingURL=gmailApiAdapter.d.ts.map

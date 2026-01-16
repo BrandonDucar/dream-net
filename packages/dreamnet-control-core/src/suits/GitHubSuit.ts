@@ -34,11 +34,12 @@ export class GitHubSuit {
     /**
      * RADAR: Scan for issues in the repo
      */
-    async scanIssues(state: 'open' | 'closed' | 'all' = 'open') {
+    async scanIssues(labels?: string[], state: 'open' | 'closed' | 'all' = 'open') {
         const { data } = await this.octokit.rest.issues.listForRepo({
             owner: this.owner,
             repo: this.repo,
             state,
+            labels: labels?.join(','),
             per_page: 10
         });
 
@@ -126,9 +127,59 @@ export class GitHubSuit {
     }
 
     /**
+     * STAR: Star a repository
+     */
+    async starRepo(owner: string, repo: string) {
+        await this.octokit.rest.activity.starRepoForAuthenticatedUser({
+            owner,
+            repo
+        });
+        return { success: true, owner, repo };
+    }
+
+    /**
+     * UNSTAR: Unstar a repository
+     */
+    async unstarRepo(owner: string, repo: string) {
+        await this.octokit.rest.activity.unstarRepoForAuthenticatedUser({
+            owner,
+            repo
+        });
+        return { success: true, owner, repo };
+    }
+
+    /**
+     * FOLLOW: Follow a user
+     */
+    async followUser(username: string) {
+        await this.octokit.rest.users.follow({
+            username
+        });
+        return { success: true, username };
+    }
+
+    /**
+     * UNFOLLOW: Unfollow a user
+     */
+    async unfollowUser(username: string) {
+        await this.octokit.rest.users.unfollow({
+            username
+        });
+        return { success: true, username };
+    }
+
+    /**
+     * LIST_FOLLOWING: Get the list of users the authenticated user follows
+     */
+    async listFollowing() {
+        const { data } = await this.octokit.rest.users.listFollowedByAuthenticatedUser();
+        return data.map(u => u.login);
+    }
+
+    /**
      * ORACLE: Analyze an issue using LLM and return a suggestion
      */
-    async analyzeIssue(issueNumber: number, title: string, body: string, llmClient: any) {
+    async analyzeIssue(issueNumber: number, title: string, body: string, llmClient?: any) {
         console.log(`👁️ [Oracle] Analyzing Issue #${issueNumber}: ${title}`);
 
         const prompt = `
@@ -140,11 +191,22 @@ export class GitHubSuit {
             Response should be in the style of a high-level sovereign AI.
         `;
 
-        const response = await llmClient.chat.completions.create({
-            model: "gpt-4-turbo-preview",
-            messages: [{ role: "user", content: prompt }]
-        });
-
-        return response.choices[0].message.content;
+        if (llmClient) {
+            const response = await llmClient.chat.completions.create({
+                model: "gpt-4-turbo-preview",
+                messages: [{ role: "user", content: prompt }]
+            });
+            return response.choices[0].message.content;
+        } else {
+            // Fallback to Zero-Auth AI (Pollinations)
+            try {
+                const aiUrl = process.env.POLLINATIONS_AI_URL || 'https://text.pollinations.ai/';
+                const response = await fetch(`${aiUrl}${encodeURIComponent(prompt)}`);
+                const text = await response.text();
+                return text;
+            } catch (e: any) {
+                return "Analysis temporarily unavailable. Maintaining high-fidelity waiting state.";
+            }
+        }
     }
 }

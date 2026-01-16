@@ -5,7 +5,13 @@
  * Connected to instant mesh for seamless agent creation.
  */
 
-import { randomUUID } from "node:crypto";
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+import { uuidv7 } from "uuidv7";
 import { instantMesh } from "../mesh/InstantMesh";
 import { superSpine } from "../core/SuperSpine";
 import type { AgentHybrid } from "../mesh/InstantMesh";
@@ -138,7 +144,7 @@ class AgentFoundry {
     parentAgents?: string[];
   }): Promise<AgentBuildRequest> {
     const buildRequest: AgentBuildRequest = {
-      id: randomUUID(),
+      id: uuidv7(),
       requestedBy: request.requestedBy,
       agentName: request.agentName,
       templateSlug: request.templateSlug,
@@ -167,7 +173,7 @@ class AgentFoundry {
 
       // Register with Super Spine
       const agentKey = buildRequest.agentName.toLowerCase().replace(/\s+/g, "-");
-      
+
       // Map capabilities to AgentCapability type
       const mappedCapabilities: any[] = [];
       for (const cap of buildRequest.capabilities) {
@@ -185,10 +191,10 @@ class AgentFoundry {
           mappedCapabilities.push("funding");
         }
       }
-      
+
       // Remove duplicates
       const uniqueCapabilities = Array.from(new Set(mappedCapabilities)) as any[];
-      
+
       superSpine.registerAgent(
         agentKey,
         buildRequest.agentName,

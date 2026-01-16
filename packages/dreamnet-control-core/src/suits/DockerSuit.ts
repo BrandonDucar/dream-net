@@ -1,5 +1,5 @@
-
 import { execSync } from 'child_process';
+import { swarmLog } from '../server.js';
 
 export interface DockerContainer {
     id: string;
@@ -20,9 +20,9 @@ export class DockerSuit {
     private verifyDocker() {
         try {
             execSync('docker --version', { stdio: 'ignore' });
-            console.log("🐳 [DockerSuit] Docker Desktop parity verified.");
+            swarmLog('DOCKER', "🐳 [DockerSuit] Docker Desktop parity verified.");
         } catch (error) {
-            console.warn("⚠️ [DockerSuit] Docker CLI not found. Ensure Docker Desktop is running.");
+            swarmLog('DOCKER_ERROR', "⚠️ [DockerSuit] Docker CLI not found. Ensure Docker Desktop is running.");
         }
     }
 
@@ -34,23 +34,23 @@ export class DockerSuit {
                 return { id, image, status, name };
             });
         } catch (error) {
-            console.error("❌ [DockerSuit] Failed to list containers:", error);
+            swarmLog('DOCKER_ERROR', `❌ [DockerSuit] Failed to list containers: ${error}`);
             return [];
         }
     }
 
     public startContainer(name: string) {
-        console.log(`🐳 [DockerSuit] Starting container: ${name}`);
+        swarmLog('DOCKER', `🐳 [DockerSuit] Starting container: ${name}`);
         execSync(`docker start ${name}`);
     }
 
     public stopContainer(name: string) {
-        console.log(`🐳 [DockerSuit] Stopping container: ${name}`);
+        swarmLog('DOCKER', `🐳 [DockerSuit] Stopping container: ${name}`);
         execSync(`docker stop ${name}`);
     }
 
     public restartContainer(name: string) {
-        console.log(`🐳 [DockerSuit] Restarting container: ${name}`);
+        swarmLog('DOCKER', `🐳 [DockerSuit] Restarting container: ${name}`);
         execSync(`docker restart ${name}`);
     }
 

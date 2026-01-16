@@ -16,6 +16,7 @@ import { connect, keyStores, KeyPair } from 'near-api-js';
 export class NearSuit {
     private accountId: string;
     private config: any;
+    private near: any;
     public activeMode: 'PASSIVE' | 'HUNTER' = 'HUNTER';
 
     constructor() {
@@ -37,17 +38,30 @@ export class NearSuit {
         try {
             swarmLog('NEAR_SUIT', 'Establishing connection to NEAR Protocol...');
 
-            // If private key is provided, set it up
-            if (process.env.NEAR_PRIVATE_KEY && this.accountId !== 'dreamnet.near') {
-                const keyPair = KeyPair.fromString(process.env.NEAR_PRIVATE_KEY);
-                await this.config.keyStore.setKey(this.config.networkId, this.accountId, keyPair);
-                swarmLog('NEAR_SUIT', 'Private key loaded into memory keystore.');
+            // Check for keys
+            if (this.accountId !== 'dreamnet.near' && process.env.NEAR_PRIVATE_KEY) {
+                try {
+                    const keyPair = KeyPair.fromString(process.env.NEAR_PRIVATE_KEY);
+                    await this.config.keyStore.setKey(this.config.networkId, this.accountId, keyPair);
+                    this.activeMode = 'HUNTER';
+                    swarmLog('NEAR_SUIT', `🏹 Hunter Mode ACTIVE for ${this.accountId}`);
+                } catch (e: any) {
+                    swarmLog('NEAR_SUIT_ERROR', `⚠️ Key Error: ${e.message}. Reverting to Passive.`);
+                    this.activeMode = 'PASSIVE'; // Set to passive on error
+                }
+            } else {
+                // User has no Near account or no private key - this is expected for passive mode.
+                this.activeMode = 'PASSIVE';
+                swarmLog('NEAR_SUIT', `👁️ Passive Mode (Scanner Only). No Account Configured or Key Provided.`);
             }
 
             this.near = await connect(this.config);
             swarmLog('NEAR_SUIT', 'Connection established. Online.');
 
-            await this.scanForTasks();
+            // Start the Hunting Cycle (The Worker)
+            setInterval(async () => {
+                await this.scanForTasks();
+            }, 60000); // Check for bounties every minute
 
         } catch (error: any) {
             swarmLog('NEAR_SUIT_ERROR', `Failed to wake: ${error.message}`);

@@ -22,8 +22,9 @@ export class BrainGate {
     private model: any;
 
     private constructor() {
-        if (process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY) {
-            this.genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY || '');
+        const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+        if (apiKey) {
+            this.genAI = new GoogleGenerativeAI(apiKey);
 
             // UPGRADE: Sourcing Gemini High Fidelity (Jan 2026)
             // User explicit request: "gemini high" (gemini-1.5-pro) for maximum depth.
@@ -32,8 +33,7 @@ export class BrainGate {
 
             console.log(`[🧠 BrainGate] ELITE UPLINK: Established via ${preferredModel} (HIGH FIDELITY).`);
         } else {
-            console.warn("[🧠 BrainGate] CRITICAL: Neural Blindness. GEMINI_API_KEY missing. System halted.");
-            throw new Error("GEMINI_API_KEY_MISSING");
+            console.warn("[🧠 BrainGate] WARNING: GEMINI_API_KEY missing. Neural Uplink dormant (System continuing).");
         }
     }
 

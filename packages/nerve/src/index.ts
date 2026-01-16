@@ -28,12 +28,13 @@ export * from './bridges/N8nBridge.js';
 export * as Wormholes from './wormholes/index.js';
 export * as Bridges from './bridges/index.js';
 export * as SpiderWeb from './spider-web/index.js';
+export * from './spine/index.js';
 export * as Spine from './spine/index.js';
 export { dreamEventBus, elizaBridge, nursery, brainGate } from './spine/index.js';
 export * from './telepathy.js';
 export * from './quantum-mechanic.js';
 export * from './manifold.js';
-export {
+export type {
     Fly,
     FlyType,
     FlyPriority,

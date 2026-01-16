@@ -13,4 +13,3 @@ export declare const WhaleStore: {
     setLastRunAt(ts: number | null): void;
     status(): WhalePackStatus;
 };
-//# sourceMappingURL=whaleStore.d.ts.map

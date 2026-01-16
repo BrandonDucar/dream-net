@@ -11,3 +11,4 @@ export declare class RemSleep {
      */
     static dream(): Promise<void>;
 }
+//# sourceMappingURL=remSleep.d.ts.map

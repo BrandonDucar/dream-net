@@ -319,9 +319,26 @@ class WolfPackFundingHunter {
   }
 
   public async verifyLiquidityDepth(marketId: string, amount: number): Promise<boolean> {
-    console.log(`[Wolf Pack] 🔍 Scouring liquidity depth for ${marketId}...`);
-    // Stub: In V2, this checks UniV3/Polymarket order books
-    return amount < 5000; // Defensive threshold
+    console.log(`[Wolf Pack] 🔍 Scouring liquidity depth for ${marketId} (Reality Warp)...`);
+
+    // Real: For V1 activation, we check the Uniswap V3 Pool for the target market token.
+    // In a real scenario, 'marketId' would resolve to a token address.
+    const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL || 'https://polygon-rpc.com');
+
+    try {
+      // Simplified check: verifying the pool exists and has sufficient balance of the reserve token
+      const poolContract = new ethers.Contract(marketId, [
+        'function liquidity() view returns (uint128)'
+      ], provider);
+
+      const liquidity = await poolContract.liquidity();
+      console.log(`[Wolf Pack] 💧 Pool Liquidity Detected: ${liquidity.toString()}`);
+
+      return liquidity > BigInt(amount);
+    } catch (e) {
+      console.warn(`[Wolf Pack] ⚠️ Liquidity Check Error for ${marketId}. Falling back to defensive threshold.`);
+      return amount < 1000;
+    }
   }
 
   public async grantPackConsent(huntId: string, wolfId: string): Promise<boolean> {
