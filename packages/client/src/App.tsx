@@ -129,7 +129,6 @@ const EvolvedArchive = lazy(() => import('@/pages/evolved-archive'));
 const DreamTree = lazy(() => import('@/components/DreamTree'));
 const GodView = lazy(() => import('@/pages/GodView'));
 const OmniDashboard = lazy(() => import('@/pages/OmniDashboard'));
-const OmniDashboard = lazy(() => import('@/pages/OmniDashboard'));
 const MultiPaneDash = lazy(() => import('@/pages/MultiPaneDash'));
 const VerifyPage = lazy(() => import('@/pages/verify'));
 const GodModePage = lazy(() => import('@/pages/god-mode'));
