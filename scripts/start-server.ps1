@@ -7,5 +7,5 @@ Write-Host "Port: $env:PORT" -ForegroundColor Yellow
 Write-Host "Environment: $env:NODE_ENV" -ForegroundColor Yellow
 Write-Host ""
 
-tsx server/index.ts
+npx tsx packages/server/src/index.ts
 
