@@ -1,12 +1,12 @@
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
+import path from 'path';
+import { existsSync } from 'fs';
+import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import path from 'path';
-import { existsSync } from 'fs';
-import dotenv from 'dotenv';
 // Load Environment Variables (Root + Local)
 const rootEnv = path.resolve(process.cwd(), '../../.env');
 if (existsSync(rootEnv)) dotenv.config({ path: rootEnv });
@@ -15,17 +15,19 @@ dotenv.config();
 
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import { Router } from "express";
+
+// HEAD imports
 import { ReliabilityGuard } from "./agents/reliability-guard.js";
 import { SentinelAgent } from "./agents/sentinel-agent.js";
 import { ForgeService } from "./services/ForgeService.js";
+import ntagRouter from './routes/ntag.js';
+
+// Feature imports
 import { startMesh } from './mesh/index.js';
 import { createMeshRouter } from './mesh/router.js';
 import { getEnvConfig, PORT as ENV_PORT, ALLOWED_ORIGINS, OPERATOR_WALLETS, INIT_SUBSYSTEMS, MESH_AUTOSTART, INIT_HEAVY_SUBSYSTEMS, NODE_ENV } from './config/env.js';
-// import { VibeConductor } from './agents/vibe-conductor.js'; // Shadowed below
-// Use the root import for DreamNetOSCore to avoid export map issues
 import { registerAlertNotifier } from "@dreamnet/dreamnet-os-core";
 import { createGodViewRouter } from './routes/god-view.js';
-// import { getSystemThermodynamics } from "@dreamnet/event-wormholes";
 
 // 🔌 WIRED ORGANS (Operation Plug In) - DISABLED FOR BOOT RECOVERY
 import { createHaloRouter } from "@dreamnet/halo-loop";
@@ -41,7 +43,11 @@ import { createOrdersRouter } from "@dreamnet/orders";
 import { createRewardsRouter } from "@dreamnet/rewards-engine";
 import { createLiquidityRouter } from "@dreamnet/liquidity-engine";
 import { createMetricsRouter } from "@dreamnet/metrics-engine";
-import ntagRouter from './routes/ntag.js';
+
+import opsRouter from './routes/ops.js';
+import factoryRouter from './routes/factory.js';
+
+import { Telepathy, QuantumMechanic } from "@dreamnet/nerve";
 
 // Lazy import vite.ts to avoid issues in production
 let viteModuleCache: any = null;
@@ -53,37 +59,15 @@ async function loadViteModule() {
   return viteModuleCache;
 }
 
-// Legacy loader stubbed for stability - completely disabled
-const loadLegacyLoader = async () => undefined;
-
-// Route Placeholders (Valid Stubs for Missing/Core internals)
-const createAgentRouter = () => Router();
-const createGraftedRouter = () => Router(); // Internal extension of Graft
-const createResonanceRouter = () => Router(); // Still missing/unmapped
-const createOperatorRouter = () => Router();
-const createEventRouter = () => Router();
-// const createMetricsRouter = () => Router(); // Wired
-const createPublicRouter = () => Router();
-import opsRouter from './routes/ops.js';
-import factoryRouter from './routes/factory.js';
-
-// Missing Middlewares
-const controlCoreMiddleware = (req: any, res: any, next: any) => next();
-
-import { Telepathy, QuantumMechanic } from "@dreamnet/nerve";
-// VibeConductor is now real and imported
-
 // Initialize Express
-// Initialize Reliability Guard (Night Watchman)
-const reliabilityGuard = new ReliabilityGuard();
-
-// Initialize Sentinel (Build Watcher)
-const sentinel = new SentinelAgent();
-
-console.log("🦾 [DreamNet] Core Systems Online.");
 // Initialize Organism (DreamNet)
 async function bootstrap() {
   console.log("🌌 DreamNet Awakening Protocol Initiated...");
+  console.log("🦾 [DreamNet] Core Systems Online.");
+
+  // HEAD: Night Watchman Initialization
+  const reliabilityGuard = new ReliabilityGuard();
+  const sentinel = new SentinelAgent();
 
   // 0. Sovereign Validation (Masters of the Stack Principle)
   const { BootGuard } = await import('./core/BootGuard.js');
@@ -120,7 +104,6 @@ async function bootstrap() {
   const port = ENV_PORT;
   const host = "0.0.0.0";
 
-  // ... (Middleware & Routes setup)
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
@@ -143,11 +126,12 @@ async function bootstrap() {
 
   // Health
   app.get("/health", (req, res) => {
-    res.json({ status: "ALIVE", version: "1.0.0", mode: NODE_ENV, pulse: "STRONG" });
+    res.json({ status: "ALIVE", version: "1.0.0", mode: NODE_ENV, pulse: "STRONG", watchman: "ACTIVE" });
   });
 
   app.get("/api/system/thermodynamics", (req, res) => {
-    res.json(getSystemThermodynamics());
+    // res.json(getSystemThermodynamics());
+    res.json({ status: "simulated" });
   });
 
   // API Layers
@@ -157,6 +141,7 @@ async function bootstrap() {
   apiRouter.use("/god-view", createGodViewRouter()); // The Observatory
   apiRouter.use("/factory", factoryRouter);
   apiRouter.use("/ntag", ntagRouter);
+
 
   // Welcome Agent
   apiRouter.post("/agents/welcome", async (req, res) => {
@@ -241,6 +226,7 @@ async function bootstrap() {
     coreGuild.boot(); // Initializes the garden bed
     wolfFundingAgent.ignite();
     console.log("   - [WolfPack] Funding Agent Ignite + Submission Engine Linked");
+
     // 9. Economic Synchronization (Avenue 21)
     const { clanker } = await import('./services/ClankerService.js');
     console.log("   - [Clanker] Economic Spine Synchronized (Base V4)");
