@@ -1,0 +1,40 @@
+{
+    "name": "PickleBet",
+    "version": "1.0.0",
+    "description": "The Exclusive Pickleball Casino. Real-money prop betting on pro pickleball metrics.",
+    "category": "gaming",
+    "branding": {
+        "primaryColor": "#a3e635",
+        "secondaryColor": "#000000",
+        "icon": "🏓",
+        "banner": "https://api.dreamnet.ink/assets/picklebet-banner.png"
+    },
+    "deployment": {
+        "chain": "base",
+        "target": "ohara-standard-v1",
+        "features": [
+            "fiat-gateway",
+            "multichain-settlement",
+            "agent-oracle"
+        ]
+    },
+    "finance": {
+        "supportedCurrencies": [
+            "USDC",
+            "BTC",
+            "SOL",
+            "USD"
+        ],
+        "stripeEnabled": true,
+        "onchainSettlement": true
+    },
+    "oracle": {
+        "agentId": "PICKLEBALL-ORACLE-001",
+        "metrics": [
+            "lobs",
+            "ernes",
+            "atps",
+            "3rd-shot-type"
+        ]
+    }
+}

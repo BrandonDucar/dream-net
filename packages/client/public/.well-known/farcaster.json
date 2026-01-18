@@ -19,6 +19,16 @@
             "name": "Social Mesh",
             "route": "/miniapps/social",
             "farcasterAction": "social"
+        },
+        {
+            "name": "PickleBet Casino",
+            "route": "/miniapps/ohara/picklebet-casino",
+            "farcasterAction": "gaming"
         }
-    ]
+    ],
+    "accountAssociation": {
+        "header": "eyJmaWQiOjE0NzcxNDIsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHhENmMyNDdkRTgzMUI0MTkwYWZCYzM0ZTNhOTlDYzZGNzVDNjgwMEU2In0",
+        "payload": "eyJkb21haW4iOiJkcmVhbW5ldC5pbmsifQ",
+        "signature": "PLACEHOLDER_USER_SIGNATURE_FOR_DREAMNET_INK"
+    }
 }

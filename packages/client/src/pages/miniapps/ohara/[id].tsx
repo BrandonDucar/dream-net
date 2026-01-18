@@ -23,16 +23,17 @@ export default function OharaWrapper() {
     // Wouter replacement for Next.js router
     const [match, params] = useRoute("/miniapps/ohara/:id");
     const [_location, setLocation] = useLocation();
-    const id = match ? params?.id : null;
+    const id = match ? params?.id?.toString() : null;
 
     const [loading, setLoading] = React.useState(true);
     const [manualUrl, setManualUrl] = React.useState('');
 
-    // Mock app data for now (since we don't have the registry import here yet likely)
-    const app = { name: 'Ohara App', description: 'Sovereign App powered by DreamNet.' };
+    // Check if this is a local mini-app registered in our system
+    const localComponent = id ? getMiniAppComponent(id as any) : undefined;
+    const localAppInfo = id ? getMiniApp(id as any) : undefined;
 
     // Determine if ID is a valid UUID (Neural Link) or a Placeholder Slug
-    const isUUID = id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id.toString());
+    const isUUID = id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
 
     // If user provides a manual URL, use that ID
     const handleManualLink = () => {
@@ -44,6 +45,29 @@ export default function OharaWrapper() {
     };
 
     if (!id) return null;
+
+    // If it's a local app, we render it directly instead of an iframe
+    if (localComponent) {
+        return (
+            <div className="min-h-screen bg-black">
+                <Head>
+                    <title>{localAppInfo?.name} | DreamNet x Ohara</title>
+                </Head>
+                {/* Navigation Header for local apps in Ohara mode */}
+                <div className="h-12 border-b border-gray-800 flex items-center justify-between px-4 bg-gray-900/80 backdrop-blur z-50">
+                    <Button variant="ghost" size="xs" onClick={() => setLocation('/miniapps')} className="text-[10px] text-gray-400 hover:text-white">
+                        <ArrowLeft className="w-3 h-3 mr-1" />
+                        HUB
+                    </Button>
+                    <div className="text-[10px] font-mono text-gray-500 uppercase tracking-tighter">
+                        Ohara Dual-Casting: {localAppInfo?.name}
+                    </div>
+                    <div className="w-10" />
+                </div>
+                {localComponent({})}
+            </div>
+        );
+    }
 
     const oharaUrl = `https://ohara.ai/mini-apps/${id}`;
 

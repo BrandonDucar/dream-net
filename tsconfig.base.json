@@ -24,9 +24,9 @@
         "spine/index.ts"
       ],
       "@dreamnet/*": [
+        "packages/*",
         "packages/*/src/index.ts",
-        "packages/*/index.ts",
-        "packages/*/dist/index.d.ts"
+        "packages/*/index.ts"
       ],
       "@/*": [
         "packages/client/src/*"
