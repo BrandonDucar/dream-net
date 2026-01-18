@@ -6,8 +6,8 @@
   "type": "module",
   "license": "MIT",
   "engines": {
-    "node": ">=20.19.0 || >=22.12.0",
-    "pnpm": ">=9"
+    "node": "20.x",
+    "pnpm": "9.15.0"
   },
   "pnpm": {
     "overrides": {
@@ -41,7 +41,7 @@
     "typecheck": "pnpm -r --if-present run typecheck",
     "build": "turbo run build",
     "build:force": "turbo run build --force",
-    "build:app": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build:app": "vite build && esbuild packages/server/src/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "lint": "pnpm -r --if-present run lint",
     "format": "pnpm -r --if-present run format",
     "test": "pnpm -r --if-present run test",
@@ -61,7 +61,7 @@
     "deploy:production": "tsx scripts/deploy-production.ts",
     "deploy:gcp": "tsx infrastructure/google/deploy-all.ts",
     "deploy:data-gcp": "tsx infrastructure/google/data/deploy.ts",
-    "vercel-build": "pnpm build:app",
+    "vercel-build": "cd packages/client && pnpm install --no-frozen-lockfile && pnpm run build",
     "build:prebuilt": "npx vercel build --prod --yes",
     "deploy:prebuilt": "npx vercel deploy --prebuilt --prod --yes",
     "enable:gcp-apis": "tsx scripts/enable-all-gcp-apis.ts",

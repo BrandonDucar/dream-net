@@ -55,6 +55,7 @@ export { ReactionTestMini } from './ReactionTestMini.js';
 export { DreamSnailDrift } from './DreamSnailDrift.js';
 export { DreamCloudBuilder } from './DreamCloudBuilder.js';
 export { DinoBaseRunner } from './DinoBaseRunner.js';
+export { PickleBetMini } from './PickleBetMini.js';
 
 // Practical/Ops/Money Apps
 export { DreamScopeOpsConsoleMini } from './DreamScopeOpsConsoleMini.js';
@@ -351,6 +352,12 @@ export const MINI_APPS = {
   'dino-runner': {
     component: 'DinoBaseRunner',
     name: 'Dino Base Runner',
+    category: 'gaming',
+    requiresPassport: false,
+  },
+  'picklebet-casino': {
+    component: 'PickleBetMini',
+    name: 'PickleBet - Exclusive Pickleball Casino',
     category: 'gaming',
     requiresPassport: false,
   },
