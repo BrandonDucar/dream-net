@@ -70,6 +70,7 @@
         "@dreamnet/social-hub-core": "workspace:*",
         "@dreamnet/spider-web-core": "workspace:*",
         "@dreamnet/spore-engine": "workspace:*",
+        "@dreamnet/squad-alchemy": "workspace:*",
         "@dreamnet/squad-builder": "workspace:*",
         "@dreamnet/star-bridge-lungs": "workspace:*",
         "@dreamnet/utils": "workspace:*",
@@ -102,6 +103,10 @@
         "stripe": "^14.21.0",
         "uuidv7": "^1.1.0",
         "vm2": "^3.10.0",
+        "@wormhole-foundation/sdk": "^0.10.1",
+        "@wormhole-foundation/sdk-evm": "^0.10.1",
+        "@wormhole-foundation/sdk-solana": "^0.10.1",
+        "@wormhole-foundation/sdk-definitions": "^0.10.1",
         "ws": "^8.18.3",
         "zod": "3.23.8"
     },

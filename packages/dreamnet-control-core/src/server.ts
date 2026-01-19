@@ -17,7 +17,9 @@ import { BaseSuit } from './suits/BaseSuit.js';
 import { HyperionSuit } from './suits/HyperionSuit.js';
 import dotenv from 'dotenv';
 // @ts-ignore - Sister package import
-import { memorySystem } from '../../memory-dna/src/systems/TriuneMemory.js';
+import { memorySystem } from '@dreamnet/memory-dna';
+// @ts-ignore - Sister package import
+import { dreamEventBus } from '@dreamnet/nerve';
 
 dotenv.config();
 
@@ -74,6 +76,12 @@ async function main() {
             bootState: bootManager.getState(),
             uptime: process.uptime()
         });
+    });
+
+    // 2.1 Bridge Nerve Bus to Swarm Logs (Omni-Vision)
+    dreamEventBus.subscribe('Agent.Thought', (envelope: any) => {
+        const { agentName, step, totalSteps, thought } = envelope.payload;
+        swarmLog(agentName.toUpperCase(), `[Thinking ${step}/${totalSteps}] ${thought}`);
     });
 
     io.on('connection', (socket) => {

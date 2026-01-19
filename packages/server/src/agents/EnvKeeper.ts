@@ -20,7 +20,13 @@ class EnvKeeper extends EventEmitter {
         'PHANTOM_PRIVATE_KEY',
         'METAMASK_PRIVATE_KEY',
         'COSMIC_SECRET',
-        'OHARA_API_KEY'
+        'OHARA_API_KEY',
+        // Cloud Integration Keys
+        'AWS_ACCESS_KEY_ID',
+        'AWS_SECRET_ACCESS_KEY',
+        'GEMINI_API_KEY',
+        'DREAMNET_AWS_CA_ID', // Certificate of Authority: 80b47339-197f-4642-bf06-250377f75cc7
+        'CHILIZ_RPC_URL'
     ];
 
     public validate(): EnvStatus {

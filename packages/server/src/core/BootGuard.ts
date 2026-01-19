@@ -26,9 +26,16 @@ const SovereignConfigSchema = z.object({
     GOOGLE_REFRESH_TOKEN: z.string().optional(),
 
     // Cryptographic Authority (Administrative)
+    // Cryptographic Authority (Administrative)
     ADMIN_WALLETS: z.string().optional().describe('Comma-separated EVM addresses'),
     TREASURY_ADDRESS: z.string().optional(),
     PHANTOM_PRIVATE_KEY: z.string().optional().describe('Solana Master Key'),
+
+    // Cloud Authorities
+    AWS_ACCESS_KEY_ID: z.string().optional().describe('AWS Access Key'),
+    AWS_SECRET_ACCESS_KEY: z.string().optional().describe('AWS Secret Key'),
+    AWS_REGION: z.string().default('us-east-1'),
+    DREAMNET_AWS_CA_ID: z.string().uuid().describe('Certificate of Authority for DreamNet on AWS'),
 });
 
 export type SovereignConfig = z.infer<typeof SovereignConfigSchema>;

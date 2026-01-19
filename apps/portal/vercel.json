@@ -1,0 +1,11 @@
+{
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ],
+    "framework": "vite",
+    "buildCommand": "pnpm build",
+    "outputDirectory": "dist"
+}

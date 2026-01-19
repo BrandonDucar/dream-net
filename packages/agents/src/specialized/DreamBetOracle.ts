@@ -1,6 +1,7 @@
 import { BaseAgent, AgentConfig } from "../core/BaseAgent";
 import { dreamEventBus } from "@dreamnet/nerve";
 import { OracleEngine } from "@dreamnet/dreambet-core/logic/oracle";
+import { GlobalSportHubSpike } from "@dreamnet/sensory-spikes";
 
 /**
  * 🎲 DreamBetOracle (The Witness)
@@ -25,15 +26,46 @@ export class DreamBetOracle extends BaseAgent {
      * Main lifecycle: Listen for Pending Settlements -> Verify -> Authorize
      */
     public async ignite(): Promise<void> {
-        console.log(`[🎲 ${this.name}] Settlement Gaze Active. Watching the DreamBet pulse...`);
+        console.log(`[🎲 ${this.name}] Settlement Gaze Active. Watching the Hub...`);
 
-        // Subscribe to settle requests
+        // 1. Broad Sweep on Ignition
+        await this.performGlobalSweep();
+
+        // 2. Subscribe to settle requests
         dreamEventBus.subscribe('DreamBet.SettlementRequested', async (envelope) => {
             const { gameId, roundId, participants, gameType } = envelope.payload;
             console.log(`[🎲 ${this.name}] Settlement Request Detected: ${gameId}/${roundId}`);
 
             await this.handleSettlement(gameId, roundId, participants, gameType);
         });
+
+        // 3. Listen for Degen Warmups (pointing sensors)
+        dreamEventBus.subscribe('PickleBet.DegenWarmup', async (envelope) => {
+            console.log(`[🎯 ${this.name}] WARMUP SIGNAL: Pointing sensors at ${envelope.payload.focus}...`);
+            await this.performGlobalSweep();
+        });
+    }
+
+    private async performGlobalSweep() {
+        const hub = new GlobalSportHubSpike();
+        const situation = await hub.fetch();
+
+        console.log(`[🌍 ${this.name}] HUB INTEL: ${situation.data.recommendation}`);
+
+        // Identify if a specialist is needed
+        if (situation.data.recommendation.includes('Pickleball')) {
+            dreamEventBus.publish({
+                eventType: 'Oracle.DelegationRequested',
+                payload: { focus: 'pickleball', action: 'activate_referee' },
+                source: this.id,
+                timestamp: Date.now(),
+                eventId: `DEL-${Date.now()}`,
+                correlationId: 'HUB-SCAN',
+                actor: { system: true },
+                target: {},
+                severity: 'medium'
+            });
+        }
     }
 
     private async handleSettlement(gameId: string, roundId: string, participants: string[], gameType: string) {

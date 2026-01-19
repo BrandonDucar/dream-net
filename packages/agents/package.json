@@ -3,11 +3,6 @@
     "version": "1.0.0",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "exports": {
-        ".": "./src/index.ts",
-        "./*.js": "./src/*.ts",
-        "./*": "./src/*.ts"
-    },
     "scripts": {
         "build": "tsc",
         "dev": "tsc -w"
@@ -17,7 +12,8 @@
         "@dreamnet/construction-core": "workspace:*",
         "@dreamnet/nerve": "workspace:*",
         "@dreamnet/shared": "workspace:*",
-        "@dreamnet/platform-connector": "workspace:*"
+        "@dreamnet/platform-connector": "workspace:*",
+        "@dreamnet/server": "workspace:*"
     },
     "devDependencies": {
         "typescript": "^5.5.4"
