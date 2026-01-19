@@ -1,0 +1,56 @@
+﻿node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : 
+NotSpecifie    d: (:String) [], 
+RemoteException
+    + FullyQualifiedErrorId : 
+NativeComma    ndError
+ 
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot 
+find package 'express' imported from 
+C:\Users\brand\OneDrive\Documents\Git
+Hub\dream-net\packages\dreamnet-contr
+ol-core\src\server.ts
+    at Object.getPackageJSONURL (node
+:internal/modules/package_json_reader
+:255:9)
+    at packageResolve (node:internal/
+modules/esm/resolve:767:81)
+    at moduleResolve (node:internal/m
+odules/esm/resolve:853:18)
+    at defaultResolve (node:internal/
+modules/esm/resolve:983:11)
+    at nextResolve (node:internal/mod
+ules/esm/hooks:748:28)
+    at resolveBase (file:///C:/Users/
+brand/AppData/Local/npm-cache/_npx/fd
+45a72a545557e9/node_modules/tsx/dist/
+esm/index.mjs?1768679034515:2:3744)
+    at resolveDirectory (file:///C:/U
+sers/brand/AppData/Local/npm-cache/_n
+px/fd45a72a545557e9/node_modules/tsx/
+dist/esm/index.mjs?1768679034515:2:42
+43)
+    at resolveTsPaths (file:///C:/Use
+rs/brand/AppData/Local/npm-cache/_npx
+/fd45a72a545557e9/node_modules/tsx/di
+st/esm/index.mjs?1768679034515:2:4984
+)
+    at async resolve (file:///C:/User
+s/brand/AppData/Local/npm-cache/_npx/
+fd45a72a545557e9/node_modules/tsx/dis
+t/esm/index.mjs?1768679034515:2:5355)
+    at async nextResolve (node:intern
+al/modules/esm/hooks:748:22) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v22.18.0

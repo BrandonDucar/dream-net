@@ -29,6 +29,11 @@ const config = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 84532,
     },
+    chilizSpicy: {
+      url: process.env.CHILIZ_SPICY_RPC_URL || "https://spicy-rpc.chiliz.com",
+      accounts: (process.env.METAMASK_PRIVATE_KEY || process.env.PRIVATE_KEY) ? [process.env.METAMASK_PRIVATE_KEY || process.env.PRIVATE_KEY] : [],
+      chainId: 88882,
+    },
   },
   etherscan: {
     apiKey: {
@@ -52,10 +57,18 @@ const config = {
           browserURL: "https://sepolia.basescan.org",
         },
       },
+      {
+        network: "chilizSpicy",
+        chainId: 88882,
+        urls: {
+          apiURL: "https://spicy-explorer.chiliz.com/api",
+          browserURL: "https://spicy-explorer.chiliz.com",
+        },
+      },
     ],
   },
   paths: {
-    sources: "./contracts",
+    sources: "./packages/nerve/src/contracts",
     tests: "./test",
     cache: "./cache",
     artifacts: "./artifacts",
