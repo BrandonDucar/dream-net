@@ -26,7 +26,8 @@ export type MarketEventType =
 
 // Agent Events (Future)
 export type AgentEventType =
-    | 'Agent.PolicyViolation';
+    | 'Agent.PolicyViolation'
+    | 'Agent.Thought';
 
 // All Event Types
 export type EventType = SecurityEventType | BrowserEventType | MarketEventType | AgentEventType;

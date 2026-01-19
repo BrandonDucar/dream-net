@@ -1,0 +1,69 @@
+﻿node.exe : (node:38688) [DEP0128] 
+DeprecationWarning: Invalid 'main' field in 
+'\\?\C:\Users\brand\OneDrive\Documents\GitHu
+b\dream-net\packages\agent-wallet-manager\pa
+ckage.json' of './dist/index.js'. Please 
+either fix that or report it to the module 
+author
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: 
+    ((node:38688) [D...e module author:Str  
+  ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommand 
+   Error
+ 
+(Use `node --trace-deprecation ...` to show 
+where the warning was created)
+(node:38688) [DEP0128] DeprecationWarning: 
+Invalid 'main' field in '\\?\C:\Users\brand\
+OneDrive\Documents\GitHub\dream-net\packages
+\rewards-engine\package.json' of 
+'dist/index.js'. Please either fix that or 
+report it to the module author
+
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: 
+Package subpath './v4' is not defined by 
+"exports" in C:\Users\brand\OneDrive\Documen
+ts\GitHub\dream-net\node_modules\zod\package
+.json imported from C:\Users\brand\OneDrive\
+Documents\GitHub\dream-net\node_modules\driz
+zle-zod\index.mjs
+    at exportsNotFound 
+(node:internal/modules/esm/resolve:313:10)
+    at packageExportsResolve 
+(node:internal/modules/esm/resolve:660:9)
+    at packageResolve 
+(node:internal/modules/esm/resolve:773:12)
+    at moduleResolve 
+(node:internal/modules/esm/resolve:853:18)
+    at defaultResolve 
+(node:internal/modules/esm/resolve:983:11)
+    at nextResolve 
+(node:internal/modules/esm/hooks:748:28)
+    at resolveBase (file:///C:/Users/brand/O
+neDrive/Documents/GitHub/dream-net/node_modu
+les/tsx/dist/esm/index.mjs?1768683557547:2:3
+744)
+    at resolveDirectory (file:///C:/Users/br
+and/OneDrive/Documents/GitHub/dream-net/node
+_modules/tsx/dist/esm/index.mjs?176868355754
+7:2:4243)
+    at resolveTsPaths (file:///C:/Users/bran
+d/OneDrive/Documents/GitHub/dream-net/node_m
+odules/tsx/dist/esm/index.mjs?1768683557547:
+2:4984)
+    at resolve (file:///C:/Users/brand/OneDr
+ive/Documents/GitHub/dream-net/node_modules/
+tsx/dist/esm/index.mjs?1768683557547:2:5361)
+ {
+  code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+}
+
+Node.js v22.18.0
