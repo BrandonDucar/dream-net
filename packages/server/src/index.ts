@@ -80,6 +80,28 @@ async function bootstrap() {
   const { KineticBridge } = await import('./core/LWS.js');
   console.log("   - [1/5] Nerve Spine Ignited (Sensors Online)");
 
+  // 1.5 Operation Hydra: Agent Mitosis Listener 🐍
+  NERVE_BUS.subscribe('System.ReinforcementRequested', async (event: any) => {
+    console.log(`[Hydra] 🐍 Reinforcement Requested by ${event.payload.targetAgentId}. Reason: ${event.payload.reason}`);
+
+    try {
+      const { runSquadAlchemyCycle } = await import('@dreamnet/squad-alchemy/engine/squadAlchemy.js');
+      const ctx = {
+        // Context placeholder
+      };
+      const decisions = runSquadAlchemyCycle(ctx);
+
+      decisions.forEach(d => {
+        if (d.action === 'clone') {
+          console.log(`[Hydra] 🧬 CLONING INITIATED: ${d.newSquads?.[0]?.id}`);
+          // Future: Spawn Process Hook
+        }
+      });
+    } catch (err) {
+      console.error("[Hydra] Alchemy Cycle Failed:", err);
+    }
+  });
+
   // 2. Awaken the Mind (Triune Memory) & Connections (Mycelium)
   const { epigenetics } = await import('@dreamnet/memory-dna');
   epigenetics.subscribeToTrauma((hash, count) => {

@@ -44,3 +44,5 @@ export * from './spikes/RedditSpike.js';
 export * from './spikes/SolarSpike.js';
 export * from './spikes/UniversalSpike.js';
 export * from './spikes/FlightSpike.js';
+export * from './spikes/PickleIntelSpike.js';
+export * from './spikes/GlobalSportHubSpike.js';

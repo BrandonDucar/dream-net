@@ -8,6 +8,7 @@
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { dreamEventBus } from './dreamnet-event-bus/DreamEventBus.js';
 
 export interface BrainPulseConfig {
     provider: 'openai' | 'gemini' | 'anthropic';
@@ -134,6 +135,35 @@ export class BrainGate {
     public async weave(memories: string[]): Promise<string> {
         const prompt = `Synthesize the following neural memories into a single coherent insight: \n\n${memories.join("\n")}`;
         return this.think(prompt);
+    }
+
+    /**
+     * 💪 Reinforcement Call: Trigger Agent Mitosis.
+     * When an agent feels overwhelmed, it calls this to request a clone.
+     */
+    public async requestReinforcements(agentId: string, reason: string): Promise<string> {
+        console.log(`[🧠 BrainGate] REINFORCEMENT REQUEST: Agent ${agentId} is overwhelmed.`);
+        console.log(`[🧠 BrainGate] REASON: ${reason}`);
+
+        // Emit the Mitosis Trigger event
+        dreamEventBus.publish({
+            eventType: 'System.ReinforcementRequested',
+            source: 'BrainGate',
+            payload: {
+                targetAgentId: agentId,
+                reason: reason,
+                timestamp: Date.now()
+            },
+            // Metadata
+            eventId: `mitosis-${Date.now()}`,
+            correlationId: agentId,
+            timestamp: Date.now(),
+            actor: { system: true },
+            target: { agentId },
+            severity: 'critical'
+        });
+
+        return "Reinforcement Request Broadcasted. Stand by for Alchemy Cycle.";
     }
 }
 

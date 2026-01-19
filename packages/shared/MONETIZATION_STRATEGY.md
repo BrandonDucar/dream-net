@@ -61,6 +61,13 @@ graph TD
     F -->|System Upgrade| A
 ```
 
+- [x] Grounding: Finalize Agent Citizenship (143 Agents) -> **READY**.
+- [x] Hardening: Vercel Node/pnpm version pinning -> **DONE**.
+- [x] Sovereign Ignition: Resolve `ERR_PACKAGE_PATH_NOT_EXPORTED` in `drizzle-zod`.
+- [x] MAS Handshake: Update Blackboard with Port 5000 status.
+- [/] Synthesis: Integrate Thread B's *Strategic Intelligence* into the *Sifter's Fix Blueprints*.
+- [ ] Inception: Launch the first "Synthetic Genome" agent as a pilot for the 80 avenues.
+
 ## 3. Monetization Milestones
 
 1. **Cycle 1**: Initialize `Sovereign Solver` on Bahamut Chain (QL-04).

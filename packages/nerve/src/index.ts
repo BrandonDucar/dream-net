@@ -16,7 +16,9 @@ export * from './spine/MagLevMonitor.js';
 // Suits
 export * from './spine/suits/DiscordSuit.js';
 export * from './spine/suits/TelegramSuit.js';
+export * from './spine/suits/TelegramSuit.js';
 export * from './spine/suits/BotpressSuit.js';
+export * from './spine/suits/ChilizSuit.js';
 
 // Cortex
 export * from './spine/TaskerCortex.js';

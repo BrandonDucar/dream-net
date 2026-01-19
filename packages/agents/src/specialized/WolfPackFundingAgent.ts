@@ -1,7 +1,5 @@
 import { dreamEventBus } from '@dreamnet/nerve';
-import { Genome } from '@dreamnet/shared/genetic/Genome.js';
-import { nursery } from '@dreamnet/nerve';
-import { nursery } from '@dreamnet/nerve';
+import { BaseAgent, AgentConfig } from '../core/BaseAgent.js';
 import { GrantSpike } from '@dreamnet/sensory-spikes';
 
 export interface FundingOpportunity {
@@ -15,65 +13,48 @@ export interface FundingOpportunity {
 }
 
 /**
- * WolfPackFundingAgent
- * A financial scout specialized in identifying real 2026 grants and hackathons.
+ * 🐺 WolfPackFundingAgent: The "Hunter-Gatherer"
+ * Focus: Swarm Economics & Autonomous Revenue.
+ * 🎯 Phase V Aufgabe: Identify -> Verify (Oracle) -> Pursue (Pilot)
  */
-export class WolfPackFundingAgent {
-    private name: string;
-    private id: string;
-    private genome: Genome;
+export class WolfPackFundingAgent extends BaseAgent {
 
-    constructor(name: string, baseGenome?: Genome) {
-        this.name = name;
-        this.id = `WOLF-FUNDING-${Math.random().toString(36).slice(2, 9)}`;
-
-        this.genome = baseGenome || {
-            strain: "Amnesia Haze",
-            generation: 1,
-            genes: {
-                scoutEfficiency: { name: "Scout Efficiency", value: 1.0, min: 0.5, max: 2.0, mutationRate: 0.1 },
-                outreachConfidence: { name: "Outreach Confidence", value: 0.8, min: 0.5, max: 1.0, mutationRate: 0.1 }
-            }
-        };
-
-        nursery.register(this.id, this.genome);
-        this.listenForEvolution();
+    constructor(config: AgentConfig) {
+        super(config);
     }
 
-    public async ignite() {
-        console.log(`[🐺 WolfPackFundingAgent:${this.name}] Starting outreach scout sequence (Frequency: Jan 2026)...`);
-        this.scout();
+    protected async performSelfRefinement(thought: string): Promise<string> {
+        return `${thought} -> Value Extraction Risk: [Analyzing ROI vs Effort...]`;
+    }
+
+    public async ignite(): Promise<void> {
+        console.log(`[🐺 ${this.name}] Starting Hunter Scout sequence...`);
+
+        // Initial scout run
+        await this.scout();
+
+        // Listen for internal triggers
         this.listenForActions();
     }
 
     private listenForActions() {
         dreamEventBus.subscribe('WolfPack.ActionRequested', (envelope: any) => {
             const { action, target, data } = envelope.payload;
-            console.log(`[🐺 WolfPackFundingAgent] ACTION RECEIVED: ${action} for ${target}.`);
+            console.log(`[🐺 ${this.name}] ACTION RECEIVED: ${action} for ${target}.`);
 
             if (action === 'draft_proposal') {
-                // The HackathonSubmissionService will handle this via event bus
-                console.log(`[🐺 WolfPackFundingAgent] Delegating ${action} to Submission Engine...`);
+                console.log(`[🐺 ${this.name}] Delegating ${action} to Submission Engine...`);
             }
         });
     }
 
     private async scout() {
-        // Dynamic import to avoid circular deps during boot
-        const { aliveMode } = await import('../../../server/src/core/AliveMode.js');
-        aliveMode.pulse('WolfPackFundingAgent');
-
-        console.log(`[🐺 WolfPackFundingAgent:${this.name}] INITIATING LIVE SENSORY SWEEP (GrantSpike)...`);
+        console.log(`[🐺 ${this.name}] INITIATING LIVE SENSORY SWEEP (GrantSpike)...`);
 
         const grantSpike = new GrantSpike();
         const spikeResult = await grantSpike.fetch();
 
-        if (spikeResult.difficulty || spikeResult.data?.error) {
-            console.warn(`[🐺 WolfPackFundingAgent] Sensory Sweep returned low confidence or error.`);
-        }
-
         const opportunities: FundingOpportunity[] = [];
-
         if (spikeResult.data?.opportunities) {
             spikeResult.data.opportunities.forEach((raw: any, idx: number) => {
                 opportunities.push({
@@ -89,63 +70,59 @@ export class WolfPackFundingAgent {
         }
 
         if (opportunities.length === 0) {
-            console.log(`[🐺 WolfPackFundingAgent] No new prey detected in this cycle.`);
+            console.log(`[🐺 ${this.name}] No new prey detected.`);
             return;
         }
 
         for (const opp of opportunities) {
-            console.log(`[🐺 WolfPackFundingAgent:${this.name}] 🎯 LIVE TARGET ACQUIRED: ${opp.title} (${opp.source})`);
+            console.log(`[🐺 ${this.name}] 🎯 TARGET DETECTED: ${opp.title} (${opp.source})`);
 
-            const eventId = crypto.randomUUID();
+            // 1. Deep Thinking: Assess the value
+            const thoughtInput = `Assessing revenue potential for ${opp.title}. Reward: ${opp.rewardAmount}.`;
+            const analysis = await this.think(thoughtInput);
+            console.log(`[🧠 ${this.name}] Analysis: ${analysis}`);
+
+            // 2. Request Verification from Oracle (DreamBet or specialized Truth Oracle)
+            // We publish an event that the Oracle scions are watching
             dreamEventBus.publish({
-                eventType: 'WolfPack.FundingOpportunity',
-                eventId,
-                correlationId: eventId,
-                timestamp: Date.now(),
+                eventType: 'WolfPack.VerificationRequested',
+                payload: {
+                    type: 'opportunity_validity',
+                    target: opp.id,
+                    metadata: opp
+                },
                 source: this.id,
-                payload: opp
+                timestamp: Date.now(),
+                eventId: Math.random().toString(36).slice(2),
+                correlationId: this.id,
+                actor: { system: true },
+                target: {},
+                severity: 'low'
             });
 
-            // AUTOMATIC EXTRACTION: Trigger drafting for high-value targets
-            // We loosen the filter since live data might vary in format
+            // 3. Trigger drafting if it passes internal threshold (simulated for now)
             if (opp.title.toLowerCase().includes('hackathon') || opp.title.toLowerCase().includes('grant')) {
-                console.log(`[🐺 WolfPackFundingAgent] PRIME TARGET DETECTED: Triggering HACK-MECH drafting limb for ${opp.title}...`);
+                console.log(`[🐺 ${this.name}] PRIME TARGET: Triggering Pilot for drafting...`);
                 dreamEventBus.publish({
-                    type: 'WolfPack.ActionRequested',
+                    eventType: 'WolfPack.ActionRequested',
                     payload: {
                         action: 'draft_proposal',
                         target: opp.title,
                         data: {
                             oppId: opp.id,
                             source: opp.source,
-                            focus: opp.description,
                             reward: opp.rewardAmount
                         }
                     },
-                    source: this.id
+                    source: this.id,
+                    timestamp: Date.now(),
+                    eventId: Math.random().toString(36).slice(2),
+                    correlationId: this.id,
+                    actor: { system: true },
+                    target: {},
+                    severity: 'medium'
                 });
             }
         }
-    }
-
-    private listenForEvolution() {
-        dreamEventBus.subscribe('Agent.GeneticShift', (envelope: any) => {
-            const { agentId, current: newGenome } = envelope.payload;
-            if (agentId === this.id) {
-                console.log(`[🐺 WolfPackFundingAgent:${this.name}] GENOMIC SHIFT: Upgrading to Generation ${newGenome.generation}...`);
-                this.genome = newGenome;
-            }
-        });
-    }
-
-    /**
-     * Guild Interface Compatibility
-     */
-    public async boot() {
-        return this.ignite();
-    }
-
-    public checkHealth() {
-        return { status: 'WORKING', lastHeartbeat: Date.now(), errorCount: 0, memoryUsage: 0 };
     }
 }

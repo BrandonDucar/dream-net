@@ -1,5 +1,6 @@
 import { BaseAgent, AgentConfig } from "../core/BaseAgent.js";
 import { dreamEventBus } from "@dreamnet/nerve";
+import { PickleIntelSpike } from "@dreamnet/sensory-spikes";
 
 /**
  * 🏓 PickleballOracle (The Referee)
@@ -27,6 +28,14 @@ export class PickleballOracle extends BaseAgent {
 
             await this.settleProp(matchId, propType, targetMetric, player);
         });
+
+        // 🌶️ Listen for Hub Delegation
+        dreamEventBus.subscribe('Oracle.DelegationRequested', async (envelope) => {
+            if (envelope.payload.focus === 'pickleball') {
+                console.log(`[🔋 ${this.name}] ACTIVATION: Hub has delegated Pickleball witnessing. Energizing sensors...`);
+                // This would trigger proactive scanning for live matches to identify prop opportunities
+            }
+        });
     }
 
     private async settleProp(matchId: string, propType: string, targetMetric: any, player: string) {
@@ -36,11 +45,13 @@ export class PickleballOracle extends BaseAgent {
 
         console.log(`[🧠 ${this.name}] Metric Analysis: ${analysis}`);
 
-        // 2. Mock Witnessing: In production, this would hook into a real stats feed.
-        // We simulate a degen "witnessing" event.
-        const witnessedValue = this.simulateMetricOutcome(propType);
+        // 2. Real Witnessing: Hit the Sensory Spike for actual match data
+        const spike = new PickleIntelSpike();
+        const intel = await spike.fetch({ matchId, type: 'live' });
 
-        console.log(`[🕊️ ${this.name}] WINNER DETERMINED for ${propType}: ${witnessedValue}`);
+        const witnessedValue = this.extractMetricFromIntel(intel.data, propType);
+
+        console.log(`[🕊️ ${this.name}] WINNER DETERMINED for ${propType} via ${intel.source}: ${witnessedValue} (Confidence: ${intel.confidence})`);
 
         // 3. Publish Settlement & Trigger Payout
         dreamEventBus.publish({
@@ -85,13 +96,13 @@ export class PickleballOracle extends BaseAgent {
         }
     }
 
-    private simulateMetricOutcome(propType: string): number | string {
+    private extractMetricFromIntel(data: any, propType: string): number | string {
+        // Logic to parse the normalized data from PickleIntelSpike
         switch (propType) {
-            case 'lob_count': return Math.floor(Math.random() * 5) + 1;
-            case 'third_shot_type': return Math.random() > 0.7 ? 'drive' : 'drop';
-            case 'erne_attempt': return Math.random() > 0.8 ? 'success' : 'fail';
-            case 'atp_winner': return Math.random() > 0.9 ? 'yes' : 'no';
-            case 'dink_rally_length': return Math.floor(Math.random() * 20) + 5;
+            case 'ernes': return data.ernes || 0;
+            case 'nvz_faults': return data.nvz_faults || 0;
+            case 'last_shot': return data.lastShot || 'unknown';
+            case 'score': return data.score || '0-0';
             default: return 0;
         }
     }

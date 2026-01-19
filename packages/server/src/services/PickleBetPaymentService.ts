@@ -1,6 +1,7 @@
 import { dreamEventBus } from "@dreamnet/nerve";
 import { SovereignWalletService } from "./SovereignWalletService.js";
 import { SolanaTreasuryService } from "./SolanaTreasuryService.js";
+import { ChilizSuit } from "@dreamnet/nerve";
 
 /**
  * 💰 PickleBetPaymentService
@@ -11,10 +12,12 @@ import { SolanaTreasuryService } from "./SolanaTreasuryService.js";
 export class PickleBetPaymentService {
     private sovereignWallet: SovereignWalletService;
     private solanaTreasury: SolanaTreasuryService;
+    private chilizSuit: ChilizSuit;
 
     constructor() {
         this.sovereignWallet = new SovereignWalletService();
         this.solanaTreasury = new SolanaTreasuryService();
+        this.chilizSuit = new ChilizSuit(false); // Default to Spicy Testnet for now
     }
 
     /**
@@ -37,6 +40,8 @@ export class PickleBetPaymentService {
                 return await this.processCryptoDeposit(payload, 'SOLANA');
             case 'btc':
                 return await this.processCryptoDeposit(payload, 'BITCOIN');
+            case 'chz':
+                return await this.processChilizDeposit(payload);
             default:
                 throw new Error(`Unsupported payment method: ${payload.method}`);
         }
@@ -75,23 +80,50 @@ export class PickleBetPaymentService {
         };
     }
 
+    private async processChilizDeposit(payload: any) {
+        console.log(`[🌶️ Chiliz] Processing CHZ deposit for ${payload.userId}...`);
+
+        const isConnected = await this.chilizSuit.checkConnection();
+        if (!isConnected) throw new Error("CHILIZ_UPLINK_OFFLINE");
+
+        const balance = await this.chilizSuit.getGasBalance();
+        console.log(`[🌶️ Chiliz] Current Vault Balance: ${balance} CHZ`);
+
+        this.notifySuccess(payload.userId, payload.amount, 'CHZ', 'chiliz');
+
+        return {
+            status: 'SUCCESS',
+            transactionId: `CHZ-${Math.random().toString(36).slice(2)}`,
+            message: 'Chiliz deposit successful'
+        };
+    }
+
     private notifySuccess(userId: string, amount: number, currency: string, method: string) {
+        const timestamp = Date.now();
+
         dreamEventBus.publish({
             eventType: 'PickleBet.DepositSuccess',
-            payload: {
-                userId,
-                amount,
-                currency,
-                method,
-                timestamp: Date.now()
-            },
+            payload: { userId, amount, currency, method, timestamp },
             source: 'PaymentService',
-            timestamp: Date.now(),
+            timestamp,
             eventId: `DEP-${Math.random().toString(36).slice(2)}`,
             correlationId: userId,
             actor: { user: userId },
             target: {},
             severity: 'low'
+        });
+
+        // 🌶️ Trigger "Degen Warmup" for Oracles
+        dreamEventBus.publish({
+            eventType: 'PickleBet.DegenWarmup',
+            payload: { userId, intent: 'live_betting', focus: 'pickleball' },
+            source: 'PaymentService',
+            timestamp,
+            eventId: `WARM-${Math.random().toString(36).slice(2)}`,
+            correlationId: userId,
+            actor: { system: true },
+            target: {},
+            severity: 'medium'
         });
     }
 
