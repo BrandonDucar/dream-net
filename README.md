@@ -1,5 +1,8 @@
 # 🦅 DreamNet: The Sovereign Agent Empire
 
+> [!IMPORTANT]
+> **Single source of truth: [/blackboard.md](file:///c:/Users/brand/OneDrive/Documents/GitHub/dream-net/blackboard.md)**
+
 > **Status**: [ACTIVE]
 > **Mode**: [SOVEREIGN MASTERY]
 > **Brain**: [TRIUNE MEMORY ENABLED]
