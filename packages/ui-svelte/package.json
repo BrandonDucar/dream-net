@@ -1,0 +1,21 @@
+{
+    "name": "@dreamnet/ui-svelte",
+    "version": "0.0.0",
+    "type": "module",
+    "main": "./src/index.ts",
+    "module": "./src/index.ts",
+    "types": "./src/index.ts",
+    "scripts": {
+        "build": "svelte-package",
+        "check": "svelte-check"
+    },
+    "peerDependencies": {
+        "svelte": "^5.0.0"
+    },
+    "devDependencies": {
+        "@sveltejs/package": "^2.3.9",
+        "svelte": "^5.47.1",
+        "svelte-check": "^4.1.4",
+        "typescript": "^5.9.3"
+    }
+}
