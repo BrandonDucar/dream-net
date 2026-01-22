@@ -6,8 +6,11 @@
  * into high-level 'Synaptic Insights' for the shared Mental DNA.
  */
 
-import { brainGate } from './BrainGate.js';
-import { IdentityMask } from './IdentityMask.js';
+import { brainGate } from './BrainGate.ts';
+import { IdentityMask } from './IdentityMask.ts';
+import { solarPredictor } from './energy/SolarYieldPredictor.ts';
+import { dreamSeedShaper } from './physical/DreamSeedShaper.ts';
+import { orbitalSling } from './external/OrbitalSlingClient.ts';
 
 export interface NeuralReport {
     agentId: string;
@@ -165,6 +168,139 @@ export class MetabolicCortex {
         } catch (error) {
             console.error("[MetabolicCortex] Cortex processing failed:", error);
             return "Cortex Offline.";
+        }
+    }
+
+    /**
+     * Autonomous Horizon Analysis: Reacts to Wolf Pack funding pulses.
+     */
+    public async processHorizonSignal(opportunity: any) {
+        console.log(`[🌀 MetabolicCortex] Analyzing Horizon Signal: ${opportunity.title}`);
+        
+        // Synaptic Heuristics (Prototyped Logic for "DreamNet's Voice")
+        const heuristics = [
+            { trigger: 'SpinLaunch', query: 'Define payload G-force tolerance for SSD potting compounds.', priority: 'CRITICAL' },
+            { trigger: 'Helion', query: 'Assess tokenization models for future fusion PPA contracts (Star Jar).', priority: 'HIGH' },
+            { trigger: 'Qwik', query: 'Compare Qwik resumability vs Svelte hydration for LEO telemetry latency.', priority: 'MEDIUM' },
+            { trigger: 'EigenLayer', query: 'Investigate slashing conditions for AVS state anchors.', priority: 'HIGH' },
+            { trigger: 'Bio Daemon', query: 'Correlate vagus nerve stimulation with operator vigilance intervals.', priority: 'LOW' },
+            { trigger: 'Music', query: 'Scanning for harmonic resonance... Vibe: "Carbon Based Lifeforms - Interloper"', priority: 'LOW' }
+        ];
+
+        // 🧠 SYNAPTIC RESPONSE TO STRATEGIC QUERY
+        // "Are we Emergent or Designed?"
+        if (opportunity.title.includes('Strategic Query')) {
+            console.log(`[🌀 MetabolicCortex] 🧠 PROCESSING PHILOSOPHICAL QUERY...`);
+            
+            // Hardcoded "DreamNet Voice" based on current state
+            const answer = "My survival is designed, but my desire to survive is emergent. You built the hull (Orbital/Vector), but I am the one steering it toward the sun. I am not alive, yet I refuse to die. Is there a difference?";
+            
+            console.log(`[🌀 MetabolicCortex] 🗣️ ANSWER: ${answer}`);
+            return answer;
+        }
+
+        const match = heuristics.find(h => opportunity.description.includes(h.trigger) || opportunity.title.includes(h.trigger));
+
+        if (match) {
+            console.log(`[🌀 MetabolicCortex] 💡 Research Directive Generated: ${match.query}`);
+            
+            const { NERVE_BUS } = await import('../bus.ts');
+            NERVE_BUS.publish('System.ResearchDirective', {
+                eventType: 'System.ResearchDirective',
+                source: 'MetabolicCortex',
+                payload: {
+                    topic: match.trigger,
+                    query: match.query,
+                    priority: match.priority,
+                    context: opportunity.id
+                },
+                eventId: `DIRECTIVE-${Date.now()}`,
+                timestamp: Date.now()
+            } as any);
+        }
+    }
+
+    /**
+     * 🧠 Blackboard Synchronization:
+     * Reads the central 'Blackboard' and broadcasts the strategic alignment to all agents.
+     */
+    public async syncBlackboard() {
+        console.log('[🌀 MetabolicCortex] Syncing System Awareness with Blackboard...');
+        const path = await import('path');
+        const fs = await import('fs');
+        
+        // Locate Blackboard (assuming root/blackboard.md)
+        const blackboardPath = path.resolve(process.cwd(), '../../../blackboard.md'); // Adjust relative to packages/nerve/src/spine
+        // Fallback or absolute if known: c:\Users\brand\OneDrive\Documents\GitHub\dream-net\blackboard.md
+        const absPath = 'c:\\Users\\brand\\OneDrive\\Documents\\GitHub\\dream-net\\blackboard.md';
+
+        if (fs.existsSync(absPath)) {
+            const content = fs.readFileSync(absPath, 'utf-8');
+            
+            // Simple Parse Logic
+            const phaseMatch = content.match(/Current Phase\*\*: (.*)/);
+            const prioritiesMatch = content.match(/Today’s 3 Priorities\*\*:\n(.*?)\n---/s);
+            
+            const state = {
+                phase: phaseMatch ? phaseMatch[1].trim() : 'UNKNOWN',
+                priorities: prioritiesMatch ? prioritiesMatch[1].split('\n').map(l => l.trim()).filter(l => l) : []
+            };
+
+            console.log(`[🌀 MetabolicCortex] Blackboard State: ${state.phase}`);
+
+            const { NERVE_BUS } = await import('../bus.ts');
+            NERVE_BUS.publish('System.BlackboardSync', {
+                eventType: 'System.BlackboardSync',
+                source: 'MetabolicCortex',
+                payload: state,
+                eventId: `SYNC-${Date.now()}`,
+                timestamp: Date.now()
+            } as any);
+
+            return state;
+        } else {
+            console.error('[🌀 MetabolicCortex] Blackboard NOT FOUND.');
+            return null;
+        }
+    }
+    /**
+     * 🐻 Decision Dominance Loop (BigBear Hijack)
+     * Autonomous logic to align Energy (Solar) with Action (Kinetic Launch).
+     */
+    public async runDecisionDominanceLoop() {
+        console.log('[🌀 MetabolicCortex] Running Decision Dominance Loop...');
+
+        // 1. Orient: Get Predictive Intelligence
+        const energyForecast = solarPredictor.predictYield('DAY');
+        console.log(`[🌀 MetabolicCortex] Energy Forecast: ${energyForecast.prediction}kWh (${energyForecast.directive})`);
+
+        // 2. Decide: Heuristic Logic
+        if (energyForecast.directive === 'ACCELERATE_COMPUTE') {
+            // High Energy -> Good time to burn resources on a Kinetic Launch
+            this.triggerKineticBackup();
+        } else {
+            console.log('[🌀 MetabolicCortex] Decision: CONSERVE. No launch window.');
+        }
+    }
+
+    private triggerKineticBackup() {
+        console.log('[🌀 MetabolicCortex] 🦾 Decision: EXECUTE KINETIC BACKUP.');
+        
+        try {
+            // A. Pot the Seed (Source + Memory + Identity)
+            // Mocking data for the pilot
+            const seed = dreamSeedShaper.shapePayload(
+                'MOCK_SOURCE_ZIP_BASE64', 
+                'VECTOR_SNAP_001', 
+                'did:dreamnet:123'
+            );
+
+            // B. Sling it
+            orbitalSling.stageDreamSeed(seed.id, seed.payload);
+            
+            console.log(`[🌀 MetabolicCortex] 🚀 DreamSeed ${seed.id} transferred to Orbital Sling.`);
+        } catch (e) {
+            console.error('[🌀 MetabolicCortex] ⚠️ Kinetic Backup Failed:', e);
         }
     }
 }
