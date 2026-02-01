@@ -1,0 +1,37 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "types": [
+            "node"
+        ],
+        "lib": [
+            "es2022",
+            "dom"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../../skeletal/shared"
+        },
+        {
+            "path": "../dreamstate"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

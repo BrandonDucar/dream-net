@@ -18,9 +18,11 @@ import { dns } from 'dns/promises';
 const domains = [
   'dreamnet.ink',
   'dreamnet.live',
+  'aethersafe.pro',
   'dadfi.org',
   'www.dreamnet.ink',
   'www.dreamnet.live',
+  'www.aethersafe.pro',
   'www.dadfi.org',
 ];
 
@@ -53,7 +55,7 @@ async function checkSSL(domain: string): Promise<{ valid: boolean; expiry?: Date
       `echo | openssl s_client -servername ${domain} -connect ${domain}:443 2>/dev/null | openssl x509 -noout -dates`,
       { encoding: 'utf-8', stdio: 'pipe', timeout: 5000 }
     );
-    
+
     const expiryMatch = result.match(/notAfter=(.+)/);
     if (expiryMatch) {
       return { valid: true, expiry: new Date(expiryMatch[1]) };
@@ -80,7 +82,7 @@ async function checkHTTP(domain: string): Promise<{ status?: number; redirect?: 
 
 async function scanDomain(domain: string): Promise<DomainInfo> {
   console.log(`\n🔍 Scanning ${domain}...`);
-  
+
   const info: DomainInfo = {
     domain,
     aRecords: [],
@@ -90,7 +92,7 @@ async function scanDomain(domain: string): Promise<DomainInfo> {
     nsRecords: [],
     sslValid: false,
   };
-  
+
   // DNS Records
   try {
     info.aRecords = await resolveDNS(domain, 'A');
@@ -98,7 +100,7 @@ async function scanDomain(domain: string): Promise<DomainInfo> {
     info.mxRecords = await resolveDNS(domain, 'MX');
     info.txtRecords = await resolveDNS(domain, 'TXT');
     info.nsRecords = await resolveDNS(domain, 'NS');
-    
+
     console.log(`   📍 A Records: ${info.aRecords.length > 0 ? info.aRecords.join(', ') : 'None'}`);
     console.log(`   🔗 CNAME Records: ${info.cnameRecords.length > 0 ? info.cnameRecords.join(', ') : 'None'}`);
     console.log(`   📧 MX Records: ${info.mxRecords.length > 0 ? info.mxRecords.length : 'None'}`);
@@ -106,7 +108,7 @@ async function scanDomain(domain: string): Promise<DomainInfo> {
   } catch (error: any) {
     console.log(`   ⚠️  DNS lookup failed: ${error.message}`);
   }
-  
+
   // SSL Certificate
   try {
     const ssl = await checkSSL(domain);
@@ -121,7 +123,7 @@ async function scanDomain(domain: string): Promise<DomainInfo> {
   } catch {
     console.log(`   🔒 SSL: Could not check`);
   }
-  
+
   // HTTP Status
   try {
     const http = await checkHTTP(domain);
@@ -132,16 +134,16 @@ async function scanDomain(domain: string): Promise<DomainInfo> {
   } catch {
     console.log(`   🌐 HTTP: Could not check`);
   }
-  
+
   return info;
 }
 
 async function main() {
   console.log('🌐 Scanning DreamNet Domains...\n');
   console.log('='.repeat(60));
-  
+
   const results: DomainInfo[] = [];
-  
+
   for (const domain of domains) {
     try {
       const info = await scanDomain(domain);
@@ -150,11 +152,11 @@ async function main() {
       console.error(`❌ Failed to scan ${domain}: ${error.message}`);
     }
   }
-  
+
   // Summary
   console.log('\n' + '='.repeat(60));
   console.log('📊 Domain Summary:\n');
-  
+
   results.forEach(info => {
     const status = info.sslValid && info.httpStatus === 200 ? '✅' : '⚠️';
     console.log(`${status} ${info.domain}`);
@@ -173,20 +175,20 @@ async function main() {
     }
     console.log('');
   });
-  
+
   // Check domain issuance capabilities
   console.log('='.repeat(60));
   console.log('\n🎫 Domain Issuance Capabilities:\n');
-  
+
   try {
-    const { getDomainsForWallet } = await import('../packages/domain-issuance-core');
+    const { getDomainsForWallet } = await import('../packages/organs/reproductive/domain-issuance-core');
     // Check if we can issue domains
     console.log('   ✅ Domain Issuance Core package available');
     console.log('   💡 Can issue domains via: /api/domain-issuance');
   } catch {
     console.log('   ⚠️  Domain Issuance Core not available');
   }
-  
+
   console.log('\n💡 To issue a domain:');
   console.log('   POST /api/domain-issuance/issue');
   console.log('   { "wallet": "0x...", "domain": "subdomain.dreamnet.ink" }');

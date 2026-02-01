@@ -1,0 +1,52 @@
+﻿.                                        | ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.0"})
+
+> @dreamnet/shield-core@0.1.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\packages\shield-core
+> tsc
+
+node.exe : 
+node:internal/modules/cjs/loader:1368
+At C:\Users\brand\AppData\Roaming\npm\pnpm
+.ps1:24 char:5
++     & "node$exe"  
+"$basedir/node_modules/pnpm/bin/pnpm.cjs" 
+$args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (node:internal/modules/cjs/loader:  
+  1368:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+  throw err;
+  ^
+
+Error: Cannot find module 'C:\Users\brand\
+OneDrive\Documents\GitHub\dream-net\packag
+es\shield-core\node_modules\typescript\bin
+\tsc'
+    at Function._resolveFilename 
+(node:internal/modules/cjs/loader:1365:15)
+    at defaultResolveImpl 
+(node:internal/modules/cjs/loader:1021:19)
+    at resolveForCJSWithHooks 
+(node:internal/modules/cjs/loader:1026:22)
+    at Function._load 
+(node:internal/modules/cjs/loader:1175:37)
+    at TracingChannel.traceSync 
+(node:diagnostics_channel:322:14)
+    at wrapModuleLoad 
+(node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as 
+runMain] 
+(node:internal/modules/run_main:171:5)
+    at 
+node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v22.18.0
+C:\Users\brand\OneDrive\Documents\GitHub\dream-net\packages\shield-core:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @dreamnet/shield-core@0.1.0 build: `tsc`
+Exit status 1

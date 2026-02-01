@@ -18,10 +18,9 @@ services:
   # ---------------------------------------------------------------------------
   # THE BRAIN (Control Core)
   # ---------------------------------------------------------------------------
-  control-core:
     build:
       context: .
-      dockerfile: packages/dreamnet-control-core/Dockerfile
+      dockerfile: packages/organs/endocrine/dreamnet-control-core/Dockerfile
     container_name: dreamnet_control_core
     restart: on-failure
     labels:
@@ -53,13 +52,13 @@ services:
     labels:
       - "dreamnet.role=worker"      # PREDATOR PROTOCOL: RESTART ON FAILURE
       - "dreamnet.protection=standard"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
     environment:
       # Controller manages the GPU pool
       - PORT=8080
@@ -87,11 +86,71 @@ services:
     networks:
       - dream_network
 
+  # ---------------------------------------------------------------------------
+  # THE WEB SKIN (Crawl4AI - Sensory Ingestion)
+  # ---------------------------------------------------------------------------
+  web-skin:
+    image: unclecode/crawl4ai:latest
+    container_name: dreamnet_web_skin
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=sensor"
+      - "dreamnet.protection=standard"
+    ports:
+      - "11235:11235"
+    environment:
+      - CRAWL4AI_API_TOKEN=${CRAWL4AI_API_TOKEN:-dreamnet_secret_sensor}
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE COMMAND INTERFACE (Moltbot / Clawdbot Gateway)
+  # ---------------------------------------------------------------------------
+  moltbot-gateway:
+    image: moltbot:local
+    container_name: dreamnet_moltbot_gateway
+    restart: unless-stopped
+    ports:
+      - "11234:11234"
+    volumes:
+      - moltbot_data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - CLAWDBOT_GATEWAY_TOKEN=${MOLTBOT_TOKEN:-dreamnet_secret_cmd}
+      - CLAWDBOT_GATEWAY_PORT=11234
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ENABLED=true
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DISCORD_ENABLED=true
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CLAWDBOT_STATE_DIR=/app/data
+    command: ["node", "dist/index.js", "gateway", "--bind", "all", "--port", "11234"]
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE MEMORY FABRIC (Qdrant - Vector Mesh)
+  # ---------------------------------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: dreamnet_qdrant
+    restart: always
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - dream_network
+
 volumes:
   nerve_data:
   passports_data:
   wooly_data:
   portainer_data:
+  moltbot_data:
+  qdrant_data:
 
 networks:
   dream_network:

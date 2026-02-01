@@ -1,0 +1,45 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../../skeletal/shared"
+        },
+        {
+            "path": "../../skeletal/utils"
+        },
+        {
+            "path": "../../nervous/event-wormholes"
+        },
+        {
+            "path": "../graft-engine"
+        },
+        
+        {
+            "path": "../../skeletal/internal-ports"
+        }],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "tests"
+    ]
+}

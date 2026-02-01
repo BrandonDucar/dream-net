@@ -1,0 +1,25 @@
+{
+    "name": "@dreamnet/dreamops-treasury",
+    "version": "0.1.0",
+    "description": "ERC-4337 Autonomous Treasury for DreamNet Sovereign Economy",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "ethers": "^6.13.0",
+        "axios": "^1.7.2",
+        "zod": "^3.23.8",
+        "uuid": "^9.0.1",
+        "@coinbase/cdp-sdk": "^1.43.0",
+        "@dreamnet/nerve": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/node": "^20.12.0",
+        "vitest": "^1.6.0"
+    }
+}

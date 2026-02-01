@@ -2,11 +2,18 @@
  * Check what media files have been uploaded
  */
 
-import { db } from "../server/db";
-import { mediaAssets } from "../shared/schema";
-import { readFile } from "node:fs/promises";
+import dotenv from "dotenv";
+import path from "node:path";
+
+// Load environment variables
+dotenv.config();
+dotenv.config({ path: path.join(process.cwd(), ".env") });
+
+import { db } from "../packages/organs/integumentary/server/src/db.js";
+import { mediaAssets } from "../packages/organs/skeletal/shared/schema.js";
+import { readFile, rename, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, basename } from "node:path";
 
 async function checkMedia() {
   console.log("🔍 Checking uploaded media files...\n");
@@ -31,11 +38,11 @@ async function checkMedia() {
         console.log(`   File Path: ${media.file_path}`);
         console.log(`   Size: ${(media.size_bytes / 1024 / 1024).toFixed(2)} MB`);
         console.log(`   Created: ${media.created_at}`);
-        
+
         // Check if file exists
         const fileExists = existsSync(media.file_path);
         console.log(`   File Exists: ${fileExists ? "✅" : "❌"}`);
-        
+
         if (!fileExists) {
           // Try to find it in alternative locations
           const getMediaRoot = (): string => {
@@ -52,7 +59,7 @@ async function checkMedia() {
             }
             return join(projectRoot, "media");
           };
-          
+
           const mediaRoot = getMediaRoot();
           const fileName = media.file_path.split(/[/\\]/).pop();
           const altPath = join(mediaRoot, "original", fileName || "");
@@ -60,7 +67,7 @@ async function checkMedia() {
           console.log(`   Alternative Path: ${altPath}`);
           console.log(`   Alternative Exists: ${altExists ? "✅" : "❌"}`);
         }
-        
+
         console.log("");
       }
     }
@@ -70,7 +77,7 @@ async function checkMedia() {
 
   // Check file system
   console.log("\n🔍 Checking file system for media directories...\n");
-  
+
   const getMediaRoot = (): string => {
     if (process.env.MEDIA_ROOT) {
       if (process.env.MEDIA_ROOT.startsWith("/") || process.env.MEDIA_ROOT.match(/^[A-Z]:/)) {
@@ -95,7 +102,7 @@ async function checkMedia() {
       const { readdir } = await import("node:fs/promises");
       const dirs = await readdir(mediaRoot);
       console.log(`   Subdirectories: ${dirs.join(", ")}`);
-      
+
       for (const dir of dirs) {
         const dirPath = join(mediaRoot, dir);
         const files = await readdir(dirPath);
@@ -107,5 +114,49 @@ async function checkMedia() {
   }
 }
 
-checkMedia().catch(console.error);
+async function restoreRootImages() {
+  console.log("\n🧹 Restoring root images to media-vault...\n");
+
+  const rootImages = [
+    "05159841-3041-40ad-bfff-954223e24489_1761033493669.jpg",
+    "083a9e23-fa6c-4cd2-8466-fe6cad4a54c1_1761033490037.jpg",
+    "90eb5dbb-8b2f-4fb7-8e10-0c34e10e5ba9_1761033497418.jpg"
+  ];
+
+  const projectRoot = process.cwd();
+  // TARGET: C:\dev\dream-net-media (outside project root to avoid git lock)
+  const mediaRoot = process.env.MEDIA_ROOT || join(dirname(projectRoot), "dream-net-media");
+  const targetDir = join(mediaRoot, "original");
+
+  console.log(`📡 Vault Target: ${targetDir}`);
+
+  if (!existsSync(targetDir)) {
+    console.log(`📁 Creating missing vault directory: ${targetDir}`);
+    await mkdir(targetDir, { recursive: true });
+  }
+
+  for (const imgName of rootImages) {
+    const sourcePath = join(projectRoot, imgName);
+    const targetPath = join(targetDir, imgName);
+
+    if (existsSync(sourcePath)) {
+      console.log(`📦 Moving ${imgName} to ${targetPath}`);
+      try {
+        await rename(sourcePath, targetPath);
+        console.log(` ✅ Moved successfully.`);
+      } catch (err) {
+        console.error(` ❌ Failed to move ${imgName}:`, err);
+      }
+    } else {
+      console.log(` 🛰️ ${imgName} not found in root (possibly already moved).`);
+    }
+  }
+}
+
+async function run() {
+  await checkMedia();
+  await restoreRootImages();
+}
+
+run().catch(console.error);
 

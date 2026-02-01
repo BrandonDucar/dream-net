@@ -1,0 +1,26 @@
+language = "typescript"
+
+[run]
+command = "pnpm run dev"
+
+[packager]
+manager = "pnpm"
+
+[deployment]
+run = "pnpm start"
+build = "pnpm run build"
+
+[nix]
+channel = "stable-24_05"
+
+[interpreter]
+command = ["tsx", "index.ts"]
+
+[env]
+REPL_ID = "dreamnet-sovereign"
+NODE_ENV = "development"
+
+[ports]
+"3000" = "http"
+"5173" = "http"
+"8080" = "http"

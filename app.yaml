@@ -1,0 +1,73 @@
+# App Engine Configuration for DreamNet
+# 
+# Deploy with: gcloud app deploy
+# 
+# This is the zero-ops deployment option - App Engine handles everything
+
+runtime: nodejs20
+
+# Environment variables
+env_variables:
+  NODE_ENV: production
+  PORT: 8080
+  # Add other env vars via: gcloud app deploy --set-env-vars KEY=VALUE
+
+# Automatic scaling
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 0.6
+  target_throughput_utilization: 0.6
+
+# Health checks
+readiness_check:
+  path: "/health/ready"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: 300
+
+liveness_check:
+  path: "/health/live"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 4
+  success_threshold: 2
+  initial_delay_sec: 300
+
+# Resources
+resources:
+  cpu: 2
+  memory_gb: 2
+  disk_size_gb: 10
+
+# Handlers
+handlers:
+  # API routes
+  - url: /api/.*
+    script: auto
+    secure: always
+  
+  # Health checks
+  - url: /health.*
+    script: auto
+    secure: always
+  
+  # Frontend (served by Express)
+  - url: /.*
+    script: auto
+    secure: always
+
+# Skip files
+skip_files:
+  - ^(.*/)?#.*#$
+  - ^(.*/)?.*~$
+  - ^(.*/)?.*\.py[co]$
+  - ^(.*/)?.*/RCS/.*$
+  - ^(.*/)?\..*$
+  - ^(.*/)?node_modules/.*$
+  - ^(.*/)?\.git/.*$
+  - ^(.*/)?\.env.*$
+  - ^(.*/)?dist/.*$
+

@@ -1,0 +1,39 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@dreamnet/internal-ports": [
+                "../internal-ports"
+            ],
+            "@dreamnet/internal-router": [
+                "../internal-router"
+            ],
+            "@dreamnet/lib": [
+                "../lib"
+            ],
+            "@dreamnet/shared": [
+                "../shared"
+            ]
+        }
+    },
+    "include": [
+        "index.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "src",
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
+}

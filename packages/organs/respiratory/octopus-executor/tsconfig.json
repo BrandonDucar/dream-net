@@ -1,0 +1,44 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../../respiratory/quantum-anticipation"
+        },
+        {
+            "path": "../../skeletal/shared"
+        },
+        {
+            "path": "../../respiratory/squad-alchemy"
+        },
+        {
+            "path": "../../skeletal/utils"
+        },
+        {
+            "path": "../wolf-pack"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "types.ts",
+        "logic/**/*",
+        "adapters/**/*",
+        "store/**/*"
+    ],
+    "references": [
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../../skeletal/shared"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

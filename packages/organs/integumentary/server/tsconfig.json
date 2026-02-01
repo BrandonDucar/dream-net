@@ -1,0 +1,36 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "outDir": "dist",
+        "rootDir": ".",
+        "esModuleInterop": true,
+        "types": [
+            "node",
+            "vite/client"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [
+        {
+            "path": "../../skeletal/shared"
+        },
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../dreamnet-control-core"
+        },
+        {
+            "path": "../../skeletal/dreamnet-os-core"
+        }
+    ],
+    "exclude": [
+        "dist",
+        "**/*.test.ts"
+    ]
+}

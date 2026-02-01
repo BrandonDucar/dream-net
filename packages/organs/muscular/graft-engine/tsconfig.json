@@ -1,0 +1,43 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "graftEngine.ts",
+        "registry.ts",
+        "types.ts",
+        "logic/**/*",
+        "processors/**/*",
+        "validators/**/*",
+        "events/**/*"
+    ],
+    "references": [
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../../skeletal/shared"
+        },
+        
+        {
+            "path": "../../skeletal/internal-ports"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

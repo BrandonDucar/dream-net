@@ -1,0 +1,38 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "outDir": "./dist",
+        "rootDir": ".",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "index.ts",
+        "aliveEngine.ts",
+        "types.ts",
+        "router.ts"
+    ],
+    "references": [
+        {
+            "path": "../dreamnet-control-core"
+        },
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../../skeletal/shared"
+        }
+    ],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}

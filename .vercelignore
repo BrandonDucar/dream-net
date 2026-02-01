@@ -4,7 +4,6 @@ node_modules
 .env.*.local
 
 # Build artifacts
-dist
 .cache
 
 # Server-only directories

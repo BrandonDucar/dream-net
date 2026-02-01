@@ -20,6 +20,16 @@ interface Command {
 
 const commands: Command[] = [
   {
+    intent: ['dream', 'simulate', 'run simulation', 'dream for me', 'start simulation'],
+    action: async () => {
+      const description = process.argv.slice(3).join(' ');
+      console.log('🧪 Initiating DreamNet Simulation (Project Genie)...\n');
+      const cmd = `npx tsx scripts/genie-sim.ts "${description}"`;
+      execSync(cmd, { stdio: 'inherit' });
+    },
+    description: 'Manually trigger a generative system simulation'
+  },
+  {
     intent: ['deploy', 'deploy to cloud run', 'go live', 'make it live', 'deploy now'],
     action: async () => {
       console.log('🚀 Deploying DreamNet to Cloud Run...\n');
@@ -100,7 +110,7 @@ async function main() {
   }
 
   // Find matching command
-  const command = commands.find(cmd => 
+  const command = commands.find(cmd =>
     cmd.intent.some(intent => input.includes(intent))
   );
 

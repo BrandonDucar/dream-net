@@ -1,0 +1,16 @@
+﻿≡ƒÆÄ [Sovereign Audit] Initiating Multi-Chain Health Check...
+≡ƒö╡ [BASE] Address: 0x57D7789E4E90f6FE692CAb607D69ec591581D354
+≡ƒö╡ [BASE] Balance: 0.000304400555070845 ETH
+node.exe : Γ¥î [SOLANA] Audit Failed: Invalid 
+public key input
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Γ 
+   ¥î [SOLANA] Au...ublic key input:String) [  
+  ], RemoteException
+    + FullyQualifiedErrorId : NativeCommandErr 
+   or
+ 

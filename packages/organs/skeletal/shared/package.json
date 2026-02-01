@@ -1,0 +1,24 @@
+{
+    "name": "@dreamnet/shared",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "main": "./dist/index.js",
+    "source": "./src/index.ts",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": "./dist/index.js",
+        "./*": "./dist/*.js",
+        "./genetic/Genome.js": "./dist/genetic/Genome.js",
+        "./genetic/Strains.js": "./dist/genetic/Strains.js"
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "drizzle-orm": "^0.44.7",
+        "drizzle-zod": "^0.8.3",
+        "zod": "^3.25.75"
+    },
+    "devDependencies": {}
+}
