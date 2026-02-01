@@ -38,19 +38,19 @@
 ### [Bio-Electricity & Synthetic Bio]
 
 - **Target Mind**: Michael Levin ([@drmichaellevin](https://x.com/drmichaellevin))
-- **Focus**: Xenobots, Bio-electric networks as a collective intelligence substrate.
+- **Source**: [Levin Lab Research](https://www.drmichaellevin.org/) | [Xenobots Patterns](https://github.com/leevinlab)
 - **DreamNet Utility**: Modeling the "Nerve Bus" as a bio-electric field rather than a simple pub/sub.
 
 ### [Kinetic Space Logistics]
 
 - **Target Mind**: Jonathan Yaney (SpinLaunch)
-- **Focus**: Kinetic launch systems, high-G payload resilience.
+- **Source**: [SpinLaunch Technology](https://www.spinlaunch.com/technology)
 - **DreamNet Utility**: Hardening agent state for orbital redundancy (SpinLaunch capability).
 
-### [Strategic Incentive Design]
+### [ Strategic Incentive Design]
 
 - **Target Mind**: Vitalik Buterin ([@vitalikbuterin](https://x.com/vitalikbuterin))
-- **Focus**: DAOs, Quadratic Funding, Soulbound Tokens.
+- **Source**: [Vitalik.eth - DAOs](https://vitalik.eth.limo/) | [EIP-6551](https://eips.ethereum.org/EIPS/eip-6551)
 - **DreamNet Utility**: Refining the "Sovereign Citizen" identity to be more than just a wallet.
 
 ---
