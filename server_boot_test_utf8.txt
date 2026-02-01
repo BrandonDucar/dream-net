@@ -1,0 +1,44 @@
+﻿node.exe : node:internal/modules/package_j
+son_reader:255
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (node:internal/m...json_reader:255  
+  :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+  throw new 
+ERR_MODULE_NOT_FOUND(packageName, 
+fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find 
+package '@dreamnet/internal-ports' 
+imported from C:\Users\brand\OneDrive\Docu
+ments\GitHub\dream-net\dist\index.js
+    at Object.getPackageJSONURL (node:inte
+rnal/modules/package_json_reader:255:9)
+    at packageResolve 
+(node:internal/modules/esm/resolve:767:81)
+    at moduleResolve 
+(node:internal/modules/esm/resolve:853:18)
+    at defaultResolve 
+(node:internal/modules/esm/resolve:983:11)
+    at ModuleLoader.defaultResolve 
+(node:internal/modules/esm/loader:783:12)
+    at #cachedDefaultResolve 
+(node:internal/modules/esm/loader:707:25)
+    at ModuleLoader.resolve 
+(node:internal/modules/esm/loader:690:38)
+    at ModuleLoader.getModuleJobForImport 
+(node:internal/modules/esm/loader:307:38)
+    at ModuleJob._link (node:internal/modu
+les/esm/module_job:183:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v22.18.0

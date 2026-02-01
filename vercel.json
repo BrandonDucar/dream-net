@@ -1,7 +1,7 @@
 {
     "version": 2,
-    "buildCommand": "cd packages/client && pnpm run build",
-    "outputDirectory": "packages/client/dist",
+    "buildCommand": "cd packages/organs/integumentary/client && pnpm run build",
+    "outputDirectory": "packages/organs/integumentary/client/dist",
     "rewrites": [
         {
             "source": "/api/(.*)",

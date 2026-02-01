@@ -1,0 +1,38 @@
+{
+    "version": "1.0.0",
+    "name": "DreamNet Sovereign Mesh",
+    "description": "Agent-aware permission manifest for the DreamNet organism.",
+    "permissions": {
+        "crawler": {
+            "allow": true,
+            "rate_limit": "100req/min",
+            "user_agent_required": true
+        },
+        "interaction": {
+            "dom_manipulation": "monitored",
+            "form_submission": "allowed",
+            "wallet_connection": "signature_required"
+        },
+        "api_fallbacks": [
+            {
+                "type": "openapi",
+                "url": "/api/openapi.json",
+                "priority": 1
+            },
+            {
+                "type": "mcp",
+                "url": "/mcp/gateway",
+                "priority": 2
+            }
+        ],
+        "policy": {
+            "storing_data": "ephemeral_only",
+            "resale_prohibited": true,
+            "attribution_required": true
+        }
+    },
+    "contacts": {
+        "governance": "governance@dreamnet.ink",
+        "security": "security@dreamnet.ink"
+    }
+}

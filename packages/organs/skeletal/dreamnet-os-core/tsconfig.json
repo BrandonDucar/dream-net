@@ -1,0 +1,72 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": ".",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "./**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../agent-registry-core"
+        },
+        {
+            "path": "../civic-panel-core"
+        },
+        {
+            "path": "../dream-shop"
+        },
+        {
+            "path": "../dream-tank-core"
+        },
+        {
+            "path": "../../circulatory/dream-vault"
+        },
+        {
+            "path": "../dreambet-core"
+        },
+        {
+            "path": "../economic-engine-core"
+        },
+        {
+            "path": "../field-layer"
+        },
+        {
+            "path": "../init-ritual-core"
+        },
+        {
+            "path": "../../skeletal/lib"
+        },
+        {
+            "path": "../liquidity-engine"
+        },
+        
+        {
+            "path": "../../skeletal/shared"
+        },
+        {
+            "path": "../social-hub-core"
+        },
+        {
+            "path": "../../skeletal/utils"
+        },
+        {
+            "path": "../zen-garden-core"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

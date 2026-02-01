@@ -1,4 +1,13 @@
 node_modules
+# System & Media
+*.MOV
+*.HEIC
+*.mp4
+*.MOV.mp4
+/attached_assets/*.MOV
+/attached_assets/*.HEIC
+/wisdom/*.JPG
+/wisdom/*.png
 dist
 outputs/
 .DS_Store
@@ -44,3 +53,10 @@ Thumbs.db
 data/
 db/
 !docs/*.txt
+
+# Media Vault (Externalized)
+*.MOV
+*.HEIC
+*.mp4
+*.MOV
+packages/organs/integumentary/portal/temp_vault/

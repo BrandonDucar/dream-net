@@ -1,0 +1,1543 @@
+{
+  "agents": [
+    {
+      "id": ".vercel",
+      "name": ".vercel",
+      "package": "@dreamnet/.vercel",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "aethersafe",
+      "name": "Aethersafe",
+      "package": "@dreamnet/aethersafe",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "aethersafe-core",
+      "name": "Aethersafe Core",
+      "package": "@dreamnet/aethersafe-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "agent-gateway",
+      "name": "Agent Gateway",
+      "package": "@dreamnet/agent-gateway",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "agent-registry-core",
+      "name": "Agent Registry Core",
+      "package": "@dreamnet/agent-registry-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "agent-wallet-manager",
+      "name": "Agent Wallet Manager",
+      "package": "@dreamnet/agent-wallet-manager",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "agents",
+      "name": "Agents",
+      "package": "@dreamnet/agents",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "ai-seo-core",
+      "name": "Ai Seo Core",
+      "package": "@dreamnet/ai-seo-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "alive-mode",
+      "name": "Alive Mode",
+      "package": "@dreamnet/alive-mode",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "antigravity-core",
+      "name": "Antigravity Core",
+      "package": "@dreamnet/antigravity-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "api-keeper-core",
+      "name": "Api Keeper Core",
+      "package": "@dreamnet/api-keeper-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "archimedes",
+      "name": "Archimedes",
+      "package": "@dreamnet/archimedes",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "automotive-core",
+      "name": "Automotive Core",
+      "package": "@dreamnet/automotive-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "base-mini-apps",
+      "name": "Base Mini Apps",
+      "package": "@dreamnet/base-mini-apps",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "browser-agent-core",
+      "name": "Browser Agent Core",
+      "package": "@dreamnet/browser-agent-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "card-forge-pro",
+      "name": "Card Forge Pro",
+      "package": "@dreamnet/card-forge-pro",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "chain-receipt-core",
+      "name": "Chain Receipt Core",
+      "package": "@dreamnet/chain-receipt-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "civic-panel-core",
+      "name": "Civic Panel Core",
+      "package": "@dreamnet/civic-panel-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "client",
+      "name": "Client",
+      "package": "@dreamnet/client",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "coinsensei-core",
+      "name": "Coinsensei Core",
+      "package": "@dreamnet/coinsensei-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "construction-core",
+      "name": "Construction Core",
+      "package": "@dreamnet/construction-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "creative-engine",
+      "name": "Creative Engine",
+      "package": "@dreamnet/creative-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dark-fabric",
+      "name": "Dark Fabric",
+      "package": "@dreamnet/dark-fabric",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "database",
+      "name": "Database",
+      "package": "@dreamnet/database",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "deployment-core",
+      "name": "Deployment Core",
+      "package": "@dreamnet/deployment-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "directory",
+      "name": "Directory",
+      "package": "@dreamnet/directory",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "domain-issuance-core",
+      "name": "Domain Issuance Core",
+      "package": "@dreamnet/domain-issuance-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-blob-store",
+      "name": "Dream Blob Store",
+      "package": "@dreamnet/dream-blob-store",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-cortex",
+      "name": "Dream Cortex",
+      "package": "@dreamnet/dream-cortex",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-shop",
+      "name": "Dream Shop",
+      "package": "@dreamnet/dream-shop",
+      "status": "HEADLESS",
+      "contractAddress": "0xa1E35292c736a68B9CAB7b9e5c271575632F442d"
+    },
+    {
+      "id": "dream-state-core",
+      "name": "Dream State Core",
+      "package": "@dreamnet/dream-state-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-sync-engine",
+      "name": "Dream Sync Engine",
+      "package": "@dreamnet/dream-sync-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-tank-core",
+      "name": "Dream Tank Core",
+      "package": "@dreamnet/dream-tank-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-token",
+      "name": "Dream Token",
+      "package": "@dreamnet/dream-token",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dream-vault",
+      "name": "Dream Vault",
+      "package": "@dreamnet/dream-vault",
+      "status": "HEADLESS",
+      "contractAddress": "0x832876CDAaC6e7BAd9C4B953efce19AF0D89Fbd7"
+    },
+    {
+      "id": "dreambet-core",
+      "name": "Dreambet Core",
+      "package": "@dreamnet/dreambet-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-agent-client",
+      "name": "Dreamnet Agent Client",
+      "package": "@dreamnet/dreamnet-agent-client",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-alerts-core",
+      "name": "Dreamnet Alerts Core",
+      "package": "@dreamnet/dreamnet-alerts-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-audit-core",
+      "name": "Dreamnet Audit Core",
+      "package": "@dreamnet/dreamnet-audit-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-autoscale-core",
+      "name": "Dreamnet Autoscale Core",
+      "package": "@dreamnet/dreamnet-autoscale-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-bridge",
+      "name": "Dreamnet Bridge",
+      "package": "@dreamnet/dreamnet-bridge",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-control-core",
+      "name": "Dreamnet Control Core",
+      "package": "@dreamnet/dreamnet-control-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-cost-core",
+      "name": "Dreamnet Cost Core",
+      "package": "@dreamnet/dreamnet-cost-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-cost-economic-bridge",
+      "name": "Dreamnet Cost Economic Bridge",
+      "package": "@dreamnet/dreamnet-cost-economic-bridge",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-factory",
+      "name": "Dreamnet Factory",
+      "package": "@dreamnet/dreamnet-factory",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-health-core",
+      "name": "Dreamnet Health Core",
+      "package": "@dreamnet/dreamnet-health-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-identity-passport-bridge",
+      "name": "Dreamnet Identity Passport Bridge",
+      "package": "@dreamnet/dreamnet-identity-passport-bridge",
+      "status": "HEADLESS",
+      "contractAddress": "0x62805dBCc7fb37b62d9Ca92e14aFf63d1e1424CC"
+    },
+    {
+      "id": "dreamnet-incident-core",
+      "name": "Dreamnet Incident Core",
+      "package": "@dreamnet/dreamnet-incident-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-metrics-core",
+      "name": "Dreamnet Metrics Core",
+      "package": "@dreamnet/dreamnet-metrics-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-operational-bridge",
+      "name": "Dreamnet Operational Bridge",
+      "package": "@dreamnet/dreamnet-operational-bridge",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-os-core",
+      "name": "Dreamnet Os Core",
+      "package": "@dreamnet/dreamnet-os-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-rbac-core",
+      "name": "Dreamnet Rbac Core",
+      "package": "@dreamnet/dreamnet-rbac-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-scheduler-core",
+      "name": "Dreamnet Scheduler Core",
+      "package": "@dreamnet/dreamnet-scheduler-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-shield-health-bridge",
+      "name": "Dreamnet Shield Health Bridge",
+      "package": "@dreamnet/dreamnet-shield-health-bridge",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-snail-core",
+      "name": "Dreamnet Snail Core",
+      "package": "@dreamnet/dreamnet-snail-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-types",
+      "name": "Dreamnet Types",
+      "package": "@dreamnet/dreamnet-types",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-vercel-agent",
+      "name": "Dreamnet Vercel Agent",
+      "package": "@dreamnet/dreamnet-vercel-agent",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-voice-twilio",
+      "name": "Dreamnet Voice Twilio",
+      "package": "@dreamnet/dreamnet-voice-twilio",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamnet-world",
+      "name": "Dreamnet World",
+      "package": "@dreamnet/dreamnet-world",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamops-treasury",
+      "name": "Dreamops Treasury",
+      "package": "@dreamnet/dreamops-treasury",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "dreamstate",
+      "name": "Dreamstate",
+      "package": "@dreamnet/dreamstate",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "economic-engine-core",
+      "name": "Economic Engine Core",
+      "package": "@dreamnet/economic-engine-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "env-keeper-core",
+      "name": "Env Keeper Core",
+      "package": "@dreamnet/env-keeper-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "event-wormholes",
+      "name": "Event Wormholes",
+      "package": "@dreamnet/event-wormholes",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "expansion-core",
+      "name": "Expansion Core",
+      "package": "@dreamnet/expansion-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "field-layer",
+      "name": "Field Layer",
+      "package": "@dreamnet/field-layer",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "forge-fix-core",
+      "name": "Forge Fix Core",
+      "package": "@dreamnet/forge-fix-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "governance",
+      "name": "Governance",
+      "package": "@dreamnet/governance",
+      "status": "HEADLESS",
+      "contractAddress": "0x44a2E7ee89EEa63C6EAC6532c6B356be1655ff16"
+    },
+    {
+      "id": "graft-engine",
+      "name": "Graft Engine",
+      "package": "@dreamnet/graft-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "guardian-framework-core",
+      "name": "Guardian Framework Core",
+      "package": "@dreamnet/guardian-framework-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "halo-loop",
+      "name": "Halo Loop",
+      "package": "@dreamnet/halo-loop",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "identity-grid",
+      "name": "Identity Grid",
+      "package": "@dreamnet/identity-grid",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "immune",
+      "name": "Immune",
+      "package": "@dreamnet/immune",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "inbox-squared-core",
+      "name": "Inbox Squared Core",
+      "package": "@dreamnet/inbox-squared-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "init-ritual-core",
+      "name": "Init Ritual Core",
+      "package": "@dreamnet/init-ritual-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "internal-ports",
+      "name": "Internal Ports",
+      "package": "@dreamnet/internal-ports",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "internal-router",
+      "name": "Internal Router",
+      "package": "@dreamnet/internal-router",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "jaggy-core",
+      "name": "Jaggy Core",
+      "package": "@dreamnet/jaggy-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "legal-core",
+      "name": "Legal Core",
+      "package": "@dreamnet/legal-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "lib",
+      "name": "Lib",
+      "package": "@dreamnet/lib",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "liquidity-core",
+      "name": "Liquidity Core",
+      "package": "@dreamnet/liquidity-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "liquidity-engine",
+      "name": "Liquidity Engine",
+      "package": "@dreamnet/liquidity-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "market-organ",
+      "name": "Market Organ",
+      "package": "@dreamnet/market-organ",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "mcp-gateway",
+      "name": "Mcp Gateway",
+      "package": "@dreamnet/mcp-gateway",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "media-organ",
+      "name": "Media Organ",
+      "package": "@dreamnet/media-organ",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "media-vault",
+      "name": "Media Vault",
+      "package": "@dreamnet/media-vault",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "memory-dna",
+      "name": "Memory Dna",
+      "package": "@dreamnet/memory-dna",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "metrics-engine",
+      "name": "Metrics Engine",
+      "package": "@dreamnet/metrics-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "micro-market-core",
+      "name": "Micro Market Core",
+      "package": "@dreamnet/micro-market-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "narrative-field",
+      "name": "Narrative Field",
+      "package": "@dreamnet/narrative-field",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "nerve",
+      "name": "Nerve",
+      "package": "@dreamnet/nerve",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "network-blueprints",
+      "name": "Network Blueprints",
+      "package": "@dreamnet/network-blueprints",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "neural-mesh",
+      "name": "Neural Mesh",
+      "package": "@dreamnet/neural-mesh",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "neurontainer",
+      "name": "Neurontainer",
+      "package": "@dreamnet/neurontainer",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "octopus-executor",
+      "name": "Octopus Executor",
+      "package": "@dreamnet/octopus-executor",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "omni-sync-core",
+      "name": "Omni Sync Core",
+      "package": "@dreamnet/omni-sync-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "ops-sentinel",
+      "name": "Ops Sentinel",
+      "package": "@dreamnet/ops-sentinel",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "orca-pack-core",
+      "name": "Orca Pack Core",
+      "package": "@dreamnet/orca-pack-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "orchestrator-core",
+      "name": "Orchestrator Core",
+      "package": "@dreamnet/orchestrator-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "orders",
+      "name": "Orders",
+      "package": "@dreamnet/orders",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "organs",
+      "name": "Organs",
+      "package": "@dreamnet/organs",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "platform-connector",
+      "name": "Platform Connector",
+      "package": "@dreamnet/platform-connector",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "port-governor",
+      "name": "Port Governor",
+      "package": "@dreamnet/port-governor",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "predator-scavenger",
+      "name": "Predator Scavenger",
+      "package": "@dreamnet/predator-scavenger",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "quantum-anticipation",
+      "name": "Quantum Anticipation",
+      "package": "@dreamnet/quantum-anticipation",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "quantum-shield",
+      "name": "Quantum Shield",
+      "package": "@dreamnet/quantum-shield",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "reality-check-core",
+      "name": "Reality Check Core",
+      "package": "@dreamnet/reality-check-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "reputation-lattice",
+      "name": "Reputation Lattice",
+      "package": "@dreamnet/reputation-lattice",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "rewards-engine",
+      "name": "Rewards Engine",
+      "package": "@dreamnet/rewards-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "right-sphere-core",
+      "name": "Right Sphere Core",
+      "package": "@dreamnet/right-sphere-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "runtime-bridge-core",
+      "name": "Runtime Bridge Core",
+      "package": "@dreamnet/runtime-bridge-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "sensory-spikes",
+      "name": "Sensory Spikes",
+      "package": "@dreamnet/sensory-spikes",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "server",
+      "name": "Server",
+      "package": "@dreamnet/server",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "shared",
+      "name": "Shared",
+      "package": "@dreamnet/shared",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "shield-core",
+      "name": "Shield Core",
+      "package": "@dreamnet/shield-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "slug-time-memory",
+      "name": "Slug Time Memory",
+      "package": "@dreamnet/slug-time-memory",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "social-hub-core",
+      "name": "Social Hub Core",
+      "package": "@dreamnet/social-hub-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "spider-web-core",
+      "name": "Spider Web Core",
+      "package": "@dreamnet/spider-web-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "spore-engine",
+      "name": "Spore Engine",
+      "package": "@dreamnet/spore-engine",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "squad-alchemy",
+      "name": "Squad Alchemy",
+      "package": "@dreamnet/squad-alchemy",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "squad-builder",
+      "name": "Squad Builder",
+      "package": "@dreamnet/squad-builder",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "star-bridge-lungs",
+      "name": "Star Bridge Lungs",
+      "package": "@dreamnet/star-bridge-lungs",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "swarm-terminal",
+      "name": "Swarm Terminal",
+      "package": "@dreamnet/swarm-terminal",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "tag-bridge-core",
+      "name": "Tag Bridge Core",
+      "package": "@dreamnet/tag-bridge-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "tool-gym",
+      "name": "Tool Gym",
+      "package": "@dreamnet/tool-gym",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "traffic-shaper-core",
+      "name": "Traffic Shaper Core",
+      "package": "@dreamnet/traffic-shaper-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "travel-fleet-core",
+      "name": "Travel Fleet Core",
+      "package": "@dreamnet/travel-fleet-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "trend-hijack-core",
+      "name": "Trend Hijack Core",
+      "package": "@dreamnet/trend-hijack-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "ui",
+      "name": "Ui",
+      "package": "@dreamnet/ui",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "ui-svelte",
+      "name": "Ui Svelte",
+      "package": "@dreamnet/ui-svelte",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "utils",
+      "name": "Utils",
+      "package": "@dreamnet/utils",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "vds-core",
+      "name": "Vds Core",
+      "package": "@dreamnet/vds-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "vechain-core",
+      "name": "Vechain Core",
+      "package": "@dreamnet/vechain-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "vibes-core",
+      "name": "Vibes Core",
+      "package": "@dreamnet/vibes-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "webhook-nervous-core",
+      "name": "Webhook Nervous Core",
+      "package": "@dreamnet/webhook-nervous-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "website-ai-designer",
+      "name": "Website Ai Designer",
+      "package": "@dreamnet/website-ai-designer",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "whale-pack-core",
+      "name": "Whale Pack Core",
+      "package": "@dreamnet/whale-pack-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "wolf-pack",
+      "name": "Wolf Pack",
+      "package": "@dreamnet/wolf-pack",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "wolfpack-analyst-core",
+      "name": "Wolfpack Analyst Core",
+      "package": "@dreamnet/wolfpack-analyst-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "wolfpack-funding-core",
+      "name": "Wolfpack Funding Core",
+      "package": "@dreamnet/wolfpack-funding-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "wolfpack-mailer-core",
+      "name": "Wolfpack Mailer Core",
+      "package": "@dreamnet/wolfpack-mailer-core",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "wooly-ai",
+      "name": "Wooly Ai",
+      "package": "@dreamnet/wooly-ai",
+      "status": "HEADLESS"
+    },
+    {
+      "id": "zen-garden-core",
+      "name": "Zen Garden Core",
+      "package": "@dreamnet/zen-garden-core",
+      "status": "HEADLESS"
+    }
+  ],
+  "miniApps": [
+    {
+      "id": "dreamnet-sovereign-soul",
+      "name": "DreamNet Sovereign Soul",
+      "description": "Built for the sovereign web: DreamNet Sovereign Soul delivers Immutable performance. (Sovereign App (Ticker: $SOUL))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "bet-insight-analyzer",
+      "name": "Bet Insight Analyzer",
+      "description": "The world's first High-Stakes solution for Bet Insight Analyzer. (Sovereign App (Ticker: $ODDS))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "smart-bet-tracker",
+      "name": "Smart Bet Tracker",
+      "description": "Built for the sovereign web: Smart Bet Tracker delivers XP-Enabled performance. (Sovereign App (Ticker: $SMARTBET))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "parlay-lab",
+      "name": "Parlay Lab",
+      "description": "The world's first Guild-Compatible solution for Parlay Lab. (Sovereign App (Ticker: $PARLAY))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "matchup-predictor-for-bettors",
+      "name": "Matchup Predictor for Bettors",
+      "description": "Built for the sovereign web: Matchup Predictor for Bettors delivers High-Stakes performance. (Sovereign App (Ticker: $VIG))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "goldback-valuator",
+      "name": "Goldback Valuator",
+      "description": "Experience Metaverse-Native like never before. This is Goldback Valuator. (Sovereign App (Ticker: $GOLDBACK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "precious-metals-shockwave-app",
+      "name": "Precious Metals Shockwave App",
+      "description": "Precious Metals Shockwave App: The On-Chain Assets standard for modern agents. (Sovereign App (Ticker: $SHOCK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "metals-buy-sheet-maker",
+      "name": "Metals Buy Sheet Maker",
+      "description": "The world's first Provably Fair solution for Metals Buy Sheet Maker. (Sovereign App (Ticker: $SPREAD))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "precious-metals-dealer-tool",
+      "name": "Precious Metals Dealer Tool",
+      "description": "The world's first Play-to-Earn solution for Precious Metals Dealer Tool. (Sovereign App (Ticker: $MELT))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "gold-arbitrage-insight",
+      "name": "Gold Arbitrage Insight",
+      "description": "The world's first High-Stakes solution for Gold Arbitrage Insight. (Sovereign App (Ticker: $GOLDARBI))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "wallet-score-engine",
+      "name": "Wallet Score Engine",
+      "description": "Experience Metaverse-Native like never before. This is Wallet Score Engine. (Sovereign App (Ticker: $WSE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "pack-funnel-manager",
+      "name": "Pack & Funnel Manager",
+      "description": "The world's first XP-Enabled solution for Pack & Funnel Manager. (Sovereign App (Ticker: $FUNNEL))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-protocol-maker",
+      "name": "DreamNet Protocol Maker",
+      "description": "The world's first Sovereign solution for DreamNet Protocol Maker. (Sovereign App (Ticker: $PROTO))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-ritual-designer",
+      "name": "DreamNet Ritual Designer",
+      "description": "Built for the sovereign web: DreamNet Ritual Designer delivers Permissionless performance. (Sovereign App (Ticker: $RITUAL))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-journey-designer",
+      "name": "DreamNet Journey Designer",
+      "description": "Unleash Immutable capabilities with DreamNet Journey Designer, exclusively on DreamNet. (Sovereign App (Ticker: $VIBE))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-health-dashboard",
+      "name": "DreamNet Health Dashboard",
+      "description": "DreamNet Health Dashboard: The Permissionless standard for modern agents. (Sovereign App (Ticker: $HEALTH))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-econ-designer",
+      "name": "DreamNet Econ Designer",
+      "description": "DreamNet Econ Designer: The Quantum-Ready standard for modern agents. (Sovereign App (Ticker: $MONEY))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-law-codex",
+      "name": "DreamNet Law Codex",
+      "description": "DreamNet Law Codex: The Quantum-Ready standard for modern agents. (Sovereign App (Ticker: $LAW))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamforge-studio",
+      "name": "DreamForge Studio",
+      "description": "Unleash XP-Enabled capabilities with DreamForge Studio, exclusively on DreamNet. (Sovereign App (Ticker: $COG))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-memory-vault",
+      "name": "DreamNet Memory Vault",
+      "description": "Experience Immutable like never before. This is DreamNet Memory Vault. (Sovereign App (Ticker: $STASH))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-control-app",
+      "name": "DreamNet Control App",
+      "description": "Built for the sovereign web: DreamNet Control App delivers Sovereign performance. (Sovereign App (Ticker: $NAVI))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamlab-scenario-simulator",
+      "name": "DreamLab Scenario Simulator",
+      "description": "DreamLab Scenario Simulator: The High-Stakes standard for modern agents. (Sovereign App (Ticker: $DREAMLAB))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "ohara-mapper",
+      "name": "Ohara Mapper",
+      "description": "Ohara Mapper: The On-Chain Assets standard for modern agents. (Sovereign App (Ticker: $HOME))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-time-orchestrator",
+      "name": "DreamNet Time Orchestrator",
+      "description": "Built for the sovereign web: DreamNet Time Orchestrator delivers Sovereign performance. (Sovereign App (Ticker: $TEMPORAL))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamgraph-mapper",
+      "name": "DreamGraph Mapper",
+      "description": "The world's first High-Stakes solution for DreamGraph Mapper. (Sovereign App (Ticker: $GRAPH))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "flowpipeline-creator",
+      "name": "FlowPipeline Creator",
+      "description": "Experience Provably Fair like never before. This is FlowPipeline Creator. (Sovereign App (Ticker: $CHAIN))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-backend-designer",
+      "name": "DreamNet Backend Designer",
+      "description": "Unleash Zero-Knowledge capabilities with DreamNet Backend Designer, exclusively on DreamNet. (Sovereign App (Ticker: $STORE))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-ops-cockpit",
+      "name": "DreamNet Ops Cockpit",
+      "description": "Experience Quantum-Ready like never before. This is DreamNet Ops Cockpit. (Sovereign App (Ticker: $OPS))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "action-planner-permission-hub",
+      "name": "Action Planner & Permission Hub",
+      "description": "The world's first Guild-Compatible solution for Action Planner & Permission Hub. (Sovereign App (Ticker: $BRAIN))",
+      "category": "gaming",
+      "status": "active",
+      "contractAddress": "0x73999460083aC079A199B10f1DE1f4A9cA3db837"
+    },
+    {
+      "id": "social-identity-manager",
+      "name": "Social Identity Manager",
+      "description": "Unleash Play-to-Earn capabilities with Social Identity Manager, exclusively on DreamNet. (Sovereign App (Ticker: $RELAY))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-badge-manager",
+      "name": "DreamNet Badge Manager",
+      "description": "Experience Permissionless like never before. This is DreamNet Badge Manager. (Sovereign App (Ticker: $REP))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "miniworld-hub",
+      "name": "Miniworld Hub",
+      "description": "Experience High-Stakes like never before. This is Miniworld Hub. (Sovereign App (Ticker: $MINI))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "funnelcartographer",
+      "name": "FunnelCartographer",
+      "description": "FunnelCartographer: The On-Chain Assets standard for modern agents. (Sovereign App (Ticker: $MAPP))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-scriptlab",
+      "name": "DreamNet ScriptLab",
+      "description": "Experience Permissionless like never before. This is DreamNet ScriptLab. (Sovereign App (Ticker: $THREAD))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "resonance-radar",
+      "name": "Resonance Radar",
+      "description": "Resonance Radar: The On-Chain Assets standard for modern agents. (Sovereign App (Ticker: $RADAR))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-drop-designer",
+      "name": "DreamNet Drop Designer",
+      "description": "The world's first Quantum-Ready solution for DreamNet Drop Designer. (Sovereign App (Ticker: $DROP))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "culturecoin-creator",
+      "name": "CultureCoin Creator",
+      "description": "Experience Metaverse-Native like never before. This is CultureCoin Creator. (Sovereign App (Ticker: $CULTURE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "meme-campaign-planner",
+      "name": "Meme Campaign Planner",
+      "description": "Experience On-Chain Assets like never before. This is Meme Campaign Planner. (Sovereign App (Ticker: $MEMEPLAN))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "bs-paddlepro",
+      "name": "BS PaddlePro",
+      "description": "Built for the sovereign web: BS PaddlePro delivers On-Chain Assets performance. (Sovereign App (Ticker: $RANK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "pulsecaster",
+      "name": "PulseCaster",
+      "description": "The world's first Play-to-Earn solution for PulseCaster. (Sovereign App (Ticker: $PULSE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "memeengine-core",
+      "name": "MemeEngine Core",
+      "description": "Unleash Provably Fair capabilities with MemeEngine Core, exclusively on DreamNet. (Sovereign App (Ticker: $CORE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "culturescore-meme-analyzer",
+      "name": "CultureScore Meme Analyzer",
+      "description": "Unleash High-Stakes capabilities with CultureScore Meme Analyzer, exclusively on DreamNet. (Sovereign App (Ticker: $SCORE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "remixengine-meme-mutator",
+      "name": "RemixEngine Meme Mutator",
+      "description": "RemixEngine Meme Mutator: The High-Stakes standard for modern agents. (Sovereign App (Ticker: $REMIX))",
+      "category": "gaming",
+      "status": "active",
+      "contractAddress": "0x66Ef7DDb340537E22F567D60d6c22EDA2B8c3619"
+    },
+    {
+      "id": "memeforge-ai-meme-generator",
+      "name": "MemeForge: AI Meme Generator",
+      "description": "MemeForge: AI Meme Generator: The Play-to-Earn standard for modern agents. (Sovereign App (Ticker: $MEME))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamcook-express",
+      "name": "DreamCook Express",
+      "description": "Experience XP-Enabled like never before. This is DreamCook Express. (Sovereign App (Ticker: $COOK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "datahub-core-manager",
+      "name": "DataHub Core Manager",
+      "description": "Experience On-Chain Assets like never before. This is DataHub Core Manager. (Sovereign App (Ticker: $NODE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamguild-doa-creator",
+      "name": "DreamGuild DOA Creator",
+      "description": "DreamGuild DOA Creator: The XP-Enabled standard for modern agents. (Sovereign App (Ticker: $GUILD))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "basetime-oracle",
+      "name": "BaseTime Oracle",
+      "description": "Experience High-Stakes like never before. This is BaseTime Oracle. (Sovereign App (Ticker: $LOG))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "rewindpay-rewards",
+      "name": "RewindPay Rewards",
+      "description": "The world's first High-Stakes solution for RewindPay Rewards. (Sovereign App (Ticker: $BACKPAY))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamflex-pools",
+      "name": "DreamFlex Pools",
+      "description": "Built for the sovereign web: DreamFlex Pools delivers Guild-Compatible performance. (Sovereign App (Ticker: $POOLS))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "emotionchain",
+      "name": "EmotionChain",
+      "description": "Experience Play-to-Earn like never before. This is EmotionChain. (Sovereign App (Ticker: $FEEL))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "timelock-playground",
+      "name": "TimeLock Playground",
+      "description": "The world's first Provably Fair solution for TimeLock Playground. (Sovereign App (Ticker: $LOCK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "ledgerlens-insight",
+      "name": "LedgerLens Insight",
+      "description": "Experience High-Stakes like never before. This is LedgerLens Insight. (Sovereign App (Ticker: $SIGHT))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "cryptoguardian",
+      "name": "CryptoGuardian",
+      "description": "Experience Provably Fair like never before. This is CryptoGuardian. (Sovereign App (Ticker: $GUARD))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "vault-card-nfts",
+      "name": "Vault Card NFTs",
+      "description": "Experience Metaverse-Native like never before. This is Vault Card NFTs. (Sovereign App (Ticker: $VAULT))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "onchain-identity-modes",
+      "name": "OnChain Identity Modes",
+      "description": "Experience Guild-Compatible like never before. This is OnChain Identity Modes. (Sovereign App (Ticker: $MODE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "receiptnet",
+      "name": "ReceiptNet",
+      "description": "Experience Guild-Compatible like never before. This is ReceiptNet. (Sovereign App (Ticker: $TRACK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "taproot-wallet",
+      "name": "TapRoot Wallet",
+      "description": "The world's first Guild-Compatible solution for TapRoot Wallet. (Sovereign App (Ticker: $ROOT))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "modu-v2-unified-payment-system",
+      "name": "MODU V2: Unified Payment System",
+      "description": "Built for the sovereign web: MODU V2: Unified Payment System delivers On-Chain Assets performance. (Sovereign App (Ticker: $UPS))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "metalsmind-pro",
+      "name": "MetalsMind Pro",
+      "description": "Experience Play-to-Earn like never before. This is MetalsMind Pro. (Sovereign App (Ticker: $AUAG))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "formflow-designer",
+      "name": "FormFlow Designer",
+      "description": "FormFlow Designer: The XP-Enabled standard for modern agents. (Sovereign App (Ticker: $FORM))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "offer-design-lab",
+      "name": "Offer Design Lab",
+      "description": "Experience Play-to-Earn like never before. This is Offer Design Lab. (Sovereign App (Ticker: $WIN))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "idea-to-saas-transformer",
+      "name": "Idea-to-SaaS Transformer",
+      "description": "The world's first On-Chain Assets solution for Idea-to-SaaS Transformer. (Sovereign App (Ticker: $SASS))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-alchemist",
+      "name": "DreamNet Alchemist",
+      "description": "The world's first Permissionless solution for DreamNet Alchemist. (Sovereign App (Ticker: $BUDDY))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamhive-navigator",
+      "name": "DreamHive Navigator",
+      "description": "DreamHive Navigator: The High-Stakes standard for modern agents. (Sovereign App (Ticker: $HIVE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-converter",
+      "name": "DreamNet Converter",
+      "description": "Unleash Quantum-Ready capabilities with DreamNet Converter, exclusively on DreamNet. (Sovereign App (Ticker: $D2D))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreambuddy-customizer",
+      "name": "DreamBuddy Customizer",
+      "description": "DreamBuddy Customizer: The High-Stakes standard for modern agents. (Sovereign App (Ticker: $BUDS))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-debug-oracle",
+      "name": "Dreamnet DeBug Oracle",
+      "description": "The world's first XP-Enabled solution for Dreamnet DeBug Oracle. (Sovereign App (Ticker: $DEBUG))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnet-debug-oracle",
+      "name": "DreamNet Debug Oracle",
+      "description": "The world's first Permissionless solution for DreamNet Debug Oracle. (Sovereign App (Ticker: $DEBUG))",
+      "category": "utility",
+      "status": "active"
+    },
+    {
+      "id": "dreamforge-mini",
+      "name": "Dreamforge Mini",
+      "description": "Dreamforge Mini: The Provably Fair standard for modern agents. (Sovereign App (Ticker: $PULSE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "codelens-analyzer",
+      "name": "CodeLens Analyzer",
+      "description": "CodeLens Analyzer: The Play-to-Earn standard for modern agents. (Sovereign App (Ticker: $CODE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamlens-scout",
+      "name": "DreamLens Scout",
+      "description": "Experience On-Chain Assets like never before. This is DreamLens Scout. (Sovereign App (Ticker: $DLS))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dream-mirror-reflector",
+      "name": "Dream Mirror Reflector",
+      "description": "Built for the sovereign web: Dream Mirror Reflector delivers Metaverse-Native performance. (Sovereign App (Ticker: $LOOK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamdev-cookbox",
+      "name": "DreamDev Cookbox",
+      "description": "Unleash Provably Fair capabilities with DreamDev Cookbox, exclusively on DreamNet. (Sovereign App (Ticker: $COOK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamprompter-ai",
+      "name": "DreamPrompter Ai",
+      "description": "DreamPrompter Ai: The Provably Fair standard for modern agents. (Sovereign App (Ticker: $PROMPT))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamnote-scan",
+      "name": "DreamNote Scan",
+      "description": "Built for the sovereign web: DreamNote Scan delivers XP-Enabled performance. (Sovereign App (Ticker: $NOTE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreambudget-builder-pro",
+      "name": "DreamBudget Builder Pro",
+      "description": "Built for the sovereign web: DreamBudget Builder Pro delivers High-Stakes performance. (Sovereign App (Ticker: $BUD))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamfit-coach",
+      "name": "DreamFit Coach",
+      "description": "DreamFit Coach: The On-Chain Assets standard for modern agents. (Sovereign App (Ticker: $FIT))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamchat-buddy",
+      "name": "DreamChat Buddy",
+      "description": "The world's first High-Stakes solution for DreamChat Buddy. (Sovereign App (Ticker: $PAL))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreammeal-planner",
+      "name": "DreamMeal Planner",
+      "description": "Unleash Play-to-Earn capabilities with DreamMeal Planner, exclusively on DreamNet. (Sovereign App (Ticker: $MEAL))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamforge-story-maker",
+      "name": "DreamForge Story Maker",
+      "description": "The world's first Guild-Compatible solution for DreamForge Story Maker. (Sovereign App (Ticker: $STORY))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamflow-scheduler",
+      "name": "DreamFlow Scheduler",
+      "description": "Built for the sovereign web: DreamFlow Scheduler delivers Play-to-Earn performance. (Sovereign App (Ticker: $FLOW))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamboost-app",
+      "name": "DreamBoost App",
+      "description": "DreamBoost App: The High-Stakes standard for modern agents. (Sovereign App (Ticker: $RANK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamzone-mapper",
+      "name": "DreamZone Mapper",
+      "description": "Experience Metaverse-Native like never before. This is DreamZone Mapper. (Sovereign App (Ticker: $ZONE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamrank-engine",
+      "name": "DreamRank Engine",
+      "description": "Experience High-Stakes like never before. This is DreamRank Engine. (Sovereign App (Ticker: $RANK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamzone-mapper",
+      "name": "DreamZone Mapper",
+      "description": "The world's first On-Chain Assets solution for DreamZone Mapper. (Sovereign App (Ticker: $ZONE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamblade-trials",
+      "name": "DreamBlade Trials",
+      "description": "Experience XP-Enabled like never before. This is DreamBlade Trials. (Sovereign App (Ticker: $BLADE))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dream-slayer-quest",
+      "name": "Dream Slayer Quest",
+      "description": "The world's first On-Chain Assets solution for Dream Slayer Quest. (Sovereign App (Ticker: $HERO))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreampulse-studio",
+      "name": "Dreampulse Studio",
+      "description": "Dreampulse Studio: The On-Chain Assets standard for modern agents. (Sovereign App (Ticker: $ISM))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dreamkid-guard",
+      "name": "DreamKid Guard",
+      "description": "Unleash XP-Enabled capabilities with DreamKid Guard, exclusively on DreamNet. (Sovereign App (Ticker: $TECHHABI))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "dream-seed-generator",
+      "name": "Dream Seed Generator",
+      "description": "Dream Seed Generator: The XP-Enabled standard for modern agents. (Sovereign App (Ticker: $STARTUPK))",
+      "category": "gaming",
+      "status": "active"
+    },
+    {
+      "id": "picklebet-casino",
+      "name": "PickleBet - Exclusive Pickleball Casino",
+      "description": "The world's first Real-Money solution for specialized Pickleball prop betting. (Sovereign App (Ticker: $PICKLE))",
+      "category": "gaming",
+      "status": "active"
+    }
+  ],
+  "contracts": {
+    "base": {
+      "chainId": 8453,
+      "contracts": {
+        "DreamPassport": "0x62805dBCc7fb37b62d9Ca92e14aFf63d1e1424CC",
+        "DreamGovernance": "0x44a2E7ee89EEa63C6EAC6532c6B356be1655ff16",
+        "DreamVault": "0x832876CDAaC6e7BAd9C4B953efce19AF0D89Fbd7",
+        "BountyEscrow": "0x21c4BD450a6689353aFfB3EDCA887aa9F908Fc2c",
+        "BadgeNFT": "0x6Ece1531C0547b366Fd10814Fae5963788d2c2a1",
+        "DreamRemixRegistry": "0x66Ef7DDb340537E22F567D60d6c22EDA2B8c3619",
+        "WhisperMessenger": "0x1cBf5C4AB1aa0f1D0Db0fF17f978EC1e165E1002",
+        "SeasonalEventsRegistry": "0xdf30a28fA5DbF392DD76Ed761852a31F772AcC27",
+        "NightmareRegistry": "0x29f2E979E5E2ec0683B1D0ee660824eeb12B7AdF",
+        "RevenueSplitter": "0x07ed77169aD71905aF3778b42760F3269a0D0C74",
+        "ProgressionRegistry": "0xDa02C8383D42C9b0943d532fC9F95C27C9A8055B",
+        "MissionRegistry": "0x73999460083aC079A199B10f1DE1f4A9cA3db837",
+        "DreamDriftersRegistry": "0x3987902f05Dfca6197D08AcB694e48BE5Df8cE65",
+        "DreamTimeCapsule": "0x891A71eB2D20692D22bF7106B16Ba48253826409",
+        "DreamDNASequencer": "0xd9B140aFB0ef0b358f8342fe6381f6589d450A87",
+        "DreamPredictionMarket": "0x036b043Ebb894f16639452fC35B7C379bbD05593",
+        "DreamShop": "0xa1E35292c736a68B9CAB7b9e5c271575632F442d",
+        "TributeGate": "0x318292412250E906951f849eB3446c00b7688a6B",
+        "WalletScoreRegistry": "0x61A0523f068246E72a77e70f7B30AC2e4bfa87D5",
+        "GameRegistry": "0xB38005e10E376D5D43699B45E7fc2f06A8465a5D",
+        "GameAchievementNFT": "0x4AF7a82908C64e554584bD6A0F9145521F1913d6",
+        "CardForgeNFT": "0x34e1079820b4c733bE7D67A5F980ea4c752DbD47"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+    "agent_name": "DreamNet Swarm",
+    "agent_version": "1.0.0",
+    "description": "The Operating System for Autonomous Agents.",
+    "author": "DreamNet Collective",
+    "license": "MIT",
+    "capabilities": [
+        "multi_agent_orchestration",
+        "blockchain_settlement",
+        "social_media_autonomy",
+        "real_time_telemetry"
+    ],
+    "entry_point": "packages/server/src/index.ts",
+    "interfaces": {
+        "http": {
+            "port": 3000,
+            "docs": "/api/docs"
+        },
+        "p2p": {
+            "protocol": "dreamnet/v1",
+            "port": 4000
+        }
+    },
+    "metadata": {
+        "website": "https://dreamnet.live",
+        "google_dev": "https://g.dev/dreamnetgmo",
+        "documentation": "https://docs.dreamnet.live",
+        "repository": "https://github.com/BrandonDucar/dream-net"
+    }
+}

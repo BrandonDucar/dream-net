@@ -1,0 +1,22 @@
+{
+    "name": "@dreamnet/market-organ",
+    "version": "0.1.0",
+    "description": "Market Sentiment & Trade Execution Organ for DreamNet Swarm",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "drizzle-orm": "^0.30.0",
+        "@dreamnet/nerve": "workspace:*",
+        "@dreamnet/shared": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.4.0",
+        "@types/node": "^20.12.0",
+        "vitest": "^1.6.0"
+    }
+}

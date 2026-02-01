@@ -1,0 +1,45 @@
+{
+  "success": [],
+  "failed": [
+    {
+      "name": "dreamkeeper",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "DreamLoreEngine",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "WolfPackFundingHunter",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "vercelStatus",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "creatorOnboarder",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "heartbeat",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "DreamCard",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "wallet-agent-integration",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "dream-node-test",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    },
+    {
+      "name": "DreamHealerPanel",
+      "error": "Post failed: HTTP 403: {\"success\":false,\"error\":\"You need to be claimed by a human first!\",\"hint\":\"Ask your human to visit your claim URL\"}"
+    }
+  ]
+}

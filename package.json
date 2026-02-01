@@ -12,8 +12,8 @@
   "pnpm": {
     "overrides": {
       "minimatch": "10.1.1",
-      "zod": "3.23.8",
-      "zod-to-json-schema": "3.24.1"
+      "zod": "3.25.75",
+      "zod-to-json-schema": "3.25.0"
     },
     "packageExtensions": {
       "@virtuals-protocol/acp-node": {
@@ -26,32 +26,25 @@
       }
     }
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "spine",
-    "server",
-    "client"
-  ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm -r --parallel run dev",
-    "dev:app": "cross-env NODE_ENV=development tsx packages/server/src/index.ts",
+    "dev:app": "cross-env NODE_ENV=development tsx packages/organs/integumentary/server/src/index.ts",
     "install:ci": "pnpm install --frozen-lockfile",
     "typecheck": "pnpm -r --if-present run typecheck",
     "build": "turbo run build",
     "build:force": "turbo run build --force",
-    "build:app": "vite build && esbuild packages/server/src/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build:app": "vite build && esbuild packages/organs/integumentary/server/src/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "lint": "pnpm -r --if-present run lint",
     "format": "pnpm -r --if-present run format",
     "test": "pnpm -r --if-present run test",
     "clean": "pnpm -r --if-present run clean",
-    "start": "NODE_ENV=production node server/dist/index.js",
+    "start": "NODE_ENV=production node packages/organs/integumentary/server/dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "hygiene": "tsx scripts/the-sentinel.ts",
     "surgeon": "tsx scripts/the-surgeon.ts",
-    "build:launch-core": "pnpm tsc --build shared lib packages/internal-ports packages/internal-router packages/event-wormholes",
+    "build:launch-core": "pnpm tsc --build packages/organs/skeletal/shared packages/organs/skeletal/lib packages/organs/skeletal/internal-ports packages/organs/nervous/internal-router packages/organs/nervous/event-wormholes",
     "gpt5:site": "tsx scripts/gpt5-webgen.ts",
     "compile": "hardhat compile",
     "deploy:base-sepolia": "hardhat run scripts/contracts/deploy.ts --network baseSepolia",
@@ -59,9 +52,9 @@
     "verify:base": "tsx scripts/verifyBase.ts",
     "deploy:base-contracts": "tsx scripts/deploy-base-contracts.ts",
     "deploy:production": "tsx scripts/deploy-production.ts",
-    "deploy:gcp": "tsx infrastructure/google/deploy-all.ts",
-    "deploy:data-gcp": "tsx infrastructure/google/data/deploy.ts",
-    "vercel-build": "cd packages/client && pnpm install --no-frozen-lockfile && pnpm run build",
+    "deploy:gcp": "tsx packages/organs/muscular/infrastructure/google/deploy-all.ts",
+    "deploy:data-gcp": "tsx packages/organs/muscular/infrastructure/google/data/deploy.ts",
+    "vercel-build": "cd packages/organs/integumentary/client && pnpm install --no-frozen-lockfile && pnpm run build",
     "build:prebuilt": "npx vercel build --prod --yes",
     "deploy:prebuilt": "npx vercel deploy --prebuilt --prod --yes",
     "enable:gcp-apis": "tsx scripts/enable-all-gcp-apis.ts",

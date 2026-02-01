@@ -1,0 +1,2 @@
+﻿error TS5055: Cannot write file 'C:/Users/brand/OneDrive/Documents/GitHub/dream-net/packages/shield-core/dist/index.d.ts' because it would overwrite input file.
+

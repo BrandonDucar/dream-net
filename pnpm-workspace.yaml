@@ -1,14 +1,3 @@
 packages:
-  - "packages/*"
-  - "apps/*"
-  - "spine"
-  - "server"
-  - "client"
-  - "!apps/_site-old-DISABLED"
-  - "!apps/oharas-eye"
-  - "!apps/dreamnet-quest"
-  - "!apps/sitebuilder"
-  - "!apps/seo"
-  - "!apps/hub"
-  - "!apps/dreamos"
-  - "!apps/api-forge"
+  - 'packages/organs/**'
+  - '!**/node_modules/**'

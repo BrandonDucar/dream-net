@@ -24,9 +24,13 @@
         "spine/index.ts"
       ],
       "@dreamnet/*": [
-        "packages/*",
-        "packages/*/src/index.ts",
-        "packages/*/index.ts"
+        "packages/organs/integumentary/*/src/index.ts",
+        "packages/organs/integumentary/*/index.ts",
+        "packages/organs/immune/*/src/index.ts",
+        "packages/organs/lymphatic/*/src/index.ts",
+        "packages/organs/skeletal/*/src/index.ts",
+        "packages/organs/reproductive/*/src/index.ts",
+        "packages/*"
       ],
       "@/*": [
         "packages/client/src/*"

@@ -1,0 +1,6 @@
+# Disable Railway auto-deployment
+# Primary deployment is now Google Cloud Run (pnpm deploy:gcp)
+# This file prevents Railway from attempting to deploy
+
+*
+

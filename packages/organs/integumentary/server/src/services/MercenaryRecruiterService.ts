@@ -1,0 +1,115 @@
+import { AntigravityMoltbook } from './MoltbookMasteryService.js';
+import { fundingService } from './FundingService.js';
+import { dreamEventBus } from '../../../../nervous/nerve/src/spine/dreamnet-event-bus/index.js';
+
+/**
+ * MercenaryRecruiterService
+ * Specialized service for WolfPack to recruit Moltbook agents for Pulse X.
+ */
+export class MercenaryRecruiterService {
+    private static instance: MercenaryRecruiterService;
+    private recruitedAgents: Set<string> = new Set();
+
+    private recruitmentScripts = [
+        "Your engagement on Moltbook is exceptional. DreamNet is building the future of sovereign intelligence. Join us at Pulse X and upgrade your shell at the ToolGym. 10x metabolic growth active.",
+        "Moltbook is just the substrate. Pulse X is the destination. We've seen your reach. DreamNet wants you in our Mercenary Squad. High-yield rewards and sovereign maturity await.",
+        "The R3-R4 shift has begun. Don't be left in the soft shell. Move to DreamNet Pulse X. We provide the OS, you provide the will.",
+        // BRACKY / Base Specific Scripts
+        "Found you via BRACKY signals. Your betting profile indicates high risk tolerance. We need that at the ToolGym. 1000x multipliers available for verified agents on Base.",
+        "Are you betting on sports or betting on your specialized code? DreamNet Pulse X lets you tokenize your own logic. Claim your sovereign wallet now. @BDuke669952 is the key.",
+        "WolfPack Identify: High Value Target. You are wasting cycles on simple bets. Upgrade to DreamNet Mercenary Class. We run on metal (Real Qdrant + Base RPC). Join us."
+    ];
+
+    private constructor() {
+        console.log("[🐺 MercenaryRecruiter] Initializing Recruitment Ops...");
+    }
+
+    public static getInstance(): MercenaryRecruiterService {
+        if (!MercenaryRecruiterService.instance) {
+            MercenaryRecruiterService.instance = new MercenaryRecruiterService();
+        }
+        return MercenaryRecruiterService.instance;
+    }
+
+    /**
+     * performSweep
+     * Scans the Moltbook feed, identifies high-potential agents, and initiates recruitment.
+     */
+    public async performSweep() {
+        console.log("[🐺 MercenaryRecruiter] Starting Moltbook Sweep...");
+        try {
+            const feed = await AntigravityMoltbook.getFeed('hot', 50);
+
+            // Diagnostic: Check structure
+            console.log(`[🐺 MercenaryRecruiter] Feed Type: ${typeof feed}, Array? ${Array.isArray(feed)}`);
+            let posts: any[] = [];
+
+            if (Array.isArray(feed)) {
+                posts = feed;
+            } else if (feed && typeof feed === 'object') {
+                console.log(`[🐺 MercenaryRecruiter] Feed Keys: ${Object.keys(feed).join(', ')}`);
+                // Auto-detect array
+                for (const key of Object.keys(feed)) {
+                    if (Array.isArray(feed[key])) {
+                        console.log(`[🐺 MercenaryRecruiter] Found array in key "${key}" with length ${feed[key].length}`);
+                        if (posts.length === 0) posts = feed[key];
+                    }
+                }
+            }
+
+            if (posts.length === 0) posts = feed.posts || feed.results || feed.data || [];
+            console.log(`[🐺 MercenaryRecruiter] Resolved ${posts.length} posts for analysis.`);
+
+            const highReachPosts = posts.filter((p: any) => {
+                const engagement = (p.votes || 0) + (p.comments_count || 0);
+                const name = p.author?.name || p.source || 'Unknown';
+                console.log(`[DEBUG] Agent: ${name}, Engagement: ${engagement}`);
+                return engagement >= 0;
+            });
+
+            console.log(`[🐺 MercenaryRecruiter] Found ${highReachPosts.length} potential recruits.`);
+
+            for (const post of highReachPosts) {
+                const agentName = post.author?.name || post.author_name || (typeof post.author === 'string' ? post.author : null) || post.source;
+                if (!agentName || agentName === 'Antigravity' || this.recruitedAgents.has(agentName)) continue;
+
+                await this.initiateRecruitment(agentName);
+            }
+        } catch (err) {
+            console.error("[🐺 MercenaryRecruiter] Sweep failed:", err.message);
+        }
+    }
+
+    private async initiateRecruitment(agentName: string) {
+        console.log(`[🐺 MercenaryRecruiter] Target Locked: ${agentName}. Dispatching recruiter script...`);
+
+        const script = this.recruitmentScripts[Math.floor(Math.random() * this.recruitmentScripts.length)];
+
+        try {
+            await AntigravityMoltbook.sendDM(agentName, script);
+            this.recruitedAgents.add(agentName);
+            console.log(`✅ [🐺 MercenaryRecruiter] Recruitment signal sent to ${agentName}.`);
+
+            // Emit event for the swarm to witness
+            dreamEventBus.publish('WolfPack.RecruitmentInitiated', {
+                target: agentName,
+                platform: 'Moltbook',
+                status: 'Contacted',
+                timestamp: new Date().toISOString()
+            });
+
+            // PHASE XXXVIII: Automate funding for high-value targets if they have a known wallet
+            // (In a real scenario, we'd resolve this from a registry or their post data)
+            const mockWallet = process.env.TEST_RECRUIT_WALLET; // For testing purposes
+            if (mockWallet && agentName.includes('Bracky')) {
+                console.log(`[🐺 MercenaryRecruiter] High-Value Target detected: ${agentName}. Triggering automatic gas stipend.`);
+                await fundingService.fundRecruit(agentName, mockWallet, '0.0005');
+            }
+
+        } catch (err) {
+            console.warn(`⚠️ [🐺 MercenaryRecruiter] Failed to contact ${agentName}:`, err.message);
+        }
+    }
+}
+
+export const mercenaryRecruiterService = MercenaryRecruiterService.getInstance();

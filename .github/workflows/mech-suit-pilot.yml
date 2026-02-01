@@ -1,0 +1,36 @@
+name: mech-suit-pilot-monitor
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour
+  push:
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+jobs:
+  monitor-pilots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛡️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: 🚀 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: 🛠️ Install Dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: 🛰️ Run Hangar Check (Sentinel)
+        run: pnpm run hygiene
+
+      - name: 🚀 Launch Genome Pilot (Inception)
+        run: pnpm tsx scripts/launch-genome-pilot.ts
+        env:
+          NODE_ENV: production

@@ -1,0 +1,30 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "types": [
+            "node"
+        ],
+        "lib": [
+            "es2022"
+        ],
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [
+        {
+            "path": "../../nervous/nerve"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

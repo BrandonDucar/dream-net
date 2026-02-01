@@ -1,0 +1,37 @@
+{
+    "extends": "../../../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@dreamnet/internal-ports": [
+                "../internal-ports/dist/index.d.ts"
+            ],
+            "@dreamnet/lib": [
+                "../lib/dist/index.d.ts"
+            ],
+            "@dreamnet/shared": [
+                "../shared/dist/index.d.ts"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

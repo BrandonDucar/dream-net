@@ -1,0 +1,19 @@
+{
+    "schema_version": "v1",
+    "name_for_model": "DreamNet",
+    "name_for_human": "DreamNet Agent Swarm",
+    "description_for_model": "DreamNet is a Multi-Agent System (MAS) that allows users to interact with a swarm of specialized AI agents. This plugin provides access to the DreamNet Agent Registry, allowing you to search for agents, view their capabilities (Manifest), and interact with them via the Neural Hub.",
+    "description_for_human": "Connect with the DreamNet Agent Swarm. Discover specialized agents for finance, coding, creative writing, and more.",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "https://dreamnet.live/api/openapi.yaml",
+        "is_user_authenticated": false
+    },
+    "logo_url": "https://dreamnet.live/logo.png",
+    "contact_email": "hello@dreamnet.live",
+    "google_dev": "https://g.dev/dreamnetgmo",
+    "legal_info_url": "https://dreamnet.live/legal"
+}
