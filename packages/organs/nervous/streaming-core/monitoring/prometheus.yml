@@ -1,0 +1,43 @@
+{
+  "global": {
+    "scrape_interval": "15s",
+    "evaluation_interval": "15s"
+  },
+  "rule_files": [
+    "streaming_rules.yml"
+  ],
+  "scrape_configs": [
+    {
+      "job_name": "nats",
+      "static_configs": [
+        {
+          "targets": [
+            "nats:8222"
+          ]
+        }
+      ],
+      "metrics_path": "/varz"
+    },
+    {
+      "job_name": "redpanda",
+      "static_configs": [
+        {
+          "targets": [
+            "redpanda:9644"
+          ]
+        }
+      ],
+      "metrics_path": "/metrics"
+    },
+    {
+      "job_name": "dreamnet-streaming",
+      "static_configs": [
+        {
+          "targets": [
+            "dreamnet-streaming:9090"
+          ]
+        }
+      ]
+    }
+  ]
+}

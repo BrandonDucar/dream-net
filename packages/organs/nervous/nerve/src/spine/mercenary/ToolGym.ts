@@ -1,5 +1,6 @@
 import { pbkdf2 } from 'node:crypto';
 import { monetizationService } from '../../../../integumentary/server/src/services/MonetizationService.js';
+import { persistenceService } from '../../../../skeletal/shared/services/PersistenceService.js';
 import { dreamEventBus } from '../dreamnet-event-bus/index.js';
 import { EventEmitter } from 'node:events';
 // ... (imports remain)
@@ -112,6 +113,13 @@ export class ToolGymService extends EventEmitter {
             });
 
             // Emit Certification or Failure
+            if (tier === 'APEX') {
+                await persistenceService.saveAgentState(agentId, { rank: 'APEX PREDATOR', isCertified: true });
+                console.log(`[ToolGym] 🏆 ${agentId} graduated to APEX PREDATOR. State Anchored.`);
+            } else {
+                await persistenceService.saveAgentState(agentId, { rank: 'SOLDIER' });
+            }
+
             dreamEventBus.publish('ToolGym.BenchmarkComplete', {
                 agentId,
                 score: totalScore,

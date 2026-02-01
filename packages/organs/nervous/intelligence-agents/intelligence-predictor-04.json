@@ -1,0 +1,41 @@
+{
+  "agentId": "intelligence-predictor-04",
+  "name": "Predictor-4",
+  "type": "intelligence",
+  "specialty": "Trend Forecasting",
+  "capabilities": [
+    "time_series_analysis",
+    "probabilistic_modeling",
+    "risk_assessment",
+    "scenario_planning"
+  ],
+  "mission": "Forecast future states and optimize decision making",
+  "dreamTokenStake": 1000,
+  "status": "deploying",
+  "deployed": "2026-02-01T08:06:53.305Z",
+  "version": "2.0.0",
+  "dependencies": {
+    "core": "@dreamnet/shared",
+    "intelligence": "@dreamnet/intelligence-core",
+    "analysis": "@dreamnet/analysis-engine"
+  },
+  "resources": {
+    "memory": "512MB",
+    "cpu": "0.5",
+    "storage": "1GB"
+  },
+  "network": {
+    "endpoints": [
+      "/research",
+      "/analyze",
+      "/predict",
+      "/optimize",
+      "/learn"
+    ],
+    "protocols": [
+      "MCP",
+      "A2A",
+      "ACP"
+    ]
+  }
+}

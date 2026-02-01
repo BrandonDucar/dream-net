@@ -4,6 +4,11 @@
     "private": true,
     "type": "module",
     "main": "dist/index.js",
+    "exports": {
+        ".": "./src/index.ts",
+        "./*": "./src/*.ts",
+        "./db": "./src/db.ts"
+    },
     "scripts": {
         "dev": "tsx src/index.ts",
         "build": "tsup",

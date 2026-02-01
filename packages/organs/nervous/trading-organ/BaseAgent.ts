@@ -1,16 +1,20 @@
 import { ethers } from 'ethers';
+import { bankrService } from './BankrService.js';
 import { PrismaClient } from '@prisma/client';
+import { persistenceService } from '../skeletal/shared/services/PersistenceService.js';
+import { zkAuditService } from '../../integumentary/server/src/services/ZkAuditService.js';
 
 /**
  * 💎 BaseAgent: Durable Trading Orchestrator
- * 
- * Integrated with the Durable Execution Mandate (GPT-DUMP-2026)
- * Uses WAL (Write-Ahead Log) via Prisma.
  */
 export class BaseAgent {
     private provider: ethers.JsonRpcProvider;
     private wallet: ethers.Wallet;
     private prisma: PrismaClient;
+    public rank: string = 'UNCERTIFIED';
+    public isCertified: boolean = false;
+
+
 
     // Known Token Mints on Base
     public static MINTS = {
@@ -36,6 +40,14 @@ export class BaseAgent {
      * Initializes or retreieves the agent's wallet from the database.
      */
     public async initializeWallet(agentId: string) {
+        // Load persistent state
+        const state = await persistenceService.loadAgentState(agentId);
+        if (state) {
+            this.rank = state.rank;
+            this.isCertified = state.isCertified;
+            console.log(`[💎 BaseAgent] ${agentId} State Restored: ${this.rank} (Certified: ${this.isCertified})`);
+        }
+
         // Ensure wallet exists in DB
         const existing = await this.prisma.agentWallet.findUnique({
             where: {
@@ -57,6 +69,9 @@ export class BaseAgent {
                     parentWallet: 'MASTER_WALLET_ADDRESS' // TODO: Pass master wallet addr
                 }
             });
+
+            // Initial save of state fields
+            await persistenceService.saveAgentState(agentId, { rank: this.rank, isCertified: this.isCertified });
         } else {
             console.log(`[💎 BaseAgent] Wallet Verified for ${agentId}: ${existing.address}`);
         }
@@ -218,5 +233,8 @@ export class BaseAgent {
         } catch (e) {
             return false;
         }
+    }
+    public async executeIntent(query: string) {
+        return await bankrService.promptAndWait(query, this.wallet);
     }
 }

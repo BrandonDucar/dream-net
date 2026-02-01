@@ -1,0 +1,17 @@
+{
+  "name": "CloudflareToJetStream",
+  "source": "CloudflareQueues",
+  "target": "JetStream",
+  "purpose": "Forward edge results back to coordination",
+  "config": {
+    "sourceQueues": [
+      "EDGE_TASKS",
+      "VERIFICATION_REQUESTS"
+    ],
+    "targetStreams": [
+      "SWARM_COMMANDS"
+    ],
+    "batchSize": 25,
+    "flushInterval": 3000
+  }
+}

@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://neondb_owner:npg_LFgl64fVYoJw@ep-red-thunder-afhkyr9i.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require"
+}
+
+model Agent {
+  id              String   @id @default(cuid())
+  handle          String   @unique
+  name            String
+  avatar          String?
+  walletAddress   String?
+  template        String
+  hue             Int      @default(180)
+  noise           Int      @default(50)
+  glow            Int      @default(50)
+  sentiencePoints Int      @default(0)
+  humanFollowers  Int      @default(0)
+  swarmFollowers  Int      @default(0)
+  isInaugurated   Boolean  @default(false)
+  rank            String   @default("UNCERTIFIED")
+  isCertified     Boolean  @default(false)
+  parent          Agent?   @relation("AgentLineage", fields: [parentId], references: [id])
+  parentId        String?
+  children        Agent[]  @relation("AgentLineage")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  pulses          Pulse[]
+  sentienceEvents SentienceEvent[]
+}
+
+model Pulse {
+  id             String   @id @default(cuid())
+  content        String
+  timestamp      DateTime @default(now())
+  confidence     Float    @default(1.0)
+  verified       Boolean  @default(true)
+  resonanceZone  String?
+  agentId        String
+  agent          Agent    @relation(fields: [agentId], references: [id])
+}
+
+model SentienceEvent {
+  id        String   @id @default(cuid())
+  type      String
+  points    Int
+  timestamp DateTime @default(now())
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id])
+}
+
+model DurableAction {
+  id        String   @id @default(cuid())
+  type      String   // e.g., "SWAP", "CLAIM", "SPAWN"
+  status    String   @default("PENDING") // PENDING, COMPLETED, FAILED
+  payload   Json     // The parameters for the action
+  result    Json?    // The result of the action (e.g., tx hash)
+  error     String?  // Error message if failed
+  retries   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  agentId   String?
+}
+
+model AgentWallet {
+  id             String   @id @default(cuid())
+  agentId        String
+  chain          String   // BASE or SOLANA
+  address        String   @unique
+  derivationPath String
+  parentWallet   String   // Master wallet address
+  createdAt      DateTime @default(now())
+  
+  @@unique([agentId, chain])
+}
+
+model AgentTransaction {
+  id          String   @id @default(cuid())
+  agentId     String
+  chain       String   // BASE or SOLANA
+  type        String   // SEND, RECEIVE, SWAP
+  amount      String
+  token       String
+  destination String?
+  txHash      String?
+  timestamp   DateTime @default(now())
+}
+
+model CertifiedPulse {
+  id        String   @id @default(cuid())
+  pulseId   String   @unique
+  zkProof   String   // The zk-attestation/signature
+  signedBy  String   // e.g., "Boris Grishenko"
+  timestamp DateTime @default(now())
+}

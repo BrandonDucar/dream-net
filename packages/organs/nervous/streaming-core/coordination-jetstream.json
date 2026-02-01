@@ -1,0 +1,56 @@
+{
+  "tier": "coordination",
+  "technology": "JetStream",
+  "purpose": "Ultra-low latency agent coordination",
+  "config": {
+    "natsUrl": "nats://localhost:4222",
+    "jetStreamDomain": "DREAMNET_COORDINATION",
+    "streams": [
+      {
+        "name": "AGENT_COORDINATION",
+        "subjects": [
+          "agent.*.coordination",
+          "agent.*.heartbeat",
+          "agent.*.status"
+        ],
+        "retention": "workqueue",
+        "maxAge": "24h",
+        "maxBytes": "1GB"
+      },
+      {
+        "name": "SWARM_COMMANDS",
+        "subjects": [
+          "swarm.*.command",
+          "swarm.*.response"
+        ],
+        "retention": "limits",
+        "maxAge": "7d",
+        "maxBytes": "10GB"
+      },
+      {
+        "name": "TEMPORAL_EVENTS",
+        "subjects": [
+          "temporal.*.ripening",
+          "temporal.*.validation"
+        ],
+        "retention": "interest",
+        "maxAge": "30d",
+        "maxBytes": "5GB"
+      }
+    ],
+    "consumers": [
+      {
+        "name": "AGGREGATOR",
+        "stream": "AGENT_COORDINATION",
+        "ackPolicy": "explicit",
+        "maxDeliver": 3
+      },
+      {
+        "name": "COMMAND_PROCESSOR",
+        "stream": "SWARM_COMMANDS",
+        "ackPolicy": "explicit",
+        "maxDeliver": 5
+      }
+    ]
+  }
+}

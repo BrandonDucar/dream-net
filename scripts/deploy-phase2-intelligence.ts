@@ -7,9 +7,9 @@
  * ResearchScout, DataAnalyst, Predictor, Optimizer, Learner, and specialized variants
  */
 
-import { randomUUID } from 'node:crypto';
-import { writeFile, mkdir } from 'node:fs/promises';
-import { join } from 'node:path';
+import { randomUUID } from "node:crypto";
+import { writeFile, mkdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 interface IntelligenceAgent {
   agentId: string;
@@ -125,7 +125,8 @@ async function createAgentConfigs(agents: IntelligenceAgent[]) {
 async function updateAgentRegistry(agents: IntelligenceAgent[]) {
   try {
     const registryPath = join(process.cwd(), 'COMPREHENSIVE_AGENT_INVENTORY.json');
-    const registry = JSON.parse(require('fs').readFileSync(registryPath, 'utf8'));
+    const registryText = await readFile(registryPath, 'utf8');
+    const registry = JSON.parse(registryText);
     
     // Add new intelligence agents
     agents.forEach(agent => {
@@ -260,8 +261,6 @@ async function executePhase2Deployment() {
 }
 
 // Execute deployment
-if (require.main === module) {
-  executePhase2Deployment().catch(console.error);
-}
+executePhase2Deployment().catch(console.error);
 
 export { deployIntelligenceAgents, executePhase2Deployment };

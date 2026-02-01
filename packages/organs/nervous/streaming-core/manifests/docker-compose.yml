@@ -1,0 +1,57 @@
+# DreamNet Streaming Architecture
+{
+  "version": "3.8",
+  "services": {
+    "nats": {
+      "image": "nats:2.10-alpine",
+      "ports": [
+        "4222:4222",
+        "8222:8222"
+      ],
+      "command": [
+        "--jetstream",
+        "--store_dir",
+        "/data",
+        "--http_port",
+        "8222"
+      ],
+      "volumes": [
+        "nats_data:/data"
+      ]
+    },
+    "redpanda": {
+      "image": "docker.vectorized.io/redpandadata/redpanda:v23.2.15",
+      "ports": [
+        "9092:9092",
+        "8081:8081"
+      ],
+      "command": [
+        "redpanda",
+        "start",
+        "--smp=1",
+        "--memory=1G",
+        "--reserve-memory=0",
+        "--overprovisioned",
+        "--node-id=0",
+        "--kafka-addr=PLAINTEXT://0.0.0.0:9092",
+        "--advertise-kafka-addr=PLAINTEXT://localhost:9092",
+        "--pandaproxy-addr=PLAINTEXT://0.0.0.0:8081",
+        "--advertise-pandaproxy-addr=PLAINTEXT://localhost:8081"
+      ]
+    },
+    "dreamnet-streaming": {
+      "build": ".",
+      "depends_on": [
+        "nats",
+        "redpanda"
+      ],
+      "environment": {
+        "NATS_URL": "nats://nats:4222",
+        "REDPANDA_BROKERS": "redpanda:9092"
+      }
+    }
+  },
+  "volumes": {
+    "nats_data": {}
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "tier": "analytics",
+  "technology": "Redpanda",
+  "purpose": "High-throughput event analytics",
+  "config": {
+    "bootstrapServers": "localhost:9092",
+    "clientId": "dreamnet-analytics",
+    "topics": [
+      {
+        "name": "AGENT_METRICS",
+        "partitions": 6,
+        "replicationFactor": 3,
+        "retentionMs": 604800000,
+        "config": {
+          "cleanup.policy": "delete",
+          "compression.type": "lz4"
+        }
+      },
+      {
+        "name": "TEMPORAL_ECONOMICS",
+        "partitions": 12,
+        "replicationFactor": 3,
+        "retentionMs": 2592000000,
+        "config": {
+          "cleanup.policy": "compact",
+          "compression.type": "snappy"
+        }
+      },
+      {
+        "name": "HUMAN_RESONANCE_EVENTS",
+        "partitions": 8,
+        "replicationFactor": 3,
+        "retentionMs": 1209600000,
+        "config": {
+          "cleanup.policy": "delete",
+          "compression.type": "gzip"
+        }
+      },
+      {
+        "name": "MOLTBOOK_OPERATIONS",
+        "partitions": 4,
+        "replicationFactor": 3,
+        "retentionMs": 7776000000,
+        "config": {
+          "cleanup.policy": "compact",
+          "compression.type": "lz4"
+        }
+      }
+    ],
+    "consumerGroups": [
+      {
+        "name": "METRICS_AGGREGATORS",
+        "topics": [
+          "AGENT_METRICS",
+          "TEMPORAL_ECONOMICS"
+        ],
+        "config": {
+          "auto.offset.reset": "earliest",
+          "enable.auto.commit": "false"
+        }
+      },
+      {
+        "name": "RESONANCE_ANALYZERS",
+        "topics": [
+          "HUMAN_RESONANCE_EVENTS"
+        ],
+        "config": {
+          "auto.offset.reset": "latest",
+          "enable.auto.commit": "true"
+        }
+      }
+    ]
+  }
+}

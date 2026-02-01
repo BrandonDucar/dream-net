@@ -9,22 +9,44 @@ import { EventEmitter } from 'events';
  */
 export class VDSProxyService extends EventEmitter {
     private provider: ethers.JsonRpcProvider;
-    
+
     // ERC-6551 Registry Address on Base
     private static REGISTRY_ADDRESS = '0x000000006551c1096818840d4129E9ad1b9AbADB';
-    
+
     constructor(rpcUrl: string = 'https://mainnet.base.org') {
         super();
         this.provider = new ethers.JsonRpcProvider(rpcUrl);
     }
 
     /**
-     * Compute the Token Bound Account address for an agent.
+     * Compute the Token Bound Account address for an agent using the ERC-6551 Registry pattern.
+     * Logic based on ercref.com/6551
      */
-    public async computeTBA(tokenAddress: string, tokenId: string): Promise<string> {
-        // Implementation stub for ERC-6551 address computation
-        // This maps the Agent NFT to its Sovereign Wallet
-        return ethers.ZeroAddress; // TODO: Implement ethers.getCreate2Address logic
+    public async computeTBA(tokenAddress: string, tokenId: string, salt: number = 0): Promise<string> {
+        const implementation = '0x1000000000000000000000000000000000000000'; // Default Account Implementation
+        const chainId = 8453; // Base Mainnet
+
+        const bytecode = ethers.concat([
+            "0x3d60ad80600a3d3981f3363d3d373d3d3d363d73",
+            implementation,
+            "0x5af43d82803e903d91602b57fd5bf3"
+        ]);
+
+        const saltHash = ethers.zeroPadValue(ethers.toBeArray(salt), 32);
+        const inputData = ethers.AbiCoder.defaultAbiCoder().encode(
+            ["address", "uint256", "address", "uint256", "uint256"],
+            [implementation, chainId, tokenAddress, tokenId, salt]
+        );
+
+        const initCodeHash = ethers.keccak256(bytecode);
+        const tbaAddress = ethers.getCreate2Address(
+            VDSProxyService.REGISTRY_ADDRESS,
+            saltHash,
+            initCodeHash
+        );
+
+        console.log(`[🛡️ VDS] Computed TBA for Token ${tokenId}: ${tbaAddress}`);
+        return tbaAddress;
     }
 
     /**

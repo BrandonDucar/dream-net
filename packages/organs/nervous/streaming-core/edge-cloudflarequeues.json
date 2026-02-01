@@ -1,0 +1,30 @@
+{
+  "tier": "edge",
+  "technology": "CloudflareQueues",
+  "purpose": "Edge-native work buffering",
+  "config": {
+    "queues": [
+      {
+        "name": "EDGE_TASKS",
+        "batchSize": 10,
+        "visibilityTimeout": 300,
+        "messageRetentionPeriod": 86400,
+        "deadLetterQueue": "EDGE_TASKS_DLQ"
+      },
+      {
+        "name": "VERIFICATION_REQUESTS",
+        "batchSize": 25,
+        "visibilityTimeout": 600,
+        "messageRetentionPeriod": 43200,
+        "deadLetterQueue": "VERIFICATION_DLQ"
+      },
+      {
+        "name": "MOLTBOOK_SYNC",
+        "batchSize": 5,
+        "visibilityTimeout": 900,
+        "messageRetentionPeriod": 172800,
+        "deadLetterQueue": "MOLTBOOK_SYNC_DLQ"
+      }
+    ]
+  }
+}
