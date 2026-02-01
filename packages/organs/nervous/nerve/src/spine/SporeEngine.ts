@@ -132,6 +132,12 @@ export class SporeEngine {
         // Increment count
         this.mintedSporeCount.set(parentAgentId, count + 1);
 
+        // --- NEW: Recursive Economic Multiplier ---
+        const growthFactor = 1.0 + (count * 0.05); // 5% boost per existing spore
+        this.sentiencePoints += 0.1 * growthFactor;
+
+        console.log(`[🍄 SporeEngine] Recursive Growth Active: Factor ${growthFactor.toFixed(2)}x applied.`);
+
         const id = `spore:${Date.now()}`;
         const spore: Spore = {
             id,
@@ -220,6 +226,15 @@ export class SporeEngine {
             timestamp: Date.now(),
             eventId: `kill-${id}`
         } as any);
+    }
+
+    public getStats(agentId: string) {
+        const count = this.mintedSporeCount.get(agentId) || 0;
+        return {
+            mintedCount: count,
+            multiplier: 1.0 + (count * 0.05),
+            metabolicCredit: this.sentiencePoints
+        };
     }
 
     public getStatus() {

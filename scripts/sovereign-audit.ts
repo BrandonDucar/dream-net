@@ -1,5 +1,5 @@
-import { BaseAgent } from '../packages/organs/nervous/trading-organ/BaseAgent';
-import { SolanaAgent } from '../packages/organs/nervous/trading-organ/SolanaAgent';
+import { BaseAgent } from '../packages/organs/nervous/trading-organ/BaseAgent.js';
+import { SolanaAgent } from '../packages/organs/nervous/trading-organ/SolanaAgent.js';
 
 // Load keys from ENV
 const METAMASK_PK = '83a901f657e80f470d63e2be5baa753da5b81ec31a55195862a9c32e469e8c80';

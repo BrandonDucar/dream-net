@@ -1,7 +1,7 @@
-import { BaseAgent } from './BaseAgent';
-import { SolanaAgent } from './SolanaAgent';
-import { DurableExecutor } from './DurableExecutor';
-import { TreasuryService } from './TreasuryService';
+import { BaseAgent } from './BaseAgent.js';
+import { SolanaAgent } from './SolanaAgent.js';
+import { DurableExecutor } from './DurableExecutor.js';
+import { TreasuryService } from './TreasuryService.js';
 
 /**
  * 💎 SovereignTradingHub

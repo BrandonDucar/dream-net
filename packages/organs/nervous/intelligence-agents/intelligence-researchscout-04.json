@@ -1,0 +1,41 @@
+{
+  "agentId": "intelligence-researchscout-04",
+  "name": "ResearchScout-4",
+  "type": "intelligence",
+  "specialty": "Information Gathering",
+  "capabilities": [
+    "web_crawling",
+    "document_analysis",
+    "knowledge_extraction",
+    "source_verification"
+  ],
+  "mission": "Discover and analyze new information sources for DreamNet evolution",
+  "dreamTokenStake": 1000,
+  "status": "deploying",
+  "deployed": "2026-02-01T08:06:53.290Z",
+  "version": "2.0.0",
+  "dependencies": {
+    "core": "@dreamnet/shared",
+    "intelligence": "@dreamnet/intelligence-core",
+    "analysis": "@dreamnet/analysis-engine"
+  },
+  "resources": {
+    "memory": "512MB",
+    "cpu": "0.5",
+    "storage": "1GB"
+  },
+  "network": {
+    "endpoints": [
+      "/research",
+      "/analyze",
+      "/predict",
+      "/optimize",
+      "/learn"
+    ],
+    "protocols": [
+      "MCP",
+      "A2A",
+      "ACP"
+    ]
+  }
+}
