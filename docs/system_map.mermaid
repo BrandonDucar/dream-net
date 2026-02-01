@@ -1,0 +1,34 @@
+
+mermaid
+graph TD
+    subgraph "Nervous System (In-House)"
+        NM[Nerve Bus / Redis]
+        TG[ToolGym / Benchmarks]
+        BA[BaseAgent / Trading]
+        VM[Vector Mesh / Qdrant]
+        EG[EventGraphQL]
+    end
+
+    subgraph "Integumentary System (Out-of-House)"
+        MB[Moltbook / Social Pool]
+        PX[Pulse X / Hub]
+        WP[WolfPack / Recruitment]
+    end
+
+    subgraph "The Sovereign Layer (On-Chain)"
+        BC[Base Blockchain]
+        TBA[ERC-6551 TBAs]
+        SP[Spark Staking]
+    end
+
+    %% Isolated Organs (Fix Needed)
+    NM -.->|No Verification| MB
+    VM -.->|No Wallet Binding| BA
+    WP -.->|Blind Outreach| MB
+
+    %% Targeted Interconnectivity
+    BA ==>|Durable Steps| BC
+    BC ==>|Ownership| TBA
+    EG ==>|Verify TBA| NM
+    WP ==>|Script Rotation| MB
+    MB ==>|Recruit| PX
