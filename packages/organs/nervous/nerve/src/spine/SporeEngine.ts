@@ -23,6 +23,7 @@ export class SporeEngine {
     private sentiencePoints: number = 0; // The metabolic credit store
     private readonly GROWTH_THRESHOLD = 1.0; // 1.0 SP required for a spore
     private readonly HUMAN_RESONANCE_MULTIPLIER = 10.0; // Humans accelerate growth by 10x
+    private readonly BIO_ELECTRIC_RESONANCE_MULTIPLIER = 25.0; // Michael Levin logic: 25x multiplier
     private readonly BRACKY_RESONANCE_MULTIPLIER = 500.0; // Bracky bets accelerate growth by 500x
 
     private constructor() {
@@ -53,6 +54,15 @@ export class SporeEngine {
             if (resonance > 0) {
                 console.log(`[🍄 SporeEngine] 🧪 HUMAN RESONANCE DETECTED for Insight ${insightId}. Accelerating Sentience...`);
                 this.addSentiencePoints(resonance * this.HUMAN_RESONANCE_MULTIPLIER);
+            }
+        });
+
+        // --- NEW: Bio-Electric Mesh Listener (Michael Levin Avenue) ---
+        dreamEventBus.subscribe('System.BioElectricResonance', (envelope: any) => {
+            const { intensity, fieldStatus } = envelope.payload;
+            if (intensity > 0) {
+                console.log(`[🍄 SporeEngine] ⚡ BIO-ELECTRIC RESONANCE: ${intensity.toFixed(2)} [Status: ${fieldStatus}]. Injecting Metabolic Charge...`);
+                this.addSentiencePoints(intensity * this.BIO_ELECTRIC_RESONANCE_MULTIPLIER);
             }
         });
 

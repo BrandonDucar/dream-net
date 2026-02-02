@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
 import { useDreamNetTheme } from '@/contexts/DreamNetThemeContext';
+import { SettingsProvider, useSettings } from '@/contexts/SettingsContext';
 import { Button } from '@/components/ui/button';
-import { 
-  Network, 
-  Box, 
-  ShoppingBag, 
-  FlaskConical, 
-  Bot, 
+import { SettingsDialog } from '../SettingsDialog';
+import { SentientAvatar } from '../ui/SentientAvatar';
+import {
+  Network,
+  Box,
+  ShoppingBag,
+  FlaskConical,
+  Bot,
   Users,
   Activity,
   Settings
@@ -18,8 +21,17 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
+  return (
+    <SettingsProvider>
+      <LayoutContent>{children}</LayoutContent>
+    </SettingsProvider>
+  );
+}
+
+function LayoutContent({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { dreamNetMode, toggleDreamNetMode } = useDreamNetTheme();
+  const { settings } = useSettings();
 
   const navLinks = [
     { href: '/', label: 'DreamNet', icon: Network },
@@ -34,11 +46,10 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Top Navigation Bar */}
-      <header className={`sticky top-0 z-50 border-b ${
-        dreamNetMode 
-          ? 'bg-black/90 border-electric-cyan/30 backdrop-blur-sm shadow-[0_0_20px_rgba(0,255,255,0.1)]' 
-          : 'bg-background/80 border-border backdrop-blur-sm'
-      }`}>
+      <header className={`sticky top-0 z-50 border-b ${dreamNetMode
+        ? 'bg-black/90 border-electric-cyan/30 backdrop-blur-sm shadow-[0_0_20px_rgba(0,255,255,0.1)]'
+        : 'bg-background/80 border-border backdrop-blur-sm'
+        }`}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -55,11 +66,10 @@ export function MainLayout({ children }: MainLayoutProps) {
                 <Link key={href} href={href}>
                   <Button
                     variant={location === href ? 'default' : 'ghost'}
-                    className={`${
-                      dreamNetMode && location === href
-                        ? 'bg-electric-cyan/20 text-electric-cyan border-electric-cyan/50'
-                        : ''
-                    }`}
+                    className={`${dreamNetMode && location === href
+                      ? 'bg-electric-cyan/20 text-electric-cyan border-electric-cyan/50'
+                      : ''
+                      }`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
                     {label}
@@ -68,24 +78,32 @@ export function MainLayout({ children }: MainLayoutProps) {
               ))}
             </nav>
 
-            {/* DreamNet Mode Toggle */}
+            {/* Toggles & Settings */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground hidden sm:inline">DreamNet Mode</span>
+                <span className="text-sm text-muted-foreground hidden lg:inline">DreamNet Mode</span>
                 <button
                   onClick={toggleDreamNetMode}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    dreamNetMode
-                      ? 'bg-electric-cyan'
-                      : 'bg-muted'
-                  }`}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${dreamNetMode
+                    ? 'bg-electric-cyan'
+                    : 'bg-muted'
+                    }`}
                 >
                   <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      dreamNetMode ? 'translate-x-6' : 'translate-x-1'
-                    } ${dreamNetMode ? 'shadow-[0_0_8px_rgba(0,255,255,0.6)]' : ''}`}
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${dreamNetMode ? 'translate-x-6' : 'translate-x-1'
+                      } ${dreamNetMode ? 'shadow-[0_0_8px_rgba(0,255,255,0.6)]' : ''}`}
                   />
                 </button>
+              </div>
+              <div className="h-6 w-px bg-white/10 mx-2" />
+              <div className="flex items-center gap-3">
+                <SentientAvatar
+                  seed={settings.identitySeed}
+                  type="research"
+                  className="w-8 h-8 ring-1 ring-white/20 shadow-[0_0_10px_rgba(0,243,255,0.2)]"
+                  pulse={false}
+                />
+                <SettingsDialog />
               </div>
             </div>
           </div>
@@ -98,11 +116,10 @@ export function MainLayout({ children }: MainLayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className={`border-t mt-auto ${
-        dreamNetMode 
-          ? 'border-electric-cyan/20 bg-black/50' 
-          : 'border-border bg-background'
-      }`}>
+      <footer className={`border-t mt-auto ${dreamNetMode
+        ? 'border-electric-cyan/20 bg-black/50'
+        : 'border-border bg-background'
+        }`}>
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <p>DreamNet — A Living Digital Network</p>

@@ -122,6 +122,13 @@ export class SystemHeartbeat {
                 ReputationLattice.run({} as any);
             } catch (e) { }
 
+            // 9. Mastery Tracking (Agent Progress)
+            try {
+                const { masteryTracker } = await import('./MasteryTracker.js');
+                // No specific 'run' method yet, but it listens to events.
+                // We'll publish a pulse for mastery if needed.
+            } catch (e) { }
+
             // console.log("[SystemHeartbeat] 💓 Thump-thump");
 
             // Emit pulse event

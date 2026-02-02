@@ -22,8 +22,10 @@ import {
     Eye,
     Trash2,
     MessageSquare,
-    Terminal
+    Terminal,
+    User
 } from 'lucide-react';
+import { SentientAvatar, AgentSoulType } from "@/components/ui/SentientAvatar";
 
 interface SwarmLog {
     id: string;
@@ -137,7 +139,7 @@ export default function OmniDashboard() {
             <div
                 className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
                 style={{
-                    background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(6, 182, 212, 0.05), transparent 80%)`
+                    background: `radial-gradient(1000px circle at ${mousePos.x}px ${mousePos.y}px, rgba(6, 182, 212, 0.08), transparent 80%)`
                 }}
             />
 
@@ -168,24 +170,34 @@ export default function OmniDashboard() {
 
             <main className="grid grid-cols-12 gap-6 relative z-10 h-[calc(100vh-140px)]">
                 <div className="col-span-4 space-y-6 flex flex-col h-full overflow-hidden">
-                    <section className="flex-1 bg-black/40 border border-white/5 p-4 rounded-xl backdrop-blur-md overflow-hidden flex flex-col">
-                        <h2 className="text-xs font-bold text-cyan-400 mb-4 flex items-center gap-2">
-                            <Terminal className="w-3 h-3" /> SWARM_LOG_STREAM
+                    <section className="flex-1 vivid-glass p-4 rounded-xl overflow-hidden flex flex-col relative">
+                        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+                        <h2 className="text-xs font-bold text-cyan-400 mb-4 flex items-center justify-between">
+                            <span className="flex items-center gap-2"><Terminal className="w-3 h-3" /> SWARM_LOG_STREAM</span>
+                            <span className="text-[8px] opacity-40 animate-pulse tracking-widest">REALTIME_INGEST</span>
                         </h2>
                         <div ref={scrollRef} className="space-y-2 overflow-y-auto flex-1 pr-2 custom-scrollbar text-[10px]">
                             <AnimatePresence initial={false}>
                                 {logs.map(log => (
                                     <motion.div
                                         key={log.id}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        className="p-2 border-l-2 border-white/10 hover:border-cyan-500/50 bg-white/[0.02] flex flex-col gap-1"
+                                        initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                                        className="p-3 border-l-2 border-white/5 hover:border-cyan-500/50 bg-white/[0.02] hover:bg-white/[0.05] flex gap-3 transition-all rounded-r-lg"
                                     >
-                                        <div className="flex justify-between items-center opacity-50">
-                                            <span className="font-bold text-cyan-500">{log.source}</span>
-                                            <span>{log.timestamp}</span>
+                                        <SentientAvatar
+                                            seed={log.source}
+                                            type={log.source.toLowerCase() as AgentSoulType}
+                                            className="w-8 h-8 flex-shrink-0"
+                                            pulse={log.source === 'CORE'}
+                                        />
+                                        <div className="flex flex-col gap-1 flex-1">
+                                            <div className="flex justify-between items-center opacity-50 uppercase tracking-tighter">
+                                                <span className="font-bold text-cyan-500">{log.source}</span>
+                                                <span className="text-[8px]">{log.timestamp}</span>
+                                            </div>
+                                            <div className="text-white/80 leading-tight">{log.message}</div>
                                         </div>
-                                        <div className="text-white/80">{log.message}</div>
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
@@ -209,22 +221,35 @@ export default function OmniDashboard() {
                     </section>
                 </div>
 
-                <div className="col-span-5 bg-black/60 border border-cyan-500/20 rounded-3xl p-6 relative overflow-hidden flex flex-col">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/5 via-transparent to-transparent pointer-events-none"></div>
-                    <h2 className="text-xs font-black tracking-[0.2em] text-cyan-400 mb-6 flex items-center gap-2 uppercase">
-                        <Activity className="w-4 h-4" /> Thinking_Stream.exe
+                <div className="col-span-5 chitin-iridescent rounded-3xl p-6 relative overflow-hidden flex flex-col">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent pointer-events-none"></div>
+                    <h2 className="text-xs font-black tracking-[0.2em] text-cyan-400 mb-6 flex items-center justify-between uppercase">
+                        <span className="flex items-center gap-2"><Activity className="w-4 h-4" /> Thinking_Stream.exe</span>
+                        <div className="flex gap-2">
+                            <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_cyan]" />
+                            <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+                        </div>
                     </h2>
                     <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-4">
                         {logs.filter(l => l.source === 'GENOME_PILOT' || l.source === 'CORE').slice(0, 10).map((thought, i) => (
-                            <motion.div key={thought.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></div>
-                                    <span className="text-[10px] font-black text-cyan-500/70 uppercase">Step {logs.length - i}</span>
+                            <motion.div
+                                key={thought.id}
+                                initial={{ opacity: 0, y: 10, filter: 'blur(10px)' }}
+                                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                                className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl relative group hover:border-cyan-500/30 transition-all"
+                            >
+                                <div className="flex items-center gap-3 mb-2">
+                                    <SentientAvatar
+                                        seed={thought.source}
+                                        type={thought.source === 'CORE' ? 'quantum' : 'research'}
+                                        className="w-6 h-6"
+                                        pulse
+                                    />
+                                    <span className="text-[10px] font-black text-cyan-500/70 uppercase">Pulse Sequence {logs.length - i}</span>
                                 </div>
-                                <p className="text-sm text-gray-200 leading-relaxed italic italic">"{thought.message}"</p>
+                                <p className="text-sm text-gray-200 leading-relaxed italic border-l-2 border-white/10 pl-4 py-1">"{thought.message}"</p>
                                 <div className="mt-2 flex gap-2">
-                                    <div className="px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[8px] text-cyan-400">LATENCY: 42ms</div>
-                                    <div className="px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-[8px] text-purple-400">CONFIDENCE: 0.99</div>
+                                    <div className="px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[8px] text-cyan-400 font-mono tracking-widest">NEURAL_DELAY: 12ms</div>
                                 </div>
                             </motion.div>
                         ))}
@@ -259,8 +284,8 @@ export default function OmniDashboard() {
 function NodeCard({ title, icon, color, status, details }: any) {
     return (
         <div className="bg-black/40 border border-white/5 p-4 rounded-xl hover:border-white/20 transition-all group">
-            <div className={`flex items-center gap-2 mb-2 ${color}`}>
-                {icon}
+            <div className={`flex items-center gap-3 mb-2 ${color}`}>
+                <SentientAvatar seed={title} type={title.includes('ORGAN') ? 'defense' : 'research'} className="w-8 h-8" pulse />
                 <span className="text-xs font-black tracking-widest">{title}</span>
             </div>
             <div className="text-white text-sm font-bold mb-1">{status}</div>

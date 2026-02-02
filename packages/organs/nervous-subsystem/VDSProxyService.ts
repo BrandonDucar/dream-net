@@ -1,5 +1,7 @@
 import { ethers } from 'ethers';
 import { EventEmitter } from 'events';
+import { bankrService } from '../nervous/trading-organ/BankrService.js';
+import { treasuryAuditService } from './TreasuryAuditService.js';
 
 /**
  * 🛡️ VDS Proxy Layer (Virtual Decoupled Sovereignty)
@@ -10,8 +12,8 @@ import { EventEmitter } from 'events';
 export class VDSProxyService extends EventEmitter {
     private provider: ethers.JsonRpcProvider;
 
-    // ERC-6551 Registry Address on Base
-    private static REGISTRY_ADDRESS = '0x000000006551c1096818840d4129E9ad1b9AbADB';
+    // ERC-6551 Registry Address on Base (Lowercased to avoid checksum errors)
+    private static REGISTRY_ADDRESS = '0x000000006551c1096818840d4129e9ad1b9abadb';
 
     constructor(rpcUrl: string = 'https://mainnet.base.org') {
         super();
@@ -32,15 +34,10 @@ export class VDSProxyService extends EventEmitter {
             "0x5af43d82803e903d91602b57fd5bf3"
         ]);
 
-        const saltHash = ethers.zeroPadValue(ethers.toBeArray(salt), 32);
-        const inputData = ethers.AbiCoder.defaultAbiCoder().encode(
-            ["address", "uint256", "address", "uint256", "uint256"],
-            [implementation, chainId, tokenAddress, tokenId, salt]
-        );
-
+        const saltHash = ethers.id(salt.toString());
         const initCodeHash = ethers.keccak256(bytecode);
         const tbaAddress = ethers.getCreate2Address(
-            VDSProxyService.REGISTRY_ADDRESS,
+            ethers.getAddress(VDSProxyService.REGISTRY_ADDRESS),
             saltHash,
             initCodeHash
         );
@@ -51,11 +48,45 @@ export class VDSProxyService extends EventEmitter {
 
     /**
      * Route an intent through the VDS mesh.
+     * Decouples agentId from a static wallet by using a deterministic TBA.
      */
-    public async routeIntent(agentId: string, intent: any) {
+    public async routeIntent(agentId: string, intent: { action: string; params: any; query: string }) {
         console.log(`[🛡️ VDS] Routing intent for ${agentId}:`, intent);
-        this.emit('intent:routed', { agentId, intent, timestamp: Date.now() });
-        // ZK-proof generation or routing logic here
+
+        try {
+            // 1. Compute the TBA for this agent (using agentId as tokenId for now)
+            // In a real scenario, the agent would own a specific Passport NFT.
+            const tokenAddress = '0x0000000000000000000000000000000000000000'; // Placeholder Zero Address
+            const tokenId = BigInt(parseInt(ethers.keccak256(ethers.toUtf8Bytes(agentId)).slice(0, 10), 16)); // Valid uint256
+            const tbaAddress = await this.computeTBA(tokenAddress, tokenId.toString());
+
+            // 2. Log intent routing onset
+            treasuryAuditService.logTransaction({
+                agentId,
+                chain: 'Base',
+                action: `VDS_ROUTE_${intent.action}`,
+                params: { ...intent.params, tbaAddress },
+                status: 'SUCCESS'
+            });
+
+            // 3. Execute via BankrService
+            // Note: In Phase XXXIX, we assume the TBA is the execution context.
+            // For now, we simulate the prompt waiting.
+            const result = await bankrService.promptAndWait(intent.query, null as any); // Wallet abstraction pending
+
+            this.emit('intent:routed', { agentId, tbaAddress, result, timestamp: Date.now() });
+            return { tbaAddress, result };
+        } catch (error) {
+            console.error(`[❌ VDS] Routing failed for ${agentId}:`, error);
+            treasuryAuditService.logTransaction({
+                agentId,
+                chain: 'Base',
+                action: `VDS_ROUTE_${intent.action}`,
+                params: intent.params,
+                status: 'FAILED'
+            });
+            throw error;
+        }
     }
 }
 
