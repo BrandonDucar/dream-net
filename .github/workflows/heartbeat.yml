@@ -23,7 +23,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9.15.4
       
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile # Allow drift while stabilizing
