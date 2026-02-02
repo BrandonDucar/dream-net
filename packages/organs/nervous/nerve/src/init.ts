@@ -15,6 +15,11 @@ import {
 // import { memorySystem } from '@dreamnet/memory-dna';
 import { registerStoicObserver } from './stoic/StoicObserver.js';
 import { registerMycelialNetwork } from './mycelium/MyceliumNetwork.js';
+import { optioOrchestrator } from '../../../nervous-subsystem/OptioOrchestrator.js';
+import { vdsProxy } from '../../../nervous-subsystem/VDSProxyService.js';
+import { treasuryAuditService } from '../../../nervous-subsystem/TreasuryAuditService.js';
+import { persistenceService } from '../../skeletal/shared/services/PersistenceService.js';
+import { dreamEventBus } from './dreamnet-event-bus/index.js';
 
 /**
  * Initialize Nerve Fabric
@@ -38,7 +43,13 @@ export function initNerveFabric(): {
   // 🍄 Initialize Mycelial Network (Wood Wide Web)
   registerMycelialNetwork(NERVE_BUS);
 
-  console.info("[nerve] Nerve Fabric online: Shield, Jaggy, DreamScope subscribed");
+  // 🏛️ Initialize Distributed Sovereignty (Optio Batch)
+  optioOrchestrator.ignite().catch(err => console.error("[nerve] Optio Ignition Failed:", err));
+
+  // 💾 Restore Persistent State (AlaskanKing Mastery)
+  persistenceService.restoreAll().catch(err => console.error("[nerve] State Restoration Failed:", err));
+
+  console.info("[nerve] Nerve Fabric online: Shield, Jaggy, DreamScope, Optio, VDS Substrate Active");
 
   return { dreamScope };
 }

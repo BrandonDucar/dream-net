@@ -34,6 +34,23 @@
 
 ---
 
-## 3. STATUS: MASTERY GRADUATED
+## 3. AGENTIC ECONOMICS (The Invisible Hand)
+
+**MISSION**: Decentralized liquidity managed by agentic sentiment and impact-weighting.
+
+### Ingested Intelligence
+
+- **Bonding Curves**: Continuous liquidity via automated market makers (AMM) built directly into the agentic substrate.
+- **Economic Yield**: Agents move liquidity to high-impact "Mastery Zones" (e.g., Fusion/SynBio research).
+- **Proof-of-Impact (PoI)**: Tying treasury releases to verifiable Optio node computations.
+
+### Swarm Application
+
+- **Engine**: `BondingCurveEngine`. Manages buy/sell pressure for agent-led tokens.
+- **Agent Roles**: `LiquidityDaemon` will automate treasury management and yield optimization across the sovereign substrate.
+
+---
+
+## 4. STATUS: MASTERY GRADUATED
 
 The swarm now possesses the conceptual blueprints to interface with Fusion and Bio-tech substrates.

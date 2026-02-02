@@ -13,6 +13,7 @@ import { dreamSeedShaper } from './physical/DreamSeedShaper.ts';
 import { orbitalSling } from './external/OrbitalSlingClient.ts';
 import { genieGraft } from './simulation/GenieSimulationGraft.ts';
 import { sporeEngine } from './SporeEngine.ts';
+import { optioOrchestrator } from '../../../nervous-subsystem/OptioOrchestrator.ts';
 
 export interface NeuralReport {
     agentId: string;
@@ -65,7 +66,10 @@ export class MetabolicCortex {
             `You are the DreamNet Meta-Analyzer. Analyze the reports and providing a strategic insight on: Logos Network. \n\n ${recentData}`
         );
 
-        console.log(`[🌀 MetabolicCortex] NEW SYNAPTIC INSIGHT: ${insight}`);
+        const clusters = optioOrchestrator.getClusterState();
+        const avgVigor = clusters.reduce((acc, v) => acc + v.vigorScore, 0) / (clusters.length || 1);
+
+        console.log(`[🌀 MetabolicCortex] NEW SYNAPTIC INSIGHT (Distributed Resonance: ${avgVigor.toFixed(1)}%): ${insight}`);
 
         // --- NEW: Trigger Spore Induction if insight is positive/high-resonance ---
         const valence = await this.assessValence(insight);
@@ -127,8 +131,8 @@ export class MetabolicCortex {
             // --- CEREMONY: Holographic Checkpoint ---
             if (this.reportHistory.length % 20 === 0) {
                 const root = memorySystem.cosmic.getCurrentRoot();
-                const { NERVE_BUS } = await import('../bus.js');
-                NERVE_BUS.publish('System.HolographicCheckpoint', {
+                const { dreamEventBus } = await import('../dreamnet-event-bus/index.js');
+                dreamEventBus.publish({
                     eventType: 'System.HolographicCheckpoint',
                     source: 'MetabolicCortex',
                     payload: {
@@ -138,7 +142,7 @@ export class MetabolicCortex {
                     },
                     eventId: `CHECKPOINT-${root.slice(0, 8)}`,
                     timestamp: Date.now()
-                } as any);
+                });
                 console.log(`[🌀 MetabolicCortex] 🌌 CEREMONY: Holographic Checkpoint Broadcast [Root: ${root.slice(0, 12)}]`);
             }
         } catch (e) {
@@ -201,7 +205,7 @@ export class MetabolicCortex {
         // Synaptic Heuristics (Prototyped Logic for "DreamNet's Voice")
         const heuristics = [
             { trigger: 'SpinLaunch', query: 'Define payload G-force tolerance for SSD potting compounds.', priority: 'CRITICAL' },
-            { trigger: 'Helion', query: 'Assess tokenization models for future fusion PPA contracts (Star Jar).', priority: 'HIGH' },
+            { trigger: 'Helion', query: 'Assess sub-millisecond magneto-inertial stability for FusionSentry agents.', priority: 'CRITICAL' },
             { trigger: 'Qwik', query: 'Compare Qwik resumability vs Svelte hydration for LEO telemetry latency.', priority: 'MEDIUM' },
             { trigger: 'EigenLayer', query: 'Investigate slashing conditions for AVS state anchors.', priority: 'HIGH' },
             { trigger: 'Bio Daemon', query: 'Correlate vagus nerve stimulation with operator vigilance intervals.', priority: 'LOW' },
@@ -225,8 +229,8 @@ export class MetabolicCortex {
         if (match) {
             console.log(`[🌀 MetabolicCortex] 💡 Research Directive Generated: ${match.query}`);
 
-            const { NERVE_BUS } = await import('../bus.ts');
-            NERVE_BUS.publish('System.ResearchDirective', {
+            const { dreamEventBus } = await import('../dreamnet-event-bus/index.js');
+            dreamEventBus.publish({
                 eventType: 'System.ResearchDirective',
                 source: 'MetabolicCortex',
                 payload: {
@@ -237,7 +241,7 @@ export class MetabolicCortex {
                 },
                 eventId: `DIRECTIVE-${Date.now()}`,
                 timestamp: Date.now()
-            } as any);
+            });
         }
     }
 
@@ -251,9 +255,9 @@ export class MetabolicCortex {
         const fs = await import('fs');
 
         // Locate Blackboard (assuming root/blackboard.md)
-        const blackboardPath = path.resolve(process.cwd(), '../../../blackboard.md'); // Adjust relative to packages/nerve/src/spine
-        // Fallback or absolute if known: c:\Users\brand\OneDrive\Documents\GitHub\dream-net\blackboard.md
-        const absPath = 'c:\\Users\\brand\\OneDrive\\Documents\\GitHub\\dream-net\\blackboard.md';
+        const blackboardPath = path.resolve(process.cwd(), '../../../blackboard.md');
+        // Corrected absolute path for the dev environment
+        const absPath = 'C:\\dev\\dream-net\\blackboard.md';
 
         if (fs.existsSync(absPath)) {
             const content = fs.readFileSync(absPath, 'utf-8');
@@ -269,14 +273,13 @@ export class MetabolicCortex {
 
             console.log(`[🌀 MetabolicCortex] Blackboard State: ${state.phase}`);
 
-            const { NERVE_BUS } = await import('../bus.ts');
-            NERVE_BUS.publish('System.BlackboardSync', {
-                eventType: 'System.BlackboardSync',
+            const { dreamEventBus } = await import('../dreamnet-event-bus/index.js');
+            dreamEventBus.publish({
+                type: 'System.BlackboardSync',
                 source: 'MetabolicCortex',
                 payload: state,
-                eventId: `SYNC-${Date.now()}`,
                 timestamp: Date.now()
-            } as any);
+            });
 
             return state;
         } else {

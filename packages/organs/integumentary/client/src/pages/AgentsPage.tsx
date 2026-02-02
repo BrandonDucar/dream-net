@@ -1,22 +1,8 @@
 import React from 'react';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { useDreamNetTheme } from '@/contexts/DreamNetThemeContext';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Bot, Network, Zap } from 'lucide-react';
-
-const agents = [
-  { id: 'dreamops', name: 'DreamOps', role: 'Infra', description: 'Main orchestrator for DreamNet operations' },
-  { id: 'deploykeeper', name: 'DeployKeeper', role: 'Infra', description: 'Manages deployments and CI/CD integrity' },
-  { id: 'envkeeper', name: 'EnvKeeper', role: 'Infra', description: 'Environment variable hygiene and security' },
-  { id: 'wolfpack', name: 'WolfPack', role: 'Swarm', description: 'Predatory anomaly-hunting subsystem' },
-  { id: 'swarmpatrol', name: 'Swarm Patrol', role: 'Swarm', description: 'Micro-agent repair patrol' },
-  { id: 'fieldlayer', name: 'Field Layer Engine', role: 'Economy', description: 'Global parameter fields (risk, trust, liquidity)' },
-  { id: 'economy', name: 'Economic Engine Core', role: 'Economy', description: 'Rewards and token simulation layer' },
-  { id: 'zengarden', name: 'Zen Garden Core', role: 'Wellness', description: 'Ritual and activity tracking' },
-  { id: 'dreamtank', name: 'Dream Tank Incubator', role: 'Governance', description: 'Dream incubation and progression' },
-  { id: 'socialhub', name: 'Social Hub Core', role: 'Social', description: 'Social feed and posts layer' },
-  { id: 'agentregistry', name: 'Agent Registry Core', role: 'System', description: 'Agent catalog and health tracking' },
-];
+import { SentientAgentCard } from '@/components/SentientAgentCard';
+import agentLibrary from '@/data/agentLibrary';
 
 const biomimeticSystems = [
   { name: 'Slime-Mold Router', description: 'Adaptive routing based on pheromone trails' },
@@ -34,9 +20,8 @@ export default function AgentsPage() {
     <MainLayout>
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${
-            dreamNetMode ? 'text-electric-cyan' : 'text-foreground'
-          }`}>
+          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${dreamNetMode ? 'text-electric-cyan' : 'text-foreground'
+            }`}>
             Agents & Swarm
           </h1>
           <p className="text-xl text-muted-foreground">
@@ -44,38 +29,25 @@ export default function AgentsPage() {
           </p>
         </div>
 
-        {/* Agent Roster */}
-        <section className="mb-12">
-          <h2 className={`text-2xl font-semibold mb-6 ${dreamNetMode ? 'text-electric-cyan' : ''}`}>
-            Agent Roster
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {agents.map((agent) => (
-              <Card 
+        {/* Agent Library */}
+        <section className="mb-20">
+          <div className="flex justify-between items-end mb-10">
+            <div>
+              <h2 className={`text-3xl font-black uppercase tracking-tighter ${dreamNetMode ? 'text-electric-cyan' : ''}`}>
+                Sentient Agent Library
+              </h2>
+              <p className="text-sm text-muted-foreground mt-2 italic">A foundational collection of high-fidelity identities for the sovereign swarm.</p>
+            </div>
+            <button className="px-4 py-2 bg-electric-cyan text-black font-black uppercase text-[10px] rounded-lg shadow-[0_0_15px_rgba(0,243,255,0.4)] hover:scale-105 transition-transform">
+              + Mint_New_Agent
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-10 justify-center">
+            {agentLibrary.map((agent) => (
+              <SentientAgentCard
                 key={agent.id}
-                className={dreamNetMode ? 'border-electric-cyan/30 bg-electric-cyan/5 hover:border-electric-cyan/50 transition-colors' : ''}
-              >
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <Bot className={`w-5 h-5 ${dreamNetMode ? 'text-electric-cyan' : 'text-primary'}`} />
-                    <div>
-                      <CardTitle className={dreamNetMode ? 'text-electric-cyan' : ''}>
-                        {agent.name}
-                      </CardTitle>
-                      <span className={`text-xs px-2 py-1 rounded ${
-                        dreamNetMode 
-                          ? 'bg-electric-cyan/20 text-electric-cyan border border-electric-cyan/30' 
-                          : 'bg-muted text-muted-foreground'
-                      }`}>
-                        {agent.role}
-                      </span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>{agent.description}</CardDescription>
-                </CardContent>
-              </Card>
+                agent={agent}
+              />
             ))}
           </div>
         </section>
@@ -87,7 +59,7 @@ export default function AgentsPage() {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {biomimeticSystems.map((system) => (
-              <Card 
+              <Card
                 key={system.name}
                 className={dreamNetMode ? 'border-electric-cyan/30 bg-black/50 hover:border-electric-cyan/50 transition-colors' : ''}
               >

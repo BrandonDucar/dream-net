@@ -172,60 +172,46 @@ export default function VerifyPage() {
                     </p>
                 </motion.div>
 
-                {/* ASSET DETAILS (Liquid Glass Panel) */}
-                {status === 'AUTHENTIC' && result?.data?.linkedAsset && (
+                {/* CHAIRMAN COUNCIL VERDICT (Liquid Glass Panel) */}
+                {status === 'AUTHENTIC' && (
                     <motion.div
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        onMouseEnter={() => setDwellStart(Date.now())}
-                        onMouseLeave={() => {
-                            if (dwellStart) {
-                                emitIntentPulse('ASSET_HOVER', Date.now() - dwellStart);
-                                setDwellStart(null);
-                            }
-                        }}
-                        className="mt-10 p-6 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-3xl text-left relative overflow-hidden group hover:border-blue-500/30 transition-colors duration-500"
+                        className="mt-10 p-6 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-3xl text-left relative overflow-hidden group hover:border-purple-500/30 transition-colors duration-500"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent opacity-50" />
 
                         <div className="relative z-10 font-mono">
                             <div className="flex justify-between items-start mb-4">
-                                <span className="text-[10px] text-blue-400 font-black tracking-widest uppercase">
-                                    {result.data.linkedAsset.type}
+                                <span className="text-[10px] text-purple-400 font-black tracking-widest uppercase">
+                                    Chairman_Council_Verdict
                                 </span>
-                                <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                                <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.5)]" />
                             </div>
 
-                            <h2 className="text-2xl font-black mb-4 tracking-tight">
-                                {result.data.linkedAsset.name}
+                            <h2 className="text-2xl font-black mb-4 tracking-tight uppercase">
+                                {result?.data?.linkedAsset?.name || 'Sovereign_Entity'}
                             </h2>
 
-                            <div className="grid grid-cols-2 gap-4 text-[10px] tracking-widest uppercase text-gray-500 mb-6">
-                                <div className="flex flex-col gap-1">
-                                    <span className="opacity-50">Rarity</span>
-                                    <span className="text-white font-bold">{result.data.linkedAsset.rarity}</span>
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <span className="opacity-50">Ripening_Phase</span>
-                                    <span className={`font-black ${result.data.temporal?.phase === 'Sovereign' ? 'text-purple-400' : 'text-cyan-400'}`}>
-                                        {result.data.temporal?.phase}
-                                    </span>
+                            <div className="space-y-4 mb-6">
+                                <div className="p-3 bg-black/40 rounded-lg border border-white/5">
+                                    <div className="text-[8px] text-gray-500 uppercase mb-2">Council_Notes:</div>
+                                    <ul className="text-[10px] space-y-2">
+                                        <li className="text-cyan-400">⚡ BORIS: Performance Reward 95% Yield.</li>
+                                        <li className="text-green-400">🐺 WOLFPACK: Social resonance verified.</li>
+                                        <li className="text-purple-400">🏦 ANTIGRAVITY: Substrate bound to TBA.</li>
+                                    </ul>
                                 </div>
                             </div>
 
-                            {/* Temporal Progress Bar */}
-                            <div className="space-y-2">
-                                <div className="flex justify-between text-[8px] font-black tracking-[0.2em] text-white/30 uppercase">
-                                    <span>Ripening_Purity</span>
-                                    <span>{Math.round((result.data.temporal?.purity || 0) * 100)}%</span>
+                            <div className="grid grid-cols-2 gap-4 text-[10px] tracking-widest uppercase text-gray-500">
+                                <div className="flex flex-col gap-1">
+                                    <span className="opacity-50">Sovereign_Node</span>
+                                    <span className="text-white font-bold">OPTIO-20-BOUND</span>
                                 </div>
-                                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${(result.data.temporal?.purity || 0) * 100}%` }}
-                                        transition={{ duration: 1.5, ease: "easeOut" }}
-                                        className={`h-full ${result.data.temporal?.phase === 'Sovereign' ? 'bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]' : 'bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]'}`}
-                                    />
+                                <div className="flex flex-col gap-1 text-right">
+                                    <span className="opacity-50">RLVR_Status</span>
+                                    <span className="text-purple-400 font-black">REWARDED_SYNC</span>
                                 </div>
                             </div>
                         </div>

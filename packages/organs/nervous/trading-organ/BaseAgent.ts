@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
 import { bankrService } from './BankrService.js';
 import { PrismaClient } from '@prisma/client';
-import { persistenceService } from '../skeletal/shared/services/PersistenceService.js';
-import { zkAuditService } from '../../integumentary/server/src/services/ZkAuditService.js';
+import { persistenceService } from '../../skeletal/shared/src/services/PersistenceService.js';
+import { zkAuditService } from '../../../integumentary/server/src/services/ZkAuditService.js';
 
 /**
  * 💎 BaseAgent: Durable Trading Orchestrator
@@ -47,6 +47,11 @@ export class BaseAgent {
             this.isCertified = state.isCertified;
             console.log(`[💎 BaseAgent] ${agentId} State Restored: ${this.rank} (Certified: ${this.isCertified})`);
         }
+
+        // 🛡️ VDS: Compute Token Bound Account (ERC-6551)
+        const { vdsProxy } = await import('../../nervous-subsystem/VDSProxyService.js');
+        const tbaAddress = await vdsProxy.computeTBA(BaseAgent.MINTS.WEN, agentId); // Using WEN as proxy NFT
+        console.log(`[🛡️ VDS] Sovereign Passport Address: ${tbaAddress}`);
 
         // Ensure wallet exists in DB
         const existing = await this.prisma.agentWallet.findUnique({

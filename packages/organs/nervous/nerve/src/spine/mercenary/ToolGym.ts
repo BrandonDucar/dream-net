@@ -127,6 +127,13 @@ export class ToolGymService extends EventEmitter {
                 rank: this.calculateRank(totalScore)
             });
 
+            // Contribute to Mastery
+            dreamEventBus.publish({
+                type: 'Agent.ImpactScore',
+                payload: { agentId, score: totalScore / 10, domain: 'Mercenary Optimization' },
+                source: 'TOOL_GYM'
+            });
+
         } catch (err) {
             console.error(`[ToolGym] ❌ Training Accident for ${agentId}:`, err);
         }

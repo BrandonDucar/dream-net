@@ -8,6 +8,7 @@ export * from './FlashTrader.js';
 export * from './BrainGate.js';
 export * from './ElizaBridge.js';
 export * from './Nursery.js';
+export * from './MasteryTracker.js';
 export * from './PilotRegistry.js';
 export * from './MetabolicCortex.js';
 export * from './IdentityMask.js';

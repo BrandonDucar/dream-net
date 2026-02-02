@@ -72,4 +72,4 @@ export class TreasuryAuditService extends EventEmitter {
     }
 }
 
-export const treasuryAudit = new TreasuryAuditService();
+export const treasuryAuditService = new TreasuryAuditService();

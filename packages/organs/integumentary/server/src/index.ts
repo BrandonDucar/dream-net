@@ -277,6 +277,14 @@ async function bootstrap() {
     const { CitizenPulseHub } = await import('./agents/CitizenPulseHub.js');
     const activatedCount = await CitizenPulseHub.activateSwarm();
     console.log(`   - [Citizen Hub] Swarm Active: ${activatedCount} unique agents pulsing.`);
+
+    // 13. [NEW] Phase XXXIX-C: Synaptic Arbitrage & Sovereign Oracles
+    const { PriceOracle } = await import('../../respiratory/agents/src/specialized/PriceOracle.js');
+    const { arbitrageService } = await import('./services/ArbitrageService.js');
+
+    const priceOracle = new PriceOracle({ id: 'PRICE_GAZER', name: 'PriceOracle' });
+    await priceOracle.ignite();
+    console.log("   - [Oracle] Price Gazer Active. Synaptic Arbitrage Enabled (Phase XXXIX-C).");
   });
 }
 

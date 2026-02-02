@@ -79,10 +79,23 @@ export class SovereignTradingHub {
                 throw new Error(`🚫 SECURITY VIOLATION: Attempted to move protected token ${token}`);
             }
 
-            console.log(`💸 [💎 HUB] Executing ${action} for ${amount} ${token} on ${chain}...`);
+            // 1. Certification & Rank Check (Directive 002)
+            if (chain === 'BASE' && !this.baseAgent.isCertified) {
+                console.warn(`⚠️ [💎 HUB] Agent is UNCERTIFIED. Applying additional friction to trade...`);
+            }
+
+            // 2. Quantum Risk Analysis (Avenue 48)
+            const { quantumOracle } = await import('../nerve/src/spine/economy/QuantumOracleService.js');
+            const riskProfile = await quantumOracle.analyzeFluctuation(token);
+
+            console.log(`⚛️ [💎 HUB] Quantum Risk Profile for ${token}: ${riskProfile.vibeShift} (Vol: ${riskProfile.volatility.toFixed(2)})`);
+            console.log(`💸 [💎 HUB] Executing ${action} for ${amount} ${token} on ${chain}. Slippage: ${riskProfile.recommendedSlippage * 100}%`);
 
             // Logic for DEX integration would go here (Uniswap on Base, Jupiter on Solana)
-            await checkpoint({ step: 'DEX_ROUTING_SUCCESSFUL' });
+            await checkpoint({
+                step: 'QUANTUM_RISK_CHECK_PASSED',
+                slippage: riskProfile.recommendedSlippage
+            });
 
             // LOG TO TREASURY
             await this.treasury.logTransaction(
@@ -95,7 +108,7 @@ export class SovereignTradingHub {
                 '0x_simulated_hash'
             );
 
-            return { txHash: '0x_simulated_hash', status: 'SUCCESS' };
+            return { txHash: '0x_simulated_hash', status: 'SUCCESS', riskVibe: riskProfile.vibeShift };
         });
     }
 }

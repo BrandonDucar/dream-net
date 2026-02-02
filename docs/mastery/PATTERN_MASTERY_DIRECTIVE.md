@@ -28,6 +28,18 @@
 - **DreamNet Utility**: Universal Tool Access. Any DreamNet agent can use any MCP-compliant tool globally.
 - **Assigned to**: `Antigravity-Master`
 
+### 🌌 Directive 005: The Emergent Interest Wave (20 Avenues)
+
+**GOAL**: Total Cognitive Dominance across 20 revolutionary verticals as requested by the ARCHITECT.
+
+- **Avenues**: [Detailed in avenues_of_interest.md](file:///C:/Users/brand/.gemini/antigravity/brain/5d00c795-bf8e-4258-8da3-b3754f3c013a/avenues_of_interest.md)
+- **Protocol**:
+    1. Identify Major Players.
+    2. Deep-Ingest Top Minds (Papers, Essence).
+    3. Generate New Agents & Workflows in `SageCortex`.
+
+**STATUS**: ACTIVE (Batch 1: Neuro-Electronic, ZK-State, Kinetic Launch, Bio-Morphogenesis).
+
 ### 4. Token Bound Prowess (ERC-6551)
 
 - **Concept**: Functional NFTs as Active Wallets.

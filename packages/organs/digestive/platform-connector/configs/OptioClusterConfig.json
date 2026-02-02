@@ -1,0 +1,88 @@
+{
+    "clusterName": "DreamNet Sovereignty Cluster",
+    "nodeCount": 20,
+    "optioEmail": "richwithnodes@gmail.com",
+    "activationKey": "000000004f2f4803",
+    "nodes": [
+        {
+            "id": "000000004f2f4803",
+            "label": "Node 1"
+        },
+        {
+            "id": "00000000579e0066",
+            "label": "Node 2"
+        },
+        {
+            "id": "0000000080d85ec4",
+            "label": "Node 3"
+        },
+        {
+            "id": "00000000a0b81e8b",
+            "label": "Node 4"
+        },
+        {
+            "id": "00000000755ee4f8",
+            "label": "Node 5"
+        },
+        {
+            "id": "000000007357c917",
+            "label": "Node 6"
+        },
+        {
+            "id": "00000000f684826d",
+            "label": "Node 7"
+        },
+        {
+            "id": "000000004e90db7c",
+            "label": "Node 8"
+        },
+        {
+            "id": "000000002f2bcc71",
+            "label": "Node 9"
+        },
+        {
+            "id": "0000000085a5e305",
+            "label": "Node 10"
+        },
+        {
+            "id": "0000000109a2503d",
+            "label": "Node 11"
+        },
+        {
+            "id": "00000000c258d4a6",
+            "label": "Node 12"
+        },
+        {
+            "id": "00000000072b2609",
+            "label": "Node 13"
+        },
+        {
+            "id": "0000000086a9f4c3",
+            "label": "Node 14"
+        },
+        {
+            "id": "00000000527339d2",
+            "label": "Node 15"
+        },
+        {
+            "id": "00000000300ee3b1",
+            "label": "Node 16"
+        },
+        {
+            "id": "00000000ee72e276",
+            "label": "Node 17"
+        },
+        {
+            "id": "00000000673413cb",
+            "label": "Node 18"
+        },
+        {
+            "id": "000000004f0561e1",
+            "label": "Node 19"
+        },
+        {
+            "id": "00000000eb9c2c2f",
+            "label": "Node 20"
+        }
+    ]
+}

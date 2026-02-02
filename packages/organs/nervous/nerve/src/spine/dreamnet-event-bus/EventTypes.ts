@@ -24,10 +24,18 @@ export type MarketEventType =
     | 'Market.SlippageAlert'
     | 'Market.AlphaExtracted';
 
-// Agent Events (Future)
+// Agent Events
 export type AgentEventType =
     | 'Agent.PolicyViolation'
-    | 'Agent.Thought';
+    | 'Agent.Thought'
+    | 'Agent.GeneticShift'
+    | 'Agent.ImpactScore';
+
+// Mastery Events
+export type MasteryEventType =
+    | 'Mastery.LevelUp'
+    | 'Mastery.SkillUnlocked'
+    | 'Mastery.ResearchCompleted';
 
 // All Event Types
-export type EventType = SecurityEventType | BrowserEventType | MarketEventType | AgentEventType;
+export type EventType = SecurityEventType | BrowserEventType | MarketEventType | AgentEventType | MasteryEventType;

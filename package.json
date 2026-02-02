@@ -62,6 +62,8 @@
     "test:gcp-apis": "tsx scripts/test-all-gcp-apis.ts",
     "test:aws": "tsx scripts/test-aws-sdk.ts",
     "test:clouds": "tsx scripts/test-cloud-sdks.ts",
+    "test:optio-vigor": "tsx scripts/test-optio-vigor.ts",
+    "test:hybrid-sweep": "tsx scripts/test-hybrid-sweep.ts",
     "check:gcp-setup": "tsx scripts/check-gcp-setup.ts",
     "check:gcp-accounts": "tsx scripts/check-gcp-accounts.ts",
     "setup:dreamnet-gcp": "tsx scripts/setup-dreamnet-gcp-project.ts",
