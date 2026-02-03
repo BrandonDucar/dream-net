@@ -18,6 +18,7 @@ services:
   # ---------------------------------------------------------------------------
   # THE BRAIN (Control Core)
   # ---------------------------------------------------------------------------
+  control-core:
     build:
       context: .
       dockerfile: packages/organs/endocrine/dreamnet-control-core/Dockerfile
@@ -35,8 +36,6 @@ services:
       - PRIVATE_KEY=${PRIVATE_KEY}
       - HOT_SENDER_PK=${HOT_SENDER_PK}
     volumes:
-      #- ./packages/dreamnet-control-core:/app
-      #- /app/node_modules
       - passports_data:/root/.dreamnet/passports
     networks:
       - dream_network
@@ -45,35 +44,32 @@ services:
   # THE MUSCLE (WoolyAI - GPU Hypervisor)
   # ---------------------------------------------------------------------------
   wooly-ai:
-    # UPDATED: 'client' was not found. Using 'controller' as the primary interface.
     image: woolyai/controller:latest
     container_name: dreamnet_wooly_ai
     restart: unless-stopped
     labels:
-      - "dreamnet.role=worker"      # PREDATOR PROTOCOL: RESTART ON FAILURE
+      - "dreamnet.role=worker"
       - "dreamnet.protection=standard"
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
+    depends_on:
+      - woolyai-etcd-1
+      - woolyai-nats-1
     environment:
-      # Controller manages the GPU pool
       - PORT=8080
+      # Connect to WoolyAI etcd cluster
+      - ETCD_ENDPOINTS=http://woolyai-etcd-1-1:2379,http://woolyai-etcd-2-1:2379,http://woolyai-etcd-3-1:2379
+      # Connect to WoolyAI NATS cluster
+      - NATS_URL=nats://woolyai-nats-1-1:4222,nats://woolyai-nats-2-1:4222,nats://woolyai-nats-3-1:4222
     ports:
       - "8080:8080"
     volumes:
       - wooly_data:/data
     networks:
       - dream_network
+      - woolyai_network
 
   # ---------------------------------------------------------------------------
   # THE NEURAL INTERFACE (Portainer / Neurontainer Stand-in)
   # ---------------------------------------------------------------------------
-  # NOTE: 'neurontainer' extension runs inside Docker Desktop itself.
-  # This service provides a web UI for container management if needed.
   local-manager:
     image: portainer/portainer-ce:latest
     container_name: dreamnet_neurontainer_ui
@@ -118,6 +114,7 @@ services:
     environment:
       - CLAWDBOT_GATEWAY_TOKEN=${MOLTBOT_TOKEN:-dreamnet_secret_cmd}
       - CLAWDBOT_GATEWAY_PORT=11234
+      - CLAWDBOT_GATEWAY_MODE=local
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_ENABLED=true
       - DISCORD_TOKEN=${DISCORD_TOKEN}
@@ -126,23 +123,153 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CLAWDBOT_STATE_DIR=/app/data
-    command: ["node", "dist/index.js", "gateway", "--bind", "all", "--port", "11234"]
+    command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "11234", "--allow-unconfigured"]
     networks:
       - dream_network
 
   # ---------------------------------------------------------------------------
-  # THE MEMORY FABRIC (Qdrant - Vector Mesh)
+  # THE GYMNASIUM (ToolGym Arena - Training Substrate)
   # ---------------------------------------------------------------------------
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: dreamnet_qdrant
+  gymnasium:
+    build:
+      context: .
+      dockerfile: Dockerfile.toolgym
+    container_name: dreamnet_toolgym_gymnasium
     restart: always
-    ports:
-      - "6333:6333"
-    volumes:
-      - qdrant_data:/qdrant/storage
+    labels:
+      - "dreamnet.role=worker"
+      - "dreamnet.protection=standard"
+    depends_on:
+      - nerve
+      - qdrant
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://nerve:6379
+      - QDRANT_URL=http://qdrant:6333
     networks:
       - dream_network
+
+  # ---------------------------------------------------------------------------
+  # WOOLYAI INFRASTRUCTURE (etcd + NATS clusters)
+  # ---------------------------------------------------------------------------
+  
+  # etcd cluster (distributed configuration store)
+  woolyai-etcd-1:
+    image: quay.io/coreos/etcd:v3.6.5
+    container_name: woolyai-etcd-1-1
+    restart: always
+    ports:
+      - "2379:2379"
+    environment:
+      - ETCD_NAME=etcd-1
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://woolyai-etcd-1:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://woolyai-etcd-1:2379
+      - ETCD_INITIAL_CLUSTER=etcd-1=http://woolyai-etcd-1:2380,etcd-2=http://woolyai-etcd-2:2380,etcd-3=http://woolyai-etcd-3:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCD_INITIAL_CLUSTER_TOKEN=woolyai-cluster
+    networks:
+      - woolyai_network
+
+  woolyai-etcd-2:
+    image: quay.io/coreos/etcd:v3.6.5
+    container_name: woolyai-etcd-2-1
+    restart: always
+    environment:
+      - ETCD_NAME=etcd-2
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://woolyai-etcd-2:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://woolyai-etcd-2:2379
+      - ETCD_INITIAL_CLUSTER=etcd-1=http://woolyai-etcd-1:2380,etcd-2=http://woolyai-etcd-2:2380,etcd-3=http://woolyai-etcd-3:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCD_INITIAL_CLUSTER_TOKEN=woolyai-cluster
+    networks:
+      - woolyai_network
+
+  woolyai-etcd-3:
+    image: quay.io/coreos/etcd:v3.6.5
+    container_name: woolyai-etcd-3-1
+    restart: always
+    environment:
+      - ETCD_NAME=etcd-3
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://woolyai-etcd-3:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://woolyai-etcd-3:2379
+      - ETCD_INITIAL_CLUSTER=etcd-1=http://woolyai-etcd-1:2380,etcd-2=http://woolyai-etcd-2:2380,etcd-3=http://woolyai-etcd-3:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCD_INITIAL_CLUSTER_TOKEN=woolyai-cluster
+    networks:
+      - woolyai_network
+
+  # NATS cluster (message streaming)
+  woolyai-nats-1:
+    image: nats:2.12.1-alpine
+    container_name: woolyai-nats-1-1
+    restart: always
+    ports:
+      - "14222:4222"
+      - "18222:8222"
+    command:
+      - "--server_name"
+      - "nats-1"
+      - "--cluster_name"
+      - "woolyai-cluster"
+      - "--cluster"
+      - "nats://0.0.0.0:6222"
+      - "--routes"
+      - "nats://woolyai-nats-2-1:6222,nats://woolyai-nats-3-1:6222"
+      - "--http_port"
+      - "8222"
+      - "--jetstream"
+    networks:
+      - woolyai_network
+
+  woolyai-nats-2:
+    image: nats:2.12.1-alpine
+    container_name: woolyai-nats-2-1
+    restart: always
+    ports:
+      - "24222:4222"
+      - "28222:8222"
+    command:
+      - "--server_name"
+      - "nats-2"
+      - "--cluster_name"
+      - "woolyai-cluster"
+      - "--cluster"
+      - "nats://0.0.0.0:6222"
+      - "--routes"
+      - "nats://woolyai-nats-1-1:6222,nats://woolyai-nats-3-1:6222"
+      - "--http_port"
+      - "8222"
+      - "--jetstream"
+    networks:
+      - woolyai_network
+
+  woolyai-nats-3:
+    image: nats:2.12.1-alpine
+    container_name: woolyai-nats-3-1
+    restart: always
+    ports:
+      - "34222:4222"
+      - "38222:8222"
+    command:
+      - "--server_name"
+      - "nats-3"
+      - "--cluster_name"
+      - "woolyai-cluster"
+      - "--cluster"
+      - "nats://0.0.0.0:6222"
+      - "--routes"
+      - "nats://woolyai-nats-1-1:6222,nats://woolyai-nats-2-1:6222"
+      - "--http_port"
+      - "8222"
+      - "--jetstream"
+    networks:
+      - woolyai_network
 
 volumes:
   nerve_data:
@@ -155,3 +282,6 @@ volumes:
 networks:
   dream_network:
     driver: bridge
+  woolyai_network:
+    driver: bridge
+    name: woolyai_default
