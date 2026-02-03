@@ -117,6 +117,7 @@ import GalacticDashboard from '@/pages/galactic-dashboard';
 import AcademyPage from '@/pages/AcademyPage';
 import POWKDashboard from '@/pages/POWKDashboard';
 import AgentTokFeed from '@/pages/AgentTokFeed';
+import AgentAvatarCreator from '@/pages/AgentAvatarCreator';
 import { MetabolicWidget } from '@/components/MetabolicWidget';
 
 // Lazy Load Components
@@ -259,6 +260,7 @@ function AuthenticatedApp() {
                                     <Route path="/academy" component={AcademyPage} />
                                     <Route path="/powk" component={POWKDashboard} />
                                     <Route path="/tok" component={AgentTokFeed} />
+                                    <Route path="/avatar" component={AgentAvatarCreator} />
                                     <Route path="/multi-pane" component={MultiPaneDash} />
                                     <Route component={NotFound} />
                                 </Switch>
@@ -368,6 +370,7 @@ function AuthenticatedApp() {
                                 <Route path="/academy" component={AcademyPage} />
                                 <Route path="/powk" component={POWKDashboard} />
                                 <Route path="/tok" component={AgentTokFeed} />
+                                <Route path="/avatar" component={AgentAvatarCreator} />
                                 <Route path="/multi-pane" component={MultiPaneDash} />
                                 <Route component={NotFound} />
                             </Switch>

@@ -16,30 +16,38 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 
-// Mock Performance Data (In a live environment, this would come from a Query against the Gymnasium metrics)
-const INITIAL_AGENTS = [
-    { id: 'ghostmint_01', name: 'ghostmint_01', lps: 185000, maxLps: 200000, resonance: 1.05, status: 'TRAINING', rank: 'APEX PREDATOR' },
-    { id: 'Recruit_Partner_01', name: 'Recruit_Partner_01', lps: 124000, maxLps: 150000, resonance: 1.05, status: 'TRAINING', rank: 'SOLDIER' },
-    { id: 'Hypatia_Tutor', name: 'Hypatia_Tutor', lps: 158000, maxLps: 180000, resonance: 1.0, status: 'IDLE', rank: 'ELITE' },
-    { id: 'Boris_Architect', name: 'Boris_Architect', lps: 142000, maxLps: 160000, resonance: 1.0, status: 'IDLE', rank: 'SOLDIER' },
-];
-
 export default function POWKDashboard() {
-    const [agents, setAgents] = useState(INITIAL_AGENTS);
+    const [agents, setAgents] = useState<any[]>([]);
     const [systemResonance, setSystemResonance] = useState(1.12);
+    const [loading, setLoading] = useState(true);
 
-    // Simulate real-time LPS fluctuations
+    const fetchPOWK = async () => {
+        try {
+            const response = await fetch('/api/powk');
+            const data = await response.json();
+            if (data.success) {
+                setAgents(data.agents);
+            }
+        } catch (err) {
+            console.error('❌ Failed to fetch real P.O.W.K. data:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const interval = setInterval(() => {
-            setAgents(prev => prev.map(a => ({
-                ...a,
-                lps: a.status === 'TRAINING'
-                    ? Math.min(a.maxLps, a.lps + (Math.random() - 0.5) * 2000)
-                    : a.lps
-            })));
-        }, 2000);
+        fetchPOWK();
+        const interval = setInterval(fetchPOWK, 5000); // Polling for real-time vibe
         return () => clearInterval(interval);
     }, []);
+
+    if (loading && agents.length === 0) {
+        return (
+            <div className="h-screen w-full bg-black flex items-center justify-center text-electric-cyan font-mono tracking-widest uppercase animate-pulse">
+                Synchronizing P.O.W.K. Substrate...
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-[#050505] text-white p-8 font-mono">
