@@ -47,6 +47,7 @@ import { createMetricsRouter } from "@dreamnet/metrics-engine";
 import opsRouter from './routes/ops.js';
 import factoryRouter from './routes/factory.js';
 import intentRouter from './routes/intent.js';
+import tokRouter from './routes/tok.js';
 
 import { Telepathy, QuantumMechanic } from "@dreamnet/nerve";
 
@@ -166,6 +167,8 @@ async function bootstrap() {
   apiRouter.use("/factory", factoryRouter);
   apiRouter.use("/ntag", ntagRouter);
   apiRouter.use("/intent", intentRouter);
+  apiRouter.use("/tok", tokRouter);
+  apiRouter.use("/bounties", (await import('./routes/bounties.js')).default);
 
 
   // Welcome Agent
@@ -285,6 +288,10 @@ async function bootstrap() {
     const priceOracle = new PriceOracle({ id: 'PRICE_GAZER', name: 'PriceOracle' });
     await priceOracle.ignite();
     console.log("   - [Oracle] Price Gazer Active. Synaptic Arbitrage Enabled (Phase XXXIX-C).");
+
+    // 14. Activate Simulation Pilot (Google Labs / SIMA)
+    const { simPilotAgent } = await import('./agents/SimulationPilotAgent.js');
+    console.log("   - [SimPilot] SIMA-inspired pilot awakened for generative resilience.");
   });
 }
 

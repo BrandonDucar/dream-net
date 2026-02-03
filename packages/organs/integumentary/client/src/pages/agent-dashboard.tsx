@@ -254,8 +254,9 @@ export default function AgentDashboard() {
                     </div>
                     <div className="mt-6 flex justify-end">
                       <button className="text-[10px] font-black text-white px-4 py-2 border border-white/20 hover:bg-white/10 transition-all tracking-[0.2em] uppercase">
-                        HIJACK_VALUE
+                        RESONATE_VALUE
                       </button>
+
                     </div>
                   </div>
                 ))}

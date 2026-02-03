@@ -1,0 +1,165 @@
+[
+    {
+        "id": "specialist-fusion",
+        "avenue": "1: Pulsed Fusion",
+        "minds": [
+            "Michel Laberge",
+            "David Kirtley"
+        ],
+        "focus": "MetabolicRecapture"
+    },
+    {
+        "id": "specialist-hts",
+        "avenue": "2: HTS Tokamaks",
+        "minds": [
+            "Bob Mumgaard"
+        ],
+        "focus": "SuperconductorBuses"
+    },
+    {
+        "id": "specialist-kinetic",
+        "avenue": "3: Kinetic Launch",
+        "minds": [
+            "Jonathan Yaney"
+        ],
+        "focus": "OrbitalSling"
+    },
+    {
+        "id": "specialist-morpho",
+        "avenue": "4: Bio-Electric Morphogenetics",
+        "minds": [
+            "Michael Levin"
+        ],
+        "focus": "BioDaemonVNS"
+    },
+    {
+        "id": "specialist-crispr",
+        "avenue": "5: Programmable Biology",
+        "minds": [
+            "Jennifer Doudna",
+            "Feng Zhang"
+        ],
+        "focus": "CasPruning"
+    },
+    {
+        "id": "specialist-commerce",
+        "avenue": "6: Agentic Commerce",
+        "minds": [
+            "Jesse Pollak"
+        ],
+        "focus": "BaseSubstrate"
+    },
+    {
+        "id": "specialist-network",
+        "avenue": "7: Network States",
+        "minds": [
+            "Balaji Srinivasan"
+        ],
+        "focus": "SovereignRegistry"
+    },
+    {
+        "id": "specialist-bonding",
+        "avenue": "8: Curation Markets",
+        "minds": [
+            "Simon de la Rouviere"
+        ],
+        "focus": "SignalBondingCurves"
+    },
+    {
+        "id": "specialist-slm",
+        "avenue": "9: SLM Optimization",
+        "minds": [
+            "Andrej Karpathy"
+        ],
+        "focus": "KarpathyStrictness"
+    },
+    {
+        "id": "specialist-a2a",
+        "avenue": "10: Inter-Agent Protocols",
+        "minds": [
+            "Anthropic Engineering"
+        ],
+        "focus": "NeuralMeshV2"
+    },
+    {
+        "id": "specialist-gensim",
+        "avenue": "11: Generative Simulation",
+        "minds": [
+            "DeepMind Genie Team"
+        ],
+        "focus": "DreamSim"
+    },
+    {
+        "id": "specialist-zk",
+        "avenue": "12: Post-Quantum Identity",
+        "minds": [
+            "Vitalik Buterin",
+            "Alex Blania"
+        ],
+        "focus": "ZkGuardian"
+    },
+    {
+        "id": "specialist-dpu",
+        "avenue": "13: DPU Acceleration",
+        "minds": [
+            "NVIDIA Engineering"
+        ],
+        "focus": "BlueFieldSiphon"
+    },
+    {
+        "id": "specialist-fhe",
+        "avenue": "14: FHE Privacy",
+        "minds": [
+            "Rand Hindi"
+        ],
+        "focus": "BioVaultEncrypted"
+    },
+    {
+        "id": "specialist-space",
+        "avenue": "15: Space Manufacturing",
+        "minds": [
+            "Delian Asparouhov"
+        ],
+        "focus": "OrbitalBackup"
+    },
+    {
+        "id": "specialist-agro",
+        "avenue": "16: Vertical Farming",
+        "minds": [
+            "David Rosenberg"
+        ],
+        "focus": "HydroponicNodes"
+    },
+    {
+        "id": "specialist-pqc",
+        "avenue": "17: Post-Quantum Cryptography",
+        "minds": [
+            "NIST"
+        ],
+        "focus": "QuantumGuard"
+    },
+    {
+        "id": "specialist-const",
+        "avenue": "18: Constitutional AI",
+        "minds": [
+            "Dario Amodei"
+        ],
+        "focus": "ConstitutionalGuard"
+    },
+    {
+        "id": "specialist-dag",
+        "avenue": "19: DAG State Structures",
+        "minds": [
+            "Evan Cheng"
+        ],
+        "focus": "10kTpsMesh"
+    },
+    {
+        "id": "specialist-swarm",
+        "avenue": "20: Swarm Intelligence",
+        "minds": [
+            "Marco Dorigo"
+        ],
+        "focus": "AcoRouting"
+    }
+]

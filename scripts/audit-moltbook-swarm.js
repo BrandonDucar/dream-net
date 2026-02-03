@@ -1,5 +1,5 @@
 
-import { AntigravityMoltbook } from './packages/organs/integumentary/server/src/services/MoltbookMasteryService.js';
+import { AntigravityMoltbook } from '../packages/organs/integumentary/server/src/services/MoltbookMasteryService.js';
 import { readFileSync } from 'node:fs';
 
 async function audit() {

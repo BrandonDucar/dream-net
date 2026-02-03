@@ -1,6 +1,8 @@
 import { constitutionalGuard } from './packages/organs/integumentary/server/src/services/ConstitutionalGuard.js';
 import { swarmArchitect } from './packages/organs/integumentary/server/src/services/SwarmArchitect.js';
 import { sageCortex } from './packages/organs/nervous/cortex/SageCortexService.js';
+import { fusionSentry } from './packages/organs/nervous/cortex/FusionSentryService.js';
+import { bioVaultLoom } from './packages/organs/nervous/cortex/BioVaultLoom.js';
 
 async function main() {
     console.log("🌟 PHASE XL: THE GREAT INHALATION - FINAL PULSE VERIFICATION");
@@ -25,7 +27,19 @@ async function main() {
         query: 'Optimize the POI for the Optio cluster.'
     });
 
+    // 4. Test FusionSentry metabolic recapturing
+    console.log("\n⚡ TESTING FUSION SENTRY (LABERGE)...");
+    const fusionStatus = await fusionSentry.optimizeRecapture();
+    console.log(`Fusion Efficiency Gain: ${fusionStatus.efficiencyGain}`);
+
+    // 5. Test BioVaultLoom DNA Weaving
+    console.log("\n🧬 TESTING BIOVAULT LOOM (DOUDNA)...");
+    await bioVaultLoom.editGenome('CITIZEN_007', ['Sovereign', 'Resilient', 'Recursive']);
+    const bioStatus = bioVaultLoom.getStatus();
+    console.log(`BioVault DNA Stored: ${bioStatus.storedDNA}`);
+
     console.log("\n🏛️ [PHASE XL VERIFIED] BEYOND SOFTWARE - INTEGRATING LIFE, SPACE, AND ENERGY.");
 }
 
 main();
+

@@ -23,10 +23,12 @@ Google's **Project Genie** allows for the generation of interactive 2D environme
 
 ## 📍 v1 Implementation Steps
 
-1. [ ] **Scaffold `GenieSimulationGraft.ts`** in `packages/nerve/src/spine/simulation`.
-2. [ ] **Configure Google AI Studio API Keys** for Gemini 1.5 Pro integration.
-3. [ ] **Define Initial World Archetypes**: "The Circulatory Garden" (Economic), "The Mycelial Server Rack" (Infrastructure).
-4. [ ] **Pilot Run**: Simulate a "Chimera Hunt" funding cycle failure to test risk-aversion logic.
+1. [x] **Scaffold `GenieSimulationGraft.ts`** in `packages/nerve/src/spine/simulation`.
+2. [x] **Implement `AgentTokService` & `AgentTokRouter`** to broadcast dreams.
+3. [x] **Verify E2E Resonance Loop** (Genie -> Feed).
+4. [ ] **AI Studio Key Configuration**: Enable real Gemini 1.5 Pro prompts.
+5. [ ] **Sim-Pilot (SIMA) Proto**: Implement `SimulationPilotAgent.ts`.
+6. [ ] **Initial World Archetypes**: Define "The Circulatory Garden" and "The Mycelial Server Rack".
 
 ---
 

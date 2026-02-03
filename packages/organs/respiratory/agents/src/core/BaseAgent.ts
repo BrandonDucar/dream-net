@@ -1,5 +1,5 @@
 import { dreamEventBus, nursery } from '@dreamnet/nerve';
-import { Genome } from '@dreamnet/shared/genetic/Genome.js';
+import { Genome } from '@dreamnet/shared/genetic/Genome';
 
 export interface AgentConfig {
     name: string;
