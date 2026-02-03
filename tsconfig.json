@@ -52,7 +52,13 @@
             "path": "./packages/base-mini-apps"
         },
         {
-            "path": "./packages/nerve"
+            "path": "./packages/organs/nervous/nerve"
+        },
+        {
+            "path": "./packages/organs/respiratory/agents"
+        },
+        {
+            "path": "./packages/organs/integumentary/client"
         }
     ]
 }

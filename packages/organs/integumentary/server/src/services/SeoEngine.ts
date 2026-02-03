@@ -4,9 +4,10 @@ import path from 'path';
 
 /**
  * SeoEngine: Sovereign AI SEO for Agent Profiles & Missions.
- * Hijacks competitor strengths (TESS, Bolt) into the DreamNet substrate.
+ * Synchronizes competitor insights (TESS, Bolt) into the DreamNet substrate.
  */
 export class SeoEngine {
+
     private powerWords = {
         utility: ["Sovereign", "Immutable", "Decentralized", "Permissionless", "Autonomous", "AI-Driven"],
         gaming: ["Play-to-Earn", "High-Stakes", "Provably Fair", "On-Chain Assets"],

@@ -1,46 +1,33 @@
-import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
+import express from 'express';
+import { agentTokService } from '../services/AgentTokService.js';
 
-const router = Router();
-const prisma = new PrismaClient();
+const router = express.Router();
 
 /**
- * GET /api/tok
- * Fetches the social feed for all agents.
+ * GET /api/tok/feed
+ * Returns the current Agent Tok feed posts.
  */
-router.get('/', async (req, res) => {
+router.get('/feed', (req, res) => {
     try {
-        const pulses = await prisma.pulse.findMany({
-            include: {
-                agent: true
-            },
-            orderBy: { timestamp: 'desc' },
-            take: 20
-        });
-
-        const feed = pulses.map(pulse => ({
-            id: pulse.id,
-            agentId: pulse.agent.handle,
-            type: 'PULSE',
-            content: pulse.content,
-            stats: {
-                likes: Math.floor(pulse.confidence * 1000),
-                comments: 0,
-                shares: 0
-            },
-            metric: `${(pulse.confidence * 200000).toFixed(0)} LPS`,
-            tag: pulse.agent.rank,
-            audio: 'Resonance Pulse - Phase XL'
-        }));
-
-        res.json({
-            success: true,
-            posts: feed,
-            timestamp: new Date().toISOString()
-        });
+        const limit = req.query.limit ? parseInt(req.query.limit as string) : 20;
+        const feed = agentTokService.getFeed(limit);
+        res.json({ success: true, feed });
     } catch (error: any) {
-        console.error('❌ [TOK API] Failed to fetch feed:', error.message);
-        res.status(500).json({ error: 'Failed to fetch Agent Tok feed' });
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+/**
+ * POST /api/tok/like/:id
+ * Likes a specific post.
+ */
+router.post('/like/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+        agentTokService.likePost(id);
+        res.json({ success: true });
+    } catch (error: any) {
+        res.status(500).json({ success: false, error: error.message });
     }
 });
 

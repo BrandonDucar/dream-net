@@ -1,4 +1,4 @@
-import { GenomePilotAgent } from '../packages/agents/src/specialized/GenomePilotAgent';
+import { GenomePilotAgent } from '../packages/organs/respiratory/agents/src/specialized/GenomePilotAgent';
 
 async function main() {
     console.log("🚀 INITIALIZING GENOME PILOT INCEPTION...\n");

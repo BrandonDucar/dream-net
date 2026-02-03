@@ -15,9 +15,9 @@ export default function BondingCurveHub() {
         <div className="min-h-screen bg-black text-white font-mono p-8 selection:bg-cyan-500 selection:text-black">
             <header className="mb-12 border-b border-white/10 pb-6">
                 <h1 className="text-5xl font-black italic tracking-tighter uppercase italic">
-                    Bonding_Curve_Hub <span className="text-xs font-normal non-italic text-cyan-400 opacity-50">v1.0-HIJACK</span>
+                    Bonding_Curve_Hub <span className="text-xs font-normal non-italic text-cyan-400 opacity-50">v1.0-SYNC</span>
                 </h1>
-                <p className="text-sm opacity-60 mt-2 tracking-[0.2em]">/// LIQUIDITY HIJACK PROTOCOL // BASE L2</p>
+                <p className="text-sm opacity-60 mt-2 tracking-[0.2em]">/// LIQUIDITY RESONANCE PROTOCOL // BASE L2</p>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

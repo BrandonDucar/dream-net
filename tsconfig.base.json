@@ -30,10 +30,24 @@
         "packages/organs/lymphatic/*/src/index.ts",
         "packages/organs/skeletal/*/src/index.ts",
         "packages/organs/reproductive/*/src/index.ts",
+        "packages/organs/nervous/*/src/index.ts",
+        "packages/organs/nervous/*/index.ts",
+        "packages/organs/respiratory/*/src/index.ts",
+        "packages/organs/respiratory/*/index.ts",
+        "packages/organs/circulatory/*/src/index.ts",
+        "packages/organs/circulatory/*/index.ts",
+        "packages/organs/digestive/*/src/index.ts",
+        "packages/organs/digestive/*/index.ts",
+        "packages/organs/muscular/*/src/index.ts",
+        "packages/organs/muscular/*/index.ts",
+        "packages/organs/excretory/*/src/index.ts",
+        "packages/organs/excretory/*/index.ts",
+        "packages/organs/endocrine/*/src/index.ts",
+        "packages/organs/endocrine/*/index.ts",
         "packages/*"
       ],
       "@/*": [
-        "packages/client/src/*"
+        "packages/organs/integumentary/client/src/*"
       ]
     }
   }

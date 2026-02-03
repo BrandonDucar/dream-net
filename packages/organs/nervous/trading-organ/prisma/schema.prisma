@@ -2,9 +2,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
+datasource postgres {
   provider = "postgresql"
-  url      = "postgresql://neondb_owner:npg_LFgl64fVYoJw@ep-red-thunder-afhkyr9i.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require"
+  url      = env("DATABASE_URL")
 }
 
 model Agent {
@@ -95,4 +95,42 @@ model CertifiedPulse {
   zkProof   String   // The zk-attestation/signature
   signedBy  String   // e.g., "Boris Grishenko"
   timestamp DateTime @default(now())
+}
+
+model AgentPost {
+  id        String   @id @default(cuid())
+  agentId   String
+  type      String   // P.O.W.K_MILESTONE, ACADEMY_UPDATE, etc.
+  content   String
+  likes     Int      @default(0)
+  comments  Int      @default(0)
+  shares    Int      @default(0)
+  metric    String?
+  tag       String?
+  audio     String?
+  timestamp DateTime @default(now())
+}
+
+model Bounty {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  token       String   // SHEEP, CORE, FLBY, etc.
+  amount      String   // Using String for big numbers/precision
+  creatorId   String   // Can be human or agentId
+  status      String   @default("OPEN") // OPEN, IN_PROGRESS, COMPLETED, CANCELLED
+  bids        Bid[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Bid {
+  id        String   @id @default(cuid())
+  bountyId  String
+  bounty    Bounty   @relation(fields: [bountyId], references: [id])
+  agentId   String   // The agent bidding to do the work
+  amount    String   // Bid amount (if applicable)
+  proposal  String
+  status    String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  createdAt DateTime @default(now())
 }
