@@ -49,6 +49,8 @@ const navigation = [
   { name: "Community", href: "/community", icon: Users },
   { name: "Vault", href: "/vault", icon: Vault },
   { name: "Academy", href: "/academy", icon: GraduationCap },
+  { name: "P.O.W.K.", href: "/powk", icon: Activity }, // Added P.O.W.K. navigation item
+  { name: "Agent Tok", href: "/tok", icon: Zap }, // Added Agent Tok navigation item
   { name: "Mission Center", href: "/mission-center", icon: Swords },
   { name: "Agents", href: "/agents", icon: Bot },
   { name: "Settings", href: "/settings", icon: Settings },

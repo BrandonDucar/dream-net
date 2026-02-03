@@ -150,6 +150,28 @@ services:
       - dream_network
 
   # ---------------------------------------------------------------------------
+  # THE PLAYGROUND (Autonomous Manifestation Substrate)
+  # ---------------------------------------------------------------------------
+  playground:
+    build:
+      context: .
+      dockerfile: Dockerfile.playground
+    container_name: dreamnet_toolgym_playground
+    restart: always
+    labels:
+      - "dreamnet.role=worker"
+      - "dreamnet.protection=standard"
+    depends_on:
+      - nerve
+      - qdrant
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://nerve:6379
+      - QDRANT_URL=http://qdrant:6333
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
   # WOOLYAI INFRASTRUCTURE (etcd + NATS clusters)
   # ---------------------------------------------------------------------------
   
