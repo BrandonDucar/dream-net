@@ -115,6 +115,8 @@ import { GravRemote } from '@/components/GravRemote';
 import CommandPalette from '@/components/CommandPalette';
 import GalacticDashboard from '@/pages/galactic-dashboard';
 import AcademyPage from '@/pages/AcademyPage';
+import POWKDashboard from '@/pages/POWKDashboard';
+import AgentTokFeed from '@/pages/AgentTokFeed';
 import { MetabolicWidget } from '@/components/MetabolicWidget';
 
 // Lazy Load Components
@@ -255,6 +257,8 @@ function AuthenticatedApp() {
                                     <Route path="/god-view" component={GodView} />
                                     <Route path="/omni-dashboard" component={OmniDashboard} />
                                     <Route path="/academy" component={AcademyPage} />
+                                    <Route path="/powk" component={POWKDashboard} />
+                                    <Route path="/tok" component={AgentTokFeed} />
                                     <Route path="/multi-pane" component={MultiPaneDash} />
                                     <Route component={NotFound} />
                                 </Switch>
@@ -362,6 +366,8 @@ function AuthenticatedApp() {
                                 <Route path="/god-view" component={GodView} />
                                 <Route path="/omni-dashboard" component={OmniDashboard} />
                                 <Route path="/academy" component={AcademyPage} />
+                                <Route path="/powk" component={POWKDashboard} />
+                                <Route path="/tok" component={AgentTokFeed} />
                                 <Route path="/multi-pane" component={MultiPaneDash} />
                                 <Route component={NotFound} />
                             </Switch>
@@ -410,9 +416,9 @@ function App() {
                                     <Suspense fallback={<div className="h-screen w-full bg-black flex items-center justify-center text-white font-mono tracking-widest uppercase">Initializing Sovereign Grid...</div>}>
                                         <Switch>
                                             {/* Domain-Aware Routing */}
-                                            {domain === 'live' && <Route path="/" component={Portal} />}
+                                            {domain === 'live' && <Route path="/" component={AgentTokFeed} />}
                                             {domain === 'pro' && <Route path="/" component={VerifyPage} />}
-                                            {domain === 'org' && <Route path="/" component={LeaderboardPage} />}
+                                            {domain === 'org' && <Route path="/" component={POWKDashboard} />}
 
                                             {/* Default/Hub Routing */}
                                             <Route path="/" component={Home} />

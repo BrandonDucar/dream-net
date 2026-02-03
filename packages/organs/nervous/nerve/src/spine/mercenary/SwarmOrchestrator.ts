@@ -31,7 +31,7 @@ class SwarmOrchestrator {
         console.log(`⚡ [Orchestrator] Executing ${booking.type} for ${booking.agentId}...`);
 
         if (booking.type === 'GYMNASIUM') {
-            // Signal the Gymnasium container (via Nerve/Redis)
+            // Signal the Gymnasium container
             dreamEventBus.publish('Gymnasium.StartSession', { agentId: booking.agentId });
         } else if (booking.type === 'PLAYGROUND') {
             // Signal the Playground container
