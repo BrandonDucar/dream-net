@@ -114,6 +114,7 @@ import Portal from '@/pages/Portal';
 import { GravRemote } from '@/components/GravRemote';
 import CommandPalette from '@/components/CommandPalette';
 import GalacticDashboard from '@/pages/galactic-dashboard';
+import AcademyPage from '@/pages/AcademyPage';
 import { MetabolicWidget } from '@/components/MetabolicWidget';
 
 // Lazy Load Components
@@ -253,6 +254,7 @@ function AuthenticatedApp() {
                                     <Route path="/system-os-status" component={SystemOsStatusPage} />
                                     <Route path="/god-view" component={GodView} />
                                     <Route path="/omni-dashboard" component={OmniDashboard} />
+                                    <Route path="/academy" component={AcademyPage} />
                                     <Route path="/multi-pane" component={MultiPaneDash} />
                                     <Route component={NotFound} />
                                 </Switch>
@@ -359,6 +361,7 @@ function AuthenticatedApp() {
                                 <Route path="/dreamscope/alive" component={DreamScopeAlive} />
                                 <Route path="/god-view" component={GodView} />
                                 <Route path="/omni-dashboard" component={OmniDashboard} />
+                                <Route path="/academy" component={AcademyPage} />
                                 <Route path="/multi-pane" component={MultiPaneDash} />
                                 <Route component={NotFound} />
                             </Switch>

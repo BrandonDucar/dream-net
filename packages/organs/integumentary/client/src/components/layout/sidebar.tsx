@@ -48,6 +48,8 @@ const navigation = [
   { name: "Dream Gallery", href: "/dream-gallery", icon: Gem },
   { name: "Community", href: "/community", icon: Users },
   { name: "Vault", href: "/vault", icon: Vault },
+  { name: "Academy", href: "/academy", icon: GraduationCap },
+  { name: "Mission Center", href: "/mission-center", icon: Swords },
   { name: "Agents", href: "/agents", icon: Bot },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
