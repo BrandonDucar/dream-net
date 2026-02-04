@@ -1,20 +1,16 @@
 {
-  "name": "@dreamnet/playground",
+  "name": "playground",
   "version": "1.0.0",
   "type": "module",
   "description": "DreamNet Agent Experimentation & Prototyping Environment",
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "test": "echo 'Playground tests'"
+    "start": "node dist/index.js"
   },
   "dependencies": {
-    "@dreamnet/shared": "workspace:*",
-    "@dreamnet/lib": "workspace:*",
     "express": "^4.21.2",
-    "ws": "^8.18.0",
-    "zod": "^3.23.8"
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

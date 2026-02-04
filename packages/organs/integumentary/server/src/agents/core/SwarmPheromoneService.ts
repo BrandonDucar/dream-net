@@ -1,6 +1,6 @@
-import { pheromones as circulatoryPheromones } from '@dreamnet/circulatory-dream-state-core';
+import { pheromones as circulatoryPheromones } from '@dreamnet/dream-state-core';
 import { getPheromoneStrength, depositPheromone as haloDeposit } from '@dreamnet/halo-loop';
-import { agentBus } from '../agent-bus';
+import { agentBus } from '../agent-bus.js';
 
 /**
  * SwarmPheromoneService

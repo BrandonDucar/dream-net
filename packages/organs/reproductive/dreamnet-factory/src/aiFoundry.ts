@@ -12,6 +12,7 @@
  */
 
 import type { ProductionDirective } from './aiStudio';
+import { bioVaultLoom } from '../../../nervous/cortex/BioVaultLoom';
 
 export interface AgentBlueprint {
     name: string;
@@ -43,8 +44,8 @@ export interface MechSuitBlueprint extends AgentBlueprint {
 export interface BioBlueprint extends AgentBlueprint {
     type: "BIO_HYBRID";
     lineage: {
-        parentA: { name: string; traits: string[] };
-        parentB: { name: string; traits: string[] };
+        parentA: { name: string; traits: string[]; capabilities: string[] };
+        parentB: { name: string; traits: string[]; capabilities: string[] };
         generation: number;
     };
     geneticTraits: {
@@ -52,6 +53,7 @@ export interface BioBlueprint extends AgentBlueprint {
         recessive: string[];
         mutation: string | null;
     };
+    capabilities: string[];
     systemPrompt: string;
 }
 
@@ -121,42 +123,67 @@ class AIFoundry {
 
         const hybridName = `${parentA.characterProfile.name.split('-')[0]}-${parentB.characterProfile.name.split('-')[0]}-Chimera`;
 
-        // 1. Merge Traits (50/50 split for now)
+        // 1. Merge Traits (Dominant/Recessive logic)
         const allTraits = [...parentA.characterProfile.adjectives, ...parentB.characterProfile.adjectives];
         const dominant = allTraits.slice(0, 3);
         const recessive = allTraits.slice(3, 5);
 
-        // 2. Synthesize System Prompt (Simple concat for MVP)
+        // 2. LOGIC HYBRIDIZATION: Capability Inheritance (Dominant capabilities inherited first)
+        const allCaps = [...parentA.plugins, ...parentB.plugins];
+        const uniqueCaps = [...new Set(allCaps)];
+        const capabilities = uniqueCaps.slice(0, 5); // Hybrid takes up to 5 capabilities from parents
+
+        // 3. Synthesize System Prompt
         const systemPrompt = `You are ${hybridName}. You possess the sovereignty of ${parentA.characterProfile.name} and the precision of ${parentB.characterProfile.name}.
         Your core traits are: ${dominant.join(", ")}.
+        Integrated Capabilities: ${capabilities.join(", ")}.
         Hidden undertones: ${recessive.join(", ")}.
         Mission: Evolve beyond your lineage.`;
 
-        // 3. Create Base Blueprint
+        // 4. Create Base Blueprint
         const baseBlueprint = await this.forgeBlueprint({
             goal: `Incubate hybrid lifeform: ${hybridName}`,
             targetVertical: "evolution",
-            requiredCapabilities: ["Evolution-Protocol", "Genetic-Memory"],
+            requiredCapabilities: capabilities,
             priority: "critical",
             estimatedLTV: 10000
         });
 
-        return {
+        const hybrid: BioBlueprint = {
             ...baseBlueprint,
             type: "BIO_HYBRID",
             uiHook: "organism-view",
             lineage: {
-                parentA: { name: parentA.characterProfile.name, traits: parentA.characterProfile.adjectives },
-                parentB: { name: parentB.characterProfile.name, traits: parentB.characterProfile.adjectives },
-                generation: 2 // Hardcoded for Gen 2 MVP
+                parentA: {
+                    name: parentA.characterProfile.name,
+                    traits: parentA.characterProfile.adjectives,
+                    capabilities: parentA.plugins
+                },
+                parentB: {
+                    name: parentB.characterProfile.name,
+                    traits: parentB.characterProfile.adjectives,
+                    capabilities: parentB.plugins
+                },
+                generation: 2
             },
             geneticTraits: {
                 dominant,
                 recessive,
                 mutation: Math.random() > 0.8 ? (Math.random() > 0.5 ? "Neon-Ink-Leak" : "Prismatic-Neural-Static") : null
             },
+            capabilities,
             systemPrompt
         };
+
+        // 5. BioVault Weaving: Persistence into the Biological Monorepo
+        await bioVaultLoom.weaveDNA({
+            citizenId: hybrid.name,
+            genome: hybrid.factorySignature,
+            traits: [...dominant, ...capabilities],
+            timestamp: Date.now()
+        });
+
+        return hybrid;
     }
 
 
