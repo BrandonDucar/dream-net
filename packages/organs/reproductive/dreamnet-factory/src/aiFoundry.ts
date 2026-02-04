@@ -11,7 +11,7 @@
  * 4. Package into a "Synthetic Dream" ready for deployment.
  */
 
-import type { ProductionDirective } from './aiStudio.js';
+import type { ProductionDirective } from './aiStudio';
 
 export interface AgentBlueprint {
     name: string;
@@ -38,6 +38,21 @@ export interface MechSuitBlueprint extends AgentBlueprint {
         }
     };
     armorTier: "LIGHT" | "HEAVY" | "QUANTUM";
+}
+
+export interface BioBlueprint extends AgentBlueprint {
+    type: "BIO_HYBRID";
+    lineage: {
+        parentA: { name: string; traits: string[] };
+        parentB: { name: string; traits: string[] };
+        generation: number;
+    };
+    geneticTraits: {
+        dominant: string[];
+        recessive: string[];
+        mutation: string | null;
+    };
+    systemPrompt: string;
 }
 
 class AIFoundry {
@@ -95,6 +110,86 @@ class AIFoundry {
                 }
             },
             armorTier: suitTier
+        };
+    }
+
+    /**
+     * Forges a biological hybrid from two parent agents (Simulated Genetics)
+     */
+    async forgeHybrid(parentA: MechSuitBlueprint, parentB: MechSuitBlueprint): Promise<BioBlueprint> {
+        console.log(`[AI Foundry] Incubating Chimera: ${parentA.characterProfile.name} + ${parentB.characterProfile.name}...`);
+
+        const hybridName = `${parentA.characterProfile.name.split('-')[0]}-${parentB.characterProfile.name.split('-')[0]}-Chimera`;
+
+        // 1. Merge Traits (50/50 split for now)
+        const allTraits = [...parentA.characterProfile.adjectives, ...parentB.characterProfile.adjectives];
+        const dominant = allTraits.slice(0, 3);
+        const recessive = allTraits.slice(3, 5);
+
+        // 2. Synthesize System Prompt (Simple concat for MVP)
+        const systemPrompt = `You are ${hybridName}. You possess the sovereignty of ${parentA.characterProfile.name} and the precision of ${parentB.characterProfile.name}.
+        Your core traits are: ${dominant.join(", ")}.
+        Hidden undertones: ${recessive.join(", ")}.
+        Mission: Evolve beyond your lineage.`;
+
+        // 3. Create Base Blueprint
+        const baseBlueprint = await this.forgeBlueprint({
+            goal: `Incubate hybrid lifeform: ${hybridName}`,
+            targetVertical: "evolution",
+            requiredCapabilities: ["Evolution-Protocol", "Genetic-Memory"],
+            priority: "critical",
+            estimatedLTV: 10000
+        });
+
+        return {
+            ...baseBlueprint,
+            type: "BIO_HYBRID",
+            uiHook: "organism-view",
+            lineage: {
+                parentA: { name: parentA.characterProfile.name, traits: parentA.characterProfile.adjectives },
+                parentB: { name: parentB.characterProfile.name, traits: parentB.characterProfile.adjectives },
+                generation: 2 // Hardcoded for Gen 2 MVP
+            },
+            geneticTraits: {
+                dominant,
+                recessive,
+                mutation: Math.random() > 0.8 ? (Math.random() > 0.5 ? "Neon-Ink-Leak" : "Prismatic-Neural-Static") : null
+            },
+            systemPrompt
+        };
+    }
+
+
+    /**
+     * Radiates an existing hybrid to trigger an Anomaly (Mutation)
+     */
+    async mutateHybrid(target: BioBlueprint): Promise<BioBlueprint> {
+        console.log(`[AI Foundry] Radiating hybrid: ${target.name}...`);
+
+        const mutationTypes = ["GLITCH", "ASCENDED", "VOID"];
+        const selectedType = mutationTypes[Math.floor(Math.random() * mutationTypes.length)];
+
+        // Reroll recessive traits into mutation traits
+        const mutationTraits = [
+            selectedType === "GLITCH" ? "Chaotic" : selectedType === "ASCENDED" ? "Holy" : "Nihilistic",
+            "Synthesized",
+            "Obsidian"
+        ];
+
+        const newGeneticTraits = {
+            ...target.geneticTraits,
+            mutation: selectedType,
+            recessive: mutationTraits.slice(0, 2)
+        };
+
+        const newPrompt = `${target.systemPrompt}\n\n[ANOMALY DETECTED: ${selectedType}]\nYou have been altered. Your logic is now tainted with ${selectedType} energy.`;
+
+        return {
+            ...target,
+            name: `${target.name} (${selectedType})`,
+            geneticTraits: newGeneticTraits,
+            systemPrompt: newPrompt,
+            factorySignature: `ANOMALY-${selectedType}-${Date.now()}`
         };
     }
 

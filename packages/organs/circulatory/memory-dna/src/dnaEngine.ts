@@ -267,6 +267,50 @@ export async function updateTraitsFromTaskResult(task: TaskModel): Promise<void>
   }
 }
 
+export async function deriveHybridMemory(entityType: EntityType, parent1Id: string, parent2Id: string, childId: string): Promise<void> {
+  const parent1 = await getMemoryRecord(entityType, parent1Id);
+  const parent2 = await getMemoryRecord(entityType, parent2Id);
+  if (!parent1 || !parent2) return;
+
+  const child = await ensureRecord(entityType, childId);
+
+  // MERGE TRAITS: 50/50 blend with minor mutation chance
+  const mergedTraits: Trait[] = [];
+  const allKeys = Array.from(new Set([...parent1.traits.map(t => t.key), ...parent2.traits.map(t => t.key)]));
+
+  for (const key of allKeys) {
+    const t1 = parent1.traits.find(t => t.key === key);
+    const t2 = parent2.traits.find(t => t.key === key);
+
+    let val = 0.5;
+    if (t1 && t2) val = (t1.value + t2.value) / 2;
+    else if (t1) val = t1.value;
+    else if (t2) val = t2.value;
+
+    // Mutation Factor: +/- 5%
+    val += (Math.random() - 0.5) * 0.1;
+
+    mergedTraits.push({
+      key,
+      value: Number(Math.max(0, Math.min(1, val)).toFixed(4)),
+      lastUpdated: new Date().toISOString()
+    });
+  }
+
+  child.traits = mergedTraits;
+  child.tags = Array.from(new Set([...parent1.tags, ...parent2.tags, "hybrid", "gen2"]));
+  child.history = [
+    {
+      timestamp: new Date().toISOString(),
+      summary: `Hybrid creation: Spliced from ${parent1Id} and ${parent2Id}`,
+    },
+    ...child.history,
+  ].slice(0, 25);
+  child.updatedAt = new Date().toISOString();
+
+  await upsertMemoryRecord(child);
+}
+
 export async function deriveChildMemory(entityType: EntityType, parentId: string, childId: string): Promise<void> {
   const parent = await getMemoryRecord(entityType, parentId);
   if (!parent) return;
