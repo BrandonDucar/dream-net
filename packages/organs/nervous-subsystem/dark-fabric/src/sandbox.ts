@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { writeFileSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from 'url';
+import { spawn } from "node:child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,6 +27,10 @@ function cleanupSandbox(runId: string): void {
   }
 }
 
+/**
+ * Executes code in a "fissioned" process for safety.
+ * Phase 2 Level: tsx execution with timeout and output capture.
+ */
 export async function runSandbox(
   code: string,
   testCode?: string,
@@ -36,89 +41,76 @@ export async function runSandbox(
   ensureSandboxDir();
   mkdirSync(runDir, { recursive: true });
 
-  try {
-    // Write code files
-    const codePath = join(runDir, "code.ts");
-    writeFileSync(codePath, code, "utf-8");
+  const codePath = join(runDir, "code.ts");
+  writeFileSync(codePath, code, "utf-8");
 
-    if (testCode) {
-      const testPath = join(runDir, "test.ts");
-      writeFileSync(testPath, testCode, "utf-8");
-    }
-
-    const startTime = Date.now();
-
-    // Phase 1: Sandbox is a safe validation/analysis layer
-    // Phase 2: Full VM isolation with actual code execution
-    // For now, we simulate sandbox execution by analyzing the code
-    let output = "";
-    let errors: string[] = [];
-    let testResults: SandboxResult["testResults"];
-
-    // Basic syntax validation (Phase 1: simple checks)
-    // Phase 2: Use TypeScript compiler API for full type checking
-    try {
-      // Check for basic syntax errors
-      if (!code.trim()) {
-        errors.push("Code is empty");
-      }
-
-      // Check for balanced braces
-      const openBraces = (code.match(/\{/g) || []).length;
-      const closeBraces = (code.match(/\}/g) || []).length;
-      if (openBraces !== closeBraces) {
-        errors.push(`Unbalanced braces: ${openBraces} open, ${closeBraces} close`);
-      }
-
-      // Check for balanced parentheses
-      const openParens = (code.match(/\(/g) || []).length;
-      const closeParens = (code.match(/\)/g) || []).length;
-      if (openParens !== closeParens) {
-        errors.push(`Unbalanced parentheses: ${openParens} open, ${closeParens} close`);
-      }
-
-      // Simulate successful execution if no syntax errors
-      if (errors.length === 0) {
-        output = "Sandbox validation passed (Phase 1: syntax check only)";
-
-        // Simulate test results if test code provided
-        if (testCode) {
-          testResults = {
-            passed: 1,
-            failed: 0,
-            logs: ["Test code provided, validation passed"],
-            errors: [],
-          };
-        }
-      }
-    } catch (err: any) {
-      errors.push(err.message || "Sandbox validation failed");
-    }
-
-    const executionTime = Date.now() - startTime;
-
-    const result: SandboxResult = {
-      runId,
-      success: errors.length === 0,
-      output,
-      errors,
-      testResults,
-      executionTime,
-    };
-
-    // Cleanup after a delay (allow inspection)
-    setTimeout(() => cleanupSandbox(runId), 60000); // 1 minute
-
-    return result;
-  } catch (err: any) {
-    cleanupSandbox(runId);
-    return {
-      runId,
-      success: false,
-      output: "",
-      errors: [err.message || "Sandbox execution failed"],
-      executionTime: 0,
-    };
+  if (testCode) {
+    const testPath = join(runDir, "test.ts");
+    writeFileSync(testPath, testCode, "utf-8");
   }
+
+  const startTime = Date.now();
+  let stdout = "";
+  let stderr = "";
+  let success = false;
+  let errorMessages: string[] = [];
+
+  return new Promise((resolve) => {
+    // Phase 2: Trial by Execution
+    // We run the code using npx tsx. 
+    // In a real production environment, we'd use isolated-vm or a Docker runner.
+    const child = spawn("npx", ["tsx", codePath], {
+      timeout,
+      env: { ...process.env, DARK_FABRIC_SANDBOX: "true" },
+      shell: true // Required for npx on Windows
+    });
+
+    child.stdout.on("data", (data) => {
+      stdout += data.toString();
+    });
+
+    child.stderr.on("data", (data) => {
+      stderr += data.toString();
+    });
+
+    child.on("close", (code) => {
+      const executionTime = Date.now() - startTime;
+      success = code === 0;
+
+      if (!success) {
+        errorMessages.push(`Process exited with code ${code}`);
+        if (stderr) errorMessages.push(stderr);
+      }
+
+      const result: SandboxResult = {
+        runId,
+        success,
+        output: stdout,
+        errors: errorMessages,
+        testResults: {
+          passed: success ? 1 : 0,
+          failed: success ? 0 : 1,
+          logs: stdout.split("\n").filter(Boolean),
+          errors: stderr.split("\n").filter(Boolean)
+        },
+        executionTime,
+      };
+
+      // Cleanup after a delay
+      setTimeout(() => cleanupSandbox(runId), 60000);
+      resolve(result);
+    });
+
+    child.on("error", (err) => {
+      resolve({
+        runId,
+        success: false,
+        output: stdout,
+        errors: [err.message, stderr],
+        executionTime: Date.now() - startTime,
+      });
+      cleanupSandbox(runId);
+    });
+  });
 }
 

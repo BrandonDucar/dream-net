@@ -134,3 +134,37 @@ model Bid {
   status    String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
   createdAt DateTime @default(now())
 }
+
+model Molting {
+  id             String        @id @default(cuid())
+  name           String
+  type           String        // MOLTING (Base), SOPHLET (Light), TINY_TURTLE (Heavy)
+  dna            Json          // The genetic data (colors, shapes, traits)
+  imageUrl       String
+  parent1Id      String
+  parent2Id      String
+  generation     Int           @default(1)
+  incubatedAt    DateTime      @default(now())
+  remixReceiptId String?       @unique
+  remixReceipt   RemixReceipt? @relation(fields: [remixReceiptId], references: [id])
+}
+
+model RemixReceipt {
+  id        String   @id @default(cuid())
+  payerId   String   // User or Agent ID
+  amount    String   // Cost of remix
+  token     String   // DREAM, ETH, etc.
+  moltingId String?
+  molting   Molting?
+  timestamp DateTime @default(now())
+}
+
+model BlackboardSnapshot {
+  id          String   @id @default(cuid())
+  phase       String
+  objectives  Json     // Storing list of objectives/priorities
+  fullContent String   // Backup of the raw markdown
+  swarms      Json?    // Parsed swarm assignments
+  timestamp   DateTime @default(now())
+  syncedBy    String   @default("MetabolicCortex")
+}

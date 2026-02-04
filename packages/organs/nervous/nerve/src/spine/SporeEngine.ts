@@ -25,6 +25,7 @@ export class SporeEngine {
     private readonly HUMAN_RESONANCE_MULTIPLIER = 10.0; // Humans accelerate growth by 10x
     private readonly BIO_ELECTRIC_RESONANCE_MULTIPLIER = 25.0; // Michael Levin logic: 25x multiplier
     private readonly BRACKY_RESONANCE_MULTIPLIER = 500.0; // Bracky bets accelerate growth by 500x
+    private mintedSporeCount: Map<string, number> = new Map();
 
     private constructor() {
         this.initListeners();
@@ -106,11 +107,6 @@ export class SporeEngine {
         }
     }
 
-    private sentiencePoints = 0.0;
-    private readonly GROWTH_THRESHOLD = 1.0;
-    private mintedSporeCount: Map<string, number> = new Map();
-
-    private constructor() {
     /**
      * Mint a new Spore from a Synaptic Insight
      */
