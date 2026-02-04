@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import XPMeter from '@/components/XPMeter';
@@ -87,7 +87,7 @@ export default function MissionCenter() {
       // Show level up toast if applicable
       if (data.xpUpdate?.levelUp) {
         toast({
-          title: "🎉 Level Up!",
+          title: "ðŸŽ‰ Level Up!",
           description: `You leveled up to L${data.xpUpdate.newLevel}!`,
           duration: 5000,
         });
@@ -123,13 +123,13 @@ export default function MissionCenter() {
     if (agent.currentMission) {
       return (
         <span className="text-yellow-400 text-sm">
-          🔄 Running {agent.currentMission}
+          ðŸ”„ Running {agent.currentMission}
         </span>
       );
     }
     return (
       <span className="text-green-400 text-sm">
-        ✅ Idle
+        âœ… Idle
       </span>
     );
   };
@@ -297,7 +297,7 @@ export default function MissionCenter() {
                       {getAgentStatus(agent)}
                     </div>
                     <p className="text-cyan-500/60 text-[10px] font-mono uppercase">
-                      Units: {agent.agentsIncluded.join(' • ')}
+                      Units: {agent.agentsIncluded.join(' â€¢ ')}
                     </p>
                   </div>
                 </motion.div>
@@ -309,7 +309,7 @@ export default function MissionCenter() {
 
       {/* Mission Logbook */}
       <section className="logbook mt-8 bg-gray-900 border border-gold-500 rounded-lg p-8">
-        <h2 className="text-3xl font-bold text-gold-400 mb-6">📖 Mission Logbook</h2>
+        <h2 className="text-3xl font-bold text-gold-400 mb-6">ðŸ“– Mission Logbook</h2>
 
         <div className="overflow-x-auto">
           <table className="w-full table-auto">
@@ -357,7 +357,7 @@ export default function MissionCenter() {
                     <td className="py-3 px-4">
                       <div className="text-gray-300">{formatDate(log.timestamp)}</div>
                       <div className="text-gray-500 text-sm">
-                        {log.status === 'complete' ? '✅ Complete' : '🔄 Running'}
+                        {log.status === 'complete' ? 'âœ… Complete' : 'ðŸ”„ Running'}
                       </div>
                     </td>
                   </tr>
@@ -381,16 +381,17 @@ export default function MissionCenter() {
           className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-black font-semibold rounded-lg transition-colors"
           onClick={() => window.history.back()}
         >
-          ← Back to Dashboard
+          â† Back to Dashboard
         </button>
         <button
           className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors"
           onClick={() => window.location.href = '/agent-customizer'}
         >
-          🤖 Agent Customizer
+          ðŸ¤– Agent Customizer
         </button>
       </div>
     </div>
-    </div >
+    </div>
   );
 }
+
