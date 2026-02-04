@@ -388,3 +388,37 @@ body {
     clip: rect(7px, 9999px, 49px, 0);
   }
 }
+
+/* SOVEREIGN LIVE AESTHETICS */
+.site-live .cyber-hub-bg {
+  background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+}
+
+.site-live .neon-border-pulse {
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+  animation: neon-pulse 4s infinite alternate;
+}
+
+@keyframes neon-pulse {
+  from {
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+  }
+
+  to {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  }
+}
+
+.site-live .crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.01));
+  background-size: 100% 2px, 2px 100%;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.3;
+}

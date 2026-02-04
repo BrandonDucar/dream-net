@@ -1,5 +1,5 @@
-import { swarmPheromones } from './SwarmPheromoneService.js';
-import { agentBus } from '../agent-bus.js';
+import { swarmPheromones } from './SwarmPheromoneService';
+import { agentBus } from '../agent-bus';
 
 /**
  * EconomicPheromoneService

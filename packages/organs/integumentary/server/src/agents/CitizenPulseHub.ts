@@ -1,7 +1,7 @@
 import { CitizenshipStore } from '@dreamnet/circulatory-dream-state-core';
-import { agentRegistry } from './core/registry.js';
-import { Agent, AgentId, AgentInvocationContext, AgentResult } from './core/types.js';
-import { agentBus } from './agent-bus.js';
+import { agentRegistry } from './core/registry';
+import { Agent, AgentId, AgentInvocationContext, AgentResult } from './core/types';
+import { agentBus } from './agent-bus';
 
 /**
  * CitizenPulseHub
@@ -49,8 +49,8 @@ export class CitizenPulseHub {
             },
 
             pulse: async (ctx: AgentInvocationContext): Promise<AgentResult> => {
-                const { BlackboardScheduler } = await import('./BlackboardScheduler.js');
-                const { swarmPheromones } = await import('./core/SwarmPheromoneService.js');
+                const { BlackboardScheduler } = await import('./BlackboardScheduler');
+                const { swarmPheromones } = await import('./core/SwarmPheromoneService');
 
                 // 1. Formicidae: Sniff for "Hot Leads" (Aesthetic/Semantic Pheromones)
                 const globalPheromones = await swarmPheromones.sniffTrail('global_foraging');

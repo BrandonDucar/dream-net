@@ -1,6 +1,6 @@
-import { Agent, AgentId, AgentInvocationContext, AgentResult } from './core/types.js';
-import { BlackboardScheduler } from './BlackboardScheduler.js';
-import { agentBus } from './agent-bus.js';
+import { Agent, AgentId, AgentInvocationContext, AgentResult } from './core/types';
+import { BlackboardScheduler } from './BlackboardScheduler';
+import { agentBus } from './agent-bus';
 
 /**
  * PippinBabyAGIAgent

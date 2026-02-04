@@ -2,10 +2,10 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Zap, Grid3x3, Cloud, Bot, ArrowRight, Shield, Tv, Coins, 
-  Users, FlaskConical, Plane, Code, Building2, Star, 
-  Network, Rocket, Wallet, Activity, LayoutGrid, Sparkles
+import {
+  Zap, Grid3x3, Cloud, Bot, ArrowRight, Shield, Tv, Coins,
+  Users, FlaskConical, Plane, Code, Building2, Star,
+  Network, Rocket, Wallet, Activity, LayoutGrid, Sparkles, Palette
 } from "lucide-react";
 
 interface Vertical {
@@ -87,13 +87,24 @@ export default function LandingNew() {
     {
       id: "agent-foundry",
       name: "Agent Foundry",
-      description: "Create custom hybrid agents for DreamNet",
-      icon: Code,
-      color: "text-pink-400",
-      bgColor: "bg-pink-400/10",
-      domain: "agents.dream",
+      description: "Logic Hybridization & Genetic Splicing. Forge Phase 2 agents with inherited wisdom.",
+      icon: FlaskConical,
+      color: "text-cyan-400",
+      bgColor: "bg-cyan-400/10",
+      domain: "foundry.dream",
       status: "live",
-      route: "/agent-customizer"
+      route: "/foundry"
+    },
+    {
+      id: "avatar-forge",
+      name: "Avatar Forge",
+      description: "Visual Identity Substrate. Remix your sovereign presence and incubate Moltings.",
+      icon: Palette,
+      color: "text-purple-400",
+      bgColor: "bg-purple-400/10",
+      domain: "forge.dream",
+      status: "live",
+      route: "/avatar"
     },
     {
       id: "dreamnet-systems",
@@ -264,8 +275,8 @@ export default function LandingNew() {
           {coreVerticals.map((vertical) => {
             const Icon = vertical.icon;
             return (
-              <Card 
-                key={vertical.id} 
+              <Card
+                key={vertical.id}
                 className="border-border hover:border-electric-cyan/50 transition-all hover:shadow-lg hover:shadow-electric-cyan/10 cursor-pointer group"
               >
                 <CardHeader>
@@ -311,8 +322,8 @@ export default function LandingNew() {
           {coreInfrastructure.map((infra) => {
             const Icon = infra.icon;
             return (
-              <Card 
-                key={infra.id} 
+              <Card
+                key={infra.id}
                 className="border-border hover:border-electric-violet/50 transition-all hover:shadow-lg hover:shadow-electric-violet/10 cursor-pointer group"
               >
                 <CardHeader>

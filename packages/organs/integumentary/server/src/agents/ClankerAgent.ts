@@ -1,5 +1,5 @@
-import { agentBus } from './agent-bus.js';
-import { Agent, AgentInvocationContext, AgentId } from './core/types.js';
+import { agentBus } from './agent-bus';
+import { Agent, AgentInvocationContext, AgentId } from './core/types';
 import axios from 'axios';
 import { ethers } from 'ethers';
 

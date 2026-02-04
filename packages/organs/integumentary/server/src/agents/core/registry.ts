@@ -1,4 +1,4 @@
-import { Agent, AgentId } from './types';
+import { Agent, AgentId } from './types.js';
 
 class AgentRegistry {
     private agents: Map<AgentId, Agent> = new Map();
@@ -44,7 +44,7 @@ class AgentRegistry {
 
             // 🦀 PAN-CRAB: Biomass Podding (Agent Stacking)
             // Check if other agents are working on the same goal to form a "Pod"
-            const { swarmPheromones } = await import('./SwarmPheromoneService.js');
+            const { swarmPheromones } = await import('./SwarmPheromoneService');
             const podTrail = await swarmPheromones.sniffTrail(`pod:${agent.id}`);
 
             const ctx: AgentInvocationContext = {
@@ -96,9 +96,9 @@ class AgentRegistry {
 export const agentRegistry = new AgentRegistry();
 
 // Auto-register core agents
-import { formicidaeTunneler } from '../FormicidaeTunnelerAgent.js';
-import { pippinSoul } from '../PippinBabyAGIAgent.js';
-import { resourceManager } from './ResourceManager.js';
+import { formicidaeTunneler } from '../FormicidaeTunnelerAgent';
+import { pippinSoul } from '../PippinBabyAGIAgent';
+import { resourceManager } from './ResourceManager';
 
 agentRegistry.registerAgent(formicidaeTunneler);
 agentRegistry.registerAgent(pippinSoul);
