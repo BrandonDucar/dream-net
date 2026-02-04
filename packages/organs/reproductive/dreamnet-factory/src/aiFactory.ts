@@ -12,8 +12,8 @@
  */
 
 import { bridgeToSpiderWeb } from '@dreamnet/dreamnet-operational-bridge';
-import { aiStudio, type ProductionDirective } from './aiStudio.js';
-import { aiFoundry, type AgentBlueprint } from './aiFoundry.js';
+import { aiStudio, type ProductionDirective } from './aiStudio';
+import { aiFoundry, type AgentBlueprint } from './aiFoundry';
 import { EventEmitter } from 'events';
 
 export interface ProductionLog {
@@ -79,15 +79,15 @@ class AIFactory {
                 this.events.emit('production_finished', log);
 
                 // --- AGENT REGISTRY INTEGRATION ---
-                const { agentRegistry } = await import('../../../integumentary/server/src/agents/core/registry.js');
-                const { agentBus } = await import('../../../integumentary/server/src/agents/agent-bus.js');
-                const { BlackboardScheduler } = await import('../../../integumentary/server/src/agents/BlackboardScheduler.js');
+                const { agentRegistry } = await import('../../../integumentary/server/src/agents/core/registry');
+                const { agentBus } = await import('../../../integumentary/server/src/agents/agent-bus');
+                const { BlackboardScheduler } = await import('../../../integumentary/server/src/agents/BlackboardScheduler');
 
                 // Construct an active Agent from the blueprint
                 const activeAgent: any = {
                     id: blueprint.name.toLowerCase(),
                     name: blueprint.name,
-                    description: `Mech Suit Pilot: ${blueprint.name}`,
+                    description: `Chimera Hybrid Pilot: ${blueprint.name}`,
                     category: 'action',
                     version: '1.0.0',
                     capabilities: blueprint.dependencies || [],

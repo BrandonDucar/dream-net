@@ -854,13 +854,14 @@ export const insertOathSchema = createInsertSchema(oaths).pick({
   userId: true,
   username: true,
   evidenceUrl: true,
-});
+}) as unknown as z.ZodTypeAny;
 
 export const insertHomeostasisBandSchema = createInsertSchema(homeostasisBands).pick({
   userId: true,
   band: true,
   pulseFrequency: true,
-});
+}) as unknown as z.ZodTypeAny;
+
 
 export type Oath = typeof oaths.$inferSelect;
 export type InsertOath = z.infer<typeof insertOathSchema>;

@@ -18,7 +18,10 @@
     "dependencies": {
         "drizzle-orm": "^0.44.7",
         "drizzle-zod": "^0.8.3",
-        "zod": "^3.25.75"
+        "zod": "3.23.8",
+        "@prisma/client": "6.2.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "prisma": "6.2.1"
+    }
 }
