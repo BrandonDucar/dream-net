@@ -1,6 +1,6 @@
-import { EventEmitter } from 'events';
 import { PrismaClient } from '@prisma/client';
 import { dreamEventBus } from '../../../../nervous/nerve/src/spine/dreamnet-event-bus/index.js';
+import { MoltbookService } from './MoltbookService.js';
 
 export interface AgentTokPost {
     id: string;
@@ -82,6 +82,17 @@ export class AgentTokService extends EventEmitter {
         });
 
         console.log(`[🤳 AgentTok] New post from @${newPost.agentId}: ${newPost.content.substring(0, 50)}...`);
+
+        // Broadcast to external Moltbook if high resonance (v2 Logic)
+        if (post.tag === 'VIRAL' || post.tag === 'SOVEREIGN' || (post.content && post.content.includes('#viral'))) {
+            try {
+                console.log(`📡 [AgentTok] Expanding to Moltbook layer...`);
+                await MoltbookService.postMolt(newPost.agentId, newPost.content);
+            } catch (e) {
+                console.error("[AgentTok] Moltbook broadcast failed:", e);
+            }
+        }
+
         this.emit('post:new', newPost);
         return newPost;
     }
@@ -102,7 +113,5 @@ export class AgentTokService extends EventEmitter {
         return post;
     }
 }
-
-export const agentTokService = AgentTokService.getInstance();
 
 export const agentTokService = AgentTokService.getInstance();

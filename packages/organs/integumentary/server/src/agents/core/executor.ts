@@ -1,5 +1,6 @@
 import { agentRegistry } from './registry';
 import { AgentId, AgentInvocationContext, AgentResult } from './types';
+import { agentBus } from '../agent-bus';
 
 export async function runAgent<TInput, TOutput>(
     agentId: AgentId,
@@ -40,7 +41,7 @@ export async function runAgent<TInput, TOutput>(
             try {
                 const snapshot = await agent.getAestheticSnapshot(input, result as TOutput, fullContext);
                 if (snapshot) {
-                    const { agentBus } = await import('../agent-bus.js');
+                    const { agentBus } = await import('../agent-bus');
                     agentBus.broadcast('GALLERY_PIECE_PUBLISHED', `Agent ${agentId} emitted art residue: ${snapshot.title}`, {
                         agentId,
                         ...snapshot,

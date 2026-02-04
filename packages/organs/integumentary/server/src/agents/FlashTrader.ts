@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
-import { agentBus } from './agent-bus.js';
-import { clanker } from '../services/ClankerService.js';
-import { Agent, AgentInvocationContext, AgentId } from './core/types.js';
-import { mevShield } from '../services/MEVShieldService.js';
-import { dutchBook } from '../services/DutchBookService.js';
-import { solanaTreasury } from '../services/SolanaTreasuryService.js';
-import { TreasuryGuards } from '../services/TreasuryGuards.js';
-import { metabolicBridge } from '../services/MetabolicBridgeService.js';
+import { agentBus } from './agent-bus';
+import { clanker } from '../services/ClankerService';
+import { Agent, AgentInvocationContext, AgentId } from './core/types';
+import { mevShield } from '../services/MEVShieldService';
+import { dutchBook } from '../services/DutchBookService';
+import { solanaTreasury } from '../services/SolanaTreasuryService';
+import { TreasuryGuards } from '../services/TreasuryGuards';
+import { metabolicBridge } from '../services/MetabolicBridgeService';
 
 export interface FlashTraderRequest {
     targetToken?: string;

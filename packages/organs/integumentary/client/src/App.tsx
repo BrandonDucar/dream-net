@@ -118,6 +118,7 @@ import AcademyPage from '@/pages/AcademyPage';
 import POWKDashboard from '@/pages/POWKDashboard';
 import AgentTokFeed from '@/pages/AgentTokFeed';
 import AgentAvatarCreator from '@/pages/AgentAvatarCreator';
+import AgentFoundry from '@/pages/AgentFoundry';
 import { MetabolicWidget } from '@/components/MetabolicWidget';
 
 // Lazy Load Components
@@ -261,6 +262,8 @@ function AuthenticatedApp() {
                                     <Route path="/powk" component={POWKDashboard} />
                                     <Route path="/tok" component={AgentTokFeed} />
                                     <Route path="/avatar" component={AgentAvatarCreator} />
+                                    <Route path="/foundry" component={AgentFoundry} />
+                                    <Route path="/foundry" component={AgentFoundry} />
                                     <Route path="/multi-pane" component={MultiPaneDash} />
                                     <Route component={NotFound} />
                                 </Switch>
@@ -433,6 +436,7 @@ function App() {
                                             <Route path="/:rest*" component={CatchAllRoute} />
                                         </Switch>
                                         <GravRemote />
+                                        {domain === 'live' && <div className="crt-overlay" />}
                                         {/* AI Factory Metabolic Monitor */}
                                         <MetabolicWidget />
                                     </Suspense>

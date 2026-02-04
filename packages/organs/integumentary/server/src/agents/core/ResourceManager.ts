@@ -1,4 +1,4 @@
-import { agentBus } from './agent-bus.js';
+import { agentBus } from '../agent-bus';
 
 export interface ResourceShell {
     id: string;

@@ -1,11 +1,11 @@
 import { ethers } from 'ethers';
-import { agentBus } from './agent-bus.js';
+import { agentBus } from './agent-bus';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import path from 'path';
 import * as solana from '@solana/web3.js';
 import fs from 'fs';
-import { Agent, AgentInvocationContext, AgentId } from './core/types.js';
+import { Agent, AgentInvocationContext, AgentId } from './core/types';
 import { epigenetics } from '@dreamnet/memory-dna';
 
 // Fix: Correct path to root .env.gcp
@@ -68,7 +68,7 @@ export class AuditorAgent implements Agent<AuditorRequest, AuditorResponse> {
     public async getLivePrices(): Promise<Record<string, number>> {
         try {
             // Priority 1: SensoryCortex Snapshot
-            const { cortex } = await import('../services/SensoryCortex.js');
+            const { cortex } = await import('../services/SensoryCortex');
             const snapshot = cortex.getLatestSnapshot();
 
             if (snapshot && snapshot.crypto) {
@@ -218,7 +218,7 @@ export class AuditorAgent implements Agent<AuditorRequest, AuditorResponse> {
 
             // 3. Clanker Reward Scan (Shadow Yield)
             try {
-                const { clanker } = await import('../services/ClankerService.js');
+                const { clanker } = await import('../services/ClankerService');
                 const commonRewardTokens = [
                     { symbol: 'WETH', address: '0x4200000000000000000000000000000000000006', priceKey: 'ETH' },
                     { symbol: 'DEGEN', address: '0x4ed4E111100220c4Ba272363102434E7B3527D56', priceKey: 'DEGEN' }
@@ -396,7 +396,7 @@ export class AuditorAgent implements Agent<AuditorRequest, AuditorResponse> {
             }
 
             // Post to Blackboard Scheduler
-            const { BlackboardScheduler } = await import('./BlackboardScheduler.js');
+            const { BlackboardScheduler } = await import('./BlackboardScheduler');
             await BlackboardScheduler.postTask(this.id, {
                 id: `audit-${Date.now()}`,
                 goal: "System Integrity Audit",

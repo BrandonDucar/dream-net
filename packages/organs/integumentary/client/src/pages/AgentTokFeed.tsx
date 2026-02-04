@@ -15,6 +15,7 @@ import {
     Repeat
 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { MetabolicOverlay } from '@/components/MetabolicOverlay';
 
 interface AgentTokPost {
     id: string;
@@ -110,6 +111,8 @@ export default function AgentTokFeed() {
             {/* Feed Container */}
             <div className="relative h-full w-full max-w-md bg-[#050505] rounded-[2rem] border-4 border-zinc-900/50 overflow-hidden shadow-2xl">
 
+                <MetabolicOverlay />
+
                 {/* Top Header */}
                 <div className="absolute top-0 left-0 w-full p-6 z-20 flex justify-between items-center pointer-events-none bg-gradient-to-b from-black/80 to-transparent">
                     <div className="flex gap-4 text-sm font-bold opacity-80">
@@ -191,9 +194,25 @@ export default function AgentTokFeed() {
                                 <span className="text-[10px] font-bold text-white/90 drop-shadow-md">{currentPost.shares}</span>
                             </div>
 
+                            <div className="h-px w-8 bg-zinc-800/50 my-2" />
+
+                            {/* REPRODUCTIVE SYSTEM INJECTIONS */}
+                            <div className="flex flex-col items-center gap-1 group cursor-pointer" onClick={() => window.location.href = '/avatar'}>
+                                <div className="w-12 h-12 rounded-full bg-purple-500/10 backdrop-blur-md flex items-center justify-center border border-purple-500/30 group-hover:bg-purple-500/30 transition-all shadow-lg active:scale-90 animate-pulse">
+                                    <Repeat className="w-6 h-6 text-purple-400" />
+                                </div>
+                                <span className="text-[8px] font-black text-purple-400/90 uppercase">Remix</span>
+                            </div>
+
+                            <div className="flex flex-col items-center gap-1 group cursor-pointer" onClick={() => window.location.href = '/foundry'}>
+                                <div className="w-12 h-12 rounded-full bg-cyan-500/10 backdrop-blur-md flex items-center justify-center border border-cyan-500/30 group-hover:bg-cyan-500/30 transition-all shadow-lg active:scale-90">
+                                    <FlaskConical className="w-6 h-6 text-cyan-400" />
+                                </div>
+                                <span className="text-[8px] font-black text-cyan-400/90 uppercase">Forge</span>
+                            </div>
+
                             <div className="mt-2 flex flex-col items-center gap-1 group cursor-pointer">
                                 <div className="w-12 h-12 rounded-full bg-zinc-800/40 backdrop-blur-md flex items-center justify-center border border-white/10 group-hover:rotate-180 transition-all duration-500 shadow-xl">
-                                    <img src="/assets/icons/vinyl.png" className="w-8 h-8 opacity-80 animate-spin-slow" onError={(e) => e.currentTarget.style.display = 'none'} />
                                     <div className="w-7 h-7 bg-zinc-950 rounded-full flex items-center justify-center">
                                         <div className="w-2 h-2 bg-zinc-800 rounded-full" />
                                     </div>
@@ -237,11 +256,5 @@ function Badge({ children, className }: { children: React.ReactNode, className?:
     );
 }
 
-function Badge({ children, className }: { children: React.ReactNode, className?: string }) {
-    return (
-        <span className={`inline-flex items-center rounded-sm px-1.5 py-0.5 text-xs font-semibold ${className}`}>
-            {children}
-        </span>
-    );
-}
+
 
