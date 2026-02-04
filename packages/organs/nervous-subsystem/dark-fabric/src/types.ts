@@ -1,4 +1,4 @@
-export type FabricTaskType = "generate" | "mutate" | "refactor" | "test" | "merge" | "custom";
+export type FabricTaskType = "generate" | "mutate" | "refactor" | "test" | "merge" | "custom" | "patch" | "heal";
 
 export type FabricTaskStatus = "pending" | "running" | "completed" | "failed" | "approved" | "rejected";
 

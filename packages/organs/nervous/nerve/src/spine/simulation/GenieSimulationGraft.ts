@@ -125,45 +125,44 @@ export class GenieSimulationGraft {
             return "The dream dissolves into static.";
         }
     }
-}
-
     /**
      * triggerSystemDream
      * Automated failure simulation based on predefined technical archetypes.
      */
     public async triggerSystemDream(archetype: 'CIRCULATORY_GARDEN' | 'MYCELIAL_RACK' | 'ZERO_GRAVITY_TOKEN', severity: number) {
-    const archetypes = {
-        CIRCULATORY_GARDEN: {
-            description: "The DreamNet Circulatory System as a lush, bioluminescent garden. Tokens are flowing water.",
-            params: { flowRate: "HIGH", droughtRisk: severity > 0.7 }
-        },
-        MYCELIAL_RACK: {
-            description: "An infinite server rack where cables are fungal mycelium networks. Data packets are spores.",
-            params: { sporeDensity: "CRITICAL", rot: severity > 0.5 }
-        },
-        ZERO_GRAVITY_TOKEN: {
-            description: "A void of zero gravity where asset bubbles float and burst. P.O.W.K. laws apply.",
-            params: { gForce: "ZERO", volatility: severity }
-        }
-    };
+        const archetypes = {
+            CIRCULATORY_GARDEN: {
+                description: "The DreamNet Circulatory System as a lush, bioluminescent garden. Tokens are flowing water.",
+                params: { flowRate: "HIGH", droughtRisk: severity > 0.7 }
+            },
+            MYCELIAL_RACK: {
+                description: "An infinite server rack where cables are fungal mycelium networks. Data packets are spores.",
+                params: { sporeDensity: "CRITICAL", rot: severity > 0.5 }
+            },
+            ZERO_GRAVITY_TOKEN: {
+                description: "A void of zero gravity where asset bubbles float and burst. P.O.W.K. laws apply.",
+                params: { gForce: "ZERO", volatility: severity }
+            }
+        };
 
-    const selected = archetypes[archetype];
+        const selected = archetypes[archetype];
 
-    console.log(`[🔮 Genie] Triggering System Dream: ${archetype} (Severity: ${severity})`);
+        console.log(`[🔮 Genie] Triggering System Dream: ${archetype} (Severity: ${severity})`);
 
-    const sketch = await this.dream({
-        id: `dream_${Date.now()}`,
-        description: selected.description,
-        parameters: selected.params,
-        complexity: severity > 0.8 ? 'HIGH' : 'MEDIUM'
-    });
+        const sketch = await this.dream({
+            id: `dream_${Date.now()}`,
+            description: selected.description,
+            parameters: selected.params,
+            complexity: severity > 0.8 ? 'HIGH' : 'MEDIUM'
+        });
 
-    // Simulate a "Sim-Pilot" reacting to the world
-    const reaction = await this.evaluateAction(sketch, "DEPLOY_SPIKE_PROTEINS");
-    console.log(`[🤖 Sim-Pilot] Reaction: ${reaction}`);
+        // Simulate a "Sim-Pilot" reacting to the world
+        const reaction = await this.evaluateAction(sketch, "DEPLOY_SPIKE_PROTEINS");
+        console.log(`[🤖 Sim-Pilot] Reaction: ${reaction}`);
 
-    return { sketch, reaction };
+        return { sketch, reaction };
+    }
 }
-}
+
 
 export const genieGraft = GenieSimulationGraft.getInstance();

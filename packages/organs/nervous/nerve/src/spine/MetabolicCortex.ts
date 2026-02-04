@@ -82,12 +82,10 @@ export class MetabolicCortex {
 
         // --- NEW: Trigger System Dream (Genie Simulation) ---
         if (this.reportHistory.length % 10 === 0) {
-            await genieGraft.dream({
-                id: `DREAM-${Date.now()}`,
-                description: `Simulating consequences of insight: ${insight.substring(0, 50)}...`,
-                parameters: { insight, historyLength: this.reportHistory.length },
-                complexity: 'MEDIUM'
-            });
+            await genieGraft.triggerSystemDream(
+                Math.random() > 0.5 ? 'CIRCULATORY_GARDEN' : 'MYCELIAL_RACK',
+                'MEDIUM'
+            );
         }
 
         // --- NEW WIRING: VectorStore, CosmicLayer, and Mammal Layer Commitment ---
@@ -262,17 +260,18 @@ export class MetabolicCortex {
         if (fs.existsSync(absPath)) {
             const content = fs.readFileSync(absPath, 'utf-8');
 
-            // Simple Parse Logic
-            const phaseMatch = content.match(/Current Phase\*\*: (.*)/);
-            const prioritiesMatch = content.match(/Today’s 3 Priorities\*\*:\n(.*?)\n---/s);
+            // Improved Parse Logic for Sovereignty 2.0 Blackboard
+            const phaseMatch = content.match(/## CURRENT PHASE: (.*)/);
+            const prioritiesMatch = content.match(/### 🎯 STRATEGIC PRIORITIES\n\n(.*?)\n\n---/s);
 
             const state = {
-                phase: phaseMatch ? phaseMatch[1].trim() : 'UNKNOWN',
-                priorities: prioritiesMatch ? prioritiesMatch[1].split('\n').map(l => l.trim()).filter(l => l) : []
+                phase: phaseMatch ? phaseMatch[1].trim() : 'PHASE XL',
+                priorities: prioritiesMatch ? prioritiesMatch[1].split('\n').map(l => l.trim().replace(/^\d+\.\s+/, '')).filter(l => l) : []
             };
 
             console.log(`[🌀 MetabolicCortex] Blackboard State: ${state.phase}`);
 
+            // 1. Publish to Nerve Bus
             const { dreamEventBus } = await import('../dreamnet-event-bus/index.js');
             dreamEventBus.publish({
                 type: 'System.BlackboardSync',
@@ -280,6 +279,30 @@ export class MetabolicCortex {
                 payload: state,
                 timestamp: Date.now()
             });
+
+            // 2. SNAPSHOT TO NEON DB (Sovereign Mirror)
+            try {
+                // Dynamically import prisma client to avoid circular deps during boot if needed
+                const { PrismaClient } = await import('@prisma/client');
+                const prisma = new PrismaClient();
+
+                // Parse Swarm Assignments for JSON storage
+                const swarmsMatch = content.match(/```yaml(.*?)```/s);
+                const swarmsJson = swarmsMatch ? { raw_yaml: swarmsMatch[1] } : null;
+
+                await prisma.blackboardSnapshot.create({
+                    data: {
+                        phase: state.phase,
+                        objectives: state.priorities, // Stored as JSON
+                        fullContent: content,
+                        swarms: swarmsJson || {},
+                        syncedBy: 'MetabolicCortex'
+                    }
+                });
+                console.log(`[🌀 MetabolicCortex] 💾 SNAPSHOT SAVED to Neon DB (BlackboardSnapshot).`);
+            } catch (dbError) {
+                console.warn(`[🌀 MetabolicCortex] ⚠️ DB Snapshot failed (Non-Critical):`, dbError);
+            }
 
             return state;
         } else {
