@@ -1,34 +1,38 @@
 # 🎭 ToolPlayground: The Manifestation Substrate
-FROM node:20-alpine AS builder
-RUN npm install -g pnpm
+FROM node:20-slim AS builder
+RUN npm install -g pnpm && apt-get update && apt-get install -y python3 make g++ libffi-dev
 WORKDIR /app
 
 # Copy Configs
 COPY pnpm-lock.yaml package.json pnpm-workspace.yaml tsconfig.base.json ./
 
 # Copy Required Package Manifests
-COPY packages/dreamnet-types/package.json ./packages/dreamnet-types/
-COPY packages/shared/package.json ./packages/shared/
+COPY packages/organs/skeletal/dreamnet-types/package.json ./packages/organs/skeletal/dreamnet-types/
+COPY packages/organs/skeletal/shared/package.json ./packages/organs/skeletal/shared/
+
 COPY packages/organs/nervous/nerve/package.json ./packages/organs/nervous/nerve/
 
 # Install Dependencies
 RUN pnpm install --frozen-lockfile
 
 # Copy Source Code
-COPY packages/dreamnet-types ./packages/dreamnet-types
-COPY packages/shared ./packages/shared
+COPY packages/organs/skeletal/dreamnet-types ./packages/organs/skeletal/dreamnet-types
+COPY packages/organs/skeletal/shared ./packages/organs/skeletal/shared
+
 COPY packages/organs/nervous/nerve ./packages/organs/nervous/nerve
 
 # Build Requirements
-WORKDIR /app/packages/dreamnet-types
+WORKDIR /app/packages/organs/skeletal/dreamnet-types
 RUN pnpm build
-WORKDIR /app/packages/shared
+WORKDIR /app/packages/organs/skeletal/shared
 RUN pnpm build
+
 WORKDIR /app/packages/organs/nervous/nerve
 RUN pnpm build
 
 # 🛡️ RUNTIME: The Playground
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
+
 WORKDIR /app
 
 # Non-privileged user
@@ -36,7 +40,8 @@ RUN addgroup --system --gid 1001 dreamnet && \
     adduser --system --uid 1001 dreamnet
 
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/packages/dreamnet-types/dist ./packages/dreamnet-types/dist
+COPY --from=builder /app/packages/organs/skeletal/dreamnet-types/dist ./packages/organs/skeletal/dreamnet-types/dist
+
 COPY --from=builder /app/packages/organs/nervous/nerve/dist ./packages/organs/nervous/nerve/dist
 COPY --from=builder /app/packages/organs/nervous/nerve/package.json ./packages/organs/nervous/nerve/
 
