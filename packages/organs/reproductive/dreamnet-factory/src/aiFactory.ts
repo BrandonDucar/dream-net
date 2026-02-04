@@ -79,9 +79,9 @@ class AIFactory {
                 this.events.emit('production_finished', log);
 
                 // --- AGENT REGISTRY INTEGRATION ---
-                const { agentRegistry } = await import('../../../integumentary/server/src/agents/core/registry');
-                const { agentBus } = await import('../../../integumentary/server/src/agents/agent-bus');
-                const { BlackboardScheduler } = await import('../../../integumentary/server/src/agents/BlackboardScheduler');
+                const { agentRegistry } = await import('../../../integumentary/server/src/agents/core/registry.js');
+                const { agentBus } = await import('../../../integumentary/server/src/agents/agent-bus.js');
+                const { BlackboardScheduler } = await import('../../../integumentary/server/src/agents/BlackboardScheduler.js');
 
                 // Construct an active Agent from the blueprint
                 const activeAgent: any = {

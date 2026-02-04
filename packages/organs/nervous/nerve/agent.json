@@ -1,0 +1,45 @@
+{
+    "id": "dreamnet.nerve.v1",
+    "name": "Nerve Organ",
+    "owner": "nervous",
+    "capabilities": [
+        "messaging.nats",
+        "event.bus",
+        "social.discord",
+        "social.telegraf",
+        "social.twitter",
+        "social.tiktok",
+        "social.instagram",
+        "social.facebook"
+    ],
+    "inputs": {
+        "topic": "string",
+        "payload": "any"
+    },
+    "outputs": {
+        "status": "success | error"
+    },
+    "trust_level": "internal",
+    "risk_notes": "Handles high-frequency NATS traffic. Social API keys required for external bridging.",
+    "resources": {
+        "secrets": [
+            "DISCORD_TOKEN",
+            "TELEGRAM_TOKEN",
+            "TWITTER_API_V2_TOKEN"
+        ],
+        "scopes": [
+            "nats.pubsub",
+            "social.write"
+        ]
+    },
+    "healthcheck": "http://nerve:4222/health",
+    "version": "0.1.0",
+    "changelog": "Initial integration into the Agent Empire.",
+    "tags": [
+        "core",
+        "nervous",
+        "messaging",
+        "social"
+    ],
+    "docs": "./README.md"
+}

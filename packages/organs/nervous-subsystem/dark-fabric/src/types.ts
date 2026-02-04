@@ -60,12 +60,17 @@ export interface SandboxResult {
   success: boolean;
   output: string;
   errors: string[];
-  testResults?: {
+  executionTime: number;
+  testResults: {
     passed: number;
     failed: number;
     logs: string[];
     errors: string[];
   };
-  executionTime: number;
+  selfHealReport?: {
+    detectedIssues: string[];
+    suggestedFixes: string[];
+    riskLevel: "low" | "medium" | "high";
+  };
 }
 

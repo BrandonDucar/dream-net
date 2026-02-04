@@ -28,7 +28,8 @@
         "@dreamnet/lib": "workspace:*",
         "@dreamnet/shared": "workspace:*",
         "@dreamnet/wolfpack-funding-core": "workspace:*",
-        "@dreamnet/dreambet-core": "workspace:*"
+        "@dreamnet/dreambet-core": "workspace:*",
+        "@dreamnet/memory-dna": "workspace:*"
     },
     "devDependencies": {
         "typescript": "^5.9.3"

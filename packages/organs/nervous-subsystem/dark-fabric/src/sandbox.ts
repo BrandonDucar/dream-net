@@ -87,13 +87,18 @@ export async function runSandbox(
         success,
         output: stdout,
         errors: errorMessages,
+        executionTime,
         testResults: {
           passed: success ? 1 : 0,
           failed: success ? 0 : 1,
           logs: stdout.split("\n").filter(Boolean),
           errors: stderr.split("\n").filter(Boolean)
         },
-        executionTime,
+        selfHealReport: !success ? {
+          detectedIssues: errorMessages,
+          suggestedFixes: generateSuggestions(errorMessages),
+          riskLevel: "medium"
+        } : undefined
       };
 
       // Cleanup after a delay
@@ -108,9 +113,29 @@ export async function runSandbox(
         output: stdout,
         errors: [err.message, stderr],
         executionTime: Date.now() - startTime,
+        testResults: { passed: 0, failed: 1, logs: [], errors: [err.message] },
+        selfHealReport: {
+          detectedIssues: [err.message],
+          suggestedFixes: ["Check environment stability", "Verify tsx availability"],
+          riskLevel: "high"
+        }
       });
       cleanupSandbox(runId);
     });
   });
+}
+
+/**
+ * Generates rudimentary suggestions for self-healing
+ */
+function generateSuggestions(errors: string[]): string[] {
+  const suggestions: string[] = [];
+  const combined = errors.join(" ").toLowerCase();
+
+  if (combined.includes("cannot find module") || combined.includes("err_module_not_found")) suggestions.push("Run 'pnpm install'");
+  if (combined.includes("timeout")) suggestions.push("Increase sandbox timeout");
+  if (combined.includes("permission denied")) suggestions.push("Check file permissions");
+
+  return suggestions.length > 0 ? suggestions : ["Manual review required"];
 }
 

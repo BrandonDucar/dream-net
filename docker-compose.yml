@@ -222,6 +222,31 @@ services:
       - dream_network
 
   # ---------------------------------------------------------------------------
+  # THE ACADEMY (Institution of Learning)
+  # ---------------------------------------------------------------------------
+  academy:
+    build:
+      context: .
+      dockerfile: packages/organs/neural/academy/Dockerfile
+    container_name: dreamnet_academy
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=educator"
+      - "dreamnet.protection=max"
+    depends_on:
+      - nerve
+      - qdrant
+    environment:
+      - NODE_ENV=development
+      - PORT=7004
+      - REDIS_URL=redis://nerve:6379
+      - QDRANT_URL=http://qdrant:6333
+    ports:
+      - "7004:7004"
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
   # WOOLYAI INFRASTRUCTURE (etcd + NATS clusters)
   # ---------------------------------------------------------------------------
   

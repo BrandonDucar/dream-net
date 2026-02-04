@@ -1,8 +1,8 @@
 {
-  "name": "tool-gym",
+  "name": "dreamnet-academy",
   "version": "1.0.0",
   "type": "module",
-  "description": "DreamNet Agent Training & Benchmarking Environment",
+  "description": "DreamNet Academy - Institution of Learning for Agents",
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",

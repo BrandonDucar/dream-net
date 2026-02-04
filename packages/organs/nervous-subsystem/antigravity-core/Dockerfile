@@ -1,34 +1,23 @@
-# Antigravity - Swarm Orchestration & Coordination Engine
+# Antigravity - Swarm Orchestration Engine (Standalone)
 FROM node:22-alpine
 
 WORKDIR /app
 
-# Install dependencies
-RUN apk add --no-cache \
-    python3 \
-    py3-pip \
-    curl \
-    git
+# Install curl for healthcheck
+RUN apk add --no-cache curl
 
-# Copy workspace dependencies
-COPY package.json pnpm-lock.yaml ./
-COPY packages/organs/nervous-subsystem/antigravity-core/package.json ./packages/organs/nervous-subsystem/antigravity-core/
-COPY packages/organs/skeletal/shared ./packages/organs/skeletal/shared
-COPY packages/organs/skeletal/lib ./packages/organs/skeletal/lib
+# Copy package files
+COPY packages/organs/nervous-subsystem/antigravity-core/package.json ./
+COPY packages/organs/nervous-subsystem/antigravity-core/tsconfig.json ./
 
-# Install pnpm
-RUN npm install -g pnpm@9.15.4
-
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Install dependencies (minimal, no workspace)
+RUN npm install
 
 # Copy source
-COPY packages/organs/nervous-subsystem/antigravity-core/src ./packages/organs/nervous-subsystem/antigravity-core/src
-COPY packages/organs/nervous-subsystem/antigravity-core/tsconfig.json ./packages/organs/nervous-subsystem/antigravity-core/
+COPY packages/organs/nervous-subsystem/antigravity-core/src ./src
 
-# Build
-WORKDIR /app/packages/organs/nervous-subsystem/antigravity-core
-RUN pnpm run build || echo "Build may need existing source files"
+# Build TypeScript
+RUN npm run build
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \

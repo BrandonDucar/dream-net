@@ -391,7 +391,7 @@ export default function MissionCenter() {
         </button>
       </div>
     </div>
-    </div>
   );
 }
+
 

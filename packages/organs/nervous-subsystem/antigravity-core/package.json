@@ -1,33 +1,22 @@
 {
-    "name":  "@dreamnet/antigravity-core",
-    "version":  "1.0.0",
-    "type":  "module",
-    "main":  "./dist/index.js",
-    "types":  "./dist/index.d.ts",
-    "exports":  {
-                    ".":  {
-                              "source":  "./index.ts",
-                              "import":  "./index.ts",
-                              "require":  "./index.ts",
-                              "default":  "./index.ts"
-                          },
-                    "./*":  {
-                                "source":  "./src/*.ts",
-                                "import":  "./src/*.ts",
-                                "default":  "./src/*.ts"
-                            },
-                    "./src/*":  "./src/*.ts"
-                },
-    "dependencies":  {
-                         "@dreamnet/memory-dna":  "workspace:*",
-                         "@dreamnet/nerve":  "workspace:*",
-                         "@dreamnet/spore-engine":  "workspace:*",
-                         "@dreamnet/shared":  "workspace:*",
-                         "langchain":  "0.0.186"
-                     },
-    "scripts":  {
-                    "build":  "tsc",
-                    "typecheck":  "tsc --noEmit",
-                    "clean":  "rm -rf dist"
-                }
+  "name": "antigravity-core",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DreamNet Swarm Orchestration Engine",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.7.5",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
 }
