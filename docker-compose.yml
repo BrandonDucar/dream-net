@@ -128,46 +128,96 @@ services:
       - dream_network
 
   # ---------------------------------------------------------------------------
-  # THE GYMNASIUM (ToolGym Arena - Training Substrate)
+  # THE MEMORY (Qdrant - Vector Mesh)
   # ---------------------------------------------------------------------------
-  gymnasium:
-    build:
-      context: .
-      dockerfile: Dockerfile.toolgym
-    container_name: dreamnet_toolgym_gymnasium
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: dreamnet_qdrant
     restart: always
-    labels:
-      - "dreamnet.role=worker"
-      - "dreamnet.protection=standard"
-    depends_on:
-      - nerve
-      - qdrant
-    environment:
-      - NODE_ENV=development
-      - REDIS_URL=redis://nerve:6379
-      - QDRANT_URL=http://qdrant:6333
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
     networks:
       - dream_network
 
   # ---------------------------------------------------------------------------
-  # THE PLAYGROUND (Autonomous Manifestation Substrate)
+  # THE TOOL GYM (Agent Training & Benchmarking)
   # ---------------------------------------------------------------------------
-  playground:
+  tool-gym:
     build:
       context: .
-      dockerfile: Dockerfile.playground
-    container_name: dreamnet_toolgym_playground
-    restart: always
+      dockerfile: packages/organs/immune/tool-gym/Dockerfile
+    container_name: dreamnet_tool_gym
+    restart: unless-stopped
     labels:
-      - "dreamnet.role=worker"
+      - "dreamnet.role=trainer"
       - "dreamnet.protection=standard"
     depends_on:
       - nerve
       - qdrant
     environment:
       - NODE_ENV=development
+      - PORT=7001
       - REDIS_URL=redis://nerve:6379
       - QDRANT_URL=http://qdrant:6333
+    ports:
+      - "7001:7001"
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE PLAYGROUND (Agent Experimentation & Prototyping)
+  # ---------------------------------------------------------------------------
+  playground:
+    build:
+      context: .
+      dockerfile: packages/organs/reproductive/playground/Dockerfile
+    container_name: dreamnet_playground
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=experimenter"
+      - "dreamnet.protection=standard"
+    depends_on:
+      - nerve
+      - qdrant
+    environment:
+      - NODE_ENV=development
+      - PORT=7002
+      - REDIS_URL=redis://nerve:6379
+      - QDRANT_URL=http://qdrant:6333
+    ports:
+      - "7002:7002"
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # ANTIGRAVITY (Swarm Orchestration Engine)
+  # ---------------------------------------------------------------------------
+  antigravity:
+    build:
+      context: .
+      dockerfile: packages/organs/nervous-subsystem/antigravity-core/Dockerfile
+    container_name: dreamnet_antigravity
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=orchestrator"
+      - "dreamnet.protection=max"
+    depends_on:
+      - nerve
+      - qdrant
+      - tool-gym
+      - playground
+    environment:
+      - NODE_ENV=development
+      - PORT=7003
+      - REDIS_URL=redis://nerve:6379
+      - QDRANT_URL=http://qdrant:6333
+      - TOOLGYM_URL=http://tool-gym:7001
+      - PLAYGROUND_URL=http://playground:7002
+    ports:
+      - "7003:7003"
     networks:
       - dream_network
 
