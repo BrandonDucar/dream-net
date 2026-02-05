@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { HeatMapper } from'./HeatMapper.js';
-import { SovereignGallery } from'./SovereignGallery.js';
-import { Sidebar } from './Sidebar.js';
-import { FeedPanel } from './FeedPanel.js';
-import { NetworkGraph } from './NetworkGraph.js';
-import { NotificationsPanel } from './NotificationsPanel.js';
+import { HeatMapper } from './HeatMapper';
+import { SovereignGallery } from './SovereignGallery';
+import { Sidebar } from './Sidebar';
+import { FeedPanel } from './FeedPanel';
+import { NetworkGraph } from './NetworkGraph';
+import { NotificationsPanel } from './NotificationsPanel';
 
 export default function DreamDashboard() {
   const [view, setView] = useState('feed');

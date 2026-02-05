@@ -23,5 +23,6 @@ export * from './logic/pulsar.js';
 export * from './systems/TriuneMemory.js';
 export * from './systems/EpigeneticMemory.js';
 export * from './systems/LimbicSystem.js';
+export { pheromones } from './systems/PheromoneStore.js';
 
 export { createDnaRouter } from './router.js';

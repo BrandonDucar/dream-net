@@ -8,7 +8,7 @@
         "outDir": "./dist",
         "rootDir": ".",
         "module": "ESNext",
-        "moduleResolution": "bundler",
+        "moduleResolution": "NodeNext",
         "types": [
             "node"
         ],

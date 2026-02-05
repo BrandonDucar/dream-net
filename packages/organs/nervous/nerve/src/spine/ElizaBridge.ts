@@ -18,6 +18,7 @@ import { FarcasterSuit } from './suits/FarcasterSuit.js';
 import { VercelSuit } from './suits/VercelSuit.js';
 import { DiscordSuit } from './suits/DiscordSuit.js';
 import { GitHubSuit } from './suits/GitHubSuit.js';
+import { BobaFettSuit } from './suits/BobaFettSuit.js';
 
 export interface ElizaPluginRequest {
     agentId: string; // The Pilot
@@ -97,6 +98,10 @@ export class ElizaBridge {
 
         if (request.plugin === 'discord') {
             return this.executeDiscord(request.action, request.payload);
+        }
+
+        if (request.plugin === 'boba_fett' || request.agentId === 'BobaFett') {
+            return this.executeBobaFett(request.action, request.payload);
         }
 
         return {
@@ -218,6 +223,15 @@ export class ElizaBridge {
     private fcSuit: FarcasterSuit | null = null;
     private vercelSuit: VercelSuit | null = null;
     private githubSuit: GitHubSuit | null = null;
+    private bfSuit: BobaFettSuit | null = null;
+
+    private async executeBobaFett(action: string, payload: any): Promise<any> {
+        if (!this.bfSuit) this.bfSuit = new BobaFettSuit();
+        console.log(`[🧬 ElizaBridge] 🎯 BobaFettSuit Routing: ${action}`);
+        if (action === 'capture_bounty' || action === 'post') return this.bfSuit.post(payload);
+        if (action === 'hunt') return this.bfSuit.hunt(payload.target);
+        return { success: false, error: "UNKNOWN_MOTOR_FUNCTION" };
+    }
 
     private async executeVercel(action: string, payload: any): Promise<any> {
         if (!this.vercelSuit) this.vercelSuit = new VercelSuit();

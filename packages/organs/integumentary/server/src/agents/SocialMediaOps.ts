@@ -10,7 +10,7 @@
 
 import { randomUUID } from "node:crypto";
 
-export type SocialPlatform = "twitter" | "instagram" | "facebook" | "linkedin" | "tiktok" | "youtube" | "threads" | "moltbook";
+export type SocialPlatform = "twitter" | "instagram" | "facebook" | "linkedin" | "tiktok" | "youtube" | "threads" | "moltbook" | "telegram" | "discord";
 
 export interface SocialAccount {
   id: string;
@@ -128,6 +128,8 @@ class SocialMediaOpsAgent {
       youtube: "@dreamnet",
       threads: "@dreamnet_ink",
       moltbook: "Swarm Hub",
+      telegram: "DreamNet_Announcements",
+      discord: "DreamNet Sovereign Hub"
     };
     return usernames[platform];
   }

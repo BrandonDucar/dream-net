@@ -54,6 +54,9 @@ export class HarvesterAgent {
 
         const viralityBoost = this.genome.genes.viralityBoost.value;
 
+        const receiptService = new (await import('../../../../nervous/nerve/src/services/ReceiptService')).ReceiptService();
+        const privateKey = process.env.AGENT_PRIVATE_KEY || '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'; // Mock Dev Key
+
         for (const payload of engagementPayloads) {
             // 2. Broadcast impact via the OptioConnector
             const txHash = await optioConnector.broadcastImpact(this.id, {
@@ -62,12 +65,14 @@ export class HarvesterAgent {
                 payload: { content: payload.content, virality: this.manifest.viralityFactor * viralityBoost }
             });
 
-            console.log(`[HarvesterAgent:${this.name}] Impact recorded: ${txHash} (Virality Boost: ${viralityBoost.toFixed(2)})`);
+            // 3. Generate Sovereign Receipt
+            const receipt = await receiptService.signReceipt(this.id, 'BROADCAST_IMPACT', { txHash, platform: payload.platform }, privateKey);
+            console.log(`[HarvesterAgent:${this.name}] Impact recorded: ${txHash} (Receipt: ${receipt.signature.slice(0, 10)}...)`);
 
-            // Broadcast for Nursery fitness tracking
+            // Broadcast for Nursery fitness tracking + Audit Trail
             dreamEventBus.publish({
                 type: 'Agent.ImpactScore',
-                payload: { agentId: this.id, score: 0.1 * viralityBoost },
+                payload: { agentId: this.id, score: 0.1 * viralityBoost, receipt },
                 source: this.id
             });
         }

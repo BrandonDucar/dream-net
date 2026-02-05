@@ -1,11 +1,57 @@
 // @ts-ignore
 import { connect, Connection, Table } from "@lancedb/lancedb";
-// @ts-ignore
-import { OpenAIEmbeddings } from "@langchain/openai";
-// @ts-ignore
-import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+import { pathToFileURL } from "url";
 import path from "path";
 import fs from "fs";
+
+// ESM Dynamic Import Workaround for LangChain
+let OpenAIEmbeddings: any;
+let RecursiveCharacterTextSplitter: any;
+
+async function loadLangChain() {
+    if (OpenAIEmbeddings && RecursiveCharacterTextSplitter) return;
+
+    const possiblePaths = [
+        "@langchain/openai",
+        "C:/dev/dream-net/node_modules/@langchain/openai/dist/index.js",
+        pathToFileURL(path.join(process.cwd(), "node_modules/@langchain/openai/dist/index.js")).href,
+        "../../../node_modules/@langchain/openai/dist/index.js"
+    ];
+
+    for (const p of possiblePaths) {
+        try {
+            const openai = await import(p);
+            OpenAIEmbeddings = openai.OpenAIEmbeddings;
+            if (OpenAIEmbeddings) {
+                // console.log(`[VectorStore] ✅ Loaded OpenAIEmbeddings from ${p}`);
+                break;
+            }
+        } catch (e) { }
+    }
+
+    const splitterPaths = [
+        "@langchain/textsplitters",
+        "C:/dev/dream-net/node_modules/@langchain/textsplitters/dist/index.js",
+        pathToFileURL(path.join(process.cwd(), "node_modules/@langchain/textsplitters/dist/index.js")).href,
+        "../../../node_modules/@langchain/textsplitters/dist/index.js"
+    ];
+
+    for (const p of splitterPaths) {
+        try {
+            const splitter = await import(p);
+            RecursiveCharacterTextSplitter = splitter.RecursiveCharacterTextSplitter;
+            if (RecursiveCharacterTextSplitter) {
+                // console.log(`[VectorStore] ✅ Loaded RecursiveCharacterTextSplitter from ${p}`);
+                break;
+            }
+        } catch (e) { }
+    }
+
+    if (!OpenAIEmbeddings || !RecursiveCharacterTextSplitter) {
+        console.warn("[VectorStore] ⚠️  LangChain dependencies not found effectively. Using fallbacks.");
+    }
+}
+pocketBase: string; // Not pocketbase, but keeping nomenclature for now
 
 export interface VectorRecord {
     id: string;
@@ -22,21 +68,23 @@ export class VectorStore {
     private dbPath: string;
 
     constructor(basePath: string = "./data/dream-memory") {
-        // Ensure directory exists
-        // Ensure directory exists
         if (!fs.existsSync(basePath)) {
             fs.mkdirSync(basePath, { recursive: true });
         }
         this.dbPath = basePath;
+    }
+
+    async ensureEmbeddings() {
+        if (this.embeddings) return;
 
         // Graceful Degradation: Check for API Key
         if (process.env.OPENAI_API_KEY) {
+            await loadLangChain();
             this.embeddings = new OpenAIEmbeddings({
                 modelName: "text-embedding-3-small",
             });
         } else {
             console.warn("[VectorStore] ⚠️  OPENAI_API_KEY missing. Using Mock Embeddings (Neural Phantom).");
-            // Mock object satisfying minimal interface
             this.embeddings = {
                 embedQuery: async (text: string) => new Array(1536).fill(0),
                 embedDocuments: async (texts: string[]) => texts.map(() => new Array(1536).fill(0))
@@ -45,6 +93,7 @@ export class VectorStore {
     }
 
     async init() {
+        await this.ensureEmbeddings();
         this.db = await connect(this.dbPath);
 
         // Check if table exists, if not create
@@ -96,6 +145,7 @@ export class VectorStore {
         if (!this.db || !this.table) await this.init();
         if (!this.table) return []; // No memories yet
 
+        await this.ensureEmbeddings();
         const queryVector = await this.embeddings.embedQuery(query);
 
         // LanceDB Node API for vector search
