@@ -16,40 +16,13 @@
             "path": "./packages/shared"
         },
         {
-            "path": "./packages/halo-loop"
+            "path": "./packages/organs/integumentary/server"
         },
         {
-            "path": "./packages/shield-core"
+            "path": "./packages/organs/circulatory/memory-dna"
         },
         {
-            "path": "./packages/memory-dna"
-        },
-        {
-            "path": "./packages/wolf-pack"
-        },
-        {
-            "path": "./packages/star-bridge-lungs"
-        },
-        {
-            "path": "./packages/dreamnet-control-core"
-        },
-        {
-            "path": "./packages/internal-ports"
-        },
-        {
-            "path": "./packages/internal-router"
-        },
-        {
-            "path": "./packages/event-wormholes"
-        },
-        {
-            "path": "./packages/jaggy-core"
-        },
-        {
-            "path": "./packages/dream-state-core"
-        },
-        {
-            "path": "./packages/base-mini-apps"
+            "path": "./packages/organs/circulatory/dream-state-core"
         },
         {
             "path": "./packages/organs/nervous/nerve"
@@ -58,7 +31,7 @@
             "path": "./packages/organs/respiratory/agents"
         },
         {
-            "path": "./packages/organs/integumentary/client"
+            "path": "./packages/organs/reproductive/dreamnet-factory"
         }
     ]
 }

@@ -10,27 +10,26 @@
 /* DOMAIN SWARM THEMES */
 :root.site-ink {
   --primary-glow: #00F3FF;
-  --bg-core: #0B0F13;
+  --bg-core: #050505;
   --accent: #E6D5AC;
+  --mesh-pattern: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300F3FF' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='0.5'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 :root.site-live {
   --primary-glow: #00FF00;
-  /* Neon Lime for "Alive" status */
   --bg-core: #050505;
   --accent: #FFFFFF;
 }
 
 :root.site-pro {
   --primary-glow: #8A2BE2;
-  /* BlueViolet for DeSci/Sovereignty */
-  --bg-core: #0D0D12;
+  --bg-core: #0A0A0F;
   --accent: #E6D5AC;
+  --vault-border: rgba(138, 43, 226, 0.2);
 }
 
 :root.site-org {
   --primary-glow: #FFD700;
-  /* Gold for Treasury/Governance */
   --bg-core: #101010;
   --accent: #F0F0F0;
 }
@@ -134,14 +133,24 @@ body {
   animation: chitin-pulse 8s infinite alternate ease-in-out;
 }
 
-@keyframes chitin-pulse {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
+/* SPRAWLER MESH AESTHETIC */
+.sprawler-mesh {
+  background-color: #050505;
+  background-image: var(--mesh-pattern);
+  position: relative;
+}
 
-  100% {
-    transform: rotate(360deg) scale(1.1);
-  }
+.sprawler-mesh::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+}
+
+.tactical-border {
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
 }
 
 /* PORTAL CORE STYLES */

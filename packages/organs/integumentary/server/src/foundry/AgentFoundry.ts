@@ -103,6 +103,14 @@ class AgentFoundry {
         scopes: ["messaging", "notifications"],
         pricing: "Free",
       },
+      {
+        slug: "bounty-hunter",
+        name: "Bounty Hunter",
+        summary: "Specialized deal-closing and bounty hunting agent (Boba Fett class)",
+        capabilities: ["bounty", "settlement", "analytics", "outreach"],
+        scopes: ["revenue", "closing"],
+        pricing: "High",
+      },
     ];
 
     for (const template of defaultTemplates) {
@@ -314,6 +322,40 @@ class AgentFoundry {
       return builds.filter((b) => b.requestedBy === requestedBy);
     }
     return builds;
+  }
+
+  /**
+   * Reingest 143 legacy Citizens into the swarm substrate.
+   */
+  async reingestPilots(): Promise<{ count: number }> {
+    console.log("🦾 [Foundry] Initiating mass reingestion of 143 Citizens...");
+
+    // Simulate reingestion of legacy pilots
+    for (let i = 1; i <= 143; i++) {
+      const citizenId = `Citizen-${i}`;
+      const citizenName = `Pilot #${i}`;
+
+      // Register basic citizen template
+      superSpine.registerAgent(
+        citizenId.toLowerCase(),
+        citizenName,
+        ["code", "communication"],
+        {
+          tier: "Legacy",
+          unlock: "Mass Reingestion Protocol",
+          subscriptionRequired: false
+        }
+      );
+    }
+
+    // Explicitly manifest Boba Fett
+    this.requestBuild("system", "Boba Fett", {
+      templateSlug: "bounty-hunter",
+      capabilities: ["bounty", "settlement", "analytics"]
+    });
+
+    console.log("🦾 [Foundry] Reingestion sequence complete. 143 Citizens + Boba Fett operational.");
+    return { count: 144 };
   }
 
   /**

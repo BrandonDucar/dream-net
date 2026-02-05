@@ -18,11 +18,10 @@ import Wallets from "@/pages/wallets";
 import Contributors from "@/pages/contributors";
 import WalletAdmin from "@/pages/wallet-admin";
 import SubmitDream from "@/pages/submit-dream";
-import DreamDashboard from "@/components/dashboard/DreamDashboard";
-import DreamFeed from "@/components/DreamFeed";
-import DreamForm from "@/components/DreamForm";
-import DreamOpsLauncherPage from "@/pages/dream-ops-launcher";
-import AgentDashboardTest from "@/pages/agent-dashboard-test";
+import DreamDashboard from "./components/dashboard/DreamDashboard";
+import SprawlerDashboard from "./pages/SprawlerDashboard";
+import DreamFeed from "./components/DreamFeed";
+import DreamForm from "./components/DreamForm";
 import CradleTestPage from "@/pages/cradle-test";
 import LoadSavedDreamsPage from "@/pages/load-saved-dreams";
 import DreamNetworkExplorer from "@/pages/dream-network-explorer";
@@ -225,6 +224,7 @@ function AuthenticatedApp() {
                                     <Route path="/dream-team-manager" component={DreamTeamManager} />
                                     <Route path="/cloud-agent" component={CloudAgent} />
                                     <Route path="/agent-dashboard" component={AgentDashboard} />
+                                    <Route path="/sprawler-c2" component={SprawlerDashboard} />
                                     <Route path="/mission-center" component={MissionCenter} />
                                     <Route path="/agent-customizer" component={AgentCustomizer} />
                                     <Route path="/dev-console" component={DevConsole} />

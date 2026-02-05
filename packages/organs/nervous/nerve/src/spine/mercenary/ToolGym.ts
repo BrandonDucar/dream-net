@@ -145,7 +145,7 @@ export class ToolGymService extends EventEmitter {
      */
     private async runLPSBenchmark(agentId: string): Promise<BenchmarkResult> {
         const start = performance.now();
-        const iterations = 100000; // UPGRADED: 10x intensity for Phase XXXVIII
+        const iterations = 500000; // CRITICAL: Real CPU stressor for R4 Sovereign validation.
 
         // Real CPU Work: Crypto hashing to stress the container
         await new Promise<void>((resolve, reject) => {
@@ -162,10 +162,10 @@ export class ToolGymService extends EventEmitter {
 
         return {
             agentId,
-            testId: 'LPS_BURST_REAL_V2',
-            score: Math.min(100, (lps / 200000) * 100), // Adjusted normalization for higher intensity
+            testId: 'LPS_BURST_REAL_V3',
+            score: Math.min(100, (lps / 500000) * 100), // Adjusted for higher intensity
             metrics: { lps, latency, integrity: 100 },
-            passed: lps > 50000,
+            passed: lps > 100000,
             timestamp: Date.now()
         };
     }
