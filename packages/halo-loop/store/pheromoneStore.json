@@ -1,0 +1,230 @@
+{
+  "reputation:formicidae:tunneler": {
+    "path": "reputation:formicidae:tunneler",
+    "strength": 0.85,
+    "types": {
+      "HONEY": 0.85,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-05T21:39:55.321Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-05T21:39:55.321Z",
+    "updatedAt": "2026-02-05T21:39:55.321Z"
+  },
+  "reputation:pippin:soul": {
+    "path": "reputation:pippin:soul",
+    "strength": 0.45,
+    "types": {
+      "HONEY": 0.45,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-05T21:39:55.352Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-05T21:39:55.352Z",
+    "updatedAt": "2026-02-05T21:39:55.352Z"
+  },
+  "reputation:resonance:dean": {
+    "path": "reputation:resonance:dean",
+    "strength": 0.95,
+    "types": {
+      "HONEY": 0.95,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-05T21:39:55.356Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-05T21:39:55.356Z",
+    "updatedAt": "2026-02-05T21:39:55.356Z"
+  },
+  "reputation:formicidae:tunneler:01": {
+    "path": "reputation:formicidae:tunneler:01",
+    "strength": 1,
+    "types": {
+      "HONEY": 1,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 4,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-05T21:42:33.512Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-05T21:40:29.579Z",
+    "updatedAt": "2026-02-05T21:42:33.512Z"
+  },
+  "reputation:pippin:soul:01": {
+    "path": "reputation:pippin:soul:01",
+    "strength": 1,
+    "types": {
+      "HONEY": 1,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 4,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-05T21:42:33.603Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-05T21:40:29.585Z",
+    "updatedAt": "2026-02-05T21:42:33.603Z"
+  },
+  "reputation:humanizer:dean": {
+    "path": "reputation:humanizer:dean",
+    "strength": 1,
+    "types": {
+      "HONEY": 1,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 4,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-05T21:42:33.624Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-05T21:40:29.592Z",
+    "updatedAt": "2026-02-05T21:42:33.624Z"
+  },
+  "reputation:GLOBAL_SWARM": {
+    "path": "reputation:GLOBAL_SWARM",
+    "strength": 120,
+    "types": {
+      "HONEY": 120,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-06T04:17:28.891Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-06T04:17:28.891Z",
+    "updatedAt": "2026-02-06T04:17:28.891Z"
+  },
+  "reputation:Kyoshin": {
+    "path": "reputation:Kyoshin",
+    "strength": 450,
+    "types": {
+      "HONEY": 450,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-06T04:17:28.902Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-06T04:17:28.902Z",
+    "updatedAt": "2026-02-06T04:17:28.902Z"
+  },
+  "reputation:PippinSoul": {
+    "path": "reputation:PippinSoul",
+    "strength": 850,
+    "types": {
+      "HONEY": 850,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-06T04:17:28.906Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-06T04:17:28.906Z",
+    "updatedAt": "2026-02-06T04:17:28.906Z"
+  },
+  "reputation:TheResonance": {
+    "path": "reputation:TheResonance",
+    "strength": 300,
+    "types": {
+      "HONEY": 300,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-06T04:17:28.912Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-06T04:17:28.912Z",
+    "updatedAt": "2026-02-06T04:17:28.912Z"
+  },
+  "reputation:Gordon": {
+    "path": "reputation:Gordon",
+    "strength": 900,
+    "types": {
+      "HONEY": 900,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-06T04:17:28.916Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-06T04:17:28.916Z",
+    "updatedAt": "2026-02-06T04:17:28.916Z"
+  },
+  "reputation:Antigravity": {
+    "path": "reputation:Antigravity",
+    "strength": 50,
+    "types": {
+      "HONEY": 50,
+      "SLIME": 0,
+      "HEAT": 0,
+      "PULSE": 1
+    },
+    "successCount": 1,
+    "failureCount": 0,
+    "lastSuccess": "2026-02-06T04:17:28.920Z",
+    "lastFailure": "",
+    "avgLatency": 0,
+    "rewardDensity": 0,
+    "currentLoad": 0,
+    "createdAt": "2026-02-06T04:17:28.920Z",
+    "updatedAt": "2026-02-06T04:17:28.920Z"
+  }
+}

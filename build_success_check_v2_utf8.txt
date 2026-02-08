@@ -1,0 +1,10 @@
+﻿.                                        | ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+Scope: 2 of 5 workspace projects
+packages/ink build$ next build
+packages/live build$ next build
+packages/ink build: - info Skipping validation of types
+packages/ink build: - info Skipping linting
+packages/live build: - info Skipping validation of types
+packages/live build: - info Skipping linting
+packages/live build: - info Creating an optimized production build...
+packages/ink build: - info Creating an optimized production build...

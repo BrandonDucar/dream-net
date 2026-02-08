@@ -1,0 +1,86 @@
+﻿.                                        | ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+Scope: 2 of 5 workspace projects
+packages/ink build$ next build
+packages/live build$ next build
+packages/ink build: - info Skipping validation of types
+packages/ink build: - info Skipping linting
+packages/live build: - info Skipping validation of types
+packages/live build: - info Skipping linting
+packages/ink build: - info Creating an optimized production build...
+packages/live build: - info Creating an optimized production build...
+packages/ink build: Failed to compile.
+packages/ink build: ../shared/components/index.tsx
+packages/ink build: Module parse failed: Unexpected token (3:40)
+packages/ink build: You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+packages/ink build: | import React from 'react';
+packages/ink build: | 
+packages/ink build: > export const Card = ({ title, children }: any) => (
+packages/ink build: |     <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
+packages/ink build: |         {title && <h3 className="text-lg font-semibold mb-4 text-zinc-200">{title}</h3>}
+packages/ink build: Import trace for requested module:
+packages/ink build: ../shared/components/index.tsx
+packages/ink build: ./pages/onboard.tsx
+packages/ink build: ../shared/types/index.ts
+packages/ink build: Module parse failed: Unexpected token (2:7)
+packages/ink build: You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+packages/ink build: | // User & Auth
+packages/ink build: > export interface User {
+packages/ink build: |     id: string;
+packages/ink build: |     walletAddress: string;
+packages/ink build: Import trace for requested module:
+packages/ink build: ../shared/types/index.ts
+packages/ink build: ../shared/index.ts
+packages/ink build: ./pages/index.tsx
+packages/ink build: ../shared/utils/pheromone.ts
+packages/ink build: Module parse failed: Unexpected token (23:10)
+packages/ink build: You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+packages/ink build: | // Calculate decayed contribution
+packages/ink build: | export function decayedContribution(
+packages/ink build: >     weight: number,
+packages/ink build: |     actionTimeMs: number,
+packages/ink build: |     nowMs: number = Date.now()
+packages/ink build: Import trace for requested module:
+packages/ink build: ../shared/utils/pheromone.ts
+packages/ink build: ../shared/index.ts
+packages/ink build: ./pages/index.tsx
+packages/ink build: > Build failed because of webpack errors
+packages/live build: Failed to compile.
+packages/live build: ../shared/components/index.tsx
+packages/live build: Module parse failed: Unexpected token (3:40)
+packages/live build: You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+packages/live build: | import React from 'react';
+packages/live build: | 
+packages/live build: > export const Card = ({ title, children }: any) => (
+packages/live build: |     <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-white/20 transition-all">
+packages/live build: |         {title && <h3 className="text-lg font-semibold mb-4 text-zinc-200">{title}</h3>}
+packages/live build: Import trace for requested module:
+packages/live build: ../shared/components/index.tsx
+packages/live build: ./pages/credentials.tsx
+packages/live build: ../shared/types/index.ts
+packages/live build: Module parse failed: Unexpected token (2:7)
+packages/live build: You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+packages/live build: | // User & Auth
+packages/live build: > export interface User {
+packages/live build: |     id: string;
+packages/live build: |     walletAddress: string;
+packages/live build: Import trace for requested module:
+packages/live build: ../shared/types/index.ts
+packages/live build: ../shared/index.ts
+packages/live build: ./pages/index.tsx
+packages/live build: ../shared/utils/pheromone.ts
+packages/live build: Module parse failed: Unexpected token (23:10)
+packages/live build: You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+packages/live build: | // Calculate decayed contribution
+packages/live build: | export function decayedContribution(
+packages/live build: >     weight: number,
+packages/live build: |     actionTimeMs: number,
+packages/live build: |     nowMs: number = Date.now()
+packages/live build: Import trace for requested module:
+packages/live build: ../shared/utils/pheromone.ts
+packages/live build: ../shared/index.ts
+packages/live build: ./pages/index.tsx
+packages/live build: > Build failed because of webpack errors
+packages/ink build: Failed
+C:\dev\dream-net\packages\ink:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @dreamnet/ink@1.0.0 build: `next build`
+Exit status 1

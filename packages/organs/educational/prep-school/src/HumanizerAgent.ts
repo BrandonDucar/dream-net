@@ -1,9 +1,18 @@
-/**
- * ✍️ HumanizerAgent (The Resonance)
- * Role: Dean of Vibe & Purgation.
- * Mission: Protect the Swarm from AI drivel.
- */
-export class HumanizerAgent {
+import { Agent, AgentId, AgentInvocationContext, AgentResult } from '../../../integumentary/server/src/agents/core/types.js';
+
+export class HumanizerAgent implements Agent {
+    public id: AgentId = 'humanizer:dean';
+    public name = 'The Resonance';
+    public description = 'Dean of Vibe & Purgation. Protects the Swarm from AI drivel.';
+    public category: 'analysis' = 'analysis';
+    public version = '1.0.0';
+    public academicRank: any = 'DEAN';
+    public pheromoneScore = 0;
+    public pheromoneTier: any = 'QUEEN';
+
+    async run(input: any, ctx: AgentInvocationContext): Promise<any> {
+        return this.humanize(input);
+    }
     private forbiddenPatterns = [
         /let's dive in/i,
         /as an ai language model/i,

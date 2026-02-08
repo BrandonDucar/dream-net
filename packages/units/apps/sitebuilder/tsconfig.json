@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "."
+  },
+  "include": ["./**/*"],
+  "references": [
+    { "path": "../../packages/auth" },
+    { "path": "../../packages/utils" },
+    { "path": "../../packages/ui" },
+    { "path": "../../packages/agents" }
+  ]
+}

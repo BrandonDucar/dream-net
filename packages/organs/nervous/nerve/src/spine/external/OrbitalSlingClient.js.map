@@ -1,0 +1,1 @@
+{"version":3,"file":"OrbitalSlingClient.js","sourceRoot":"","sources":["OrbitalSlingClient.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AACH,MAAM,OAAO,kBAAkB;IAC3B;QACI,OAAO,CAAC,GAAG,CAAC,mDAAmD,CAAC,CAAC;IACrE,CAAC;IAEM,KAAK,CAAC,QAAQ,CAAC,MAAW;QAC7B,OAAO,CAAC,GAAG,CAAC,gDAAgD,EAAE,MAAM,CAAC,CAAC;QACtE,OAAO,iBAAiB,CAAC;IAC7B,CAAC;CACJ"}

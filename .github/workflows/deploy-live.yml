@@ -1,0 +1,22 @@
+name: Deploy dreamnet.live
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'packages/live/**', 'packages/shared/**', 'packages/api/**' ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npx turbo build --filter=live --filter=api
+      - name: Deploy
+        run: echo "Deploying Dashboard and API..."

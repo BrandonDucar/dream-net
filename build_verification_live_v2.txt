@@ -1,0 +1,85 @@
+.                                        |  WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/live@1.0.0 build C:\dev\dream-net\packages\live
+> next build
+
+- info Skipping validation of types
+- info Skipping linting
+- info Creating an optimized production build...
+Warning: Your PostCSS configuration defines a field which is not supported (`__esModule`). Please remove this configuration value.
+Failed to compile.
+
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/channel-credentials.js
+Module not found: Can't resolve 'tls'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/index.js
+../../node_modules/@farcaster/hub-nodejs/dist/index.js
+../../node_modules/@coinbase/onchainkit/dist/lib/core/getFrameMessage.js
+../../node_modules/@coinbase/onchainkit/dist/lib/index.js
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/channelz.js
+Module not found: Can't resolve 'net'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/index.js
+../../node_modules/@farcaster/hub-nodejs/dist/index.js
+../../node_modules/@coinbase/onchainkit/dist/lib/core/getFrameMessage.js
+../../node_modules/@coinbase/onchainkit/dist/lib/index.js
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/http_proxy.js
+Module not found: Can't resolve 'tls'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/internal-channel.js
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/channel.js
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/index.js
+../../node_modules/@farcaster/hub-nodejs/dist/index.js
+../../node_modules/@coinbase/onchainkit/dist/lib/core/getFrameMessage.js
+../../node_modules/@coinbase/onchainkit/dist/lib/index.js
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/load-balancing-call.js
+Module not found: Can't resolve 'http2'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/internal-channel.js
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/channel.js
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/index.js
+../../node_modules/@farcaster/hub-nodejs/dist/index.js
+../../node_modules/@coinbase/onchainkit/dist/lib/core/getFrameMessage.js
+../../node_modules/@coinbase/onchainkit/dist/lib/index.js
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/resolver-dns.js
+Module not found: Can't resolve 'dns'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@farcaster/hub-nodejs/node_modules/@grpc/grpc-js/build/src/index.js
+../../node_modules/@farcaster/hub-nodejs/dist/index.js
+../../node_modules/@coinbase/onchainkit/dist/lib/core/getFrameMessage.js
+../../node_modules/@coinbase/onchainkit/dist/lib/index.js
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+
+> Build failed because of webpack errors
+C:\dev\dream-net\packages\live:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @dreamnet/live@1.0.0 build: `next build`
+Exit status 1

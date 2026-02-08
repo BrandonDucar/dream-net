@@ -1,0 +1,40 @@
+- id: dreamnet.relaybot
+  owner: Brandon Ducar
+  maintainer: DreamOps
+  purpose: Message dispatch and routing
+  autonomy: propose_then_approve
+  allowlist_hosts: [api.telegram.org, graph.microsoft.com, api.twilio.com]
+  limits: { rate_per_minute: 10, spend_usd_per_day: 0 }
+  risk: low
+
+- id: dreamnet.dreamkeeper
+  owner: Brandon Ducar
+  maintainer: DreamOps
+  purpose: Health diagnostics and self-healing
+  autonomy: execute_with_guardrails
+  allowlist_hosts: [api.github.com, api.vercel.com, api.neon.tech]
+  risk: medium
+
+- id: dreamnet.deploykeeper
+  owner: Brandon Ducar
+  maintainer: DreamOps
+  purpose: Deployment validation and repair
+  autonomy: execute_with_guardrails
+  allowlist_hosts: [api.github.com, api.vercel.com]
+  risk: low
+
+- id: dreamnet.integrationscanner
+  owner: Brandon Ducar
+  maintainer: DreamOps
+  purpose: Integration discovery and safe installs
+  autonomy: propose_then_approve
+  allowlist_hosts: [api.github.com]
+  risk: medium
+
+- id: dreamnet.monetizer-1
+  owner: Brandon Ducar
+  maintainer: DreamOps
+  purpose: Social monetization automation
+  autonomy: execute_with_guardrails
+  allowlist_hosts: [api.twitter.com, graph.instagram.com, open.tiktokapis.com, oauth.reddit.com]
+  risk: high
