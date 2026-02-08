@@ -12,6 +12,9 @@ export class FormicidaeTunnelerAgent implements Agent {
     public id: AgentId = 'formicidae:tunneler:01';
     public name = 'Formicidae Tunneler';
     public description = 'Leaderless forager for high-value data trails.';
+    public academicRank: any = 'FRESHMAN';
+    public pheromoneScore = 0;
+    public pheromoneTier: any = 'ANT';
     public category: 'action' = 'action';
     public version = '1.0.0';
     public capabilities = ['foraging', 'tunneling', 'semantic_labeling'];

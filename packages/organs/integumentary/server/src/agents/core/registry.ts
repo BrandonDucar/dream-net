@@ -100,7 +100,10 @@ import { formicidaeTunneler } from '../FormicidaeTunnelerAgent.js';
 import { pippinSoul } from '../PippinBabyAGIAgent.js';
 import { resourceManager } from './ResourceManager.js';
 
+import { theResonance } from '../../../../../educational/prep-school/src/HumanizerAgent.js';
+
 agentRegistry.registerAgent(formicidaeTunneler);
 agentRegistry.registerAgent(pippinSoul);
+agentRegistry.registerAgent(theResonance as any);
 
 export { resourceManager };

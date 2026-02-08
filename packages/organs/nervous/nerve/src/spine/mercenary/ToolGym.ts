@@ -27,6 +27,8 @@ import { EventEmitter } from 'node:events';
         lps: number; // Logic Per Second
         latency: number;
         integrity: number;
+        cpuUsage: number;
+        memoryUsage: number;
     };
     passed: boolean;
     timestamp: number;
@@ -106,7 +108,9 @@ export class ToolGymService extends EventEmitter {
                 metrics: {
                     lps: lpsResult.metrics.lps,
                     latency: lpsResult.metrics.latency,
-                    integrity: spikeResult.metrics.integrity
+                    integrity: spikeResult.metrics.integrity,
+                    cpuUsage: lpsResult.metrics.cpuUsage,
+                    memoryUsage: memoryResult.metrics.memoryUsage
                 },
                 passed,
                 timestamp: Date.now()
@@ -157,6 +161,9 @@ export class ToolGymService extends EventEmitter {
 
         const end = performance.now();
         const latency = end - start;
+        const cpuAfter = process.cpuUsage();
+        const cpuPerf = (cpuAfter.user - cpuBefore.user + cpuAfter.system - cpuBefore.system) / 1000;
+
         // LPS Metric: (Iterations / Time in seconds) 
         const lps = (iterations / latency) * 1000;
 
@@ -164,7 +171,13 @@ export class ToolGymService extends EventEmitter {
             agentId,
             testId: 'LPS_BURST_REAL_V3',
             score: Math.min(100, (lps / 500000) * 100), // Adjusted for higher intensity
-            metrics: { lps, latency, integrity: 100 },
+            metrics: {
+                lps,
+                latency,
+                integrity: 100,
+                cpuUsage: cpuPerf,
+                memoryUsage: process.memoryUsage().heapUsed / 1024 / 1024
+            },
             passed: lps > 100000,
             timestamp: Date.now()
         };

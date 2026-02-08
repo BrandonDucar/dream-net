@@ -1,0 +1,21 @@
+﻿.                                        | ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+Scope: 2 of 5 workspace projects
+packages/ink build$ next build
+packages/live build$ next build
+packages/ink build: - info Linting and checking validity of types...
+packages/live build: - info Linting and checking validity of types...
+packages/ink build: Failed to compile.
+packages/ink build: ../../node_modules/ox/core/internal/abiParameters.ts:451:24
+packages/ink build: Type error: Argument of type 'string | number | bigint | boolean | readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly ...[])[])[])[])[])[])[])[])[])[])[] | readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly ...[])[])[])[])[])[])[])...' is not assignable to parameter of type 'readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly ...[])[])[])[])[])[])[])[])[])[])[] | readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly ...[])[])[])[])[])[])[])[])[])[])[]'.
+packages/ink build:   Type 'string' is not assignable to type 'readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly ...[])[])[])[])[])[])[])[])[])[])[] | readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly (readonly ...[])[])[])[])[])[])[])[])[])[])[]'.
+packages/ink build: [0m [90m 449 | [39m  [36mif[39m (arrayComponents) {[0m
+packages/ink build: [0m [90m 450 | [39m    [36mconst[39m [length[33m,[39m type] [33m=[39m arrayComponents[0m
+packages/ink build: [0m[31m[1m>[22m[39m[90m 451 | [39m    [36mreturn[39m encodeArray(value[33m,[39m {[0m
+packages/ink build: [0m [90m     | [39m                       [31m[1m^[22m[39m[0m
+packages/ink build: [0m [90m 452 | [39m      checksumAddress[33m,[39m[0m
+packages/ink build: [0m [90m 453 | [39m      length[33m,[39m[0m
+packages/ink build: [0m [90m 454 | [39m      parameter[33m:[39m {[0m
+packages/ink build: Failed
+C:\dev\dream-net\packages\ink:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @dreamnet/ink@1.0.0 build: `next build`
+Exit status 1

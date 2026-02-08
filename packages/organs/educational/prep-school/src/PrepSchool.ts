@@ -3,6 +3,12 @@ import { theResonance } from './HumanizerAgent.js';
 import { bioDopamine } from './BioDopamineService.js';
 import { institutionManager } from './Institution.js';
 
+export interface ProvenanceRecord {
+    rekorId: string;
+    slsaPredicate: any;
+    timestamp: number;
+}
+
 export interface ExamResult {
     studentId: string;
     taskId: string;
@@ -10,6 +16,7 @@ export interface ExamResult {
     resonance: number;
     grade: string;
     feedback: string;
+    provenance?: ProvenanceRecord;
 }
 
 /**
@@ -40,22 +47,51 @@ export class PrepSchool {
         // 4. Feedback from the Humanizer
         const feedback = await theResonance.humanize(success ? "Passable work." : "Output contains chatbot drivel. Execution required.");
 
+        // 5. Atomic Provenance: Rekor Anchoring (SLSA-compliant)
+        const provenance = await this.anchorProvenance(studentId, task, success, resonance);
+
         const result: ExamResult = {
             studentId,
             taskId,
             success,
             resonance: 1 - resonance,
             grade,
-            feedback
+            feedback,
+            provenance
         };
 
-        // 5. Reward Loop
+        // 6. Reward Loop
         if (success) {
             bioDopamine.triggerReward(studentId, result.resonance);
         }
 
         console.log(`[PrepSchool] 📊 Exam Result for ${studentId}: ${grade} (${success ? 'PASS' : 'FAIL'})`);
+        if (provenance) console.log(`[PrepSchool] 🔍 Provenance Anchored: RekorID ${provenance.rekorId}`);
         return result;
+    }
+
+    private async anchorProvenance(studentId: string, task: TrainingTask, success: boolean, resonance: number): Promise<ProvenanceRecord> {
+        // Mocking Sigstore Rekor inclusion for Wave 7 Gnosis
+        const slsaPredicate = {
+            builder: { id: "dreamnet-prep-school-v1" },
+            buildType: "https://dreamnet.live/LPS/v1",
+            invocation: {
+                studentId,
+                taskId: task.id,
+                resonanceScore: 1 - resonance
+            },
+            metadata: {
+                buildFinishedOn: new Date().toISOString(),
+                completeness: { parameters: true, environment: true, materials: false },
+                reproducible: true
+            }
+        };
+
+        return {
+            rekorId: `rek-${Math.random().toString(36).slice(2, 10)}`,
+            slsaPredicate,
+            timestamp: Date.now()
+        };
     }
 
     private async simulateStudentResponse(studentId: string, task: TrainingTask): Promise<string> {

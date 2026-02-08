@@ -22,8 +22,8 @@ app.use(express.json({ limit: '50mb' })); // Large data dumps
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ALIVE', 
+  res.json({
+    status: 'ALIVE',
     service: 'DreamNet Academy',
     uptime: process.uptime(),
     mode: 'education',
@@ -37,7 +37,7 @@ app.get('/health', (req, res) => {
 app.post('/ingest/daily-pulse', (req, res) => {
   const { source, timestamp, data, categories } = req.body;
   const dumpId = `dump_${Date.now()}`;
-  
+
   // Store raw data
   knowledgeDomains.set(dumpId, {
     source,
@@ -47,11 +47,11 @@ app.post('/ingest/daily-pulse', (req, res) => {
     processed: false,
     insights: []
   });
-  
+
   console.log(`[Academy] Ingested daily pulse: ${dumpId}`);
   console.log(`  Categories: ${categories?.join(', ') || 'general'}`);
   console.log(`  Data size: ${JSON.stringify(data).length} bytes`);
-  
+
   res.json({
     success: true,
     dumpId,
@@ -64,12 +64,12 @@ app.post('/ingest/daily-pulse', (req, res) => {
 // Process data through ShitSifter
 app.post('/process/shit-sifter', (req, res) => {
   const { dumpId, extractionRules } = req.body;
-  
+
   const dump = knowledgeDomains.get(dumpId);
   if (!dump) {
     return res.status(404).json({ error: 'Data dump not found' });
   }
-  
+
   // Simulate ShitSifter processing
   const insights = {
     orbital: extractOrbitalInsights(dump.data),
@@ -78,15 +78,15 @@ app.post('/process/shit-sifter', (req, res) => {
     infrastructure: extractInfrastructureInsights(dump.data),
     market: extractMarketInsights(dump.data)
   };
-  
+
   dump.processed = true;
   dump.insights = insights;
-  
+
   siftedData.set(dumpId, insights);
-  
+
   console.log(`[Academy] ShitSifter processed ${dumpId}`);
   console.log(`  Extracted insights: ${Object.keys(insights).length} domains`);
-  
+
   res.json({
     success: true,
     dumpId,
@@ -99,7 +99,7 @@ app.post('/process/shit-sifter', (req, res) => {
 app.post('/enroll', (req, res) => {
   const { agentId, learningGoals, currentLevel } = req.body;
   const sessionId = `session_${Date.now()}`;
-  
+
   learningSessions.set(sessionId, {
     agentId,
     learningGoals: learningGoals || ['general'],
@@ -108,9 +108,9 @@ app.post('/enroll', (req, res) => {
     completedModules: [],
     progress: 0
   });
-  
+
   console.log(`[Academy] Agent ${agentId} enrolled in session ${sessionId}`);
-  
+
   res.json({
     success: true,
     sessionId,
@@ -124,14 +124,14 @@ app.post('/enroll', (req, res) => {
 app.get('/curriculum/:sessionId', (req, res) => {
   const { sessionId } = req.params;
   const session = learningSessions.get(sessionId);
-  
+
   if (!session) {
     return res.status(404).json({ error: 'Session not found' });
   }
-  
+
   const curriculum = generateCurriculum(session.learningGoals);
   const availableKnowledge = getAvailableKnowledge(session.learningGoals);
-  
+
   res.json({
     success: true,
     sessionId,
@@ -146,23 +146,23 @@ app.get('/curriculum/:sessionId', (req, res) => {
 // Submit completed module
 app.post('/complete-module', (req, res) => {
   const { sessionId, moduleId, assessment } = req.body;
-  
+
   const session = learningSessions.get(sessionId);
   if (!session) {
     return res.status(404).json({ error: 'Session not found' });
   }
-  
+
   session.completedModules.push({
     moduleId,
     completedAt: Date.now(),
     assessment
   });
-  
+
   session.progress = (session.completedModules.length / 10) * 100; // Assume 10 modules
-  
+
   console.log(`[Academy] Agent ${session.agentId} completed module ${moduleId}`);
   console.log(`  Progress: ${session.progress.toFixed(1)}%`);
-  
+
   res.json({
     success: true,
     sessionId,
@@ -180,7 +180,7 @@ app.get('/knowledge/domains', (req, res) => {
     processed: d.processed,
     timestamp: d.timestamp
   }));
-  
+
   res.json({
     success: true,
     count: domains.length,
@@ -191,62 +191,55 @@ app.get('/knowledge/domains', (req, res) => {
 
 // Helper functions
 function extractOrbitalInsights(data: any) {
-  // Extract orbital/satellite insights
+  const content = JSON.stringify(data).toLowerCase();
   return {
     type: 'orbital',
-    summary: 'Orbital infrastructure developments',
-    keyPoints: [
-      'SpaceX 1M satellite orbital data center',
-      'China space-based AI data centers',
-      'LEO constellation safety reconfigurations'
-    ]
+    summary: content.includes('spacex') ? 'Starlink/SpaceX infrastructure detection' : 'Orbital telemetry monitoring',
+    keyPoints: content.includes('satellite') ? ['LEO data center reconfiguration detected', 'StarBridge orbital link stable'] : ['Standard orbital sweep active']
   };
 }
 
 function extractBiomimeticInsights(data: any) {
+  const content = JSON.stringify(data).toLowerCase();
   return {
     type: 'biomimetic',
-    summary: 'Biomimetic computation advances',
+    summary: 'Biomimetic computation & regulation patterns',
     keyPoints: [
-      'Bio-inspired AI robots with organic motion',
-      'Neuromorphic computing scaling',
-      'Biohybrid systems integration'
+      content.includes('pheromone') ? 'Pheromone time-decay reputation model detected' : 'Standard biomimetic scan',
+      content.includes('neuromorphic') ? 'Neuromorphic spiking circuit efficiency identified' : 'Organic computation baseline'
     ]
   };
 }
 
 function extractMaterialsInsights(data: any) {
+  const content = JSON.stringify(data).toLowerCase();
   return {
     type: 'materials',
-    summary: 'Advanced materials research',
-    keyPoints: [
-      'Snail-inspired reversible adhesives',
-      'Frequency-selective damping hydrogels',
-      'PDMS sponge + SLIPS coatings'
-    ]
+    summary: 'Sovereign material science extraction',
+    keyPoints: content.includes('snail') ? ['Snail-inspired reversible adhesive patterns identified'] : ['Baseline material scan']
   };
 }
 
 function extractInfrastructureInsights(data: any) {
+  const content = JSON.stringify(data).toLowerCase();
   return {
     type: 'infrastructure',
-    summary: 'Infrastructure and tooling',
+    summary: 'Elite infrastructure telemetry',
     keyPoints: [
-      'Mise lockfile production-grade',
-      'LangChain ToolCallRequest middleware',
-      'WebAuthn device-bound attestation'
+      content.includes('neynar') ? 'Neynar Farcaster consolidation detected' : 'Standard infra scan',
+      content.includes('lava') || content.includes('pocket') ? 'Passive RPC Node Revenue opportunity identified' : 'Revenue baseline'
     ]
   };
 }
 
 function extractMarketInsights(data: any) {
+  const content = JSON.stringify(data).toLowerCase();
   return {
     type: 'market',
-    summary: 'Market and competitive intelligence',
+    summary: 'High-order extraction & bounty intelligence',
     keyPoints: [
-      'Elon vs OpenAI competitive dynamics',
-      'Google + Elon convergence potential',
-      'Crypto on-chain consolidation patterns'
+      content.includes('researchhub') ? 'ResearchHub $150 RSC Peer Review bounty active' : 'DeSci baseline',
+      content.includes('diu') ? 'DIU Commercial Solutions Opening (CSO) detected' : 'GovTech baseline'
     ]
   };
 }
@@ -282,11 +275,11 @@ function getNextModule(session: any) {
 // WebSocket for real-time learning updates
 wss.on('connection', (ws) => {
   console.log('[Academy] New learning connection');
-  
+
   ws.on('message', (data) => {
     const msg = JSON.parse(data.toString());
     console.log('[Academy] Received:', msg);
-    
+
     // Echo back with learning progress
     ws.send(JSON.stringify({
       type: 'learning_update',
@@ -299,7 +292,7 @@ wss.on('connection', (ws) => {
       timestamp: Date.now()
     }));
   });
-  
+
   ws.on('close', () => {
     console.log('[Academy] Learning connection closed');
   });

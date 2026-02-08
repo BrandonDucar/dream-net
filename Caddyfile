@@ -1,0 +1,32 @@
+{
+    email brandon@dreamnet.ink
+}
+
+dreamnet.ink, www.dreamnet.ink {
+    root * /var/www/html
+    file_server
+    try_files {path} /index.html
+    header {
+        # Security headers
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        X-XSS-Protection "1; mode=block"
+    }
+}
+
+dreamnet.live, www.dreamnet.live {
+    root * /var/www/html
+    file_server
+    try_files {path} /index.html
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        X-XSS-Protection "1; mode=block"
+    }
+}
+
+api.dreamnet.ink {
+    reverse_proxy control-core:3000
+}

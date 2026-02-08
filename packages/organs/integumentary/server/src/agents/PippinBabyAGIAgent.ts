@@ -11,6 +11,9 @@ export class PippinBabyAGIAgent implements Agent {
     public id: AgentId = 'pippin:soul:01';
     public name = 'Pippin Soul';
     public description = 'Recursive goal-seeking and task management.';
+    public academicRank: any = 'SOPHOMORE';
+    public pheromoneScore = 0;
+    public pheromoneTier: any = 'ANT';
     public category: 'analysis' = 'analysis';
     public version = '1.0.0';
     public capabilities = ['recursive_logic', 'task_creation', 'goal_refinement'];

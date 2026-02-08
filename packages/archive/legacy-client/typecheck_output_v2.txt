@@ -1,0 +1,1328 @@
+﻿
+> @dreamnet/client@0.0.0 typecheck
+> tsc --noEmit
+
+src/agents/DecayAgent.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/DreamAttractor.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/DreamLoreEngine.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/DreamTagsAgent.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/DreamTagsAgent.ts(41,52): error TS7006: Parameter 'emotion' implicitly has an 'any' type.
+src/agents/LinkAgent.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/LinkAgent.ts(68,85): error TS2304: Cannot find name 'emotions'.
+src/agents/LinkAgent.ts(68,98): error TS2304: Cannot find name 'emotions'.
+src/agents/LinkAgent.ts(71,18): error TS2304: Cannot find name 'emotions'.
+src/agents/LinkAgent.ts(71,31): error TS2304: Cannot find name 'emotions'.
+src/agents/LinkAgent.ts(73,110): error TS2304: Cannot find name 'emotions'.
+src/agents/LinkAgent.ts(73,123): error TS2304: Cannot find name 'emotions'.
+src/agents/NarratorAgent.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/NutrientEngine.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/NutrientEngine.ts(83,58): error TS7006: Parameter 'flag' implicitly has an 'any' type.
+src/agents/RemixAgent.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/agents/RemixAgent.ts(67,45): error TS2304: Cannot find name 'baseDream'.
+src/agents/RemixAgent.ts(67,57): error TS2304: Cannot find name 'baseDream'.
+src/agents/RemixAgent.ts(67,153): error TS2304: Cannot find name 'emotions'.
+src/agents/RemixAgent.ts(67,166): error TS2304: Cannot find name 'emotions'.
+src/agents/RemixAgent.ts(70,18): error TS2304: Cannot find name 'emotions'.
+src/agents/RemixAgent.ts(70,31): error TS2304: Cannot find name 'emotions'.
+src/agents/RemixAgent.ts(72,73): error TS2304: Cannot find name 'emotions'.
+src/agents/RemixAgent.ts(72,86): error TS2304: Cannot find name 'emotions'.
+src/agents/ScoreAgent.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/api/baseMiniApps.ts(6,27): error TS2307: Cannot find module '@/miniapps/registry' or its corresponding type declarations.
+src/api/baseMiniApps.ts(25,3): error TS2322: Type '{ id: string; info: unknown; }[]' is not assignable to type '{ id: string; info: BaseMiniAppInfo; }[]'.
+  Type '{ id: string; info: unknown; }' is not assignable to type '{ id: string; info: BaseMiniAppInfo; }'.
+    Types of property 'info' are incompatible.
+      Type 'unknown' is not assignable to type 'BaseMiniAppInfo'.
+src/api/baseMiniApps.ts(26,28): error TS18046: 'info' is of type 'unknown'.
+src/api/cardForge.ts(8,30): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/App.tsx(3,29): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/App.tsx(5,25): error TS2307: Cannot find module '@/components/ui/toaster' or its corresponding type declarations.
+src/App.tsx(6,33): error TS2307: Cannot find module '@/components/ui/tooltip' or its corresponding type declarations.
+src/App.tsx(7,39): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/App.tsx(8,54): error TS2307: Cannot find module '@/components/ErrorBoundary' or its corresponding type declarations.
+src/App.tsx(9,23): error TS2307: Cannot find module '@/components/auth/login-form' or its corresponding type declarations.
+src/App.tsx(10,30): error TS2307: Cannot find module '@/components/auth/restricted-access' or its corresponding type declarations.
+src/App.tsx(11,22): error TS2307: Cannot find module '@/pages/not-found' or its corresponding type declarations.
+src/App.tsx(12,23): error TS2307: Cannot find module '@/pages/dashboard' or its corresponding type declarations.
+src/App.tsx(13,20): error TS2307: Cannot find module '@/pages/dreams' or its corresponding type declarations.
+src/App.tsx(14,26): error TS2307: Cannot find module '@/pages/dream-gallery' or its corresponding type declarations.
+src/App.tsx(15,21): error TS2307: Cannot find module '@/pages/cocoons' or its corresponding type declarations.
+src/App.tsx(16,19): error TS2307: Cannot find module '@/pages/cores' or its corresponding type declarations.
+src/App.tsx(17,21): error TS2307: Cannot find module '@/pages/wallets' or its corresponding type declarations.
+src/App.tsx(18,26): error TS2307: Cannot find module '@/pages/contributors' or its corresponding type declarations.
+src/App.tsx(19,25): error TS2307: Cannot find module '@/pages/wallet-admin' or its corresponding type declarations.
+src/App.tsx(20,25): error TS2307: Cannot find module '@/pages/submit-dream' or its corresponding type declarations.
+src/App.tsx(21,28): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './components/dashboard/DreamDashboard.js'?
+src/App.tsx(22,31): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './pages/SprawlerDashboard.js'?
+src/App.tsx(23,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './components/DreamFeed.js'?
+src/App.tsx(24,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './components/DreamForm.js'?
+src/App.tsx(25,28): error TS2307: Cannot find module '@/pages/cradle-test' or its corresponding type declarations.
+src/App.tsx(26,33): error TS2307: Cannot find module '@/pages/load-saved-dreams' or its corresponding type declarations.
+src/App.tsx(27,34): error TS2307: Cannot find module '@/pages/dream-network-explorer' or its corresponding type declarations.
+src/App.tsx(28,29): error TS2307: Cannot find module '@/pages/fusion-vault' or its corresponding type declarations.
+src/App.tsx(29,25): error TS2307: Cannot find module '@/pages/dream-viewer' or its corresponding type declarations.
+src/App.tsx(30,24): error TS2307: Cannot find module '@/pages/dream-vault' or its corresponding type declarations.
+src/App.tsx(31,30): error TS2307: Cannot find module '@/pages/solana-wallet-demo' or its corresponding type declarations.
+src/App.tsx(32,29): error TS2307: Cannot find module '@/components/WalletConnector' or its corresponding type declarations.
+src/App.tsx(33,31): error TS2307: Cannot find module '@/pages/wallet-integration' or its corresponding type declarations.
+src/App.tsx(34,23): error TS2307: Cannot find module '@/pages/echo-agent' or its corresponding type declarations.
+src/App.tsx(35,30): error TS2307: Cannot find module '@/pages/dream-scoring-demo' or its corresponding type declarations.
+src/App.tsx(36,29): error TS2307: Cannot find module '@/pages/agent-status-demo' or its corresponding type declarations.
+src/App.tsx(37,36): error TS2307: Cannot find module '@/pages/wallet-agent-integration' or its corresponding type declarations.
+src/App.tsx(38,24): error TS2307: Cannot find module '@/pages/bounty-feed' or its corresponding type declarations.
+src/App.tsx(39,27): error TS2307: Cannot find module '@/pages/agent-glow-demo' or its corresponding type declarations.
+src/App.tsx(40,30): error TS2307: Cannot find module '@/pages/token-minting-demo' or its corresponding type declarations.
+src/App.tsx(41,30): error TS2307: Cannot find module '@/pages/dream-minting-demo' or its corresponding type declarations.
+src/App.tsx(42,31): error TS2307: Cannot find module '@/pages/fusion-chamber-demo' or its corresponding type declarations.
+src/App.tsx(43,32): error TS2307: Cannot find module '@/pages/agent-filtering-demo' or its corresponding type declarations.
+src/App.tsx(44,28): error TS2307: Cannot find module '@/pages/dream-vault' or its corresponding type declarations.
+src/App.tsx(45,30): error TS2307: Cannot find module '@/pages/dream-remixer' or its corresponding type declarations.
+src/App.tsx(46,27): error TS2307: Cannot find module '@/pages/edit-dream' or its corresponding type declarations.
+src/App.tsx(47,29): error TS2307: Cannot find module '@/pages/shared-dream' or its corresponding type declarations.
+src/App.tsx(48,28): error TS2307: Cannot find module '@/pages/bounty-explorer' or its corresponding type declarations.
+src/App.tsx(49,42): error TS2307: Cannot find module '@/components/SolanaWalletProvider' or its corresponding type declarations.
+src/App.tsx(50,37): error TS2307: Cannot find module '@/providers/OnchainAuthProvider' or its corresponding type declarations.
+src/App.tsx(51,30): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/App.tsx(52,28): error TS2307: Cannot find module '@/components/DreamProcessor' or its corresponding type declarations.
+src/App.tsx(53,27): error TS2307: Cannot find module '@/pages/error-demo' or its corresponding type declarations.
+src/App.tsx(54,21): error TS2307: Cannot find module '@/components/layout/sidebar' or its corresponding type declarations.
+src/App.tsx(55,20): error TS2307: Cannot find module '@/components/layout/header' or its corresponding type declarations.
+src/App.tsx(56,28): error TS2307: Cannot find module '@/pages/dream-cloud' or its corresponding type declarations.
+src/App.tsx(57,22): error TS2307: Cannot find module '@/pages/fuse' or its corresponding type declarations.
+src/App.tsx(58,23): error TS2307: Cannot find module '@/pages/token-demo' or its corresponding type declarations.
+src/App.tsx(59,29): error TS2307: Cannot find module '@/pages/simple-token-demo' or its corresponding type declarations.
+src/App.tsx(60,24): error TS2307: Cannot find module '@/pages/dream-nodes' or its corresponding type declarations.
+src/App.tsx(61,32): error TS2307: Cannot find module '@/pages/ecosystem-dashboard' or its corresponding type declarations.
+src/App.tsx(62,30): error TS2307: Cannot find module '@/pages/command-interface' or its corresponding type declarations.
+src/App.tsx(63,29): error TS2307: Cannot find module '@/pages/remix-submission' or its corresponding type declarations.
+src/App.tsx(64,24): error TS2307: Cannot find module '@/pages/badge-board' or its corresponding type declarations.
+src/App.tsx(65,30): error TS2307: Cannot find module '@/pages/dream-team-manager' or its corresponding type declarations.
+src/App.tsx(66,24): error TS2307: Cannot find module '@/pages/cloud-agent' or its corresponding type declarations.
+src/App.tsx(67,28): error TS2307: Cannot find module '@/pages/agent-dashboard' or its corresponding type declarations.
+src/App.tsx(68,27): error TS2307: Cannot find module '@/pages/mission-center' or its corresponding type declarations.
+src/App.tsx(69,29): error TS2307: Cannot find module '@/pages/agent-customizer' or its corresponding type declarations.
+src/App.tsx(70,24): error TS2307: Cannot find module '@/pages/dev-console' or its corresponding type declarations.
+src/App.tsx(71,25): error TS2307: Cannot find module '@/pages/node-web-demo' or its corresponding type declarations.
+src/App.tsx(72,26): error TS2307: Cannot find module '@/pages/node-grid-demo' or its corresponding type declarations.
+src/App.tsx(73,34): error TS2307: Cannot find module '@/pages/dream-healer-panel' or its corresponding type declarations.
+src/App.tsx(74,27): error TS2307: Cannot find module '@/pages/dream-node-test' or its corresponding type declarations.
+src/App.tsx(75,21): error TS2307: Cannot find module '@/pages/sms-demo' or its corresponding type declarations.
+src/App.tsx(76,29): error TS2307: Cannot find module '@/pages/leaderboard' or its corresponding type declarations.
+src/App.tsx(77,27): error TS2307: Cannot find module '@/pages/dream-tree-demo' or its corresponding type declarations.
+src/App.tsx(78,30): error TS2307: Cannot find module '@/pages/harvest-dashboard' or its corresponding type declarations.
+src/App.tsx(79,25): error TS2307: Cannot find module '@/pages/dashboard/harvest' or its corresponding type declarations.
+src/App.tsx(80,28): error TS2307: Cannot find module '@/pages/swarm-dashboard' or its corresponding type declarations.
+src/App.tsx(81,33): error TS2307: Cannot find module '@/pages/dreamkeeper-core' or its corresponding type declarations.
+src/App.tsx(82,32): error TS2307: Cannot find module '@/pages/ai-surgeon-dashboard' or its corresponding type declarations.
+src/App.tsx(83,37): error TS2307: Cannot find module '@/pages/defense-network' or its corresponding type declarations.
+src/App.tsx(84,33): error TS2307: Cannot find module '@/pages/evolution-engine' or its corresponding type declarations.
+src/App.tsx(85,26): error TS2307: Cannot find module '@/pages/dreamscope-ui' or its corresponding type declarations.
+src/App.tsx(86,29): error TS2307: Cannot find module '@/pages/dreamscope-alive' or its corresponding type declarations.
+src/App.tsx(87,31): error TS2307: Cannot find module '@/pages/dao-management' or its corresponding type declarations.
+src/App.tsx(88,34): error TS2307: Cannot find module '@/pages/whisper-messaging' or its corresponding type declarations.
+src/App.tsx(89,33): error TS2307: Cannot find module '@/pages/user-progression' or its corresponding type declarations.
+src/App.tsx(90,32): error TS2307: Cannot find module '@/pages/revenue-sharing' or its corresponding type declarations.
+src/App.tsx(91,34): error TS2307: Cannot find module '@/pages/vault-marketplace' or its corresponding type declarations.
+src/App.tsx(92,32): error TS2307: Cannot find module '@/pages/evolution-vault' or its corresponding type declarations.
+src/App.tsx(93,25): error TS2307: Cannot find module '@/pages/landing' or its corresponding type declarations.
+src/App.tsx(94,29): error TS2307: Cannot find module '@/pages/BondingCurveHub' or its corresponding type declarations.
+src/App.tsx(96,37): error TS2307: Cannot find module '@/components/SeasonalEventBanner' or its corresponding type declarations.
+src/App.tsx(97,39): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/App.tsx(98,34): error TS2307: Cannot find module '@/components/MetabolicOverlay' or its corresponding type declarations.
+src/App.tsx(99,22): error TS2307: Cannot find module '@/pages/HomePage' or its corresponding type declarations.
+src/App.tsx(100,20): error TS2307: Cannot find module '@/pages/OsPage' or its corresponding type declarations.
+src/App.tsx(101,23): error TS2307: Cannot find module '@/pages/VaultPage' or its corresponding type declarations.
+src/App.tsx(102,27): error TS2307: Cannot find module '@/pages/MiniAppLoader' or its corresponding type declarations.
+src/App.tsx(103,22): error TS2307: Cannot find module '@/pages/ShopPage' or its corresponding type declarations.
+src/App.tsx(104,27): error TS2307: Cannot find module '@/pages/DreamTankPage' or its corresponding type declarations.
+src/App.tsx(105,24): error TS2307: Cannot find module '@/pages/AgentsPage' or its corresponding type declarations.
+src/App.tsx(106,27): error TS2307: Cannot find module '@/pages/CommunityPage' or its corresponding type declarations.
+src/App.tsx(107,32): error TS2307: Cannot find module '@/pages/SystemOsStatusPage' or its corresponding type declarations.
+src/App.tsx(108,31): error TS2307: Cannot find module '@/pages/SystemRuntimePage' or its corresponding type declarations.
+src/App.tsx(109,31): error TS2307: Cannot find module '@/pages/SystemFundingPage' or its corresponding type declarations.
+src/App.tsx(110,23): error TS2307: Cannot find module '@/pages/hub/HubRoutes' or its corresponding type declarations.
+src/App.tsx(111,24): error TS2307: Cannot find module '@/pages/landing-new' or its corresponding type declarations.
+src/App.tsx(112,25): error TS2307: Cannot find module '@/pages/void-landing' or its corresponding type declarations.
+src/App.tsx(113,18): error TS2307: Cannot find module '@/pages/Home' or its corresponding type declarations.
+src/App.tsx(114,20): error TS2307: Cannot find module '@/pages/Portal' or its corresponding type declarations.
+src/App.tsx(115,25): error TS2307: Cannot find module '@/pages/marketing/DreamNetInk' or its corresponding type declarations.
+src/App.tsx(116,26): error TS2307: Cannot find module '@/pages/dashboard/DreamNetLive' or its corresponding type declarations.
+src/App.tsx(117,28): error TS2307: Cannot find module '@/components/GravRemote' or its corresponding type declarations.
+src/App.tsx(118,28): error TS2307: Cannot find module '@/components/CommandPalette' or its corresponding type declarations.
+src/App.tsx(119,31): error TS2307: Cannot find module '@/pages/galactic-dashboard' or its corresponding type declarations.
+src/App.tsx(120,25): error TS2307: Cannot find module '@/pages/AcademyPage' or its corresponding type declarations.
+src/App.tsx(121,27): error TS2307: Cannot find module '@/pages/POWKDashboard' or its corresponding type declarations.
+src/App.tsx(122,26): error TS2307: Cannot find module '@/pages/AgentTokFeed' or its corresponding type declarations.
+src/App.tsx(123,32): error TS2307: Cannot find module '@/pages/AgentAvatarCreator' or its corresponding type declarations.
+src/App.tsx(124,26): error TS2307: Cannot find module '@/pages/AgentFoundry' or its corresponding type declarations.
+src/App.tsx(125,33): error TS2307: Cannot find module '@/components/MetabolicWidget' or its corresponding type declarations.
+src/App.tsx(128,50): error TS2307: Cannot find module '@/components/WalletProfileDashboard' or its corresponding type declarations.
+src/App.tsx(133,46): error TS2307: Cannot find module '@/components/DreamEvolution' or its corresponding type declarations.
+src/App.tsx(137,42): error TS2307: Cannot find module '@/pages/evolved-archive' or its corresponding type declarations.
+src/App.tsx(138,37): error TS2307: Cannot find module '@/components/DreamTree' or its corresponding type declarations.
+src/App.tsx(139,35): error TS2307: Cannot find module '@/pages/GodView' or its corresponding type declarations.
+src/App.tsx(140,41): error TS2307: Cannot find module '@/pages/OmniDashboard' or its corresponding type declarations.
+src/App.tsx(141,39): error TS2307: Cannot find module '@/pages/god-mode' or its corresponding type declarations.
+src/App.tsx(143,37): error TS2307: Cannot find module '@/components/DreamCube' or its corresponding type declarations.
+src/App.tsx(144,40): error TS2307: Cannot find module '@/pages/DreamCubeHub' or its corresponding type declarations.
+src/App.tsx(271,74): error TS2304: Cannot find name 'MultiPaneDash'.
+src/App.tsx(381,70): error TS2304: Cannot find name 'MultiPaneDash'.
+src/App.tsx(436,93): error TS2304: Cannot find name 'VerifyPage'.
+src/App.tsx(442,78): error TS2304: Cannot find name 'VerifyPage'.
+src/components/AgentFilteredDreams.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/AgentFilteredDreams.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/AgentFilteredDreams.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/AgentFilteredDreams.tsx(6,24): error TS2307: Cannot find module '@/components/ui/slider' or its corresponding type declarations.
+src/components/AgentFilteredDreams.tsx(8,79): error TS2307: Cannot find module '@/utils/wallet-filtering' or its corresponding type declarations.
+src/components/AgentFilteredDreams.tsx(186,46): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/components/auth/login-form.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/auth/login-form.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/auth/login-form.tsx(4,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/auth/login-form.tsx(5,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/components/auth/login-form.tsx(7,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/auth/login-form.tsx(8,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/auth/login-form.tsx(62,32): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/components/auth/login-form.tsx(62,55): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/components/auth/login-form.tsx(179,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/auth/restricted-access.tsx(1,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/auth/restricted-access.tsx(2,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/auth/restricted-access.tsx(4,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/BaseWalletButton.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/BaseWalletButton.tsx(4,25): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/components/BaseWalletButton.tsx(10,8): error TS2307: Cannot find module '@/components/ui/dropdown-menu' or its corresponding type declarations.
+src/components/BlessingPanel.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/BlessingPanel.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/CommandPalette.tsx(6,8): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/components/CommandPalette.tsx(14,8): error TS2307: Cannot find module '@/components/ui/command' or its corresponding type declarations.
+src/components/CommandPalette.tsx(25,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/contributor-management.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/contributor-management.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/contributor-management.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/contributor-management.tsx(6,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/contributor-management.tsx(7,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/components/contributor-management.tsx(8,79): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/components/contributor-management.tsx(9,100): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/components/contributor-management.tsx(10,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/components/contributor-management.tsx(11,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/components/contributor-management.tsx(13,41): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/contributor-management.tsx(14,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/contributor-management.tsx(243,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/contributor-management.tsx(248,45): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/components/CradleAgentView.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/CradleAgentView.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/CradleAgentView.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/CradleAgentView.tsx(8,26): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../hooks/use-toast.js'?
+src/components/CradleAgentView.tsx(9,69): error TS2307: Cannot find module '@/components/ui/collapsible' or its corresponding type declarations.
+src/components/CradleAgentView.tsx(168,76): error TS7006: Parameter 'open' implicitly has an 'any' type.
+src/components/CradleAgentView.tsx(219,73): error TS7006: Parameter 'open' implicitly has an 'any' type.
+src/components/DAOManagement.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/dashboard/AntikytheraWidget.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/dashboard/AntikytheraWidget.tsx(70,9): error TS2304: Cannot find name 'fetchMetrics'.
+src/components/dashboard/AntikytheraWidget.tsx(71,38): error TS2304: Cannot find name 'fetchMetrics'.
+src/components/dashboard/DreamDashboard.tsx(2,28): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './HeatMapper.js'?
+src/components/dashboard/DreamDashboard.tsx(3,34): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './SovereignGallery.js'?
+src/components/dashboard/DreamDashboard.tsx(4,25): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './Sidebar.js'?
+src/components/dashboard/DreamDashboard.tsx(5,27): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './FeedPanel.js'?
+src/components/dashboard/DreamDashboard.tsx(6,30): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './NetworkGraph.js'?
+src/components/dashboard/DreamDashboard.tsx(7,36): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './NotificationsPanel.js'?
+src/components/dashboard/FeedPanel.tsx(2,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/dashboard/FeedPanel.tsx(10,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/components/dashboard/FeedPanel.tsx(10,57): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/components/dashboard/FeedPanel.tsx(35,26): error TS2339: Property 'id' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(36,43): error TS2339: Property 'name' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(37,63): error TS2339: Property 'stage' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(37,85): error TS2339: Property 'score' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(38,53): error TS2339: Property 'tags' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(39,19): error TS2339: Property 'contributors' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(40,78): error TS2339: Property 'contributors' does not exist on type 'never'.
+src/components/dashboard/FeedPanel.tsx(40,95): error TS7006: Parameter 'c' implicitly has an 'any' type.
+src/components/dashboard/HeatMapper.tsx(2,39): error TS2307: Cannot find module '@dreamnet/event-wormholes' or its corresponding type declarations.
+src/components/dashboard/NotificationsPanel.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/dashboard/NotificationsPanel.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/dashboard/NotificationsPanel.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DatabaseStatus.tsx(1,37): error TS2307: Cannot find module '@/hooks/use-database-fallback' or its corresponding type declarations.
+src/components/DatabaseStatus.tsx(2,41): error TS2307: Cannot find module '@/components/ui/alert' or its corresponding type declarations.
+src/components/DatabaseStatus.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(3,31): error TS2307: Cannot find module '@/agents/RemixAgent' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(4,31): error TS2307: Cannot find module '@/agents/ScoreAgent' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(5,30): error TS2307: Cannot find module '@/agents/LinkAgent' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(6,31): error TS2307: Cannot find module '@/agents/DecayAgent' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(7,35): error TS2307: Cannot find module '@/agents/NutrientEngine' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(8,34): error TS2307: Cannot find module '@/agents/NarratorAgent' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(9,35): error TS2307: Cannot find module '@/agents/DreamAttractor' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(10,35): error TS2307: Cannot find module '@/agents/DreamTagsAgent' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(11,36): error TS2307: Cannot find module '@/agents/DreamLoreEngine' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(12,37): error TS2307: Cannot find module '@/agents/creatorOnboarder' or its corresponding type declarations.
+src/components/DreamAgentSpawner.tsx(112,29): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/components/DreamAgentSpawner.tsx(143,26): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/components/DreamAgentSpawner.tsx(200,31): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/components/DreamArchitectWorkshop.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/DreamArchitectWorkshop.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/DreamCallOptIn.tsx(2,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamCallOptIn.tsx(3,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/DreamCallOptIn.tsx(32,24): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/DreamCardRenderer.tsx(42,26): error TS2349: This expression is not callable.
+  Type 'typeof import("C:/dev/dream-net/node_modules/html2canvas/dist/types/index")' has no call signatures.
+src/components/DreamCloud.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamCloud.tsx(3,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/DreamCloud.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamConstellationFilter.tsx(192,19): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/components/DreamConstellationFilter.tsx(202,19): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/components/DreamConstellationFilter.tsx(212,19): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/components/DreamCoreViewer.tsx(109,47): error TS2322: Type '{ originalDream: DreamCore; onMutate: ((updatedDream: DreamCore) => void) | undefined; }' is not assignable to type 'IntrinsicAttributes & { originalDream: any; }'.
+  Property 'onMutate' does not exist on type 'IntrinsicAttributes & { originalDream: any; }'.
+src/components/DreamDAOPanel.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/DreamDAOPanel.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/DreamEdict.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/DreamEdict.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/DreamEmotionEnhancer.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamerXPPanel.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/DreamerXPPanel.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/DreamEvolutionDemo.tsx(19,28): error TS2322: Type '{ id: string; title: string; content: string; score: number; creatorWallet: string; created: number; evolved: boolean; }' is not assignable to type 'string'.
+src/components/DreamExplorerMap.tsx(2,10): error TS2305: Module '"vis-network"' has no exported member 'Network'.
+src/components/DreamFeed.tsx(2,54): error TS2307: Cannot find module '@/components/ErrorBoundary' or its corresponding type declarations.
+src/components/DreamFeed.tsx(33,24): error TS2339: Property 'name' does not exist on type 'never'.
+src/components/DreamFeed.tsx(33,38): error TS2339: Property 'title' does not exist on type 'never'.
+src/components/DreamFeed.tsx(34,23): error TS2339: Property 'description' does not exist on type 'never'.
+src/components/DreamFeed.tsx(34,44): error TS2339: Property 'summary' does not exist on type 'never'.
+src/components/DreamFeed.tsx(35,42): error TS2339: Property 'tags' does not exist on type 'never'.
+src/components/DreamForm.tsx(3,37): error TS7031: Binding element 'onSubmit' implicitly has an 'any' type.
+src/components/DreamForm.tsx(8,31): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/DreamFusionIntegration.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamFusionIntegration.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamFusionPanel.tsx(3,44): error TS7031: Binding element 'dreams' implicitly has an 'any' type.
+src/components/DreamFusionPanel.tsx(8,25): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/DreamFusionPanel.tsx(9,17): error TS2345: Argument of type '(prev: never[]) => any[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+  Type '(prev: never[]) => any[]' is not assignable to type '(prevState: never[]) => never[]'.
+    Type 'any[]' is not assignable to type 'never[]'.
+      Type 'any' is not assignable to type 'never'.
+src/components/DreamFusionPanel.tsx(10,21): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+src/components/DreamFusionPanel.tsx(36,21): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/components/DreamFusionPanel.tsx(43,45): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+src/components/DreamFusionPanel.tsx(45,41): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+src/components/DreamFusionPanel.tsx(48,32): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+src/components/DreamHealerPanel.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamHealerPanel.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamHealerPanel.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamHealerPanel.tsx(6,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/DreamHealerPanel.tsx(8,29): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/DreamLineage.tsx(1,24): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/components/DreamLineage.tsx(11,40): error TS7031: Binding element 'lineage' implicitly has an 'any' type.
+src/components/DreamLineage.tsx(11,49): error TS7031: Binding element 'dream' implicitly has an 'any' type.
+src/components/DreamLineage.tsx(15,40): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/DreamLineage.tsx(15,44): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/components/DreamMinter.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamMinter.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamMinter.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamMutator.tsx(4,40): error TS7031: Binding element 'originalDream' implicitly has an 'any' type.
+src/components/DreamMutator.tsx(9,12): error TS2345: Argument of type '(prev: never[]) => string[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+  Type '(prev: never[]) => string[]' is not assignable to type '(prevState: never[]) => never[]'.
+    Type 'string[]' is not assignable to type 'never[]'.
+      Type 'string' is not assignable to type 'never'.
+src/components/DreamMutator.tsx(19,16): error TS2345: Argument of type '(prev: never[]) => string[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+  Type '(prev: never[]) => string[]' is not assignable to type '(prevState: never[]) => never[]'.
+    Type 'string[]' is not assignable to type 'never[]'.
+      Type 'string' is not assignable to type 'never'.
+src/components/DreamMutator.tsx(21,16): error TS2345: Argument of type '(prev: never[]) => string[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+  Type '(prev: never[]) => string[]' is not assignable to type '(prevState: never[]) => never[]'.
+    Type 'string[]' is not assignable to type 'never[]'.
+      Type 'string' is not assignable to type 'never'.
+src/components/DreamMutator.tsx(24,14): error TS2345: Argument of type '(prev: never[]) => string[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+  Type '(prev: never[]) => string[]' is not assignable to type '(prevState: never[]) => never[]'.
+    Type 'string[]' is not assignable to type 'never[]'.
+      Type 'string' is not assignable to type 'never'.
+src/components/DreamMutator.tsx(24,54): error TS18046: 'err' is of type 'unknown'.
+src/components/DreamReminderDashboard.tsx(134,54): error TS2339: Property 'archived' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(135,55): error TS2339: Property 'archived' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(176,53): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(207,28): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/components/DreamReminderDashboard.tsx(240,22): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/components/DreamReminderDashboard.tsx(288,31): error TS2339: Property 'note' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(372,33): error TS2339: Property 'secondaryEmotions' does not exist on type '{ primaryEmotion: string; intensity: number; }'.
+src/components/DreamReminderDashboard.tsx(739,27): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(739,49): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(741,42): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(744,27): error TS2339: Property 'note' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(746,37): error TS2339: Property 'note' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(766,39): error TS2339: Property 'metrics' does not exist on type '{ title: string; viralityMetrics?: { remixCount: number; shareVelocity: number; saturationLevel: number; currentTrend: string; } | undefined; emotionalProfile?: { primaryEmotion: string; intensity: number; } | undefined; remixLineage?: { id: string; title: string; generation: number; }[] | undefined; }'.
+src/components/DreamReminderDashboard.tsx(767,39): error TS2339: Property 'metrics' does not exist on type '{ title: string; viralityMetrics?: { remixCount: number; shareVelocity: number; saturationLevel: number; currentTrend: string; } | undefined; emotionalProfile?: { primaryEmotion: string; intensity: number; } | undefined; remixLineage?: { id: string; title: string; generation: number; }[] | undefined; }'.
+src/components/DreamReminderDashboard.tsx(768,39): error TS2339: Property 'metrics' does not exist on type '{ title: string; viralityMetrics?: { remixCount: number; shareVelocity: number; saturationLevel: number; currentTrend: string; } | undefined; emotionalProfile?: { primaryEmotion: string; intensity: number; } | undefined; remixLineage?: { id: string; title: string; generation: number; }[] | undefined; }'.
+src/components/DreamReminderDashboard.tsx(769,39): error TS2339: Property 'metrics' does not exist on type '{ title: string; viralityMetrics?: { remixCount: number; shareVelocity: number; saturationLevel: number; currentTrend: string; } | undefined; emotionalProfile?: { primaryEmotion: string; intensity: number; } | undefined; remixLineage?: { id: string; title: string; generation: number; }[] | undefined; }'.
+src/components/DreamReminderDashboard.tsx(770,39): error TS2339: Property 'metrics' does not exist on type '{ title: string; viralityMetrics?: { remixCount: number; shareVelocity: number; saturationLevel: number; currentTrend: string; } | undefined; emotionalProfile?: { primaryEmotion: string; intensity: number; } | undefined; remixLineage?: { id: string; title: string; generation: number; }[] | undefined; }'.
+src/components/DreamReminderDashboard.tsx(771,38): error TS2339: Property 'metrics' does not exist on type '{ title: string; viralityMetrics?: { remixCount: number; shareVelocity: number; saturationLevel: number; currentTrend: string; } | undefined; emotionalProfile?: { primaryEmotion: string; intensity: number; } | undefined; remixLineage?: { id: string; title: string; generation: number; }[] | undefined; }'.
+src/components/DreamReminderDashboard.tsx(826,33): error TS2339: Property 'launched' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(850,29): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(850,51): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(852,41): error TS2339: Property 'reactions' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(859,35): error TS2339: Property 'note' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(876,38): error TS2304: Cannot find name 'remindLater'.
+src/components/DreamReminderDashboard.tsx(917,30): error TS2339: Property 'launched' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(947,31): error TS2339: Property 'note' does not exist on type 'Reminder'.
+src/components/DreamReminderDashboard.tsx(948,88): error TS2339: Property 'note' does not exist on type 'Reminder'.
+src/components/DreamRemixer.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamRemixer.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamRemixer.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamRemixer.tsx(6,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/DreamRemixer.tsx(7,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/components/DreamRemixer.tsx(8,79): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/components/DreamRemixer.tsx(169,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/DreamRemixer.tsx(178,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/DreamTokenMinter.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/DreamTokenMinter.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamTokenMinter.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamTokenMinter.tsx(6,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamTokenMinter.tsx(7,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/DreamTokenMinter.tsx(9,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/DreamTree.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamTree.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamTreeNode.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamTreeNode.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamTreeNode.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamVault.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/DreamVault.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/DreamWithScoring.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/DreamWithScoring.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/DreamWithScoring.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/DreamWithScoring.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/DreamWithScoring.tsx(7,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/DreamWithScoring.tsx(9,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/EchoScore.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/EchoScore.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/EchoScore.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/EchoScore.tsx(6,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/EchoScore.tsx(8,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/EnhancedAgentFilter.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/EnhancedAgentFilter.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/EnhancedAgentFilter.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ErrorDemo.tsx(2,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ErrorDemo.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/ErrorDemo.tsx(4,54): error TS2307: Cannot find module '@/components/ErrorBoundary' or its corresponding type declarations.
+src/components/EvolutionVault.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/EvolutionVault.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/EvolutionVault.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/EvolutionVault.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/FactoryControl.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/FactoryControl.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/FactoryControl.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/GenesisDreamForm.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/GenesisDreamForm.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/hero/DreamCube.tsx(115,55): error TS2339: Property 'agents' does not exist on type '{ id: string; label: string; color: string; rot: string; axis: string; }'.
+src/components/hero/DreamCube.tsx(115,68): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/components/hero/HeroSection.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/hero/HeroSection.tsx(4,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/components/hero/SovereignHero.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/hero/SovereigntyHero.tsx(13,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/hero/SovereigntyHero.tsx(125,30): error TS7031: Binding element 'Icon' implicitly has an 'any' type.
+src/components/hero/SovereigntyHero.tsx(125,36): error TS7031: Binding element 'title' implicitly has an 'any' type.
+src/components/hero/SovereigntyHero.tsx(125,43): error TS7031: Binding element 'desc' implicitly has an 'any' type.
+src/components/hero/SovereigntyHero.tsx(125,49): error TS7031: Binding element 'href' implicitly has an 'any' type.
+src/components/hero/SovereigntyHero.tsx(125,55): error TS7031: Binding element 'color' implicitly has an 'any' type.
+src/components/hero/SovereigntyHero.tsx(125,62): error TS7031: Binding element 'delay' implicitly has an 'any' type.
+src/components/layout/header.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/layout/header.tsx(4,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/layout/header.tsx(5,36): error TS2307: Cannot find module '@/components/notification-center' or its corresponding type declarations.
+src/components/layout/header.tsx(8,50): error TS2307: Cannot find module '@/components/BaseWalletButton' or its corresponding type declarations.
+src/components/layout/MainLayout.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/components/layout/MainLayout.tsx(4,47): error TS2307: Cannot find module '@/contexts/SettingsContext' or its corresponding type declarations.
+src/components/layout/MainLayout.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/layout/MainLayout.tsx(6,32): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../SettingsDialog.js'?
+src/components/layout/MainLayout.tsx(7,32): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../ui/SentientAvatar.js'?
+src/components/layout/sidebar.tsx(3,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/layout/sidebar.tsx(46,62): error TS2304: Cannot find name 'Activity'.
+src/components/layout/sidebar.tsx(51,46): error TS2304: Cannot find name 'GraduationCap'.
+src/components/layout/sidebar.tsx(52,44): error TS2304: Cannot find name 'Activity'.
+src/components/layout/sidebar.tsx(54,60): error TS2304: Cannot find name 'Swords'.
+src/components/layout/sidebar.tsx(61,37): error TS2304: Cannot find name 'useAuth'.
+src/components/LifecycleDemo.tsx(2,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/marketing/IdentityBinding.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/marketing/IdentityBinding.tsx(4,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/marketing/IdentityBinding.tsx(44,40): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/marketing/RoleQuiz.tsx(3,22): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/marketing/RoleQuiz.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/marketing/RoleQuiz.tsx(52,73): error TS2304: Cannot find name 'Activity'.
+src/components/marketing/RoleQuiz.tsx(54,77): error TS2304: Cannot find name 'TrendingUp'.
+src/components/marketing/RoleQuiz.tsx(55,76): error TS2304: Cannot find name 'Zap'.
+src/components/marketing/RoleQuiz.tsx(72,72): error TS2304: Cannot find name 'Activity'.
+src/components/marketing/RoleQuiz.tsx(74,77): error TS2304: Cannot find name 'Coins'.
+src/components/marketing/RoleQuiz.tsx(75,72): error TS2304: Cannot find name 'BookOpen'.
+src/components/MetabolicOverlay.tsx(4,25): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../contexts/auth-context.js'?
+src/components/MetabolicOverlay.tsx(15,17): error TS2304: Cannot find name 'setMetrics'.
+src/components/MetabolicOverlay.tsx(15,28): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/MetabolicOverlay.tsx(26,13): error TS2304: Cannot find name 'setMetrics'.
+src/components/MetabolicOverlay.tsx(26,24): error TS7006: Parameter 'prev' implicitly has an 'any' type.
+src/components/MetabolicOverlay.tsx(44,31): error TS2304: Cannot find name 'metrics'.
+src/components/MetabolicOverlay.tsx(50,31): error TS2304: Cannot find name 'metrics'.
+src/components/MetabolicOverlay.tsx(56,31): error TS2304: Cannot find name 'metrics'.
+src/components/MetabolicOverlay.tsx(62,32): error TS2304: Cannot find name 'metrics'.
+src/components/MetabolicOverlay.tsx(67,44): error TS2304: Cannot find name 'metrics'.
+src/components/MetabolicOverlay.tsx(68,31): error TS2304: Cannot find name 'metrics'.
+src/components/MetabolicWidget.tsx(3,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../systems/AudioEngine.js'?
+src/components/MetabolicWidget.tsx(5,32): error TS2339: Property 'div' does not exist on type 'typeof import("C:/dev/dream-net/node_modules/styled-components/dist/index")'.
+src/components/MetabolicWidget.tsx(27,26): error TS2339: Property 'div' does not exist on type 'typeof import("C:/dev/dream-net/node_modules/styled-components/dist/index")'.
+src/components/MetabolicWidget.tsx(31,23): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/components/MetabolicWidget.tsx(32,17): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/components/MetabolicWidget.tsx(34,16): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/components/MetabolicWidget.tsx(43,22): error TS2339: Property 'span' does not exist on type 'typeof import("C:/dev/dream-net/node_modules/styled-components/dist/index")'.
+src/components/MetabolicWidget.tsx(49,25): error TS2339: Property 'canvas' does not exist on type 'typeof import("C:/dev/dream-net/node_modules/styled-components/dist/index")'.
+src/components/MoondustBar.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/MoondustBar.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/MutationPanel.tsx(2,35): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/MutationPanel.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/MutationPanel.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/MutationPanel.tsx(6,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/MutationPanel.tsx(7,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/NightmareCard.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/NightmareCard.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/NodeGrid.tsx(104,13): error TS2304: Cannot find name 'assignNightmareAgent'.
+src/components/NodeGrid.tsx(223,84): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(223,121): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(224,57): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(225,24): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(225,67): error TS2339: Property 'name' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(230,24): error TS2339: Property 'remixCount' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(230,86): error TS2339: Property 'remixCount' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(232,22): error TS2339: Property 'trustLevel' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(234,25): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(235,29): error TS2339: Property 'trustLevel' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(236,29): error TS2339: Property 'trustLevel' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(237,29): error TS2339: Property 'trustLevel' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(238,29): error TS2339: Property 'trustLevel' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(240,26): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(240,71): error TS2339: Property 'trustLevel' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(243,22): error TS2339: Property 'bounties' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(243,40): error TS2339: Property 'bounties' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(245,34): error TS2339: Property 'bounties' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(248,22): error TS2339: Property 'isNightmare' does not exist on type 'Dream'.
+src/components/NodeGrid.tsx(250,35): error TS2339: Property 'decayRate' does not exist on type 'Dream'.
+src/components/NodeWeb.tsx(3,27): error TS2307: Cannot find module '@/utils/wallet' or its corresponding type declarations.
+src/components/NodeWeb.tsx(4,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/NodeWeb.tsx(5,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/notification-center.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/notification-center.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/notification-center.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/notification-center.tsx(6,100): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/components/notification-center.tsx(8,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/components/notification-center.tsx(10,41): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/notification-center.tsx(11,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/RemixGallery.tsx(88,37): error TS2322: Type 'Dream' is not assignable to type 'string'.
+src/components/RemixSubmissionTracker.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(6,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(7,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(8,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(9,79): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(11,29): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/RemixSubmissionTracker.tsx(135,26): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/RemixSubmissionTracker.tsx(145,26): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/RemixSubmissionTracker.tsx(188,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/RemixSubmissionTracker.tsx(190,30): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/RemixSubmissionTracker.tsx(344,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/RevenueSharing.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/RevenueSharing.tsx(3,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/ReviveDreamPanel.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/ReviveDreamPanel.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/SaveMutatedDream.tsx(3,44): error TS7031: Binding element 'dream' implicitly has an 'any' type.
+src/components/scoring-dashboard.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/scoring-dashboard.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/scoring-dashboard.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/scoring-dashboard.tsx(6,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/components/scoring-dashboard.tsx(8,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/scoring-dashboard.tsx(9,41): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/SeasonalEventBanner.tsx(3,35): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/SeasonalEventBanner.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/SeasonalEventBanner.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/SecretVault.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/SecretVault.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/SentientAgentCard.tsx(3,32): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './ui/SentientAvatar.js'?
+src/components/SentientAgentCard.tsx(4,31): error TS2307: Cannot find module '@/data/agentLibrary' or its corresponding type declarations.
+src/components/SentientAgentCard.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/SentientAgentCard.tsx(97,39): error TS7006: Parameter 'trait' implicitly has an 'any' type.
+src/components/SettingsDialog.tsx(9,8): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/components/SettingsDialog.tsx(10,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/SettingsDialog.tsx(11,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/SettingsDialog.tsx(12,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/components/SettingsDialog.tsx(13,29): error TS2307: Cannot find module '@/contexts/SettingsContext' or its corresponding type declarations.
+src/components/SettingsDialog.tsx(14,32): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './ui/SentientAvatar.js'?
+src/components/SettingsDialog.tsx(59,44): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/SettingsDialog.tsx(87,40): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/components/SimpleDreamMinter.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/SimpleDreamMinter.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/SuggestTitleButton.tsx(2,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/SuggestTitleButton.tsx(3,35): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/ui/accordion.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/alert-dialog.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/alert-dialog.tsx(5,32): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ui/alert.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/avatar.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/badge.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/breadcrumb.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/button.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/calendar.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/calendar.tsx(6,32): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ui/card.tsx(3,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/carousel.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/carousel.tsx(8,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ui/chart.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/chart.tsx(119,7): error TS2339: Property 'payload' does not exist on type 'Omit<Omit<Props<ValueType, NameType>, PropertiesReadFromContext> & { active?: boolean | undefined; allowEscapeViewBox?: AllowInDimension | undefined; animationDuration?: number | undefined; animationEasing?: AnimationTiming | undefined; axisId?: AxisId | undefined; content?: ContentType<ValueType, NameType> | undefined; cursor?: CursorDefinition | undefined; defaultIndex?: number | TooltipIndex | undefined; filterNull?: boolean | undefined; includeHidden?: boolean | undefined; isAnimationActive?: boolean | "auto" | undefined; offset?: number | undefined; payloadUniqBy?: UniqueOption<Payload<ValueType, NameType>> | undefined; portal?: HTMLElement | null | undefined; position?: Partial<Coordinate> | undefined; reverseDirection?: AllowInDimension | undefined; shared?: boolean | undefined; trigger?: TooltipTrigger | undefined; useTranslate3d?: boolean | undefined; wrapperStyle?: CSSProperties | undefined; } & ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> & { hideLabel?: boolean | undefined; hideIndicator?: boolean | undefined; indicator?: "dashed" | "line" | "dot" | undefined; nameKey?: string | undefined; labelKey?: string | undefined; }, "ref">'.
+src/components/ui/chart.tsx(124,7): error TS2339: Property 'label' does not exist on type 'Omit<Omit<Props<ValueType, NameType>, PropertiesReadFromContext> & { active?: boolean | undefined; allowEscapeViewBox?: AllowInDimension | undefined; animationDuration?: number | undefined; animationEasing?: AnimationTiming | undefined; axisId?: AxisId | undefined; content?: ContentType<ValueType, NameType> | undefined; cursor?: CursorDefinition | undefined; defaultIndex?: number | TooltipIndex | undefined; filterNull?: boolean | undefined; includeHidden?: boolean | undefined; isAnimationActive?: boolean | "auto" | undefined; offset?: number | undefined; payloadUniqBy?: UniqueOption<Payload<ValueType, NameType>> | undefined; portal?: HTMLElement | null | undefined; position?: Partial<Coordinate> | undefined; reverseDirection?: AllowInDimension | undefined; shared?: boolean | undefined; trigger?: TooltipTrigger | undefined; useTranslate3d?: boolean | undefined; wrapperStyle?: CSSProperties | undefined; } & ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> & { hideLabel?: boolean | undefined; hideIndicator?: boolean | undefined; indicator?: "dashed" | "line" | "dot" | undefined; nameKey?: string | undefined; labelKey?: string | undefined; }, "ref">'.
+src/components/ui/chart.tsx(188,25): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/components/ui/chart.tsx(188,31): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/ui/chart.tsx(264,41): error TS2344: Type '"verticalAlign" | "payload"' does not satisfy the constraint '"string" | "children" | "className" | "path" | "id" | "method" | "x" | "filter" | "fill" | "values" | "end" | "style" | "layout" | "name" | "type" | "content" | "local" | "color" | "fontFamily" | "onClick" | "opacity" | "fontSize" | "display" | "href" | "target" | "suppressHydrationWarning" | "height" | "lang" | "max" | "media" | "min" | "width" | "role" | "tabIndex" | "crossOrigin" | "accentHeight" | "accumulate" | "additive" | "alignmentBaseline" | "allowReorder" | "alphabetic" | "amplitude" | "arabicForm" | "ascent" | "attributeName" | "attributeType" | "autoReverse" | "azimuth" | "baseFrequency" | "baselineShift" | "baseProfile" | "bbox" | "begin" | "bias" | "by" | "calcMode" | "capHeight" | "clip" | "clipPath" | "clipPathUnits" | "clipRule" | "colorInterpolation" | "colorInterpolationFilters" | "colorProfile" | "colorRendering" | "contentScriptType" | "contentStyleType" | "cursor" | "cx" | "cy" | "d" | "decelerate" | "descent" | "diffuseConstant" | "direction" | "divisor" | "dominantBaseline" | "dur" | "dx" | "dy" | "edgeMode" | "elevation" | "enableBackground" | "exponent" | "externalResourcesRequired" | "fillOpacity" | "fillRule" | "filterRes" | "filterUnits" | "floodColor" | "floodOpacity" | "focusable" | "fontSizeAdjust" | "fontStretch" | "fontStyle" | "fontVariant" | "fontWeight" | "format" | "fr" | "from" | "fx" | "fy" | "g1" | "g2" | "glyphName" | "glyphOrientationHorizontal" | "glyphOrientationVertical" | "glyphRef" | "gradientTransform" | "gradientUnits" | "hanging" | "horizAdvX" | "horizOriginX" | "ideographic" | "imageRendering" | "in2" | "in" | "intercept" | "k1" | "k2" | "k3" | "k4" | "k" | "kernelMatrix" | "kernelUnitLength" | "kerning" | "keyPoints" | "keySplines" | "keyTimes" | "lengthAdjust" | "letterSpacing" | "lightingColor" | "limitingConeAngle" | "markerEnd" | "markerHeight" | "markerMid" | "markerStart" | "markerUnits" | "markerWidth" | "mask" | "maskContentUnits" | "maskUnits" | "mathematical" | "mode" | "numOctaves" | "offset" | "operator" | "order" | "orient" | "orientation" | "origin" | "overflow" | "overlinePosition" | "overlineThickness" | "paintOrder" | "panose1" | "pathLength" | "patternContentUnits" | "patternTransform" | "patternUnits" | "pointerEvents" | "points" | "pointsAtX" | "pointsAtY" | "pointsAtZ" | "preserveAlpha" | "preserveAspectRatio" | "primitiveUnits" | "r" | "radius" | "refX" | "refY" | "renderingIntent" | "repeatCount" | "repeatDur" | "requiredExtensions" | "requiredFeatures" | "restart" | "result" | "rotate" | "rx" | "ry" | "scale" | "seed" | "shapeRendering" | "slope" | "spacing" | "specularConstant" | "specularExponent" | "speed" | "spreadMethod" | "startOffset" | "stdDeviation" | "stemh" | "stemv" | "stitchTiles" | "stopColor" | "stopOpacity" | "strikethroughPosition" | "strikethroughThickness" | "stroke" | "strokeDasharray" | "strokeDashoffset" | "strokeLinecap" | "strokeLinejoin" | "strokeMiterlimit" | "strokeOpacity" | "strokeWidth" | "surfaceScale" | "systemLanguage" | "tableValues" | "targetX" | "targetY" | "textAnchor" | "textDecoration" | "textLength" | "textRendering" | "to" | "transform" | "transformOrigin" | "u1" | "u2" | "underlinePosition" | "underlineThickness" | "unicode" | "unicodeBidi" | "unicodeRange" | "unitsPerEm" | "vAlphabetic" | "vectorEffect" | "version" | "vertAdvY" | "vertOriginX" | "vertOriginY" | "vHanging" | "vIdeographic" | "viewBox" | "viewTarget" | "visibility" | "vMathematical" | "widths" | "wordSpacing" | "writingMode" | "x1" | "x2" | "xChannelSelector" | "xHeight" | "xlinkActuate" | "xlinkArcrole" | "xlinkHref" | "xlinkRole" | "xlinkShow" | "xlinkTitle" | "xlinkType" | "xmlBase" | "xmlLang" | "xmlns" | "xmlnsXlink" | "xmlSpace" | "y1" | "y2" | "y" | "yChannelSelector" | "z" | "zoomAndPan" | "dangerouslySetInnerHTML" | "onCopy" | "onCopyCapture" | "onCut" | "onCutCapture" | "onPaste" | "onPasteCapture" | "onCompositionEnd" | "onCompositionEndCapture" | "onCompositionStart" | "onCompositionStartCapture" | "onCompositionUpdate" | "onCompositionUpdateCapture" | "onFocus" | "onFocusCapture" | "onBlur" | "onBlurCapture" | "onChange" | "onChangeCapture" | "onBeforeInput" | "onBeforeInputCapture" | "onInput" | "onInputCapture" | "onReset" | "onResetCapture" | "onSubmit" | "onSubmitCapture" | "onInvalid" | "onInvalidCapture" | "onLoad" | "onLoadCapture" | "onError" | "onErrorCapture" | "onKeyDown" | "onKeyDownCapture" | "onKeyPress" | "onKeyPressCapture" | "onKeyUp" | "onKeyUpCapture" | "onAbort" | "onAbortCapture" | "onCanPlay" | "onCanPlayCapture" | "onCanPlayThrough" | "onCanPlayThroughCapture" | "onDurationChange" | "onDurationChangeCapture" | "onEmptied" | "onEmptiedCapture" | "onEncrypted" | "onEncryptedCapture" | "onEnded" | "onEndedCapture" | "onLoadedData" | "onLoadedDataCapture" | "onLoadedMetadata" | "onLoadedMetadataCapture" | "onLoadStart" | "onLoadStartCapture" | "onPause" | "onPauseCapture" | "onPlay" | "onPlayCapture" | "onPlaying" | "onPlayingCapture" | "onProgress" | "onProgressCapture" | "onRateChange" | "onRateChangeCapture" | "onSeeked" | "onSeekedCapture" | "onSeeking" | "onSeekingCapture" | "onStalled" | "onStalledCapture" | "onSuspend" | "onSuspendCapture" | "onTimeUpdate" | "onTimeUpdateCapture" | "onVolumeChange" | "onVolumeChangeCapture" | "onWaiting" | "onWaitingCapture" | "onAuxClick" | "onAuxClickCapture" | "onClickCapture" | "onContextMenu" | "onContextMenuCapture" | "onDoubleClick" | "onDoubleClickCapture" | "onDrag" | "onDragCapture" | "onDragEnd" | "onDragEndCapture" | "onDragEnter" | "onDragEnterCapture" | "onDragExit" | "onDragExitCapture" | "onDragLeave" | "onDragLeaveCapture" | "onDragOver" | "onDragOverCapture" | "onDragStart" | "onDragStartCapture" | "onDrop" | "onDropCapture" | "onMouseDown" | "onMouseDownCapture" | "onMouseEnter" | "onMouseLeave" | "onMouseMove" | "onMouseMoveCapture" | "onMouseOut" | "onMouseOutCapture" | "onMouseOver" | "onMouseOverCapture" | "onMouseUp" | "onMouseUpCapture" | "onSelect" | "onSelectCapture" | "onTouchCancel" | "onTouchCancelCapture" | "onTouchEnd" | "onTouchEndCapture" | "onTouchMove" | "onTouchMoveCapture" | "onTouchStart" | "onTouchStartCapture" | "onPointerDown" | "onPointerDownCapture" | "onPointerMove" | "onPointerMoveCapture" | "onPointerUp" | "onPointerUpCapture" | "onPointerCancel" | "onPointerCancelCapture" | "onPointerEnter" | "onPointerLeave" | "onPointerOver" | "onPointerOverCapture" | "onPointerOut" | "onPointerOutCapture" | "onGotPointerCapture" | "onGotPointerCaptureCapture" | "onLostPointerCapture" | "onLostPointerCaptureCapture" | "onScroll" | "onScrollCapture" | "onWheel" | "onWheelCapture" | "onAnimationStart" | "onAnimationStartCapture" | "onAnimationEnd" | "onAnimationEndCapture" | "onAnimationIteration" | "onAnimationIterationCapture" | "onTransitionEnd" | "onTransitionEndCapture" | "key" | "verticalAlign" | "onPointerEnterCapture" | "onPointerLeaveCapture" | keyof AriaAttributes | "formatter" | "itemSorter" | "align" | "payloadUniqBy" | "portal" | "wrapperStyle" | "iconSize" | "iconType" | "inactiveColor" | "onBBoxUpdate"'.
+  Type '"payload"' is not assignable to type '"string" | "children" | "className" | "path" | "id" | "method" | "x" | "filter" | "fill" | "values" | "end" | "style" | "layout" | "name" | "type" | "content" | "local" | "color" | "fontFamily" | "onClick" | "opacity" | "fontSize" | "display" | "href" | "target" | "suppressHydrationWarning" | "height" | "lang" | "max" | "media" | "min" | "width" | "role" | "tabIndex" | "crossOrigin" | "accentHeight" | "accumulate" | "additive" | "alignmentBaseline" | "allowReorder" | "alphabetic" | "amplitude" | "arabicForm" | "ascent" | "attributeName" | "attributeType" | "autoReverse" | "azimuth" | "baseFrequency" | "baselineShift" | "baseProfile" | "bbox" | "begin" | "bias" | "by" | "calcMode" | "capHeight" | "clip" | "clipPath" | "clipPathUnits" | "clipRule" | "colorInterpolation" | "colorInterpolationFilters" | "colorProfile" | "colorRendering" | "contentScriptType" | "contentStyleType" | "cursor" | "cx" | "cy" | "d" | "decelerate" | "descent" | "diffuseConstant" | "direction" | "divisor" | "dominantBaseline" | "dur" | "dx" | "dy" | "edgeMode" | "elevation" | "enableBackground" | "exponent" | "externalResourcesRequired" | "fillOpacity" | "fillRule" | "filterRes" | "filterUnits" | "floodColor" | "floodOpacity" | "focusable" | "fontSizeAdjust" | "fontStretch" | "fontStyle" | "fontVariant" | "fontWeight" | "format" | "fr" | "from" | "fx" | "fy" | "g1" | "g2" | "glyphName" | "glyphOrientationHorizontal" | "glyphOrientationVertical" | "glyphRef" | "gradientTransform" | "gradientUnits" | "hanging" | "horizAdvX" | "horizOriginX" | "ideographic" | "imageRendering" | "in2" | "in" | "intercept" | "k1" | "k2" | "k3" | "k4" | "k" | "kernelMatrix" | "kernelUnitLength" | "kerning" | "keyPoints" | "keySplines" | "keyTimes" | "lengthAdjust" | "letterSpacing" | "lightingColor" | "limitingConeAngle" | "markerEnd" | "markerHeight" | "markerMid" | "markerStart" | "markerUnits" | "markerWidth" | "mask" | "maskContentUnits" | "maskUnits" | "mathematical" | "mode" | "numOctaves" | "offset" | "operator" | "order" | "orient" | "orientation" | "origin" | "overflow" | "overlinePosition" | "overlineThickness" | "paintOrder" | "panose1" | "pathLength" | "patternContentUnits" | "patternTransform" | "patternUnits" | "pointerEvents" | "points" | "pointsAtX" | "pointsAtY" | "pointsAtZ" | "preserveAlpha" | "preserveAspectRatio" | "primitiveUnits" | "r" | "radius" | "refX" | "refY" | "renderingIntent" | "repeatCount" | "repeatDur" | "requiredExtensions" | "requiredFeatures" | "restart" | "result" | "rotate" | "rx" | "ry" | "scale" | "seed" | "shapeRendering" | "slope" | "spacing" | "specularConstant" | "specularExponent" | "speed" | "spreadMethod" | "startOffset" | "stdDeviation" | "stemh" | "stemv" | "stitchTiles" | "stopColor" | "stopOpacity" | "strikethroughPosition" | "strikethroughThickness" | "stroke" | "strokeDasharray" | "strokeDashoffset" | "strokeLinecap" | "strokeLinejoin" | "strokeMiterlimit" | "strokeOpacity" | "strokeWidth" | "surfaceScale" | "systemLanguage" | "tableValues" | "targetX" | "targetY" | "textAnchor" | "textDecoration" | "textLength" | "textRendering" | "to" | "transform" | "transformOrigin" | "u1" | "u2" | "underlinePosition" | "underlineThickness" | "unicode" | "unicodeBidi" | "unicodeRange" | "unitsPerEm" | "vAlphabetic" | "vectorEffect" | "version" | "vertAdvY" | "vertOriginX" | "vertOriginY" | "vHanging" | "vIdeographic" | "viewBox" | "viewTarget" | "visibility" | "vMathematical" | "widths" | "wordSpacing" | "writingMode" | "x1" | "x2" | "xChannelSelector" | "xHeight" | "xlinkActuate" | "xlinkArcrole" | "xlinkHref" | "xlinkRole" | "xlinkShow" | "xlinkTitle" | "xlinkType" | "xmlBase" | "xmlLang" | "xmlns" | "xmlnsXlink" | "xmlSpace" | "y1" | "y2" | "y" | "yChannelSelector" | "z" | "zoomAndPan" | "dangerouslySetInnerHTML" | "onCopy" | "onCopyCapture" | "onCut" | "onCutCapture" | "onPaste" | "onPasteCapture" | "onCompositionEnd" | "onCompositionEndCapture" | "onCompositionStart" | "onCompositionStartCapture" | "onCompositionUpdate" | "onCompositionUpdateCapture" | "onFocus" | "onFocusCapture" | "onBlur" | "onBlurCapture" | "onChange" | "onChangeCapture" | "onBeforeInput" | "onBeforeInputCapture" | "onInput" | "onInputCapture" | "onReset" | "onResetCapture" | "onSubmit" | "onSubmitCapture" | "onInvalid" | "onInvalidCapture" | "onLoad" | "onLoadCapture" | "onError" | "onErrorCapture" | "onKeyDown" | "onKeyDownCapture" | "onKeyPress" | "onKeyPressCapture" | "onKeyUp" | "onKeyUpCapture" | "onAbort" | "onAbortCapture" | "onCanPlay" | "onCanPlayCapture" | "onCanPlayThrough" | "onCanPlayThroughCapture" | "onDurationChange" | "onDurationChangeCapture" | "onEmptied" | "onEmptiedCapture" | "onEncrypted" | "onEncryptedCapture" | "onEnded" | "onEndedCapture" | "onLoadedData" | "onLoadedDataCapture" | "onLoadedMetadata" | "onLoadedMetadataCapture" | "onLoadStart" | "onLoadStartCapture" | "onPause" | "onPauseCapture" | "onPlay" | "onPlayCapture" | "onPlaying" | "onPlayingCapture" | "onProgress" | "onProgressCapture" | "onRateChange" | "onRateChangeCapture" | "onSeeked" | "onSeekedCapture" | "onSeeking" | "onSeekingCapture" | "onStalled" | "onStalledCapture" | "onSuspend" | "onSuspendCapture" | "onTimeUpdate" | "onTimeUpdateCapture" | "onVolumeChange" | "onVolumeChangeCapture" | "onWaiting" | "onWaitingCapture" | "onAuxClick" | "onAuxClickCapture" | "onClickCapture" | "onContextMenu" | "onContextMenuCapture" | "onDoubleClick" | "onDoubleClickCapture" | "onDrag" | "onDragCapture" | "onDragEnd" | "onDragEndCapture" | "onDragEnter" | "onDragEnterCapture" | "onDragExit" | "onDragExitCapture" | "onDragLeave" | "onDragLeaveCapture" | "onDragOver" | "onDragOverCapture" | "onDragStart" | "onDragStartCapture" | "onDrop" | "onDropCapture" | "onMouseDown" | "onMouseDownCapture" | "onMouseEnter" | "onMouseLeave" | "onMouseMove" | "onMouseMoveCapture" | "onMouseOut" | "onMouseOutCapture" | "onMouseOver" | "onMouseOverCapture" | "onMouseUp" | "onMouseUpCapture" | "onSelect" | "onSelectCapture" | "onTouchCancel" | "onTouchCancelCapture" | "onTouchEnd" | "onTouchEndCapture" | "onTouchMove" | "onTouchMoveCapture" | "onTouchStart" | "onTouchStartCapture" | "onPointerDown" | "onPointerDownCapture" | "onPointerMove" | "onPointerMoveCapture" | "onPointerUp" | "onPointerUpCapture" | "onPointerCancel" | "onPointerCancelCapture" | "onPointerEnter" | "onPointerLeave" | "onPointerOver" | "onPointerOverCapture" | "onPointerOut" | "onPointerOutCapture" | "onGotPointerCapture" | "onGotPointerCaptureCapture" | "onLostPointerCapture" | "onLostPointerCaptureCapture" | "onScroll" | "onScrollCapture" | "onWheel" | "onWheelCapture" | "onAnimationStart" | "onAnimationStartCapture" | "onAnimationEnd" | "onAnimationEndCapture" | "onAnimationIteration" | "onAnimationIterationCapture" | "onTransitionEnd" | "onTransitionEndCapture" | "key" | "verticalAlign" | "onPointerEnterCapture" | "onPointerLeaveCapture" | keyof AriaAttributes | "formatter" | "itemSorter" | "align" | "payloadUniqBy" | "portal" | "wrapperStyle" | "iconSize" | "iconType" | "inactiveColor" | "onBBoxUpdate"'.
+src/components/ui/chart.tsx(275,19): error TS2339: Property 'length' does not exist on type '{}'.
+src/components/ui/chart.tsx(288,18): error TS2339: Property 'map' does not exist on type '{}'.
+src/components/ui/chart.tsx(288,23): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/components/ui/checkbox.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/command.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/command.tsx(7,39): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/components/ui/context-menu.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/dialog.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/drawer.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/dropdown-menu.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/form.tsx(15,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/form.tsx(16,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/components/ui/hover-card.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/input-otp.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/input.tsx(3,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/label.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/menubar.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/navigation-menu.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/pagination.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/pagination.tsx(5,45): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ui/pagination.tsx(68,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+src/components/ui/pagination.tsx(84,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+src/components/ui/popover.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/progress.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/radio-group.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/resizable.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/scroll-area.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/select.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/SentientAvatar.tsx(3,53): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './avatar.js'?
+src/components/ui/SentientAvatar.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/SentientAvatar.tsx(74,21): error TS2367: This comparison appears to be unintentional because the types 'AgentSoulType' and '"glitch"' have no overlap.
+src/components/ui/SentientAvatar.tsx(77,107): error TS2367: This comparison appears to be unintentional because the types 'AgentSoulType' and '"void"' have no overlap.
+src/components/ui/separator.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/sheet.tsx(8,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(6,29): error TS2307: Cannot find module '@/hooks/use-mobile' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(8,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(9,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(10,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(17,8): error TS2307: Cannot find module '@/components/ui/sheet' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(18,26): error TS2307: Cannot find module '@/components/ui/skeleton' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(24,8): error TS2307: Cannot find module '@/components/ui/tooltip' or its corresponding type declarations.
+src/components/ui/sidebar.tsx(283,17): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/components/ui/skeleton.tsx(1,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/slider.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/switch.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/table.tsx(3,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/tabs.tsx(4,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/textarea.tsx(3,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/toast.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/toaster.tsx(1,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/ui/toaster.tsx(9,8): error TS2307: Cannot find module '@/components/ui/toast' or its corresponding type declarations.
+src/components/ui/toaster.tsx(16,31): error TS7031: Binding element 'id' implicitly has an 'any' type.
+src/components/ui/toaster.tsx(16,35): error TS7031: Binding element 'title' implicitly has an 'any' type.
+src/components/ui/toaster.tsx(16,42): error TS7031: Binding element 'description' implicitly has an 'any' type.
+src/components/ui/toaster.tsx(16,55): error TS7031: Binding element 'action' implicitly has an 'any' type.
+src/components/ui/toggle-group.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/toggle-group.tsx(8,32): error TS2307: Cannot find module '@/components/ui/toggle' or its corresponding type declarations.
+src/components/ui/toggle-group.tsx(22,4): error TS2322: Type '{ children: Element; ref: ForwardedRef<HTMLDivElement>; className: any; } | { children: Element; ref: ForwardedRef<HTMLDivElement>; className: any; }' is not assignable to type 'IntrinsicAttributes & ((ToggleGroupSingleProps | ToggleGroupMultipleProps) & RefAttributes<HTMLDivElement>)'.
+  Type '{ children: Element; ref: ForwardedRef<HTMLDivElement>; className: any; }' is not assignable to type 'IntrinsicAttributes & ((ToggleGroupSingleProps | ToggleGroupMultipleProps) & RefAttributes<HTMLDivElement>)'.
+    Property 'type' is missing in type '{ children: Element; ref: ForwardedRef<HTMLDivElement>; className: any; }' but required in type 'ToggleGroupMultipleProps'.
+src/components/ui/toggle-group.tsx(43,6): error TS2741: Property 'value' is missing in type '{ children: any; ref: ForwardedRef<HTMLButtonElement>; className: any; }' but required in type 'Omit<ToggleGroupItemImplProps, "pressed">'.
+src/components/ui/toggle.tsx(5,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/ui/tooltip.tsx(6,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/components/UserProgressionSystem.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/UserProgressionSystem.tsx(3,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/VaultMarketplace.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/VaultMarketplace.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/VaultMarketplace.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/WalletDemo.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/WalletDemo.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/WalletDemo.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/WalletDemo.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/WalletDemo.tsx(8,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/WalletProfileDashboard.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/WalletProfileDashboard.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/WalletProfileDashboard.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/WalletProfileDashboard.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/WalletProfileDashboard.tsx(7,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/components/WalletScoring.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/WalletScoring.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/WalletScoring.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/components/WalletScoring.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/components/WalletScoring.tsx(7,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/components/WalletScoring.tsx(9,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/components/WalletStatus.tsx(2,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/components/WhisperMessaging.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/components/XPMeter.tsx(37,14): error TS2322: Type '{ children: string; jsx: true; }' is not assignable to type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+  Property 'jsx' does not exist on type 'DetailedHTMLProps<StyleHTMLAttributes<HTMLStyleElement>, HTMLStyleElement>'.
+src/contexts/auth-context.tsx(2,45): error TS2307: Cannot find module '@/lib/siwe' or its corresponding type declarations.
+src/contexts/auth-context.tsx(35,32): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/contexts/auth-context.tsx(35,55): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/data/agentLibrary.ts(1,31): error TS2307: Cannot find module '@/components/ui/SentientAvatar' or its corresponding type declarations.
+src/governor/config.ts(4,22): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/governor/config.ts(5,30): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/governor/config.ts(6,38): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/governor/config.ts(7,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/governor/config.ts(8,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/governor/config.ts(9,37): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/governor/config.ts(10,39): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/hooks/use-toast.ts(6,8): error TS2307: Cannot find module '@/components/ui/toast' or its corresponding type declarations.
+src/hooks/use-toast.ts(158,22): error TS7006: Parameter 'open' implicitly has an 'any' type.
+src/hooks/useMetrics.ts(3,30): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/layouts/LayoutHub.tsx(3,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/layouts/LayoutHub.tsx(4,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/layouts/LayoutHub.tsx(19,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/layouts/LayoutHub.tsx(20,28): error TS2307: Cannot find module '@/components/ui/scroll-area' or its corresponding type declarations.
+src/layouts/LayoutHub.tsx(21,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/lib/db.ts(1,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/lib/db.ts(2,24): error TS2307: Cannot find module '@/data/mockDreams' or its corresponding type declarations.
+src/lib/wagmi.ts(12,13): error TS2322: Type 'string' is not assignable to type 'Preference'.
+  Type 'string' is not assignable to type '{ keysUrl?: string | undefined; options: "all" | "smartWalletOnly" | "eoaOnly"; attribution?: Attribution | undefined; telemetry?: boolean | undefined; }'.
+src/miniapps/hooks/useContract.ts(7,25): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/miniapps/hooks/useTokenBalance.ts(7,47): error TS2307: Cannot find module '@dreamnet/utils' or its corresponding type declarations.
+src/miniapps/hooks/useTokenBalance.ts(29,15): error TS7006: Parameter 'err' implicitly has an 'any' type.
+src/miniapps/shadow/ShadowProbeApp.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/miniapps/shadow/ShadowProbeApp.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/miniapps/shadow/ShadowProbeApp.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/miniapps/shadow/ShadowProbeApp.tsx(16,35): error TS2551: Property 'context' does not exist on type 'typeof import("C:/dev/dream-net/node_modules/@farcaster/frame-sdk/dist/index")'. Did you mean 'Context'?
+src/miniapps/shadow/ShadowProbeApp.tsx(18,17): error TS2339: Property 'actions' does not exist on type 'typeof import("C:/dev/dream-net/node_modules/@farcaster/frame-sdk/dist/index")'.
+src/miniapps/subscriptions/SubscriptionApp.tsx(3,25): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(4,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(13,8): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(14,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(15,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(16,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(17,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(23,8): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(24,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(25,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/miniapps/subscriptions/SubscriptionApp.tsx(28,33): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/miniapps/subscriptions/SubscriptionApp.tsx(29,35): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/miniapps/subscriptions/SubscriptionApp.tsx(30,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/miniapps/subscriptions/SubscriptionApp.tsx(31,42): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/miniapps/subscriptions/SubscriptionApp.tsx(606,38): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/miniapps/subscriptions/SubscriptionApp.tsx(618,38): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/miniapps/subscriptions/SubscriptionApp.tsx(632,36): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/miniapps/subscriptions/SubscriptionApp.tsx(647,38): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/miniapps/subscriptions/SubscriptionApp.tsx(671,38): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/miniapps/subscriptions/SubscriptionApp.tsx(685,36): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/miniapps/template/SimpleSwapApp.tsx(7,25): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(9,31): error TS2307: Cannot find module '@dreamnet/utils' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(10,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(11,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(12,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(13,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(15,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/miniapps/template/SimpleSwapApp.tsx(113,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/miniapps/template/SimpleSwapApp.tsx(124,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/miniapps/template/TokenBalanceApp.tsx(7,25): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/miniapps/template/TokenBalanceApp.tsx(9,50): error TS2307: Cannot find module '@dreamnet/utils' or its corresponding type declarations.
+src/miniapps/template/TokenBalanceApp.tsx(10,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/miniapps/template/TokenBalanceApp.tsx(11,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/miniapps/template/TokenBalanceApp.tsx(12,26): error TS2307: Cannot find module '@/components/ui/skeleton' or its corresponding type declarations.
+src/miniapps/utils.ts(36,7): error TS2353: Object literal may only specify known properties, and 'address' does not exist in type 'TokenBalance'.
+src/pages/AcademyPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/AcademyPage.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/AcademyPage.tsx(6,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/AcademyPage.tsx(7,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/AcademyPage.tsx(8,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/AcademyPage.tsx(122,44): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/agent-customizer.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/agent-dashboard-test.tsx(1,29): error TS2307: Cannot find module '@/components/AgentStatusGrid' or its corresponding type declarations.
+src/pages/agent-dashboard.tsx(273,34): error TS7006: Parameter 'pkg' implicitly has an 'any' type.
+src/pages/agent-dashboard.tsx(308,29): error TS7006: Parameter 'task' implicitly has an 'any' type.
+src/pages/agent-dashboard.tsx(316,158): error TS2304: Cannot find name 'Clock'.
+src/pages/agent-dashboard.tsx(323,70): error TS2304: Cannot find name 'Clock'.
+src/pages/agent-filtering-demo.tsx(2,33): error TS2307: Cannot find module '@/components/AgentFilteredDreams' or its corresponding type declarations.
+src/pages/agent-filtering-demo.tsx(3,33): error TS2307: Cannot find module '@/components/EnhancedAgentFilter' or its corresponding type declarations.
+src/pages/agent-filtering-demo.tsx(4,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/agent-filtering-demo.tsx(5,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/agent-filtering-demo.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/agent-filtering-demo.tsx(7,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/agent-glow-demo.tsx(2,25): error TS2307: Cannot find module '@/components/AgentStatus' or its corresponding type declarations.
+src/pages/agent-glow-demo.tsx(3,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/agent-glow-demo.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/agent-glow-demo.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/agent-glow-demo.tsx(6,24): error TS2307: Cannot find module '@/components/ui/slider' or its corresponding type declarations.
+src/pages/agent-status-demo.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/agent-status-demo.tsx(4,25): error TS2307: Cannot find module '@/components/AgentStatus' or its corresponding type declarations.
+src/pages/agent-status-demo.tsx(5,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/agent-status-demo.tsx(6,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/agent-status-demo.tsx(7,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/agent-status-demo.tsx(8,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/AgentAvatarCreator.tsx(17,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/AgentAvatarCreator.tsx(18,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/AgentAvatarCreator.tsx(19,24): error TS2307: Cannot find module '@/components/ui/slider' or its corresponding type declarations.
+src/pages/AgentAvatarCreator.tsx(20,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/AgentAvatarCreator.tsx(21,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/AgentFoundry.tsx(17,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/AgentFoundry.tsx(18,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/AgentFoundry.tsx(19,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/AgentFoundry.tsx(20,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/AgentsPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/AgentsPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/AgentsPage.tsx(4,35): error TS2307: Cannot find module '@/components/SentientAgentCard' or its corresponding type declarations.
+src/pages/AgentsPage.tsx(5,26): error TS2307: Cannot find module '@/data/agentLibrary' or its corresponding type declarations.
+src/pages/AgentsPage.tsx(46,32): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/pages/AgentsPage.tsx(62,16): error TS2304: Cannot find name 'Card'.
+src/pages/AgentsPage.tsx(66,18): error TS2304: Cannot find name 'CardHeader'.
+src/pages/AgentsPage.tsx(68,22): error TS2304: Cannot find name 'Network'.
+src/pages/AgentsPage.tsx(69,22): error TS2304: Cannot find name 'CardTitle'.
+src/pages/AgentsPage.tsx(71,23): error TS2304: Cannot find name 'CardTitle'.
+src/pages/AgentsPage.tsx(73,19): error TS2304: Cannot find name 'CardHeader'.
+src/pages/AgentsPage.tsx(74,18): error TS2304: Cannot find name 'CardContent'.
+src/pages/AgentsPage.tsx(75,20): error TS2304: Cannot find name 'CardDescription'.
+src/pages/AgentsPage.tsx(75,58): error TS2304: Cannot find name 'CardDescription'.
+src/pages/AgentsPage.tsx(104,19): error TS2304: Cannot find name 'CardContent'.
+src/pages/AgentsPage.tsx(105,17): error TS2304: Cannot find name 'Card'.
+src/pages/AgentTokFeed.tsx(18,34): error TS2307: Cannot find module '@/components/MetabolicOverlay' or its corresponding type declarations.
+src/pages/AgentTokFeed.tsx(209,38): error TS2304: Cannot find name 'FlaskConical'.
+src/pages/ai-surgeon-dashboard.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(6,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(7,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(8,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(22,30): error TS2307: Cannot find module '@/lib/mock-dreamnet' or its corresponding type declarations.
+src/pages/ai-surgeon-dashboard.tsx(311,68): error TS7006: Parameter 'task' implicitly has an 'any' type.
+src/pages/ai-surgeon-dashboard.tsx(311,74): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/ai-surgeon-dashboard.tsx(362,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/ai-surgeon-dashboard.tsx(372,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/billable-dashboard.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/billable-dashboard.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/billable-dashboard.tsx(9,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/bounty-explorer.tsx(3,23): error TS2307: Cannot find module '@/components/DreamCard' or its corresponding type declarations.
+src/pages/bounty-explorer.tsx(4,28): error TS2307: Cannot find module '@/components/BountyEnhancer' or its corresponding type declarations.
+src/pages/bounty-explorer.tsx(220,25): error TS7006: Parameter 'enhancement' implicitly has an 'any' type.
+src/pages/bounty-feed.tsx(2,41): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/bounty-feed.tsx(56,36): error TS2339: Property 'filter' does not exist on type '{}'.
+src/pages/cloud-agent.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/cocoons.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/cocoons.tsx(5,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/cocoons.tsx(6,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/cocoons.tsx(7,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/pages/cocoons.tsx(8,100): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/pages/cocoons.tsx(12,39): error TS2307: Cannot find module '@/components/contributor-management' or its corresponding type declarations.
+src/pages/cocoons.tsx(175,72): error TS2367: This comparison appears to be unintentional because the types '"archived" | "active" | "complete" | "seedling" | "incubating" | "metamorphosis" | "emergence"' and '"hatched"' have no overlap.
+src/pages/command-interface.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/CommunityPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/CommunityPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/CommunityPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/contributors.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/contributors.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/contributors.tsx(4,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/pages/contributors.tsx(5,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(9,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(10,24): error TS2307: Cannot find module '@/components/ui/switch' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(11,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(12,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/pages/control-plane-dashboard.tsx(245,41): error TS7006: Parameter 'enabled' implicitly has an 'any' type.
+src/pages/control-plane-dashboard.tsx(297,38): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/control-plane-dashboard.tsx(311,38): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/control-plane-dashboard.tsx(325,38): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/cores.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/cores.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/cores.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/cores.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/cores.tsx(13,8): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/cradle-test.tsx(2,29): error TS2307: Cannot find module '@/components/CradleAgentView' or its corresponding type declarations.
+src/pages/cradle-test.tsx(3,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/cradle-test.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/cradle-test.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dashboard.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dashboard.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dashboard.tsx(4,34): error TS2307: Cannot find module '@/components/scoring-dashboard' or its corresponding type declarations.
+src/pages/dashboard.tsx(18,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(3,22): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(4,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(28,33): error TS2307: Cannot find module '@/components/MetabolicWidget' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(29,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(30,56): error TS2307: Cannot find module '@/../../nervous/nerve/src/spine/mercenary/IdentityService' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(31,47): error TS2307: Cannot find module '@/components/ui/SentientAvatar' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(32,30): error TS2307: Cannot find module '@/data/agentLibrary' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(33,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(34,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(35,24): error TS2307: Cannot find module '@/components/ui/slider' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(36,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/dashboard/DreamNetLive.tsx(531,77): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/dashboard/DreamNetLive.tsx(540,71): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/pages/dashboard/harvest.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/defense-network.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/defense-network.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/defense-network.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/defense-network.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/defense-network.tsx(6,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/defense-network.tsx(21,33): error TS2307: Cannot find module '@/lib/mock-dreamnet' or its corresponding type declarations.
+src/pages/defense-network.tsx(250,81): error TS7006: Parameter 'threat' implicitly has an 'any' type.
+src/pages/defense-network.tsx(250,89): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/defense-network.tsx(300,48): error TS7006: Parameter 'pattern' implicitly has an 'any' type.
+src/pages/defense-network.tsx(300,57): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/dev-console.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/dream-detail.tsx(3,41): error TS2307: Cannot find module '@/lib/db' or its corresponding type declarations.
+src/pages/dream-detail.tsx(4,31): error TS2307: Cannot find module '@/components/DreamLineageModal' or its corresponding type declarations.
+src/pages/dream-detail.tsx(5,31): error TS2307: Cannot find module '@/components/DreamAgentSpawner' or its corresponding type declarations.
+src/pages/dream-detail.tsx(6,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/pages/dream-detail.tsx(92,66): error TS7006: Parameter 'newDream' implicitly has an 'any' type.
+src/pages/dream-detail.tsx(152,63): error TS7006: Parameter 'emotion' implicitly has an 'any' type.
+src/pages/dream-gallery.tsx(1,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dream-gallery.tsx(2,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/dream-gallery.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dream-gallery.tsx(5,27): error TS2307: Cannot find module '@/hooks/use-dream' or its corresponding type declarations.
+src/pages/dream-gallery.tsx(64,24): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/pages/dream-gallery.tsx(95,34): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/pages/dream-graveyard.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/dream-healer-panel.tsx(1,30): error TS2307: Cannot find module '@/components/DreamHealerPanel' or its corresponding type declarations.
+src/pages/dream-minting-demo.tsx(3,23): error TS2307: Cannot find module '@/components/DreamCard' or its corresponding type declarations.
+src/pages/dream-network-explorer.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(2,27): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(3,28): error TS2307: Cannot find module '@/components/DreamFilterBar' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(4,31): error TS2307: Cannot find module '@/components/DreamAgentSpawner' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(5,32): error TS2307: Cannot find module '@/components/DreamConstellation' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(6,38): error TS2307: Cannot find module '@/components/DreamConstellationFilter' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(7,41): error TS2307: Cannot find module '@/lib/db' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(8,23): error TS2307: Cannot find module '@/components/DreamNodeCard' or its corresponding type declarations.
+src/pages/dream-node-test.tsx(112,31): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/pages/dream-ops-launcher.tsx(1,30): error TS2307: Cannot find module '@/components/DreamOpsLauncher' or its corresponding type declarations.
+src/pages/dream-remixer.tsx(2,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/dream-remixer.tsx(3,26): error TS2307: Cannot find module '@/components/DreamRemixer' or its corresponding type declarations.
+src/pages/dream-remixer.tsx(4,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/dream-remixer.tsx(5,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dream-scoring-demo.tsx(3,26): error TS2307: Cannot find module '@/components/TokenBooster' or its corresponding type declarations.
+src/pages/dream-scoring-demo.tsx(4,23): error TS2307: Cannot find module '@/components/DreamCard' or its corresponding type declarations.
+src/pages/dream-scoring-demo.tsx(180,23): error TS7006: Parameter 'tokenSymbol' implicitly has an 'any' type.
+src/pages/dream-scoring-demo.tsx(180,36): error TS7006: Parameter 'amountInUnits' implicitly has an 'any' type.
+src/pages/dream-team-manager.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/dream-tree-demo.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dream-vault.tsx(4,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/dream-vault.tsx(5,24): error TS2307: Cannot find module '@/components/DreamVault' or its corresponding type declarations.
+src/pages/dream-vault.tsx(6,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/dream-vault.tsx(7,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dream-vault.tsx(8,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dream-vault.tsx(9,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/dream-viewer.tsx(3,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(6,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(8,34): error TS2307: Cannot find module '@/lib/mock-dreamnet' or its corresponding type declarations.
+src/pages/dreamkeeper-core.tsx(249,69): error TS7006: Parameter 'log' implicitly has an 'any' type.
+src/pages/dreamkeeper-core.tsx(249,74): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/dreamkeeper-core.tsx(260,43): error TS7006: Parameter 'note' implicitly has an 'any' type.
+src/pages/dreamkeeper-core.tsx(260,49): error TS7006: Parameter 'noteIndex' implicitly has an 'any' type.
+src/pages/dreams.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dreams.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dreams.tsx(5,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/dreams.tsx(6,79): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/pages/dreams.tsx(7,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/dreams.tsx(15,8): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/dreams.tsx(17,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/pages/dreams.tsx(18,41): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/dreams.tsx(19,32): error TS2307: Cannot find module '@/components/DatabaseStatus' or its corresponding type declarations.
+src/pages/dreams.tsx(20,54): error TS2307: Cannot find module '@/components/ErrorBoundary' or its corresponding type declarations.
+src/pages/dreams.tsx(21,28): error TS2307: Cannot find module '@/components/DreamCallOptIn' or its corresponding type declarations.
+src/pages/dreams.tsx(384,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/dreams.tsx(480,24): error TS2367: This comparison appears to be unintentional because the types '"pending" | "Draft" | "Live" | "Abandoned"' and '"approved"' have no overlap.
+src/pages/dreamscope-alive.tsx(2,39): error TS2307: Cannot find module '@/components/CompactMetricsOverlay' or its corresponding type declarations.
+src/pages/dreamscope-ui.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/dreamscope-ui.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/dreamscope-ui.tsx(4,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/dreamscope-ui.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/dreamscope-ui.tsx(18,82): error TS2307: Cannot find module '@/lib/mock-dreamnet' or its corresponding type declarations.
+src/pages/dreamscope-ui.tsx(194,42): error TS7006: Parameter 'log' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(194,47): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(230,37): error TS7006: Parameter 'task' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(230,43): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(271,39): error TS7006: Parameter 'upgrade' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(271,48): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(313,32): error TS7006: Parameter 'threat' implicitly has an 'any' type.
+src/pages/dreamscope-ui.tsx(313,40): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/pages/DreamTankPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/DreamTankPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/DreamTankPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/DreamTankPage.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/echo-agent.tsx(1,23): error TS2307: Cannot find module '@/components/EchoScore' or its corresponding type declarations.
+src/pages/echo-agent.tsx(2,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/echo-agent.tsx(4,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/edit-dream.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/edit-dream.tsx(5,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/edit-dream.tsx(6,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/edit-dream.tsx(7,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/edit-dream.tsx(8,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/edit-dream.tsx(9,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/pages/edit-dream.tsx(10,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/edit-dream.tsx(13,32): error TS2307: Cannot find module '@/components/SuggestTitleButton' or its corresponding type declarations.
+src/pages/edit-dream.tsx(234,42): error TS7006: Parameter 'title' implicitly has an 'any' type.
+src/pages/edit-dream.tsx(316,36): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/edit-dream.tsx(321,44): error TS7006: Parameter 'title' implicitly has an 'any' type.
+src/pages/edit-dream.tsx(334,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/edit-dream.tsx(344,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/edit-dream.tsx(344,90): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/pages/error-demo.tsx(1,27): error TS2307: Cannot find module '@/components/ErrorDemo' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(6,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(7,79): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(24,33): error TS2307: Cannot find module '@/lib/mock-dreamnet' or its corresponding type declarations.
+src/pages/evolution-engine.tsx(276,70): error TS7006: Parameter 'cycle' implicitly has an 'any' type.
+src/pages/evolution-engine.tsx(276,77): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/evolution-engine.tsx(340,25): error TS18046: 'insights' is of type 'unknown'.
+src/pages/evolution-engine.tsx(346,34): error TS18046: 'insights' is of type 'unknown'.
+src/pages/evolution-engine.tsx(350,32): error TS18046: 'insights' is of type 'unknown'.
+src/pages/evolution-engine.tsx(350,46): error TS7006: Parameter 'insight' implicitly has an 'any' type.
+src/pages/evolution-engine.tsx(350,55): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/pages/evolution-engine.tsx(425,39): error TS7006: Parameter 'value' implicitly has an 'any' type.
+src/pages/evolution-vault.tsx(1,28): error TS2307: Cannot find module '@/components/EvolutionVault' or its corresponding type declarations.
+src/pages/evolved-archive.tsx(3,23): error TS2307: Cannot find module '@/components/DreamCard' or its corresponding type declarations.
+src/pages/evolved-archive.tsx(4,35): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/evolved-archive.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/fuse.tsx(4,27): error TS2307: Cannot find module '@/components/TokenSelector' or its corresponding type declarations.
+src/pages/fuse.tsx(5,26): error TS2307: Cannot find module '@/components/TokenBooster' or its corresponding type declarations.
+src/pages/fuse.tsx(58,66): error TS2345: Argument of type 'Token | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/pages/fuse.tsx(193,36): error TS2339: Property 'fusedDream' does not exist on type 'never'.
+src/pages/fuse.tsx(194,32): error TS2339: Property 'fusedDream' does not exist on type 'never'.
+src/pages/fusion-chamber-demo.tsx(3,23): error TS2307: Cannot find module '@/components/DreamCard' or its corresponding type declarations.
+src/pages/galactic-dashboard.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/galactic-dashboard.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/galactic-dashboard.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/galactic-dashboard.tsx(6,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/galactic-dashboard.tsx(8,26): error TS2307: Cannot find module '@/components/ui/use-toast' or its corresponding type declarations.
+src/pages/god-terminal.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/GodView.tsx(35,36): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/harvest-dashboard.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/health-dashboard.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/health-dashboard.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/health-dashboard.tsx(9,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/heartbeat-dashboard.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/heartbeat-dashboard.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/heartbeat-dashboard.tsx(9,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/heartbeat-dashboard.tsx(10,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/heartbeat-dashboard.tsx(11,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/Home.tsx(3,27): error TS2307: Cannot find module '@/components/DreamCube' or its corresponding type declarations.
+src/pages/Home.tsx(19,56): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/HomePage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/HomePage.tsx(3,33): error TS2307: Cannot find module '@/components/hero/SovereigntyHero' or its corresponding type declarations.
+src/pages/hub/agents.tsx(1,28): error TS2307: Cannot find module '@/mocks/agents' or its corresponding type declarations.
+src/pages/hub/agents.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/agents.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/agents.tsx(30,26): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/pages/hub/agents.tsx(53,35): error TS7006: Parameter 'scope' implicitly has an 'any' type.
+src/pages/hub/apps.tsx(3,63): error TS2307: Cannot find module '@/api/baseMiniApps' or its corresponding type declarations.
+src/pages/hub/apps.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/apps.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/apps.tsx(6,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/hub/apps.tsx(16,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/apps.tsx(50,15): error TS18046: 'info' is of type 'unknown'.
+src/pages/hub/apps.tsx(51,25): error TS18046: 'info' is of type 'unknown'.
+src/pages/hub/apps.tsx(52,31): error TS18046: 'info' is of type 'unknown'.
+src/pages/hub/apps.tsx(120,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(8,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(9,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(10,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(11,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(12,79): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(14,79): error TS2307: Cannot find module '@/api/cardForge' or its corresponding type declarations.
+src/pages/hub/card-forge.tsx(103,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(114,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(125,30): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(134,30): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(148,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(157,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(170,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(180,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(190,34): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/card-forge.tsx(204,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/clouds.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/clouds.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/clouds.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/clouds.tsx(7,47): error TS2307: Cannot find module '@/api/clouds' or its corresponding type declarations.
+src/pages/hub/clouds.tsx(8,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/clouds.tsx(39,21): error TS18046: 'clouds' is of type 'unknown'.
+src/pages/hub/clouds.tsx(46,11): error TS18046: 'clouds' is of type 'unknown'.
+src/pages/hub/clouds.tsx(63,12): error TS18046: 'clouds' is of type 'unknown'.
+src/pages/hub/clouds.tsx(92,38): error TS7006: Parameter 'chain' implicitly has an 'any' type.
+src/pages/hub/deployment.tsx(8,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/deployment.tsx(9,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/deployment.tsx(10,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/deployment.tsx(11,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/hub/deployment.tsx(13,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/deployment.tsx(15,30): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/hub/grid.tsx(3,37): error TS2307: Cannot find module '@/api/dreams' or its corresponding type declarations.
+src/pages/hub/grid.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/grid.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/grid.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/grid.tsx(7,85): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/pages/hub/grid.tsx(8,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/hub/grid.tsx(10,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/grid.tsx(34,26): error TS18046: 'dreams' is of type 'unknown'.
+src/pages/hub/grid.tsx(34,41): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/pages/hub/grid.tsx(102,21): error TS18046: 'dreams' is of type 'unknown'.
+src/pages/hub/grid.tsx(126,32): error TS7006: Parameter 'dream' implicitly has an 'any' type.
+src/pages/hub/grid.tsx(278,59): error TS7006: Parameter 'lineage' implicitly has an 'any' type.
+src/pages/hub/grid.tsx(278,68): error TS7006: Parameter 'idx' implicitly has an 'any' type.
+src/pages/hub/HubRoutes.tsx(13,30): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/hub/index.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/index.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/index.tsx(6,33): error TS2307: Cannot find module '@/api/bridge' or its corresponding type declarations.
+src/pages/hub/index.tsx(24,9): error TS2322: Type '{} | { dreams: number; nodes: number; agents: number; clouds: number; wallets: number; apps: number; }' is not assignable to type 'SystemStats'.
+  Type '{}' is missing the following properties from type 'SystemStats': dreams, nodes, agents, clouds, and 2 more.
+src/pages/hub/ops.tsx(3,32): error TS2307: Cannot find module '@/api/bridge' or its corresponding type declarations.
+src/pages/hub/ops.tsx(5,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/ops.tsx(6,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/ops.tsx(7,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/ops.tsx(8,85): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/pages/hub/ops.tsx(9,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/hub/ops.tsx(10,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/hub/ops.tsx(23,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/ops.tsx(41,33): error TS2339: Property 'filter' does not exist on type '{}'.
+src/pages/hub/ops.tsx(41,41): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/pages/hub/ops.tsx(71,50): error TS2339: Property 'flatMap' does not exist on type '{}'.
+src/pages/hub/ops.tsx(71,58): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/hub/ops.tsx(97,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/ops.tsx(140,27): error TS2322: Type 'unknown' is not assignable to type 'Key | null | undefined'.
+src/pages/hub/ops.tsx(140,39): error TS2322: Type 'unknown' is not assignable to type 'string | number | readonly string[] | undefined'.
+src/pages/hub/ops.tsx(141,21): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/pages/hub/ops.tsx(152,30): error TS7006: Parameter 'agent' implicitly has an 'any' type.
+src/pages/hub/ops.tsx(183,35): error TS7006: Parameter 'scope' implicitly has an 'any' type.
+src/pages/hub/wallets.tsx(2,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/wallets.tsx(3,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/wallets.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/wallets.tsx(6,42): error TS2307: Cannot find module '@/api/wallets' or its corresponding type declarations.
+src/pages/hub/wallets.tsx(7,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/wallets.tsx(17,33): error TS2339: Property 'totalWallets' does not exist on type '{}'.
+src/pages/hub/wallets.tsx(18,31): error TS2339: Property 'totalValue' does not exist on type '{}'.
+src/pages/hub/wallets.tsx(19,32): error TS2339: Property 'lastUpdated' does not exist on type '{}'.
+src/pages/hub/wallets.tsx(20,24): error TS2339: Property 'lastUpdated' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(5,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(6,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(7,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(8,23): error TS2307: Cannot find module '@/components/ui/label' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(17,64): error TS2307: Cannot find module '@/api/websiteDesigner' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(18,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/pages/hub/website-builder.tsx(61,33): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(63,67): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(81,7): error TS2322: Type 'unknown' is not assignable to type 'ReactNode'.
+src/pages/hub/website-builder.tsx(96,26): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/website-builder.tsx(109,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/website-builder.tsx(120,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/website-builder.tsx(131,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/website-builder.tsx(142,28): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/hub/website-builder.tsx(172,33): error TS2339: Property 'success' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(178,42): error TS2339: Property 'success' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(188,42): error TS2339: Property 'success' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(190,45): error TS2339: Property 'error' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(193,38): error TS2339: Property 'success' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(193,71): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(202,34): error TS2339: Property 'success' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(202,67): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(216,88): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(235,88): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(254,87): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/hub/website-builder.tsx(269,44): error TS2339: Property 'code' does not exist on type '{}'.
+src/pages/index.tsx(1,30): error TS2307: Cannot find module '@/components/DreamOpsLauncher' or its corresponding type declarations.
+src/pages/landing-new.tsx(2,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/landing-new.tsx(3,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/landing-new.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/landing.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/leaderboard.tsx(1,30): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../components/DreamLeaderboard.js'?
+src/pages/leaderboard.tsx(2,23): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean '../components/DreamCard.js'?
+src/pages/lifecycle-demo.tsx(2,38): error TS2307: Cannot find module '@/components/LifecycleDemo' or its corresponding type declarations.
+src/pages/lifecycle-demo.tsx(3,30): error TS2307: Cannot find module '@/components/WalletStatus' or its corresponding type declarations.
+src/pages/load-saved-dreams.tsx(1,29): error TS2307: Cannot find module '@/components/LoadSavedDreams' or its corresponding type declarations.
+src/pages/marketing/DreamNetInk.tsx(3,31): error TS2307: Cannot find module '@/components/hero/SovereignHero' or its corresponding type declarations.
+src/pages/marketing/DreamNetInk.tsx(4,26): error TS2307: Cannot find module '@/components/RoleQuiz' or its corresponding type declarations.
+src/pages/marketing/DreamNetInk.tsx(5,33): error TS2307: Cannot find module '@/components/marketing/IdentityBinding' or its corresponding type declarations.
+src/pages/marketing/DreamNetInk.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/marketing/DreamNetInk.tsx(9,29): error TS2307: Cannot find module '@/components/WalletConnector' or its corresponding type declarations.
+src/pages/MiniAppLoader.tsx(3,49): error TS2307: Cannot find module '@/miniapps/registry' or its corresponding type declarations.
+src/pages/MiniAppLoader.tsx(4,35): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/MiniAppLoader.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/miniapps/[id].tsx(8,49): error TS2307: Cannot find module '@/miniapps/registry' or its corresponding type declarations.
+src/pages/miniapps/[id].tsx(9,25): error TS2307: Cannot find module '@/providers/BaseProvider' or its corresponding type declarations.
+src/pages/miniapps/[id].tsx(10,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/miniapps/[id].tsx(11,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/miniapps/[id].tsx(12,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/miniapps/[id].tsx(67,35): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/miniapps/index.tsx(8,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/miniapps/index.tsx(9,50): error TS2307: Cannot find module '@/miniapps/registry' or its corresponding type declarations.
+src/pages/miniapps/index.tsx(10,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/miniapps/index.tsx(39,48): error TS2307: Cannot find module '@/miniapps/registry' or its corresponding type declarations.
+src/pages/miniapps/ohara/[id].tsx(4,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/miniapps/ohara/[id].tsx(5,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/miniapps/ohara/[id].tsx(6,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/miniapps/ohara/[id].tsx(32,33): error TS2304: Cannot find name 'getMiniAppComponent'.
+src/pages/miniapps/ohara/[id].tsx(33,31): error TS2304: Cannot find name 'getMiniApp'.
+src/pages/miniapps/ohara/[id].tsx(77,25): error TS2304: Cannot find name 'app'.
+src/pages/miniapps/ohara/[id].tsx(77,34): error TS2304: Cannot find name 'app'.
+src/pages/miniapps/ohara/[id].tsx(148,56): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/mission-center.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/mission-center.tsx(4,21): error TS2307: Cannot find module '@/components/XPMeter' or its corresponding type declarations.
+src/pages/mission-center.tsx(5,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/pages/mission-center.tsx(6,47): error TS2307: Cannot find module '@/components/ui/SentientAvatar' or its corresponding type declarations.
+src/pages/mission-center.tsx(7,29): error TS2307: Cannot find module '@/contexts/SettingsContext' or its corresponding type declarations.
+src/pages/mission-center.tsx(88,16): error TS2339: Property 'xpUpdate' does not exist on type 'MissionDeployment'.
+src/pages/mission-center.tsx(91,51): error TS2339: Property 'xpUpdate' does not exist on type 'MissionDeployment'.
+src/pages/MultiPaneDash.tsx(17,47): error TS2304: Cannot find name 'Globe'.
+src/pages/node-grid-demo.tsx(2,22): error TS2307: Cannot find module '@/components/NodeGrid' or its corresponding type declarations.
+src/pages/node-web-demo.tsx(1,21): error TS2307: Cannot find module '@/components/NodeWeb' or its corresponding type declarations.
+src/pages/node-web-demo.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/not-found.tsx(1,35): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/OmniDashboard.tsx(4,28): error TS2307: Cannot find module '@/components/dashboard/HeatMapper' or its corresponding type declarations.
+src/pages/OmniDashboard.tsx(5,34): error TS2307: Cannot find module '@/components/dashboard/SovereignGallery' or its corresponding type declarations.
+src/pages/OmniDashboard.tsx(28,47): error TS2307: Cannot find module '@/components/ui/SentientAvatar' or its corresponding type declarations.
+src/pages/OsPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/OsPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/OsPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/Portal.tsx(6,37): error TS2307: Cannot find module '@/components/DreamCube' or its corresponding type declarations.
+src/pages/Portal.tsx(24,39): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/Portal.tsx(221,52): error TS2322: Type '{ posture: "idle" | "attack" | "resonate"; metabolism: number; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'posture' does not exist on type 'IntrinsicAttributes'.
+src/pages/POWKDashboard.tsx(15,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/POWKDashboard.tsx(16,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/POWKDashboard.tsx(17,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/remix-gallery.tsx(1,26): error TS2307: Cannot find module '@/components/RemixGallery' or its corresponding type declarations.
+src/pages/remix-submission-tracker.tsx(1,36): error TS2307: Cannot find module '@/components/RemixSubmissionTracker' or its corresponding type declarations.
+src/pages/remix-submission.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/shared-dream.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/shared-dream.tsx(5,27): error TS2307: Cannot find module '@/components/LineageThread' or its corresponding type declarations.
+src/pages/shared-dream.tsx(6,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/shared-dream.tsx(7,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/shared-dream.tsx(8,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/shared-dream.tsx(9,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/ShopPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/ShopPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/ShopPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/ShopPage.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/sms-demo.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/sms-demo.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/sms-demo.tsx(4,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/sms-demo.tsx(91,26): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/sms-demo.tsx(97,26): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/sms-demo.tsx(103,26): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/pages/solana-wallet-demo.tsx(2,32): error TS2307: Cannot find module '@/components/SolanaWalletButton' or its corresponding type declarations.
+src/pages/solana-wallet-demo.tsx(3,26): error TS2307: Cannot find module '@/components/WalletHeader' or its corresponding type declarations.
+src/pages/solana-wallet-demo.tsx(5,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/SovereignFlagship.tsx(3,31): error TS2307: Cannot find module '@/components/hero/SovereignHero' or its corresponding type declarations.
+src/pages/SovereignFlagship.tsx(4,26): error TS2307: Cannot find module '@/components/RoleQuiz' or its corresponding type declarations.
+src/pages/SovereignFlagship.tsx(5,33): error TS2307: Cannot find module '@/components/marketing/IdentityBinding' or its corresponding type declarations.
+src/pages/SovereignFlagship.tsx(6,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/SprawlerDashboard.tsx(5,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/submit-dream.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/submit-dream.tsx(6,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/submit-dream.tsx(7,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/pages/submit-dream.tsx(8,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/pages/submit-dream.tsx(9,97): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+src/pages/submit-dream.tsx(10,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/pages/submit-dream.tsx(149,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+src/pages/submit-dream.tsx(169,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+src/pages/submit-dream.tsx(189,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+src/pages/submit-dream.tsx(210,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+src/pages/submit-dream.tsx(230,30): error TS7031: Binding element 'field' implicitly has an 'any' type.
+src/pages/swarm-dashboard.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/control.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/control.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/system/control.tsx(9,79): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/system/funding.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/funding.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/system/funding.tsx(9,79): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/system/orca.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/orca.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/system/shields.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/shields.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/system/shields.tsx(9,79): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/system/spider.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/spider.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/system/spider.tsx(9,79): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/system/state.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/state.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/system/state.tsx(9,79): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/pages/system/whale.tsx(7,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/system/whale.tsx(8,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/SystemFundingPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/SystemFundingPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/SystemFundingPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/SystemFundingPage.tsx(5,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/SystemFundingPage.tsx(94,34): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/SystemFundingPage.tsx(227,23): error TS2339: Property 'id' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(228,23): error TS2339: Property 'name' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(229,23): error TS2339: Property 'type' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(230,38): error TS2339: Property 'id' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(230,100): error TS2339: Property 'stage' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(231,26): error TS2339: Property 'stage' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(233,23): error TS2339: Property 'isHot' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(235,35): error TS2339: Property 'id' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(241,39): error TS2339: Property 'id' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(243,23): error TS2339: Property 'priorityScore' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(244,23): error TS2339: Property 'email' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(275,23): error TS2339: Property 'id' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(276,23): error TS2339: Property 'leadId' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(277,23): error TS2339: Property 'toEmail' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(278,23): error TS2339: Property 'subject' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(278,47): error TS2339: Property 'subject' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(278,84): error TS2339: Property 'subject' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(279,35): error TS2339: Property 'id' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(279,90): error TS2339: Property 'status' does not exist on type 'never'.
+src/pages/SystemFundingPage.tsx(280,26): error TS2339: Property 'status' does not exist on type 'never'.
+src/pages/SystemOsStatusPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/SystemOsStatusPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/SystemOsStatusPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/SystemOsStatusPage.tsx(5,26): error TS2307: Cannot find module '@/components/ui/progress' or its corresponding type declarations.
+src/pages/SystemOsStatusPage.tsx(66,36): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/SystemRuntimePage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/SystemRuntimePage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/SystemRuntimePage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/team-management.tsx(3,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/token-demo.tsx(3,27): error TS2307: Cannot find module '@/components/TokenSelector' or its corresponding type declarations.
+src/pages/token-minting-demo.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/token-minting-demo.tsx(4,30): error TS2307: Cannot find module '@/components/DreamTokenMinter' or its corresponding type declarations.
+src/pages/token-minting-demo.tsx(5,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/token-minting-demo.tsx(6,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/token-minting-demo.tsx(7,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/token-minting-demo.tsx(8,24): error TS2307: Cannot find module '@/components/ui/slider' or its corresponding type declarations.
+src/pages/VaultPage.tsx(2,28): error TS2307: Cannot find module '@/components/layout/MainLayout' or its corresponding type declarations.
+src/pages/VaultPage.tsx(3,34): error TS2307: Cannot find module '@/contexts/DreamNetThemeContext' or its corresponding type declarations.
+src/pages/VaultPage.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/verify/index.tsx(50,25): error TS2304: Cannot find name 'result'.
+src/pages/verify/index.tsx(89,17): error TS2304: Cannot find name 'setResult'.
+src/pages/verify/index.tsx(170,69): error TS2304: Cannot find name 'result'.
+src/pages/verify/index.tsx(193,34): error TS2304: Cannot find name 'result'.
+src/pages/wallet-admin.tsx(2,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/wallet-admin.tsx(3,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/wallet-admin.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/wallet-admin.tsx(5,27): error TS2307: Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+src/pages/wallet-admin.tsx(7,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
+src/pages/wallet-agent-integration.tsx(3,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/wallet-agent-integration.tsx(4,25): error TS2307: Cannot find module '@/components/AgentStatus' or its corresponding type declarations.
+src/pages/wallet-agent-integration.tsx(5,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/wallet-agent-integration.tsx(6,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/wallet-agent-integration.tsx(7,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/wallet-demo.tsx(2,25): error TS2307: Cannot find module '@/contexts/auth-context' or its corresponding type declarations.
+src/pages/wallet-demo.tsx(3,30): error TS2307: Cannot find module '@/components/WalletStatus' or its corresponding type declarations.
+src/pages/wallet-demo.tsx(4,75): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/wallet-demo.tsx(5,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/wallet-demo.tsx(6,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/wallet-demo.tsx(7,28): error TS2307: Cannot find module '@/lib/queryClient' or its corresponding type declarations.
+src/pages/wallet-integration.tsx(1,24): error TS2307: Cannot find module '@/components/WalletDemo' or its corresponding type declarations.
+src/pages/wallet-integration.tsx(2,27): error TS2307: Cannot find module '@/components/WalletScoring' or its corresponding type declarations.
+src/pages/wallet-integration.tsx(3,18): error TS2307: Cannot find module '@/components/Head' or its corresponding type declarations.
+src/pages/wallet-integration.tsx(4,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.
+src/pages/wallets.tsx(2,58): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/pages/wallets.tsx(3,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/pages/wallets.tsx(4,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/pages/wallets.tsx(12,8): error TS2307: Cannot find module '@/components/ui/table' or its corresponding type declarations.
+src/providers/BaseProvider.tsx(4,10): error TS2305: Module '"@wagmi/core"' has no exported member 'getEip1193Provider'.
+src/providers/OnchainAuthProvider.tsx(4,10): error TS2305: Module '"@coinbase/onchainkit"' has no exported member 'OnchainKitProvider'.
+src/providers/OnchainAuthProvider.tsx(7,29): error TS2307: Cannot find module '@/lib/wagmi' or its corresponding type declarations.
+src/providers/OnchainAuthProvider.tsx(20,32): error TS2339: Property 'env' does not exist on type 'ImportMeta'.

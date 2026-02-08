@@ -1,0 +1,31 @@
+{
+  "miniapp": {
+    "version": "1",
+    "name": "TimeLock Playground",
+    "iconUrl": "https://usdozf7pplhxfvrl.public.blob.vercel-storage.com/thumbnail_af1c102b-0416-46a0-b53d-742987668e12-pacNNho0N3mEX4n7r0LhIiuRx6TJZG",
+    "homeUrl": "https://smaller-baseball-925.app.ohara.ai",
+    "imageUrl": "https://usdozf7pplhxfvrl.public.blob.vercel-storage.com/thumbnail_af1c102b-0416-46a0-b53d-742987668e12-pacNNho0N3mEX4n7r0LhIiuRx6TJZG",
+    "buttonTitle": "Open with Ohara",
+    "splashImageUrl": "https://usdozf7pplhxfvrl.public.blob.vercel-storage.com/farcaster/splash_images/splash_image1.svg",
+    "splashBackgroundColor": "#ffffff",
+    "tags": [
+      "ohara",
+      "mini-app",
+      "base",
+      "farcaster"
+    ],
+    "primaryCategory": "entertainment",
+    "ogTitle": "TimeLock Playground",
+    "ogImageUrl": "https://usdozf7pplhxfvrl.public.blob.vercel-storage.com/thumbnail_af1c102b-0416-46a0-b53d-742987668e12-pacNNho0N3mEX4n7r0LhIiuRx6TJZG"
+  },
+  "baseBuilder": {
+    "allowedAddresses": [
+      ""
+    ]
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjE0NzcxNDIsInR5cGUiOiJhdXRoIiwia2V5IjoiMHg3RDc5RTkwMjQ4MjQ2OWRBNjQ5NzdkMkIwOTc3MTIwQzc3MDI5NTkzIn0",
+    "payload": "eyJkb21haW4iOiJzbWFsbGVyLWJhc2ViYWxsLTkyNS5hcHAub2hhcmEuYWkifQ",
+    "signature": "3Nf76KbTiJp79/1H2gaVir/EzPtySFz//Kpja6RJKGx8u2CLGy4ypQZPs0uwHV5bblMv607WPKgKgebqVUFFjRw="
+  }
+}

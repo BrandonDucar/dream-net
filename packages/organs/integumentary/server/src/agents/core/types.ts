@@ -34,6 +34,12 @@ export interface Agent<TInput = unknown, TOutput = unknown> {
     droneId?: string;
     droneStatus?: 'docked' | 'patrol' | 'combat' | 'recharging';
 
+    // Phase XLIX: Reputation & Institution
+    academicRank?: 'PROBATION' | 'FRESHMAN' | 'SOPHOMORE' | 'SENIOR' | 'ALUMNI' | 'DEAN' | 'HEADMASTER';
+    institutionalRole?: string;
+    pheromoneScore?: number;
+    pheromoneTier?: 'ANT' | 'SWARM' | 'COLONY' | 'QUEEN';
+
     // Main execution function
     run(input: TInput, ctx: AgentInvocationContext): Promise<TOutput>;
 

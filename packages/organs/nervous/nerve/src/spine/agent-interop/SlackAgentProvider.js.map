@@ -1,0 +1,1 @@
+{"version":3,"file":"SlackAgentProvider.js","sourceRoot":"","sources":["SlackAgentProvider.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,kBAAkB,GAAuB;IAClD,IAAI,EAAE,aAAa;IACnB,OAAO,EAAE,OAAO;IAChB,YAAY,EAAE,CAAC,gBAAgB,EAAE,mBAAmB,EAAE,kBAAkB,CAAC;CAC5E,CAAC"}
