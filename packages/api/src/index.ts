@@ -7,6 +7,7 @@ import credentialsRoutes from './routes/credentials';
 import marketplaceRoutes from './routes/marketplace'; // New import
 import userRoutes from './routes/user';
 import authMiddleware from './middleware/auth';
+import { clawedetteService } from './services/ClawedetteService'; // Add Clawedette
 
 const app = express();
 const port = process.env.PORT || 3000; // Renamed from PORT to port
@@ -41,6 +42,14 @@ app.use((err: any, req: any, res: any, next: any) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`DreamNet API running on port ${PORT}`);
+
+    // Initialize Clawedette 🦞✨
+    try {
+        await clawedetteService.startWatchdog();
+        console.log('🦞 [Clawedette] Cognitive Core Pulse - Watchdog Active.');
+    } catch (e) {
+        console.error('🦞 [Clawedette] Watchdog Failure:', e);
+    }
 });
