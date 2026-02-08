@@ -25,7 +25,7 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:3000
 
-  moltbot:
+  clawedette:
     build: ./packages/organs/voice
     environment:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
