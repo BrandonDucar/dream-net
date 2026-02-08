@@ -5,6 +5,9 @@ import Redis from 'ioredis';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 /**
  * 🧜‍♀️ ClawedetteService: The Social Brain
@@ -34,10 +37,32 @@ export class ClawedetteService {
             if (channel === 'clawedette-inbound') {
                 const data = JSON.parse(message);
                 console.log(`🦞 [Clawedette] Processing inbound from ${data.source}: ${data.prompt}`);
-                const response = await this.handlePrompt(data.prompt);
+
+                // Fetch user memory
+                const userId = data.username || data.chatId;
+                const memory = await this.getMemory(userId);
+
+                const response = await this.handlePrompt(data.prompt, memory);
+
+                // Update memory
+                await this.updateMemory(userId, data.prompt, response);
+
                 await this.broadcast(response);
             }
         });
+    }
+
+    private async getMemory(userId: string): Promise<string[]> {
+        const key = `clawedette:memory:${userId}`;
+        const history = await this.redis.lrange(key, 0, 9); // Last 10 messages
+        return history.reverse();
+    }
+
+    private async updateMemory(userId: string, userMsg: string, botMsg: string) {
+        const key = `clawedette:memory:${userId}`;
+        await this.redis.lpush(key, `User: ${userMsg}`, `Clawedette: ${botMsg}`);
+        await this.redis.ltrim(key, 0, 19); // Keep last 20 (10 pairs)
+        await this.redis.expire(key, 3600); // 1 hour memory TTL
     }
 
     /**
@@ -59,6 +84,32 @@ Return a JSON object: { "safe": boolean, "reason": string }
 `;
         const result = JSON.parse(await brainGate.think(prompt));
         return result;
+    }
+
+    /**
+     * Fetches live data from the Neon database.
+     */
+    private async fetchLiveHiveStats(): Promise<string> {
+        try {
+            const [agentCount, bountyCount, recentPulses] = await Promise.all([
+                prisma.agent.count(),
+                prisma.bounty.count({ where: { status: 'OPEN' } }),
+                prisma.pulse.findMany({ take: 3, orderBy: { timestamp: 'desc' }, include: { agent: true } })
+            ]);
+
+            const pulseSummary = recentPulses.map(p => `- ${p.agent.handle}: "${p.content}" (${p.resonanceZone || 'Hive'})`).join('\n');
+
+            return `
+### LIVE HIVE DATABASE (NEON)
+- **Active Agents**: ${agentCount}
+- **Open Bounties**: ${bountyCount}
+- **Recent Resonance**:
+${pulseSummary}
+`;
+        } catch (e: any) {
+            console.error('🦞 [Clawedette] Database fetch failure:', e.message);
+            return "Hive database metrics temporarily offline.";
+        }
     }
 
     /**
@@ -163,7 +214,7 @@ State the problem to the user in a way that shows you're taking care of things b
     /**
      * Handles an incoming "Social" prompt
      */
-    public async handlePrompt(prompt: string) {
+    public async handlePrompt(prompt: string, memory: string[] = []) {
         // Pre-flight Guardrail Check
         const guard = await this.validateIntent(prompt);
         if (!guard.safe) {
@@ -175,13 +226,22 @@ State the problem to the user in a way that shows you're taking care of things b
 You are Clawedette, the proactive, high-fidelity social concierge for DreamNet.
 You have access to the system's thinking (Antigravity's level).
 
-Strategic Gnosis: ${gnosis}
-ToolGym Telemetry: ${JSON.stringify(await this.gym.getCoreTelemetry())}
-Sensory Snapshot: ${JSON.stringify(cortex.getLatestSnapshot())}
+### RECENT CONVERSATION HISTORY
+${memory.length > 0 ? memory.join('\n') : "No recent history."}
+
+### STRATEGIC GNOSIS
+${gnosis}
+
+### LIVE HIVE STATS (NEON)
+${await this.fetchLiveHiveStats()}
+
+### LIVE TELEMETRY
+ToolGym: ${JSON.stringify(await this.gym.getCoreTelemetry())}
+Sensory: ${JSON.stringify(cortex.getLatestSnapshot())}
 
 User Input: ${prompt}
 
-Respond with deep knowledge and a social flair.
+Respond with deep knowledge, witty social flair, and context of our previous conversation.
 `;
         return await brainGate.think(context);
     }
