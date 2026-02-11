@@ -1,0 +1,24 @@
+{
+  "name": "@dreamnet/clawedette-voice",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Clawedette Voice - Telegram uplink and command handling",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "telegraf": "^4.16.0",
+    "ioredis": "^5.3.2",
+    "dotenv": "^16.4.5",
+    "axios": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/node-telegram-bot-api": "^0.64.7",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

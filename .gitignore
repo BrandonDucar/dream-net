@@ -16,6 +16,7 @@ vite.config.ts.*
 *.tar.gz
 .vercel
 .env
+.env.*
 .env.local
 .env.*.local
 cache
