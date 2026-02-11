@@ -24,11 +24,15 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Sovereign-Token, Authorization');
   if (req.method === 'OPTIONS') return res.status(204).end();
 
-  // Response time tracking
+  // Response time tracking — set header before send, not after
   const start = Date.now();
-  res.on('finish', () => {
-    res.setHeader('X-Response-Time', `${Date.now() - start}ms`);
-  });
+  const origEnd = res.end.bind(res);
+  res.end = function (...args: any[]) {
+    if (!res.headersSent) {
+      res.setHeader('X-Response-Time', `${Date.now() - start}ms`);
+    }
+    return origEnd(...args);
+  };
 
   // Cache headers for GET endpoints (spike/roving data)
   if (req.method === 'GET' && req.path.startsWith('/api/')) {
@@ -42,6 +46,32 @@ app.use((req, res, next) => {
 app.use(sovereignOverride.middleware());
 
 const clawedette = new ClawedetteService();
+
+// 🛡️ External agent heartbeat — Sable and LMC phone home here
+app.post('/sovereign/heartbeat', async (req, res) => {
+  const { agentId, metadata } = req.body;
+  if (!agentId) return res.status(400).json({ error: 'agentId required' });
+  try {
+    await sovereignOverride.registerExternalHeartbeat(agentId, metadata);
+    res.json({ status: 'ok', agentId, timestamp: Date.now() });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 🛡️ Fleet status — see all agents' heartbeat status
+app.get('/sovereign/fleet', async (req, res) => {
+  const token = req.headers['x-sovereign-token'] as string;
+  if (!token || !sovereignOverride.validateToken(token)) {
+    return res.status(403).json({ error: 'Sovereign access denied' });
+  }
+  try {
+    const fleet = await sovereignOverride.getFleetStatus();
+    res.json({ fleet, timestamp: Date.now() });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Health check
 app.get('/health', (req, res) => {
