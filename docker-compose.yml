@@ -111,6 +111,7 @@ services:
     volumes:
       - moltbot_data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./scripts/sovereign-heartbeat-sidecar.js:/app/sovereign-heartbeat-sidecar.js:ro
     environment:
       - CLAWDBOT_GATEWAY_TOKEN=${MOLTBOT_TOKEN:-dreamnet_secret_cmd}
       - CLAWDBOT_GATEWAY_PORT=11234
@@ -123,7 +124,12 @@ services:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CLAWDBOT_STATE_DIR=/app/data
-    command: ["node", "dist/index.js", "gateway", "--bind", "lan", "--port", "11234", "--allow-unconfigured"]
+      - REDIS_URL=redis://nerve:6379
+      - SOVEREIGN_OVERRIDE_TOKEN=${SOVEREIGN_OVERRIDE_TOKEN:-adb863f74f62c0185ed9816786f73fd27d4d9b612cd089cc5d05236d8c1b132b}
+      - OWNER_TELEGRAM_IDS=6059583422
+      - SOVEREIGN_AGENT_ID=sable
+      - SOVEREIGN_HEARTBEAT_URL=http://clawedette-api:3100/sovereign/heartbeat
+    command: ["sh", "-c", "node /app/sovereign-heartbeat-sidecar.js & node dist/index.js gateway --bind lan --port 11234 --allow-unconfigured"]
     networks:
       - dream_network
 

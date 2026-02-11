@@ -144,7 +144,8 @@ export class SovereignOverride {
           uptime: Date.now() - this.bootTime,
           heartbeatActive: this.heartbeatTimer !== null,
           ownerIds: this.ownerIds,
-          tokenConfigured: !!this.token
+          tokenConfigured: !!this.token,
+          fleet: await this.getFleetStatus()
         };
 
       case 'dump-state':
@@ -224,6 +225,35 @@ export class SovereignOverride {
     const key = HEARTBEAT_KEY_PREFIX + agentId;
     const val = await this.redis.get(key);
     return val !== null;
+  }
+
+  /**
+   * Get status of all agents in the fleet
+   */
+  public async getFleetStatus(): Promise<Record<string, any>> {
+    const agents = ['clawedette', 'sable', 'lil-miss-claw'];
+    const fleet: Record<string, any> = {};
+    for (const id of agents) {
+      const key = HEARTBEAT_KEY_PREFIX + id;
+      const val = await this.redis.get(key).catch(() => null);
+      fleet[id] = val ? JSON.parse(val) : { agentId: id, alive: false, status: 'no-heartbeat' };
+    }
+    return fleet;
+  }
+
+  /**
+   * Register an external agent's heartbeat (called via API)
+   */
+  public async registerExternalHeartbeat(agentId: string, metadata?: any) {
+    const key = HEARTBEAT_KEY_PREFIX + agentId;
+    await this.redis.set(key, JSON.stringify({
+      agentId,
+      alive: true,
+      timestamp: Date.now(),
+      paused: false,
+      ...metadata
+    }), 'EX', Math.ceil(this.heartbeatTimeoutMs / 1000));
+    await this.audit('HEARTBEAT', agentId, `External heartbeat from ${agentId}`);
   }
 
   // ─── PILLAR 4: COMMAND HIERARCHY ────────────────────────────────────────
@@ -309,9 +339,19 @@ export class SovereignOverride {
 
       // Sovereign override routes
       if (req.path.startsWith('/sovereign/')) {
+        // Allow heartbeat POST without token (external agents phone home)
+        if (req.path === '/sovereign/heartbeat' && req.method === 'POST') {
+          return next();
+        }
+
         if (!isSovereign) {
           await this.audit('UNAUTHORIZED_SOVEREIGN_ATTEMPT', req.ip || 'unknown', req.path);
           return res.status(403).json({ error: 'Sovereign access denied' });
+        }
+
+        // Fleet status is handled by its own route handler
+        if (req.path === '/sovereign/fleet') {
+          return next();
         }
 
         const command = req.path.replace('/sovereign/', '') as SovereignCommand['command'];
