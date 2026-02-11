@@ -1,0 +1,22 @@
+name: Deploy dreamnet.ink
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'packages/ink/**', 'packages/shared/**' ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npx turbo build --filter=ink
+      - name: Deploy
+        run: echo "Deploying to Vercel/Fly.io..."

@@ -1,0 +1,54 @@
+﻿.                                        | ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/ink@1.0.0 build C:\dev\dream-net\packages\ink
+> next build
+
+- info Linting and checking validity of types...
+node.exe : Failed to compile.
+At C:\Users\brand\AppData\Roaming\npm\pnpm
+.ps1:24 char:5
++     & "node$exe"  
+"$basedir/node_modules/pnpm/bin/pnpm.cjs" 
+$args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (Failed to compile.:String) [], Re  
+  moteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+
+../../node_modules/ox/core/Hex.ts:239:29
+Type error: BigInt literals are not 
+available when targeting lower than 
+ES2020.
+
+[0m [90m 237 | [39m  [36mlet[39m 
+maxValue[33m:[39m bigint [33m|[39m 
+number [33m|[39m undefined[0m
+[0m [90m 238 | [39m  [36mif[39m 
+(size) {[0m
+[0m[31m[1m>[22m[39m[90m 239 | [39m 
+   [36mif[39m (signed) maxValue 
+[33m=[39m ([35m1[39mn [33m<<[39m 
+([33mBigInt[39m(size) [33m*[39m 
+[35m8[39mn [33m-[39m [35m1[39mn)) 
+[33m-[39m [35m1[39mn[0m
+[0m [90m     | [39m                    
+        [31m[1m^[22m[39m[0m
+[0m [90m 240 | [39m    [36melse[39m 
+maxValue [33m=[39m [35m2[39mn 
+[33m**[39m ([33mBigInt[39m(size) 
+[33m*[39m [35m8[39mn) [33m-[39m 
+[35m1[39mn[0m
+[0m [90m 241 | [39m  } [36melse[39m 
+[36mif[39m ([36mtypeof[39m value 
+[33m===[39m [32m'number'[39m) {[0m
+[0m [90m 242 | [39m    maxValue 
+[33m=[39m [33mBigInt[39m([33mNumber[
+39m[33m.[39m[33mMAX_SAFE_INTEGER[39m)
+[0m
+C:\dev\dream-net\packages\ink:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @dreamnet/ink@1.0.0 build: `next build`
+Exit status 1

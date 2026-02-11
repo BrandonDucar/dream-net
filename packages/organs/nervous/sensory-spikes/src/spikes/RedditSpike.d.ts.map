@@ -1,0 +1,1 @@
+{"version":3,"file":"RedditSpike.d.ts","sourceRoot":"","sources":["RedditSpike.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,YAAY,EAAE,WAAW,EAAE,MAAM,aAAa,CAAC;AAExD,qBAAa,WAAY,YAAW,YAAY;IAC5C,IAAI,SAAiB;IACrB,IAAI,EAAG,UAAU,CAAU;IAG3B,OAAO,CAAC,UAAU,CAAuD;IAEnE,KAAK,IAAI,OAAO,CAAC,WAAW,CAAC;CAsCtC"}

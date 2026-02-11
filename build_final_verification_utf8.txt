@@ -1,0 +1,20 @@
+﻿.                                        | â€‰WARNâ€‰ Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+Scope: 3 of 4 workspace projects
+packages/shared build$ tsc --noEmit
+packages/shared build: ../organs/circulatory/dream-state-core/tsconfig.json(23,9): error TS6053: File 'C:/dev/dream-net/packages/organs/skeletal/shared' not found.
+packages/shared build: ../organs/circulatory/dream-state-core/tsconfig.json(26,9): error TS6053: File 'C:/dev/dream-net/packages/organs/skeletal/lib' not found.
+packages/shared build: ../organs/circulatory/dream-state-core/tsconfig.json(29,9): error TS6053: File 'C:/dev/dream-net/packages/organs/circulatory/dreambet-core' not found.
+packages/shared build: ../organs/circulatory/dream-state-core/tsconfig.json(33,9): error TS6053: File 'C:/dev/dream-net/packages/organs/circulatory/wolfpack-funding-core' not found.
+packages/shared build: ../organs/nervous/nerve/tsconfig.json(23,9): error TS6053: File 'C:/dev/dream-net/packages/organs/skeletal/lib' not found.
+packages/shared build: ../organs/nervous/nerve/tsconfig.json(26,9): error TS6053: File 'C:/dev/dream-net/packages/organs/skeletal/shared' not found.
+packages/shared build: ../organs/nervous/nerve/tsconfig.json(29,9): error TS6053: File 'C:/dev/dream-net/packages/organs/nervous/dreamstate' not found.
+packages/shared build: ../organs/reproductive/dreamnet-factory/tsconfig.json(24,9): error TS6053: File 'C:/dev/dream-net/packages/organs/reproductive/dreamnet-control-core' not found.
+packages/shared build: ../organs/reproductive/dreamnet-factory/tsconfig.json(27,9): error TS6053: File 'C:/dev/dream-net/packages/organs/reproductive/wolf-pack' not found.
+packages/shared build: ../organs/reproductive/dreamnet-factory/tsconfig.json(30,9): error TS6053: File 'C:/dev/dream-net/packages/organs/reproductive/spider-web-core' not found.
+packages/shared build: ../organs/respiratory/agents/tsconfig.json(21,9): error TS6053: File 'C:/dev/dream-net/packages/organs/respiratory/construction-core' not found.
+packages/shared build: ../../tsconfig.json(15,9): error TS6053: File 'C:/dev/dream-net/packages/shared' not found.
+packages/shared build: ../../tsconfig.json(18,9): error TS6053: File 'C:/dev/dream-net/packages/organs/integumentary/server' not found.
+packages/shared build: Failed
+C:\dev\dream-net\packages\shared:
+â€‰ERR_PNPM_RECURSIVE_RUN_FIRST_FAILâ€‰ @dreamnet/shared@1.0.0 build: `tsc --noEmit`
+Exit status 1

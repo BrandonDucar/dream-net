@@ -186,12 +186,45 @@ class SocialMediaOpsAgent {
         await MoltbookService.postMolt(account.username, post.content);
       }
 
-      // TODO: Integrate with actual platform APIs
-      // For now, simulate posting
-      console.log(`📱 [Social Media Ops] Posting to ${post.platform}:`);
-      console.log(`   Content: ${post.content.substring(0, 100)}...`);
-      if (post.mediaUrls) {
-        console.log(`   Media: ${post.mediaUrls.length} files`);
+      // 🌐 NEYNAR / FARCASTER SHIFT
+      if (post.platform === "threads" || (post.platform as any) === "farcaster") {
+        const { NeynarService } = await import('../services/NeynarService.js');
+        const cast = await NeynarService.postCast(post.content);
+        post.metadata = { ...post.metadata, cast_hash: cast.hash };
+      }
+
+      // 📡 TELEGRAM TRANSPORT
+      if (post.platform === "telegram") {
+        const token = process.env.TELEGRAM_BOT_TOKEN;
+        const chatId = process.env.TELEGRAM_CHAT_ID;
+        if (token && chatId) {
+          const url = `https://api.telegram.org/bot${token}/sendMessage`;
+          await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text: post.content })
+          });
+          console.log(`✅ [Social Media Ops] Telegram post delivered.`);
+        }
+      }
+
+      // 👾 DISCORD TRANSPORT
+      if (post.platform === "discord") {
+        const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+        if (webhookUrl) {
+          await fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: post.content })
+          });
+          console.log(`✅ [Social Media Ops] Discord webhook triggered.`);
+        }
+      }
+
+      // For other platforms, simulate
+      if (!["moltbook", "telegram", "discord", "threads"].includes(post.platform)) {
+        console.log(`📱 [Social Media Ops] Simulated post to ${post.platform}:`);
+        console.log(`   Content: ${post.content.substring(0, 100)}...`);
       }
 
       post.status = "posted";

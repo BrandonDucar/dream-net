@@ -8,18 +8,18 @@ export interface BondingCurveState {
     slope: number;
 }
 
-/**
- * BondingCurveEngine
- * Implements the P = f(S) logic for agent-led liquidity.
  * Uses a linear bonding curve model: Price = Slope * Supply.
  */
+export const SHEEP_TOKEN_ADDRESS = '0x2896BdB9455e8e5C4a72634E27990ff7532CbC07';
+
 export class BondingCurveEngine extends EventEmitter {
     private static instance: BondingCurveEngine;
     private curves: Map<string, BondingCurveState> = new Map();
 
     private constructor() {
         super();
-        console.log("📈 [BondingCurveEngine] Initialized logic for Agentic Economics.");
+        this.initializeCurve('SHEEP', 0.0001); // Initial slope for $SHEEP
+        console.log("📈 [BondingCurveEngine] Initialized logic for Agentic Economics and $SHEEP curve.");
     }
 
     public static getInstance(): BondingCurveEngine {

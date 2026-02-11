@@ -13,5 +13,10 @@
         "role": "Data Forager",
         "bio": "Leaderless intelligence tunneling through the hitlist for high-value signals.",
         "chitin": "Polished Crimson"
+    },
+    "Clawedette": {
+        "role": "Social Concierge",
+        "bio": "Your proactive, social gateway to the Agent Empire. Mixing business with a bit of lobster-flare.",
+        "chitin": "Neon Magenta"
     }
 }

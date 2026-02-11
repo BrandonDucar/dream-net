@@ -1,0 +1,7 @@
+﻿
+> @dreamnet/client@0.0.0 typecheck
+> tsc --noEmit
+
+src/pages/dashboard/DreamNetLive.tsx(161,22): error TS17008: JSX element 'AnimatePresence' has no corresponding closing tag.
+src/pages/dashboard/DreamNetLive.tsx(657,31): error TS17002: Expected corresponding JSX closing tag for 'motion.div'.
+src/pages/dashboard/DreamNetLive.tsx(658,17): error TS1005: ')' expected.

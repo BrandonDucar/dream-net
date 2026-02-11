@@ -1,0 +1,26 @@
+﻿.                                        | â€‰WARNâ€‰ Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/shared@1.0.0 build C:\dev\dream-net\packages\shared
+> tsc --noEmit
+
+utils/api.ts(18,5): error TS1128: Declaration or statement expected.
+utils/api.ts(18,12): error TS1434: Unexpected keyword or identifier.
+utils/api.ts(18,42): error TS1005: ',' expected.
+utils/api.ts(18,52): error TS1005: ';' expected.
+utils/api.ts(38,5): error TS1128: Declaration or statement expected.
+utils/api.ts(38,12): error TS1434: Unexpected keyword or identifier.
+utils/api.ts(38,35): error TS1005: ';' expected.
+utils/api.ts(52,5): error TS1128: Declaration or statement expected.
+utils/api.ts(52,12): error TS1434: Unexpected keyword or identifier.
+utils/api.ts(52,33): error TS1005: ';' expected.
+utils/api.ts(69,5): error TS1128: Declaration or statement expected.
+utils/api.ts(69,12): error TS1434: Unexpected keyword or identifier.
+utils/api.ts(69,35): error TS1005: ';' expected.
+utils/api.ts(88,5): error TS1128: Declaration or statement expected.
+utils/api.ts(88,12): error TS1434: Unexpected keyword or identifier.
+utils/api.ts(88,38): error TS1005: ',' expected.
+utils/api.ts(88,48): error TS1005: ';' expected.
+utils/api.ts(98,1): error TS1128: Declaration or statement expected.
+C:\dev\dream-net\packages\shared:
+â€‰ERR_PNPM_RECURSIVE_RUN_FIRST_FAILâ€‰ @dreamnet/shared@1.0.0 build: `tsc --noEmit`
+Exit status 2

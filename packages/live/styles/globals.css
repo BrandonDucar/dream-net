@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bg-cyber: #050505;
+    --neon-lime: hsl(84, 81%, 55%);
+    --neon-purple: hsl(263, 90%, 65%);
+    --cyber-blue: hsl(190, 100%, 50%);
+}
+
+body {
+    background-color: var(--bg-cyber);
+    color: white;
+    -webkit-font-smoothing: antialiased;
+}

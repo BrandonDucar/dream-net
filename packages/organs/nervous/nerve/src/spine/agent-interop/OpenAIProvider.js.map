@@ -1,0 +1,1 @@
+{"version":3,"file":"OpenAIProvider.js","sourceRoot":"","sources":["OpenAIProvider.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,cAAc,GAAuB;IAC9C,IAAI,EAAE,QAAQ;IACd,OAAO,EAAE,OAAO;IAChB,YAAY,EAAE,CAAC,UAAU,EAAE,WAAW,EAAE,gBAAgB,CAAC;CAC5D,CAAC"}
