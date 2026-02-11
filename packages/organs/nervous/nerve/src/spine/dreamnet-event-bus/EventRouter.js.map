@@ -1,0 +1,1 @@
+{"version":3,"file":"EventRouter.js","sourceRoot":"","sources":["EventRouter.ts"],"names":[],"mappings":"AAEA,MAAM,OAAO,WAAW;IACpB,wCAAwC;IACxC,+BAA+B;IAExB,KAAK,CAAC,KAAoB;QAC7B,sCAAsC;QACtC,OAAO,KAAK,CAAC;IACjB,CAAC;IAEM,QAAQ,CAAC,SAAiB;QAC7B,mCAAmC;QACnC,OAAO,IAAI,CAAC;IAChB,CAAC;CACJ"}

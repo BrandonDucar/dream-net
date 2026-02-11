@@ -20,6 +20,12 @@ import { vdsProxy } from '../../../nervous-subsystem/VDSProxyService.js';
 import { treasuryAuditService } from '../../../nervous-subsystem/TreasuryAuditService.js';
 import { persistenceService } from '../../skeletal/shared/services/PersistenceService.js';
 import { dreamEventBus } from './dreamnet-event-bus/index.js';
+import { socialRelayService } from './spine/mercenary/SocialRelayService.js';
+import { bobaFettService } from './spine/mercenary/BobaFettService.js';
+import { pheromoneService } from './spine/mercenary/PheromoneService.js';
+import { researchHubBountyService } from './spine/mercenary/ResearchHubBountyService.js';
+import { diuSnifferService } from './spine/mercenary/DIUSnifferService.js';
+import { nodeRevenueService } from '../../skeletal/shared/services/NodeRevenueService.js';
 
 /**
  * Initialize Nerve Fabric
@@ -49,7 +55,12 @@ export function initNerveFabric(): {
   // 💾 Restore Persistent State (AlaskanKing Mastery)
   persistenceService.restoreAll().catch(err => console.error("[nerve] State Restoration Failed:", err));
 
+  // 🛡️ Initialize Elite Sovereign Services
+  socialRelayService.monitorStreams();
+  nodeRevenueService.initializeNodes().catch(err => console.error("[nerve] Node Revenue Initialization Failed:", err));
+
   console.info("[nerve] Nerve Fabric online: Shield, Jaggy, DreamScope, Optio, VDS Substrate Active");
+  console.info("[nerve] Elite Services active: SocialRelay, BobaFett, Pheromone, ResearchHub, DIU, NodeRevenue");
 
   return { dreamScope };
 }

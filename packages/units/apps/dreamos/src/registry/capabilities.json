@@ -1,0 +1,23 @@
+[
+  {
+    "id": "deploy.vercel",
+    "desc": "Trigger Vercel Deploy Hook for production.",
+    "inputs": ["commitSha?"],
+    "scopes": ["vercel:deploy"],
+    "cost_hint": "medium"
+  },
+  {
+    "id": "migrate.drizzle",
+    "desc": "Trigger GitHub Actions workflow_dispatch to run Drizzle migrations.",
+    "inputs": [],
+    "scopes": ["neon:migrate", "github:actions"],
+    "cost_hint": "low"
+  },
+  {
+    "id": "scan.integrations",
+    "desc": "List connected integrations from GitHub + Vercel (read-only).",
+    "inputs": [],
+    "scopes": ["github:read", "vercel:read"],
+    "cost_hint": "low"
+  }
+]

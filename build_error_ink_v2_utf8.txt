@@ -1,0 +1,71 @@
+﻿.                                        | ΓÇëWARNΓÇë Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/ink@1.0.0 build C:\dev\dream-net\packages\ink
+> next build
+
+- info Linting and checking validity of types...
+node.exe : Failed to compile.
+At C:\Users\brand\AppData\Roaming\npm\pnpm
+.ps1:24 char:5
++     & "node$exe"  
+"$basedir/node_modules/pnpm/bin/pnpm.cjs" 
+$args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (Failed to compile.:String) [], Re  
+  moteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+
+../../node_modules/ox/core/internal/abiPar
+ameters.ts:451:24
+Type error: Argument of type 'string | 
+number | bigint | boolean | readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly 
+...[])[])[])[])[])[])[])[])[])[])[] | 
+readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly 
+...[])[])[])[])[])[])[])...' is not 
+assignable to parameter of type 'readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly 
+...[])[])[])[])[])[])[])[])[])[])[] | 
+readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly 
+...[])[])[])[])[])[])[])[])[])[])[]'.
+  Type 'string' is not assignable to type 
+'readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly 
+...[])[])[])[])[])[])[])[])[])[])[] | 
+readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly (readonly 
+(readonly (readonly (readonly 
+...[])[])[])[])[])[])[])[])[])[])[]'.
+
+[0m [90m 449 | [39m  [36mif[39m 
+(arrayComponents) {[0m
+[0m [90m 450 | [39m    [36mconst[39m 
+[length[33m,[39m type] [33m=[39m 
+arrayComponents[0m
+[0m[31m[1m>[22m[39m[90m 451 | [39m 
+   [36mreturn[39m 
+encodeArray(value[33m,[39m {[0m
+[0m [90m     | [39m                    
+   [31m[1m^[22m[39m[0m
+[0m [90m 452 | [39m      
+checksumAddress[33m,[39m[0m
+[0m [90m 453 | [39m      
+length[33m,[39m[0m
+[0m [90m 454 | [39m      
+parameter[33m:[39m {[0m
+C:\dev\dream-net\packages\ink:
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë @dreamnet/ink@1.0.0 build: `next build`
+Exit status 1

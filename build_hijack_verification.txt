@@ -1,0 +1,24 @@
+.                                        |  WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/ink@1.0.0 build C:\dev\dream-net\packages\ink
+> next build
+
+- info Skipping validation of types
+- info Skipping linting
+- info Creating an optimized production build...
+Failed to compile.
+
+../shared/components/TierBadge.tsx
+Module not found: Can't resolve './ui/badge'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../shared/components/index.tsx
+./pages/onboard.tsx
+
+
+> Build failed because of webpack errors
+C:\dev\dream-net\packages\ink:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @dreamnet/ink@1.0.0 build: `next build`
+Exit status 1

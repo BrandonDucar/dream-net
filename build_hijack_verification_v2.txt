@@ -1,0 +1,77 @@
+.                                        |  WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/ink@1.0.0 build C:\dev\dream-net\packages\ink
+> next build
+
+- info Skipping validation of types
+- info Skipping linting
+- info Creating an optimized production build...
+Failed to compile.
+
+./styles/globals.css
+Error: Cannot load the module
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:813369
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:86800
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:1325141
+    at Hook.eval [as callAsync] (eval at create (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:13:28867), <anonymous>:6:1)
+    at AsyncQueue._handleResult (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:1324689)
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:1324540
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:89115
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:417360
+    at Hook.eval [as callAsync] (eval at create (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:13:28867), <anonymous>:42:1)
+    at NormalModuleFactory.create (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:417215)
+
+Import trace for requested module:
+./styles/globals.css
+
+../../node_modules/@gemini-wallet/core/dist/index.js
+Attempted import error: 'mainnet' is not exported from 'viem/chains' (imported as 'mainnet').
+
+Import trace for requested module:
+../../node_modules/@gemini-wallet/core/dist/index.js
+../../node_modules/@wagmi/connectors/dist/esm/gemini.js
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./lib/wagmi.ts
+./providers/OnchainAuthProvider.tsx
+
+../../node_modules/@gemini-wallet/core/dist/index.js
+Attempted import error: 'mainnet' is not exported from 'viem/chains' (imported as 'mainnet').
+
+Import trace for requested module:
+../../node_modules/@gemini-wallet/core/dist/index.js
+../../node_modules/@wagmi/connectors/dist/esm/gemini.js
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./lib/wagmi.ts
+./providers/OnchainAuthProvider.tsx
+
+../../node_modules/@wagmi/connectors/dist/esm/baseAccount.js
+Module not found: Can't resolve '@base-org/account'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./lib/wagmi.ts
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+../../node_modules/@wagmi/connectors/dist/esm/porto.js
+Module not found: Can't resolve 'porto/internal'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./lib/wagmi.ts
+./providers/OnchainAuthProvider.tsx
+./pages/_app.tsx
+
+
+> Build failed because of webpack errors
+C:\dev\dream-net\packages\ink:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @dreamnet/ink@1.0.0 build: `next build`
+Exit status 1

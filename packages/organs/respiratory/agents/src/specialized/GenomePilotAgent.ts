@@ -1,8 +1,8 @@
-import { BaseAgent, AgentConfig } from '../core/BaseAgent';
+import { BaseAgent, AgentConfig } from '../core/BaseAgent.js';
 import { dreamEventBus } from '@dreamnet/nerve';
 // Use local service bridge to bypass monorepo resolution drama
-import { StarBridge } from '../operational/services/StarBridge';
-import { sovereignWallet } from '../operational/services/SovereignWalletService';
+import { StarBridge } from '../operational/services/StarBridge.js';
+import { sovereignWallet } from '../operational/services/SovereignWalletService.js';
 
 /**
  * 🛰️ GenomePilotAgent: The first of the "Synthetic Scions"

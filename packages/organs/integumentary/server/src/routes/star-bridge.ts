@@ -1,98 +1,114 @@
+import { Router } from 'express';
+import { ProvenanceService } from '@dreamnet/nerve';
+import { swarmPheromones } from '../agents/core/SwarmPheromoneService.js';
+import { ScentEngine } from '@dreamnet/memory-dna';
+import { NodeMonitorService } from '../monitoring/NodeMonitorService.js';
+import { PrismaClient } from '@prisma/client';
+import { swarmCoordinator } from '../swarm-coordinator.js';
+
+const prisma = new PrismaClient();
+
 /**
- * Star Bridge Lungs API Routes
- * Cross-chain breathwork and monitoring
+ * 🛰️ Star Bridge Router: Integration Layer
+ * Role: Connects the Sovereign Grid's telemetry (Star Bridge) to the .ink and .live frontends.
  */
+export function createStarBridgeRouter(
+    pheromoneService: any, // Placeholder for nerve service compatibility
+    provenanceService: ProvenanceService,
+    nodeMonitor: NodeMonitorService
+) {
+    const router = Router();
 
-import express from "express";
-// Star Bridge Lungs is optional
-let StarBridgeLungs: any = null;
-try {
-  const starBridgeModule = require("@dreamnet/star-bridge-lungs");
-  StarBridgeLungs = starBridgeModule.StarBridgeLungs;
-} catch {
-  console.warn("[Star Bridge Router] @dreamnet/star-bridge-lungs not available");
+    /**
+     * [PHEROMONE] GET /score/:wallet
+     * Returns the current SCENT score with time-decay applied.
+     */
+    router.get('/pheromone/score/:wallet', async (req, res) => {
+        const { wallet } = req.params;
+
+        // WAVE 7: Real-world computation from Prisma vs. stubs
+        const result = await pheromoneService.getScentForWallet(wallet);
+
+        res.json({
+            wallet,
+            ...result,
+            timestamp: new Date().toISOString()
+        });
+    });
+
+    /**
+     * [PHEROMONE] GET /leaderboard
+     * Returns the global swarm leaderboard.
+     */
+    router.get('/pheromone/leaderboard', async (req, res) => {
+        try {
+            const leaderboard = await pheromoneService.getLeaderboard();
+            res.json(leaderboard);
+        } catch (error) {
+            console.error('❌ [Antigravity Router] Leaderboard fetch failed:', error);
+            res.status(500).json({ error: 'Failed to fetch leaderboard' });
+        }
+    });
+
+    /**
+     * [PROVENANCE] GET /attestations/:runId
+     * Returns the SLSA-compliant attestation for a specific agent run.
+     */
+    router.get('/attestations/:runId', (req, res) => {
+        const { runId } = req.params;
+        const attestation = provenanceService.getAttestation(runId);
+
+        if (!attestation) {
+            return res.status(404).json({ error: 'Attestation not found' });
+        }
+
+        res.json(attestation);
+    });
+
+    /**
+     * [NODES] GET /nodes/status
+     * Returns the health and earnings of all monitored RPC nodes.
+     */
+    router.get('/nodes/status', (req, res) => {
+        const nodes = nodeMonitor.getAllNodes();
+        res.json(nodes);
+    });
+
+    /**
+     * [SWARM] GET /swarm/status
+     * Returns the global swarm health, active operations, and bot heartbeats.
+     */
+    router.get('/swarm/status', (req, res) => {
+        const status = swarmCoordinator.getSwarmStatus();
+        res.json({
+            ...status,
+            bpm: 72 + Math.floor(Math.random() * 10), // Simulated heart rate for immersion
+            timestamp: new Date().toISOString()
+        });
+    });
+
+    router.get('/tasks/queue', async (req, res) => {
+        try {
+            // WAVE 7: Real-world bounty queue from Prisma
+            const bounties = await (prisma as any).bounty.findMany({
+                where: { status: 'OPEN' },
+                orderBy: { createdAt: 'desc' },
+                take: 10
+            });
+
+            const tasks = bounties.map((b: any) => ({
+                id: b.id,
+                title: b.title,
+                reward: `${b.amount} ${b.token}`,
+                tier: b.amount > 100 ? 'SWARM' : 'ANT'
+            }));
+
+            res.json(tasks);
+        } catch (error) {
+            console.error('❌ [Antigravity Router] Task queue fetch failed:', error);
+            res.status(500).json({ error: 'Failed to fetch task queue' });
+        }
+    });
+
+    return router;
 }
-
-const router: express.Router = express.Router();
-
-// GET /api/star-bridge - Get Star Bridge Lungs status
-router.get("/", (req, res) => {
-  if (!StarBridgeLungs) {
-    return res.status(503).json({ error: "Star Bridge Lungs not available" });
-  }
-  try {
-    const status = StarBridgeLungs.status();
-    res.json({
-      success: true,
-      starBridge: status,
-    });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// GET /api/star-bridge/chains - Get chain metrics
-router.get("/chains", (req, res) => {
-  if (!StarBridgeLungs) {
-    return res.status(503).json({ error: "Star Bridge Lungs not available" });
-  }
-  try {
-    const status = StarBridgeLungs.status();
-    res.json({
-      success: true,
-      chains: status.chainMetrics,
-      count: status.chainMetrics.length,
-    });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// GET /api/star-bridge/breaths - Get recent breath snapshots
-router.get("/breaths", (req, res) => {
-  if (!StarBridgeLungs) {
-    return res.status(503).json({ error: "Star Bridge Lungs not available" });
-  }
-  try {
-    const status = StarBridgeLungs.status();
-    const limit = parseInt(req.query.limit as string) || 10;
-    const breaths = status.lastBreaths.slice(-limit);
-    res.json({
-      success: true,
-      breaths,
-      count: breaths.length,
-    });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// POST /api/star-bridge/breathe - Trigger a breath cycle manually
-router.post("/breathe", (req, res) => {
-  if (!StarBridgeLungs) {
-    return res.status(503).json({ error: "Star Bridge Lungs not available" });
-  }
-  try {
-    // Import required systems for context
-    const { NeuralMesh } = require("@dreamnet/neural-mesh");
-    const { QuantumAnticipation } = require("@dreamnet/quantum-anticipation");
-    const { SlugTimeMemory } = require("@dreamnet/slug-time-memory");
-
-    const status = StarBridgeLungs.run({
-      neuralMesh: NeuralMesh,
-      quantumAnticipation: QuantumAnticipation,
-      slugTimeMemory: SlugTimeMemory,
-    });
-
-    res.json({
-      success: true,
-      message: "Breath cycle completed",
-      starBridge: status,
-    });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-export default router;
-

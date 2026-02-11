@@ -1,3 +1,9 @@
 packages:
-  - 'packages/organs/**'
+  - 'packages/shared'
+  - 'packages/ink'
+  - 'packages/live'
+  - 'packages/api'
+  - 'packages/organs/voice'
+  - '!packages/organs/**'
+  - '!packages/archive/**'
   - '!**/node_modules/**'

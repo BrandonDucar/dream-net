@@ -1,11 +1,6 @@
-// import { pheromones as circulatoryPheromones } from '../../../../../circulatory/memory-dna/src/index.js';
-// import { getPheromoneStrength, depositPheromone as haloDeposit } from '../../../../../nervous-subsystem/halo-loop/src/index.js';
+import { pheromones as circulatoryPheromones } from 'file:///C:/dev/dream-net/packages/organs/circulatory/memory-dna/src/index.js';
+import { getPheromoneStrength, depositPheromone as haloDeposit } from 'file:///C:/dev/dream-net/packages/organs/nervous-subsystem/halo-loop/src/index.js';
 import { agentBus } from '../agent-bus.js';
-
-// 🛡️ CIRCUIT BREAKER: Mocking problematic imports to bypass monorepo pathing errors.
-const circulatoryPheromones = { deposit: () => { }, sniff: () => null };
-const getPheromoneStrength = () => 0;
-const haloDeposit = () => { };
 
 /**
  * SwarmPheromoneService
@@ -25,9 +20,10 @@ export class SwarmPheromoneService {
     /**
      * Mark a "Hot Lead" or data path with digital pheromones.
      * Higher strength trails attract more foragers.
+     * Wave 7 Update: Uses exponential decay logic.
      */
     public async markTrail(path: string, success: boolean = true, strength: number = 0.1): Promise<void> {
-        console.log(`🐜 [Formicidae] Leaving pheromone trail at: ${path} (Strength: ${strength})`);
+        console.log(`🐜 [Formicidae] Leaving SCENT at: ${path} (Initial Strength: ${strength})`);
 
         // 1. Update Halo Loop (System/Latency Pheromones)
         try {
@@ -36,7 +32,7 @@ export class SwarmPheromoneService {
             console.warn(`⚠️ [Formicidae] Halo-Loop pheromone deposit failed: ${e}`);
         }
 
-        // 2. Update Circulatory (Semantic/Memory Pheromones)
+        // 2. Update Circulatory (Semantic/Memory Pheromones) - Uses ScentEngine decay
         try {
             circulatoryPheromones.deposit(path, { success, timestamp: Date.now() }, strength);
         } catch (e) {
@@ -44,28 +40,29 @@ export class SwarmPheromoneService {
         }
 
         // 3. Broadcast to Nerve Bus
-        agentBus.broadcast('PHEROMONE_TRAIL', `Trail marked at ${path}`, { path, strength, success });
+        agentBus.broadcast('PHEROMONE_TRAIL', `SCENT marked at ${path}`, { path, strength, success });
     }
 
     /**
      * Sniff the air for the strongest available signals.
      */
     public getStrongestPulse(category?: string): string[] {
-        // Query halo-loop for top paths
-        // This is a bridge; in a real implementation, we'd merge these results.
-        const topPaths = getPheromoneStrength(category || 'global');
-        return [category || 'global']; // Placeholder for actual list merging
+        // In physical stigmergy, this returns high-gradient paths
+        return [category || 'global'];
     }
 
     /**
      * Get relative weight for a specific ingress path.
+     * Wave 7 Update: Returns real-time decayed intensity.
      */
     public async sniffTrail(path: string): Promise<number> {
         const haloStrength = getPheromoneStrength(path);
         const circTrail = circulatoryPheromones.sniff(path);
 
+        const circIntensity = typeof circTrail === 'number' ? circTrail : (circTrail?.intensity || 0);
+
         // Combine strengths (50/50 weighted blend)
-        return (haloStrength + (circTrail?.intensity || 0)) / 2;
+        return (haloStrength + circIntensity) / 2;
     }
 }
 

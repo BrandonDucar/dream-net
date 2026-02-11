@@ -1,0 +1,103 @@
+.                                        |  WARN  Unsupported engine: wanted: {"node":"20.x"} (current: {"node":"v22.18.0","pnpm":"9.15.4"})
+
+> @dreamnet/live@1.0.0 build C:\dev\dream-net\packages\live
+> next build
+
+- info Skipping validation of types
+- info Skipping linting
+- info Creating an optimized production build...
+Warning: Your PostCSS configuration defines a field which is not supported (`__esModule`). Please remove this configuration value.
+Failed to compile.
+
+./styles/globals.css.webpack[javascript/auto]!=!../../node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[1].oneOf[13].use[1]!../../node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[1].oneOf[13].use[2]!./styles/globals.css
+Error: Your custom PostCSS configuration must export a `plugins` key.
+    at getPostCssPlugins (C:\dev\dream-net\node_modules\next\dist\build\webpack\config\blocks\css\plugins.js:111:15)
+    at async C:\dev\dream-net\node_modules\next\dist\build\webpack\config\blocks\css\index.js:124:36
+    at async C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js:51:41
+    at async Span.traceAsyncFn (C:\dev\dream-net\node_modules\next\dist\trace\trace.js:103:20)
+
+Import trace for requested module:
+./styles/globals.css.webpack[javascript/auto]!=!../../node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[1].oneOf[13].use[1]!../../node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[1].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+./styles/globals.css
+Error: Your custom PostCSS configuration must export a `plugins` key.
+    at getPostCssPlugins (C:\dev\dream-net\node_modules\next\dist\build\webpack\config\blocks\css\plugins.js:111:15)
+    at async C:\dev\dream-net\node_modules\next\dist\build\webpack\config\blocks\css\index.js:124:36
+    at async C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js:51:41
+    at async Span.traceAsyncFn (C:\dev\dream-net\node_modules\next\dist\trace\trace.js:103:20)
+    at tryRunOrWebpackError (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:311493)
+    at __webpack_require_module__ (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:131117)
+    at __nested_webpack_require_153754__ (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:130556)
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:131409
+    at symbolIterator (C:\dev\dream-net\node_modules\next\dist\compiled\neo-async\async.js:1:14444)
+    at done (C:\dev\dream-net\node_modules\next\dist\compiled\neo-async\async.js:1:14824)
+    at Hook.eval [as callAsync] (eval at create (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:13:28867), <anonymous>:15:1)
+    at Hook.CALL_ASYNC_DELEGATE [as _callAsync] (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:13:26021)
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:130276
+    at symbolIterator (C:\dev\dream-net\node_modules\next\dist\compiled\neo-async\async.js:1:14402)
+-- inner error --
+Error: Your custom PostCSS configuration must export a `plugins` key.
+    at getPostCssPlugins (C:\dev\dream-net\node_modules\next\dist\build\webpack\config\blocks\css\plugins.js:111:15)
+    at async C:\dev\dream-net\node_modules\next\dist\build\webpack\config\blocks\css\index.js:124:36
+    at async C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js:51:41
+    at async Span.traceAsyncFn (C:\dev\dream-net\node_modules\next\dist\trace\trace.js:103:20)
+    at Object.<anonymous> (C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[1].oneOf[13].use[1]!C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[1].oneOf[13].use[2]!C:\dev\dream-net\packages\live\styles\globals.css:1:7)
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:915095
+    at Hook.eval [as call] (eval at create (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:13:28645), <anonymous>:7:1)
+    at Hook.CALL_DELEGATE [as _call] (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:13:25915)
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:131150
+    at tryRunOrWebpackError (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:311447)
+    at __webpack_require_module__ (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:131117)
+    at __nested_webpack_require_153754__ (C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:130556)
+    at C:\dev\dream-net\node_modules\next\dist\compiled\webpack\bundle5.js:28:131409
+    at symbolIterator (C:\dev\dream-net\node_modules\next\dist\compiled\neo-async\async.js:1:14444)
+
+Generated code for C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[1].oneOf[13].use[1]!C:\dev\dream-net\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[1].oneOf[13].use[2]!C:\dev\dream-net\packages\live\styles\globals.css
+
+Import trace for requested module:
+./styles/globals.css
+
+../../node_modules/@wagmi/connectors/dist/esm/baseAccount.js
+Module not found: Can't resolve '@base-org/account'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./components/auth/login-form.tsx
+./pages/index.tsx
+
+../../node_modules/porto/dist/core/internal/modes/dialog.js
+Module not found: Package path ./mini is not exported from package C:\dev\dream-net\node_modules\zod (see exports field in C:\dev\dream-net\node_modules\zod\package.json)
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/porto/dist/core/Porto.js
+../../node_modules/porto/dist/index.js
+../../node_modules/@wagmi/connectors/dist/esm/porto.js
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./components/auth/login-form.tsx
+./pages/index.tsx
+
+../../node_modules/porto/dist/core/internal/provider.js
+Module not found: Package path ./mini is not exported from package C:\dev\dream-net\node_modules\zod (see exports field in C:\dev\dream-net\node_modules\zod\package.json)
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../node_modules/porto/dist/index.js
+../../node_modules/@wagmi/connectors/dist/esm/porto.js
+../../node_modules/@wagmi/connectors/dist/esm/exports/index.js
+../../node_modules/wagmi/dist/esm/exports/connectors.js
+./components/auth/login-form.tsx
+./pages/index.tsx
+
+
+> Build failed because of webpack errors
+C:\dev\dream-net\packages\live:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @dreamnet/live@1.0.0 build: `next build`
+Exit status 1

@@ -51,7 +51,6 @@ async function loadLangChain() {
         console.warn("[VectorStore] ⚠️  LangChain dependencies not found effectively. Using fallbacks.");
     }
 }
-pocketBase: string; // Not pocketbase, but keeping nomenclature for now
 
 export interface VectorRecord {
     id: string;

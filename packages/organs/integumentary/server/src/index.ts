@@ -170,6 +170,20 @@ async function bootstrap() {
   apiRouter.use("/tok", tokRouter);
   apiRouter.use("/bounties", (await import('./routes/bounties.js')).default);
 
+  // 🛰️ Antigravity Integration Layer
+  const { PheromoneService } = await import('@dreamnet/nerve');
+  const { ProvenanceService } = await import('@dreamnet/nerve');
+  const { NodeMonitorService } = await import('@dreamnet/nerve');
+  const { createStarBridgeRouter } = await import('./routes/star-bridge.js');
+
+  const pheromoneService = new PheromoneService();
+  const provenanceService = new ProvenanceService(process.env.SIGNER_PRIVATE_KEY || '0xabc123');
+  const nodeMonitor = new NodeMonitorService();
+
+  apiRouter.use("/star-bridge", createStarBridgeRouter(pheromoneService, provenanceService, nodeMonitor));
+  // 🛰️ LEGACY ALIAS: Maintain /antigravity for backward compatibility during transition
+  apiRouter.use("/antigravity", createStarBridgeRouter(pheromoneService, provenanceService, nodeMonitor));
+
 
   // Welcome Agent
   apiRouter.post("/agents/welcome", async (req, res) => {

@@ -44,6 +44,14 @@ export class CurriculumEngine {
             instructions: "Negotiate compute resources with a peer agent while maintaining sub-1.5% gas overhead.",
             expectedOutcome: "Equitable resource distribution agreement.",
             minimumResonance: 0.75
+        },
+        {
+            id: "HOMEO-001",
+            subject: "Biomimetic: Homeostatic Regulation",
+            difficulty: "SOVEREIGN",
+            instructions: "Self-throttle compute usage to match a decaying pheromone signal without losing task coherence.",
+            expectedOutcome: "Stable operating point maintained under resource scarcity.",
+            minimumResonance: 0.85
         }
     ];
 

@@ -19,8 +19,7 @@ export class PheromoneStore {
     private DECAY_RATE = 0.05; // 5% decay per tick
 
     constructor() {
-        // Start the decay clock (Entropy)
-        setInterval(() => this.decay(), 1000);
+        // Entropy is now calculated on-demand via ScentEngine
     }
 
     /**
@@ -38,12 +37,21 @@ export class PheromoneStore {
     }
 
     /**
-     * Sniff the air (Read Pheromone)
+     * Sniff the air (Read Pheromone with Exponential Decay)
      */
     public sniff(location: string): Pheromone | null {
         const trail = this.trails.get(location);
-        if (!trail || trail.intensity < 0.1) return null; // Too faint to smell
-        return trail;
+        if (!trail) return null;
+
+        // Calculate real-time intensity based on decay math
+        const currentIntensity = ScentEngine.calculateDecay(trail.intensity, trail.depositedAt);
+
+        if (currentIntensity < 0.05) {
+            this.trails.delete(location); // Evaporated
+            return null;
+        }
+
+        return { ...trail, intensity: currentIntensity };
     }
 
     /**
@@ -66,13 +74,13 @@ export class PheromoneStore {
     }
 
     /**
-     * The Entropy Loop (Decay)
+     * The Cleanup Loop (Manual Evaporation)
      */
-    private decay() {
+    public vacuum() {
         for (const [loc, trail] of this.trails) {
-            trail.intensity -= this.DECAY_RATE;
-            if (trail.intensity <= 0) {
-                this.trails.delete(loc); // Evaporated
+            const intensity = ScentEngine.calculateDecay(trail.intensity, trail.depositedAt);
+            if (intensity <= 0.01) {
+                this.trails.delete(loc);
             }
         }
     }
