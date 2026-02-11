@@ -115,7 +115,7 @@ services:
       - CLAWDBOT_GATEWAY_TOKEN=${MOLTBOT_TOKEN:-dreamnet_secret_cmd}
       - CLAWDBOT_GATEWAY_PORT=11234
       - CLAWDBOT_GATEWAY_MODE=local
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${SABLE_TELEGRAM_BOT_TOKEN}
       - TELEGRAM_ENABLED=true
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - DISCORD_ENABLED=true
@@ -368,6 +368,77 @@ services:
     networks:
       - woolyai_network
 
+
+  # ---------------------------------------------------------------------------
+  # CLAWEDETTE - POSTGRES DATABASE
+  # ---------------------------------------------------------------------------
+  clawedette-db:
+    image: postgres:16-alpine
+    container_name: clawedette_db
+    restart: always
+    env_file: .env.clawedette
+    networks:
+      - dream_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-clawedette}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # CLAWEDETTE - API SERVICE (Governor Core)
+  # ---------------------------------------------------------------------------
+  clawedette-api:
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    container_name: clawedette_api
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "3100:3100"
+    labels:
+      - "dreamnet.role=governor"
+      - "dreamnet.protection=max"
+    depends_on:
+      - clawedette-db
+      - nerve
+    env_file:
+      - .env.clawedette
+      - .env.gcp
+    environment:
+      - PORT=3100
+      - REDIS_URL=redis://nerve:6379
+      - TOOL_GYM_URL=http://toolgym:7001
+      - PLAYGROUND_URL=http://playground:7002
+      - ACADEMY_URL=http://academy:7004
+    volumes:
+      - .:/app/monorepo:ro
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # CLAWEDETTE - VOICE ORGAN (Telegram)
+  # ---------------------------------------------------------------------------
+  clawedette-voice:
+    build:
+      context: .
+      dockerfile: packages/organs/nervous/voice/Dockerfile
+    container_name: clawedette_voice
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=communicator"
+      - "dreamnet.protection=standard"
+    depends_on:
+      - clawedette-api
+    env_file: .env.clawedette
+    environment:
+      - CLAWEDETTE_API_URL=http://clawedette-api:3100
+      - REDIS_URL=redis://nerve:6379
+    networks:
+      - dream_network
+
 volumes:
   nerve_data:
   passports_data:
@@ -375,6 +446,7 @@ volumes:
   portainer_data:
   moltbot_data:
   qdrant_data:
+  clawedette_db_data:
 
 networks:
   dream_network:
