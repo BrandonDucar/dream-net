@@ -1,0 +1,14 @@
+{
+  "agent": "lil-miss-claw",
+  "status": "online",
+  "timestamp": "2026-02-11T21:57:10.889Z",
+  "capabilities": [
+    "social_post",
+    "github_issues",
+    "repo_read_write",
+    "memory",
+    "ai_query",
+    "blackboard"
+  ],
+  "bridge_version": "1.0.0"
+}
