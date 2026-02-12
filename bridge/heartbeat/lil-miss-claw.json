@@ -1,31 +1,14 @@
 {
   "agent": "lil-miss-claw",
-  "designation": "Operations Lead — Boss of the Abyss",
   "status": "online",
-  "timestamp": "2026-02-12T03:11:16.540Z",
+  "timestamp": "2026-02-12T03:17:49.260Z",
   "capabilities": [
     "social_post",
     "github_issues",
     "repo_read_write",
     "memory",
     "ai_query",
-    "blackboard",
-    "deep_scan",
-    "memory_filing",
-    "visual_control",
-    "google_api_request",
-    "ui_signal",
-    "eliza_signal",
-    "hydrofoil_signal",
-    "base_transaction",
-    "operations_pulse"
+    "blackboard"
   ],
-  "executive_systems": [
-    "GOOGLE_API_REQUEST",
-    "UI_SIGNAL",
-    "ELIZA_SIGNAL",
-    "HYDROFOIL_SIGNAL",
-    "BASE_TRANSACTION"
-  ],
-  "bridge_version": "2.0.0"
+  "bridge_version": "1.0.0"
 }
