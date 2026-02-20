@@ -1,0 +1,93 @@
+# PHASE 1 SERVICES - Add to docker-compose.yml
+
+  # ─────────────────────────────────────────────────────────────
+  # AGENT SPAWN SERVICE - Automated agent deployment
+  # ─────────────────────────────────────────────────────────────
+  agent-spawn-service:
+    build:
+      context: .
+      dockerfile: packages/infrastructure/agent-spawn-service/Dockerfile
+    container_name: dreamnet_agent_spawn_service
+    restart: unless-stopped
+    ports:
+      - "7010:7010"
+    environment:
+      - NODE_ENV=production
+      - PORT=7010
+      - REDIS_URL=redis://nerve:6379
+    depends_on:
+      - nerve
+    networks:
+      - dream_network
+    labels:
+      - "dreamnet.role=infrastructure"
+      - "dreamnet.service=agent-spawn"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7010/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ─────────────────────────────────────────────────────────────
+  # AGENT HEALTH MONITOR - Real-time monitoring & alerting
+  # ─────────────────────────────────────────────────────────────
+  agent-health-monitor:
+    build:
+      context: .
+      dockerfile: packages/infrastructure/agent-health-monitor/Dockerfile
+    container_name: dreamnet_agent_health_monitor
+    restart: unless-stopped
+    ports:
+      - "7011:7011"
+    environment:
+      - NODE_ENV=production
+      - PORT=7011
+      - REDIS_URL=redis://nerve:6379
+    depends_on:
+      - nerve
+    networks:
+      - dream_network
+    labels:
+      - "dreamnet.role=infrastructure"
+      - "dreamnet.service=agent-health"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ─────────────────────────────────────────────────────────────
+  # AGENT MESSAGE BUS - Cross-agent communication (NATS)
+  # ─────────────────────────────────────────────────────────────
+  agent-message-bus:
+    image: nats:2.10-alpine
+    container_name: dreamnet_agent_message_bus
+    restart: unless-stopped
+    ports:
+      - "4222:4222"    # Client port
+      - "6222:6222"    # Cluster port
+      - "8222:8222"    # HTTP monitoring
+    volumes:
+      - ./packages/infrastructure/agent-message-bus/nats.conf:/etc/nats/nats.conf:ro
+      - agent_message_bus_data:/data
+    environment:
+      - SYS_PASS=SysPassword123
+      - DREAMNET_PASS=DreamNetPassword456
+    command: 
+      - "nats-server"
+      - "-c"
+      - "/etc/nats/nats.conf"
+    networks:
+      - dream_network
+    labels:
+      - "dreamnet.role=infrastructure"
+      - "dreamnet.service=message-bus"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8222/varz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# Add to volumes section
+volumes:
+  agent_message_bus_data:

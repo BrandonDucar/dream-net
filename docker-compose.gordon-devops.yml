@@ -1,0 +1,28 @@
+services:
+  gordon-devops:
+    build:
+      context: .
+      dockerfile: packages/agents/gordon-devops/Dockerfile
+    image: dream-net-gordon-devops:latest
+    container_name: dreamnet_gordon_devops
+    restart: unless-stopped
+    user: "0:0"
+    labels:
+      - "dreamnet.role=infrastructure-conductor"
+      - "dreamnet.protection=max"
+    depends_on:
+      - nerve
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - BLACKBOARD_PATH=/workspace/blackboard.md
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./blackboard.md:/workspace/blackboard.md
+    networks:
+      - dream_network
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "node.*dist/index.js"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

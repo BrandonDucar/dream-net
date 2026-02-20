@@ -1,0 +1,150 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dreamnet
+  labels:
+    name: dreamnet
+    managed-by: gordon-devops
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dreamnet-config
+  namespace: dreamnet
+data:
+  # Redis Configuration
+  REDIS_URL: "redis://redis.dreamnet.svc.cluster.local:6379"
+  
+  # Service Endpoints
+  CONTROL_CORE_URL: "http://control-core.dreamnet.svc.cluster.local:7000"
+  ANTIGRAVITY_URL: "http://antigravity.dreamnet.svc.cluster.local:7003"
+  CLAWEDETTE_API_URL: "http://clawedette-api.dreamnet.svc.cluster.local:3100"
+  TOOL_GYM_URL: "http://tool-gym.dreamnet.svc.cluster.local:7001"
+  PLAYGROUND_URL: "http://playground.dreamnet.svc.cluster.local:7002"
+  ACADEMY_URL: "http://academy.dreamnet.svc.cluster.local:7004"
+  QDRANT_URL: "http://qdrant.dreamnet.svc.cluster.local:6333"
+  
+  # NATS Configuration
+  NATS_URL: "nats://nats.dreamnet.svc.cluster.local:4222"
+  NATS_CLUSTER_URL: "nats-cluster://nats.dreamnet.svc.cluster.local:6222"
+  
+  # Database Configuration
+  DATABASE_URL: "postgresql://dreamnet:dreamnet@postgres.dreamnet.svc.cluster.local:5432/dreamnet"
+  
+  # Monitoring
+  PROMETHEUS_URL: "http://prometheus.dreamnet.svc.cluster.local:9090"
+  GRAFANA_URL: "http://grafana.dreamnet.svc.cluster.local:3000"
+  JAEGER_AGENT_HOST: "jaeger-agent.dreamnet.svc.cluster.local"
+  JAEGER_AGENT_PORT: "6831"
+  
+  # Environment
+  ENVIRONMENT: "production"
+  LOG_LEVEL: "info"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dreamnet-sa
+  namespace: dreamnet
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dreamnet-role
+  namespace: dreamnet
+rules:
+# Pods - read/list/watch (for monitoring)
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+# Services - read
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list"]
+# ConfigMaps - read
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list"]
+# Secrets - read
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+# Persistent Volumes - read
+- apiGroups: [""]
+  resources: ["persistentvolumeclaims"]
+  verbs: ["get", "list"]
+# Events - create (for logging)
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["create", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dreamnet-rolebinding
+  namespace: dreamnet
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: dreamnet-role
+subjects:
+- kind: ServiceAccount
+  name: dreamnet-sa
+  namespace: dreamnet
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: dreamnet-pdb
+  namespace: dreamnet
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: dreamnet
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: dreamnet-network-policy
+  namespace: dreamnet
+spec:
+  podSelector:
+    matchLabels:
+      app: dreamnet
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow intra-dreamnet traffic
+  - from:
+    - podSelector:
+        matchLabels:
+          app: dreamnet
+  # Allow from monitoring
+  - from:
+    - podSelector:
+        matchLabels:
+          app: monitoring
+  egress:
+  # Allow to intra-dreamnet
+  - to:
+    - podSelector:
+        matchLabels:
+          app: dreamnet
+  # Allow to kube-dns
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+  # Allow to external APIs (for Gemini, etc.)
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
