@@ -1,0 +1,23 @@
+{
+  "name": "@dreamnet/gordon-devops",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Gordon-DevOps Agent - Autonomous infrastructure monitoring and execution",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "ioredis": "^5.3.2",
+    "dockerode": "^4.0.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/dockerode": "^3.3.29",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
