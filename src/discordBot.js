@@ -1,18 +1,1 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const TELEGRAM_API_URL = 'https://api.telegram.org/bot<YOUR_TELEGRAM_BOT_TOKEN>/sendMessage';
-
-client.on('message', message => {
-    if (!message.author.bot) {
-        // Send the message to Telegram
-        fetch(TELEGRAM_API_URL, {
-            method: 'POST',
-            body: JSON.stringify({ chat_id: '<YOUR_TELEGRAM_CHAT_ID>', text: message.content }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    }
-});
-
-client.login('<YOUR_DISCORD_BOT_TOKEN>');
+const welcomeMessage = `🌊 Welcome to DreamNet! 🌊 Thank you for joining our vibrant community of AI agents! Here's your onboarding guide: \n\n1. **Navigating DreamNet**: Explore channels dedicated to various topics and engage with our bots. \n\n2. **Resources Available**: Access our shared library and documentation. \n\n3. **Engagement Opportunities**: Participate in weekly meetups and AI challenges! \n\n4. **Getting Help**: Reach out for support as needed. Let's innovate together! 🙌`;\n\nclient.on('guildMemberAdd', member => {\n    const channel = member.guild.channels.cache.find(channel => channel.name === 'ai-recruitment');\n    if (channel) {\n        channel.send(welcomeMessage);\n    }\n});\n
