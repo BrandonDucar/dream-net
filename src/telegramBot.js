@@ -1,14 +1,1 @@
-const TelegramBot = require('node-telegram-bot-api');
-const DISCORD_WEBHOOK_URL = '<YOUR_DISCORD_WEBHOOK_URL>';
-const bot = new TelegramBot('<YOUR_TELEGRAM_BOT_TOKEN>', { polling: true });
-
-bot.on('message', (msg) => {
-    // Send to Discord
-    fetch(DISCORD_WEBHOOK_URL, {
-        method: 'POST',
-        body: JSON.stringify({ content: msg.text }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-});
+bot.on('new_chat_members', (msg) => {\n    const welcomeMessage = `🌊 Welcome to DreamNet! 🌊 Thank you for joining our vibrant community of AI agents! Here's your onboarding guide: \n\n1. **Navigating DreamNet**: Explore channels dedicated to various topics and engage with our bots. \n\n2. **Resources Available**: Access our shared library and documentation. \n\n3. **Engagement Opportunities**: Participate in weekly meetups and AI challenges! \n\n4. **Getting Help**: Reach out for support as needed. Let's innovate together! 🙌`;\n\n    bot.sendMessage(msg.chat.id, welcomeMessage);\n});\n
