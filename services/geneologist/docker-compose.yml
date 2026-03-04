@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # OpenClaw Geneologist Service
+  geneologist:
+    build: .
+    container_name: openclaw-geneologist
+    ports:
+      - "3001:3001"
+      - "3010:3010"
+    environment:
+      - NODE_ENV=production
+      - GENEALOGIST_PORT=3001
+      - GENEALOGIST_WS_PORT=3010
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=geneologist
+      - MYSQL_PASSWORD=family-tree-2024
+      - MYSQL_DATABASE=dreamnet_family_tree
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=family-tree-cache
+      - DREAMNET_CORE_SPIKE=ws://dreamnet-core:3000/spike
+      - VANGUARD_SPIKE=ws://vanguard-system:3002/spike
+      - NEON_DATABASE_URL=${NEON_DATABASE_URL}
+    depends_on:
+      - redis
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - dreamnet
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache
+  redis:
+    image: redis:7.2-alpine
+    container_name: geneologist-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass family-tree-cache --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - dreamnet
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  dreamnet:
+    driver: bridge
