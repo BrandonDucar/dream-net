@@ -6,6 +6,8 @@ import { gymStaffService } from './services/GymStaffService';
 import { spikeRunner } from './services/SpikeRunnerService';
 import { sovereignOverride } from './services/SovereignOverride';
 import { rovingAgent } from './services/RovingAgentService';
+import iftttRoutes from './routes/ifttt.js'; // IFTTT Pro Bridge - external nervous system
+import * as SwarmTaskLoop from './services/SwarmTaskLoop.js'; // 
 import Redis from 'ioredis';
 import dotenv from 'dotenv';
 
@@ -363,4 +365,12 @@ app.listen(PORT, '0.0.0.0', () => {
   rovingAgent.start(120_000).catch(err => {
     console.error('🐾 [RovingAgent] Failed to start:', err.message);
   });
+      // START THE SWARM TASK LOOP - the missing link that feeds goals to agents
+      try {
+                SwarmTaskLoop.start();
+                const loopStatus = SwarmTaskLoop.getStatus();
+                console.log(`SwarmTaskLoop ACTIVATED - cycle every ${loopStatus.cycleIntervalMs / 1000}s, ${loopStatus.goalPoolSize} goals in pool`);
+      } catch (e) {
+                console.error('SwarmTaskLoop Failed to start:', e);
+      }
 });
