@@ -1,6 +1,6 @@
 # Multi-Stage Dockerfile for DreamNet
 # Stage 1: Build
-FROM node:22-slim AS builder
+FROM node:20-slim AS builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
@@ -45,7 +45,7 @@ WORKDIR /app/packages/dreamnet-control-core
 RUN pnpm run build
 
 # Stage 2: Runtime
-FROM node:22-slim
+FROM node:20-slim
 
 WORKDIR /app
 
