@@ -1,5 +1,5 @@
-# Railway overrides: pinned to Node 20 for ffi-napi compatibility
-FROM node:20-alpine
+# Railway overrides: pinned to Node 18 for ffi-napi compatibility
+FROM node:18-alpine
 
 RUN apk add --no-cache python3 make g++ libc6-compat curl
 
