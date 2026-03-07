@@ -1,6 +1,7 @@
 # Railway overrides: pinned to Node 18 for ffi-napi compatibility
 FROM node:18-alpine
 
+
 RUN apk add --no-cache python3 make g++ libc6-compat curl
 
 RUN npm install -g pnpm
