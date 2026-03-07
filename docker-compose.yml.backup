@@ -253,42 +253,6 @@ services:
       - dream_network
 
   # ---------------------------------------------------------------------------
-  # LIL MISS CLAW - DESIGNER & TREASURY OPERATIONS
-  # ---------------------------------------------------------------------------
-  lil-miss-claw:
-    build:
-      context: .
-      dockerfile: packages/organs/reproductive/lil-miss-claw/Dockerfile
-    container_name: dreamnet_lil_miss_claw
-    restart: unless-stopped
-    labels:
-      - "dreamnet.role=designer"
-      - "dreamnet.protection=standard"
-    depends_on:
-      - nerve
-      - qdrant
-      - antigravity
-    environment:
-      - NODE_ENV=production
-      - PORT=7005
-      - AGENT_ID=lil-miss-claw
-      - AGENT_NAME=Lil Miss Claw
-      - REDIS_URL=redis://nerve:6379
-      - QDRANT_URL=http://qdrant:6333
-      - ANTIGRAVITY_URL=http://antigravity:7003
-      - HEARTBEAT_INTERVAL=30000
-    ports:
-      - "7005:7005"
-    networks:
-      - dream_network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:7005/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-
-  # ---------------------------------------------------------------------------
   # WOOLYAI INFRASTRUCTURE (etcd + NATS clusters)
   # ---------------------------------------------------------------------------
   
@@ -452,7 +416,7 @@ services:
     environment:
       - PORT=3100
       - REDIS_URL=redis://nerve:6379
-      - TOOL_GYM_URL=http://tool-gym:7001
+      - TOOL_GYM_URL=http://toolgym:7001
       - PLAYGROUND_URL=http://playground:7002
       - ACADEMY_URL=http://academy:7004
     volumes:

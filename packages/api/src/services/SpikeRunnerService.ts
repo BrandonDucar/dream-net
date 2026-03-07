@@ -1,10 +1,12 @@
 import Redis from 'ioredis';
 import axios from 'axios';
+import { tunnelHealthCheck } from './TunnelHealthCheckService';
+import { neynarDataSource } from './NeynarDataSourceService';
 
 /**
  * 🔌 SpikeRunnerService
  * 
- * Runs all 28 sensory spikes on configurable intervals.
+ * Runs all sensory spikes on configurable intervals.
  * Publishes results to Redis channels so Clawedette, Sable, and Lil Miss Claw
  * can subscribe and react to live world data.
  * 
@@ -13,7 +15,7 @@ import axios from 'axios';
  *   spike:weather     - Weather, Solar
  *   spike:defense     - Aegis, Offensive, Defensive, Geopolitical
  *   spike:science     - Science, NASA, Cosmic, Anomaly
- *   spike:social      - News, Culture, Sentiment, Reddit, Neynar
+ *   spike:social      - News, Culture, Sentiment, Reddit, Neynar, Hawk Tunnel, Cloudflare Tunnel
  *   spike:earth       - Earthquake, Agri, Satellite
  *   spike:infra       - Flight, GitHub Trends, Grants
  *   spike:all         - Firehose (every spike result)
@@ -60,6 +62,9 @@ export class SpikeRunnerService {
     this.running = true;
 
     console.log('🔌 [SpikeRunner] Initializing sensory spike network...');
+
+    // Initialize tunnel health checks
+    tunnelHealthCheck.startHealthChecks();
 
     const spikes = this.buildSpikeConfigs();
     console.log(`🔌 [SpikeRunner] ${spikes.length} spikes registered. Starting polling loops.`);
@@ -149,6 +154,7 @@ export class SpikeRunnerService {
     this.timers.forEach(t => clearInterval(t));
     this.timers = [];
     this.running = false;
+    tunnelHealthCheck.stopHealthChecks();
     console.log('🔌 [SpikeRunner] All spike loops stopped.');
   }
 
@@ -283,7 +289,7 @@ export class SpikeRunnerService {
         }
       },
 
-      // === SOCIAL (120s) ===
+      // === SOCIAL (120s-300s) ===
       {
         name: 'NewsSpike',
         category: 'social',
@@ -309,7 +315,7 @@ export class SpikeRunnerService {
         }
       },
 
-      // === INFRA (300s) ===
+      // === INFRA (300s-600s) ===
       {
         name: 'GitHubTrendSpike',
         category: 'infra',
@@ -319,6 +325,94 @@ export class SpikeRunnerService {
           if (!res) return { source: 'github', data: {}, timestamp: Date.now(), confidence: 0.3 };
           const repos = (res.data.items || []).map((r: any) => ({ name: r.full_name, stars: r.stargazers_count, lang: r.language }));
           return { source: 'github', data: { trending: repos }, timestamp: Date.now(), confidence: 0.9 };
+        }
+      },
+
+      // === TUNNEL DATA (via Hawk, Cloudflare, Neynar fallback - 120s) ===
+      {
+        name: 'HawkTunnelSpike',
+        category: 'social',
+        intervalMs: 120_000, // 2 minutes - high-frequency tunnel data
+        fetch: async () => {
+          try {
+            const dataSource = await tunnelHealthCheck.fetchSignalData('trending');
+            return {
+              source: dataSource.tunnel,
+              data: {
+                type: 'tunnel-signal',
+                source: dataSource.tunnel,
+                content: dataSource.data,
+                tunnel_status: tunnelHealthCheck.getStatusReport()
+              },
+              timestamp: dataSource.timestamp,
+              confidence: dataSource.confidence
+            };
+          } catch (err: any) {
+            return {
+              source: 'tunnel-error',
+              data: { error: err.message },
+              timestamp: Date.now(),
+              confidence: 0.1
+            };
+          }
+        }
+      },
+
+      // === NEYNAR BUILDER SENTIMENT (120s) ===
+      {
+        name: 'NeynarBuilderSpike',
+        category: 'social',
+        intervalMs: 120_000, // 2 minutes
+        fetch: async () => {
+          try {
+            const sentiment = await neynarDataSource.getBuilderSentiment();
+            return {
+              source: 'neynar-builders',
+              data: {
+                sentiment,
+                channels: ['onchain', 'development', 'ai-agents', 'solana', 'ethereum', 'llm', 'protocol-labs', 'tools', 'security', 'payments'],
+                builder_focus: 'active'
+              },
+              timestamp: Date.now(),
+              confidence: 0.85
+            };
+          } catch (err: any) {
+            return {
+              source: 'neynar-builders',
+              data: {},
+              timestamp: Date.now(),
+              confidence: 0.1
+            };
+          }
+        }
+      },
+
+      // === NEYNAR TRENDING (300s - lower frequency) ===
+      {
+        name: 'NeynarTrendingSpike',
+        category: 'social',
+        intervalMs: 300_000, // 5 minutes
+        fetch: async () => {
+          try {
+            const trending = await neynarDataSource.getTrending();
+            return {
+              source: 'neynar-trending',
+              data: {
+                trending: trending.trending,
+                channel: trending.channel,
+                total_signals: trending.total_signals
+              },
+              timestamp: trending.timestamp,
+              confidence: 0.80
+            };
+          } catch (err: any) {
+            return {
+              source: 'neynar-trending',
+              data: {},
+              timestamp: Date.now(),
+              confidence: 0.1
+            };
+          }
         }
       }
     ];

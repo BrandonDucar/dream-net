@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  vector-enricher:
+    build:
+      context: ./packages/vector-enricher
+      dockerfile: Dockerfile
+    container_name: dreamnet_vector_enricher
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+      - KAFKA_BROKERS=dreamnet_kafka_1:9092,dreamnet_kafka_2:9092,dreamnet_kafka_3:9092
+      - QDRANT_URL=http://dreamnet_qdrant:6333
+      - POSTGRES_URL=postgresql://postgres:postgres@clawedette_db:5432/dreamnet_vectors
+      - OLLAMA_URL=http://dreamnet_ollama:11434
+    depends_on:
+      - dreamnet_kafka_1
+      - dreamnet_kafka_2
+      - dreamnet_kafka_3
+      - dreamnet_qdrant
+      - clawedette_db
+      - dreamnet_ollama
+    networks:
+      - dream_network
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('ok')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    ports:
+      - "3009:3000"
+
+networks:
+  dream_network:
+    external: true
+    name: dream-net_dream_network
