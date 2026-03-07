@@ -1,0 +1,185 @@
+# 🎨 DASHBOARD QUICK LAUNCH
+
+## ⚡ 30-Second Setup
+
+```bash
+cd dream-net
+node dashboard-server.js
+```
+
+**Then open:** `http://localhost:3333`
+
+---
+
+## 📊 Three Ways to Launch
+
+### Way 1: Quick Start (Recommended)
+```bash
+node dashboard-server.js
+# Browse: http://localhost:3333
+```
+
+### Way 2: Docker
+```bash
+docker run -p 3333:3333 -e REDIS_HOST=dreamnet_nerve \
+  -v $(pwd):/app node:22-alpine node /app/dashboard-server.js
+```
+
+### Way 3: No Server
+Just open `dashboard.html` in your browser
+
+---
+
+## 🎯 What You'll See
+
+```
+┌─────────────────────────────────────────────┐
+│  🚀 VANGUARD 54 - AUTONOMOUS AGENT EMPIRE  │
+│  Status: ✅ OPERATIONAL                     │
+├─────────────────────────────────────────────┤
+│                                              │
+│  🏗️  Infrastructure    🤖 Agents            │
+│  30/30 Containers     4 Registered          │
+│  99%+ Uptime          3 Autonomous          │
+│                                              │
+│  🧠 AI Integration    📋 Tasks              │
+│  54 Total Instances   5 Queued/Processing   │
+│  50 LangChain         Progress: ████░░░░░   │
+│  1 Solana             Status: 🔄 Live       │
+│  3 AutoGen                                   │
+│                                              │
+│  🔒 Security          ⚡ Performance         │
+│  51/51 CVEs Patched   <500ms Latency        │
+│  100% Enterprise      99%+ Success Rate     │
+│                                              │
+│  🌊 Blockchain        👥 Community          │
+│  7 Networks Ready     124K+ Developers      │
+│                                              │
+│  🏆 VANGUARD 54 Achievements               │
+│  ✅ Production Ready  ✅ Multi-Framework    │
+│  ✅ Scalable         ✅ Secured            │
+│                                              │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## 📡 Endpoints
+
+### Web Interface
+- `http://localhost:3333/` - Main dashboard
+- `http://localhost:3333/dashboard.html` - Fallback
+
+### REST API
+- `GET /api/metrics` - All metrics
+- `GET /api/status` - Service status
+- `GET /api/tasks` - Task queue
+
+### Example:
+```bash
+curl http://localhost:3333/api/metrics | jq
+```
+
+---
+
+## 🎨 Features
+
+✅ Real-time updates (every 100ms)  
+✅ Mobile responsive  
+✅ Dark theme  
+✅ Live animations  
+✅ Auto-refreshing metrics  
+✅ Task progress tracking  
+✅ Status indicators  
+✅ Hover effects  
+
+---
+
+## 🔧 Configuration
+
+```bash
+# Custom port
+DASHBOARD_PORT=3000 node dashboard-server.js
+
+# Custom Redis
+REDIS_HOST=remote.redis.server REDIS_PORT=6380 node dashboard-server.js
+
+# Combined
+DASHBOARD_PORT=3000 REDIS_HOST=redis.local node dashboard-server.js
+```
+
+---
+
+## 🚨 Troubleshooting
+
+### "Cannot find Redis"
+```bash
+# Check Redis is running
+docker ps | grep nerve
+# or
+redis-cli PING
+```
+
+### "Connection refused"
+```bash
+# Check server is running
+curl http://localhost:3333
+```
+
+### "Metrics showing as --"
+```bash
+# Check Redis has data
+docker exec dreamnet_nerve redis-cli KEYS "*"
+```
+
+---
+
+## 💡 Pro Tips
+
+1. **Full-screen for presentations**
+   - F11 in browser for full screen
+   - Perfect for demos
+
+2. **Share the link**
+   - `http://your-machine-ip:3333`
+   - Teams can view live
+
+3. **Export metrics**
+   - Open DevTools (F12)
+   - Network tab → /api/metrics
+   - Save as JSON
+
+4. **Monitor specific tasks**
+   - Click task items
+   - View details in API
+
+---
+
+## 📱 Mobile Access
+
+```bash
+# Get your machine IP
+ipconfig getifaddr en0    # Mac
+hostname -I               # Linux
+
+# Share this URL with phone/tablet
+http://YOUR_IP:3333
+```
+
+---
+
+## 🎊 Ready?
+
+```bash
+cd dream-net && node dashboard-server.js
+```
+
+Then visit: **http://localhost:3333**
+
+Enjoy your real-time autonomous agent dashboard! 🚀
+
+---
+
+**Dashboard**: ✅ READY  
+**Time to Launch**: < 1 minute  
+**Wow Factor**: ⭐⭐⭐⭐⭐

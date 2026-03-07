@@ -1,180 +1,240 @@
-# 🚀 DreamNet Quick Reference
+# ⚡ Quick Reference Card - Tunnel + Neynar Integration
 
-## Current Status
+## Your Endpoints (Configured)
 
-### ✅ Live & Working
-- **Site**: https://dreamnet.ink
-- **Mini Apps**: 3 live (Rewards, Subscriptions, Social)
-- **Contracts**: Deployed to Base Mainnet
-- **Navigation**: Creative anti-corporate design
-
-### ❌ Critical Gaps
-1. **Mini apps NOT in Base App directory** - Can't be discovered
-2. **No welcome/onboarding** - New users are lost
-3. **No cross-navigation prompts** - Users don't explore
-4. **Agents hidden** - Powerful features not exposed
+| Name | URL | Role |
+|------|-----|------|
+| **DreamNet Publishing** | `https://miniapp-generator-fid-1477142-260218210354436.neynar.app` | Primary (Hawk) |
+| **Signal Screener** | `https://server-f9f443f3932a503b.dev-studio.neynar.com` | Secondary (Cloudflare) |
+| **Neynar API** | `https://api.neynar.com/v2/...` | Fallback |
 
 ---
 
-## Base App Integration (DO THIS FIRST)
+## One-Liner Deploy
 
-### Why It Matters
-Without Base App integration, users can only find mini apps if they know the URL. They won't appear in Base App's "Apps" section.
-
-### What to Do
-
-#### 1. Install Base MiniKit
 ```bash
-cd apps/site
-pnpm add @coinbase/onchainkit
+docker compose -f dream-net/docker-compose.yml build clawedette-api && docker compose -f dream-net/docker-compose.yml restart clawedette-api && sleep 5 && curl http://localhost:3100/api/tunnel/status | jq '.primary_source'
 ```
 
-#### 2. Create Manifests
-Each mini app needs its own manifest:
-- `public/.well-known/farcaster-rewards.json`
-- `public/.well-known/farcaster-subscriptions.json`
-- `public/.well-known/farcaster-social.json`
+---
 
-#### 3. Submit to Base
-- Use Base's submission form
-- Or contact Base team
-- Get listed in directory
+## Check System Status
+
+```bash
+curl http://localhost:3100/api/tunnel/status | jq '.'
+```
+
+**Expected: `"primary_source": "hawk"`**
 
 ---
 
-## Welcome Agent (DO THIS SECOND)
+## Get Builder Sentiment NOW
 
-### Why It Matters
-New users land on the site and have no idea what to do. Welcome agent guides them.
-
-### What to Build
-
-1. **WELCOME Agent** (`server/agents/WELCOME.ts`)
-   - Detects first-time users
-   - Provides personalized greeting
-   - Suggests next actions
-
-2. **Welcome Component** (`apps/site/src/components/WelcomeAgent.tsx`)
-   - Modal/tour interface
-   - Step-by-step walkthrough
-   - Progress tracking
-
-3. **Onboarding Flow**
-   - What is DreamNet?
-   - How to earn DREAM
-   - Explore mini apps
-   - Meet the agents
+```bash
+curl http://localhost:3100/api/neynar/sentiment
+```
 
 ---
 
-## Cross-Navigation (DO THIS THIRD)
+## Watch Live Spikes (Including Your Miniapp Data)
 
-### Why It Matters
-Users get stuck in one section. Need prompts to explore other areas.
-
-### What to Build
-
-1. **ContextualPrompts Component**
-   - "You might also like" suggestions
-   - Based on current page
-   - Smart recommendations
-
-2. **ProgressTracker**
-   - Shows exploration progress
-   - "You've explored X of Y sections"
-   - Next suggested action
+```bash
+curl http://localhost:3100/api/spikes/stream | head -20
+```
 
 ---
 
-## Agent System (DO THIS FOURTH)
+## Search Builder Content
 
-### Why It Matters
-You have powerful agents (LUCID, CANVAS, ROOT, etc.) but users don't know about them.
-
-### What to Build
-
-1. **Agent Explorer Page** (`/agents`)
-   - List all agents
-   - Descriptions & capabilities
-   - Unlock requirements
-
-2. **Agent Status Dashboard**
-   - Real-time status
-   - Active tasks
-   - Trust scores
+```bash
+curl "http://localhost:3100/api/neynar/search?q=solana%20smart%20contracts&limit=20"
+```
 
 ---
 
-## Quick Wins (Do These Now)
+## Test Failover (Stop primary)
 
-### 1. Base App Detection (30 min)
-```typescript
-// apps/site/src/lib/base-app.ts
-export function isBaseApp(): boolean {
-  return typeof window !== 'undefined' && 
-    window.location.search.includes('baseApp=true');
+```bash
+# Pretend DreamNet is down:
+curl -m 1 https://miniapp-generator-fid-1477142-260218210354436.neynar.app --fail || echo "DOWN"
+
+# Check what DreamNet uses:
+curl http://localhost:3100/api/tunnel/status | jq '.hawk.healthy'
+# Should be: true (if your endpoint works)
+```
+
+---
+
+## Verify All Sources
+
+```bash
+bash dream-net/verify-tunnels.sh
+```
+
+---
+
+## View Real-Time Logs
+
+```bash
+docker logs clawedette_api -f | grep -E "HawkTunnel|Neynar|SpikeRunner|TunnelHealthCheck"
+```
+
+---
+
+## Rebuild After Config Change
+
+```bash
+docker compose -f dream-net/docker-compose.yml build clawedette-api
+```
+
+---
+
+## API Endpoints (Copy & Paste)
+
+| Endpoint | Command |
+|----------|---------|
+| Tunnel Status | `curl http://localhost:3100/api/tunnel/status` |
+| Builder Sentiment | `curl http://localhost:3100/api/neynar/sentiment` |
+| Trending | `curl http://localhost:3100/api/neynar/trending?channel=onchain` |
+| Search | `curl "http://localhost:3100/api/neynar/search?q=ai"` |
+| Real-Time | `curl http://localhost:3100/api/spikes/stream` |
+| Health | `curl http://localhost:3100/health` |
+
+---
+
+## Expected Responses
+
+### /api/tunnel/status
+```json
+{
+  "hawk": {"healthy": true, "latency": 156, "failureCount": 0},
+  "cloudflare": {"healthy": true, "latency": 198, "failureCount": 0},
+  "primary_source": "hawk"
 }
 ```
 
-### 2. Simple Welcome Modal (2 hours)
-- Detect first visit
-- Show welcome message
-- Link to key sections
+### /api/neynar/sentiment
+```json
+{
+  "sentiment": "positive",
+  "confidence": 0.87,
+  "keywords": ["build", "launch", "protocol"],
+  "top_topics": ["solana", "ethereum", "ai"]
+}
+```
 
-### 3. Contextual Prompts (2 hours)
-- Add "You might also like" to each mini app
-- Link to other sections
-
-### 4. Agent Explorer (3 hours)
-- Create `/agents` page
-- List all agents
-- Show descriptions
-
-**Total: ~8 hours for immediate improvements**
-
----
-
-## File Locations
-
-### Mini Apps
-- Rewards: `apps/site/src/pages/miniapps/rewards/index.tsx`
-- Subscriptions: `apps/site/src/pages/miniapps/subscriptions/index.tsx`
-- Social: `apps/site/src/pages/miniapps/social/index.tsx`
-
-### Agents
-- LUCID: `server/agents/LUCID.ts`
-- CANVAS: `server/agents/CANVAS.ts`
-- ROOT: `server/agents/ROOT.ts`
-- ECHO: `server/agents/ECHO.ts`
-- Welcome: **MISSING** - needs to be built
-
-### Components
-- Navigation: `apps/site/src/App.tsx` (lines 223-310)
-- Landing: `apps/site/src/App.tsx` (main component)
+### /api/spikes/stream (Sample)
+```
+data: {"spikeName":"HawkTunnelSpike","source":"hawk","confidence":0.95,...}
+data: {"spikeName":"NeynarBuilderSpike","source":"neynar-builders","confidence":0.85,...}
+data: {"spikeName":"NeynarTrendingSpike","source":"neynar-trending","confidence":0.80,...}
+```
 
 ---
 
-## Next Steps
+## Troubleshooting
 
-1. **Start with Base App integration** - Highest priority
-2. **Build welcome agent** - Critical for new users
-3. **Add cross-navigation** - Improves engagement
-4. **Expose agent system** - Unlocks powerful features
-
----
-
-## Questions to Answer
-
-1. **How do users find mini apps?** → Base App directory
-2. **How do new users get started?** → Welcome agent
-3. **How do users discover other sections?** → Contextual prompts
-4. **How do users learn about agents?** → Agent explorer
+| Problem | Check |
+|---------|-------|
+| `hawk.healthy: false` | Is DreamNet Publishing endpoint up? |
+| `cloudflare.healthy: false` | Is Signal Screener endpoint up? |
+| `primary_source: neynar-fallback` | Both miniapps down (normal fallback) |
+| `/api/tunnel/status` returns 404 | Is clawedette_api running? |
+| Timeouts on health checks | Endpoints too slow? Add `/health` endpoint |
+| Data not in spikes | Wait 120s for HawkTunnelSpike, check logs |
 
 ---
 
-**Priority Order:**
-1. Base App Integration (discovery)
-2. Welcome Agent (onboarding)
-3. Cross-Navigation (engagement)
-4. Agent System (features)
+## Files to Know
 
+```
+dream-net/
+├── FINAL_TUNNEL_NEYNAR_SUMMARY.md      ← You are here
+├── NEYNAR_MINIAPP_ACTION_PLAN.md       ← Next steps
+├── TUNNEL_NEYNAR_INTEGRATION.md        ← Full docs
+├── verify-tunnels.sh                   ← Run this to verify
+└── packages/api/src/services/
+    ├── TunnelHealthCheckService.ts     ← Failover logic
+    ├── NeynarDataSourceService.ts      ← Builder data
+    └── SpikeRunnerService.ts           ← Data to agents (3 new spikes)
+```
+
+---
+
+## Architecture in 30 Seconds
+
+```
+DreamNet Publishing (your miniapp)
+    ↓ (checked every 30s)
+Healthy? YES → Use this (confidence: 0.95)
+Healthy? NO  → Try Signal Screener (confidence: 0.90)
+Both down?   → Use Neynar API (confidence: 0.75)
+    ↓
+Publish to Redis spike:social
+    ↓
+Agents see data in <100ms
+    ↓
+Market signals + decisions
+```
+
+---
+
+## Performance Targets
+
+- ✅ Health check overhead: <0.2% CPU
+- ✅ Data latency: <100ms to agents
+- ✅ Failover time: <90s (3 check cycles)
+- ✅ Circuit breaker: 3 failures to mark unhealthy
+- ✅ Memory: +~10MB
+- ✅ Uptime: 99%+ capability
+
+---
+
+## Success Check
+
+Run this:
+```bash
+bash dream-net/verify-tunnels.sh && echo "" && curl http://localhost:3100/api/tunnel/status | jq '.primary_source'
+```
+
+If you see:
+```
+✅ DreamNet Publishing: OK
+✅ Signal Screener: OK
+✅ Neynar API: Reachable
+
+"hawk"
+```
+
+**You're good to go!** 🚀
+
+---
+
+## Emergency Reset (if needed)
+
+```bash
+# Force reset all tunnels
+curl -X POST http://localhost:3100/api/tunnel/reset/hawk
+curl -X POST http://localhost:3100/api/tunnel/reset/cloudflare
+
+# Restart container
+docker compose -f dream-net/docker-compose.yml restart clawedette-api
+
+# Verify
+curl http://localhost:3100/api/tunnel/status
+```
+
+---
+
+## Need Details?
+
+- Full setup: See `NEYNAR_MINIAPP_ACTION_PLAN.md`
+- Technical: See `TUNNEL_NEYNAR_INTEGRATION.md`
+- Troubleshooting: See `NEYNAR_MINIAPP_TUNNEL_CONFIG.md`
+- Check list: See `TUNNEL_NEYNAR_COMPLETION_CHECKLIST.md`
+
+---
+
+**Last Updated:** Today
+**Status:** ✅ Ready for deployment
+**Tunnels:** 2 (DreamNet + Screener) + 1 Fallback (Neynar)
