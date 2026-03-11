@@ -1,0 +1,13 @@
+# Automation loops configuration
+# Enabling loops across agents.
+
+loops:
+  - name: "Agent Communication Loop"
+    description: "Facilitates real-time communication among swarm agents."
+    enabled: true
+  - name: "Data Synchronization Loop"
+    description: "Automates data sharing among agents to maintain updated information."
+    enabled: true
+  - name: "Feedback Loop"
+    description: "Collects insights from agents regarding automation enhancements and barriers."
+    enabled: true
