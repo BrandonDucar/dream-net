@@ -24,11 +24,18 @@ class OllamaTaskManager:
             data=payload)
         return response
 
+    def handle_webhook(self, webhook_data):
+        # Logic for processing incoming webhooks
+        # Example: triggering email or SMS notifications based on webhook events
+        if webhook_data['event'] == 'new_message':
+            self.send_sms(webhook_data['to'], 'You have a new message!')
+        return
+
 
 def main():
     task_manager = OllamaTaskManager()
-    task_manager.send_email('user@example.com', 'Test Subject', 'Hello from DreamNet!')
-    task_manager.send_sms('+1234567890', 'SMS from DreamNet!')
+    # Simulate a webhook event
+    task_manager.handle_webhook({'event': 'new_message', 'to': '+1234567890'})
 
 if __name__ == '__main__':
     main()
