@@ -15,6 +15,9 @@
       "zod": "3.25.75",
       "zod-to-json-schema": "3.25.0"
     },
+    "neverBuiltDependencies": [
+      "ffi-napi"
+    ],
     "packageExtensions": {
       "@virtuals-protocol/acp-node": {
         "dependencies": {
