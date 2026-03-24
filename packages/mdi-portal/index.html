@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamNet MDI | Sovereign Swarm Portal</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="dream-resonance">
+    <div class="glass-bg"></div>
+    
+    <header>
+        <div class="logo">
+            <span class="pulse-icon">🧬</span>
+            <h1>DREAMNET MDI</h1>
+        </div>
+        <div class="status-bar">
+            <span class="status-pill green">🟢 RESONANT</span>
+            <span class="resonance-label">MODE: CHEDDAR CHEEZE</span>
+        </div>
+    </header>
+
+    <main>
+        <section class="visual-grid">
+            <div class="registry-container glass" id="swarm-registry">
+                <h3>👥 Swarm Registry (502 Total)</h3>
+                <div class="scroll-box-small">
+                    <table class="registry-table">
+                        <thead>
+                            <tr><th>Agent ID</th><th>Role</th><th>Wallet</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="registry-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="infra-container glass" id="infra-status">
+                <h3>🏗️ Infrastructure Grid</h3>
+                <div class="infra-stats">
+                    <div class="infra-item">
+                        <span class="label">BigQuery</span>
+                        <span class="value cyan">dreamnet-analytics</span>
+                        <div class="sub">Connected Sheets: ACTIVE</div>
+                    </div>
+                    <div class="infra-item">
+                        <span class="label">Netlify</span>
+                        <span class="value green">DreamNet Sovereign Grid</span>
+                        <div class="sub">Projects: 12 | Credits: 🟢 STABLE</div>
+                    </div>
+                    <div class="infra-item">
+                        <span class="label">Cloudflare</span>
+                        <span class="value purple">mdi.dreamnet.ink</span>
+                        <div class="sub">Edge Workers: 1 (Humming)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card glass">
+                <div class="card-header">
+                    <h3 class="card-title">Legion Pulse</h3>
+                    <div class="status-indicator online"></div>
+                </div>
+                <div id="heartbeat-viz" class="viz-container">
+                    <!-- Standard pulse viz -->
+                </div>
+            </div>
+
+            <!-- Sonic Resonance: DreamStar DJ Module -->
+            <div class="card glass sonic-resonance">
+                <div class="card-header">
+                    <h3 class="card-title">Sonic Resonance</h3>
+                    <div id="dj-status" class="status-indicator live-pulse"></div>
+                    <span class="status-text cyber-blink">DREAMSTAR LIVE</span>
+                </div>
+                <div class="sonic-viz-container">
+                    <div class="vibe-bars">
+                        <div class="bar bar-1"></div>
+                        <div class="bar bar-2"></div>
+                        <div class="bar bar-3"></div>
+                        <div class="bar bar-4"></div>
+                        <div class="bar bar-5"></div>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <div class="track-label">CURRENT_VIBE</div>
+                    <div id="track-name" class="track-title">SYNCHRONIZED_CHEDDAR</div>
+                    <div class="track-metadata">Genre: Sovereign Synth • Mood: Unstoppable</div>
+                </div>
+                <div class="dj-controls">
+                    <button id="toggle-audio" class="btn-primary">SYNC_AUDIO</button>
+                    <button id="sonic-link" class="btn-secondary">SONIC_LINK 🔗</button>
+                    <div class="vibe-level">Vibe Level: <span id="vibe-val">85%</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="visual-grid bottom-grid">
+            <div class="heatmap-container glass" id="helium-heatmap">
+                <h3>LEGION</h3>
+                <p class="big-number">502</p>
+                <div class="stat-meta">Active Agents</div>
+            </div>
+            <div class="stat-card glass" id="gnosis-wealth">
+                <h3>TREASURY</h3>
+                <p class="big-number">45.0M</p>
+                <div class="stat-meta">$CLAWSTORE</div>
+            </div>
+            <div class="stat-card glass" id="swarm-health">
+                <h3>HEALTH</h3>
+                <p class="big-number">98.4%</p>
+                <div class="stat-meta">Aggregate Sync</div>
+            </div>
+        </section>
+
+                    <span class="timestamp">[23:14:12]</span>
+                    <span class="category">PULSE</span>
+                    <span class="message">Heartbeat synchronized with GWS Master Sheet.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-meta">
+            <span>SOVEREIGN PORTAL | ATTESATION: PROVENANCE_MANIFEST_PHASE_12</span>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
