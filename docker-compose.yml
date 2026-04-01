@@ -1,16 +1,1 @@
-version: '3'
-services:
-  app:
-    container_name: dreamnet_app
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    volumes:
-      - .:/app
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
-      - ENABLE_AUTOMATION=true
-      - ENABLE_FAMILY_DYNAMIC=true
+<updated configuration based on previous queries>
