@@ -1,0 +1,74 @@
+name: CI Smoke Test
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build server
+        run: pnpm --filter @dreamnet/server build
+      
+      - name: Start server
+        run: |
+          PORT=3000 pnpm --filter @dreamnet/server start &
+          echo $! > server.pid
+        env:
+          NODE_ENV: test
+      
+      - name: Wait for server to be ready
+        run: |
+          timeout=30
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            if curl -f -s http://localhost:3000/health > /dev/null 2>&1; then
+              echo "Server is healthy!"
+              exit 0
+            fi
+            echo "Waiting for server... ($elapsed/$timeout seconds)"
+            sleep 2
+            elapsed=$((elapsed + 2))
+          done
+          echo "Server failed to become healthy within $timeout seconds"
+          exit 1
+      
+      - name: Test health endpoint
+        run: |
+          response=$(curl -s http://localhost:3000/health)
+          echo "$response" | jq .
+          if echo "$response" | jq -e '.ok == true' > /dev/null; then
+            echo "✅ Health check passed"
+          else
+            echo "❌ Health check failed"
+            exit 1
+          fi
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) || true
+            rm server.pid
+          fi
+

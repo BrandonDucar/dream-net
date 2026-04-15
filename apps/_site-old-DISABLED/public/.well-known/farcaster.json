@@ -1,0 +1,17 @@
+{
+  "name": "DreamNet Rewards Hub",
+  "subtitle": "Earn DREAM tokens through daily rewards",
+  "description": "Claim daily and weekly DREAM + SHEEP rewards, track streaks, and convert internal rewards to on-chain tokens on Base.",
+  "iconUrl": "https://dreamnet.ink/icon.png",
+  "splashImageUrl": "https://dreamnet.ink/splash.png",
+  "splashBackgroundColor": "#06060a",
+  "webUrl": "https://dreamnet.ink/miniapps/rewards",
+  "appUrl": "https://dreamnet.ink/miniapps/rewards",
+  "screenshots": [
+    "https://dreamnet.ink/screenshots/rewards-1.png"
+  ],
+  "tags": ["rewards", "tokens", "gamification", "base"],
+  "category": "Finance",
+  "version": "1.0.0"
+}
+

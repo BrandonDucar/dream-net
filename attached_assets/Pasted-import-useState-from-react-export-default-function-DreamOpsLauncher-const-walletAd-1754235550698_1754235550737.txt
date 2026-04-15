@@ -1,0 +1,119 @@
+import { useState } from 'react';
+
+export default function DreamOpsLauncher() {
+  const [walletAddress, setWalletAddress] = useState('');
+  const [walletResult, setWalletResult] = useState(null);
+  const [dreamTitle, setDreamTitle] = useState('');
+  const [dreamTags, setDreamTags] = useState('');
+  const [outputLog, setOutputLog] = useState<string[]>([]);
+  const [activeAgents, setActiveAgents] = useState<string[]>([]);
+
+  const log = (msg: string) => setOutputLog(prev => [...prev, msg]);
+
+  async function scanWallet() {
+    log(`🪞 Scanning wallet: ${walletAddress}`);
+    const res = await fetch('/api/echo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ walletAddress })
+    });
+    const data = await res.json();
+    if (data.result) {
+      setWalletResult(data.result);
+      setActiveAgents(data.result.unlockedAgents);
+      log(`✅ Wallet scored: ${data.result.trustLevel} (${data.result.score})`);
+      log(`🔓 Agents unlocked: ${data.result.unlockedAgents.join(', ')}`);
+    }
+  }
+
+  async function launchDreamCore() {
+    log(`🌱 LUCID routing based on goal: Build Dream Core`);
+    const lucRes = await fetch('/api/lucid', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        currentState: 'Dream submitted',
+        goal: 'Build Dream Core',
+        availableAgents: activeAgents
+      })
+    });
+    const lucData = await lucRes.json();
+    const nextAgent = lucData.routedTo;
+    log(`🤖 LUCID routed to: ${nextAgent}`);
+
+    if (activeAgents.includes('CANVAS')) {
+      const canvasRes = await fetch('/api/canvas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dreamTitle,
+          dreamTags: dreamTags.split(',').map(tag => tag.trim()),
+          includeMintButton: activeAgents.includes('WING'),
+          theme: 'neon'
+        })
+      });
+      const canvasData = await canvasRes.json();
+      log(`🎨 CANVAS rendered component:\n${canvasData.componentCode}`);
+    }
+
+    if (activeAgents.includes('ROOT')) {
+      const rootRes = await fetch('/api/root', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          dreamTitle,
+          storageType: 'json',
+          includeAdminAccess: true
+        })
+      });
+      const rootData = await rootRes.json();
+      log(`🌱 ROOT generated schema:\n${rootData.schema}`);
+    }
+
+    if (activeAgents.includes('CRADLE')) {
+      log(`🌀 CRADLE unlocked — evolution system not yet wired.`);
+    }
+
+    if (activeAgents.includes('WING')) {
+      log(`🪽 WING unlocked — mint/messaging layer coming soon.`);
+    }
+
+    log(`✅ Dream Core built successfully.`);
+  }
+
+  return (
+    <div style={{ maxWidth: '600px', margin: '0 auto', fontFamily: 'monospace' }}>
+      <h2>🚀 DreamOps Launcher</h2>
+
+      <input
+        placeholder="Your Wallet Address"
+        value={walletAddress}
+        onChange={e => setWalletAddress(e.target.value)}
+        style={{ width: '100%', padding: 8, marginBottom: 10 }}
+      />
+      <button onClick={scanWallet}>🪞 Scan Wallet with ECHO</button>
+
+      <hr />
+
+      <input
+        placeholder="Dream Title"
+        value={dreamTitle}
+        onChange={e => setDreamTitle(e.target.value)}
+        style={{ width: '100%', padding: 8, marginTop: 10 }}
+      />
+      <input
+        placeholder="Tags (comma separated)"
+        value={dreamTags}
+        onChange={e => setDreamTags(e.target.value)}
+        style={{ width: '100%', padding: 8, marginBottom: 10 }}
+      />
+      <button onClick={launchDreamCore}>🌱 Launch Dream Core</button>
+
+      <hr />
+      <h3>📡 Output Log</h3>
+      <pre style={{ background: '#111', color: '#0f0', padding: 10, minHeight: 200 }}>
+        {outputLog.map((line, i) => <div key={i}>{line}</div>)}
+      </pre>
+    </div>
+  );
+}

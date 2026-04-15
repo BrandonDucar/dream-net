@@ -1,0 +1,32 @@
+{
+  "name": "@dreamnet/dreamnet-os-core",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "private": true,
+  "dependencies": {
+    "@dreamnet/utils": "workspace:*",
+    "@dreamnet/dream-vault": "workspace:*",
+    "@dreamnet/dream-shop": "workspace:*",
+    "@dreamnet/field-layer": "workspace:*",
+    "@dreamnet/dreambet-core": "workspace:*",
+    "@dreamnet/zen-garden-core": "workspace:*",
+    "@dreamnet/civic-panel-core": "workspace:*",
+    "@dreamnet/dream-tank-core": "workspace:*",
+    "@dreamnet/liquidity-engine": "workspace:*",
+    "@dreamnet/social-hub-core": "workspace:*",
+    "@dreamnet/init-ritual-core": "workspace:*",
+    "@dreamnet/economic-engine-core": "workspace:*",
+    "@dreamnet/agent-registry-core": "workspace:*",
+    "@dreamnet/neural-mesh": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+

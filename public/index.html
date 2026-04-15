@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamNet - The Autonomous Intelligence Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>DreamNet</h1>
+                <p>Autonomous Intelligence</p>
+            </div>
+            <div id="live-status" class="live-status-box">
+                <p>SYSTEM STATUS: <span id="status-light" class="blinking-green"></span> <span id="status-text">OPERATIONAL</span></p>
+                <div id="status-details">
+                    <p>Spend: <span id="spend-usd">$0.00</span></p>
+                    <p>Cap: <span id="cap-usd">$0.00</span></p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <h2 id="headline"></h2>
+                <p class="subtitle">DreamNet is a closed-loop, autonomous intelligence platform that builds, deploys, and manages digital systems. Witness the future of creation.</p>
+                <div class="cta-buttons">
+                    <a href="#capabilities" class="cta-primary">Explore Capabilities</a>
+                </div>
+            </section>
+
+            <section id="capabilities" class="features">
+                <h3>Core Capabilities</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Autonomous Evolution</h4>
+                        <p>The system constantly analyzes performance and user data to identify opportunities for improvement, proposing and deploying upgrades autonomously.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Agent-Based Architecture</h4>
+                        <p>New capabilities are seamlessly integrated by deploying specialized AI agents that join the network without disrupting core operations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Automated UI Construction</h4>
+                        <p>The UI Construction Team can autonomously generate and deploy new user interface components and entire pages from high-level specifications.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Self-Healing & Conflict Resolution</h4>
+                        <p>The DeclarationsMonitor and AutonomousHealing agents constantly scan for conflicts and potential errors, automatically generating and applying fixes.</p>
+                    </div>
+                     <div class="feature-card">
+                        <h4>Hybrid Credit Meter</h4>
+                        <p>All costly operations are metered, with built-in budgetary controls to prevent overspending. The system respects throttling and hard stops.</p>
+                    </div>
+                     <div class="feature-card">
+                        <h4>Continuous Deployment</h4>
+                        <p>A fully automated, zero-downtime deployment pipeline to production, including system validation, database migration, and health checks.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

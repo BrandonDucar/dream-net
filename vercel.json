@@ -1,0 +1,18 @@
+{
+  "_comment": "LEGACY: Vercel configuration for frontend-only deployment. Primary deployment is now Google Cloud Run (see deploy:gcp). This file is kept for backward compatibility but is not required for GCP deployment.",
+  "version": 2,
+  "rootDirectory": "client",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.dreamnet.ink/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

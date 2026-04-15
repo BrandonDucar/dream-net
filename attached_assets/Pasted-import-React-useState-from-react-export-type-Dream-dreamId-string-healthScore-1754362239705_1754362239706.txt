@@ -1,0 +1,58 @@
+import React, { useState } from 'react';
+
+export type Dream = {
+  dreamId: string;
+  healthScore: number;
+  engagementScore: number;
+  remixLineage: { id: string; title: string }[];
+  metrics: { views: number; likes: number; remixes: number; shares: number; comments: number };
+  emotionalProfile: { primaryEmotion: string; secondaryEmotions: string[]; intensityScore: number };
+  communityImpact: { influenceRadius: number; networkConnections: number; crossPlatformMentions: number; collaborationRequests: number };
+  evolutionPath: { generationLevel: number; branchingFactor: number; divergenceScore: number; convergencePoints: number };
+  viralityMetrics: { shareVelocity: number; peakMomentum: string; currentTrend: string; saturationLevel: number };
+};
+
+const emotionColors: Record<string, string> = {
+  ambition: 'from-yellow-400 via-red-500 to-pink-500',
+  curiosity: 'from-blue-400 via-purple-500 to-indigo-600',
+  hope: 'from-green-300 via-emerald-400 to-teal-500',
+};
+
+export default function DreamNodeCard({ dream }: { dream: Dream }) {
+  const glow = emotionColors[dream.emotionalProfile.primaryEmotion] || 'from-gray-300 via-gray-400 to-gray-500';
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      className="relative w-80 p-1 rounded-2xl transition-transform duration-300 transform hover:scale-105"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className={`bg-gradient-to-r ${glow} p-1 rounded-2xl`}>
+        <div className="bg-gray-900 p-4 rounded-xl text-white relative overflow-hidden">
+          <h2 className="text-xl font-bold mb-1">🌟 {dream.remixLineage[0]?.title}</h2>
+          <p className="text-xs text-gray-400 mb-3">ID: {dream.dreamId}</p>
+
+          <div className="text-sm space-y-1">
+            <p>❤️ Likes: {dream.metrics.likes}</p>
+            <p>🔁 Remixes: {dream.metrics.remixes}</p>
+            <p>📈 Trend: {dream.viralityMetrics.currentTrend}</p>
+            <p>🎭 Emotion: {dream.emotionalProfile.primaryEmotion}</p>
+            <p>🔥 Intensity: {dream.emotionalProfile.intensityScore}</p>
+            <p>🧠 Health: {dream.healthScore}</p>
+            <p>💥 Engagement: {dream.engagementScore}</p>
+          </div>
+
+          {/* Hover Actions Overlay */}
+          {hovered && (
+            <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center gap-2 rounded-xl transition-all duration-300">
+              <button className="px-4 py-1 bg-white text-black rounded-full text-sm hover:bg-gray-200">🔁 Remix</button>
+              <button className="px-4 py-1 bg-white text-black rounded-full text-sm hover:bg-gray-200">🧬 Lineage</button>
+              <button className="px-4 py-1 bg-white text-black rounded-full text-sm hover:bg-gray-200">⭐ Save</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

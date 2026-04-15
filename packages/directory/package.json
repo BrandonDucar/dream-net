@@ -1,0 +1,41 @@
+{
+  "name": "@dreamnet/directory",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./registry": {
+      "import": "./src/registry.ts",
+      "types": "./src/registry.ts"
+    },
+    "./bootstrap": {
+      "import": "./src/bootstrap.ts",
+      "types": "./src/bootstrap.ts"
+    },
+    "./idGenerator": {
+      "import": "./src/idGenerator.ts",
+      "types": "./src/idGenerator.ts"
+    },
+    "./types": {
+      "import": "./src/types.ts",
+      "types": "./src/types.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "echo 'Build step - using TypeScript directly for now'"
+  },
+  "dependencies": {
+    "@dreamnet/port-governor": "workspace:*",
+    "@dreamnet/dreamnet-control-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

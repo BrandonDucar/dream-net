@@ -1,0 +1,17 @@
+{
+  "name": "@dreamnet/inbox-squared-core",
+  "version": "1.0.0",
+  "description": "AI-powered communication copilot for intelligent email outreach",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "googleapis": "^128.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
+

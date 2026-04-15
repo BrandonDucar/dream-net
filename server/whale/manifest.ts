@@ -1,0 +1,121 @@
+/**
+ * Whale Pack Manifest
+ * Describes all mini-apps and their capabilities
+ */
+
+import { MiniAppId } from './types';
+
+export interface MiniAppManifest {
+  id: MiniAppId;
+  label: string;
+  type: 'contract' | 'utility' | 'ops' | 'onboarding' | 'creative';
+  route: string;
+  metricsEndpoint?: string;
+  actionsEndpoint?: string;
+  maxAutoActionsPerHour: number;
+  description: string;
+  category: 'identity' | 'governance' | 'utility' | 'creative' | 'ops' | 'onboarding';
+}
+
+export const WHALE_MANIFEST: MiniAppManifest[] = [
+  {
+    id: 'passport',
+    label: 'Dream Passport Mint',
+    type: 'contract',
+    route: '/mini-apps/passport-mint',
+    metricsEndpoint: '/api/whale/metrics/passport',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 10,
+    description: 'Mint and manage Dream State passport NFTs',
+    category: 'identity',
+  },
+  {
+    id: 'governance',
+    label: 'Dream State Governance',
+    type: 'contract',
+    route: '/mini-apps/governance',
+    metricsEndpoint: '/api/whale/metrics/governance',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 5,
+    description: 'Create proposals and vote on Dream State decisions',
+    category: 'governance',
+  },
+  {
+    id: 'vault',
+    label: 'Dream Vault',
+    type: 'contract',
+    route: '/mini-apps/vault',
+    metricsEndpoint: '/api/whale/metrics/vault',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 20,
+    description: 'Create and manage Dream Vaults for revenue sharing',
+    category: 'utility',
+  },
+  {
+    id: 'bounty',
+    label: 'Bounty Board',
+    type: 'contract',
+    route: '/mini-apps/bounty',
+    metricsEndpoint: '/api/whale/metrics/bounty',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 30,
+    description: 'Post and claim bounties for Dream State tasks',
+    category: 'utility',
+  },
+  {
+    id: 'timeCapsule',
+    label: 'Dream Time Capsule',
+    type: 'contract',
+    route: '/mini-apps/time-capsule',
+    metricsEndpoint: '/api/whale/metrics/timeCapsule',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 15,
+    description: 'Lock dreams with future unlock dates',
+    category: 'creative',
+  },
+  {
+    id: 'prediction',
+    label: 'Dream Prediction Market',
+    type: 'contract',
+    route: '/mini-apps/prediction-market',
+    metricsEndpoint: '/api/whale/metrics/prediction',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 10,
+    description: 'Bet on dream outcomes and network events',
+    category: 'utility',
+  },
+  {
+    id: 'dreamscopeOps',
+    label: 'DreamScope Ops Console',
+    type: 'ops',
+    route: '/mini-apps/dreamscope-ops',
+    metricsEndpoint: '/api/whale/metrics/dreamscopeOps',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 100,
+    description: 'Monitor system health and operations',
+    category: 'ops',
+  },
+  {
+    id: 'onboarding',
+    label: 'Onboarding Wizard',
+    type: 'onboarding',
+    route: '/mini-apps/onboarding',
+    metricsEndpoint: '/api/whale/metrics/onboarding',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 50,
+    description: 'Guide new users through Dream State setup',
+    category: 'onboarding',
+  },
+  {
+    id: 'creatorStudio',
+    label: 'Creator Studio',
+    type: 'creative',
+    route: '/mini-apps/creator-studio',
+    metricsEndpoint: '/api/whale/metrics/creatorStudio',
+    actionsEndpoint: '/api/whale/actions',
+    maxAutoActionsPerHour: 25,
+    description: 'Create and manage dreams',
+    category: 'creative',
+  },
+];
+

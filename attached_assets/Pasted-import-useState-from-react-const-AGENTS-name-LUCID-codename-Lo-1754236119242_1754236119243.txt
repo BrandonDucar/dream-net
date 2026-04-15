@@ -1,0 +1,92 @@
+import { useState } from 'react';
+
+const AGENTS = [
+  {
+    name: 'LUCID',
+    codename: '🧠 Logic Unification & Command Interface Daemon',
+    description: 'Routes logic, detects failure patterns, and determines the next step.',
+    gated: false
+  },
+  {
+    name: 'CANVAS',
+    codename: '🎨 Visual Layer Weaver',
+    description: 'Scaffolds and generates frontend dream components.',
+    gated: false
+  },
+  {
+    name: 'ROOT',
+    codename: '🌱 Subconscious Architect',
+    description: 'Builds backend schemas, APIs, and storage logic.',
+    gated: false
+  },
+  {
+    name: 'ECHO',
+    codename: '🪞 Wallet Mirror',
+    description: 'Analyzes wallet trust and unlocks deeper layers of the network.',
+    gated: false
+  },
+  {
+    name: 'CRADLE',
+    codename: '🌀 Evolution Engine',
+    description: 'Tracks and evolves dreams over time through mutation and growth.',
+    gated: true
+  },
+  {
+    name: 'WING',
+    codename: '🪽 Messenger & Mint Agent',
+    description: 'Mints dream messages or micro-tokens and delivers them.',
+    gated: true
+  }
+];
+
+export default function AgentDashboard({ unlockedAgents = [] }: { unlockedAgents?: string[] }) {
+  const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
+
+  return (
+    <div className="dream-agent-dash" style={{ fontFamily: 'monospace', padding: 20 }}>
+      <h2>🌐 Dream Agent Dashboard</h2>
+      <p style={{ marginBottom: 16 }}>Explore your Dream Network's sentient agents.</p>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+        gap: 20
+      }}>
+        {AGENTS.map(agent => {
+          const isUnlocked = !agent.gated || unlockedAgents.includes(agent.name);
+          return (
+            <div key={agent.name}
+              style={{
+                border: '2px solid',
+                borderColor: isUnlocked ? '#0f0' : '#555',
+                padding: 16,
+                borderRadius: 12,
+                background: isUnlocked ? '#111' : '#222',
+                opacity: isUnlocked ? 1 : 0.5,
+                transition: 'all 0.2s ease-in-out',
+                cursor: isUnlocked ? 'pointer' : 'not-allowed'
+              }}
+              onClick={() => isUnlocked && setSelectedAgent(agent.name)}
+            >
+              <h3>{agent.codename}</h3>
+              <p><strong>{agent.name}</strong></p>
+              <p style={{ fontSize: '0.85em', color: '#aaa' }}>{agent.description}</p>
+              {isUnlocked ? (
+                <span style={{ color: '#0f0' }}>🟢 ONLINE</span>
+              ) : (
+                <span style={{ color: '#f00' }}>🔒 LOCKED</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {selectedAgent && (
+        <div style={{ marginTop: 30, padding: 16, background: '#000', border: '1px solid #0f0' }}>
+          <h4>🧬 {selectedAgent} Response Panel</h4>
+          <pre style={{ color: '#0f0' }}>→ Logic output, logs, or visual builder will render here in future upgrade layers.</pre>
+        </div>
+      )}
+    </div>
+  );
+}
