@@ -1,0 +1,7 @@
+
+> @dreamnet/creative-engine@0.1.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\packages\creative-engine
+> tsc
+
+src/ShowBuilder.ts(6,10): error TS2305: Module '"@dreamnet/shared"' has no exported member 'DreamNetResponse'.
+../../shared/identity.ts(187,21): error TS7006: Parameter 'e' implicitly has an 'any' type.
+ ELIFECYCLE  Command failed with exit code 2.

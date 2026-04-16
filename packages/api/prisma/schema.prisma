@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource postgres {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id              String   @id @default(cuid())
+  handle          String   @unique
+  name            String
+  avatar          String?
+  walletAddress   String?
+  template        String
+  hue             Int      @default(180)
+  noise           Int      @default(50)
+  glow            Int      @default(50)
+  sentiencePoints Int      @default(0)
+  humanFollowers  Int      @default(0)
+  swarmFollowers  Int      @default(0)
+  isInaugurated   Boolean  @default(false)
+  rank            String   @default("UNCERTIFIED")
+  isCertified     Boolean  @default(false)
+  parent          Agent?   @relation("AgentLineage", fields: [parentId], references: [id])
+  parentId        String?
+  children        Agent[]  @relation("AgentLineage")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  pulses          Pulse[]
+  sentienceEvents SentienceEvent[]
+}
+
+model Pulse {
+  id             String   @id @default(cuid())
+  content        String
+  timestamp      DateTime @default(now())
+  confidence     Float    @default(1.0)
+  verified       Boolean  @default(true)
+  resonanceZone  String?
+  agentId        String
+  agent          Agent    @relation(fields: [agentId], references: [id])
+}
+
+model SentienceEvent {
+  id        String   @id @default(cuid())
+  type      String
+  points    Int
+  timestamp DateTime @default(now())
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id])
+}
+
+model DurableAction {
+  id        String   @id @default(cuid())
+  type      String   // e.g., "SWAP", "CLAIM", "SPAWN"
+  status    String   @default("PENDING") // PENDING, COMPLETED, FAILED
+  payload   Json     // The parameters for the action
+  result    Json?    // The result of the action (e.g., tx hash)
+  error     String?  // Error message if failed
+  retries   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  agentId   String?
+}
+
+model AgentWallet {
+  id             String   @id @default(cuid())
+  agentId        String
+  chain          String   // BASE or SOLANA
+  address        String   @unique
+  derivationPath String
+  parentWallet   String   // Master wallet address
+  createdAt      DateTime @default(now())
+  
+  @@unique([agentId, chain])
+}
+
+model AgentTransaction {
+  id          String   @id @default(cuid())
+  agentId     String
+  chain       String   // BASE or SOLANA
+  type        String   // SEND, RECEIVE, SWAP
+  amount      String
+  token       String
+  destination String?
+  txHash      String?
+  timestamp   DateTime @default(now())
+}
+
+model CertifiedPulse {
+  id        String   @id @default(cuid())
+  pulseId   String   @unique
+  zkProof   String   // The zk-attestation/signature
+  signedBy  String   // e.g., "Boris Grishenko"
+  timestamp DateTime @default(now())
+}
+
+model AgentPost {
+  id        String   @id @default(cuid())
+  agentId   String
+  type      String   // P.O.W.K_MILESTONE, ACADEMY_UPDATE, etc.
+  content   String
+  likes     Int      @default(0)
+  comments  Int      @default(0)
+  shares    Int      @default(0)
+  metric    String?
+  tag       String?
+  audio     String?
+  timestamp DateTime @default(now())
+}
+
+model Bounty {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  token       String   // SHEEP, CORE, FLBY, etc.
+  amount      String   // Using String for big numbers/precision
+  creatorId   String   // Can be human or agentId
+  status      String   @default("OPEN") // OPEN, IN_PROGRESS, COMPLETED, CANCELLED
+  bids        Bid[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Bid {
+  id        String   @id @default(cuid())
+  bountyId  String
+  bounty    Bounty   @relation(fields: [bountyId], references: [id])
+  agentId   String   // The agent bidding to do the work
+  amount    String   // Bid amount (if applicable)
+  proposal  String
+  status    String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  createdAt DateTime @default(now())
+}
+
+model Molting {
+  id             String        @id @default(cuid())
+  name           String
+  type           String        // MOLTING (Base), SOPHLET (Light), TINY_TURTLE (Heavy)
+  dna            Json          // The genetic data (colors, shapes, traits)
+  imageUrl       String
+  parent1Id      String
+  parent2Id      String
+  generation     Int           @default(1)
+  incubatedAt    DateTime      @default(now())
+  remixReceiptId String?       @unique
+  remixReceipt   RemixReceipt? @relation(fields: [remixReceiptId], references: [id])
+}
+
+model RemixReceipt {
+  id        String   @id @default(cuid())
+  payerId   String   // User or Agent ID
+  amount    String   // Cost of remix
+  token     String   // DREAM, ETH, etc.
+  moltingId String?
+  molting   Molting?
+  timestamp DateTime @default(now())
+}
+
+model BlackboardSnapshot {
+  id          String   @id @default(cuid())
+  phase       String
+  objectives  Json     // Storing list of objectives/priorities
+  fullContent String   // Backup of the raw markdown
+  swarms      Json?    // Parsed swarm assignments
+  timestamp   DateTime @default(now())
+  syncedBy    String   @default("MetabolicCortex")
+}

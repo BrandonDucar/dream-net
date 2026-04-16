@@ -1,0 +1,6 @@
+
+> @dreamnet/vechain-core@1.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\packages\vechain-core
+> tsc
+
+src/client.ts(70,38): error TS2304: Cannot find name 'ThorClient'.
+ ELIFECYCLE  Command failed with exit code 2.

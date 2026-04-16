@@ -1,0 +1,9 @@
+﻿
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\packages\client
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 2577 modules transformed.
+ΓÇëERR_PNPM_RECURSIVE_RUN_FIRST_FAILΓÇë dreamops-launcher@0.0.0 build: `vite build`
+Exit status 1

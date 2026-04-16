@@ -1,0 +1,1 @@
+{"version":3,"file":"watchtower.d.ts","sourceRoot":"","sources":["watchtower.ts"],"names":[],"mappings":"AAIA,UAAU,gBAAgB;IACtB,kBAAkB,EAAE,MAAM,CAAC;IAC3B,UAAU,EAAE,MAAM,CAAC;CACtB;AAED;;;;;;GAMG;AACH,qBAAa,gBAAgB;IACzB,OAAO,CAAC,SAAS,CAAkB;IACnC,OAAO,CAAC,MAAM,CAAmB;gBAErB,MAAM,GAAE,gBAAgE;IAI7E,KAAK;YAcE,sBAAsB;YAmBtB,WAAW;YAWX,UAAU;CAoB3B;AAGD,eAAO,MAAM,gBAAgB,kBAAyB,CAAC"}

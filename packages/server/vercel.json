@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "buildCommand": "pnpm build:server",
+    "installCommand": "pnpm install",
+    "framework": null,
+    "outputDirectory": "dist",
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "index.js"
+        }
+    ]
+}

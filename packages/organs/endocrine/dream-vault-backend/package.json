@@ -1,0 +1,38 @@
+{
+  "name": "@dreamnet/dream-vault-backend",
+  "version": "1.0.0",
+  "description": "HashiCorp Vault backend for DreamNet's Dream Vault system",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "node-vault": "^0.9.22",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.2.0",
+    "tsx": "^3.12.0",
+    "vitest": "^0.34.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./client": "./dist/client.js",
+    "./secrets": "./dist/secrets.js",
+    "./auth": "./dist/auth.js",
+    "./transit": "./dist/transit.js",
+    "./audit": "./dist/audit.js",
+    "./types": "./dist/types.js"
+  }
+}

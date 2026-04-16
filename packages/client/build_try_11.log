@@ -1,0 +1,16 @@
+
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 3162 modules transformed.
+[31m✗[39m Build failed in 10.09s
+[31merror during build:
+[31mCould not resolve "../../../../node_modules/.pnpm/@noble+hashes@1.3.1_patch_h_5dc37f2e8870c6a9168dc4601a12eb7f/node_modules/@noble/hashes/esm/utils.js" from "src/shims/noble-utils.ts"[31m
+file: [36mC:/Users/brand/OneDrive/Documents/GitHub/dream-net/client/src/shims/noble-utils.ts[31m
+    at getRollupError (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/parseAst.js:397:42)
+    at ModuleLoader.handleInvalidResolvedId (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:21576:24)
+    at file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:21536:26[39m
+ ELIFECYCLE  Command failed with exit code 1.

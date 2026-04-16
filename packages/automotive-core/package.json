@@ -1,0 +1,33 @@
+{
+    "name":  "@dreamnet/automotive-core",
+    "version":  "0.1.0",
+    "type":  "module",
+    "main":  "dist/index.js",
+    "types":  "dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./index.ts",
+                              "import":  "./index.ts",
+                              "require":  "./index.ts",
+                              "default":  "./index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "build":  "tsc",
+                    "clean":  "rm -rf dist",
+                    "test":  "echo \"Error: no test specified\" \u0026\u0026 exit 1"
+                },
+    "dependencies":  {
+                         "fs-extra":  "^11.1.0",
+                         "@dreamnet/dreamnet-os-core":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.0.0"
+                        }
+}

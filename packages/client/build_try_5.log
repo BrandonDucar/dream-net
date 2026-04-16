@@ -1,0 +1,28 @@
+
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+
+[1m[33mwarn[39m[22m - The `content` option in your Tailwind CSS configuration is missing or empty.
+[1m[33mwarn[39m[22m - Configure your content sources or your generated CSS will be missing styles.
+[1m[33mwarn[39m[22m - https://tailwindcss.com/docs/content-configuration
+[32m✓[39m 2419 modules transformed.
+[31m✗[39m Build failed in 3.39s
+[31merror during build:
+[31m[vite]: Rollup failed to resolve import "@noble/hashes/sha256" from "C:/Users/brand/OneDrive/Documents/GitHub/dream-net/client/node_modules/@solana/web3.js/lib/index.browser.esm.js".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`[31m
+    at viteLog (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:34254:57)
+    at file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:34288:73
+    at onwarn (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/@vitejs+plugin-react@5.1.0__d17e1b1565d9a5063754a525354111ef/node_modules/@vitejs/plugin-react/dist/index.js:76:7)
+    at file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:34288:28
+    at onRollupLog (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:34283:63)
+    at onLog (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:34086:4)
+    at file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:20947:32
+    at Object.logger [as onLog] (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:22834:9)
+    at ModuleLoader.handleInvalidResolvedId (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:21578:26)
+    at file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:21536:26[39m
+ ELIFECYCLE  Command failed with exit code 1.

@@ -1,0 +1,36 @@
+
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+
+[1m[33mwarn[39m[22m - The `content` option in your Tailwind CSS configuration is missing or empty.
+[1m[33mwarn[39m[22m - Configure your content sources or your generated CSS will be missing styles.
+[1m[33mwarn[39m[22m - https://tailwindcss.com/docs/content-configuration
+[32m✓[39m 4 modules transformed.
+[31m✗[39m Build failed in 582ms
+[31merror during build:
+[31m[vite:esbuild] Transform failed with 1 error:
+C:/Users/brand/OneDrive/Documents/GitHub/dream-net/client/src/App.tsx:119:82: ERROR: Expected ")" but found ";"[31m
+file: [36mC:/Users/brand/OneDrive/Documents/GitHub/dream-net/client/src/App.tsx:119:82[31m
+[33m
+[33mExpected ")" but found ";"[33m
+117 |  // Lazy Load Components
+118 |  const WalletProfileDashboard = lazy(() => import('./components/WalletProfileDashboard.js').then(m => ({ default: m.Wa...
+119 |  const DreamEvolutionDemo = lazy(() => import('./components/DreamEvolutionDemo.js');
+    |                                                                                    ^
+120 |  const EvolvedArchive = lazy(() => import('./pages/evolved-archive.js');
+121 |  const DreamTree = lazy(() => import('./components/DreamTree.js');
+[31m
+    at failureErrorWithLog (C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm\esbuild@0.25.12\node_modules\esbuild\lib\main.js:1467:15)
+    at C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm\esbuild@0.25.12\node_modules\esbuild\lib\main.js:736:50
+    at responseCallbacks.<computed> (C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm\esbuild@0.25.12\node_modules\esbuild\lib\main.js:603:9)
+    at handleIncomingPacket (C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm\esbuild@0.25.12\node_modules\esbuild\lib\main.js:658:12)
+    at Socket.readFromStdout (C:\Users\brand\OneDrive\Documents\GitHub\dream-net\node_modules\.pnpm\esbuild@0.25.12\node_modules\esbuild\lib\main.js:581:7)
+    at Socket.emit (node:events:518:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)[39m
+ ELIFECYCLE  Command failed with exit code 1.

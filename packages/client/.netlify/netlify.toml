@@ -1,0 +1,63 @@
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\brand\\OneDrive\\Documents\\GitHub\\dream-net\\client\\dist"
+publishOrigin = "config"
+commandOrigin = "ui"
+base = "C:\\Users\\brand\\OneDrive\\Documents\\GitHub\\dream-net\\client"
+command = "pnpm run build"
+
+[build.environment]
+NODE_VERSION = "20"
+NPM_FLAGS = "--version"
+
+[build.processing]
+skip_processing = false
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+from = "/api/*"
+to = "https://api.dreamnet.ink/api/:splat"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

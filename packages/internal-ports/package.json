@@ -15,9 +15,7 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@dreamnet/internal-router": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "typescript": "^5.0.0"
   }

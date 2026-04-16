@@ -1,0 +1,21 @@
+
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client
+> vite build
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 2629 modules transformed.
+[31m✗[39m Build failed in 4.42s
+[31merror during build:
+[31m[commonjs--resolver] Missing "./sha256" specifier in "@noble/hashes" package[31m
+    at e (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:6866:8)
+    at n (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:6878:14)
+    at o (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:6906:10)
+    at resolveExportsOrImports (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:33446:45)
+    at resolveDeepImport (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:33460:22)
+    at tryNodeResolve (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:33335:70)
+    at Object.handler (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:33174:16)
+    at Object.handler (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/vite@7.2.2_@types+node@24.1_dd06eb3b0ba9b25358add4208d3a91be/node_modules/vite/dist/node/chunks/config.js:34325:13)
+    at file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:22437:40
+    at async PluginDriver.hookFirstAndGetPlugin (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:22319:28)[39m
+ ELIFECYCLE  Command failed with exit code 1.

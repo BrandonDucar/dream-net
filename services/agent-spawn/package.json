@@ -1,0 +1,16 @@
+{
+  "name": "@dreamnet/agent-spawn",
+  "version": "1.0.0",
+  "description": "Agent Spawn Service — Automated agent deployment at scale",
+  "main": "server.ts",
+  "scripts": {
+    "start": "tsx server.ts",
+    "dev": "tsx watch server.ts"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ioredis": "^5.3.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

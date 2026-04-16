@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamNet Playground</title>
+  
+  <!-- Base Builder Code Discovery -->
+  <meta name="base-builder-code" content="dreamnet" />
+  <meta name="base-app-category" content="ai-tools-testing" />
+  <meta name="base-app-description" content="Experiment with AI agents, test prompts, and compare AI providers in real-time" />
+  <meta name="base-app-url" content="https://playground.dreamnet.live" />
+  
+  <!-- Open Graph for Base App Store -->
+  <meta property="og:title" content="DreamNet Playground" />
+  <meta property="og:description" content="Experiment with AI agents. Test prompts. Compare providers. Real-time AI testing environment" />
+  <meta property="og:image" content="https://playground.dreamnet.live/og-image.png" />
+  <meta property="og:url" content="https://playground.dreamnet.live" />
+  
+  <!-- Base-specific tags -->
+  <meta name="base-chain" content="base" />
+  <meta name="base-token" content="LMC" />
+  <meta name="base-contract" content="0x53e77A6b6180b1A5bBA2F732667eA11853DCE550" />
+  
+  <!-- App capabilities -->
+  <meta name="base-capabilities" content="farcaster-auth,ai-testing,prompt-comparison,agent-experimentation" />
+  <meta name="base-version" content="1.0.0" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0a0a0f; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+    .card { background: rgba(30, 30, 50, 0.8); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; }
+    .glow-green { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+    textarea { resize: vertical; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">🎮 DreamNet Playground</h1>
+      <p class="text-gray-400 mt-2">Experiment with AI agents. Test prompts. Compare providers.</p>
+    </div>
+
+    <!-- Create Experiment -->
+    <div class="card p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-3">New Experiment</h2>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="text-xs text-gray-400">Agent ID</label>
+          <input id="agentId" type="text" value="my-agent" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-green-500 outline-none mt-1" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-400">Experiment Name</label>
+          <input id="expName" type="text" placeholder="My Cool Experiment" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-green-500 outline-none mt-1" />
+        </div>
+      </div>
+      <label class="text-xs text-gray-400">System Prompt</label>
+      <textarea id="sysPrompt" rows="3" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-green-500 outline-none mt-1" placeholder="You are a helpful AI assistant..."></textarea>
+      <button onclick="createExperiment()" class="mt-3 bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg font-medium transition">Create Experiment</button>
+    </div>
+
+    <!-- Active Experiment -->
+    <div id="activeExp" class="hidden">
+      <div class="card p-6 mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold">🧪 <span id="expTitle"></span></h2>
+          <span id="expId" class="text-xs text-gray-500"></span>
+        </div>
+        <div class="flex gap-3">
+          <input id="testMsg" type="text" placeholder="Type a test message..." class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-green-500 outline-none" onkeydown="if(event.key==='Enter')runTest()" />
+          <button onclick="runTest()" id="runBtn" class="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg font-medium transition">Send</button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="results" class="space-y-3"></div>
+    </div>
+
+    <!-- Past Experiments -->
+    <div class="mt-8">
+      <h2 class="text-xl font-semibold mb-4">Past Experiments</h2>
+      <div id="pastExps" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <script>
+    const API = '';
+    let currentExpId = null;
+
+    async function createExperiment() {
+      const agentId = document.getElementById('agentId').value || 'my-agent';
+      const name = document.getElementById('expName').value || 'Untitled';
+      const systemPrompt = document.getElementById('sysPrompt').value || 'You are a helpful AI assistant.';
+
+      const res = await fetch(`${API}/api/experiment`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId, name, systemPrompt }),
+      });
+      const { experiment } = await res.json();
+      currentExpId = experiment.id;
+      document.getElementById('expTitle').textContent = experiment.name;
+      document.getElementById('expId').textContent = experiment.id;
+      document.getElementById('activeExp').classList.remove('hidden');
+      document.getElementById('results').innerHTML = '';
+      loadPastExperiments();
+    }
+
+    async function runTest() {
+      if (!currentExpId) return;
+      const msg = document.getElementById('testMsg').value.trim();
+      if (!msg) return;
+
+      const btn = document.getElementById('runBtn');
+      btn.textContent = '...';
+      btn.disabled = true;
+      document.getElementById('testMsg').value = '';
+
+      // Add user message
+      const resultsEl = document.getElementById('results');
+      resultsEl.innerHTML += `<div class="card p-3"><span class="text-green-400 font-semibold">You:</span> ${msg}</div>`;
+
+      try {
+        const res = await fetch(`${API}/api/experiment/${currentExpId}/test`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg }),
+        });
+        const data = await res.json();
+        if (data.error) {
+          resultsEl.innerHTML += `<div class="card p-3 border-red-500"><span class="text-red-400">Error:</span> ${data.error}</div>`;
+        } else {
+          const r = data.result;
+          resultsEl.innerHTML += `
+            <div class="card p-3">
+              <div class="flex justify-between text-xs text-gray-500 mb-1">
+                <span>Provider: ${r.provider}</span>
+                <span>${r.latencyMs}ms</span>
+              </div>
+              <span class="text-blue-400 font-semibold">AI:</span> ${r.response.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+            </div>`;
+        }
+      } catch (err) {
+        resultsEl.innerHTML += `<div class="card p-3 border-red-500"><span class="text-red-400">Network Error:</span> ${err.message}</div>`;
+      }
+
+      btn.textContent = 'Send';
+      btn.disabled = false;
+    }
+
+    async function loadPastExperiments() {
+      try {
+        const res = await fetch(`${API}/api/experiments`);
+        const { experiments } = await res.json();
+        const el = document.getElementById('pastExps');
+        if (experiments.length === 0) { el.innerHTML = '<div class="text-gray-500 text-sm">No experiments yet</div>'; return; }
+        el.innerHTML = experiments.map(e => `
+          <div class="card p-3 flex justify-between items-center cursor-pointer hover:border-green-400 transition" onclick="loadExperiment('${e.id}')">
+            <div>
+              <span class="font-semibold">${e.name}</span>
+              <span class="text-xs text-gray-500 ml-2">${e.agentId} | ${e.results.length} tests</span>
+            </div>
+            <span class="text-xs text-gray-500">${new Date(e.createdAt).toLocaleString()}</span>
+          </div>
+        `).join('');
+      } catch {}
+    }
+
+    async function loadExperiment(id) {
+      try {
+        const res = await fetch(`${API}/api/experiment/${id}`);
+        const { experiment } = await res.json();
+        currentExpId = experiment.id;
+        document.getElementById('expTitle').textContent = experiment.name;
+        document.getElementById('expId').textContent = experiment.id;
+        document.getElementById('activeExp').classList.remove('hidden');
+
+        const resultsEl = document.getElementById('results');
+        resultsEl.innerHTML = experiment.results.map(r => `
+          <div class="card p-3"><span class="text-green-400 font-semibold">You:</span> ${r.message}</div>
+          <div class="card p-3">
+            <div class="flex justify-between text-xs text-gray-500 mb-1"><span>Provider: ${r.provider}</span><span>${r.latencyMs}ms</span></div>
+            <span class="text-blue-400 font-semibold">AI:</span> ${r.response.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+          </div>
+        `).join('');
+      } catch {}
+    }
+
+    loadPastExperiments();
+  </script>
+</body>
+</html>

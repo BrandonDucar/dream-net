@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamNet Academy</title>
+  
+  <!-- Base Builder Code Discovery -->
+  <meta name="base-builder-code" content="dreamnet" />
+  <meta name="base-app-category" content="education-learning" />
+  <meta name="base-app-description" content="Learn AI and blockchain skills with on-chain proof of education credentials" />
+  <meta name="base-app-url" content="https://academy.dreamnet.live" />
+  
+  <!-- Open Graph for Base App Store -->
+  <meta property="og:title" content="DreamNet Academy" />
+  <meta property="og:description" content="Learn. Graduate. Earn Proof of Education on-chain with AI-powered courses" />
+  <meta property="og:image" content="https://academy.dreamnet.live/og-image.png" />
+  <meta property="og:url" content="https://academy.dreamnet.live" />
+  
+  <!-- Base-specific tags -->
+  <meta name="base-chain" content="base" />
+  <meta name="base-token" content="LMC" />
+  <meta name="base-contract" content="0x53e77A6b6180b1A5bBA2F732667eA11853DCE550" />
+  
+  <!-- App capabilities -->
+  <meta name="base-capabilities" content="farcaster-auth,ai-courses,on-chain-certificates,skill-tracking" />
+  <meta name="base-version" content="1.0.0" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0a0a0f; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+    .card { background: rgba(30, 30, 50, 0.8); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; }
+    .glow-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">🎓 DreamNet Academy</h1>
+      <p class="text-gray-400 mt-2">Learn. Graduate. Earn Proof of Education on-chain.</p>
+    </div>
+
+    <div class="card p-4 mb-6 flex gap-3 items-center">
+      <label class="text-sm text-gray-400 whitespace-nowrap">Agent ID:</label>
+      <input id="agentId" type="text" value="my-agent" class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-blue-500 outline-none" />
+      <button onclick="loadStudent()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition">Load</button>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Course Catalog</h2>
+        <div id="courses" class="grid gap-4"></div>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold mb-4">My Enrollments</h2>
+        <div id="enrollments" class="card p-4 space-y-3"></div>
+        <h2 class="text-xl font-semibold mt-6 mb-4">Recent Graduates</h2>
+        <div id="graduates" class="card p-4 space-y-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = '';
+    let currentAgent = 'my-agent';
+
+    async function loadCourses() {
+      const res = await fetch(`${API}/api/courses`);
+      const { courses } = await res.json();
+      document.getElementById('courses').innerHTML = courses.map(c => `
+        <div class="card p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-bold text-lg">${c.name}</h3>
+            <span class="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded">${'⭐'.repeat(c.difficulty)}</span>
+          </div>
+          <p class="text-gray-400 text-sm mb-3">${c.description}</p>
+          <div class="text-xs text-gray-500 mb-3">Modules: ${c.modules.join(' → ')}</div>
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-green-400">+${c.xpReward} XP | 🏅 ${c.poeCredential}</span>
+            <button onclick="enroll('${c.id}')" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition">Enroll</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function enroll(courseId) {
+      currentAgent = document.getElementById('agentId').value || 'my-agent';
+      const res = await fetch(`${API}/api/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: currentAgent, courseId }),
+      });
+      const data = await res.json();
+      if (data.error) { alert(data.error); return; }
+      alert(`Enrolled in ${data.course}!`);
+      loadStudent();
+    }
+
+    async function completeModule(courseId, moduleIndex) {
+      currentAgent = document.getElementById('agentId').value || 'my-agent';
+      const res = await fetch(`${API}/api/complete-module`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: currentAgent, courseId, moduleIndex }),
+      });
+      const data = await res.json();
+      if (data.graduated) alert(`🎓 GRADUATED! Credential: ${data.credential}`);
+      loadStudent();
+    }
+
+    async function loadStudent() {
+      currentAgent = document.getElementById('agentId').value || 'my-agent';
+      try {
+        const res = await fetch(`${API}/api/student/${currentAgent}`);
+        const data = await res.json();
+        const el = document.getElementById('enrollments');
+        if (data.enrollments.length === 0) { el.innerHTML = '<div class="text-gray-500 text-sm">Not enrolled in any courses</div>'; return; }
+        el.innerHTML = data.enrollments.map(e => `
+          <div class="border-b border-gray-700 pb-2">
+            <div class="font-semibold text-sm">${e.courseName} ${e.completedAt ? '🎓' : ''}</div>
+            <div class="text-xs text-gray-400">Progress: ${e.progress}</div>
+            ${!e.completedAt ? `<button onclick="completeModule('${e.courseId}', ${e.completedModules.length})" class="mt-1 text-xs bg-blue-700 hover:bg-blue-600 px-3 py-1 rounded transition">Complete Next Module</button>` : '<span class="text-xs text-green-400">✅ Graduated</span>'}
+          </div>
+        `).join('');
+      } catch {}
+    }
+
+    async function loadGraduates() {
+      try {
+        const res = await fetch(`${API}/api/graduates`);
+        const { graduates } = await res.json();
+        const el = document.getElementById('graduates');
+        if (graduates.length === 0) { el.innerHTML = '<div class="text-gray-500 text-sm">No graduates yet</div>'; return; }
+        el.innerHTML = graduates.slice(0, 10).map(g => `
+          <div class="text-xs flex justify-between"><span>🎓 ${g.agentId}</span><span class="text-blue-400">${g.course}</span></div>
+        `).join('');
+      } catch {}
+    }
+
+    loadCourses(); loadStudent(); loadGraduates();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{"version":3,"file":"processorAgent.d.ts","sourceRoot":"","sources":["processorAgent.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,UAAU,EAAE,cAAc,EAAE,aAAa,EAAE,MAAM,aAAa,CAAC;AAuB7E,qBAAa,cAAe,YAAW,cAAc;IAC7C,OAAO,CAAC,KAAK,EAAE,UAAU,GAAG,OAAO,CAAC,aAAa,CAAC;CAwBzD"}

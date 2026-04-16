@@ -1,0 +1,42 @@
+
+> dreamops-launcher@0.0.0 build C:\Users\brand\OneDrive\Documents\GitHub\dream-net\client
+> vite build
+
+▲ [WARNING] Duplicate key "@noble/hashes/pbkdf2" in object literal [duplicate-object-key]
+
+    vite.config.ts:45:6:
+      45 │       '@noble/hashes/pbkdf2': path.resolve(__dirname, '../node_mod...
+         ╵       ~~~~~~~~~~~~~~~~~~~~~~
+
+  The original key "@noble/hashes/pbkdf2" is here:
+
+    vite.config.ts:44:6:
+      44 │       '@noble/hashes/pbkdf2': path.resolve(__dirname, '../node_mod...
+         ╵       ~~~~~~~~~~~~~~~~~~~~~~
+
+[36mvite v7.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 3487 modules transformed.
+[31m✗[39m Build failed in 5.80s
+[31merror during build:
+[31m../node_modules/@noble/curves/esm/abstract/weierstrass.js (29:9): "ahash" is not exported by "../node_modules/.pnpm/@noble+hashes@1.3.1_patch_h_5dc37f2e8870c6a9168dc4601a12eb7f/node_modules/@noble/hashes/esm/utils.js", imported by "../node_modules/@noble/curves/esm/abstract/weierstrass.js".[31m
+file: [36mC:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/@noble/curves/esm/abstract/weierstrass.js:29:9[31m
+[33m
+27: /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+28: import { hmac as nobleHmac } from '@noble/hashes/hmac.js';
+29: import { ahash } from '@noble/hashes/utils';
+             ^
+30: import { _validateObject, _abool2 as abool, _abytes2 as abytes, aInRange, bitLen, bitMask, bytesToHex, bytesToNumberB...
+31: import { _createCurveFields, mulEndoUnsafe, negateCt, normalizeZ, pippenger, wNAF, } from "./curve.js";
+[31m
+    at getRollupError (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/parseAst.js:397:42)
+    at Module.error (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:16946:16)
+    at Module.traceVariable (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:17400:29)
+    at ModuleScope.findVariable (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:15067:39)
+    at FunctionScope.findVariable (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:5641:38)
+    at FunctionBodyScope.findVariable (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:5641:38)
+    at Identifier.bind (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:5415:40)
+    at CallExpression.bind (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:2806:23)
+    at CallExpression.bind (file:///C:/Users/brand/OneDrive/Documents/GitHub/dream-net/node_modules/.pnpm/rollup@4.53.2/node_modules/rollup/dist/es/shared/node-entry.js:12114:15)[39m
+ ELIFECYCLE  Command failed with exit code 1.

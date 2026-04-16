@@ -1,0 +1,1 @@
+{"version":3,"file":"OharaScanner.d.ts","sourceRoot":"","sources":["OharaScanner.ts"],"names":[],"mappings":"AAEA,MAAM,WAAW,aAAa;IAC1B,IAAI,EAAE,MAAM,CAAC;IACb,GAAG,EAAE,MAAM,CAAC;IACZ,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,WAAW,EAAE,MAAM,CAAC;CACvB;AAED,qBAAa,YAAY;IACf,IAAI,IAAI,OAAO,CAAC,aAAa,EAAE,CAAC;CAmBzC"}

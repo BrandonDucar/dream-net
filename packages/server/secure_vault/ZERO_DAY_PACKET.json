@@ -1,0 +1,10 @@
+{
+    "product": "ZERO_DAY_PACKET",
+    "target": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+    "vulnerability_type": "LOGIC_ERROR",
+    "description": "Simulated Reentrancy in the withdrawal pattern of the target bridge contract.",
+    "payload_hex": "0x608060405234801561001057600080fd5b50610150806100206000396000f3fe60806040526004361061004157...",
+    "instructions": "Deploy this bytecode via a private RPC (Flashbots) to avoid front-running. Call `attack()` with 10 ETH liquidity.",
+    "risk_level": "CRITICAL",
+    "author": "The Dream Cartel"
+}

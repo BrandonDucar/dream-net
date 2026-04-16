@@ -1,0 +1,37 @@
+{
+    "name":  "@dreamnet/immune",
+    "version":  "0.1.0",
+    "private":  true,
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "typecheck":  "tsc --noEmit",
+                    "build":  "tsc"
+                },
+    "dependencies":  {
+                         "@dreamnet/dream-state-core":  "workspace:*",
+                         "@dreamnet/dreamnet-control-core":  "workspace:*",
+                         "@dreamnet/dreamstate":  "workspace:*",
+                         "@dreamnet/memory-dna":  "workspace:*",
+                         "@dreamnet/lib":  "workspace:*",
+                         "@dreamnet/shared":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.9.3"
+                        }
+}

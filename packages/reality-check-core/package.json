@@ -1,0 +1,32 @@
+{
+    "name":  "@dreamnet/reality-check-core",
+    "version":  "0.1.0",
+    "type":  "module",
+    "main":  "./dist/index.js",
+    "types":  "./dist/index.d.ts",
+    "exports":  {
+                    ".":  {
+                              "source":  "./src/index.ts",
+                              "import":  "./src/index.ts",
+                              "require":  "./src/index.ts",
+                              "default":  "./src/index.ts"
+                          },
+                    "./*":  {
+                                "source":  "./src/*.ts",
+                                "import":  "./src/*.ts",
+                                "default":  "./src/*.ts"
+                            },
+                    "./src/*":  "./src/*.ts"
+                },
+    "scripts":  {
+                    "build":  "tsc"
+                },
+    "dependencies":  {
+                         "fs-extra":  "^11.1.1"
+                     },
+    "devDependencies":  {
+                            "typescript":  "^5.3.3",
+                            "@types/node":  "^20.10.0",
+                            "@types/fs-extra":  "^11.0.1"
+                        }
+}

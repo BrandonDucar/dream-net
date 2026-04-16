@@ -1,0 +1,60 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "src",
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "types": [
+            "node"
+        ],
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@dreamnet/sensory-spikes": [
+                "../sensory-spikes/dist/index.d.ts"
+            ],
+            "@dreamnet/types": [
+                "../dreamnet-types/dist/index.d.ts"
+            ],
+            "@dreamnet/shared": [
+                "../shared/dist/index.d.ts"
+            ],
+            "@dreamnet/lib": [
+                "../lib/dist/index.d.ts"
+            ],
+            "@dreamnet/memory-dna": [
+                "../memory-dna/dist/index.d.ts"
+            ],
+            "@dreamnet/agent-wallet-manager": [
+                "../agent-wallet-manager/dist/index.d.ts"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "references": [
+        {
+            "path": "../shared"
+        },
+        {
+            "path": "../lib"
+        },
+        {
+            "path": "../platform-connector"
+        },
+        {
+            "path": "../agent-wallet-manager"
+        },
+        {
+            "path": "../sensory-spikes"
+        }
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

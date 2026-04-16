@@ -1,0 +1,14 @@
+{
+  "5b4552524f525d20": {
+    "crashes": 58,
+    "successes": 0,
+    "methylated": true,
+    "lastTrauma": 1767196538625
+  },
+  "424553545f535741": {
+    "crashes": 3,
+    "successes": 0,
+    "methylated": false,
+    "lastTrauma": 1767247452069
+  }
+}

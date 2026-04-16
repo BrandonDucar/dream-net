@@ -1,0 +1,30 @@
+# Goose agent config for DreamNet / OpenClaw integration
+# Mounted to /home/goose/.config/goose/config.yaml inside container
+
+GOOSE_PROVIDER: anthropic
+GOOSE_MODEL: claude-sonnet-4-5
+
+extensions:
+  # ── DreamNet OpenClaw MCP bridge (synaptic-router) ──────────
+  - name: openclaw
+    type: sse
+    uri: http://openclaw:8090/mcp
+    enabled: true
+    description: "DreamNet synaptic-router — all openclaw MCP tools"
+
+  # ── HeyGen avatar video generation ──────────────────────────
+  - name: heygenclaw
+    type: sse
+    uri: http://heygenclaw-mcp:8093/mcp
+    enabled: true
+    description: "HeyGen avatar video generation MCP"
+
+  # ── Built-in developer tools ─────────────────────────────────
+  - name: developer
+    type: builtin
+    enabled: true
+
+  # ── Computer use (browser/desktop automation) ────────────────
+  - name: computeruse
+    type: builtin
+    enabled: false

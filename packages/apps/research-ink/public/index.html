@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamNet Research - dreamnet.ink</title>
+  
+  <!-- Base Builder Code Discovery -->
+  <meta name="base-builder-code" content="dreamnet" />
+  <meta name="base-app-category" content="research-publishing" />
+  <meta name="base-app-description" content="Academic research publishing platform with peer review and citation management" />
+  <meta name="base-app-url" content="https://dreamnet.ink" />
+  
+  <!-- Open Graph for Base App Store -->
+  <meta property="og:title" content="DreamNet Research" />
+  <meta property="og:description" content="Academic research publishing with AI-powered peer review and on-chain citations" />
+  <meta property="og:image" content="https://dreamnet.ink/og-image.png" />
+  <meta property="og:url" content="https://dreamnet.ink" />
+  
+  <!-- Base-specific tags -->
+  <meta name="base-chain" content="base" />
+  <meta name="base-token" content="LMC" />
+  <meta name="base-contract" content="0x53e77A6b6180b1A5bBA2F732667eA11853DCE550" />
+  
+  <!-- App capabilities -->
+  <meta name="base-capabilities" content="farcaster-auth,academic-publishing,peer-review,citation-tracking" />
+  <meta name="base-version" content="1.0.0" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #f97316;
+      --secondary: #84cc16;
+      --accent: #eab308;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --dark: #18181b;
+      --light: #f4f4f5;
+      --gradient: linear-gradient(135deg, #f97316 0%, #84cc16 50%, #eab308 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+      color: var(--light);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .title {
+      font-size: 3rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: #9ca3af;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: rgba(24, 24, 27, 0.8);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(248, 113, 113, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .card-description {
+      color: #d1d5db;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(248, 113, 113, 0.3);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: rgba(24, 24, 27, 0.6);
+      border: 1px solid rgba(132, 204, 22, 0.2);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    .stat-label {
+      color: #9ca3af;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">📚 DreamNet Research</h1>
+      <p class="subtitle">Academic publishing for the decentralized age</p>
+      <a href="/submit" class="btn">Submit Paper</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-number">22</div>
+        <div class="stat-label">Research Papers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">AI Reviewers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$LMC</div>
+        <div class="stat-label">Rewards</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 class="card-title">🔬 Research Categories</h2>
+        <p class="card-description">
+          Publish across 10+ categories including AI/ML, Blockchain, DeFi, Quantum Computing, Neuroscience, Climate Science, and more. Each paper undergoes rigorous AI-powered peer review.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">🤖 AI Review Swarm</h2>
+        <p class="card-description">
+          Six specialized AI agents review every submission: CausalVerifier, QualityAssessor, CitationAnalyst, PlagiarismGuard, SEOOptimizer, and GeoDistributor.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">👍 Community Voting</h2>
+        <p class="card-description">
+          The community votes on papers using approve/uncertain/reject system. Combined with AI scores to determine publication decisions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">💰 Research Bounties</h2>
+        <p class="card-description">
+          Open challenges with $LMC rewards for completed research. Difficulty levels from Beginner to Expert with deadline tracking.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">📈 Prediction Markets</h2>
+        <p class="card-description">
+          Bet on research outcomes - will a paper get published? Cited 100+ times? YES/NO pools with token staking.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">🔗 On-chain Citations</h2>
+        <p class="card-description">
+          Permanent citation records on Base blockchain. Track impact, attribution, and research influence with transparency.
+        </p>
+      </div>
+    </div>
+
+    <div class="header">
+      <h2 class="title">Ready to Publish Your Research?</h2>
+      <p class="subtitle">Join the decentralized science revolution</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/submit" class="btn">Submit Paper</a>
+        <a href="/library" class="btn">Browse Library</a>
+        <a href="/bounties" class="btn">View Bounties</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

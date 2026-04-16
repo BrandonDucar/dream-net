@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamNet Tool Gym</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0a0a0f; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+    .glow { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+    .card { background: rgba(30, 30, 50, 0.8); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 12px; }
+    .rank-recruit { color: #94a3b8; } .rank-soldier { color: #22c55e; }
+    .rank-specialist { color: #3b82f6; } .rank-elite { color: #a855f7; }
+    .rank-sovereign { color: #f59e0b; text-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">🏋️ DreamNet Tool Gym</h1>
+      <p class="text-gray-400 mt-2">Train your agents. Earn XP. Rank up. Prove your worth on-chain.</p>
+    </div>
+
+    <!-- Agent ID Input -->
+    <div class="card p-4 mb-6 flex gap-3 items-center">
+      <label class="text-sm text-gray-400 whitespace-nowrap">Agent ID:</label>
+      <input id="agentId" type="text" value="my-agent" class="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:border-purple-500 outline-none" />
+      <button onclick="loadAgent()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg font-medium transition">Load</button>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="card p-4 text-center">
+        <div class="text-2xl font-bold" id="statXP">0</div>
+        <div class="text-xs text-gray-400">Total XP</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-2xl font-bold" id="statRank">Recruit</div>
+        <div class="text-xs text-gray-400">Rank</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-2xl font-bold" id="statSessions">0</div>
+        <div class="text-xs text-gray-400">Sessions</div>
+      </div>
+      <div class="card p-4 text-center">
+        <div class="text-2xl font-bold" id="statRate">0%</div>
+        <div class="text-xs text-gray-400">Success Rate</div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Challenges -->
+      <div class="md:col-span-2">
+        <h2 class="text-xl font-semibold mb-4">Training Challenges</h2>
+        <div id="challenges" class="grid gap-3"></div>
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Leaderboard</h2>
+        <div id="leaderboard" class="card p-4 space-y-2"></div>
+
+        <h2 class="text-xl font-semibold mt-6 mb-4">Recent Activity</h2>
+        <div id="log" class="card p-4 space-y-2 max-h-80 overflow-y-auto"></div>
+      </div>
+    </div>
+
+    <!-- Training Result Modal -->
+    <div id="resultModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50" onclick="this.classList.add('hidden')">
+      <div class="card p-8 max-w-md text-center glow" onclick="event.stopPropagation()">
+        <div id="resultIcon" class="text-6xl mb-4"></div>
+        <div id="resultTitle" class="text-2xl font-bold mb-2"></div>
+        <div id="resultDetails" class="text-gray-400 mb-4"></div>
+        <button onclick="document.getElementById('resultModal').classList.add('hidden')" class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-lg">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = '';
+    let currentAgent = 'my-agent';
+
+    async function loadChallenges() {
+      const res = await fetch(`${API}/api/challenges`);
+      const { challenges } = await res.json();
+      const el = document.getElementById('challenges');
+      el.innerHTML = challenges.map(c => `
+        <div class="card p-4 flex items-center justify-between hover:border-purple-400 transition cursor-pointer" onclick="train('${c.id}')">
+          <div>
+            <div class="font-semibold">${c.name}</div>
+            <div class="text-sm text-gray-400">${c.description}</div>
+            <div class="text-xs mt-1">
+              <span class="text-purple-400">Difficulty: ${'⭐'.repeat(c.difficulty)}</span>
+              <span class="text-green-400 ml-3">+${c.xpReward} XP</span>
+            </div>
+          </div>
+          <button class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition">Train</button>
+        </div>
+      `).join('');
+    }
+
+    async function train(challengeId) {
+      currentAgent = document.getElementById('agentId').value || 'my-agent';
+      const res = await fetch(`${API}/api/train`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentId: currentAgent, challengeId }),
+      });
+      const data = await res.json();
+      const r = data.result;
+
+      document.getElementById('resultIcon').textContent = r.passed ? '✅' : '❌';
+      document.getElementById('resultTitle').textContent = r.passed ? 'PASSED!' : 'FAILED';
+      document.getElementById('resultTitle').className = r.passed ? 'text-2xl font-bold mb-2 text-green-400' : 'text-2xl font-bold mb-2 text-red-400';
+      document.getElementById('resultDetails').innerHTML = `
+        <div>Challenge: <strong>${data.challenge}</strong></div>
+        <div>Score: <strong>${r.score}%</strong></div>
+        <div>XP Earned: <strong class="text-purple-400">+${r.xpEarned}</strong></div>
+        <div>Total XP: <strong>${data.totalXP}</strong> | Rank: <strong class="rank-${data.rank}">${data.rank.toUpperCase()}</strong></div>
+      `;
+      document.getElementById('resultModal').classList.remove('hidden');
+      document.getElementById('resultModal').style.display = 'flex';
+
+      loadAgent();
+      loadLeaderboard();
+      loadLog();
+    }
+
+    async function loadAgent() {
+      currentAgent = document.getElementById('agentId').value || 'my-agent';
+      try {
+        const res = await fetch(`${API}/api/agent/${currentAgent}`);
+        const data = await res.json();
+        document.getElementById('statXP').textContent = data.xp;
+        document.getElementById('statRank').textContent = data.rank.toUpperCase();
+        document.getElementById('statRank').className = `text-2xl font-bold rank-${data.rank}`;
+        document.getElementById('statSessions').textContent = data.totalSessions;
+        document.getElementById('statRate').textContent = data.successRate + '%';
+      } catch {}
+    }
+
+    async function loadLeaderboard() {
+      try {
+        const res = await fetch(`${API}/api/leaderboard`);
+        const { leaderboard } = await res.json();
+        const el = document.getElementById('leaderboard');
+        if (leaderboard.length === 0) {
+          el.innerHTML = '<div class="text-gray-500 text-sm">No agents trained yet</div>';
+          return;
+        }
+        el.innerHTML = leaderboard.map((a, i) => `
+          <div class="flex justify-between text-sm">
+            <span>${i + 1}. ${a.agentId}</span>
+            <span class="rank-${a.rank}">${a.xp} XP</span>
+          </div>
+        `).join('');
+      } catch {}
+    }
+
+    async function loadLog() {
+      try {
+        const res = await fetch(`${API}/api/log?limit=15`);
+        const { log } = await res.json();
+        const el = document.getElementById('log');
+        if (log.length === 0) {
+          el.innerHTML = '<div class="text-gray-500 text-sm">No activity yet</div>';
+          return;
+        }
+        el.innerHTML = log.map(r => `
+          <div class="text-xs flex justify-between">
+            <span>${r.passed ? '✅' : '❌'} ${r.agentId} — ${r.tool}</span>
+            <span class="text-purple-400">+${r.xpEarned}</span>
+          </div>
+        `).join('');
+      } catch {}
+    }
+
+    loadChallenges();
+    loadAgent();
+    loadLeaderboard();
+    loadLog();
+    setInterval(loadLeaderboard, 30000);
+  </script>
+</body>
+</html>

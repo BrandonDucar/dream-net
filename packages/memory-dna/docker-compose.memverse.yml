@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  memverse-server:
+    image: knowledgexlab/memverse:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_TYPE=chroma
+      - GRAPH_DB_URL=bolt://neo4j:7687
+      - LLM_PROVIDER=openai
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - chroma-db
+      - neo4j
+
+  chroma-db:
+    image: chromadb/chroma:latest
+    volumes:
+      - ./chroma_data:/chroma/chroma
+    ports:
+      - "8000:8000"
+
+  neo4j:
+    image: neo4j:latest
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - ./neo4j_data:/data

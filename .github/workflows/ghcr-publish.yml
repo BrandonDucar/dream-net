@@ -104,14 +104,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      # Skip this service if workflow_dispatch targeted a different one
+      # Skip if workflow_dispatch targeted a different service
       - name: Check if service targeted
         id: filter
         run: |
           INPUT="${{ github.event.inputs.service }}"
           if [ -n "$INPUT" ] && [ "$INPUT" != "${{ matrix.service.name }}" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
+            echo "reason=not-targeted" >> $GITHUB_OUTPUT
+          elif [ ! -f "${{ matrix.service.dockerfile }}" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "reason=dockerfile-missing" >> $GITHUB_OUTPUT
+            echo "⚠️  Skipping ${{ matrix.service.name }}: ${{ matrix.service.dockerfile }} not found in repo"
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
@@ -141,7 +148,7 @@ jobs:
 
       - name: Build and push
         if: steps.filter.outputs.skip != 'true'
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.service.context }}
           file: ${{ matrix.service.dockerfile }}
