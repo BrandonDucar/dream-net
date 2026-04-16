@@ -1,0 +1,27 @@
+{
+  "name": "@dreamnet/clawtrading",
+  "version": "1.1.0",
+  "description": "DreamNet autonomous trading agent team — Polygon DeFi + Whale Intelligence",
+  "type": "module",
+  "scripts": {
+    "alpha":         "node agents/alpha-agent.mjs",
+    "swap":          "node agents/swap-agent.mjs",
+    "arb":           "node agents/arb-agent.mjs",
+    "risk":          "node agents/risk-agent.mjs",
+    "team":          "node team-commander.mjs",
+    "belfort":       "node agents/belfort-agent.mjs",
+    "whale-scrub":   "node agents/whale-scrubber.mjs",
+    "genie":         "node agents/genie-agent.mjs",
+    "stitch":        "node agents/stitch-agent.mjs",
+    "whale-team":    "node whale-team-commander.mjs",
+    "mirofish":      "node -e \"import('./sims/mirofish.mjs').then(m=>m.runMirofish(process.argv[2]||'BELFORT'))\"",
+    "tartarian":     "node -e \"import('./sims/tartarian.mjs').then(m=>m.runTartarian(process.argv[2]||'SAYLOR'))\""
+  },
+  "dependencies": {
+    "ethers":       "^6.13.0",
+    "dotenv":       "^16.4.5",
+    "node-fetch":   "^3.3.2",
+    "pg":           "^8.11.3",
+    "redis":        "^4.6.13"
+  }
+}
