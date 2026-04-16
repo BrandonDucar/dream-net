@@ -1,0 +1,154 @@
+name: Build & Push to GHCR
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      # Rebuild only when relevant Dockerfiles or source change
+      - "packages/**"
+      - "services/**"
+      - "Dockerfile*"
+      - ".github/workflows/ghcr-publish.yml"
+  workflow_dispatch:
+    inputs:
+      service:
+        description: "Single service to rebuild (leave blank for all)"
+        required: false
+        default: ""
+
+env:
+  REGISTRY: ghcr.io
+  REPO:     ${{ github.repository_owner }}/dream-net
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Matrix: every custom image we own. Third-party images (ollama, mindsdb,
+  # postgres, redis, portainer) stay on Docker Hub — we never need to store those.
+  # ─────────────────────────────────────────────────────────────────────────────
+  build-and-push:
+    name: "${{ matrix.service.name }}"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write   # required to push to GHCR
+
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - name: api
+            context: .
+            dockerfile: packages/api/Dockerfile
+            image: api
+
+          - name: control-core
+            context: .
+            dockerfile: packages/dreamnet-control-core/Dockerfile
+            image: control-core
+
+          - name: playground
+            context: .
+            dockerfile: packages/apps/playground/Dockerfile
+            image: playground
+
+          - name: academy
+            context: .
+            dockerfile: packages/apps/academy/Dockerfile
+            image: academy
+
+          - name: publishing-house
+            context: .
+            dockerfile: packages/apps/publishing-house/Dockerfile
+            image: publishing-house
+
+          - name: openclaw
+            context: .
+            dockerfile: packages/organs/nervous/openclaw/Dockerfile
+            image: openclaw
+
+          - name: heygenclaw-mcp
+            context: .
+            dockerfile: packages/mcp/heygenclaw/Dockerfile
+            image: heygenclaw-mcp
+
+          - name: memoryclaw-mcp
+            context: .
+            dockerfile: packages/mcp/memoryclaw/Dockerfile
+            image: memoryclaw-mcp
+
+          - name: gooseclaw
+            context: packages/agents/gooseclaw
+            dockerfile: packages/agents/gooseclaw/Dockerfile
+            image: gooseclaw
+
+          - name: signal-screener
+            context: .
+            dockerfile: services/signal-screener/Dockerfile
+            image: signal-screener
+
+          - name: agent-spawn
+            context: .
+            dockerfile: services/agent-spawn/Dockerfile
+            image: agent-spawn
+
+          - name: agent-health
+            context: .
+            dockerfile: services/agent-health/Dockerfile
+            image: agent-health
+
+          - name: message-bus
+            context: .
+            dockerfile: services/message-bus/Dockerfile
+            image: message-bus
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Skip this service if workflow_dispatch targeted a different one
+      - name: Check if service targeted
+        id: filter
+        run: |
+          INPUT="${{ github.event.inputs.service }}"
+          if [ -n "$INPUT" ] && [ "$INPUT" != "${{ matrix.service.name }}" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Docker Buildx
+        if: steps.filter.outputs.skip != 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        if: steps.filter.outputs.skip != 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags + labels)
+        if: steps.filter.outputs.skip != 'true'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.REPO }}/${{ matrix.service.image }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix=sha-
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
+
+      - name: Build and push
+        if: steps.filter.outputs.skip != 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.service.context }}
+          file: ${{ matrix.service.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Layer cache stored in GHCR — no local disk used
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO }}/${{ matrix.service.image }}:buildcache
+          cache-to:   type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO }}/${{ matrix.service.image }}:buildcache,mode=max
+          platforms: linux/amd64

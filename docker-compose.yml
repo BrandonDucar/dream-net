@@ -1,0 +1,167 @@
+version: '3.8'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# IMAGE STRATEGY
+#
+# Third-party images (redis, portainer, woolyai) → Docker Hub (free, cached)
+# Custom dream-net images                         → GHCR (ghcr.io/brandonducar/dream-net/*)
+#
+# To rebuild and push a service:
+#   gh workflow run ghcr-publish.yml -f service=<name>
+#
+# To pull latest images locally (instead of building):
+#   docker compose pull
+#
+# To force local build instead of pulling GHCR (dev mode):
+#   docker compose build <service>
+# ─────────────────────────────────────────────────────────────────────────────
+
+x-ghcr: &ghcr ghcr.io/${GITHUB_OWNER:-brandonducar}/dream-net
+
+services:
+  # ---------------------------------------------------------------------------
+  # THE NERVOUS SYSTEM (Redis / Nerve)
+  # Third-party — stays on Docker Hub, no need to store in GHCR
+  # ---------------------------------------------------------------------------
+  nerve:
+    image: redis:alpine
+    container_name: dreamnet_nerve
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - nerve_data:/data
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE BRAIN (Control Core)
+  # Pulled from GHCR. Build + push via: gh workflow run ghcr-publish.yml -f service=control-core
+  # ---------------------------------------------------------------------------
+  control-core:
+    image: *ghcr/control-core:latest
+    # Uncomment to build locally instead of pulling:
+    # build:
+    #   context: .
+    #   dockerfile: packages/dreamnet-control-core/Dockerfile
+    container_name: dreamnet_control_core
+    restart: on-failure
+    labels:
+      - "dreamnet.role=sacred"
+      - "dreamnet.protection=max"
+    depends_on:
+      - nerve
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - HOT_SENDER_PK=${HOT_SENDER_PK}
+    volumes:
+      - passports_data:/root/.dreamnet/passports
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE MUSCLE (WoolyAI - GPU Hypervisor)
+  # Third-party — stays on Docker Hub
+  # ---------------------------------------------------------------------------
+  wooly-ai:
+    image: woolyai/controller:latest
+    container_name: dreamnet_wooly_ai
+    restart: unless-stopped
+    labels:
+      - "dreamnet.role=worker"
+      - "dreamnet.protection=standard"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - wooly_data:/data
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # THE NEURAL INTERFACE (Portainer)
+  # Third-party — stays on Docker Hub
+  # ---------------------------------------------------------------------------
+  local-manager:
+    image: portainer/portainer-ce:latest
+    container_name: dreamnet_neurontainer_ui
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # GOOSECLAW — Goose AI Agent + OpenClaw bridge
+  # Pulled from GHCR. gh workflow run ghcr-publish.yml -f service=gooseclaw
+  # ---------------------------------------------------------------------------
+  gooseclaw:
+    image: *ghcr/gooseclaw:latest
+    # build:
+    #   context: ./packages/agents/gooseclaw
+    #   dockerfile: Dockerfile
+    container_name: dreamnet_gooseclaw
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    environment:
+      - GOOSE_PROVIDER=${GOOSE_PROVIDER:-anthropic}
+      - GOOSE_MODEL=${GOOSE_MODEL:-claude-sonnet-4-5}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENCLAW_MCP_URL=http://openclaw:8090/mcp
+      - HEYGENCLAW_MCP_URL=http://heygenclaw-mcp:8093/mcp
+    volumes:
+      - goose_config:/home/goose/.config/goose
+      - ./scripts:/workspace/scripts:ro
+      - ./packages:/workspace/packages:ro
+    working_dir: /workspace
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+
+  # ---------------------------------------------------------------------------
+  # HEYGENCLAW MCP — HeyGen Avatar Video Generation
+  # Pulled from GHCR. gh workflow run ghcr-publish.yml -f service=heygenclaw-mcp
+  # ---------------------------------------------------------------------------
+  heygenclaw-mcp:
+    image: *ghcr/heygenclaw-mcp:latest
+    # build:
+    #   context: ./packages/mcp/heygenclaw
+    #   dockerfile: Dockerfile
+    container_name: heygenclaw_mcp
+    restart: unless-stopped
+    ports:
+      - "8093:8093"
+    environment:
+      - HEYGEN_API_KEY=${HEYGEN_API_KEY}
+      - PORT=8093
+    networks:
+      - dream_network
+
+volumes:
+  nerve_data:
+  passports_data:
+  wooly_data:
+  portainer_data:
+  goose_config:
+
+networks:
+  dream_network:
+    driver: bridge
