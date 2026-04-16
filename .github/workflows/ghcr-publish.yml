@@ -51,12 +51,12 @@ jobs:
             image: playground
 
           - name: academy
-            context: .
+            context: packages/apps/academy
             dockerfile: packages/apps/academy/Dockerfile
             image: academy
 
           - name: publishing-house
-            context: .
+            context: packages/apps/publishing-house
             dockerfile: packages/apps/publishing-house/Dockerfile
             image: publishing-house
 
@@ -66,12 +66,12 @@ jobs:
             image: openclaw
 
           - name: heygenclaw-mcp
-            context: .
+            context: packages/mcp/heygenclaw
             dockerfile: packages/mcp/heygenclaw/Dockerfile
             image: heygenclaw-mcp
 
           - name: memoryclaw-mcp
-            context: .
+            context: packages/mcp/memoryclaw
             dockerfile: packages/mcp/memoryclaw/Dockerfile
             image: memoryclaw-mcp
 
