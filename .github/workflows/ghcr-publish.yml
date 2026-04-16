@@ -18,7 +18,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  REPO:     ${{ github.repository_owner }}/dream-net
 
 jobs:
   # ─────────────────────────────────────────────────────────────────────────────
@@ -102,6 +101,10 @@ jobs:
             image: message-bus
 
     steps:
+      - name: Compute lowercase image base
+        id: image_base
+        run: echo "path=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -140,7 +143,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPO }}/${{ matrix.service.image }}
+          images: ${{ steps.image_base.outputs.path }}/${{ matrix.service.image }}
           tags: |
             type=ref,event=branch
             type=sha,prefix=sha-
@@ -156,6 +159,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           # Layer cache stored in GHCR — no local disk used
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO }}/${{ matrix.service.image }}:buildcache
-          cache-to:   type=registry,ref=${{ env.REGISTRY }}/${{ env.REPO }}/${{ matrix.service.image }}:buildcache,mode=max
+          cache-from: type=registry,ref=${{ steps.image_base.outputs.path }}/${{ matrix.service.image }}:buildcache
+          cache-to:   type=registry,ref=${{ steps.image_base.outputs.path }}/${{ matrix.service.image }}:buildcache,mode=max
           platforms: linux/amd64
