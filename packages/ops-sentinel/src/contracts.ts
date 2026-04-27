@@ -139,7 +139,22 @@ export function loadOpsContract(): OpsContract {
         requiredEnvVars: ['GMAIL_CLIENT_ID', 'GMAIL_CLIENT_SECRET', 'GMAIL_REFRESH_TOKEN'],
         status: 'active',
       },
+      // Messaging
+      {
+        name: 'NATS/JetStream',
+        category: 'Infra',
+        codeLocations: ['server/services/NatsService.ts'],
+        requiredEnvVars: ['NATS_URL'],
+        status: 'active',
+      },
       // AI
+      {
+        name: 'Vertex AI',
+        category: 'AI',
+        codeLocations: ['server/services/VertexAIService.ts'],
+        requiredEnvVars: ['GCP_PROJECT_ID', 'GCP_LOCATION'],
+        status: 'active',
+      },
       {
         name: 'OpenAI',
         category: 'AI',
@@ -204,6 +219,9 @@ export function loadOpsContract(): OpsContract {
       { name: 'BASE_MAINNET_RPC_URL', required: false, description: 'Base Mainnet RPC', scope: 'backend' },
       { name: 'BASE_SEPOLIA_RPC_URL', required: false, description: 'Base Sepolia RPC', scope: 'backend' },
       { name: 'BASE_SCAN_API_KEY', required: false, description: 'BaseScan API key', scope: 'both' },
+      { name: 'NATS_URL', required: false, description: 'NATS connection URL', scope: 'backend' },
+      { name: 'GCP_PROJECT_ID', required: false, description: 'Google Cloud Project ID', scope: 'backend' },
+      { name: 'GCP_LOCATION', required: false, description: 'Google Cloud Location (e.g. us-central1)', scope: 'backend' },
     ],
   };
 }
