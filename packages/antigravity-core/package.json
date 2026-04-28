@@ -23,7 +23,7 @@
                          "@dreamnet/nerve":  "workspace:*",
                          "@dreamnet/spore-engine":  "workspace:*",
                          "@dreamnet/shared":  "workspace:*",
-                         "langchain":  "0.0.186"
+                         "langchain":  "0.3.37"
                      },
     "scripts":  {
                     "build":  "tsc",
