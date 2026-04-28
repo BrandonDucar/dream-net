@@ -10,7 +10,7 @@
         "test": "vitest run"
     },
     "dependencies": {
-        "uuid": "^9.0.1"
+        "uuid": "^14.0.0"
     },
     "devDependencies": {
         "typescript": "^5.4.0",
