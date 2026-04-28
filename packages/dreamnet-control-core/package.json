@@ -3,45 +3,45 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./index.ts",
-      "types": "./index.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./controlCoreMiddleware": {
-      "import": "./controlCoreMiddleware.ts",
-      "types": "./controlCoreMiddleware.ts"
+      "import": "./dist/controlCoreMiddleware.js",
+      "types": "./dist/controlCoreMiddleware.d.ts"
     },
     "./identityResolver": {
-      "import": "./identityResolver.ts",
-      "types": "./identityResolver.ts"
+      "import": "./dist/identityResolver.js",
+      "types": "./dist/identityResolver.d.ts"
     },
     "./clusters": {
-      "import": "./clusters.ts",
-      "types": "./clusters.ts"
+      "import": "./dist/clusters.js",
+      "types": "./dist/clusters.d.ts"
     },
     "./conduits": {
-      "import": "./src/conduits.ts",
-      "types": "./src/conduits.ts"
+      "import": "./dist/conduits.js",
+      "types": "./dist/conduits.d.ts"
     },
     "./conduitGovernor": {
-      "import": "./src/conduitGovernor.ts",
-      "types": "./src/conduitGovernor.ts"
+      "import": "./dist/conduitGovernor.js",
+      "types": "./dist/conduitGovernor.d.ts"
     },
     "./deadLetter": {
-      "import": "./src/deadLetter.ts",
-      "types": "./src/deadLetter.ts"
+      "import": "./dist/deadLetter.js",
+      "types": "./dist/deadLetter.d.ts"
     },
     "./conduitMetrics": {
-      "import": "./src/conduitMetrics.ts",
-      "types": "./src/conduitMetrics.ts"
+      "import": "./dist/conduitMetrics.js",
+      "types": "./dist/conduitMetrics.d.ts"
     }
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "echo 'Build step - using TypeScript directly for now'"
+    "build": "tsc"
   },
   "dependencies": {},
   "devDependencies": {

@@ -56,13 +56,14 @@ services:
   # Pulled from GHCR. Build + push via: gh workflow run ghcr-publish.yml -f service=control-core
   # ---------------------------------------------------------------------------
   control-core:
-    image: ghcr.io/brandonducar/dream-net/control-core:latest
-    # Uncomment to build locally instead of pulling:
+    image: dreamnet/control-core:local
     # build:
     #   context: .
     #   dockerfile: packages/dreamnet-control-core/Dockerfile
     container_name: dreamnet_control_core
     restart: on-failure
+    env_file:
+      - .env.local
     labels:
       - "dreamnet.role=sacred"
       - "dreamnet.protection=max"
@@ -76,33 +77,6 @@ services:
       - HOT_SENDER_PK=${HOT_SENDER_PK}
     volumes:
       - passports_data:/root/.dreamnet/passports
-    networks:
-      - dream_network
-
-  # ---------------------------------------------------------------------------
-  # THE MUSCLE (WoolyAI - GPU Hypervisor)
-  # Third-party — stays on Docker Hub
-  # ---------------------------------------------------------------------------
-  wooly-ai:
-    image: woolyai/controller:latest
-    container_name: dreamnet_wooly_ai
-    restart: unless-stopped
-    labels:
-      - "dreamnet.role=worker"
-      - "dreamnet.protection=standard"
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    environment:
-      - PORT=8080
-    ports:
-      - "8080:8080"
-    volumes:
-      - wooly_data:/data
     networks:
       - dream_network
 
@@ -171,6 +145,31 @@ services:
       - PORT=8093
     networks:
       - dream_network
+
+  # ---------------------------------------------------------------------------
+  # SIGNAL SCREENER (Hawk / Arya)
+  # Data hub for Farcaster, Base, and Zora pattern detection
+  # ---------------------------------------------------------------------------
+  signal-screener:
+    image: dreamnet/signal-screener:local
+    # build:
+    #   context: ./services/signal-screener
+    #   dockerfile: Dockerfile
+    container_name: dreamnet_signal_screener
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - NEYNAR_API_KEY=${NEYNAR_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - DIVINE_DREAM_DATABASE_URL=${DIVINE_DREAM_DATABASE_URL}
+      - NODE_ENV=development
+      - PORT=3203
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
 
 volumes:
   nerve_data:

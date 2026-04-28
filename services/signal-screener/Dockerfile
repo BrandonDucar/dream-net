@@ -22,7 +22,6 @@ RUN echo '#!/bin/bash\necho "🦞 OpenClaw v1.0.0 (AI Teammate Edition)"\necho "
 # Set up OpenClaw environment
 ENV OPENCLAW_HOME=/app/.openclaw
 ENV OPENCLAW_MODEL=gpt-4
-ENV OPENCLAW_API_KEY=${OPENAI_API_KEY}
 
 # Create OpenClaw workspace
 RUN mkdir -p /app/.openclaw/workspace && \

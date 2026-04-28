@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import Redis from 'ioredis';
 import { initDatabase, storeSignal, createSnapshot, getSignalVelocity, getTopAuthors, getTopicTrends } from './database';

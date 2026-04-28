@@ -1,5 +1,5 @@
 
-import { AgentWalletManager } from '../index.js';
+import { AgentWalletManager } from './index.js';
 // import { ShieldStore } from "@dreamnet/shield-core/store/shieldStore";
 // import { DreamSnailCore } from "@dreamnet/dreamnet-snail-core";
 

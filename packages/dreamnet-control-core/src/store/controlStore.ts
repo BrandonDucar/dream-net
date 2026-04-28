@@ -362,8 +362,8 @@ class ControlStore {
     const clusterStates: Record<ClusterId, any> = {};
     for (const clusterId of this.rateLimits.keys()) {
       clusterStates[clusterId] = {
-        enabled: this.isClusterEnabled(clusterId),
         ...this.killSwitchState.clusterStates[clusterId],
+        enabled: this.isClusterEnabled(clusterId),
       };
     }
 

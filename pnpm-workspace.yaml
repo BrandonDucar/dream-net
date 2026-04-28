@@ -4,6 +4,8 @@ packages:
   - "apps/hub"
   - "apps/seo"
   - "apps/sitebuilder"
+  - "apps/arya-frame"
+  - "apps/arya-domain"
   - "packages/*"
   - "server"
 

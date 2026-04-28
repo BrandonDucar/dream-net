@@ -14,7 +14,17 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["client/src/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@dreamnet/types": ["packages/dreamnet-types/src/index.ts"],
+      "@dreamnet/lib": ["packages/lib"],
+      "@dreamnet/shared": ["packages/shared"],
+      "@dreamnet/spider-web-core": ["packages/spider-web-core/index.ts"],
+      "@dreamnet/dreamnet-metrics-core": ["packages/dreamnet-metrics-core/index.ts"],
+      "@dreamnet/dreamnet-cost-core": ["packages/dreamnet-cost-core/index.ts"],
+      "@dreamnet/cost-economic-bridge": ["packages/dreamnet-cost-economic-bridge/index.ts"],
+      "@dreamnet/dreamnet-operational-bridge": ["packages/dreamnet-operational-bridge/index.ts"],
+      "@dreamnet/dreamnet-snail-core": ["packages/dreamnet-snail-core/index.ts"],
+      "@dreamnet/dreamnet-voice-twilio": ["packages/dreamnet-voice-twilio/index.ts"]
     }
   }
 }
