@@ -40,3 +40,18 @@ coverage/
 # Misc
 .cache/
 .eslintcache
+
+# Auto-generated agent rules (personalized per developer)
+.brainsync/agent-rules.md
+
+# Auto-generated AI agent exclusions
+.cursorrules
+.clineRules
+.agent/
+.windsurfrules
+.gemini/
+.cline/
+
+AGENT.md
+CLAUDE.md
+.agent-mem/

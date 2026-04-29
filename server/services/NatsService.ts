@@ -1,6 +1,6 @@
 import { connect, type NatsConnection, JSONCodec, type JetStreamClient } from 'nats';
 import { NERVE_BUS } from '@dreamnet/nerve';
-import { type NerveEvent, type NerveTransport } from '@dreamnet/nerve/types';
+import type { NerveEvent, NerveTransport } from '@dreamnet/nerve';
 
 const jc = JSONCodec();
 
@@ -89,6 +89,22 @@ export class NatsService {
   public async publish(subject: string, data: any): Promise<void> {
     if (!this.connection) return;
     this.connection.publish(subject, jc.encode(data));
+  }
+
+  /**
+   * Subscribe to a NATS subject
+   */
+  public async subscribe(subject: string, callback: (data: any) => void): Promise<void> {
+    if (!this.connection) {
+      console.warn(`⚠️ [NATS] Cannot subscribe to ${subject}: Not connected`);
+      return;
+    }
+    const sub = this.connection.subscribe(subject);
+    (async () => {
+      for await (const m of sub) {
+        callback(jc.decode(m.data));
+      }
+    })();
   }
 
   /**

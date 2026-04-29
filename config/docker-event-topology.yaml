@@ -1,0 +1,121 @@
+version: 1
+verified_at: "2026-04-27"
+verified_from: "Antigravity laptop via Docker Desktop 4.70.0"
+sensitivity: "runtime-metadata-only"
+notes:
+  - "This file records local runtime topology and desired event-bus contracts."
+  - "It does not replace docker-compose.yml; it documents the observed Docker Desktop/cagent runtime that currently powers local DreamNet experiments."
+  - "Kafka robot topics were recreated during verification because the broker restarted without persistent topic state."
+
+docker_desktop:
+  engine: "29.4.0"
+  compose: "v5.1.2"
+  context: "desktop-linux"
+  host_os: "Windows + WSL2 Docker Desktop"
+
+event_backbone:
+  redis:
+    container: "dreamnet_nerve"
+    image: "redis:7.2-alpine"
+    port: 6379
+    observed_health: "healthy"
+    role: "agent identity cache, event cache, local nerve/state mirror"
+  nats:
+    container: "dreamnet_nats"
+    image: "nats:latest"
+    ports: [4222, 8222]
+    observed_health: "unhealthy"
+    actual_status_note: "NATS monitor endpoint previously responded; Docker healthcheck is a false negative because the image lacks /bin/sh for the configured exec path."
+    role: "JetStream-capable low-latency event spine"
+  kafka:
+    container: "dreamnet_message_bus"
+    image: "confluentinc/cp-kafka:7.5.0"
+    ports: [9092, 29092]
+    observed_health: "healthy"
+    role: "durable event bus for robot/swarm telemetry and commands"
+  zookeeper:
+    container: "dreamnet_zookeeper"
+    image: "confluentinc/cp-zookeeper:7.5.0"
+    port: 2181
+    observed_health: "healthy"
+  schema_registry:
+    container: "dreamnet_schema_registry"
+    image: "confluentinc/cp-schema-registry:7.5.0"
+    port: 8081
+    observed_health: "starting"
+  kafka_rest:
+    container: "dreamnet_kafka_rest"
+    image: "confluentinc/cp-kafka-rest:7.5.0"
+    port: 8082
+    observed_health: "started during verification"
+  kafka_ui:
+    container: "dreamnet_kafka_ui"
+    image: "provectuslabs/kafka-ui:latest"
+    port: 8080
+    observed_health: "starting"
+    note: "Earlier healthcheck false negative came from missing curl in image."
+  kafka_exporter:
+    container: "dreamnet_kafka_exporter"
+    image: "danielqsj/kafka-exporter:latest"
+    port: 9308
+    observed_health: "running"
+
+dreamnet_local_services:
+  - name: "agent-health"
+    container: "dreamnet_agent_health"
+    image: "dreamnet/agent-health:local"
+    port: 3201
+    observed_health: "healthy"
+  - name: "cross-agent-bus"
+    container: "dreamnet_cross_agent_bus"
+    image: "dreamnet/message-bus:local"
+    port: 3202
+    observed_health: "healthy"
+  - name: "agent-spawn"
+    container: "dreamnet_agent_spawn"
+    image: "dreamnet/agent-spawn:local"
+    port: 3200
+    observed_health: "healthy"
+  - name: "signal-screener"
+    container: "dreamnet_signal_screener"
+    image: "dreamnet/signal-screener:local"
+    port: 3203
+    observed_health: "healthy"
+
+robot_event_contract:
+  required_topics:
+    - name: "robot-sensors"
+      partitions: 3
+      replication_factor: 1
+      role: "sensor readings and telemetry"
+      status_after_verification: "created"
+    - name: "robot-commands"
+      partitions: 1
+      replication_factor: 1
+      role: "motor/control commands"
+      status_after_verification: "created"
+    - name: "robot-state"
+      partitions: 1
+      replication_factor: 1
+      role: "state machine transitions"
+      status_after_verification: "desired-not-created"
+    - name: "robot-events"
+      partitions: 3
+      replication_factor: 1
+      role: "audit/event stream"
+      status_after_verification: "desired-not-created"
+  required_bridge:
+    name: "robot-event-bridge"
+    status: "missing"
+    responsibilities:
+      - "Publish sensor-hub readings into robot-sensors."
+      - "Consume robot-commands and hand off to safe motor executor."
+      - "Emit state transitions to robot-state."
+      - "Mirror selected events into Redis and NATS."
+      - "Expose /health for DeployKeeper/Ops."
+
+known_blockers:
+  - "Kafka topics are not persistent unless the Kafka service has durable broker storage or an init job recreates required topics."
+  - "NATS healthcheck should use a compatible probe for the nats image."
+  - "Kafka UI healthcheck should not require curl unless the image includes it."
+  - "wooly-ai remains created/stopped because GPU runtime initialization failed in WSL without adapters."

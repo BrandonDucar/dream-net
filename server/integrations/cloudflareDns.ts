@@ -3,7 +3,7 @@
  * Manages DNS records via Cloudflare API
  */
 
-import type { DnsProvider, DnsRecord } from './dnsProvider';
+import { type DnsProvider, type DnsRecord, NoOpDnsProvider } from './dnsProvider.js';
 
 const CLOUDFLARE_API_BASE = 'https://api.cloudflare.com/client/v4';
 
@@ -249,7 +249,7 @@ export function createDnsProvider(): import('./dnsProvider').DnsProvider {
     } catch (error: any) {
       console.warn(`[DomainKeeper] Failed to initialize Cloudflare DNS provider: ${error.message}`);
       console.warn('[DomainKeeper] Falling back to NoOp provider');
-      return new (require('./dnsProvider').NoOpDnsProvider)();
+      return new NoOpDnsProvider();
     }
   }
 
@@ -258,6 +258,6 @@ export function createDnsProvider(): import('./dnsProvider').DnsProvider {
     console.warn(`[DomainKeeper] Unknown DNS provider: ${provider}. DNS sync will be skipped.`);
   }
 
-  return new (require('./dnsProvider').NoOpDnsProvider)();
+  return new NoOpDnsProvider();
 }
 

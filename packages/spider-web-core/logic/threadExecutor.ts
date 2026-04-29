@@ -146,7 +146,7 @@ async function executeStep(
         if (ctx.spiderWebCore?.AISEOCore) {
           const geofences = ctx.spiderWebCore.AISEOCore.checkGeofence(step.params.location || {});
           const rules = ctx.spiderWebCore.AISEOCore.applyGeofenceRules(
-            geofences.map((g) => g.id),
+            geofences.map((g: any) => g.id),
             step.params.contentType,
             step.params.platform
           );

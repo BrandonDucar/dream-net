@@ -1,0 +1,6 @@
+name = "arya-frame"
+compatibility_date = "2026-04-26"
+pages_build_output_dir = "./dist"
+
+[env.production]
+name = "arya-frame"

@@ -17,13 +17,14 @@ export async function discoverFromVercel(): Promise<EnvVariable[]> {
       return discovered; // No Vercel token
     }
 
-    const axios = require("axios");
+    const { default: axios } = await import("axios");
     const VERCEL_API_BASE = "https://api.vercel.com/v9";
     const teamId = process.env.VERCEL_TEAM_ID;
 
     // Get projects
     const projectsResponse = await axios.get(`${VERCEL_API_BASE}/projects${teamId ? `?teamId=${teamId}` : ""}`, {
       headers: { Authorization: `Bearer ${token}` },
+      timeout: 5000,
     });
 
     const projects = projectsResponse.data.projects || [];
@@ -35,6 +36,7 @@ export async function discoverFromVercel(): Promise<EnvVariable[]> {
           `${VERCEL_API_BASE}/projects/${project.id}/env${teamId ? `?teamId=${teamId}` : ""}`,
           {
             headers: { Authorization: `Bearer ${token}` },
+            timeout: 5000,
           }
         );
 

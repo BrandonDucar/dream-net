@@ -8,10 +8,10 @@ import type {
   RNGResult,
   DreamBetContext,
   DreamBetStatus,
-} from "./types";
-import { GameStore } from "./store/gameStore";
-import { runDreamBetCycle } from "./scheduler/gameScheduler";
-import { generateRNG, rngToUnit, rngToInt } from "./logic/rngEngine";
+} from "./src/types";
+import { GameStore } from "./src/store/gameStore";
+import { runDreamBetCycle } from "./src/scheduler/gameScheduler";
+import { generateRNG, rngToUnit, rngToInt } from "./src/logic/rngEngine";
 
 export const DreamBetCore = {
   // Game management
@@ -63,6 +63,6 @@ export const DreamBetCore = {
   },
 };
 
-export * from "./types";
+export * from "./src/types";
 export default DreamBetCore;
 

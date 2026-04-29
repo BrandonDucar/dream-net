@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "verifiedAt": "2026-04-27",
+  "principle": "Layered truth: do not collapse runtime agents, registry entries, nano datasets, UI copy, and narrative claims into one raw count.",
+  "layers": [
+    {
+      "id": "local-comprehensive-inventory",
+      "count": 143,
+      "statusBreakdown": {
+        "active": 139,
+        "stub": 4,
+        "documented": 0
+      },
+      "source": "COMPREHENSIVE_AGENT_INVENTORY.json",
+      "sourceGeneratedAt": "2025-11-14T07:09:34.730Z",
+      "sourceType": "machine-readable local inventory",
+      "confidence": "high-for-local-working-tree"
+    },
+    {
+      "id": "runtime-doc-claim-24",
+      "count": 24,
+      "source": "server/routes/prAgent.ts and server/routes/systemMapping.ts",
+      "sourceType": "runtime-facing copy/code claim",
+      "confidence": "medium",
+      "note": "This represents a control-plane/status claim, not the full registry or nano-swarm dataset."
+    },
+    {
+      "id": "macro-agents-web-report",
+      "count": 5,
+      "source": "web Codex report citing data/agents.json",
+      "sourceType": "external report",
+      "confidence": "medium-low",
+      "note": "data/agents.json is not present in this Antigravity checkout."
+    },
+    {
+      "id": "nano-swarm-web-report",
+      "count": 17900,
+      "source": "web Codex report citing data/viral-nano-swarm.json",
+      "sourceType": "external report",
+      "confidence": "medium-low",
+      "note": "data/viral-nano-swarm.json is not present in this Antigravity checkout."
+    },
+    {
+      "id": "ui-copy-503-agents",
+      "count": 503,
+      "source": "packages/ui-svelte/src/AryaChat.svelte",
+      "sourceType": "UI copy / narrative signal",
+      "confidence": "low-as-runtime-count",
+      "note": "Treat as marketing/status copy until backed by a registry artifact."
+    },
+    {
+      "id": "mini-agent-115-claim",
+      "count": 115,
+      "source": "user prompt / search target",
+      "sourceType": "unverified requested term",
+      "confidence": "unverified",
+      "note": "No authoritative local registry hit has been confirmed yet."
+    }
+  ],
+  "canonicalStatus": {
+    "currentLocalRegistryCount": 143,
+    "currentLocalActiveCount": 139,
+    "currentLocalStubCount": 4,
+    "runtimeControlPlaneClaim": 24,
+    "nanoDatasetCount": null,
+    "nanoDatasetReason": "dataset missing from this checkout",
+    "uiNarrativeCount": 503
+  },
+  "nextActions": [
+    "Run scripts/inventory/reconcile-agent-counts.ts after importing any data/agent artifacts.",
+    "Add provenance fields to any generated registry snapshots.",
+    "Wire runtime heartbeat/agent registry to report active orchestrated agents separately from declared agents."
+  ]
+}

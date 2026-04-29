@@ -7,26 +7,33 @@ import { Router, type Request, type Response } from "express";
 
 const router: Router = Router();
 
-// DreamNet Voice Twilio is optional
 let DreamNetVoiceTwilio: any = null;
-try {
-  const voiceModule = require("../../packages/dreamnet-voice-twilio");
-  DreamNetVoiceTwilio = voiceModule.DreamNetVoiceTwilio;
-} catch {
-  console.warn("[Voice Router] @dreamnet/dreamnet-voice-twilio not available");
-}
-
-// Operational bridge is optional
 let bridgeToSpiderWeb: any = null;
-try {
-  const bridgeModule = require("../../packages/dreamnet-operational-bridge");
-  bridgeToSpiderWeb = bridgeModule.bridgeToSpiderWeb;
-} catch {
-  console.warn("[Voice Router] @dreamnet/dreamnet-operational-bridge not available");
-}
+
+// Helper to load optional dependencies
+const loadDependencies = async () => {
+  if (!DreamNetVoiceTwilio) {
+    try {
+      const voiceModule = await import("../../packages/dreamnet-voice-twilio");
+      DreamNetVoiceTwilio = voiceModule.DreamNetVoiceTwilio || voiceModule.default;
+    } catch (e) {
+      console.warn("[Voice Router] @dreamnet/dreamnet-voice-twilio not available:", e);
+    }
+  }
+
+  if (!bridgeToSpiderWeb) {
+    try {
+      const bridgeModule = await import("../../packages/dreamnet-operational-bridge");
+      bridgeToSpiderWeb = bridgeModule.bridgeToSpiderWeb || bridgeModule.default;
+    } catch (e) {
+      console.warn("[Voice Router] @dreamnet/dreamnet-operational-bridge not available:", e);
+    }
+  }
+};
 
 // GET /api/voice/status - Get Voice status
-router.get("/status", (req, res) => {
+router.get("/status", async (req, res) => {
+  await loadDependencies();
   if (!DreamNetVoiceTwilio) {
     return res.status(503).json({ error: "DreamNet Voice Twilio not available" });
   }
@@ -45,6 +52,7 @@ router.get("/status", (req, res) => {
 
 // POST /api/voice/test - Send test SMS
 router.post("/test", async (req, res) => {
+  await loadDependencies();
   if (!DreamNetVoiceTwilio) {
     return res.status(503).json({ error: "DreamNet Voice Twilio not available" });
   }
@@ -75,6 +83,7 @@ router.post("/test", async (req, res) => {
 
 // POST /api/voice/send - Send custom SMS
 router.post("/send", async (req, res) => {
+  await loadDependencies();
   if (!DreamNetVoiceTwilio) {
     return res.status(503).json({ error: "DreamNet Voice Twilio not available" });
   }
@@ -109,6 +118,7 @@ router.post("/send", async (req, res) => {
 
 // POST /api/voice/trigger-event - Manually trigger an event to test routing
 router.post("/trigger-event", async (req, res) => {
+  await loadDependencies();
   try {
     const { type, severity, message, metadata } = req.body;
     

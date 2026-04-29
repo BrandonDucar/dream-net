@@ -1,5 +1,6 @@
 import Redis from 'ioredis';
 import axios from 'axios';
+import { NeynarSpike } from '@dreamnet/sensory-spikes';
 
 /**
  * 🔌 SpikeRunnerService
@@ -213,7 +214,15 @@ export class SpikeRunnerService {
         }
       },
 
-      // === EARTH (120s-300s) ===
+      {
+        name: 'NeynarSocialSpike',
+        category: 'social',
+        intervalMs: 300_000,
+        fetch: async () => {
+          const spike = new NeynarSpike();
+          return await spike.fetch();
+        }
+      },
       {
         name: 'EarthquakeSpike',
         category: 'earth',

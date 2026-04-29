@@ -13,7 +13,7 @@
         "@dreamnet/nerve": "workspace:*",
         "@dreamnet/shared": "workspace:*",
         "@dreamnet/platform-connector": "workspace:*",
-        "@dreamnet/server": "workspace:*"
+        "@dreamnet/clawedette-api": "workspace:*"
     },
     "devDependencies": {
         "typescript": "^5.5.4"

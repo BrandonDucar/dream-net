@@ -26,6 +26,9 @@
         },
         {
             "path": "../shared"
+        },
+        {
+            "path": "../dreamnet-types"
         }
     ],
     "exclude": [

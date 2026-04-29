@@ -1,5 +1,5 @@
 import type { SynapticSpike } from "./types";
-import { emitEvent } from "../event-wormholes/src/index.ts";
+import { emitEvent } from "../../event-wormholes/src/index.ts";
 
 /**
  * Convert events into "synaptic spikes"

@@ -101,6 +101,26 @@ export class APIHopperService {
       }));
     }
 
+    // === 1b. Vertex AI (Google Cloud) ===
+    if (process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.VERTEX_API_KEY) {
+        freeProviders.push(this.makeProvider('Vertex AI (Gemini Pro)', 'vertex', true, 0, async (sys, msg) => {
+            // Vertex implementation using discovery or simple fetch to rest endpoint
+            const url = `https://${process.env.VERTEX_REGION || 'us-central1'}-aiplatform.googleapis.com/v1/projects/${process.env.VERTEX_PROJECT_ID}/locations/${process.env.VERTEX_REGION || 'us-central1'}/publishers/google/models/gemini-1.5-pro:streamGenerateContent`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${process.env.VERTEX_TOKEN}`,
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({
+                    contents: [{ role: 'user', parts: [{ text: `${sys}\n\n${msg}` }] }]
+                })
+            });
+            const data: any = await response.json();
+            return data?.[0]?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        }));
+    }
+
     // === 2. Groq Mixtral (FREE: 30 RPM, $0/req) ===
     if (process.env.GROQ_API_KEY) {
       freeProviders.push(this.makeProvider('Groq (Mixtral)', 'groq', true, 0, async (sys, msg) => {
@@ -135,6 +155,18 @@ export class APIHopperService {
       }));
     }
 
+    // === 3b. DeepSeek API (FREE/LOW COST) ===
+    if (process.env.DEEPSEEK_API_KEY) {
+        freeProviders.push(this.makeProvider('DeepSeek (V3)', 'deepseek', true, 0, async (sys, msg) => {
+            return this.openAICompatible(
+                'https://api.deepseek.com/v1/chat/completions',
+                process.env.DEEPSEEK_API_KEY!,
+                'deepseek-chat',
+                sys, msg
+            );
+        }));
+    }
+
     // === 4. Together AI (FREE TIER, $0/req) ===
     if (process.env.TOGETHER_API_KEY) {
       freeProviders.push(this.makeProvider('Together AI (Mistral)', 'together', true, 0, async (sys, msg) => {
@@ -142,6 +174,16 @@ export class APIHopperService {
           'https://api.together.xyz/v1/chat/completions',
           process.env.TOGETHER_API_KEY!,
           'mistralai/Mistral-7B-Instruct-v0.3',
+          sys, msg
+        );
+      }));
+      
+      // Add Qwen 2.5 via Together if possible
+      freeProviders.push(this.makeProvider('Together AI (Qwen 2.5)', 'qwen', true, 0, async (sys, msg) => {
+        return this.openAICompatible(
+          'https://api.together.xyz/v1/chat/completions',
+          process.env.TOGETHER_API_KEY!,
+          'qwen/Qwen2.5-72B-Instruct',
           sys, msg
         );
       }));
@@ -178,6 +220,18 @@ export class APIHopperService {
           { 'HTTP-Referer': 'https://dreamnet.ink', 'X-Title': 'DreamNet' }
         );
       }));
+    }
+
+    // === 6b. Kimi (Moonshot AI) ===
+    if (process.env.KIMI_API_KEY) {
+        freeProviders.push(this.makeProvider('Kimi (Moonshot)', 'kimi', true, 0, async (sys, msg) => {
+            return this.openAICompatible(
+                'https://api.moonshot.cn/v1/chat/completions',
+                process.env.KIMI_API_KEY!,
+                'moonshot-v1-8k',
+                sys, msg
+            );
+        }));
     }
 
     // === 7. xAI Grok (PAID if used, $0.015/req approx) ===
@@ -232,13 +286,30 @@ export class APIHopperService {
 
     // === 10. Ollama Local (FREE TIER: unlimited, $0/req, OFFLINE CAPABLE) ===
     // This is the ABSOLUTE FALLBACK - always available locally, no rate limits
-    if (process.env.OLLAMA_API_URL) {
-      freeProviders.push(this.makeProvider('Ollama (Local)', 'ollama', true, 0, async (sys, msg) => {
-        const response = await fetch(`${process.env.OLLAMA_API_URL}/api/generate`, {
+    if (process.env.OLLAMA_API_URL || true) { // Always try localhost:11434 as default
+      const ollamaUrl = process.env.OLLAMA_API_URL || 'http://localhost:11434';
+      freeProviders.push(this.makeProvider('Ollama (Qwen 3 Fail-safe)', 'ollama', true, 0, async (sys, msg) => {
+        const response = await fetch(`${ollamaUrl}/api/generate`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: process.env.OLLAMA_MODEL || 'mistral',
+            model: process.env.OLLAMA_MODEL || 'qwen2.5:72b', // Default to Qwen as requested
+            prompt: `${sys}\n\n${msg}`,
+            stream: false,
+          }),
+        });
+        if (!response.ok) throw new Error(`Ollama error: ${response.statusText}`);
+        const data = await response.json();
+        return data.response;
+      }));
+
+      // Extra backup for Gemma/Gamma
+      freeProviders.push(this.makeProvider('Ollama (Gemma Fail-safe)', 'gemma', true, 0, async (sys, msg) => {
+        const response = await fetch(`${ollamaUrl}/api/generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'gemma2:27b',
             prompt: `${sys}\n\n${msg}`,
             stream: false,
           }),
@@ -250,9 +321,8 @@ export class APIHopperService {
     }
 
     // FINAL PROVIDER ORDER:
-    // 1. All FREE tier providers (better for cost, should be tried first)
+    // 1. All FREE tier providers (Gemini -> Vertex -> Groq -> DeepSeek -> Together -> HF -> OpenRouter -> Ollama)
     // 2. All PAID tier providers (fallback only when necessary)
-    // Ollama will be last in free tier (slowest, but always available locally)
     
     this.providers = [...freeProviders, ...paidProviders];
   }

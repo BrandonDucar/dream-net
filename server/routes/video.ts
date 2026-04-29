@@ -2,17 +2,22 @@ import { Router } from 'express';
 
 const router: Router = Router();
 
-// Video processor is optional
 let processVideoJob: any = null;
-try {
-  const videoModule = require('../utils/videoProcessor');
-  processVideoJob = videoModule.processVideoJob;
-} catch {
-  console.warn("[Video Router] Video processor not available");
-}
+
+const loadVideoProcessor = async () => {
+  if (!processVideoJob) {
+    try {
+      const videoModule = await import('../utils/videoProcessor.js');
+      processVideoJob = videoModule.processVideoJob || videoModule.default;
+    } catch (e) {
+      console.warn("[Video Router] Video processor not available:", e);
+    }
+  }
+};
 
 // POST /api/video/process - Process video job
 router.post('/process', async (req, res) => {
+  await loadVideoProcessor();
   try {
     const jobSpec = req.body;
     

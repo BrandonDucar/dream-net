@@ -188,6 +188,28 @@ async function neynarGet(path: string, params: Record<string, string> = {}): Pro
   return res.json();
 }
 
+async function publishCast(text: string, parentHash?: string): Promise<any> {
+  try {
+    const res = await fetch(`${NEYNAR_BASE}/cast`, {
+      method: 'POST',
+      headers: {
+        'x-api-key': NEYNAR_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text,
+        parent_author_fid: parentHash ? undefined : undefined, // Simplify for now
+        signer_uuid: process.env.NEYNAR_SIGNER_UUID,
+      }),
+    });
+    if (!res.ok) throw new Error(`Neynar publish failed: ${res.status}`);
+    return res.json();
+  } catch (e: any) {
+    console.error(`⚠️ [Screener] Failed to publish cast: ${e.message}`);
+    return null;
+  }
+}
+
 async function fetchTrendingCasts(limit = 25): Promise<Cast[]> {
   try {
     const data = await neynarGet('/feed', {
@@ -757,6 +779,14 @@ async function ingestAndScore(): Promise<void> {
   stats.last_poll = Date.now();
   stats.polls_completed++;
   console.log(`✅ [Screener] Cycle done: ${unique.length} casts, ${highSignal.length} high-signal, ${topForAI.length} AI-summarized`);
+
+  // 12. Social Activation: If high signal exists, publish a summary to resume presence
+  if (highSignal.length > 0 && stats.polls_completed % 4 === 0) { // Every 1 hour
+    const best = highSignal[0];
+    const postText = `📢 DreamNet Intel: High signal detected in ${best.topics[0]}.\n\n"${best.summary}"\n\nIntelligence score: ${best.score_total}/100. Swarm active.`;
+    await publishCast(postText);
+    console.log('📣 [Social Activation] Published intelligence report to Farcaster.');
+  }
 }
 
 // ─── REST API ────────────────────────────────────────────────────────

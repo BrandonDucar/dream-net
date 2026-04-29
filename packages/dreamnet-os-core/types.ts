@@ -50,6 +50,10 @@ export interface DreamNetOSContext {
   webhookNervousCore?: any;
   jaggyCore?: any;
   dreamSnailCore?: any;
+  dreamKeeperCore?: any;
+  dreamDefenseNet?: any;
+  surgeonAgent?: any;
+  evolutionEngine?: any;
 }
 
 export interface DreamNetOSStatus {

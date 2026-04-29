@@ -1,7 +1,11 @@
+console.log("[Routes] Module loading started...");
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+console.log("[Routes] Importing storage...");
 import { storage } from "./storage";
+console.log("[Routes] Importing schema...");
 import { insertDreamSchema, insertCocoonSchema, insertDreamCoreSchema, insertWalletSchema, type ContributorRole, contributorsLog, notifications, type CocoonLog } from "@shared/schema";
+console.log("[Routes] Importing auth...");
 import { requireAdmin as oldRequireAdmin, isAdminWallet } from "./auth";
 import { 
   generateNonce, 
@@ -12,44 +16,74 @@ import {
   requireAuth, 
   requireAdmin 
 } from "./siwe-auth";
+console.log("[Routes] Importing scoring...");
 import { calculateAIScore } from "./ai-scoring";
 import { calculateDreamScore } from "./dream-scoring";
 import { dreamScoreEngine } from "./dream-score-engine";
+console.log("[Routes] Importing notification engine...");
 import { notificationEngine } from "./notification-engine";
+console.log("[Routes] Importing sample data...");
 import { sampleDreams, staticSampleDreams } from "./sample-data";
 import { getWalletData, analyzeWallet, type WalletAnalysis } from '@shared/wallet';
 import { z } from "zod";
 import { db, mongoDb } from "./db";
+console.log("[Routes] Importing gardenFeedRouter...");
 import gardenFeedRouter from "./gardenFeedRouter";
+console.log("[Routes] Importing taskConnectorRouter...");
 import taskConnectorRouter from "./routes-connector";
+console.log("[Routes] Importing streamlinedConnectorRouter...");
 import streamlinedConnectorRouter from "./routes/connector";
+console.log("[Routes] Importing dreamsRouter...");
 import dreamsRouter from "./routes/dreams";
+console.log("[Routes] Importing walletScanRouter...");
 import walletScanRouter from "./routes/wallet-scan";
+console.log("[Routes] Importing dreamProcessorRouter...");
 import dreamProcessorRouter from "./routes/dream-processor";
+console.log("[Routes] Importing walletScoreRouter...");
 import walletScoreRouter from "./routes/wallet-score";
+console.log("[Routes] Importing dreamCoresRouter...");
 import dreamCoresRouter from "./routes/dream-cores";
+console.log("[Routes] Importing ConnectorBot...");
 import { connectorBotV1 } from "./routes/ConnectorBot";
+console.log("[Routes] Importing lucidRoute...");
 import lucidRoute from './routes/lucid';
+console.log("[Routes] Importing canvasRoute...");
 import canvasRoute from './routes/canvas';
+console.log("[Routes] Importing rootRoute...");
 import rootRoute from './routes/root';
+console.log("[Routes] Importing echoRoute...");
 import echoRoute from './routes/echo';
+console.log("[Routes] Importing dreamStorageRouter...");
 import dreamStorageRouter from './routes/dream-storage';
+console.log("[Routes] Importing saveCoreRoute...");
 import saveCoreRoute from './routes/save-core';
+console.log("[Routes] Importing loadCoreRoute...");
 import loadCoreRoute from './routes/load-core';
+console.log("[Routes] Importing reactivateCoreRoute...");
 import reactivateCoreRoute from './routes/reactivate-core';
+console.log("[Routes] Importing generateDreamLinkRoute...");
 import generateDreamLinkRoute from './routes/generate-dream-link';
+console.log("[Routes] Importing sharedDreamRoute...");
 import sharedDreamRoute from './routes/shared-dream';
+console.log("[Routes] Importing publicDreamRoute...");
 import publicDreamRoute from './routes/public-dream';
+console.log("[Routes] Importing mutateDreamRoute...");
 import mutateDreamRoute from './routes/mutate-dream';
+console.log("[Routes] Importing saveMutatedDreamRoute...");
 import saveMutatedDreamRoute from './routes/save-mutated-dream';
+console.log("[Routes] Importing loadDreamsRoute...");
 import loadDreamsRoute from './routes/load-dreams';
+console.log("[Routes] Importing allDreamsRoute...");
 import allDreamsRoute from './routes/all-dreams';
+console.log("[Routes] Importing getDreamRoute...");
 import getDreamRoute from './routes/get-dream';
+console.log("[Routes] Importing getDreamByIdRoute...");
 import getDreamByIdRoute from './routes/get-dream-by-id';
-// Removed fuseDreamsRoute import as it's handled inline
+console.log("[Routes] Importing fusionsRoute...");
 import fusionsRoute from './routes/fusions';
+console.log("[Routes] Importing claimFusionRoute...");
 import claimFusionRoute from './routes/claim-fusion';
-import dreamViewer from './routes/dreams';
+console.log("[Routes] Importing walletScoringRouter...");
 import walletScoringRouter from './routes/wallet-scoring';
 import echoScoreRouter from './routes/echo-score';
 import mintTokenRouter from './routes/mint-dream-token';
@@ -81,8 +115,10 @@ import citizensRouter from './routes/citizens';
 import registerAgentsRouter from './routes/register-agents';
 import awsRouter from './routes/aws';
 import googleCloudRouter from './routes/google-cloud';
+import onboardingRouter from './routes/onboarding';
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  console.log("[Routes] registerRoutes started");
   // SIWE Auth routes
   app.post("/api/auth/nonce", async (req, res) => {
     try {
@@ -4728,6 +4764,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(leaderboardData);
   });
 
+  console.log("[Routes] registerRoutes completed");
   const httpServer = createServer(app);
   return httpServer;
 }

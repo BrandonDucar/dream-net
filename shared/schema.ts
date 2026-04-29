@@ -226,6 +226,31 @@ export const wallets = pgTable("wallets", {
   lastUpdated: timestamp("last_updated").defaultNow().notNull(),
 });
 
+// Swarm Agents Table
+export const swarmAgents = pgTable("swarm_agents", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  type: text("type").notNull(),
+  guildId: text("guild_id"),
+  status: text("status").default("idle"), // idle, active, offline
+  walletAddress: text("wallet_address"),
+  capabilities: text("capabilities").array().default(sql`'{}'::text[]`),
+  lastHeartbeat: timestamp("last_heartbeat").defaultNow(),
+  metadata: jsonb("metadata").default(sql`'{}'::jsonb`),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Guilds Table
+export const guilds = pgTable("guilds", {
+  id: text("id").primaryKey(), // piclaw, pyclaw, etc.
+  name: text("name").notNull(),
+  charter: text("charter"),
+  leaderId: varchar("leader_id"),
+  memberCount: integer("member_count").default(0),
+  metadata: jsonb("metadata").default(sql`'{}'::jsonb`),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Dream Reminders table for SMS scheduling
 export const dreamnetApiKeys = pgTable("dreamnet_api_keys", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),

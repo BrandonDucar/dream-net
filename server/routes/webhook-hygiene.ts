@@ -10,22 +10,32 @@ let webhookHygiene: any = null;
 let dependencySanity: any = null;
 let blastRadius: any = null;
 
-try {
-  const hygieneModule = require('../services/WebhookHygieneService');
-  const sanityModule = require('../services/DependencySanityService');
-  const blastModule = require('../services/BlastRadiusControlService');
-  WebhookHygieneService = hygieneModule.WebhookHygieneService;
-  DependencySanityService = sanityModule.DependencySanityService;
-  BlastRadiusControlService = blastModule.BlastRadiusControlService;
-  if (WebhookHygieneService) webhookHygiene = new WebhookHygieneService();
-  if (DependencySanityService) dependencySanity = new DependencySanityService();
-  if (BlastRadiusControlService) blastRadius = new BlastRadiusControlService();
-} catch {
-  console.warn("[Webhook Hygiene] Services not available");
-}
+// Helper to load optional dependencies
+const loadHygieneServices = async () => {
+  if (!webhookHygiene || !dependencySanity || !blastRadius) {
+    try {
+      const [hygieneModule, sanityModule, blastModule] = await Promise.all([
+        import('../services/WebhookHygieneService.js'),
+        import('../services/DependencySanityService.js'),
+        import('../services/BlastRadiusControlService.js')
+      ]);
+
+      WebhookHygieneService = hygieneModule.WebhookHygieneService || hygieneModule.default;
+      DependencySanityService = sanityModule.DependencySanityService || sanityModule.default;
+      BlastRadiusControlService = blastModule.BlastRadiusControlService || blastModule.default;
+
+      if (WebhookHygieneService && !webhookHygiene) webhookHygiene = new WebhookHygieneService();
+      if (DependencySanityService && !dependencySanity) dependencySanity = new DependencySanityService();
+      if (BlastRadiusControlService && !blastRadius) blastRadius = new BlastRadiusControlService();
+    } catch (e) {
+      console.warn("[Webhook Hygiene] Services not fully available:", e);
+    }
+  }
+};
 
 // Webhook validation endpoint
 router.post('/validate', async (req, res) => {
+  await loadHygieneServices();
   if (!webhookHygiene) {
     return res.status(503).json({ error: "Webhook Hygiene Service not available" });
   }
@@ -52,6 +62,7 @@ router.post('/validate', async (req, res) => {
 
 // Dependency audit endpoint
 router.get('/audit/dependencies', async (req, res) => {
+  await loadHygieneServices();
   if (!dependencySanity) {
     return res.status(503).json({ error: "Dependency Sanity Service not available" });
   }
@@ -68,6 +79,7 @@ router.get('/audit/dependencies', async (req, res) => {
 
 // Generate dependency audit report
 router.get('/audit/report', async (req, res) => {
+  await loadHygieneServices();
   if (!dependencySanity) {
     return res.status(503).json({ error: "Dependency Sanity Service not available" });
   }
@@ -84,7 +96,8 @@ router.get('/audit/report', async (req, res) => {
 });
 
 // Blast radius control endpoints
-router.get('/blast-radius/status', (req, res) => {
+router.get('/blast-radius/status', async (req, res) => {
+  await loadHygieneServices();
   if (!blastRadius) {
     return res.status(503).json({ error: "Blast Radius Service not available" });
   }
@@ -106,6 +119,7 @@ router.get('/blast-radius/status', (req, res) => {
 });
 
 router.post('/blast-radius/disable/:integration', async (req, res) => {
+  await loadHygieneServices();
   if (!blastRadius) {
     return res.status(503).json({ error: "Blast Radius Service not available" });
   }
@@ -130,6 +144,7 @@ router.post('/blast-radius/disable/:integration', async (req, res) => {
 });
 
 router.post('/blast-radius/enable/:integration', async (req, res) => {
+  await loadHygieneServices();
   if (!blastRadius) {
     return res.status(503).json({ error: "Blast Radius Service not available" });
   }
@@ -152,6 +167,7 @@ router.post('/blast-radius/enable/:integration', async (req, res) => {
 });
 
 router.post('/blast-radius/emergency-disable/:integration', async (req, res) => {
+  await loadHygieneServices();
   if (!blastRadius) {
     return res.status(503).json({ error: "Blast Radius Service not available" });
   }
@@ -177,7 +193,8 @@ router.post('/blast-radius/emergency-disable/:integration', async (req, res) => 
 });
 
 // Webhook statistics
-router.get('/stats', (req, res) => {
+router.get('/stats', async (req, res) => {
+  await loadHygieneServices();
   if (!webhookHygiene) {
     return res.status(503).json({ error: "Webhook Hygiene Service not available" });
   }

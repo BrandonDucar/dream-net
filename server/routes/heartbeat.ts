@@ -14,8 +14,10 @@ import DreamNetControlCore from "../../packages/dreamnet-control-core";
 const router = express.Router();
 
 // GET /api/heartbeat - Get unified DreamNet status (Phase 1 - Eyes)
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   try {
+    const { superSpine } = await import("../core/SuperSpine");
+    const spineAgents = superSpine.getAllAgents();
     const osStatus = DreamNetOSCore.status();
     const stats = DreamNetOSCore.getHealthStats();
     const activeAlerts = DreamNetOSCore.getActiveAlerts();
@@ -31,18 +33,24 @@ router.get("/", (req, res) => {
     // Try to get Whale/Orca Pack status (may not exist yet)
     let whalePack: any = null;
     let orcaPack: any = null;
-    try {
-      const { WhalePackCore } = require("../../packages/whale-pack-core");
-      whalePack = WhalePackCore?.status?.() || null;
-    } catch (e) {
-      // Whale Pack not available
-    }
-    try {
-      const { OrcaPackCore } = require("../../packages/orca-pack-core");
-      orcaPack = OrcaPackCore?.status?.() || null;
-    } catch (e) {
-      // Orca Pack not available
-    }
+    
+    // We use a promise-based approach for optional packages to avoid blocking
+    const loadPacks = async () => {
+      try {
+        const { WhalePackCore } = await import("../../packages/whale-pack-core");
+        whalePack = WhalePackCore?.status?.() || null;
+      } catch (e) {
+        // Whale Pack not available
+      }
+      try {
+        const { OrcaPackCore } = await import("../../packages/orca-pack-core");
+        orcaPack = OrcaPackCore?.status?.() || null;
+      } catch (e) {
+        // Orca Pack not available
+      }
+    };
+    
+    await loadPacks();
 
     res.json({
       success: true,
@@ -98,6 +106,12 @@ router.get("/", (req, res) => {
         rateLimits: control.rateLimits.length,
         circuitBreakers: Object.keys(control.circuitBreakers).length,
         lastUpdatedAt: control.killSwitch.lastUpdatedAt,
+      },
+      superSpine: {
+        agentCount: spineAgents.length,
+        activeAgents: spineAgents.filter(a => a.status === 'active' || a.status === 'busy').length,
+        idleAgents: spineAgents.filter(a => a.status === 'idle').length,
+        offlineAgents: spineAgents.filter(a => a.status === 'offline').length,
       },
     });
   } catch (error: any) {

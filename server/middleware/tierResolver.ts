@@ -10,9 +10,9 @@
  */
 
 import type { Request, Response, NextFunction } from "express";
-import type { TierId } from "../../packages/dreamnet-control-core/tierConfig";
-import { TIERS, getTierConfig } from "../../packages/dreamnet-control-core/tierConfig";
-import { identityAndTierResolver, type RequestWithIdentity, type CallerIdentity } from "../../packages/dreamnet-control-core/identityResolver";
+import type { TierId } from "../../packages/dreamnet-control-core/src/tierConfig";
+import { TIERS, getTierConfig } from "../../packages/dreamnet-control-core/src/tierConfig";
+import { identityAndTierResolver, type RequestWithIdentity, type CallerIdentity } from "../../packages/dreamnet-control-core/src/identityResolver";
 import { getTraceId } from "./traceId";
 
 declare global {

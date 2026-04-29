@@ -2,10 +2,18 @@ import { Pool } from 'pg';
 import { readFileSync } from 'fs';
 
 // Database connection for signal history and pattern analysis
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_LFgl64fVYoJw@ep-red-thunder-afhkyr9i.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require',
-  ssl: { rejectUnauthorized: false } // Neon requires SSL
-});
+const databaseUrl = process.env.DATABASE_URL;
+const persistenceEnabled = Boolean(databaseUrl);
+const pool: Pick<Pool, 'query'> = databaseUrl
+  ? new Pool({
+      connectionString: databaseUrl,
+      ssl: { rejectUnauthorized: false }, // Neon requires SSL
+    })
+  : {
+      async query() {
+        return { rows: [] };
+      },
+    };
 
 // Load schema from file
 const schema = readFileSync('./schema.sql', 'utf8');
@@ -301,6 +309,11 @@ export async function getSignalVelocity(hours: number = 1): Promise<number> {
 
 // Initialize database connection
 export async function initDatabase(): Promise<void> {
+  if (!persistenceEnabled) {
+    console.warn('⚠️ [Database] DATABASE_URL not set; signal persistence disabled');
+    return;
+  }
+
   try {
     await pool.query(schema);
     console.log('✅ [Database] Schema initialized');

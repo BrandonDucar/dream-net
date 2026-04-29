@@ -94,7 +94,6 @@ export class AgentSchedulerService {
         agent_id: 'clawedette', passport: 'DNET-PASS-CLAWEDETTE-MLILVLGC',
         wake_hour_utc: 10, sleep_hour_utc: 6,
         scheduled_blocks: [
-          { name: 'Morning Briefing', cron: '0 10 * * *', duration_min: 15, tasks: ['read_blackboard','check_all_spikes','post_briefing_to_bridge'], priority: 'high' },
           { name: 'Spike Watch', interval_sec: 300, tasks: ['check_crypto_spike','check_news_spike','check_weather_spike'], priority: 'medium' },
           { name: 'Social Pulse', interval_sec: 1800, tasks: ['check_inbox','scan_reddit_intel'], priority: 'medium' },
           { name: 'Gym Session', cron: '0 14 * * *', duration_min: 20, tasks: ['train_web_search','train_sentiment_analysis','train_social_post','benchmark_self'], priority: 'low' },

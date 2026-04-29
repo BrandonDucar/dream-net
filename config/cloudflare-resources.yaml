@@ -1,0 +1,74 @@
+version: 1
+verified_at: "2026-04-27"
+verified_from: "Antigravity laptop via Wrangler 4.85.0"
+sensitivity: "names-and-resource-ids-only"
+notes:
+  - "This manifest records Cloudflare resource metadata only. It must not contain secret values."
+  - "Cloudflare secrets and KV values were not listed or exported."
+  - "The web/cloud inventory report could not authenticate to Cloudflare; this file captures the local authenticated Wrangler truth."
+
+local_configs:
+  - path: "apps/arya-frame/wrangler.toml"
+    type: "cloudflare-pages"
+    name: "arya-frame"
+    compatibility_date: "2026-04-26"
+    pages_build_output_dir: "./dist"
+
+pages_projects:
+  - name: "arya-frame"
+    domain: "arya-frame.pages.dev"
+    git_provider: "No"
+    last_modified_observed: "2 hours ago"
+  - name: "dreamnet-live"
+    domain: "dreamnet-live.pages.dev"
+    git_provider: "No"
+    last_modified_observed: "1 month ago"
+  - name: "dadfi-org"
+    domain: "dadfi-org.pages.dev"
+    git_provider: "No"
+    last_modified_observed: "1 month ago"
+  - name: "dreamnet-ink"
+    domain: "dreamnet-ink.pages.dev"
+    git_provider: "No"
+    last_modified_observed: "1 month ago"
+
+d1_databases:
+  - name: "vanguard-54-db"
+    uuid: "918ff65a-f1d6-4030-bc98-f2f3339f20e7"
+    created_at: "2026-04-16T20:48:40.114Z"
+    version: "production"
+    num_tables: 0
+    file_size_bytes: 12288
+
+r2_buckets:
+  - name: "dreamnet-cflare-bucket"
+    creation_date: "2026-04-14T06:15:50.708Z"
+
+kv_namespaces:
+  - title: "DREAMNET_AGENT_CACHE"
+    id: "e2d3b0c2fe2045ecbd47e8060ee6b656"
+    supports_url_encoding: true
+  - title: "dreamnet-secrets"
+    id: "8aa65f6d8f764846b8d3321f56cb75bd"
+    supports_url_encoding: true
+    note: "Namespace name only. Values were not listed."
+  - title: "DREAMNET_STATE"
+    id: "5a33f0ede0584038a3dfaa95e8d89526"
+    supports_url_encoding: true
+  - title: "POLYGON_ORACLE_CACHE"
+    id: "16aa387f17114a699af2a6158dd4ba87"
+    supports_url_encoding: true
+  - title: "VANGUARD_KV"
+    id: "ba0c11e6b9fe4e31944daf7ce24d84b9"
+    supports_url_encoding: true
+
+queues: []
+workers:
+  note: "No worker list was captured in this pass. Pages config exists for arya-frame."
+durable_objects:
+  note: "No Durable Object bindings were found in the local Wrangler config reviewed."
+
+follow_up:
+  - "Add bindings for Pages/Workers that should be source-controlled."
+  - "Add a read-only Cloudflare inventory script that refreshes this file without secrets."
+  - "Map dreamnet.ink and www.dreamnet.ink DNS truth from Cloudflare once zones are enumerated."

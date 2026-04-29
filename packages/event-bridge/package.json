@@ -1,0 +1,24 @@
+{
+  "name": "@dreamnet/event-bridge",
+  "version": "1.0.0",
+  "description": "Bi-directional bridge between Kafka (Robot) and NATS (DreamNet)",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "nats": "^2.19.0",
+    "express": "^4.18.2",
+    "dotenv": "^16.4.5",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.20",
+    "@types/express": "^4.17.21"
+  }
+}

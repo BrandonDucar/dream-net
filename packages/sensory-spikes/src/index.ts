@@ -52,3 +52,4 @@ export * from './spikes/AgentHunterSpike.js';
 export * from './spikes/CitizenSpike.js';
 export * from './spikes/YieldSpike.js';
 export * from './spikes/UniversalHubSpike.js';
+export * from './spikes/MemPalaceSpike.js';

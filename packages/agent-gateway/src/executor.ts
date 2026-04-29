@@ -170,6 +170,8 @@ export async function executeTool(
       executionPromise = executeVercelTool(toolId, payload, req);
     } else if (toolId === "diagnostics.ping") {
       executionPromise = executeDiagnosticsTool(toolId, payload, req);
+    } else if (toolId.startsWith("ifttt.")) {
+      executionPromise = executeIftttTool(toolId, payload, req);
     } else {
       executionPromise = Promise.resolve({
         toolId,
@@ -644,6 +646,82 @@ async function executeDiagnosticsTool(
       toolId,
       ok: false,
       error: error.message || "DIAGNOSTICS_ERROR",
+      latencyMs: Date.now() - startTime,
+    };
+  }
+}
+
+/**
+ * Execute IFTTT tools
+ */
+async function executeIftttTool(
+  toolId: ToolId,
+  payload: Record<string, unknown>,
+  req: RequestWithIdentity
+): Promise<ToolExecutionResult> {
+  const startTime = Date.now();
+
+  try {
+    const { EnvKeeperCore } = await import("../../../env-keeper-core/index.js");
+    const axios = (await import("axios")).default;
+
+    if (toolId === "ifttt.trigger") {
+      const event = payload.event as string;
+      const value1 = payload.value1;
+      const value2 = payload.value2;
+      const value3 = payload.value3;
+
+      if (!event) {
+        return {
+          toolId,
+          ok: false,
+          error: "EVENT_NAME_REQUIRED",
+        };
+      }
+
+      const iftttKey = process.env.IFTTT_WEBHOOK_KEY || EnvKeeperCore.get("IFTTT_WEBHOOK_KEY")?.value;
+      
+      if (!iftttKey) {
+        return {
+          toolId,
+          ok: false,
+          error: "IFTTT_WEBHOOK_KEY_MISSING",
+          data: {
+            message: "Please set IFTTT_WEBHOOK_KEY in environment variables."
+          }
+        };
+      }
+
+      const url = `https://maker.ifttt.com/trigger/${event}/with/key/${iftttKey}`;
+      
+      const response = await axios.post(url, {
+        value1,
+        value2,
+        value3
+      });
+
+      return {
+        toolId,
+        ok: true,
+        data: {
+          message: "IFTTT Webhook triggered successfully",
+          iftttResponse: response.data,
+          event
+        },
+        latencyMs: Date.now() - startTime,
+      };
+    }
+
+    return {
+      toolId,
+      ok: false,
+      error: "UNKNOWN_IFTTT_TOOL",
+    };
+  } catch (error: any) {
+    return {
+      toolId,
+      ok: false,
+      error: error.message || "IFTTT_EXECUTION_ERROR",
       latencyMs: Date.now() - startTime,
     };
   }

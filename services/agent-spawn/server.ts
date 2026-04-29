@@ -411,7 +411,11 @@ app.get('/api/spawn/audit', async (req, res) => {
 
 // Initialize database and start server
 initDatabase().then(() => {
-  console.log('✅ [Hatchling] Database initialized successfully');
+  console.log(
+    process.env.DATABASE_URL
+      ? '✅ [Hatchling] Database initialized successfully'
+      : '⚠️ [Hatchling] Database persistence disabled; running Redis-only'
+  );
   
   loadInstances().then(() => {
     app.listen(PORT, '0.0.0.0', () => {
@@ -420,7 +424,9 @@ initDatabase().then(() => {
       console.log(`🐣 [Spawn] Talon gate: ${Object.keys(SPAWN_POLICIES).length} policies (spawn=tier2, batch=tier3, destroy=tier3, sovereign=tier5)`);
       console.log(`🐣 [Spawn] 10 endpoints ready (6 Talon-gated)`);
       console.log(`🥚 [Hatchling] Agent identity registered`);
-      console.log(`🗄️ [Hatchling] Neon database connected for persistent storage`);
+      if (process.env.DATABASE_URL) {
+        console.log(`🗄️ [Hatchling] Database connected for persistent storage`);
+      }
       redis.set(`agent:identity:${AGENT_ID}`, JSON.stringify({ ...AGENT_IDENTITY, last_boot: Date.now() })).catch(() => {});
     });
   });

@@ -1,5 +1,563 @@
 [
   {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "03bf1ffa-d1fa-4af1-bc98-dde41aacc95d",
+    "timestamp": "2026-04-29T03:04:16.940Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "229a083d-f626-4254-bd11-bc5d6e8b4eec",
+    "timestamp": "2026-04-29T03:00:38.734Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "1dccddda-9cd5-4a84-b5fa-fcf9e3384409",
+    "timestamp": "2026-04-29T02:59:03.847Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "d2cbff53-b940-4095-9cde-535696c8d3eb",
+    "timestamp": "2026-04-29T02:53:38.086Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "4088ae44-2efc-49c3-a6c2-b3131ad25cfa",
+    "timestamp": "2026-04-29T00:31:03.359Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "142caf8c-d297-48b1-866b-b3873a640d41",
+    "timestamp": "2026-04-29T00:26:12.226Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "2ccfecca-ac8a-474e-98a9-cd327c23dd9c",
+    "timestamp": "2026-04-29T00:22:55.875Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "3c6730c6-9cfe-4512-9367-dcbce064cc28",
+    "timestamp": "2026-04-29T00:20:24.871Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "833fd3ee-120d-432e-9a7d-c1a2a48df83c",
+    "timestamp": "2026-04-29T00:00:27.261Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "f4bd68e9-2ac6-45ae-a157-70b03a4b7220",
+    "timestamp": "2026-04-28T23:55:23.739Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "0ec4166c-1d7c-4248-a31e-e1f2c9850fe9",
+    "timestamp": "2026-04-28T23:54:02.765Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "d0bad2fb-bf77-4e98-bb5f-6a6999a2bb37",
+    "timestamp": "2026-04-28T23:50:29.966Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "b2f62665-18b1-47d8-8392-eaf60d111bb9",
+    "timestamp": "2026-04-28T23:49:04.473Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "f26978f6-85ae-4f1f-aec2-72fb1a0e4b67",
+    "timestamp": "2026-04-28T23:45:00.918Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "97a3ba3b-077c-49c9-bb75-2ae9d5672abe",
+    "timestamp": "2026-04-28T23:37:05.988Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "5474fc68-bafc-4de7-9d3d-d5de6680f54c",
+    "timestamp": "2026-04-28T23:35:36.266Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "a58498a9-16af-4985-857c-29d6f94679da",
+    "timestamp": "2026-04-28T23:31:53.060Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "ea4af13f-d523-4e50-89b9-d5d57a3a69f7",
+    "timestamp": "2026-04-28T23:27:23.907Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "320c0890-e713-4eae-91f0-d60f07139f68",
+    "timestamp": "2026-04-28T23:18:19.862Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "afed1f64-1121-4fc3-9c54-98744d8912ae",
+    "timestamp": "2026-04-28T23:16:32.339Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "6d8d2ee9-e27a-4149-abda-333fa6e8f905",
+    "timestamp": "2026-04-28T23:15:21.361Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "f7ff0281-66e4-4ae8-8d54-47cf56651112",
+    "timestamp": "2026-04-28T23:10:59.502Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "5a1f47f7-6844-4393-808f-dd55da5a8f64",
+    "timestamp": "2026-04-28T23:09:47.187Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "920a2855-20ac-4dc5-9e3f-ce631e69d846",
+    "timestamp": "2026-04-28T23:08:40.154Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "ac2688d9-44e1-4e41-a92c-52e3e066888e",
+    "timestamp": "2026-04-28T23:07:50.352Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "3b0a1876-1fca-4458-9972-e1de9b0e6c45",
+    "timestamp": "2026-04-28T23:00:14.511Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "8d980d2b-3d04-4d29-b187-6337e32e384a",
+    "timestamp": "2026-04-28T22:58:53.563Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "d7cc0755-6557-428a-8c2a-d41d456c4a27",
+    "timestamp": "2026-04-28T22:58:13.454Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "7a26ba0b-1380-4b33-9b27-66861aea60df",
+    "timestamp": "2026-04-28T22:57:21.232Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "57be4282-8c3d-434c-a0ac-cd188a679be6",
+    "timestamp": "2026-04-28T22:56:44.464Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
+    "id": "42835511-5f73-4f76-9300-1552a8ce7ad3",
+    "timestamp": "2026-04-28T22:44:47.006Z",
+    "handled": false
+  },
+  {
     "sourceType": "halo",
     "eventType": "halo.cycle.completed",
     "severity": "warning",

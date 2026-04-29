@@ -45,3 +45,12 @@ export interface MetricQuery {
   limit?: number;
 }
 
+export interface ScalingMetrics {
+  clusterId: string;
+  requestsPerSecond: number;
+  errorRate: number;
+  averageLatency: number;
+  p95Latency: number;
+  cpuUsage?: number;
+  memoryUsage?: number;
+}

@@ -137,7 +137,6 @@ export function discoverFromEnvFiles(): EnvVariable[] {
     const commonPaths = [
       process.cwd(),
       path.join(process.cwd(), ".."),
-      path.join(process.cwd(), "../.."),
       path.join(process.cwd(), ".env"),
       path.join(process.cwd(), ".env.local"),
       path.join(process.cwd(), ".env.production"),
@@ -252,7 +251,9 @@ export async function discoverAllEnvVars(): Promise<EnvVariable[]> {
   const seen = new Set<string>();
 
   // 1. Process.env (filter out system vars)
+  console.log("[EnvKeeper] 🔍 Discovering from process.env...");
   const processVars = discoverFromProcessEnv();
+  console.log(`[EnvKeeper] 🔍 Found ${processVars.length} vars in process.env`);
   for (const envVar of processVars) {
     if (!seen.has(envVar.key)) {
       discovered.push(envVar);
@@ -261,7 +262,9 @@ export async function discoverAllEnvVars(): Promise<EnvVariable[]> {
   }
 
   // 2. .env files (SYNC - finds ALL files)
+  console.log("[EnvKeeper] 🔍 Discovering from .env files...");
   const fileVars = discoverFromEnvFiles();
+  console.log(`[EnvKeeper] 🔍 Found ${fileVars.length} unique vars in .env files`);
   for (const envVar of fileVars) {
     if (!seen.has(envVar.key)) {
       discovered.push(envVar);
@@ -276,7 +279,9 @@ export async function discoverAllEnvVars(): Promise<EnvVariable[]> {
   }
 
   // 3. Vercel (async)
+  console.log("[EnvKeeper] 🔍 Discovering from Vercel...");
   const vercelVars = await discoverFromVercel();
+  console.log(`[EnvKeeper] 🔍 Found ${vercelVars.length} vars in Vercel`);
   for (const envVar of vercelVars) {
     if (!seen.has(envVar.key)) {
       discovered.push(envVar);

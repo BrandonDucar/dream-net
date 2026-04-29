@@ -26,4 +26,4 @@ EXPOSE 3000
 
 # Wake the Cortex
 WORKDIR /app/packages/dreamnet-control-core
-CMD ["node", "dist/server.js"]
+CMD ["pnpm", "exec", "tsx", "src/server.ts"]

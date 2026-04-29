@@ -29,8 +29,10 @@ class InstantWormhole {
 
   constructor() {
     this.initializeDefaultRoutes();
-    this.subscribeToMesh();
+    // Defer subscription to avoid circular dependency TDZ issues
+    setTimeout(() => this.subscribeToMesh(), 10);
   }
+
 
   /**
    * Initialize default instant routes

@@ -33,7 +33,7 @@ router.post('/deploy', async (req, res) => {
     if (result.success && config.platform === 'vercel') {
       // Run domain sync in background (don't block response)
       getDomainKeeper()
-        .syncProductionDomain()
+        .then(keeper => keeper.syncProductionDomain())
         .then((syncResult) => {
           console.log(`[DomainKeeper] Production domain sync: ${syncResult.action} - ${syncResult.message}`);
         })
@@ -173,7 +173,7 @@ router.post('/sync-domains', async (req, res) => {
   try {
     console.log('[DomainKeeper] Manual domain sync triggered');
 
-    const keeper = getDomainKeeper();
+    const keeper = await getDomainKeeper();
     const results = await keeper.syncAllDomains();
 
     const summary = {

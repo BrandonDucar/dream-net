@@ -3,10 +3,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
-    "module": "commonjs",
-    "target": "es2019",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "strict": true
   },
   "include": ["./**/*.ts"]

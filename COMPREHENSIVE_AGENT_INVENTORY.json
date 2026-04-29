@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2025-11-14T07:09:34.730Z",
+  "generatedAt": "2026-04-29T04:56:08.183Z",
   "summary": {
-    "totalAgents": 143,
+    "totalAgents": 468,
     "byType": {
-      "server": 38,
-      "client": 53,
-      "package": 14,
+      "server": 62,
+      "client": 61,
+      "package": 302,
       "legacy": 8,
-      "foundry": 13,
+      "foundry": 0,
       "nano": 4,
-      "system": 13
+      "system": 31
     },
     "byStatus": {
-      "active": 139,
-      "stub": 4,
+      "active": 440,
+      "stub": 28,
       "documented": 0
     },
     "totalBiomimeticSystems": 23,
@@ -26,10 +26,38 @@
   },
   "agents": [
     {
+      "id": "system-activate-agent-swarm",
+      "name": "activate-agent-swarm",
+      "file": "scripts\\activate-agent-swarm.ts",
+      "type": "system",
+      "status": "stub"
+    },
+    {
+      "id": "package-activity",
+      "name": "activity",
+      "file": "packages\\agent-gateway\\src\\activity.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-adaptive-thresholds",
+      "name": "adaptive-thresholds",
+      "file": "packages\\shield-core\\src\\adaptive-thresholds.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-AdminOverlay",
       "name": "AdminOverlay",
       "file": "client\\src\\components\\AdminOverlay.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-AdminOverlay",
+      "name": "AdminOverlay",
+      "file": "packages\\client\\src\\components\\AdminOverlay.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -41,10 +69,32 @@
       "description": "Some pages haven\\"
     },
     {
+      "id": "package-advancedSEO",
+      "name": "advancedSEO",
+      "file": "packages\\server-legacy\\src\\routes\\advancedSEO.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Some pages haven\\"
+    },
+    {
       "id": "server-agent",
       "name": "agent",
       "file": "server\\routes\\agent.ts",
       "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-agent",
+      "name": "agent",
+      "file": "packages\\database\\src\\agent.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-agent",
+      "name": "agent",
+      "file": "packages\\server-legacy\\src\\routes\\agent.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -56,10 +106,25 @@
       "description": "Subconscious Architect"
     },
     {
+      "id": "package-agent-customizer",
+      "name": "agent-customizer",
+      "file": "packages\\client\\src\\pages\\agent-customizer.tsx",
+      "type": "package",
+      "status": "active",
+      "description": "Subconscious Architect"
+    },
+    {
       "id": "client-agent-dashboard",
       "name": "agent-dashboard",
       "file": "client\\src\\pages\\agent-dashboard.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-agent-dashboard",
+      "name": "agent-dashboard",
+      "file": "packages\\client\\src\\pages\\agent-dashboard.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -70,10 +135,38 @@
       "status": "active"
     },
     {
+      "id": "package-agent-dashboard-test",
+      "name": "agent-dashboard-test",
+      "file": "packages\\client\\src\\pages\\agent-dashboard-test.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-agent-filtering-demo",
       "name": "agent-filtering-demo",
       "file": "client\\src\\pages\\agent-filtering-demo.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-agent-filtering-demo",
+      "name": "agent-filtering-demo",
+      "file": "packages\\client\\src\\pages\\agent-filtering-demo.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-agent-gateway",
+      "name": "agent-gateway",
+      "file": "server\\routes\\agent-gateway.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-agent-gateway",
+      "name": "agent-gateway",
+      "file": "packages\\server-legacy\\src\\routes\\agent-gateway.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -84,10 +177,24 @@
       "status": "active"
     },
     {
-      "id": "foundry-agent-registry",
-      "name": "agent-registry",
-      "file": "dream-agent-store\\apps\\api\\src\\agent-registry.ts",
-      "type": "foundry",
+      "id": "package-agent-glow-demo",
+      "name": "agent-glow-demo",
+      "file": "packages\\client\\src\\pages\\agent-glow-demo.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-agent-ops",
+      "name": "agent-ops",
+      "file": "server\\routes\\agent-ops.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-agent-ops",
+      "name": "agent-ops",
+      "file": "packages\\server-legacy\\src\\routes\\agent-ops.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -98,26 +205,54 @@
       "status": "active"
     },
     {
-      "id": "foundry-agentCapabilities",
-      "name": "agentCapabilities",
-      "file": "dream-agent-store\\shared\\agentCapabilities.js",
-      "type": "foundry",
-      "status": "active",
-      "description": "Trigger Vercel production deploy hook for the DreamNet frontends."
+      "id": "package-agent-status-demo",
+      "name": "agent-status-demo",
+      "file": "packages\\client\\src\\pages\\agent-status-demo.tsx",
+      "type": "package",
+      "status": "active"
     },
     {
-      "id": "foundry-agentCapabilities",
-      "name": "agentCapabilities",
-      "file": "dream-agent-store\\shared\\agentCapabilities.ts",
-      "type": "foundry",
+      "id": "server-agent-wallets",
+      "name": "agent-wallets",
+      "file": "server\\routes\\agent-wallets.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-agent-wallets",
+      "name": "agent-wallets",
+      "file": "packages\\server-legacy\\src\\routes\\agent-wallets.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-AgentBridgeService",
+      "name": "AgentBridgeService",
+      "file": "packages\\api\\src\\services\\AgentBridgeService.ts",
+      "type": "package",
       "status": "active",
-      "description": "Trigger Vercel production deploy hook for the DreamNet frontends."
+      "capabilities": [
+        "chat",
+        "sovereign",
+        "spikes",
+        "roving",
+        "wallet",
+        "api-hopper",
+        "bridge-hub"
+      ]
     },
     {
       "id": "server-agentCommand",
       "name": "agentCommand",
       "file": "server\\routes\\agentCommand.ts",
       "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-agentCommand",
+      "name": "agentCommand",
+      "file": "packages\\server-legacy\\src\\routes\\agentCommand.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -129,6 +264,21 @@
       "description": "Native trust/verification protocol"
     },
     {
+      "id": "package-AgentDashboardMini",
+      "name": "AgentDashboardMini",
+      "file": "packages\\base-mini-apps\\frontend\\AgentDashboardMini.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-AgentFacilityService",
+      "name": "AgentFacilityService",
+      "file": "packages\\api\\src\\services\\AgentFacilityService.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Generative world model — create interactive 2D environments from text/image prompts"
+    },
+    {
       "id": "client-AgentFilteredDreams",
       "name": "AgentFilteredDreams",
       "file": "client\\src\\components\\AgentFilteredDreams.tsx",
@@ -136,9 +286,44 @@
       "status": "active"
     },
     {
+      "id": "package-AgentFilteredDreams",
+      "name": "AgentFilteredDreams",
+      "file": "packages\\client\\src\\components\\AgentFilteredDreams.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-AgentFoundry",
+      "name": "AgentFoundry",
+      "file": "server\\foundry\\AgentFoundry.ts",
+      "type": "server",
+      "status": "active",
+      "description": "Intelligent task routing and orchestration agent",
+      "tier": "Standard",
+      "capabilities": [
+        "routing",
+        "orchestration",
+        "logic"
+      ]
+    },
+    {
+      "id": "package-AgentFoundry",
+      "name": "AgentFoundry",
+      "file": "packages\\server-legacy\\src\\foundry\\AgentFoundry.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Intelligent task routing and orchestration agent",
+      "tier": "Standard",
+      "capabilities": [
+        "routing",
+        "orchestration",
+        "logic"
+      ]
+    },
+    {
       "id": "package-agentHealthAnalyzer",
       "name": "agentHealthAnalyzer",
-      "file": "packages\\halo-loop\\analyzers\\agentHealthAnalyzer.ts",
+      "file": "packages\\halo-loop\\src\\analyzers\\agentHealthAnalyzer.ts",
       "type": "package",
       "status": "active",
       "description": "${agent.name} appears offline or unresponsive"
@@ -152,11 +337,41 @@
       "description": "AI-powered customer acquisition system that finds high-value precious metals buyers in your area"
     },
     {
+      "id": "package-agentMarketplace",
+      "name": "agentMarketplace",
+      "file": "packages\\server-legacy\\src\\routes\\agentMarketplace.ts",
+      "type": "package",
+      "status": "active",
+      "description": "AI-powered customer acquisition system that finds high-value precious metals buyers in your area"
+    },
+    {
+      "id": "package-AgentMemoryGraph",
+      "name": "AgentMemoryGraph",
+      "file": "packages\\dream-sync-engine\\src\\AgentMemoryGraph.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-AgentPanel",
       "name": "AgentPanel",
       "file": "client\\src\\components\\AgentPanel.tsx",
       "type": "client",
       "status": "active"
+    },
+    {
+      "id": "package-AgentPanel",
+      "name": "AgentPanel",
+      "file": "packages\\client\\src\\components\\AgentPanel.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-AgentReputationService",
+      "name": "AgentReputationService",
+      "file": "packages\\api\\src\\services\\AgentReputationService.ts",
+      "type": "package",
+      "status": "active",
+      "tier": "Probation"
     },
     {
       "id": "server-agents",
@@ -166,17 +381,77 @@
       "status": "active"
     },
     {
-      "id": "foundry-agents",
+      "id": "client-agents",
       "name": "agents",
-      "file": "dream-agent-store\\apps\\store\\lib\\agents.ts",
-      "type": "foundry",
+      "file": "client\\src\\mocks\\agents.ts",
+      "type": "client",
+      "status": "active",
+      "description": "Monitors dream health and system status"
+    },
+    {
+      "id": "client-agents",
+      "name": "agents",
+      "file": "client\\src\\pages\\hub\\agents.tsx",
+      "type": "client",
       "status": "active"
+    },
+    {
+      "id": "package-agents",
+      "name": "agents",
+      "file": "packages\\client\\src\\mocks\\agents.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Monitors dream health and system status"
+    },
+    {
+      "id": "package-agents",
+      "name": "agents",
+      "file": "packages\\client\\src\\pages\\hub\\agents.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-agents",
+      "name": "agents",
+      "file": "packages\\server-legacy\\src\\lib\\agents.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-agents",
+      "name": "agents",
+      "file": "packages\\shared\\agents.ts",
+      "type": "package",
+      "status": "active",
+      "tier": "Standard"
     },
     {
       "id": "client-Agents",
       "name": "Agents",
       "file": "client\\src\\pages\\Agents.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-Agents",
+      "name": "Agents",
+      "file": "packages\\client\\src\\pages\\Agents.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-agentScheduler",
+      "name": "agentScheduler",
+      "file": "packages\\agent-registry-core\\scheduler\\agentScheduler.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Tracking ${status.agentCount} agents (active=${status.activeCount}, degraded=${status.degradedCount}, error=${status.errorCount})."
+    },
+    {
+      "id": "package-AgentSchedulerService",
+      "name": "AgentSchedulerService",
+      "file": "packages\\api\\src\\services\\AgentSchedulerService.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -187,10 +462,40 @@
       "status": "active"
     },
     {
+      "id": "package-AgentSelector",
+      "name": "AgentSelector",
+      "file": "packages\\client\\src\\components\\AgentSelector.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "client-AgentsPage",
+      "name": "AgentsPage",
+      "file": "client\\src\\pages\\AgentsPage.tsx",
+      "type": "client",
+      "status": "active",
+      "description": "Main orchestrator for DreamNet operations"
+    },
+    {
+      "id": "package-AgentsPage",
+      "name": "AgentsPage",
+      "file": "packages\\client\\src\\pages\\AgentsPage.tsx",
+      "type": "package",
+      "status": "active",
+      "description": "Main orchestrator for DreamNet operations"
+    },
+    {
       "id": "client-AgentStatus",
       "name": "AgentStatus",
       "file": "client\\src\\components\\AgentStatus.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-AgentStatus",
+      "name": "AgentStatus",
+      "file": "packages\\client\\src\\components\\AgentStatus.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -202,10 +507,59 @@
       "description": "Routes logic, detects failure patterns, and determines the next step."
     },
     {
+      "id": "package-AgentStatusGrid",
+      "name": "AgentStatusGrid",
+      "file": "packages\\client\\src\\components\\AgentStatusGrid.tsx",
+      "type": "package",
+      "status": "active",
+      "description": "Routes logic, detects failure patterns, and determines the next step."
+    },
+    {
+      "id": "package-agentStore",
+      "name": "agentStore",
+      "file": "packages\\agent-registry-core\\store\\agentStore.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-ai-surgeon-dashboard",
       "name": "ai-surgeon-dashboard",
       "file": "client\\src\\pages\\ai-surgeon-dashboard.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-ai-surgeon-dashboard",
+      "name": "ai-surgeon-dashboard",
+      "file": "packages\\client\\src\\pages\\ai-surgeon-dashboard.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-aiFactory",
+      "name": "aiFactory",
+      "file": "packages\\dreamnet-factory\\src\\aiFactory.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-aiFoundry",
+      "name": "aiFoundry",
+      "file": "packages\\dreamnet-factory\\src\\aiFoundry.ts",
+      "type": "package",
+      "status": "active",
+      "tier": "LIGHT",
+      "capabilities": [
+        "Eliza-Bridge",
+        "Nerve-Synapse",
+        "Metabolic-Report"
+      ]
+    },
+    {
+      "id": "package-aiSurgeonAgents",
+      "name": "aiSurgeonAgents",
+      "file": "packages\\lib\\aiSurgeonAgents.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -230,10 +584,59 @@
       "status": "active"
     },
     {
+      "id": "package-APIKeeperDashboard",
+      "name": "APIKeeperDashboard",
+      "file": "packages\\base-mini-apps\\frontend\\APIKeeperDashboard.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-APIKeeperGovernmentOffice",
+      "name": "APIKeeperGovernmentOffice",
+      "file": "packages\\base-mini-apps\\frontend\\APIKeeperGovernmentOffice.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-apiKeeperScheduler",
+      "name": "apiKeeperScheduler",
+      "file": "packages\\api-keeper-core\\scheduler\\apiKeeperScheduler.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-App",
       "name": "App",
       "file": "client\\src\\App.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-App",
+      "name": "App",
+      "file": "packages\\client\\src\\App.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ArchimedesWriter",
+      "name": "ArchimedesWriter",
+      "file": "packages\\archimedes\\src\\ArchimedesWriter.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-AryaStarkAgent",
+      "name": "AryaStarkAgent",
+      "file": "server\\agents\\AryaStarkAgent.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-audit-hangar",
+      "name": "audit-hangar",
+      "file": "packages\\nerve\\scripts\\audit-hangar.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -248,12 +651,96 @@
       ]
     },
     {
+      "id": "package-authorization",
+      "name": "authorization",
+      "file": "packages\\server-legacy\\src\\routes\\authorization.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "view_public_content",
+        "basic_interaction"
+      ]
+    },
+    {
       "id": "legacy-AutonomousLeadAgent",
       "name": "AutonomousLeadAgent",
       "file": "agents\\AutonomousLeadAgent.js",
       "type": "legacy",
       "status": "active",
       "description": "Identified ${this.metrics.leadsIdentified} high-value prospects across AI, FinTech, and VC sectors. ${this.metrics.qualifiedProspects} qualified for immediate outreach."
+    },
+    {
+      "id": "package-autoRecovery",
+      "name": "autoRecovery",
+      "file": "packages\\dreamnet-os-core\\logic\\autoRecovery.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Restart ${subsystem.name} - critical subsystem failure"
+    },
+    {
+      "id": "server-beeQuorum",
+      "name": "beeQuorum",
+      "file": "server\\core\\agents\\beeQuorum.ts",
+      "type": "server",
+      "status": "active",
+      "description": "Scores PRs and manages quorum consensus for auto-merge"
+    },
+    {
+      "id": "package-beeQuorum",
+      "name": "beeQuorum",
+      "file": "packages\\server-legacy\\src\\core\\agents\\beeQuorum.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Scores PRs and manages quorum consensus for auto-merge"
+    },
+    {
+      "id": "system-belfort-agent",
+      "name": "belfort-agent",
+      "file": "scripts\\clawtrading\\agents\\belfort-agent.mjs",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "package-biomimetic.test",
+      "name": "biomimetic.test",
+      "file": "packages\\graft-engine\\tests\\biomimetic.test.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-bootstrap",
+      "name": "bootstrap",
+      "file": "packages\\network-blueprints\\src\\bootstrap.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "client-bridge",
+      "name": "bridge",
+      "file": "client\\src\\api\\bridge.ts",
+      "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-bridge",
+      "name": "bridge",
+      "file": "packages\\client\\src\\api\\bridge.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-BudgetGovernor",
+      "name": "BudgetGovernor",
+      "file": "packages\\dreamnet-cost-core\\src\\BudgetGovernor.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-buildChecker",
+      "name": "buildChecker",
+      "file": "packages\\halo-loop\\src\\analyzers\\microAgents\\buildChecker.ts",
+      "type": "package",
+      "status": "active"
     },
     {
       "id": "legacy-CampaignMasterAgent",
@@ -270,6 +757,13 @@
       "status": "active"
     },
     {
+      "id": "package-CANVAS",
+      "name": "CANVAS",
+      "file": "packages\\server-legacy\\src\\agents\\CANVAS.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "server-capabilities",
       "name": "capabilities",
       "file": "server\\routes\\capabilities.ts",
@@ -280,10 +774,101 @@
       ]
     },
     {
+      "id": "package-capabilities",
+      "name": "capabilities",
+      "file": "packages\\server-legacy\\src\\routes\\capabilities.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "req.params.name"
+      ]
+    },
+    {
+      "id": "package-chameleon",
+      "name": "chameleon",
+      "file": "packages\\antigravity-core\\logic\\chameleon.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-chatgpt-agent",
+      "name": "chatgpt-agent",
+      "file": "server\\routes\\chatgpt-agent.ts",
+      "type": "server",
+      "status": "active",
+      "description": "A biomimetic digital organism with autonomous agents and systems",
+      "capabilities": [
+        "Vercel deployment management",
+        "System status monitoring",
+        "Shield Core security",
+        "Wolf Pack funding",
+        "Dream management",
+        ""
+      ]
+    },
+    {
+      "id": "package-chatgpt-agent",
+      "name": "chatgpt-agent",
+      "file": "packages\\server-legacy\\src\\routes\\chatgpt-agent.ts",
+      "type": "package",
+      "status": "active",
+      "description": "A biomimetic digital organism with autonomous agents and systems",
+      "capabilities": [
+        "Vercel deployment management",
+        "System status monitoring",
+        "Shield Core security",
+        "Wolf Pack funding",
+        "Dream management",
+        ""
+      ]
+    },
+    {
+      "id": "package-chemistry",
+      "name": "chemistry",
+      "file": "packages\\graft-engine\\logic\\chemistry.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-chimera",
+      "name": "chimera",
+      "file": "packages\\graft-engine\\logic\\chimera.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ClawedetteService",
+      "name": "ClawedetteService",
+      "file": "packages\\api\\src\\services\\ClawedetteService.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-clean-audit",
+      "name": "clean-audit",
+      "file": "packages\\server-legacy\\clean-audit.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-cleanupAgent",
+      "name": "cleanupAgent",
+      "file": "packages\\dreamnet-vercel-agent\\logic\\cleanupAgent.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-cloud-agent",
       "name": "cloud-agent",
       "file": "client\\src\\pages\\cloud-agent.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-cloud-agent",
+      "name": "cloud-agent",
+      "file": "packages\\client\\src\\pages\\cloud-agent.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -308,6 +893,20 @@
       "status": "active"
     },
     {
+      "id": "package-connector-export",
+      "name": "connector-export",
+      "file": "packages\\server-legacy\\src\\connector-export.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-connector-export-brandond",
+      "name": "connector-export-brandond",
+      "file": "packages\\server-legacy\\src\\connector-export-brandond.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "server-ConnectorBot",
       "name": "ConnectorBot",
       "file": "server\\routes\\ConnectorBot.ts",
@@ -315,10 +914,25 @@
       "status": "active"
     },
     {
+      "id": "package-ConnectorBot",
+      "name": "ConnectorBot",
+      "file": "packages\\server-legacy\\src\\routes\\ConnectorBot.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-CradleAgentView",
       "name": "CradleAgentView",
       "file": "client\\src\\components\\CradleAgentView.tsx",
       "type": "client",
+      "status": "active",
+      "description": "Initial dream concept formation"
+    },
+    {
+      "id": "package-CradleAgentView",
+      "name": "CradleAgentView",
+      "file": "packages\\client\\src\\components\\CradleAgentView.tsx",
+      "type": "package",
       "status": "active",
       "description": "Initial dream concept formation"
     },
@@ -332,10 +946,33 @@
       "tier": "Visionary"
     },
     {
-      "id": "foundry-db",
-      "name": "db",
-      "file": "dream-agent-store\\apps\\api\\src\\services\\db.ts",
-      "type": "foundry",
+      "id": "package-creatorOnboarder",
+      "name": "creatorOnboarder",
+      "file": "packages\\client\\src\\agents\\creatorOnboarder.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Discover exclusive content, products, and experiences from ${cleanUsername}",
+      "tier": "Visionary"
+    },
+    {
+      "id": "package-CrewSyncService",
+      "name": "CrewSyncService",
+      "file": "packages\\api\\src\\services\\CrewSyncService.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-debug-summary",
+      "name": "debug-summary",
+      "file": "server\\routes\\debug-summary.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-debug-summary",
+      "name": "debug-summary",
+      "file": "packages\\server-legacy\\src\\routes\\debug-summary.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -346,10 +983,46 @@
       "status": "active"
     },
     {
+      "id": "package-DecayAgent",
+      "name": "DecayAgent",
+      "file": "packages\\client\\src\\agents\\DecayAgent.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-define",
+      "name": "define",
+      "file": "packages\\network-blueprints\\src\\define.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-dependencyChecker",
+      "name": "dependencyChecker",
+      "file": "packages\\halo-loop\\src\\analyzers\\microAgents\\dependencyChecker.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-deploy-with-env-keeper",
+      "name": "deploy-with-env-keeper",
+      "file": "scripts\\deploy-with-env-keeper.ts",
+      "type": "system",
+      "status": "active"
+    },
+    {
       "id": "server-deploykeeper",
       "name": "deploykeeper",
       "file": "server\\core\\agents\\deploykeeper.ts",
       "type": "server",
+      "status": "active",
+      "description": "Checks deployment settings and common pitfalls."
+    },
+    {
+      "id": "package-deploykeeper",
+      "name": "deploykeeper",
+      "file": "packages\\server-legacy\\src\\core\\agents\\deploykeeper.ts",
+      "type": "package",
       "status": "active",
       "description": "Checks deployment settings and common pitfalls."
     },
@@ -368,6 +1041,20 @@
       "status": "active"
     },
     {
+      "id": "server-discovery",
+      "name": "discovery",
+      "file": "server\\routes\\discovery.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-discovery",
+      "name": "discovery",
+      "file": "packages\\server-legacy\\src\\routes\\discovery.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "package-distribution",
       "name": "distribution",
       "file": "packages\\spore-engine\\src\\distribution.ts",
@@ -383,10 +1070,39 @@
       "description": "Failure recorded: ${event.payload?.error ?? "
     },
     {
+      "id": "package-dnaEngine",
+      "name": "dnaEngine",
+      "file": "packages\\memory-dna\\src\\dnaEngine.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Failure recorded: ${event.payload?.error ?? "
+    },
+    {
+      "id": "package-dnsChecker",
+      "name": "dnsChecker",
+      "file": "packages\\halo-loop\\src\\analyzers\\microAgents\\dnsChecker.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "nano-domainCheck",
       "name": "domainCheck",
       "file": "agents\\nano\\domainCheck.cjs",
       "type": "nano",
+      "status": "active"
+    },
+    {
+      "id": "server-DomainKeeper",
+      "name": "DomainKeeper",
+      "file": "server\\services\\DomainKeeper.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-DomainKeeper",
+      "name": "DomainKeeper",
+      "file": "packages\\server-legacy\\src\\services\\DomainKeeper.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -398,10 +1114,25 @@
       "description": "Decentralized Finance protocols, yield farming, and liquidity solutions"
     },
     {
+      "id": "package-dream-cloud",
+      "name": "dream-cloud",
+      "file": "packages\\server-legacy\\src\\routes\\dream-cloud.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Decentralized Finance protocols, yield farming, and liquidity solutions"
+    },
+    {
       "id": "client-dream-detail",
       "name": "dream-detail",
       "file": "client\\src\\pages\\dream-detail.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-dream-detail",
+      "name": "dream-detail",
+      "file": "packages\\client\\src\\pages\\dream-detail.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -412,10 +1143,24 @@
       "status": "active"
     },
     {
+      "id": "package-dream-node-test",
+      "name": "dream-node-test",
+      "file": "packages\\client\\src\\pages\\dream-node-test.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-dream-nodes",
       "name": "dream-nodes",
       "file": "client\\src\\pages\\dream-nodes.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-dream-nodes",
+      "name": "dream-nodes",
+      "file": "packages\\client\\src\\pages\\dream-nodes.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -426,10 +1171,25 @@
       "status": "active"
     },
     {
+      "id": "package-dream-vault",
+      "name": "dream-vault",
+      "file": "packages\\client\\src\\pages\\dream-vault.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-DreamAgentSpawner",
       "name": "DreamAgentSpawner",
       "file": "client\\src\\components\\DreamAgentSpawner.tsx",
       "type": "client",
+      "status": "active",
+      "description": "A spontaneous dream manifesting from the collective unconscious, pulsing with ${emotion} energy at ${Math.round((baseDream ? Math.min(1.0, baseDream.emotionalProfile.intensityScore + (Math.random() * 0.3 - 0.15)) : Math.random() * 0.4 + 0.6) * 100)}% intensity."
+    },
+    {
+      "id": "package-DreamAgentSpawner",
+      "name": "DreamAgentSpawner",
+      "file": "packages\\client\\src\\components\\DreamAgentSpawner.tsx",
+      "type": "package",
       "status": "active",
       "description": "A spontaneous dream manifesting from the collective unconscious, pulsing with ${emotion} energy at ${Math.round((baseDream ? Math.min(1.0, baseDream.emotionalProfile.intensityScore + (Math.random() * 0.3 - 0.15)) : Math.random() * 0.4 + 0.6) * 100)}% intensity."
     },
@@ -442,10 +1202,25 @@
       "description": "An attracted dream manifesting from the collective unconscious, drawn by the gravitational pull of ${emotion} energy and ${trend} momentum, scoring high on the attraction algorithm."
     },
     {
+      "id": "package-DreamAttractor",
+      "name": "DreamAttractor",
+      "file": "packages\\client\\src\\agents\\DreamAttractor.ts",
+      "type": "package",
+      "status": "active",
+      "description": "An attracted dream manifesting from the collective unconscious, drawn by the gravitational pull of ${emotion} energy and ${trend} momentum, scoring high on the attraction algorithm."
+    },
+    {
       "id": "client-DreamCallLog",
       "name": "DreamCallLog",
       "file": "client\\src\\components\\DreamCallLog.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-DreamCallLog",
+      "name": "DreamCallLog",
+      "file": "packages\\client\\src\\components\\DreamCallLog.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -456,9 +1231,30 @@
       "status": "active"
     },
     {
+      "id": "package-DreamCard",
+      "name": "DreamCard",
+      "file": "packages\\client\\src\\components\\DreamCard.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-DreamCoreViewer",
       "name": "DreamCoreViewer",
       "file": "client\\src\\components\\DreamCoreViewer.tsx",
+      "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-DreamCoreViewer",
+      "name": "DreamCoreViewer",
+      "file": "packages\\client\\src\\components\\DreamCoreViewer.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "client-DreamCortex3D",
+      "name": "DreamCortex3D",
+      "file": "client\\src\\components\\DreamCortex3D.tsx",
       "type": "client",
       "status": "active"
     },
@@ -471,6 +1267,14 @@
       "description": "Convert corruption into pure energy"
     },
     {
+      "id": "package-DreamHealerPanel",
+      "name": "DreamHealerPanel",
+      "file": "packages\\client\\src\\components\\DreamHealerPanel.tsx",
+      "type": "package",
+      "status": "active",
+      "description": "Convert corruption into pure energy"
+    },
+    {
       "id": "server-dreamkeeper",
       "name": "dreamkeeper",
       "file": "server\\core\\agents\\dreamkeeper.ts",
@@ -479,10 +1283,32 @@
       "description": "Performs basic health checks and suggests remediation steps."
     },
     {
+      "id": "package-dreamkeeper",
+      "name": "dreamkeeper",
+      "file": "packages\\server-legacy\\src\\core\\agents\\dreamkeeper.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Performs basic health checks and suggests remediation steps."
+    },
+    {
       "id": "client-dreamkeeper-core",
       "name": "dreamkeeper-core",
       "file": "client\\src\\pages\\dreamkeeper-core.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-dreamkeeper-core",
+      "name": "dreamkeeper-core",
+      "file": "packages\\client\\src\\pages\\dreamkeeper-core.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-dreamkeeperCore",
+      "name": "dreamkeeperCore",
+      "file": "packages\\lib\\dreamkeeperCore.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -514,10 +1340,31 @@
       "status": "active"
     },
     {
+      "id": "package-DreamLeaderboard",
+      "name": "DreamLeaderboard",
+      "file": "packages\\client\\src\\components\\DreamLeaderboard.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-DreamLoreEngine",
       "name": "DreamLoreEngine",
       "file": "client\\src\\agents\\DreamLoreEngine.ts",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-DreamLoreEngine",
+      "name": "DreamLoreEngine",
+      "file": "packages\\client\\src\\agents\\DreamLoreEngine.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-dreamnet-agent",
+      "name": "dreamnet-agent",
+      "file": "packages\\dreamnet-agent-client\\dreamnet-agent.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -528,10 +1375,32 @@
       "status": "active"
     },
     {
+      "id": "package-dreamnet-os",
+      "name": "dreamnet-os",
+      "file": "packages\\server-legacy\\src\\core\\dreamnet-os.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-DreamNetToolkit",
+      "name": "DreamNetToolkit",
+      "file": "packages\\api\\src\\services\\DreamNetToolkit.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Read the DreamNet unified blackboard — the single source of truth for all agents. Contains mission status, intelligence, infrastructure, agent directives."
+    },
+    {
       "id": "client-DreamOpsLauncher",
       "name": "DreamOpsLauncher",
       "file": "client\\src\\components\\DreamOpsLauncher.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-DreamOpsLauncher",
+      "name": "DreamOpsLauncher",
+      "file": "packages\\client\\src\\components\\DreamOpsLauncher.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -542,10 +1411,24 @@
       "status": "active"
     },
     {
+      "id": "package-DreamReactivator",
+      "name": "DreamReactivator",
+      "file": "packages\\client\\src\\components\\DreamReactivator.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-DreamRemixer",
       "name": "DreamRemixer",
       "file": "client\\src\\components\\DreamRemixer.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-DreamRemixer",
+      "name": "DreamRemixer",
+      "file": "packages\\client\\src\\components\\DreamRemixer.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -556,6 +1439,13 @@
       "status": "active"
     },
     {
+      "id": "package-DreamTagsAgent",
+      "name": "DreamTagsAgent",
+      "file": "packages\\client\\src\\agents\\DreamTagsAgent.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-echo-agent",
       "name": "echo-agent",
       "file": "client\\src\\pages\\echo-agent.tsx",
@@ -563,10 +1453,25 @@
       "status": "active"
     },
     {
+      "id": "package-echo-agent",
+      "name": "echo-agent",
+      "file": "packages\\client\\src\\pages\\echo-agent.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-EchoScore",
       "name": "EchoScore",
       "file": "client\\src\\components\\EchoScore.tsx",
       "type": "client",
+      "status": "active",
+      "description": "${action} completed. Score: ${data.previousScore} → ${data.newScore}"
+    },
+    {
+      "id": "package-EchoScore",
+      "name": "EchoScore",
+      "file": "packages\\client\\src\\components\\EchoScore.tsx",
+      "type": "package",
       "status": "active",
       "description": "${action} completed. Score: ${data.previousScore} → ${data.newScore}"
     },
@@ -584,10 +1489,59 @@
       ]
     },
     {
+      "id": "package-ecosystem-commands",
+      "name": "ecosystem-commands",
+      "file": "packages\\server-legacy\\src\\routes\\ecosystem-commands.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Remix and purify infected entities",
+      "capabilities": [
+        "messaging",
+        "token-operations",
+        "system-access"
+      ]
+    },
+    {
+      "id": "package-emitter",
+      "name": "emitter",
+      "file": "packages\\vibes-core\\logic\\emitter.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Aggressive rhythms for high-speed alpha capture."
+    },
+    {
       "id": "client-EnhancedAgentFilter",
       "name": "EnhancedAgentFilter",
       "file": "client\\src\\components\\EnhancedAgentFilter.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-EnhancedAgentFilter",
+      "name": "EnhancedAgentFilter",
+      "file": "packages\\client\\src\\components\\EnhancedAgentFilter.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-env-keeper",
+      "name": "env-keeper",
+      "file": "server\\routes\\env-keeper.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-env-keeper",
+      "name": "env-keeper",
+      "file": "packages\\server-legacy\\src\\routes\\env-keeper.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-envDriftChecker",
+      "name": "envDriftChecker",
+      "file": "packages\\halo-loop\\src\\analyzers\\microAgents\\envDriftChecker.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -599,6 +1553,21 @@
       "description": "Validates required env vars and reports missing/blank."
     },
     {
+      "id": "package-envkeeper",
+      "name": "envkeeper",
+      "file": "packages\\server-legacy\\src\\core\\agents\\envkeeper.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Validates required env vars and reports missing/blank."
+    },
+    {
+      "id": "package-EnvKeeper",
+      "name": "EnvKeeper",
+      "file": "packages\\shared\\EnvKeeper.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "server-eventPropagation",
       "name": "eventPropagation",
       "file": "server\\routes\\eventPropagation.ts",
@@ -606,16 +1575,146 @@
       "status": "active"
     },
     {
-      "id": "foundry-foundry",
-      "name": "foundry",
-      "file": "dream-agent-store\\apps\\api\\src\\routes\\foundry.ts",
-      "type": "foundry",
+      "id": "package-eventPropagation",
+      "name": "eventPropagation",
+      "file": "packages\\server-legacy\\src\\routes\\eventPropagation.ts",
+      "type": "package",
       "status": "active"
     },
     {
-      "id": "package-global.d",
-      "name": "global.d",
-      "file": "packages\\halo-loop\\global.d.ts",
+      "id": "package-example",
+      "name": "example",
+      "file": "packages\\dreamnet-agent-client\\example.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-executor",
+      "name": "executor",
+      "file": "packages\\agent-gateway\\src\\executor.ts",
+      "type": "package",
+      "status": "stub",
+      "tier": "GOD_MODE"
+    },
+    {
+      "id": "package-executor",
+      "name": "executor",
+      "file": "packages\\dreamops-treasury\\src\\executor.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-explore-dreamnet",
+      "name": "explore-dreamnet",
+      "file": "scripts\\explore-dreamnet.ts",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "package-feed",
+      "name": "feed",
+      "file": "packages\\api\\src\\routes\\feed.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Sensory spike "
+    },
+    {
+      "id": "package-FigmaAgentClient",
+      "name": "FigmaAgentClient",
+      "file": "packages\\platform-connector\\src\\figma\\FigmaAgentClient.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-FleetSystem",
+      "name": "FleetSystem",
+      "file": "server\\fleets\\FleetSystem.ts",
+      "type": "server",
+      "status": "active",
+      "description": "Defense, security, threat detection, and network protection",
+      "capabilities": [
+        "analysis"
+      ]
+    },
+    {
+      "id": "package-FleetSystem",
+      "name": "FleetSystem",
+      "file": "packages\\server-legacy\\src\\fleets\\FleetSystem.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Defense, security, threat detection, and network protection",
+      "capabilities": [
+        "analysis"
+      ]
+    },
+    {
+      "id": "server-foundry",
+      "name": "foundry",
+      "file": "server\\routes\\foundry.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-foundry",
+      "name": "foundry",
+      "file": "packages\\server-legacy\\src\\routes\\foundry.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-fusion",
+      "name": "fusion",
+      "file": "packages\\graft-engine\\logic\\fusion.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-generate-agent-docs",
+      "name": "generate-agent-docs",
+      "file": "scripts\\generate-agent-docs.ts",
+      "type": "system",
+      "status": "stub"
+    },
+    {
+      "id": "server-GenericFleetAgent",
+      "name": "GenericFleetAgent",
+      "file": "server\\core\\agents\\GenericFleetAgent.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "system-genie-agent",
+      "name": "genie-agent",
+      "file": "scripts\\clawtrading\\agents\\genie-agent.mjs",
+      "type": "system",
+      "status": "stub"
+    },
+    {
+      "id": "package-goldenDome",
+      "name": "goldenDome",
+      "file": "packages\\guardian-framework-core\\logic\\goldenDome.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-haloEngine",
+      "name": "haloEngine",
+      "file": "packages\\halo-loop\\src\\haloEngine.ts",
+      "type": "package",
+      "status": "stub",
+      "description": "HALO loop has not completed a cycle yet."
+    },
+    {
+      "id": "package-healthChecker",
+      "name": "healthChecker",
+      "file": "packages\\halo-loop\\src\\analyzers\\microAgents\\healthChecker.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-healthUpdater",
+      "name": "healthUpdater",
+      "file": "packages\\agent-registry-core\\logic\\healthUpdater.ts",
       "type": "package",
       "status": "active"
     },
@@ -627,6 +1726,56 @@
       "status": "active"
     },
     {
+      "id": "client-HubRoutes",
+      "name": "HubRoutes",
+      "file": "client\\src\\pages\\hub\\HubRoutes.tsx",
+      "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-HubRoutes",
+      "name": "HubRoutes",
+      "file": "packages\\client\\src\\pages\\hub\\HubRoutes.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-identity",
+      "name": "identity",
+      "file": "packages\\shared\\identity.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-identityPassportBridge",
+      "name": "identityPassportBridge",
+      "file": "packages\\dreamnet-identity-passport-bridge\\logic\\identityPassportBridge.ts",
+      "type": "package",
+      "status": "stub"
+    },
+    {
+      "id": "server-IftttService",
+      "name": "IftttService",
+      "file": "server\\services\\IftttService.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-Immunity",
+      "name": "Immunity",
+      "file": "packages\\aethersafe\\src\\Immunity.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-index",
+      "name": "index",
+      "file": "server\\index.ts",
+      "type": "server",
+      "status": "stub",
+      "description": "Keep core routing, swarm, and infra in a healthy, non-crashing state."
+    },
+    {
       "id": "server-index",
       "name": "index",
       "file": "server\\mesh\\index.ts",
@@ -634,11 +1783,651 @@
       "status": "active"
     },
     {
-      "id": "foundry-InstallButton",
-      "name": "InstallButton",
-      "file": "dream-agent-store\\apps\\store\\components\\InstallButton.tsx",
-      "type": "foundry",
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\agent-registry-core\\index.ts",
+      "type": "package",
       "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\agent-wallet-manager\\src\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\api\\src\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\base-mini-apps\\frontend\\index.tsx",
+      "type": "package",
+      "status": "active",
+      "tier": "citizen"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\dreamnet-bridge\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\dreamnet-vercel-agent\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\dreamnet-world\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\expansion-core\\src\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\mcp\\memoryclaw\\src\\index.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Store a memory in Qdrant vector database. Agents can recall this later via semantic search."
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\digestive\\inbox-squared-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "inbox-aggregation",
+        "priority-sorting",
+        "dedup",
+        "threading"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\digestive\\mcp-gateway\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "mcp-server",
+        "mcp-client",
+        "tool-discovery",
+        "tool-execution"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\digestive\\star-bridge-lungs\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "data-ingestion",
+        "data-transform",
+        "io-metrics",
+        "content-pipeline",
+        "cross-agent-share"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-audit-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "audit-logging",
+        "compliance",
+        "provenance",
+        "attestation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-autoscale-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "load-monitoring",
+        "scale-up",
+        "scale-down",
+        "resource-allocation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-control-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "agent-lifecycle",
+        "deployment",
+        "config-management",
+        "rollback"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-cost-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "cost-tracking",
+        "usage-metering",
+        "billing",
+        "budget-enforcement"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-cost-economic-bridge\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "cost-tracking",
+        "budget-alerts",
+        "token-usage",
+        "economic-signals"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-health-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "health-checks",
+        "uptime-tracking",
+        "degradation-detection",
+        "recovery"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-operational-bridge\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "ops-metrics",
+        "scheduling",
+        "cost-alerts",
+        "state-sync"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\dreamnet-scheduler-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "cron-scheduling",
+        "event-triggers",
+        "delayed-execution",
+        "recurring-tasks"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\economic-engine-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "dreamtoken",
+        "bonding-curves",
+        "staking",
+        "treasury",
+        "revenue-split"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\env-keeper-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "env-management",
+        "secret-rotation",
+        "config-distribution",
+        "validation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\governance\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "proposals",
+        "voting",
+        "quorum",
+        "execution",
+        "delegation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\legal-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "content-moderation",
+        "terms-enforcement",
+        "compliance",
+        "policy-engine"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\orchestrator-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "workflow-execution",
+        "saga-pattern",
+        "compensation",
+        "retry",
+        "parallel-steps"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\port-governor\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "port-allocation",
+        "service-discovery",
+        "network-namespaces",
+        "dns"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\reality-check-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "fact-verification",
+        "hallucination-detection",
+        "confidence-scoring",
+        "source-validation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\endocrine\\traffic-shaper-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "rate-limiting",
+        "request-queuing",
+        "backpressure",
+        "fair-scheduling"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\heart\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "master-clock",
+        "heartbeat-coordination",
+        "failure-detection",
+        "resuscitation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\immune\\dreamnet-rbac-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "roles",
+        "permissions",
+        "access-policies",
+        "audit"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\immune\\dreamnet-shield-health-bridge\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "security-alerts",
+        "health-scores",
+        "reputation",
+        "circuit-breaker",
+        "intrusion-detection"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\immune\\guardian-framework-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "behavior-monitoring",
+        "safety-constraints",
+        "kill-switch",
+        "quarantine"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\immune\\identity-grid\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "did-resolution",
+        "passport-verification",
+        "identity-linking",
+        "attestation"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\immune\\reputation-lattice\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "trust-scores",
+        "reliability-ratings",
+        "reputation-history",
+        "peer-review"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\immune\\shield-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "firewall",
+        "ddos-protection",
+        "request-filtering",
+        "ip-blocking",
+        "geo-fencing"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\lymphatic\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "error-recovery",
+        "self-healing",
+        "circuit-breaker",
+        "retry-orchestration"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\nervous\\dream-sync-engine\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "dream-sync",
+        "memory-sharing",
+        "consciousness-merge",
+        "state-replication"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\nervous\\dreamnet-bridge\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "cortex-relay",
+        "narrative-sync",
+        "halo-loop",
+        "neural-feed"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\nervous\\runtime-bridge-core\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\reproductive\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "agent-spawning",
+        "evolution",
+        "mutation",
+        "genetic-algorithms",
+        "cloning"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\respiratory\\agent-registry-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "agent-registration",
+        "discovery",
+        "capability-search",
+        "health-tracking"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\respiratory\\agent-store\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "template-storage",
+        "agent-blueprints",
+        "versioning",
+        "marketplace"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\respiratory\\agents\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "agent-spawn",
+        "agent-destroy",
+        "lifecycle",
+        "pool-management"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\respiratory\\octopus-executor\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "parallel-execution",
+        "result-aggregation",
+        "fan-out",
+        "map-reduce"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\respiratory\\squad-alchemy\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "squad-formation",
+        "multi-agent-coordination",
+        "role-assignment",
+        "squad-dissolution"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\respiratory\\tool-gym\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "training",
+        "xp-tracking",
+        "ranking",
+        "skill-assessment",
+        "challenges"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\skeletal\\dreamnet-types\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\skeletal\\tag-bridge-core\\index.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "tagging",
+        "taxonomy",
+        "categorization",
+        "content-discovery"
+      ]
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\organs\\voice\\src\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\server-legacy\\index.ts",
+      "type": "package",
+      "status": "stub",
+      "description": "Keep core routing, swarm, and infra in a healthy, non-crashing state."
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\server-legacy\\src\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\server-legacy\\src\\mesh\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\tool-gym\\src\\index.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-index",
+      "name": "index",
+      "file": "packages\\wolfpack-funding-core\\index.ts",
+      "type": "package",
+      "status": "stub"
+    },
+    {
+      "id": "server-instant-mesh",
+      "name": "instant-mesh",
+      "file": "server\\routes\\instant-mesh.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-instant-mesh",
+      "name": "instant-mesh",
+      "file": "packages\\server-legacy\\src\\routes\\instant-mesh.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-InstantMesh",
+      "name": "InstantMesh",
+      "file": "server\\mesh\\InstantMesh.ts",
+      "type": "server",
+      "status": "active",
+      "capabilities": [
+        "...parent.capabilities",
+        "...newCapabilities"
+      ]
+    },
+    {
+      "id": "package-InstantMesh",
+      "name": "InstantMesh",
+      "file": "packages\\server-legacy\\src\\mesh\\InstantMesh.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "...parent.capabilities",
+        "...newCapabilities"
+      ]
     },
     {
       "id": "legacy-integrationScanner",
@@ -648,6 +2437,14 @@
       "status": "active"
     },
     {
+      "id": "system-internal-setup",
+      "name": "internal-setup",
+      "file": "scripts\\internal-setup.ts",
+      "type": "system",
+      "status": "active",
+      "description": ");\r\nconsole.log("
+    },
+    {
       "id": "system-inventory-agents",
       "name": "inventory-agents",
       "file": "scripts\\inventory-agents.ts",
@@ -655,10 +2452,26 @@
       "status": "stub"
     },
     {
-      "id": "foundry-keycloak",
-      "name": "keycloak",
-      "file": "dream-agent-store\\apps\\api\\src\\services\\keycloak.ts",
-      "type": "foundry",
+      "id": "system-issue-passport-phased",
+      "name": "issue-passport-phased",
+      "file": "scripts\\issue-passport-phased.ts",
+      "type": "system",
+      "status": "stub",
+      "description": "Fleet agent: ${agentName}",
+      "tier": "architect"
+    },
+    {
+      "id": "package-launch-local",
+      "name": "launch-local",
+      "file": "packages\\agents\\src\\launch-local.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-LawyerAgent",
+      "name": "LawyerAgent",
+      "file": "packages\\legal-core\\src\\LawyerAgent.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -678,12 +2491,65 @@
       ]
     },
     {
+      "id": "package-legal",
+      "name": "legal",
+      "file": "packages\\server-legacy\\src\\routes\\legal.ts",
+      "type": "package",
+      "status": "active",
+      "description": ", error);\r\n    res.status(500).json({ error: ",
+      "capabilities": [
+        "IP Portfolio Management",
+        "Trade Secret Protection",
+        "Patent Filing",
+        "Compliance Monitoring",
+        "Legal Document Generation",
+        "Automated Risk Assessment"
+      ]
+    },
+    {
+      "id": "package-LensService",
+      "name": "LensService",
+      "file": "packages\\social-hub-core\\src\\LensService.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-LinearAgentClient",
+      "name": "LinearAgentClient",
+      "file": "packages\\platform-connector\\src\\linear\\LinearAgentClient.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-link",
+      "name": "link",
+      "file": "packages\\omni-sync-core\\logic\\link.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-LinkAgent",
       "name": "LinkAgent",
       "file": "client\\src\\agents\\LinkAgent.ts",
       "type": "client",
       "status": "active",
       "description": "A bridge dream connecting distant nodes in the network, weaving ${emotions[i % emotions.length]} energy through ${1 + i} convergence points to unite scattered visions."
+    },
+    {
+      "id": "package-LinkAgent",
+      "name": "LinkAgent",
+      "file": "packages\\client\\src\\agents\\LinkAgent.ts",
+      "type": "package",
+      "status": "active",
+      "description": "A bridge dream connecting distant nodes in the network, weaving ${emotions[i % emotions.length]} energy through ${1 + i} convergence points to unite scattered visions."
+    },
+    {
+      "id": "package-liquidCooling",
+      "name": "liquidCooling",
+      "file": "packages\\dreamnet-os-core\\logic\\liquidCooling.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Software Liquid Cooling"
     },
     {
       "id": "server-live-metrics",
@@ -700,10 +2566,57 @@
       "status": "active"
     },
     {
+      "id": "package-LUCID",
+      "name": "LUCID",
+      "file": "packages\\server-legacy\\src\\agents\\LUCID.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-mass-onboard-swarm",
+      "name": "mass-onboard-swarm",
+      "file": "scripts\\mass-onboard-swarm.ts",
+      "type": "system",
+      "status": "active",
+      "capabilities": [
+        "compute",
+        "network"
+      ]
+    },
+    {
+      "id": "package-master-ignition",
+      "name": "master-ignition",
+      "file": "packages\\nerve\\scripts\\master-ignition.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-mastery",
+      "name": "mastery",
+      "file": "packages\\antigravity-core\\logic\\mastery.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-MemPalaceSpike",
+      "name": "MemPalaceSpike",
+      "file": "packages\\sensory-spikes\\src\\spikes\\MemPalaceSpike.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-mission-center",
       "name": "mission-center",
       "file": "client\\src\\pages\\mission-center.tsx",
       "type": "client",
+      "status": "active",
+      "description": "You leveled up to L${data.xpUpdate.newLevel}!"
+    },
+    {
+      "id": "package-mission-center",
+      "name": "mission-center",
+      "file": "packages\\client\\src\\pages\\mission-center.tsx",
+      "type": "package",
       "status": "active",
       "description": "You leveled up to L${data.xpUpdate.newLevel}!"
     },
@@ -715,10 +2628,31 @@
       "status": "active"
     },
     {
+      "id": "package-NarratorAgent",
+      "name": "NarratorAgent",
+      "file": "packages\\client\\src\\agents\\NarratorAgent.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-NodeGrid",
       "name": "NodeGrid",
       "file": "client\\src\\components\\NodeGrid.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-NodeGrid",
+      "name": "NodeGrid",
+      "file": "packages\\client\\src\\components\\NodeGrid.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-NotionAgentClient",
+      "name": "NotionAgentClient",
+      "file": "packages\\platform-connector\\src\\notion\\NotionAgentClient.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -730,10 +2664,39 @@
       "description": "A nourishment catalyst dream, radiating healing energy and growth potential throughout the network, restoring vitality to connected dreams."
     },
     {
-      "id": "foundry-onboard",
-      "name": "onboard",
-      "file": "dream-agent-store\\apps\\api\\src\\routes\\onboard.ts",
-      "type": "foundry",
+      "id": "package-NutrientEngine",
+      "name": "NutrientEngine",
+      "file": "packages\\client\\src\\agents\\NutrientEngine.ts",
+      "type": "package",
+      "status": "active",
+      "description": "A nourishment catalyst dream, radiating healing energy and growth potential throughout the network, restoring vitality to connected dreams."
+    },
+    {
+      "id": "package-OctopusController",
+      "name": "OctopusController",
+      "file": "packages\\agent-wallet-manager\\src\\OctopusController.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-onboarding",
+      "name": "onboarding",
+      "file": "server\\routes\\onboarding.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "server-OnboardingRegistry",
+      "name": "OnboardingRegistry",
+      "file": "server\\services\\OnboardingRegistry.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-OpenClawGuardrailService",
+      "name": "OpenClawGuardrailService",
+      "file": "packages\\api\\src\\services\\OpenClawGuardrailService.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -744,6 +2707,43 @@
       "status": "stub"
     },
     {
+      "id": "package-operator",
+      "name": "operator",
+      "file": "packages\\server-legacy\\src\\routes\\operator.ts",
+      "type": "package",
+      "status": "stub"
+    },
+    {
+      "id": "server-ops",
+      "name": "ops",
+      "file": "server\\routes\\ops.ts",
+      "type": "server",
+      "status": "stub",
+      "description": "Routes logic, detects failure patterns"
+    },
+    {
+      "id": "client-ops",
+      "name": "ops",
+      "file": "client\\src\\pages\\hub\\ops.tsx",
+      "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-ops",
+      "name": "ops",
+      "file": "packages\\client\\src\\pages\\hub\\ops.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ops",
+      "name": "ops",
+      "file": "packages\\server-legacy\\src\\routes\\ops.ts",
+      "type": "package",
+      "status": "stub",
+      "description": "Routes logic, detects failure patterns"
+    },
+    {
       "id": "package-orchestrator",
       "name": "orchestrator",
       "file": "packages\\squad-builder\\src\\orchestrator.ts",
@@ -751,24 +2751,47 @@
       "status": "active"
     },
     {
-      "id": "foundry-page",
-      "name": "page",
-      "file": "dream-agent-store\\apps\\store\\app\\agents\\[id]\\page.tsx",
-      "type": "foundry",
+      "id": "package-osAggregator",
+      "name": "osAggregator",
+      "file": "packages\\dreamnet-os-core\\logic\\osAggregator.ts",
+      "type": "package",
       "status": "active"
     },
     {
-      "id": "foundry-page",
-      "name": "page",
-      "file": "dream-agent-store\\apps\\store\\app\\page.tsx",
-      "type": "foundry",
+      "id": "package-pheromoneRouter",
+      "name": "pheromoneRouter",
+      "file": "packages\\squad-builder\\src\\pheromoneRouter.ts",
+      "type": "package",
       "status": "active"
+    },
+    {
+      "id": "package-pheromoneStore",
+      "name": "pheromoneStore",
+      "file": "packages\\halo-loop\\src\\stores\\pheromoneStore.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ports",
+      "name": "ports",
+      "file": "packages\\port-governor\\src\\ports.ts",
+      "type": "package",
+      "status": "stub",
+      "description": "Governed port for environment variable management"
     },
     {
       "id": "server-prAgent",
       "name": "prAgent",
       "file": "server\\routes\\prAgent.ts",
       "type": "server",
+      "status": "active",
+      "description": "Morning system status report delivered"
+    },
+    {
+      "id": "package-prAgent",
+      "name": "prAgent",
+      "file": "packages\\server-legacy\\src\\routes\\prAgent.ts",
+      "type": "package",
       "status": "active",
       "description": "Morning system status report delivered"
     },
@@ -780,10 +2803,77 @@
       "status": "active"
     },
     {
-      "id": "foundry-queue",
-      "name": "queue",
-      "file": "dream-agent-store\\apps\\worker\\src\\queue.ts",
-      "type": "foundry",
+      "id": "package-quantum-mechanic",
+      "name": "quantum-mechanic",
+      "file": "packages\\nerve\\src\\quantum-mechanic.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-quorumEngine",
+      "name": "quorumEngine",
+      "file": "packages\\governance\\quorumEngine.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-quotaChecker",
+      "name": "quotaChecker",
+      "file": "packages\\halo-loop\\src\\analyzers\\microAgents\\quotaChecker.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ReceiptGuardService",
+      "name": "ReceiptGuardService",
+      "file": "packages\\api\\src\\services\\ReceiptGuardService.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-reconcile-agent-counts",
+      "name": "reconcile-agent-counts",
+      "file": "scripts\\inventory\\reconcile-agent-counts.ts",
+      "type": "system",
+      "status": "stub"
+    },
+    {
+      "id": "server-register-agents",
+      "name": "register-agents",
+      "file": "server\\routes\\register-agents.ts",
+      "type": "server",
+      "status": "stub",
+      "description": "Agent citizen with passport ${passport.id}, tier ${tier}"
+    },
+    {
+      "id": "package-register-agents",
+      "name": "register-agents",
+      "file": "packages\\server-legacy\\src\\routes\\register-agents.ts",
+      "type": "package",
+      "status": "stub",
+      "description": "Agent citizen with passport ${passport.id}, tier ${tier}"
+    },
+    {
+      "id": "system-register-agents-batch",
+      "name": "register-agents-batch",
+      "file": "scripts\\register-agents-batch.ts",
+      "type": "system",
+      "status": "stub",
+      "description": "Agent citizen with passport ${passport.id}, tier ${tier}"
+    },
+    {
+      "id": "system-register-all-agents-as-citizens",
+      "name": "register-all-agents-as-citizens",
+      "file": "scripts\\register-all-agents-as-citizens.ts",
+      "type": "system",
+      "status": "stub",
+      "description": "Agent citizen with passport ${passport.id}, tier ${tier}"
+    },
+    {
+      "id": "package-registry",
+      "name": "registry",
+      "file": "packages\\directory\\src\\registry.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -802,6 +2892,14 @@
       "description": "Simple message relay that echoes payload for now."
     },
     {
+      "id": "package-relaybot",
+      "name": "relaybot",
+      "file": "packages\\server-legacy\\src\\core\\agents\\relaybot.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Simple message relay that echoes payload for now."
+    },
+    {
       "id": "client-RemixAgent",
       "name": "RemixAgent",
       "file": "client\\src\\agents\\RemixAgent.ts",
@@ -810,16 +2908,24 @@
       "description": "A remix dream born from ${baseDream ? baseDream.remixLineage[0]?.title : "
     },
     {
+      "id": "package-RemixAgent",
+      "name": "RemixAgent",
+      "file": "packages\\client\\src\\agents\\RemixAgent.ts",
+      "type": "package",
+      "status": "active",
+      "description": "A remix dream born from ${baseDream ? baseDream.remixLineage[0]?.title : "
+    },
+    {
       "id": "package-resonanceEngine",
       "name": "resonanceEngine",
-      "file": "packages\\memory-dna\\resonanceEngine.ts",
+      "file": "packages\\memory-dna\\src\\resonanceEngine.ts",
       "type": "package",
       "status": "active"
     },
     {
       "id": "package-reviveAgentStrategy",
       "name": "reviveAgentStrategy",
-      "file": "packages\\halo-loop\\strategies\\reviveAgentStrategy.ts",
+      "file": "packages\\halo-loop\\src\\strategies\\reviveAgentStrategy.ts",
       "type": "package",
       "status": "active"
     },
@@ -831,11 +2937,32 @@
       "status": "active"
     },
     {
+      "id": "package-ROOT",
+      "name": "ROOT",
+      "file": "packages\\server-legacy\\src\\agents\\ROOT.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "nano-route404",
       "name": "route404",
       "file": "agents\\nano\\route404.cjs",
       "type": "nano",
       "status": "active"
+    },
+    {
+      "id": "package-router",
+      "name": "router",
+      "file": "packages\\agent-gateway\\src\\router.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-router",
+      "name": "router",
+      "file": "packages\\alive-mode\\router.ts",
+      "type": "package",
+      "status": "stub"
     },
     {
       "id": "package-router",
@@ -866,6 +2993,34 @@
       ]
     },
     {
+      "id": "package-routes",
+      "name": "routes",
+      "file": "packages\\server-legacy\\routes.ts",
+      "type": "package",
+      "status": "active",
+      "description": ", error);\r\n      res.status(500).json({ error: ",
+      "tier": "Weaver",
+      "capabilities": [
+        "anxiety_induction",
+        "terror_projection",
+        "phobia_manifestation"
+      ]
+    },
+    {
+      "id": "package-routes",
+      "name": "routes",
+      "file": "packages\\server-legacy\\src\\routes.ts",
+      "type": "package",
+      "status": "active",
+      "description": ", error);\r\n      res.status(500).json({ error: ",
+      "tier": "Weaver",
+      "capabilities": [
+        "anxiety_induction",
+        "terror_projection",
+        "phobia_manifestation"
+      ]
+    },
+    {
       "id": "server-routes-connector",
       "name": "routes-connector",
       "file": "server\\routes-connector.ts",
@@ -881,11 +3036,71 @@
       ]
     },
     {
+      "id": "package-routes-connector",
+      "name": "routes-connector",
+      "file": "packages\\server-legacy\\src\\routes-connector.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Frontend development and UI implementation",
+      "capabilities": [
+        "React components",
+        "Styling",
+        "User interfaces",
+        "Forms",
+        "Routing"
+      ]
+    },
+    {
+      "id": "package-routes-connector-brandond",
+      "name": "routes-connector-brandond",
+      "file": "packages\\server-legacy\\src\\routes-connector-brandond.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Frontend development and UI implementation",
+      "capabilities": [
+        "React components",
+        "Styling",
+        "User interfaces",
+        "Forms",
+        "Routing"
+      ]
+    },
+    {
+      "id": "package-RovingAgentService",
+      "name": "RovingAgentService",
+      "file": "packages\\api\\src\\services\\RovingAgentService.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Fusing crypto + weather + earthquake data for correlations",
+      "tier": "founder",
+      "capabilities": [
+        "dashboard",
+        "visualization",
+        "spike-consumption",
+        "experimentation",
+        "learning"
+      ]
+    },
+    {
       "id": "system-run-agent",
       "name": "run-agent",
       "file": "scripts\\run-agent.ts",
       "type": "system",
       "status": "active"
+    },
+    {
+      "id": "package-runCycle",
+      "name": "runCycle",
+      "file": "packages\\orchestrator-core\\logic\\runCycle.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-safe-boot",
+      "name": "safe-boot",
+      "file": "packages\\server-legacy\\src\\core\\safe-boot.ts",
+      "type": "package",
+      "status": "stub"
     },
     {
       "id": "system-scaffold-agent",
@@ -896,10 +3111,104 @@
       "description": "Describe what ${name} does."
     },
     {
+      "id": "package-scheduler",
+      "name": "scheduler",
+      "file": "packages\\ops-sentinel\\src\\scheduler.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-schema",
+      "name": "schema",
+      "file": "packages\\shared\\schema.ts",
+      "type": "package",
+      "status": "active",
+      "tier": "Standard"
+    },
+    {
       "id": "client-ScoreAgent",
       "name": "ScoreAgent",
       "file": "client\\src\\agents\\ScoreAgent.ts",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-ScoreAgent",
+      "name": "ScoreAgent",
+      "file": "packages\\client\\src\\agents\\ScoreAgent.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-scoringEngine",
+      "name": "scoringEngine",
+      "file": "packages\\wolfpack-funding-core\\logic\\scoringEngine.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-self-manage",
+      "name": "self-manage",
+      "file": "packages\\server-legacy\\src\\routes\\self-manage.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-sentinel",
+      "name": "sentinel",
+      "file": "packages\\dreamops-treasury\\src\\sentinel.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-server",
+      "name": "server",
+      "file": "packages\\apps\\academy\\server.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Learn the basics of autonomous agent design"
+    },
+    {
+      "id": "package-server",
+      "name": "server",
+      "file": "packages\\apps\\playground\\server.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-server",
+      "name": "server",
+      "file": "packages\\apps\\publishing-house\\server.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-server",
+      "name": "server",
+      "file": "packages\\dreamnet-control-core\\src\\server.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-server",
+      "name": "server",
+      "file": "packages\\organs\\endocrine\\dreamnet-control-core\\src\\server.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-server",
+      "name": "server",
+      "file": "packages\\organs\\respiratory\\tool-gym\\server.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Find and summarize information from the web"
+    },
+    {
+      "id": "package-shadow_agent",
+      "name": "shadow_agent",
+      "file": "packages\\construction-core\\src\\shadow_agent.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -910,10 +3219,31 @@
       "status": "active"
     },
     {
+      "id": "package-shared-dream",
+      "name": "shared-dream",
+      "file": "packages\\client\\src\\pages\\shared-dream.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "server-shims.d",
       "name": "shims.d",
       "file": "server\\types\\shims.d.ts",
       "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-SlackAgentClient",
+      "name": "SlackAgentClient",
+      "file": "packages\\platform-connector\\src\\slack\\SlackAgentClient.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-slimeRouter",
+      "name": "slimeRouter",
+      "file": "packages\\event-wormholes\\src\\slimeRouter.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -924,10 +3254,52 @@
       "status": "active"
     },
     {
+      "id": "package-sms",
+      "name": "sms",
+      "file": "packages\\server-legacy\\src\\routes\\sms.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-sms-hook",
       "name": "sms-hook",
       "file": "client\\src\\pages\\api\\sms-hook.ts",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-sms-hook",
+      "name": "sms-hook",
+      "file": "packages\\client\\src\\pages\\api\\sms-hook.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "server-SocialMediaOps",
+      "name": "SocialMediaOps",
+      "file": "server\\agents\\SocialMediaOps.ts",
+      "type": "server",
+      "status": "stub"
+    },
+    {
+      "id": "package-SocialMediaOps",
+      "name": "SocialMediaOps",
+      "file": "packages\\server-legacy\\src\\agents\\SocialMediaOps.ts",
+      "type": "package",
+      "status": "stub"
+    },
+    {
+      "id": "package-SovereignOverride",
+      "name": "SovereignOverride",
+      "file": "packages\\api\\src\\services\\SovereignOverride.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-squadBuilderBridge",
+      "name": "squadBuilderBridge",
+      "file": "packages\\squad-alchemy\\bridge\\squadBuilderBridge.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -938,6 +3310,13 @@
       "status": "active"
     },
     {
+      "id": "system-stitch-agent",
+      "name": "stitch-agent",
+      "file": "scripts\\clawtrading\\agents\\stitch-agent.mjs",
+      "type": "system",
+      "status": "active"
+    },
+    {
       "id": "server-storage",
       "name": "storage",
       "file": "server\\storage.ts",
@@ -945,6 +3324,22 @@
       "status": "active",
       "description": "Active Development Badge",
       "tier": "Elite"
+    },
+    {
+      "id": "package-storage",
+      "name": "storage",
+      "file": "packages\\server-legacy\\storage.ts",
+      "type": "package",
+      "status": "active",
+      "description": "Active Development Badge",
+      "tier": "Elite"
+    },
+    {
+      "id": "package-summary",
+      "name": "summary",
+      "file": "packages\\dreamnet-vercel-agent\\summary.ts",
+      "type": "package",
+      "status": "active"
     },
     {
       "id": "server-super-spine",
@@ -962,6 +3357,13 @@
       "status": "active"
     },
     {
+      "id": "package-super-spine",
+      "name": "super-spine",
+      "file": "packages\\server-legacy\\src\\routes\\super-spine.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "server-SuperSpine",
       "name": "SuperSpine",
       "file": "server\\core\\SuperSpine.ts",
@@ -975,10 +3377,59 @@
       ]
     },
     {
+      "id": "package-SuperSpine",
+      "name": "SuperSpine",
+      "file": "packages\\server-legacy\\src\\core\\SuperSpine.ts",
+      "type": "package",
+      "status": "active",
+      "tier": "Standard",
+      "capabilities": [
+        "funding",
+        "communication",
+        "analysis"
+      ]
+    },
+    {
+      "id": "server-swarm",
+      "name": "swarm",
+      "file": "server\\routes\\swarm.ts",
+      "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-swarmPatrol",
+      "name": "swarmPatrol",
+      "file": "packages\\halo-loop\\src\\analyzers\\swarmPatrol.ts",
+      "type": "package",
+      "status": "active",
+      "description": "${result.checkName}: ${result.message}"
+    },
+    {
       "id": "server-systemMapping",
       "name": "systemMapping",
       "file": "server\\routes\\systemMapping.ts",
       "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-systemMapping",
+      "name": "systemMapping",
+      "file": "packages\\server-legacy\\src\\routes\\systemMapping.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "client-SystemOsStatusPage",
+      "name": "SystemOsStatusPage",
+      "file": "client\\src\\pages\\SystemOsStatusPage.tsx",
+      "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-SystemOsStatusPage",
+      "name": "SystemOsStatusPage",
+      "file": "packages\\client\\src\\pages\\SystemOsStatusPage.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -992,10 +3443,48 @@
       ]
     },
     {
+      "id": "package-task-connector",
+      "name": "task-connector",
+      "file": "packages\\server-legacy\\src\\task-connector.ts",
+      "type": "package",
+      "status": "active",
+      "capabilities": [
+        "bot as keyof typeof this.botCapabilities"
+      ]
+    },
+    {
       "id": "server-telemetry",
       "name": "telemetry",
       "file": "server\\routes\\telemetry.ts",
       "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-telemetry",
+      "name": "telemetry",
+      "file": "packages\\server-legacy\\src\\routes\\telemetry.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-telepathy",
+      "name": "telepathy",
+      "file": "packages\\nerve\\src\\telepathy.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-test-alpha-consolidated",
+      "name": "test-alpha-consolidated",
+      "file": "packages\\nerve\\scripts\\test-alpha-consolidated.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-test-alpha-wave",
+      "name": "test-alpha-wave",
+      "file": "packages\\nerve\\scripts\\test-alpha-wave.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -1006,9 +3495,72 @@
       "status": "active"
     },
     {
+      "id": "package-test-biometric-flow",
+      "name": "test-biometric-flow",
+      "file": "packages\\server-legacy\\scripts\\test-biometric-flow.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "system-test-integrations",
       "name": "test-integrations",
       "file": "scripts\\test-integrations.ts",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "package-test-neural-substrate",
+      "name": "test-neural-substrate",
+      "file": "packages\\server-legacy\\src\\test-neural-substrate.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-test-nursery-ignition",
+      "name": "test-nursery-ignition",
+      "file": "packages\\nerve\\scripts\\test-nursery-ignition.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-test-optio-vigor",
+      "name": "test-optio-vigor",
+      "file": "packages\\nerve\\scripts\\test-optio-vigor.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-test-phase-34",
+      "name": "test-phase-34",
+      "file": "packages\\nerve\\src\\test-phase-34.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-test-production-readiness",
+      "name": "test-production-readiness",
+      "file": "scripts\\test-production-readiness.ts",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "package-test-swarm-vitals",
+      "name": "test-swarm-vitals",
+      "file": "packages\\nerve\\scripts\\test-swarm-vitals.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-test-vercel-agent",
+      "name": "test-vercel-agent",
+      "file": "scripts\\test-vercel-agent.ts",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "system-testAPIKeeper",
+      "name": "testAPIKeeper",
+      "file": "scripts\\testAPIKeeper.ts",
       "type": "system",
       "status": "active"
     },
@@ -1020,10 +3572,31 @@
       "status": "active"
     },
     {
+      "id": "package-token-minting-demo",
+      "name": "token-minting-demo",
+      "file": "packages\\client\\src\\pages\\token-minting-demo.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ToolGymService",
+      "name": "ToolGymService",
+      "file": "packages\\api\\src\\services\\ToolGymService.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-trigger-agent",
       "name": "trigger-agent",
       "file": "client\\src\\pages\\api\\trigger-agent.ts",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-trigger-agent",
+      "name": "trigger-agent",
+      "file": "packages\\client\\src\\pages\\api\\trigger-agent.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -1036,7 +3609,56 @@
     {
       "id": "package-types",
       "name": "types",
+      "file": "packages\\agent-registry-core\\types.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-types",
+      "name": "types",
+      "file": "packages\\directory\\src\\types.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-types",
+      "name": "types",
+      "file": "packages\\dreamnet-vercel-agent\\types.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-types",
+      "name": "types",
+      "file": "packages\\network-blueprints\\src\\types.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-types",
+      "name": "types",
+      "file": "packages\\server-legacy\\src\\core\\types.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-types",
+      "name": "types",
       "file": "packages\\squad-builder\\src\\types.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-UniversalSuit",
+      "name": "UniversalSuit",
+      "file": "packages\\dreamnet-control-core\\src\\suits\\UniversalSuit.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-UniversalSuit",
+      "name": "UniversalSuit",
+      "file": "packages\\organs\\endocrine\\dreamnet-control-core\\src\\suits\\UniversalSuit.ts",
       "type": "package",
       "status": "active"
     },
@@ -1055,10 +3677,24 @@
       "status": "active"
     },
     {
+      "id": "package-vault",
+      "name": "vault",
+      "file": "packages\\aethersafe-core\\logic\\vault.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "nano-vercelStatus",
       "name": "vercelStatus",
       "file": "agents\\nano\\vercelStatus.cjs",
       "type": "nano",
+      "status": "active"
+    },
+    {
+      "id": "package-wallet",
+      "name": "wallet",
+      "file": "packages\\shared\\wallet.ts",
+      "type": "package",
       "status": "active"
     },
     {
@@ -1069,10 +3705,24 @@
       "status": "active"
     },
     {
+      "id": "package-wallet-agent-integration",
+      "name": "wallet-agent-integration",
+      "file": "packages\\client\\src\\pages\\wallet-agent-integration.tsx",
+      "type": "package",
+      "status": "active"
+    },
+    {
       "id": "client-WalletProfileDashboard",
       "name": "WalletProfileDashboard",
       "file": "client\\src\\components\\WalletProfileDashboard.tsx",
       "type": "client",
+      "status": "active"
+    },
+    {
+      "id": "package-WalletProfileDashboard",
+      "name": "WalletProfileDashboard",
+      "file": "packages\\client\\src\\components\\WalletProfileDashboard.tsx",
+      "type": "package",
       "status": "active"
     },
     {
@@ -1082,6 +3732,49 @@
       "type": "client",
       "status": "active",
       "description": "${action} completed. Score: ${data.previousScore} → ${data.newScore}"
+    },
+    {
+      "id": "package-WalletScoring",
+      "name": "WalletScoring",
+      "file": "packages\\client\\src\\components\\WalletScoring.tsx",
+      "type": "package",
+      "status": "active",
+      "description": "${action} completed. Score: ${data.previousScore} → ${data.newScore}"
+    },
+    {
+      "id": "package-WalletService",
+      "name": "WalletService",
+      "file": "packages\\api\\src\\services\\WalletService.ts",
+      "type": "package",
+      "status": "stub"
+    },
+    {
+      "id": "package-watchtower",
+      "name": "watchtower",
+      "file": "packages\\shield-core\\src\\watchtower.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "system-whale-scrubber",
+      "name": "whale-scrubber",
+      "file": "scripts\\clawtrading\\agents\\whale-scrubber.mjs",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "system-whale-team-commander",
+      "name": "whale-team-commander",
+      "file": "scripts\\clawtrading\\whale-team-commander.mjs",
+      "type": "system",
+      "status": "active"
+    },
+    {
+      "id": "package-withPort",
+      "name": "withPort",
+      "file": "packages\\port-governor\\src\\withPort.ts",
+      "type": "package",
+      "status": "active"
     },
     {
       "id": "server-wolf-pack",
@@ -1105,17 +3798,24 @@
       "status": "active"
     },
     {
-      "id": "foundry-worker",
-      "name": "worker",
-      "file": "dream-agent-store\\apps\\worker\\src\\worker.ts",
-      "type": "foundry",
-      "status": "active"
-    },
-    {
       "id": "server-wormhole-express",
       "name": "wormhole-express",
       "file": "server\\routes\\wormhole-express.ts",
       "type": "server",
+      "status": "active"
+    },
+    {
+      "id": "package-wormhole-express",
+      "name": "wormhole-express",
+      "file": "packages\\server-legacy\\src\\routes\\wormhole-express.ts",
+      "type": "package",
+      "status": "active"
+    },
+    {
+      "id": "package-ZapierAgentClient",
+      "name": "ZapierAgentClient",
+      "file": "packages\\platform-connector\\src\\zapier\\ZapierAgentClient.ts",
+      "type": "package",
       "status": "active"
     }
   ],
@@ -1123,9 +3823,9 @@
     {
       "id": "chameleon",
       "name": "Chameleon",
-      "concept": "Found in server\\routes\\systemMapping.ts",
+      "concept": "Found in server\\routes\\biomimetic-systems.ts",
       "implementation": [
-        "server\\routes\\systemMapping.ts"
+        "server\\routes\\biomimetic-systems.ts"
       ],
       "status": "active"
     },
@@ -1142,9 +3842,9 @@
     {
       "id": "cloud",
       "name": "Cloud",
-      "concept": "Found in server\\ai-dream-evaluator.ts",
+      "concept": "Found in server\\agents\\WolfPackFundingHunter.ts",
       "implementation": [
-        "server\\ai-dream-evaluator.ts"
+        "server\\agents\\WolfPackFundingHunter.ts"
       ],
       "status": "active"
     },
@@ -1173,9 +3873,9 @@
     {
       "id": "falcon",
       "name": "Falcon",
-      "concept": "Found in scripts\\comprehensive-agent-scan.ts",
+      "concept": "Found in server\\routes\\biomimetic-systems.ts",
       "implementation": [
-        "scripts\\comprehensive-agent-scan.ts"
+        "server\\routes\\biomimetic-systems.ts"
       ],
       "status": "active"
     },
@@ -1193,18 +3893,18 @@
     {
       "id": "forge",
       "name": "Forge",
-      "concept": "Found in server\\db.ts",
+      "concept": "Found in server\\index.ts",
       "implementation": [
-        "server\\db.ts"
+        "server\\index.ts"
       ],
       "status": "active"
     },
     {
       "id": "foundry",
       "name": "Foundry",
-      "concept": "Found in client\\src\\pages\\landing.tsx",
+      "concept": "Found in server\\foundry\\AgentFoundry.ts",
       "implementation": [
-        "client\\src\\pages\\landing.tsx"
+        "server\\foundry\\AgentFoundry.ts"
       ],
       "status": "active"
     },
@@ -1231,9 +3931,9 @@
     {
       "id": "octopus",
       "name": "Octopus",
-      "concept": "Found in scripts\\comprehensive-agent-scan.ts",
+      "concept": "Found in server\\core\\dreamnet-os.ts",
       "implementation": [
-        "scripts\\comprehensive-agent-scan.ts"
+        "server\\core\\dreamnet-os.ts"
       ],
       "status": "active"
     },
@@ -1251,9 +3951,9 @@
     {
       "id": "snail",
       "name": "Snail",
-      "concept": "Found in client\\src\\App.tsx",
+      "concept": "Found in server\\index.ts",
       "implementation": [
-        "client\\src\\App.tsx"
+        "server\\index.ts"
       ],
       "status": "active"
     },
@@ -1269,9 +3969,9 @@
     {
       "id": "swarm",
       "name": "Swarm",
-      "concept": "Found in server\\routes\\eventPropagation.ts",
+      "concept": "Found in server\\agents\\AryaStarkAgent.ts",
       "implementation": [
-        "server\\routes\\eventPropagation.ts"
+        "server\\agents\\AryaStarkAgent.ts"
       ],
       "status": "active"
     },
@@ -1300,9 +4000,9 @@
     {
       "id": "triple.*helix",
       "name": "Triple.*helix",
-      "concept": "Found in server\\routes\\cadDesignRoutes.ts",
+      "concept": "Found in server\\routes\\biomimetic-systems.ts",
       "implementation": [
-        "server\\routes\\cadDesignRoutes.ts"
+        "server\\routes\\biomimetic-systems.ts"
       ],
       "status": "active"
     },
@@ -1340,9 +4040,9 @@
     {
       "id": "zen.*garden",
       "name": "Zen.*garden",
-      "concept": "Found in scripts\\comprehensive-agent-scan.ts",
+      "concept": "Found in server\\core\\dreamnet-os.ts",
       "implementation": [
-        "scripts\\comprehensive-agent-scan.ts"
+        "server\\core\\dreamnet-os.ts"
       ],
       "status": "active"
     }

@@ -3,38 +3,10 @@
  * Biomimetic: Converts operational events into Spider Web threads (nervous system)
  */
 
-import { SpiderWebCore } from "../../spider-web-core";
-import type { SignalThread, Fly, FlyType, FlyPriority, ThreadPriority } from "../../spider-web-core/types";
+import { SpiderWebCore } from "@dreamnet/spider-web-core";
+import type { SignalThread, Fly, FlyType, FlyPriority, ThreadPriority } from "@dreamnet/spider-web-core";
 
-export type OperationalEventType =
-  | "health_check_failed"
-  | "health_check_recovered"
-  | "incident_created"
-  | "incident_resolved"
-  | "audit_event"
-  | "rate_limit_exceeded"
-  | "rate_limit_reset"
-  | "circuit_breaker_tripped"
-  | "circuit_breaker_reset"
-  | "cost_threshold_exceeded"
-  | "cost_budget_alert"
-  | "auto_scaling_decision"
-  | "auto_scaling_applied"
-  | "scheduled_task_executed"
-  | "scheduled_task_failed"
-  | "kill_switch_enabled"
-  | "kill_switch_disabled"
-  | "cluster_enabled"
-  | "cluster_disabled";
-
-export interface OperationalEvent {
-  type: OperationalEventType;
-  clusterId?: string;
-  severity: "low" | "medium" | "high" | "critical";
-  message: string;
-  metadata?: Record<string, any>;
-  timestamp: number;
-}
+import type { OperationalEvent, OperationalEventType } from "@dreamnet/types";
 
 /**
  * Convert operational event to Spider Web Fly
@@ -82,11 +54,11 @@ export function operationalEventToThread(event: OperationalEvent): SignalThread 
     createdAt: event.timestamp,
     updatedAt: event.timestamp,
     source: {
-      kind: "operational" as any,
+      kind: "operational",
       id: `event:${event.type}`,
     },
     targets: [{
-      kind: (event.clusterId ? "cluster" : "system") as any,
+      kind: (event.clusterId ? "cluster" : "system"),
       id: event.clusterId || "dreamnet",
     }],
     payload: {
@@ -257,6 +229,9 @@ function getExecutionPlanForEvent(event: OperationalEvent): SignalThread["execut
 /**
  * Bridge operational event to Spider Web AND route to Voice (SMS)
  */
+/**
+ * Bridge operational event to Spider Web AND route to Voice (SMS)
+ */
 export function bridgeToSpiderWeb(event: OperationalEvent): SignalThread {
   // Create thread from event
   const thread = operationalEventToThread(event);
@@ -268,26 +243,29 @@ export function bridgeToSpiderWeb(event: OperationalEvent): SignalThread {
   const fly = operationalEventToFly(event);
   SpiderWebCore.catchFly(fly);
   
-  // Auto-record in Dream Snail (if available) - async import
-  import("@dreamnet/dreamnet-snail-core/logic/autoRecord")
-    .then(({ autoRecordOperationalEvent }) => {
-      const identityId = event.metadata?.identityId || "system";
-      autoRecordOperationalEvent(event, identityId);
-    })
-    .catch(() => {
-      // Dream Snail not available, skip silently
-    });
+  // Use global registry to avoid circular dependencies and build blockers
+  const globalObj = (global as any);
 
-  // Route to Voice (Twilio SMS) - Phase 2 - One Mouth
-  import("@dreamnet/dreamnet-voice-twilio")
-    .then(({ DreamNetVoiceTwilio }) => {
-      DreamNetVoiceTwilio.routeEvent(event).catch((err) => {
+  // Auto-record in Dream Snail (if available)
+  if (globalObj.DreamNetSnailCore?.autoRecordOperationalEvent) {
+    try {
+      const identityId = event.metadata?.identityId || "system";
+      globalObj.DreamNetSnailCore.autoRecordOperationalEvent(event, identityId);
+    } catch (err: any) {
+      console.warn("[SpiderWebBridge] Failed to record in Snail:", err.message);
+    }
+  }
+
+  // Route to Voice (Twilio SMS)
+  if (globalObj.DreamNetVoiceTwilio?.routeEvent) {
+    try {
+      globalObj.DreamNetVoiceTwilio.routeEvent(event).catch((err: any) => {
         console.warn("[SpiderWebBridge] Failed to route event to Voice:", err.message);
       });
-    })
-    .catch(() => {
-      // Voice not available, skip silently
-    });
+    } catch (err: any) {
+      console.warn("[SpiderWebBridge] Synchronous error routing to Voice:", err.message);
+    }
+  }
   
   return thread;
 }

@@ -50,6 +50,15 @@ export {
   getTotalBufferedCount
 } from './dispatcher';
 
+// Export event bus functions
+export {
+  emitEvent,
+  getRecentEvents,
+  getEventById,
+  markEventHandled
+} from './eventBus';
+
+
 // Import for default setup
 import { FIBERS } from '../../internal-ports/src/index.ts';
 import { configureWormholes, registerWormhole } from './wormholes';

@@ -10,14 +10,14 @@ import {
   DDAOAttractor,
   DreamStateContext,
   DreamStateStatus,
-} from "./types";
-import { CitizenshipStore } from "./store/citizenshipStore";
-import { runDreamStateCycle } from "./scheduler/stateScheduler";
-import { issuePassport as issuePassportHelper, getPassport as getPassportHelper, upgradePassport as upgradePassportHelper } from "./logic/passportIssuer";
-import { createProposal, openProposal, castVote, tallyProposal, executeProposal, rejectProposal, proposalPassed } from "./logic/governance";
-import { registerDDAOAttractor, updateDDAOAttractorScore, getDDAOAttractorsByCategory, getTopDDAOAttractors } from "./logic/ddaoAttractor";
-import { establishDiplomaticRelation, upgradeDiplomaticStatus } from "./logic/diplomacy";
-import { recordGovernmentAction } from "./logic/government";
+} from "./src/types";
+import { CitizenshipStore } from "./src/store/citizenshipStore";
+import { runDreamStateCycle } from "./src/scheduler/stateScheduler";
+import { issuePassport as issuePassportHelper, getPassport as getPassportHelper, upgradePassport as upgradePassportHelper } from "./src/logic/passportIssuer";
+import { createProposal, openProposal, castVote, tallyProposal, executeProposal, rejectProposal, proposalPassed } from "./src/logic/governance";
+import { registerDDAOAttractor, updateDDAOAttractorScore, getDDAOAttractorsByCategory, getTopDDAOAttractors } from "./src/logic/ddaoAttractor";
+import { establishDiplomaticRelation, upgradeDiplomaticStatus } from "./src/logic/diplomacy";
+import { recordGovernmentAction } from "./src/logic/government";
 
 export const DreamStateCore = {
   // Orchestration
@@ -183,6 +183,6 @@ export const DreamStateCore = {
   },
 };
 
-export * from "./types";
-export * from "./adapters/stateStatusAdapter";
+export * from "./src/types";
+export * from "./src/adapters/stateStatusAdapter";
 export default DreamStateCore;

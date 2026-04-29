@@ -1,4 +1,4 @@
-
+import "dotenv/config";
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import type { Server } from "http";
 // Lazy import vite.ts to avoid issues in production
@@ -10,6 +10,19 @@ async function loadViteModule() {
   }
   return viteModuleCache;
 }
+
+console.log("[Boot] Starting server boot...");
+import RealEnvKeeperCore from "../packages/env-keeper-core/index.js";
+console.log("[Boot] RealEnvKeeperCore imported");
+import RealAPIKeeperCore from "../packages/api-keeper-core/index.js";
+console.log("[Boot] RealAPIKeeperCore imported");
+import RealShieldCore from "../packages/shield-core/index.js";
+console.log("[Boot] RealShieldCore imported");
+import RealStarBridgeLungs from "../packages/star-bridge-lungs/index.js";
+import RealLiquidityEngine from "../packages/liquidity-engine/index.js";
+import RealDreamNetOSCore from "../packages/dreamnet-os-core/index.js";
+import RealEconomicEngineCore from "../packages/economic-engine-core/index.js";
+console.log("[Boot] Core packages imported");
 // Lazy import legacy loader - only load when needed
 let legacyRequire: <T = unknown>(modulePath: string) => T | undefined;
 async function loadLegacyLoader() {
@@ -20,6 +33,7 @@ async function loadLegacyLoader() {
   return legacyRequire;
 }
 import { startMesh } from "./mesh/index.js";
+console.log("[Boot] Mesh Core imported");
 import { createMeshRouter } from "./mesh/router.js";
 import { createAgentRouter } from "./routes/agent";
 // Environment configuration - load early to catch config errors
@@ -71,60 +85,94 @@ import onboardingRouter from "./routes/onboarding";
 let haloTriggers: { recordError?: () => void } = {};
 // Lazy imports for workspace packages - loaded only when INIT_HEAVY_SUBSYSTEMS=true
 // These will be dynamically imported to avoid startup issues
-let NeuralMesh: any;
-let QuantumAnticipation: any;
-let SquadAlchemy: any;
-let WolfPack: any;
-let OctopusExecutor: any;
-let SlugTimeMemory: any;
-let StarBridgeLungs: any;
-let PredatorScavengerLoop: any;
-let DreamCortex: any;
-let ReputationLattice: any;
-let NarrativeField: any;
-let IdentityGrid: any;
-let DreamVault: any;
-let DreamShop: any;
-let FieldLayer: any;
-let DreamBetCore: any;
-let ZenGardenCore: any;
-let CivicPanelCore: any;
-let DreamTankCore: any;
-let LiquidityEngine: any;
-let SocialHubCore: any;
-let InitRitualCore: any;
-let EconomicEngineCore: any;
-let AgentRegistryCore: any;
-let DreamNetOSCore: any;
-let WolfPackFundingCore: any;
-let APIKeeperCore: any;
-let AISEOCore: any;
-let EnvKeeperCore: any;
+let NeuralMesh: any, QuantumAnticipation: any, SquadAlchemy: any, WolfPack: any, OctopusExecutor: any;
+let SlugTimeMemory: any, StarBridgeLungs: any, DreamVault: any, DreamShop: any, FieldLayer: any;
+let DreamBetCore: any, ZenGardenCore: any, CivicPanelCore: any, DreamTankCore: any, LiquidityEngine: any;
+let SocialHubCore: any, InitRitualCore: any, EconomicEngineCore: any, AgentRegistryCore: any;
+let DreamNetOSCore: any, WolfPackFundingCore: any, APIKeeperCore: any, AISEOCore: any, EnvKeeperCore: any, ShieldCore: any;
+
+// Stub Registry for missing core services
+import { STUB_REGISTRY } from "./services/StubRegistry.js";
+import { IftttService } from "./services/IftttService.js";
+// Initialize stubs as defaults to prevent crashes during Boot Recovery
+NeuralMesh = STUB_REGISTRY.NeuralMesh;
+QuantumAnticipation = STUB_REGISTRY.QuantumAnticipation;
+SquadAlchemy = STUB_REGISTRY.SquadAlchemy;
+WolfPack = STUB_REGISTRY.WolfPack;
+OctopusExecutor = STUB_REGISTRY.OctopusExecutor;
+SlugTimeMemory = STUB_REGISTRY.SlugTimeMemory;
+StarBridgeLungs = RealStarBridgeLungs;
+DreamVault = STUB_REGISTRY.DreamVault;
+DreamShop = STUB_REGISTRY.DreamShop;
+FieldLayer = STUB_REGISTRY.FieldLayer;
+DreamBetCore = STUB_REGISTRY.DreamBetCore;
+ZenGardenCore = STUB_REGISTRY.ZenGardenCore;
+CivicPanelCore = STUB_REGISTRY.CivicPanelCore;
+DreamTankCore = STUB_REGISTRY.DreamTankCore;
+LiquidityEngine = RealLiquidityEngine;
+SocialHubCore = STUB_REGISTRY.SocialHubCore;
+InitRitualCore = STUB_REGISTRY.InitRitualCore;
+EconomicEngineCore = RealEconomicEngineCore;
+AgentRegistryCore = STUB_REGISTRY.AgentRegistryCore;
+DreamNetOSCore = RealDreamNetOSCore;
+WolfPackFundingCore = STUB_REGISTRY.WolfPackFundingCore;
+APIKeeperCore = RealAPIKeeperCore;
+AISEOCore = STUB_REGISTRY.AISEOCore;
+EnvKeeperCore = RealEnvKeeperCore;
+ShieldCore = RealShieldCore;
+console.log("[Server] Importing autoSEO middleware...");
 import { autoSEORequestMiddleware } from "./middleware/autoSEO";
+console.log("[Server] Importing heartbeatRouter...");
 import heartbeatRouter from "./routes/heartbeat";
+console.log("[Server] Importing jaggyRouter...");
 import jaggyRouter from "./routes/jaggy";
+console.log("[Server] Importing shieldRouter...");
 import shieldRouter from "./routes/shield";
+console.log("[Server] Importing starBridgeRouter...");
 import starBridgeRouter from "./routes/star-bridge";
+console.log("[Server] Importing controlRouter...");
 import controlRouter from "./routes/control";
+console.log("[Server] Importing billableRouter...");
 import billableRouter from "./routes/billable";
+console.log("[Server] Importing healthRouter...");
 import healthRouter from "./routes/health";
+console.log("[Server] Importing auditRouter...");
 import auditRouter from "./routes/audit";
+console.log("[Server] Importing rbacRouter...");
 import rbacRouter from "./routes/rbac";
+console.log("[Server] Importing voiceRouter...");
 import voiceRouter from "./routes/voice";
+console.log("[Server] Importing vercelRouter...");
 import vercelRouter from "./routes/vercel";
+console.log("[Server] Importing apiKeysRouter...");
 import apiKeysRouter from "./routes/api-keys";
+console.log("[Server] Importing envKeeperRouter...");
 import envKeeperRouter from "./routes/env-keeper";
+console.log("[Server] Importing chatgptAgentRouter...");
 import chatgptAgentRouter from "./routes/chatgpt-agent";
+console.log("[Server] Importing nerveRouter...");
 import nerveRouter from "./routes/nerve";
+console.log("[Server] Importing debugSummaryRouter...");
 import debugSummaryRouter from "./routes/debug-summary";
+console.log("[Server] Importing agentGatewayRouter...");
 import agentGatewayRouter from "./routes/agent-gateway";
+console.log("[Server] Importing aryaRouter...");
+import { createAryaRouter } from "./routes/arya";
+console.log("[Server] Importing portsOpsRouter...");
 import portsOpsRouter from "./routes/ports-ops";
+console.log("[Server] Importing agentOpsRouter...");
 import agentOpsRouter from "./routes/agent-ops";
+console.log("[Server] Importing shieldRiskRouter...");
 import shieldRiskRouter from "./routes/shield-risk";
+console.log("[Server] Importing deadLetterRouter...");
 import deadLetterRouter from "./routes/dead-letter";
+console.log("[Server] Importing gridLinesRouter...");
 import gridLinesRouter from "./routes/grid-lines";
+console.log("[Server] Importing directoryRouter...");
 import directoryRouter from "./routes/directory";
+console.log("[Server] Importing networksRouter...");
 import networksRouter from "./routes/networks";
+console.log("[Server] Importing discoveryRouter...");
 import discoveryRouter from "./routes/discovery";
 // Lazy imports for workspace packages - convert to relative paths
 // import { initDirectory } from "@dreamnet/directory/bootstrap";
@@ -133,13 +181,18 @@ import discoveryRouter from "./routes/discovery";
 // import { DreamSnailCore } from "@dreamnet/dreamnet-snail-core";
 // import { DreamNetVoiceTwilio } from "@dreamnet/dreamnet-voice-twilio";
 // import { DreamNetVercelAgent } from "@dreamnet/dreamnet-vercel-agent";
+console.log("[Server] Importing traceIdMiddleware...");
 import { traceIdMiddleware } from "./middleware/traceId";
+console.log("[Server] Importing idempotencyMiddleware...");
 import { idempotencyMiddleware } from "./middleware/idempotency";
+console.log("[Server] Importing tierResolverMiddleware...");
 import { tierResolverMiddleware } from "./middleware/tierResolver";
-// import { DreamNetControlCore } from "@dreamnet/dreamnet-control-core";
+console.log("[Server] Importing controlCoreMiddleware...");
 import { controlCoreMiddleware } from "../packages/dreamnet-control-core/controlCoreMiddleware";
 
+console.log("[Server] Creating express app...");
 const app = express();
+console.log("[Server] Express app created");
 
 // Request body size limits (prevent memory exhaustion)
 app.use(express.json({ limit: '10mb' }));
@@ -302,58 +355,51 @@ app.use((req, _res, next) => {
   }
   next();
 });
+
+console.log("[Server] Registering core routers...");
 app.use("/api/mesh", createMeshRouter());
 app.use("/api/graft", createGraftRouter());
 app.use("/api/grafted", createGraftedRouter());
 app.use("/api", createAgentRouter());
 app.use("/api", createForgeRouter());
-  // Halo routes temporarily disabled - using placeholder metrics engine
-  // app.use("/api", createHaloRouter());
 app.use("/api/dna", createDnaRouter());
 app.use("/api/resonance", createResonanceRouter());
 app.use("/api/alive", createAliveRouter());
-// app.use("/api", createSquadRouter()); // Disabled - package not available
 app.use("/api", createEventRouter());
 app.use("/api", createWormholeRouter());
 app.use("/api", createSporeRouter());
 app.use("/api", createFabricRouter());
-  // Media router temporarily disabled - @dreamnet/media-vault missing
-  // app.use("/api", createMediaRouter());
 app.use("/api", createMetricsRouter());
 app.use("/api", createOrdersRouter());
 app.use("/api", createPublicRouter());
-  // Poster router temporarily disabled - @dreamnet/media-vault missing
-  // app.use("/api", createPosterRouter());
 app.use("/api", createRewardsRouter());
 app.use("/api", createDreamRouter());
-  app.use("/api", createDreamInteractionsRouter());
-  app.use("/api", createDreamContributionsRouter());
-  app.use("/api", createWolfPackRouter());
-  app.use("/api", createSuperSpineRouter());
-  app.use("/api", createFleetsRouter());
-  app.use("/api", createCustomGPTFleetsRouter());
-  app.use("/api", createSocialMediaOpsRouter());
-  app.use("/api", createInstantMeshRouter());
-  app.use("/api", createFoundryRouter());
-  app.use("/api", createMediaListRouter());
-  app.use("/api", createEmailRouter());
-  app.use("/api/inbox-squared", createInboxSquaredRouter());
-  app.use("/api/coinsensei", createCoinSenseiRouter);
-  app.use("/api/agent-wallets", createAgentWalletRouter);
-  app.use("/api", createDreamSnailRouter());
-  app.use("/api", createBiomimeticSystemsRouter());
-  
-  // Initialize instant mesh, foundry, and social media ops on startup
-  console.log("⚡ [Instant Mesh] Zero-delay event routing active");
-  
+app.use("/api", createDreamInteractionsRouter());
+app.use("/api", createDreamContributionsRouter());
+app.use("/api", createWolfPackRouter());
+app.use("/api", createSuperSpineRouter());
+app.use("/api", createFleetsRouter());
+app.use("/api", createCustomGPTFleetsRouter());
+app.use("/api", createSocialMediaOpsRouter());
+app.use("/api", createInstantMeshRouter());
+app.use("/api", createFoundryRouter());
+app.use("/api", createMediaListRouter());
+app.use("/api", createEmailRouter());
+app.use("/api/inbox-squared", createInboxSquaredRouter());
+app.use("/api/coinsensei", createCoinSenseiRouter);
+app.use("/api/agent-wallets", createAgentWalletRouter);
+app.use("/api", createDreamSnailRouter());
+app.use("/api", createBiomimeticSystemsRouter());
+app.use("/api/arya", createAryaRouter());
+
+// Initialize instant mesh, foundry, and social media ops on startup
+console.log("⚡ [Instant Mesh] Zero-delay event routing active");
   // Declare variables for systems that need to be shared across initialization
-  let ShieldCore: any;
   let SpiderWebCore: any;
   let OrcaPackCoreInstance: any;
   let WhalePackCoreInstance: any;
   let DreamStateCoreInstance: any;
-  
-  // Optional subsystems initialization function - only runs when INIT_SUBSYSTEMS=true
+
   async function initOptionalSubsystems(app: Express, server: Server): Promise<void> {
     const envConfig = getEnvConfig();
     if (!envConfig.INIT_SUBSYSTEMS) {
@@ -363,6 +409,56 @@ app.use("/api", createDreamRouter());
 
     console.log("[Optional Subsystems] Initializing heavy subsystems...");
     
+    // Initialize NATS/JetStream - Messaging Spine
+    try {
+      const { natsService } = await import("./services/NatsService.js");
+      await natsService.initialize();
+      console.log("📡 [NATS] Messaging spine initialized and connected to NERVE_BUS");
+      
+      // Initialize Vertex AI - Advanced Reasoning (Goose/Pi Brains)
+      try {
+        const { vertexAIService } = await import("./services/VertexAIService.js");
+        await vertexAIService.initialize();
+        console.log("🧠 [Vertex AI] Advanced reasoning layer active");
+      } catch (error) {
+        console.warn("🧠 [Vertex AI] Initialization failed (falling back to heuristics):", error);
+      }
+
+      // Initialize Arya Stark Agent - Execution Layer
+      const { aryaExecutioner } = await import("./agents/AryaStarkAgent.js");
+      console.log("🗡️ [Arya Stark] Agent awakened in the execution layer");
+
+      
+      // Initialize IFTTT Bridge after NATS is ready
+      await IftttService.initialize();
+
+      // Initialize Onboarding Registry for autonomous swarm discovery
+      const { OnboardingRegistry } = await import("./services/OnboardingRegistry.js");
+      await OnboardingRegistry.initialize();
+
+      // Initialize Brain Bridge - Advanced AI Routing (Goose/Pi)
+      const { brainBridge } = await import("./services/BrainBridge.js");
+      console.log("🧠 [BrainBridge] Advanced AI reasoning bridge initialized");
+
+      // Initialize Wolf Pack Funding Hunter (Modernized ESM)
+      const { wolfPackFundingHunter } = await import("./agents/WolfPackFundingHunter.js");
+      console.log("🐺 [WolfPackFundingHunter] Grant hunting pack active");
+
+      // Initialize Guild System - Families (PiClaw, PyClaw, Axo, Edge, Ghost, Flash)
+      const { guildSystem } = await import("./core/GuildSystem.js");
+      ['piclaw', 'pyclaw', 'axo', 'edge', 'ghost', 'flash'].forEach(id => {
+        guildSystem.activateGuild(id as any);
+      });
+
+      // Start Swarm Daemon - The Orchestrator
+      const { swarmDaemon } = await import("./services/SwarmDaemon.js");
+      swarmDaemon.start();
+      console.log("⚡ [SwarmDaemon] Global heartbeat engaged");
+
+    } catch (error) {
+      console.warn("📡 [NATS/Agent/Swarm] Initialization failed:", error);
+    }
+
     // Initialize Neural Mesh (N-Mesh) - Tier II Subsystem
     try {
         const { dreamNetOS } = await import("./core/dreamnet-os");
@@ -375,7 +471,6 @@ app.use("/api", createDreamRouter());
       // Initialize Quantum Anticipation Layer (QAL) - Tier II Subsystem
       try {
         const qalStatus = QuantumAnticipation.status();
-        console.log(`🔮 [Quantum Anticipation] Initialized - Last run: ${qalStatus.lastRunAt ? new Date(qalStatus.lastRunAt).toISOString() : "never"}`);
       } catch (error) {
         console.warn("[Quantum Anticipation] Initialization warning:", error);
       }
@@ -1307,10 +1402,10 @@ app.use("/api", createDreamRouter());
     // Make systems available globally for auto-detection
     if (typeof global !== "undefined") {
       try {
-        const { DREAMKEEPER_CORE } = await import("../../lib/dreamkeeperCore");
-        const { DreamDefenseNet } = await import("../../lib/defenseBots");
-        const { SurgeonAgent } = await import("../../lib/aiSurgeonAgents");
-        const { EvolutionEngine } = await import("../../lib/evolutionEngine");
+        const { DREAMKEEPER_CORE } = await import("../lib/dreamkeeperCore");
+        const { DreamDefenseNet } = await import("../lib/defenseBots");
+        const { SurgeonAgent } = await import("../lib/aiSurgeonAgents");
+        const { EvolutionEngine } = await import("../lib/evolutionEngine");
         
         (global as any).DREAMKEEPER_CORE = DREAMKEEPER_CORE;
         (global as any).DreamDefenseNet = DreamDefenseNet;
@@ -1470,16 +1565,17 @@ app.use("/api", createDreamRouter());
       registerHaloLoopFn();
       haloTriggers = haloTriggersObj || {};
       
-      try {
-        const legacyReq = await loadLegacyLoader();
-        const legacySeedModule = legacyReq<{ seedDreams?: () => Promise<void> }>("seed-dreams");
-        legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
-        
-        const legacyDreamScoreEngine = legacyReq<{ startScheduledScoring?: () => void }>("dream-score-engine");
-      } catch (error) {
-        console.warn("[Legacy] Failed to load legacy modules:", error);
-      }
-      legacyDreamScoreEngine?.startScheduledScoring?.();
+        let legacyDreamScoreEngine: { startScheduledScoring?: () => void } | undefined;
+        try {
+          const legacyReq = await loadLegacyLoader();
+          const legacySeedModule = legacyReq<{ seedDreams?: () => Promise<void> }>("seed-dreams");
+          legacySeedModule?.seedDreams?.().catch((err) => console.error("Failed to seed dreams:", err));
+          
+          legacyDreamScoreEngine = legacyReq<{ startScheduledScoring?: () => void }>("dream-score-engine");
+        } catch (error) {
+          console.warn("[Legacy] Failed to load legacy modules:", error);
+        }
+        legacyDreamScoreEngine?.startScheduledScoring?.();
       
       const envConfig = getEnvConfig();
       if (envConfig.MESH_AUTOSTART) {
@@ -1496,6 +1592,7 @@ app.use("/api", createDreamRouter());
 } // End of initOptionalSubsystems function
   
   // Heartbeat API routes
+  console.log("[Server] Registering heartbeat router...");
   app.use("/api/heartbeat", heartbeatRouter);
   
   // Jaggy API routes (The Silent Sentinel)
@@ -1574,7 +1671,9 @@ app.use("/api", createDreamRouter());
   
   app.use("/api", createOperatorRouter());
   app.use("/api/whale", whaleRouter);
+  console.log("[Server] Registering onboarding router...");
   app.use("/api/onboarding", onboardingRouter);
+  console.log("[Server] Routers registration complete");
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -1607,10 +1706,20 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Initialize Env Keeper first to ensure all secrets are available
+  console.log("[Server] Initializing Env Keeper...");
+  await RealEnvKeeperCore.init();
+
+  // Initialize API Keeper
+  console.log("[Server] Initializing API Keeper...");
+  RealAPIKeeperCore.ensureDefaultRailGuards();
+  
   // Use dynamic import instead of legacy require for routes.ts
   let routesModule: { registerRoutes?: (app: Express) => Promise<Server> };
+  console.log("[Server] Importing routes module...");
   try {
     routesModule = await import("./routes");
+    console.log("[Server] Routes module imported");
   } catch (error: any) {
     console.error("[Server] Failed to import routes module:", error.message);
     throw new Error(`Failed to load routes module: ${error.message}`);
@@ -1620,7 +1729,9 @@ app.use((req, res, next) => {
     throw new Error("Routes module does not export registerRoutes. Cannot start DreamNet server.");
   }
 
+  console.log("[Server] Registering routes...");
   const server = await routesModule.registerRoutes(app);
+  console.log("[Server] Routes registered successfully");
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -1678,7 +1789,9 @@ app.use((req, res, next) => {
   try {
     const viteModule = await loadViteModule();
     if (app.get("env") === "development") {
+      console.log("[Vite] Setting up Vite middleware...");
       await viteModule.setupVite(app, server);
+      console.log("[Vite] Vite middleware setup complete");
     } else {
       viteModule.serveStatic(app);
     }
@@ -1695,6 +1808,7 @@ app.use((req, res, next) => {
   const port = ENV_PORT;
   const host = "0.0.0.0";
 
+  console.log("[DreamNet] Entering server.listen...");
   server.listen(port, host, () => {
     console.log(`[DreamNet] Serving on port ${port}`);
     console.log(`[DreamNet] Server started - /health endpoint available`);

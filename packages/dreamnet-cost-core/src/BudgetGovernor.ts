@@ -1,4 +1,4 @@
-import { CostRecord } from './types.js';
+import { CostRecord } from '../types';
 
 export interface AgentPerformance {
   agentId: string;

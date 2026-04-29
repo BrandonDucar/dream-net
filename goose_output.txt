@@ -1,0 +1,7 @@
+
+    __( O)>  ΓùÅ new session ┬╖ anthropic claude-sonnet-4-5
+   \____)    20260428_1 ┬╖ /workspace
+     L L     goose is ready
+Ran into this error: Authentication error: Authentication failed. Status: 401 Unauthorized. Response: x-api-key header is required.
+
+Please retry if you think this is a transient or recoverable error.

@@ -3,7 +3,9 @@ import { DreamKeeperAgent } from "./agents/dreamkeeper";
 import { DeployKeeperAgent } from "./agents/deploykeeper";
 import { RelayBotAgent } from "./agents/relaybot";
 import { EnvKeeperAgent } from "./agents/envkeeper";
-import NeuralMesh from "../../packages/neural-mesh";
+import NeuralMeshPackage from "../../packages/neural-mesh";
+const NeuralMesh = (NeuralMeshPackage as any).link ? NeuralMeshPackage : (NeuralMeshPackage as any).NeuralMesh || NeuralMeshPackage;
+
 import QuantumAnticipation from "../../packages/quantum-anticipation";
 import SquadAlchemy from "../../packages/squad-alchemy";
 import WolfPack from "../../packages/wolf-pack";
@@ -66,9 +68,12 @@ export class DreamNetOS {
   public wolfPackMailerCore = WolfPackMailerCore;
 
   constructor() {
-    [DreamKeeperAgent, DeployKeeperAgent, RelayBotAgent, EnvKeeperAgent].forEach((a) =>
-      this.registry.set(a.name, a),
-    );
+    console.log("[DreamNetOS] Constructor started");
+    [DreamKeeperAgent, DeployKeeperAgent, RelayBotAgent, EnvKeeperAgent].forEach((a) => {
+      console.log(`[DreamNetOS] Registering agent: ${a.name}`);
+      this.registry.set(a.name, a);
+    });
+    console.log("[DreamNetOS] Registry initialized");
 
     // Initialize Neural Mesh with subsystems
     this.initializeNeuralMesh();
@@ -76,6 +81,11 @@ export class DreamNetOS {
 
   private initializeNeuralMesh(): void {
     try {
+      if (typeof NeuralMesh.link !== 'function') {
+        console.warn("[DreamNetOS] NeuralMesh.link is not a function. Subsystems may be degraded.");
+        return;
+      }
+
       // Link subsystems via Neural Mesh
       NeuralMesh.link({
         swarm: {
@@ -109,6 +119,7 @@ export class DreamNetOS {
           },
         },
       });
+
 
       console.log("[DreamNetOS] Neural Mesh initialized");
     } catch (error) {

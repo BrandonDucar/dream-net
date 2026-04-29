@@ -57,9 +57,6 @@ services:
   # ---------------------------------------------------------------------------
   control-core:
     image: dreamnet/control-core:local
-    # build:
-    #   context: .
-    #   dockerfile: packages/dreamnet-control-core/Dockerfile
     container_name: dreamnet_control_core
     restart: on-failure
     env_file:
@@ -102,9 +99,6 @@ services:
   # ---------------------------------------------------------------------------
   gooseclaw:
     image: ghcr.io/brandonducar/dream-net/gooseclaw:latest
-    # build:
-    #   context: ./packages/agents/gooseclaw
-    #   dockerfile: Dockerfile
     container_name: dreamnet_gooseclaw
     restart: unless-stopped
     stdin_open: true
@@ -133,9 +127,6 @@ services:
   # ---------------------------------------------------------------------------
   heygenclaw-mcp:
     image: ghcr.io/brandonducar/dream-net/heygenclaw-mcp:latest
-    # build:
-    #   context: ./packages/mcp/heygenclaw
-    #   dockerfile: Dockerfile
     container_name: heygenclaw_mcp
     restart: unless-stopped
     ports:
@@ -152,9 +143,6 @@ services:
   # ---------------------------------------------------------------------------
   signal-screener:
     image: dreamnet/signal-screener:local
-    # build:
-    #   context: ./services/signal-screener
-    #   dockerfile: Dockerfile
     container_name: dreamnet_signal_screener
     restart: unless-stopped
     env_file:
@@ -170,6 +158,29 @@ services:
       - dream_network
     depends_on:
       - nerve
+
+  # ---------------------------------------------------------------------------
+  # ARYA EXECUTOR (Executioner / Social Game)
+  # Orchestrates roasts, reputation, and social loops based on Hawk signals
+  # ---------------------------------------------------------------------------
+  arya-executor:
+    image: dreamnet/arya-executor:local
+    container_name: dreamnet_arya_executor
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+      - DATABASE_URL=${DATABASE_URL}
+      - NODE_ENV=development
+      - PORT=3204
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+      - signal-screener
 
 volumes:
   nerve_data:

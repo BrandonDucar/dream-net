@@ -1,3 +1,4 @@
+import "dotenv/config";
 /**
  * Environment Variable Validation & Configuration
  * 
@@ -78,6 +79,9 @@ function loadEnvConfig(): EnvConfig {
     ? process.env.OPERATOR_WALLETS.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
     : undefined;
   
+  console.log(`[Env] INIT_SUBSYSTEMS: ${process.env.INIT_SUBSYSTEMS}`);
+  console.log(`[Env] DATABASE_URL present: ${!!process.env.DATABASE_URL}`);
+
   return {
     NODE_ENV: nodeEnv as 'development' | 'production' | 'test',
     PORT: port,

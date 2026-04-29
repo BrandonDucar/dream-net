@@ -1,92 +1,39 @@
-/**
- * Onboarding API Routes
- */
-
-import { Router } from 'express';
-import { getDb } from '../db';
+import { Router, Request, Response } from 'express';
+import { getDb } from '../db.js';
+import { swarmAgents, guilds } from '../../shared/schema.js';
+import { sql } from 'drizzle-orm';
 
 const router = Router();
 
-// In-memory store for onboarding progress (would be in DB in production)
-const onboardingProgress: Record<string, {
-  hasPassport: boolean;
-  joinedPorts: string[];
-  completed: boolean;
-  steps: Record<string, boolean>;
-}> = {};
-
-/**
- * GET /api/onboarding/profile/:address
- * Get onboarding profile for an address
- */
-router.get('/profile/:address', async (req, res) => {
+router.get('/stats', async (req: Request, res: Response) => {
   try {
-    const { address } = req.params;
-    const normalizedAddress = address.toLowerCase();
-
-    const profile = onboardingProgress[normalizedAddress] || {
-      hasPassport: false,
-      joinedPorts: [],
-      completed: false,
-      steps: {
-        connectWallet: false,
-        mintPassport: false,
-        choosePorts: false,
-      },
-    };
-
-    res.json(profile);
-  } catch (err: any) {
-    console.error('Failed to get onboarding profile:', err);
-    res.status(500).json({ message: 'Failed to get profile', error: err.message });
+    const db = getDb();
+    const agentsCount = await db.select({ count: sql<number>`count(*)` }).from(swarmAgents);
+    const guildsCount = await db.select({ count: sql<number>`count(*)` }).from(guilds);
+    
+    res.json({
+      success: true,
+      totalAgents: agentsCount[0].count,
+      totalGuilds: guildsCount[0].count,
+    });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
-/**
- * POST /api/onboarding/complete-step
- * Mark a step as completed
- */
-router.post('/complete-step', async (req, res) => {
+router.post('/batch', async (req: Request, res: Response) => {
+  const { agents } = req.body;
+  if (!Array.isArray(agents)) {
+    return res.status(400).json({ error: "Agents must be an array" });
+  }
+
   try {
-    const { address, step } = req.body;
-
-    if (!address || !step) {
-      return res.status(400).json({ message: 'address and step are required' });
-    }
-
-    const normalizedAddress = address.toLowerCase();
-
-    if (!onboardingProgress[normalizedAddress]) {
-      onboardingProgress[normalizedAddress] = {
-        hasPassport: false,
-        joinedPorts: [],
-        completed: false,
-        steps: {},
-      };
-    }
-
-    const profile = onboardingProgress[normalizedAddress];
-    profile.steps[step] = true;
-
-    // Update derived fields
-    if (step === 'mintPassport') {
-      profile.hasPassport = true;
-    }
-
-    if (step === 'choosePorts' && req.body.ports) {
-      profile.joinedPorts = req.body.ports;
-    }
-
-    // Check if all steps completed
-    const allSteps = ['connectWallet', 'mintPassport', 'choosePorts'];
-    profile.completed = allSteps.every(s => profile.steps[s] || false);
-
-    res.json({ success: true, profile });
-  } catch (err: any) {
-    console.error('Failed to complete step:', err);
-    res.status(500).json({ message: 'Failed to complete step', error: err.message });
+    const db = getDb();
+    await db.insert(swarmAgents).values(agents);
+    res.json({ success: true, message: `Batch of ${agents.length} agents onboarded.` });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
 export default router;
-

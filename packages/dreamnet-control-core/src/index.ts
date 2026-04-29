@@ -7,7 +7,7 @@
 import { controlStore } from "./store/controlStore";
 import type { ClusterId, ClusterRateLimit, ControlConfig, ControlContext } from "./types";
 import type { TierId, TierConfig } from "./tierConfig";
-import { bridgeToSpiderWeb } from "../dreamnet-operational-bridge";
+import { bridgeToSpiderWeb } from "../../dreamnet-operational-bridge";
 import { getTierConfig, tierHasFeature } from "./tierConfig";
 
 export const DreamNetControlCore = {
@@ -230,9 +230,9 @@ export * from "./eventFabric";
 export * from "./policyEngine";
 export * from "./controlCoreMiddleware";
 // Conduit layer exports
-export * from "./src/conduits";
-export * from "./src/conduitGovernor";
-export * from "./src/deadLetter";
-export * from "./src/conduitMetrics";
+export * from "./conduits";
+export * from "./conduitGovernor";
+export * from "./deadLetter";
+export * from "./conduitMetrics";
 export default DreamNetControlCore;
 

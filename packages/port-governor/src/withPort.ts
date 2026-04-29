@@ -6,9 +6,9 @@
 import type { Request, Response, NextFunction } from "express";
 import type { PortId } from "./types";
 import { getPortProfile } from "./ports";
-import type { RequestWithIdentity, CallerIdentity } from "../../dreamnet-control-core/identityResolver";
-import { checkAndConsume } from "../../dreamnet-control-core/rateLimiter";
-import type { OfficeId, CabinetId } from "../../dream-state-core/types";
+import type { RequestWithIdentity, CallerIdentity } from "../../dreamnet-control-core/src/identityResolver";
+import { checkAndConsume } from "../../dreamnet-control-core/src/rateLimiter";
+import type { OfficeId, CabinetId } from "../../dream-state-core/src/types";
 
 // Shield Core risk tracking (optional import)
 let getRiskProfile: ((callerId: string) => any) | null = null;

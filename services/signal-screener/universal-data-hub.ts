@@ -106,19 +106,40 @@ CREATE INDEX IF NOT EXISTS idx_specialized_spikes_timestamp ON specialized_spike
 
 // Initialize the universal schema
 export async function initializeUniversalSchema(): Promise<void> {
-  console.log('⚠️ [Universal Hub] Database temporarily disabled - using Redis only');
-  return;
+  if (!process.env.DATABASE_URL) {
+    console.log('⚠️ [Universal Hub] Database disabled - DATABASE_URL missing');
+    return;
+  }
+  
+  try {
+    await pool.query(universalSchema);
+    console.log('✅ [Universal Hub] Universal schema initialized');
+  } catch (error) {
+    console.error('❌ [Universal Hub] Failed to initialize schema:', error);
+  }
 }
 
 // Universal data ingestion - single entry point for ALL data
 export async function ingestUniversalData(event: UniversalDataEvent): Promise<void> {
   try {
-    // Store in Redis for now (database disabled)
+    // Store in Redis
     await redis.set(`universal:${event.id}`, JSON.stringify(event));
-    console.log(`✅ [Universal Hub] Stored event ${event.id} in Redis`);
     
-    // Skip database storage for now
-    return;
+    // Store in Database if available
+    if (process.env.DATABASE_URL) {
+      await pool.query(
+        `INSERT INTO universal_events (source, event_type, timestamp, data, metadata)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [event.source, event.event_type, event.timestamp, JSON.stringify(event.data), JSON.stringify(event.metadata || {})]
+      );
+      
+      // Also route to specialized table
+      await routeEventToSpecializedTable(event);
+      
+      console.log(`✅ [Universal Hub] Stored event ${event.id} in Redis and DB`);
+    } else {
+      console.log(`✅ [Universal Hub] Stored event ${event.id} in Redis (DB disabled)`);
+    }
   } catch (error) {
     console.error('❌ [Universal Hub] Failed to ingest event:', error);
     throw error;

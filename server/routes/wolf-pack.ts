@@ -5,12 +5,17 @@ import { withCluster } from "../../packages/dreamnet-control-core/controlCoreMid
 
 // Rewards engine is optional
 let grantReward: any = null;
-try {
-  const rewardsModule = require("../../packages/rewards-engine");
-  grantReward = rewardsModule.grantReward;
-} catch {
-  console.warn("[Wolf Pack] @dreamnet/rewards-engine not available");
-}
+
+// Initialize rewards engine asynchronously
+(async () => {
+  try {
+    const rewardsModule = await import("../../packages/rewards-engine");
+    grantReward = rewardsModule.grantReward;
+    console.log("🐺 [Wolf Pack] @dreamnet/rewards-engine integrated");
+  } catch (err: any) {
+    console.warn("[Wolf Pack] @dreamnet/rewards-engine not available:", err.message);
+  }
+})();
 
 export function createWolfPackRouter(): Router {
   const router = Router();

@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # Arya Executioner Engine - Roast Generator + Loop Orchestrator
+  arya-executor:
+    image: dreamnet/arya-executor:local
+    build:
+      context: ./packages/arya-executor
+      dockerfile: Dockerfile
+    container_name: dreamnet_arya_executor
+    restart: unless-stopped
+    ports:
+      - "3204:3204"  # HTTP API
+      - "3205:3205"  # Metrics
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - DATABASE_URL=${DATABASE_URL}
+      - NEON_DATABASE_URL=${DATABASE_URL}
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_MODEL=phi:3.5
+      - FARCASTER_SIGNER=${FARCASTER_SIGNER}
+      - HAWK_URL=http://dreamnet_signal_screener:3203
+      - NATS_URL=nats://dreamnet_nats:4222
+      - KAFKA_BROKERS=dreamnet_message_bus:29092
+    volumes:
+      - arya_data:/app/data
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+      - dreamnet_signal_screener
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3204/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  arya_data:
+
+networks:
+  dream_network:
+    driver: bridge

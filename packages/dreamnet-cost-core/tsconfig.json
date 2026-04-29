@@ -33,6 +33,9 @@
         },
         {
             "path": "../dreamnet-os-core"
+        },
+        {
+            "path": "../dreamnet-cost-economic-bridge"
         }
     ],
     "exclude": [

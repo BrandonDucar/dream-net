@@ -80,11 +80,14 @@ export function createEnvVarDescriptor(
   };
 }
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+import { ENV_REGISTRY } from "../types.js";
+
 /**
  * Update registry with descriptor
  */
 export function updateEnvRegistry(descriptor: EnvVarDescriptor): void {
-  const { ENV_REGISTRY } = require("../types");
   ENV_REGISTRY[descriptor.key] = descriptor;
 }
 
@@ -92,7 +95,6 @@ export function updateEnvRegistry(descriptor: EnvVarDescriptor): void {
  * Get descriptor from registry
  */
 export function getEnvDescriptor(key: string): EnvVarDescriptor | undefined {
-  const { ENV_REGISTRY } = require("../types");
   return ENV_REGISTRY[key];
 }
 
@@ -102,7 +104,6 @@ export function getEnvDescriptor(key: string): EnvVarDescriptor | undefined {
 export function getDescriptorsBySensitivity(
   sensitivity: EnvSensitivity
 ): EnvVarDescriptor[] {
-  const { ENV_REGISTRY } = require("../types");
   return Object.values(ENV_REGISTRY).filter((d: EnvVarDescriptor) => d.sensitivity === sensitivity) as EnvVarDescriptor[];
 }
 

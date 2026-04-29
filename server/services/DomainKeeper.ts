@@ -26,8 +26,9 @@ import {
   getProjectByName,
   ensureDomainAttached,
   getVercelDnsRecords,
+  listProjectDomains,
   type VercelDomain,
-} from '../integrations/vercelClient';
+} from '../integrations/vercelClient.js';
 
 export interface DomainSyncResult {
   domain: string;
@@ -78,7 +79,6 @@ export class DomainKeeper {
         result.message = `Domain attached to project ${project.name}`;
       } catch (error: any) {
         // Check if already attached
-        const { listProjectDomains } = require('../integrations/vercelClient');
         const domains = await listProjectDomains(project.id);
         const existing = domains.find(d => d.name === this.primaryDomain);
         if (existing) {
@@ -142,7 +142,6 @@ export class DomainKeeper {
         result.action = 'attached';
         result.message = `Staging domain attached to project ${project.name}`;
       } catch (error: any) {
-        const { listProjectDomains } = require('../integrations/vercelClient');
         const domains = await listProjectDomains(project.id);
         const existing = domains.find(d => d.name === this.stagingDomain);
         if (existing) {
@@ -239,9 +238,9 @@ export class DomainKeeper {
  */
 let domainKeeperInstance: DomainKeeper | null = null;
 
-export function getDomainKeeper(): DomainKeeper {
+export async function getDomainKeeper(): Promise<DomainKeeper> {
   if (!domainKeeperInstance) {
-    const { createDnsProvider } = require('../integrations/cloudflareDns');
+    const { createDnsProvider } = await import('../integrations/cloudflareDns.js');
     const dnsProvider = createDnsProvider();
     domainKeeperInstance = new DomainKeeper(dnsProvider);
   }

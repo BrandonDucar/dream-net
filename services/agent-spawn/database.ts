@@ -2,10 +2,24 @@ import { Pool } from 'pg';
 import { readFileSync } from 'fs';
 
 // Database connection for agent lifecycle and spawn history
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_LFgl64fVYoJw@ep-red-thunder-afhkyr9i.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require',
-  ssl: { rejectUnauthorized: false } // Neon requires SSL
-});
+const databaseUrl = process.env.DATABASE_URL;
+const pool = databaseUrl
+  ? new Pool({
+      connectionString: databaseUrl,
+      ssl: { rejectUnauthorized: false }, // Neon requires SSL
+    })
+  : null;
+
+function databaseDisabledMetric() {
+  return {
+    total_spawns: 0,
+    active_agents: 0,
+    paused_agents: 0,
+    destroyed_agents: 0,
+    avg_age_hours: 0,
+    database_enabled: false,
+  };
+}
 
 // Load schema from file
 const schema = readFileSync('./schema.sql', 'utf8');
@@ -50,6 +64,8 @@ export interface SpawnEvent {
 
 // Agent lifecycle operations
 export async function recordAgentSpawn(agent: AgentRecord): Promise<void> {
+  if (!pool) return;
+
   const query = `
     INSERT INTO agents (
       agent_id, name, template_id, status, spawned_at, last_heartbeat,
@@ -79,6 +95,8 @@ export async function recordAgentSpawn(agent: AgentRecord): Promise<void> {
 }
 
 export async function updateAgentStatus(agentId: string, status: string, details?: any): Promise<void> {
+  if (!pool) return;
+
   const query = `
     UPDATE agents 
     SET status = $1, last_heartbeat = NOW(), metadata = 
@@ -93,6 +111,8 @@ export async function updateAgentStatus(agentId: string, status: string, details
 }
 
 export async function recordSpawnEvent(event: SpawnEvent): Promise<void> {
+  if (!pool) return;
+
   const query = `
     INSERT INTO spawn_events (
       event_id, agent_id, event_type, timestamp, details, operator
@@ -110,6 +130,8 @@ export async function recordSpawnEvent(event: SpawnEvent): Promise<void> {
 }
 
 export async function getActiveAgents(): Promise<AgentRecord[]> {
+  if (!pool) return [];
+
   const query = `
     SELECT * FROM agents 
     WHERE status IN ('active', 'paused', 'spawning')
@@ -120,6 +142,8 @@ export async function getActiveAgents(): Promise<AgentRecord[]> {
 }
 
 export async function getAgentHistory(agentId: string, limit: number = 50): Promise<SpawnEvent[]> {
+  if (!pool) return [];
+
   const query = `
     SELECT * FROM spawn_events 
     WHERE agent_id = $1
@@ -131,6 +155,8 @@ export async function getAgentHistory(agentId: string, limit: number = 50): Prom
 }
 
 export async function getSpawnMetrics(hours: number = 24): Promise<any> {
+  if (!pool) return databaseDisabledMetric();
+
   const query = `
     SELECT 
       COUNT(*) as total_spawns,
@@ -147,6 +173,11 @@ export async function getSpawnMetrics(hours: number = 24): Promise<any> {
 
 // Initialize database connection
 export async function initDatabase(): Promise<void> {
+  if (!pool) {
+    console.warn('⚠️ [Hatchling] DATABASE_URL not set; persistence disabled');
+    return;
+  }
+
   try {
     await pool.query(schema);
     console.log('✅ [Hatchling] Database schema initialized');

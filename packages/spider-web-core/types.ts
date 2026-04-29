@@ -8,6 +8,9 @@ export type SpiderNodeKind =
   | "data-vault"
   | "economic-engine"
   | "neural-mesh"
+  | "operational"
+  | "cluster"
+  | "system"
   | "other";
 
 export interface SpiderNodeRef {
@@ -27,6 +30,15 @@ export type SignalKind =
   | "message-response"
   | "revenue-event"
   | "engagement-event"
+  | "health"
+  | "incident"
+  | "governance"
+  | "throttle"
+  | "economic"
+  | "scale"
+  | "automation"
+  | "control"
+  | "signal"
   | "custom";
 
 export type SignalStatus = "pending" | "in-progress" | "completed" | "blocked" | "failed";
@@ -168,6 +180,7 @@ export interface SpiderWebContext {
   dataVaultCore?: any;
   economicEngineCore?: any;
   neuralMesh?: any;
+  spiderWebCore?: any;
 }
 
 export interface SpiderWebStatus {

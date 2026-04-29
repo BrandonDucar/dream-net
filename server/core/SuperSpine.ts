@@ -70,7 +70,7 @@ export interface AgentSubscription {
   };
 }
 
-class SuperSpine {
+export class SuperSpine {
   private agents: Map<string, AgentNode> = new Map();
   private tasks: Map<string, Task> = new Map();
   private subscriptions: Map<string, AgentSubscription> = new Map();

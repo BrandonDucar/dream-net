@@ -3,8 +3,8 @@
  * Biomimetic: Cost Core (resource tracking) → Economic Engine (circulatory system)
  */
 
-import { DreamNetCostCore } from "@dreamnet/dreamnet-cost-core";
 import type { CostTransaction, BudgetAllocation } from "../types";
+import type { CostSummary } from "@dreamnet/types";
 
 /**
  * Bridge cost record to Economic Engine transaction
@@ -70,9 +70,7 @@ export function bridgeCostAlertToEconomicEngine(alert: {
 /**
  * Sync all cost summaries to Economic Engine
  */
-export function syncCostSummariesToEconomicEngine(): void {
-  const summaries = DreamNetCostCore.getAllCostSummaries();
-
+export function syncCostSummariesToEconomicEngine(summaries: Record<string, CostSummary>): void {
   for (const [clusterId, summary] of Object.entries(summaries)) {
     // Bridge each summary as economic data
     console.log(`💰 [Cost-Economic Bridge] Syncing cost summary for ${clusterId}: $${summary.totalCost} total`);

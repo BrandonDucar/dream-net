@@ -9,18 +9,18 @@ import {
   OffensiveSpike,
   ShieldContext,
   ShieldStatus,
-} from "./types";
-import { ShieldStore } from "./store/shieldStore";
-import { runShieldCycle } from "./scheduler/shieldScheduler";
-import { ensureShieldPhases, rotateShieldFrequencies } from "./logic/shieldRotator";
-import { createModulator, ensureDefaultModulators } from "./logic/shieldModulator";
-import { createEmitter, ensureDefaultEmitters } from "./logic/shieldEmitter";
-import { detectThreat, analyzeThreat } from "./logic/threatDetector";
-import { fireSpike, fireSpikeAtThreat } from "./logic/offensiveSpike";
-import { createCellularShield, getCellularShield, updateCellularShieldIntegrity, propagateShieldViaWormhole, listCellularShields, getCellularShieldStats, getRecentWormholeSignals } from "./logic/cellularShield";
-import { learnFromThreats, predictThreatSeverity, getThreatPatterns } from "./logic/shieldLearner";
-import { initializeCrossChainShield, syncCrossChainShields, detectCrossChainThreat, listCrossChainShields, getCrossChainShieldStats } from "./logic/crossChainShield";
-import type { CellularShield, CellType, WormholeShieldSignal, Blockchain } from "./types";
+} from "./src/types";
+import { ShieldStore } from "./src/store/shieldStore";
+import { runShieldCycle } from "./src/scheduler/shieldScheduler";
+import { ensureShieldPhases, rotateShieldFrequencies } from "./src/logic/shieldRotator";
+import { createModulator, ensureDefaultModulators } from "./src/logic/shieldModulator";
+import { createEmitter, ensureDefaultEmitters } from "./src/logic/shieldEmitter";
+import { detectThreat, analyzeThreat } from "./src/logic/threatDetector";
+import { fireSpike, fireSpikeAtThreat } from "./src/logic/offensiveSpike";
+import { createCellularShield, getCellularShield, updateCellularShieldIntegrity, propagateShieldViaWormhole, listCellularShields, getCellularShieldStats, getRecentWormholeSignals } from "./src/logic/cellularShield";
+import { learnFromThreats, predictThreatSeverity, getThreatPatterns } from "./src/logic/shieldLearner";
+import { initializeCrossChainShield, syncCrossChainShields, detectCrossChainThreat, listCrossChainShields, getCrossChainShieldStats } from "./src/logic/crossChainShield";
+import type { CellularShield, CellType, WormholeShieldSignal, Blockchain } from "./src/types";
 
 export const ShieldCore = {
   // Orchestration
@@ -214,7 +214,7 @@ export const ShieldCore = {
   },
 };
 
-export * from "./types";
+export * from "./src/types";
 export * from "./src/risk";
 // ShieldCore is already exported above as const, so we don't need to re-export it
 export default ShieldCore;

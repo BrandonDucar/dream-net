@@ -15,12 +15,19 @@
         "skipLibCheck": true
     },
     "include": [
-        "index.ts"
+        "index.ts",
+        "src/**/*",
+        "logic/**/*"
     ],
     "exclude": [
         "node_modules",
-        "dist",
-        "src",
-        "logic"
+        "dist"
+    ],
+    "references": [
+        { "path": "../dreamnet-types" },
+        { "path": "../dreamnet-metrics-core" },
+        { "path": "../dreamnet-cost-core" },
+        { "path": "../spider-web-core" },
+        { "path": "../dreamnet-voice-twilio" }
     ]
 }

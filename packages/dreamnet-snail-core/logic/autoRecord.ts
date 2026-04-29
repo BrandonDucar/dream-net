@@ -4,7 +4,7 @@
  */
 
 import { DreamSnailCore } from "../index";
-import type { OperationalEvent } from "@dreamnet/dreamnet-operational-bridge/logic/spiderWebBridge";
+import type { OperationalEvent } from "@dreamnet/types";
 
 /**
  * Auto-record operational events in Dream Snail

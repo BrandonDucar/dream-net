@@ -5,6 +5,8 @@
  */
 
 import { discoverAllEnvVars } from "./logic/envDiscoverer";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 import {
   storeEnvVar,
   getEnvVar,
@@ -61,7 +63,7 @@ export const EnvKeeperCore = {
           if (envVar.isSecret && envVar.value.includes(":")) {
             // Try to decrypt (if encrypted)
             try {
-              const { decrypt } = require("./logic/envStorage");
+              const { decrypt } = await import("./logic/envStorage.js");
               value = decrypt(envVar.value);
             } catch (e) {
               // Not encrypted, use as-is

@@ -16,11 +16,11 @@ import {
   getGodVaultApiKeysFromEnv,
   isGodVaultWallet,
 } from "./godVault";
-import type { DreamPassport, OfficeId, CabinetId } from "../dream-state-core/types";
+import type { DreamPassport, OfficeId, CabinetId } from "../../dream-state-core/src/types";
 import {
   getPassportByWallet,
   getPassportByCitizenId,
-} from "../dreamstate/src/registry";
+} from "../../dreamstate/src/registry";
 
 // If you're using ethers, you can uncomment this:
 // import { ethers } from "ethers";

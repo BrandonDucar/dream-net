@@ -1,0 +1,33 @@
+{
+  "name": "@dreamnet/vault-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./cli": {
+      "import": "./src/cli.ts",
+      "types": "./src/cli.ts"
+    },
+    "./schema": {
+      "import": "./src/schema/postgres.ts",
+      "types": "./src/schema/postgres.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "inventory": "tsx src/cli.ts inventory",
+    "heartbeat": "tsx src/cli.ts heartbeat --once",
+    "schema": "tsx src/cli.ts schema"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
