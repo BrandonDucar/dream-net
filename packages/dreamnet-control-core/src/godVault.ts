@@ -6,7 +6,7 @@
  * @module @dreamnet/dreamnet-control-core/godVault
  */
 
-import type { TierId } from "./tierConfig";
+import { type TierId } from "./tierConfig.js";
 
 export interface GodVaultConfig {
   /** Logical ID for the founder/root operator. */

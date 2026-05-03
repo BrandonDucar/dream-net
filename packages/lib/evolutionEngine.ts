@@ -1,8 +1,8 @@
 // evolutionEngine.ts
 
-import { DREAMKEEPER_CORE } from './dreamkeeperCore';
-import { DreamDefenseNet } from './defenseBots';
-import { SurgeonAgent } from './aiSurgeonAgents';
+import { DREAMKEEPER_CORE } from './dreamkeeperCore.js';
+import { DreamDefenseNet } from './defenseBots.js';
+import { SurgeonAgent } from './aiSurgeonAgents.js';
 
 export interface EvolutionCycle {
   timestamp: string;
@@ -82,7 +82,7 @@ export const EvolutionEngine = {
     const patterns = [];
     
     const remixFailures = diagnostics.filter(d => 
-      d.notes && d.notes.some(note => note.includes('remix'))
+      d.notes && d.notes.some((note: string) => note.includes('remix'))
     ).length;
     
     if (remixFailures > 2) {
@@ -90,7 +90,7 @@ export const EvolutionEngine = {
     }
     
     const buildErrors = diagnostics.filter(d =>
-      d.notes && d.notes.some(note => note.includes('build'))
+      d.notes && d.notes.some((note: string) => note.includes('build'))
     ).length;
     
     if (buildErrors > 1) {

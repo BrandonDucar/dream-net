@@ -51,6 +51,33 @@
         },
         {
             "path": "../sensory-spikes"
+        },
+        {
+            "path": "../nerve"
+        },
+        {
+            "path": "../dreamstate"
+        },
+        {
+            "path": "../dream-state-core"
+        },
+        {
+            "path": "../port-governor"
+        },
+        {
+            "path": "../dreamnet-operational-bridge"
+        },
+        {
+            "path": "../memory-dna"
+        },
+        {
+            "path": "../nerve"
+        },
+        {
+            "path": "../orca-pack-core"
+        },
+        {
+            "path": "../whale-pack-core"
         }
     ],
     "exclude": [

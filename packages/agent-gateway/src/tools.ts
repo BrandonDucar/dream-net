@@ -3,8 +3,8 @@
  * Defines available tools and their access requirements
  */
 
-import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
-import type { PortId } from "@dreamnet/port-governor/types";
+import type { ClusterId } from "../../dreamnet-control-core/src/clusters.js";
+import type { PortId } from "../../port-governor/src/types.js";
 
 export type ToolId =
   | "env.get"

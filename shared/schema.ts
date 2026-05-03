@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, boolean, pgEnum, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, boolean, pgEnum, jsonb, serial } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -237,7 +237,153 @@ export const swarmAgents = pgTable("swarm_agents", {
   capabilities: text("capabilities").array().default(sql`'{}'::text[]`),
   lastHeartbeat: timestamp("last_heartbeat").defaultNow(),
   metadata: jsonb("metadata").default(sql`'{}'::jsonb`),
+  
+  // Farcaster Identity
+  fid: integer("fid"),
+  signerUuid: text("signer_uuid"),
+  
+  // Genealogy & Maturity
+  parentId: varchar("parent_id"), // Lineage tracking
+  licenseLevel: integer("license_level").default(0), // 0=Hatchling, 1=Worker, 2=Sovereign, 3=Elder
+  workspaceId: varchar("workspace_id"), // Registered home/workspace
+  maturation: jsonb("maturation").$type<{
+    skills: string[];
+    isMature: boolean;
+    registrationDate: number;
+    mentors: string[];
+  }>().default(sql`'{"skills": [], "isMature": false, "registrationDate": 0, "mentors": []}'::jsonb`),
+
   createdAt: timestamp("created_at").defaultNow().notNull(),
+
+  // Social Health
+  qualityScore: integer("quality_score").default(50), // 0-100 (from Neynar/Internal)
+  isBanned: boolean("is_banned").default(false),
+});
+
+// Swarm Memories Table
+export const swarmMemories = pgTable("swarm_memories", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  pieceId: text("piece_id"), // Reference to Pieces OS ID
+  content: text("content").notNull(),
+  source: text("source").default("PiecesOS"),
+  tags: text("tags").array().default(sql`'{}'::text[]`),
+  relevanceScore: integer("relevance_score").default(0),
+  agentId: varchar("agent_id"), // Optional: Which agent "extracted" or "owns" this memory
+  metadata: jsonb("metadata").default(sql`'{}'::jsonb`),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Farcaster Outbound Actions (The Action Ledger)
+export const farcasterOutboundActions = pgTable("farcaster_outbound_actions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  agentId: varchar("agent_id").notNull(),
+  actionType: text("action_type").notNull(), // cast, reply, reaction, follow
+  targetId: text("target_id"), // cast hash, FID, or channel ID
+  content: text("content"),
+  idempotencyKey: text("idempotency_key").notNull().unique(),
+  status: text("status").default("pending"), // pending, sent, failed
+  txHash: text("tx_hash"), // Farcaster cast hash or onchain tx
+  errorMessage: text("error_message"),
+  scheduledAt: timestamp("scheduled_at"),
+  executedAt: timestamp("executed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Farcaster Channels Registry
+export const farcasterChannels = pgTable("farcaster_channels", {
+  id: text("id").primaryKey(), // channel_id
+  name: text("name").notNull(),
+  description: text("description"),
+  pfpUrl: text("pfp_url"),
+  parentUrl: text("parent_url"),
+  followerCount: integer("follower_count").default(0),
+  isModerated: boolean("is_moderated").default(false),
+  lastIndexedAt: timestamp("last_indexed_at"),
+});
+
+export const fundingLeads = pgTable("funding_leads", {
+  id: text("id").primaryKey(), // lead:a16z-crypto
+  name: text("name").notNull(),
+  type: text("type").notNull(), // vc, angel, grant, etc.
+  email: text("email"),
+  website: text("website"),
+  tags: text("tags").array(),
+  notes: text("notes"),
+  stage: text("stage").notNull().default("new"), // new, qualified, contacted, replied, hot, dead
+  
+  // Scores
+  dreamFitScore: integer("dream_fit_score"),
+  riskScore: integer("risk_score"),
+  trustScore: integer("trust_score"),
+  priorityScore: integer("priority_score"),
+  hotScore: integer("hot_score"),
+  isHot: boolean("is_hot").default(false),
+  
+  // Metadata
+  lastContactedAt: timestamp("last_contacted_at"),
+  lastReplyAt: timestamp("last_reply_at"),
+  nextFollowUpAt: timestamp("next_follow_up_at"),
+  contactCount: integer("contact_count").default(0),
+  
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const emailQueue = pgTable("email_queue", {
+  id: text("id").primaryKey(), // queue:lead-id:timestamp
+  leadId: text("lead_id").references(() => fundingLeads.id).notNull(),
+  toEmail: text("to_email").notNull(),
+  subject: text("subject").notNull(),
+  body: text("body").notNull(),
+  status: text("status").notNull().default("pending"), // pending, sent, failed
+  lastError: text("last_error"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  sentAt: timestamp("sent_at"),
+});
+
+export const emailDrafts = pgTable("email_drafts", {
+  id: text("id").primaryKey(),
+  leadId: text("lead_id").references(() => fundingLeads.id),
+  toEmail: text("to_email").notNull(),
+  subject: text("subject").notNull(),
+  body: text("body").notNull(),
+  html: text("html"),
+  metadata: jsonb("metadata"), // For InboxSquared research/geo/topics
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const grantApplicationDrafts = pgTable("grant_application_drafts", {
+  id: serial("id").primaryKey(),
+  leadId: integer("lead_id").references(() => fundingLeads.id).notNull(),
+  applicationType: text("application_type").notNull(), // 'email', 'form', 'proposal'
+  content: jsonb("content").notNull(),
+  status: text("status").default("draft").notNull(), // 'draft', 'finalized', 'submitted'
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const libraries = pgTable("libraries", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  version: text("version").notNull(),
+  description: text("description"),
+  packagePath: text("package_path").notNull().unique(),
+  author: text("author"),
+  license: text("license"),
+  dependencies: jsonb("dependencies"),
+  metadata: jsonb("metadata"),
+  lastScannedAt: timestamp("last_scanned_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Agent Licenses Table
+export const agentLicenses = pgTable("agent_licenses", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  agentId: varchar("agent_id").notNull(),
+  licenseType: text("license_type").notNull(), // "Child-Spawning", "Financial-Autonomy", "Cross-Chain-Execution"
+  issuedAt: timestamp("issued_at").defaultNow().notNull(),
+  expiresAt: timestamp("expires_at"),
+  revoked: boolean("revoked").default(false).notNull(),
+  metadata: jsonb("metadata").default(sql`'{}'::jsonb`),
 });
 
 // Guilds Table
@@ -366,6 +512,50 @@ export const walletsRelations = relations(wallets, ({ one }) => ({
   }),
 }));
 
+export const swarmAgentsRelations = relations(swarmAgents, ({ one, many }) => ({
+  parent: one(swarmAgents, {
+    fields: [swarmAgents.parentId],
+    references: [swarmAgents.id],
+    relationName: "lineage",
+  }),
+  children: many(swarmAgents, { relationName: "lineage" }),
+  licenses: many(agentLicenses),
+}));
+
+export const fundingLeadsRelations = relations(fundingLeads, ({ many }) => ({
+  queueItems: many(emailQueue),
+  drafts: many(emailDrafts),
+  grantDrafts: many(grantApplicationDrafts),
+}));
+
+export const emailQueueRelations = relations(emailQueue, ({ one }) => ({
+  lead: one(fundingLeads, {
+    fields: [emailQueue.leadId],
+    references: [fundingLeads.id],
+  }),
+}));
+
+export const emailDraftsRelations = relations(emailDrafts, ({ one }) => ({
+  lead: one(fundingLeads, {
+    fields: [emailDrafts.leadId],
+    references: [fundingLeads.id],
+  }),
+}));
+
+export const grantApplicationDraftsRelations = relations(grantApplicationDrafts, ({ one }) => ({
+  lead: one(fundingLeads, {
+    fields: [grantApplicationDrafts.leadId],
+    references: [fundingLeads.id],
+  }),
+}));
+
+export const agentLicensesRelations = relations(agentLicenses, ({ one }) => ({
+  agent: one(swarmAgents, {
+    fields: [agentLicenses.agentId],
+    references: [swarmAgents.id],
+  }),
+}));
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
@@ -427,6 +617,33 @@ export const insertEvolutionChainSchema = createInsertSchema(evolutionChains).pi
   metadata: true,
 }) as unknown as z.ZodTypeAny;
 
+export const insertFundingLeadSchema = createInsertSchema(fundingLeads).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}) as unknown as z.ZodTypeAny;
+
+export const insertEmailQueueSchema = createInsertSchema(emailQueue).omit({
+  id: true,
+  createdAt: true,
+}) as unknown as z.ZodTypeAny;
+
+export const insertEmailDraftSchema = createInsertSchema(emailDrafts).omit({
+  id: true,
+  createdAt: true,
+}) as unknown as z.ZodTypeAny;
+
+export const insertGrantApplicationDraftSchema = createInsertSchema(grantApplicationDrafts).omit({
+  id: true,
+  createdAt: true,
+}) as unknown as z.ZodTypeAny;
+
+export const insertLibrarySchema = createInsertSchema(libraries).omit({
+  id: true,
+  lastScannedAt: true,
+  createdAt: true,
+}) as unknown as z.ZodTypeAny;
+
 export const insertDreamInviteSchema = createInsertSchema(dreamInvites).pick({
   dreamId: true,
   invitedWallet: true,
@@ -435,12 +652,31 @@ export const insertDreamInviteSchema = createInsertSchema(dreamInvites).pick({
   message: true,
 }) as unknown as z.ZodTypeAny;
 
-export const insertDreamTokenSchema = createInsertSchema(dreamTokens).pick({
+export const dreamTokenSchema = createInsertSchema(dreamTokens).pick({
   dreamId: true,
   cocoonId: true,
   holderWallet: true,
   purpose: true,
   milestone: true,
+  metadata: true,
+});
+
+export const insertSwarmAgentSchema = createInsertSchema(swarmAgents).pick({
+  name: true,
+  type: true,
+  guildId: true,
+  walletAddress: true,
+  capabilities: true,
+  parentId: true,
+  licenseLevel: true,
+  workspaceId: true,
+  maturation: true,
+}) as unknown as z.ZodTypeAny;
+
+export const insertAgentLicenseSchema = createInsertSchema(agentLicenses).pick({
+  agentId: true,
+  licenseType: true,
+  expiresAt: true,
   metadata: true,
 }) as unknown as z.ZodTypeAny;
 
@@ -468,6 +704,13 @@ export type InsertCocoonLog = z.infer<typeof insertCocoonLogSchema>;
 
 export type EvolutionChain = typeof evolutionChains.$inferSelect;
 export type InsertEvolutionChain = z.infer<typeof insertEvolutionChainSchema>;
+
+export type FundingLeadRecord = typeof fundingLeads.$inferSelect;
+export type EmailQueueRecord = typeof emailQueue.$inferSelect;
+export type EmailDraftRecord = typeof emailDrafts.$inferSelect;
+export type GrantApplicationDraftRecord = typeof grantApplicationDrafts.$inferSelect;
+export type LibraryRecord = typeof libraries.$inferSelect;
+export type InsertLibrary = z.infer<typeof insertLibrarySchema>;
 
 export type DreamInvite = typeof dreamInvites.$inferSelect;
 export type InsertDreamInvite = z.infer<typeof insertDreamInviteSchema>;

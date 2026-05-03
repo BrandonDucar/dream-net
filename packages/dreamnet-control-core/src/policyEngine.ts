@@ -17,9 +17,7 @@
  * @module @dreamnet/dreamnet-control-core/policyEngine
  */
 
-import type { ClusterId } from "./clusters";
-import type { TierId } from "./tierConfig";
-import type { CallerIdentity } from "./identityResolver";
+import type { TierId, ClusterId, CallerIdentity } from "@dreamnet/types";
 
 export interface PolicyContext {
   /** Trace ID for request tracking */

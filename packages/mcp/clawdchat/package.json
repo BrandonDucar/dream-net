@@ -1,0 +1,17 @@
+{
+  "name": "clawdchat-mcp",
+  "version": "1.0.0",
+  "description": "ClawdChat Multi-Identity MCP Bridge for DreamNet",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "dependencies": {
+    "redis": "^4.6.11"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

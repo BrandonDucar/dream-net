@@ -31,11 +31,32 @@ export class SlackAgentClient {
         return response.data;
     }
 
-    async listChannels(): Promise<any[]> {
-        const response = await axios.get("https://slack.com/api/conversations.list", {
-            headers: { "Authorization": `Bearer ${this.token}` }
-        });
-        return response.data.channels || [];
+    async addReaction(channelId: string, timestamp: string, name: string): Promise<any> {
+        const response = await axios.post(
+            "https://slack.com/api/reactions.add",
+            { channel: channelId, timestamp, name },
+            {
+                headers: {
+                    "Authorization": `Bearer ${this.token}`,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+        return response.data;
+    }
+
+    async uploadFile(channels: string, content: string, filename: string): Promise<any> {
+        const response = await axios.post(
+            "https://slack.com/api/files.upload",
+            { channels, content, filename },
+            {
+                headers: {
+                    "Authorization": `Bearer ${this.token}`,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }
+        );
+        return response.data;
     }
 }
 

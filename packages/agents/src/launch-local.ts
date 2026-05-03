@@ -1,7 +1,7 @@
-import { GenomePilotAgent } from './specialized/GenomePilotAgent.ts';
-import { DreamBetOracle } from './specialized/DreamBetOracle.ts';
-import { PickleballOracle } from './specialized/PickleballOracle.ts';
-import { OmniWitnessAgent } from './specialized/OmniWitnessAgent.ts';
+import { GenomePilotAgent } from './specialized/GenomePilotAgent.js';
+import { DreamBetOracle } from './specialized/DreamBetOracle.js';
+import { PickleballOracle } from './specialized/PickleballOracle.js';
+import { OmniWitnessAgent } from './specialized/OmniWitnessAgent.js';
 
 async function main() {
     console.log("🚀 [LOCAL LAUNCH] INITIALIZING OMNI-ORACLE SWARM...\n");

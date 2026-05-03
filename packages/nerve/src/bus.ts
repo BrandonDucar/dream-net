@@ -4,7 +4,7 @@
  * @module @dreamnet/nerve/bus
  */
 
-import type { NerveEvent, NerveChannelId, NervePriority } from "./types";
+import type { NerveEvent, NerveChannelId, NervePriority } from "./types.js";
 
 /**
  * Nerve Subscriber - Callback function for event handling

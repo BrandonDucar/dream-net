@@ -32,8 +32,26 @@ export class IftttService {
       });
     });
 
+    // 🚀 NEW: Subscribe to Alpha Detection (Forty Avenues)
+    natsService.subscribe('dreamnet.swarm.alpha.detected', async (payload: any) => {
+      await this.triggerWebhook('alpha_detected', {
+        value1: payload.avenue || 'General',
+        value2: payload.ticker || payload.topic,
+        value3: payload.confidence || 'High'
+      });
+    });
+
+    // 🚀 NEW: Subscribe to Economic Events (Rewards/Mints)
+    natsService.subscribe('dreamnet.swarm.economic.event', async (payload: any) => {
+      await this.triggerWebhook('economic_event', {
+        value1: payload.type,
+        value2: payload.amount,
+        value3: payload.identityId
+      });
+    });
+
     this.isInitialized = true;
-    console.log("🔗 [IFTTT Service] Swarm Bridge Active.");
+    console.log("🔗 [IFTTT Service] Swarm Bridge Active with Alpha & Economic triggers.");
   }
 
   public static async triggerWebhook(event: string, data: { value1?: any, value2?: any, value3?: any }) {

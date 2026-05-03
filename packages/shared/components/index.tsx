@@ -23,6 +23,6 @@ export const Badge = ({ children, color = 'blue' }: any) => (
     </span>
 );
 
-export * from './TierBadge';
-export * from './MetabolicHUD';
-export * from './ui/badge';
+export * from './TierBadge.js';
+export * from './MetabolicHUD.js';
+export * from './ui/badge.js';

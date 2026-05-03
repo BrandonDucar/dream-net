@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "brainsync": {
+      "command": "node",
+      "args": [
+        "c:\\Users\\brand\\.antigravity\\extensions\\dawoodahmad.brainsync-3.0.12-universal\\dist\\mcp-server.js"
+      ],
+      "env": {
+        "BRAINSYNC_ENV_FILE": "C:\\Users\\brand\\.bsync_core\\dream-net\\mcp-secret-env.json"
+      }
+    },
+    "neynar": {
+      "command": "npx",
+      "args": ["-y", "@mintlify/mcp", "https://docs.neynar.com"]
+    }
+  }
+}

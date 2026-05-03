@@ -1,0 +1,112 @@
+log:
+  level: info
+
+persistence:
+  defaultStore: postgres_default
+  visibilityStore: postgres_visibility
+  numHistoryShards: 4
+  datastores:
+    postgres_default:
+      sql:
+        driver: postgres
+        host: temporal-postgres
+        port: 5432
+        database: temporal
+        user: temporal
+        password: ${POSTGRES_PASSWORD:-temporal_dev_pw}
+        maxConns: 50
+        maxIdleConns: 10
+        maxConnLifetime: 0s
+    postgres_visibility:
+      sql:
+        driver: postgres
+        host: temporal-postgres
+        port: 5432
+        database: temporal_visibility
+        user: temporal
+        password: ${POSTGRES_PASSWORD:-temporal_dev_pw}
+        maxConns: 50
+        maxIdleConns: 10
+        maxConnLifetime: 0s
+
+ringpop:
+  name: temporal
+  maxJoinDuration: 30s
+
+server:
+  rpc:
+    grpcPort: 7233
+    membershipPort: 7234
+    bindOnLocalHost: false
+  metrics:
+    prometheus:
+      framework: "openmetrics"
+      timerType: "histogram"
+      defaultHistogramBuckets: [.005, .01, .025, .05, .1, .25, .5, 1, 2.5, 5, 10]
+
+dcRedirectionPolicy:
+  policy: "noop"
+
+archival:
+  history:
+    state: "disabled"
+  visibility:
+    state: "disabled"
+
+namespaceDefaults:
+  archival:
+    history:
+      state: "disabled"
+    visibility:
+      state: "disabled"
+
+kafka:
+  brokers:
+    - kafka:9092
+
+clusters:
+  currentClusterName: "active"
+  clusterInitialInterval: 5s
+  clusterMetadataRefreshInterval: 6s10ms
+  clusterMinFailureInterval: 5s
+  clusterMaxFailureInterval: 1m0s
+  clusterMetadataExpiration: 40s
+
+global:
+  channelBufferSize: 4096
+  domainFailoverRefreshInterval: 5s
+  domainFailoverLongPollTimeout: 30s
+  domainMetadataRefreshInterval: 5s
+  historyCacheInitialSize: 128
+  historyCacheMaxSize: 262144
+  historyShardCount: 4
+  historyHostLevelCacheSize: 1024000
+  skipErrorCreatingSystemWorkflowExecutionHistory: false
+  workflowExecutionMgrNumConns: 10
+  workflowExecutionMgrMinConns: 10
+  eventsCacheInitialSize: 128
+  eventsCacheMaxSize: 262144
+  eventsCacheTTL: 1h
+  eventsCacheMaxSize: 1048576
+  localHostPort: "127.0.0.1:7233"
+  grpcMaxMsgSize: 4194304
+  dcRedirectionPolicy:
+    policy: "noop"
+  adminOperationToken: ""
+  auth:
+    authorizer: "default"
+    authorizationProvider: "default"
+    tokenKeyProvider: "default"
+
+elasticsearch:
+  version: "v7"
+  logLevel: "error"
+  url:
+    scheme: "http"
+    host: "localhost:9200"
+  indices:
+    visibility: "temporal-visibility-dev"
+  auth:
+    enabled: false
+  aws:
+    enabled: false

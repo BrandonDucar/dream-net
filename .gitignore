@@ -7,7 +7,10 @@ build/
 # Environment
 .env
 .env.local
-.env.*.local
+.env.*
+!.env.example
+!.env.sample
+!.env.template
 .env.production.local
 .env.development.local
 .env.test.local

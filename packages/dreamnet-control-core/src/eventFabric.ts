@@ -9,9 +9,9 @@
  * @module @dreamnet/dreamnet-control-core/eventFabric
  */
 
-import type { ClusterId } from "./clusters";
-import type { TierId } from "./tierConfig";
-import type { CallerIdentity } from "./identityResolver";
+import type { ClusterId } from "./clusters.js";
+import type { TierId } from "./tierConfig.js";
+import type { CallerIdentity } from "./identityResolver.js";
 
 export type ControlDecision = 
   | "allowed"

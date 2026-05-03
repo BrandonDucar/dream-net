@@ -5,10 +5,7 @@
  * @module @dreamnet/dreamnet-control-core/tierConfig
  */
 
-/**
- * Tier ID - Strongly typed tier identifiers
- */
-export type TierId = "SEED" | "BUILDER" | "OPERATOR" | "GOD_MODE";
+import type { TierId } from "@dreamnet/types";
 
 /**
  * Tier Configuration

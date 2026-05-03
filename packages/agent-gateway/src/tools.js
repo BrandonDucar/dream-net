@@ -90,6 +90,16 @@ export const TOOL_REGISTRY = {
         cost: { estimatedTokenCost: 0, estimatedDollarCost: 0 },
         riskLevel: "low",
     },
+    "ifttt.trigger": {
+        id: "ifttt.trigger",
+        label: "Trigger IFTTT Webhook",
+        description: "Send an event to an IFTTT Maker Webhook.",
+        clusterId: "WEBHOOK_NERVOUS_SYSTEM",
+        portId: "INTERNAL_ROUTER",
+        minTier: "BUILDER",
+        cost: { estimatedTokenCost: 0, estimatedDollarCost: 0 },
+        riskLevel: "medium",
+    },
 };
 export function getToolConfig(id) {
     return TOOL_REGISTRY[id];

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AntigravityAPI } from '../utils/api';
+import { AntigravityAPI } from '../utils/api.js';
 
 export function useTelemetry(wallet?: string) {
     const [scent, setScent] = useState<any>(null);

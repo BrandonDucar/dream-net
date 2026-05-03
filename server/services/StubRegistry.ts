@@ -1,3 +1,5 @@
+import { economicEngineCore as RealEconomicEngineCore } from './EconomicEngineCore.js';
+
 /**
  * Stub Registry - Phase XXIII "Boot Recovery" Protocol
  * Provides functional placeholders for missing core "Master" services.
@@ -16,6 +18,9 @@ const createStub = (name: string) => {
     manualFix: async () => console.log(`🧩 [STUB] ${name} manual fix triggered (No-op)`),
   };
 };
+
+// Realized Services
+export const EconomicEngineCore = RealEconomicEngineCore;
 
 // Missing Tier III/IV "Master" Services
 export const MatterCompiler = createStub('MatterCompiler');
@@ -43,7 +48,6 @@ export const WolfPackFundingCore = createStub('WolfPackFundingCore');
 export const APIKeeperCore = createStub('APIKeeperCore');
 export const AISEOCore = createStub('AISEOCore');
 export const CivicPanelCore = createStub('CivicPanelCore');
-export const EconomicEngineCore = createStub('EconomicEngineCore');
 export const SocialHubCore = createStub('SocialHubCore');
 export const InitRitualCore = createStub('InitRitualCore');
 export const ZenGardenCore = createStub('ZenGardenCore');

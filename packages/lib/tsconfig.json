@@ -5,8 +5,10 @@
         "rootDir": ".",
         "composite": true,
         "declaration": true,
-        "module": "ESNext",
-        "moduleResolution": "bundler",
+        "declarationMap": true,
+        "sourceMap": true,
+        "module": "Node16",
+        "moduleResolution": "Node16",
         "types": [
             "node"
         ],

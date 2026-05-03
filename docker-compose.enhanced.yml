@@ -1,0 +1,328 @@
+version: '3.8'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DREAMNET ENHANCED COMPOSE
+# Integrates: Temporal, Redis Enterprise, OpenWebUI, Tailscale, Docker Extensions
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.enhanced.yml up -d
+#
+# Or use docker-compose.combined.yml (all services merged)
+# ─────────────────────────────────────────────────────────────────────────────
+
+x-ghcr: &ghcr ghcr.io/${GITHUB_OWNER:-brandonducar}/dream-net
+
+services:
+  # ---------------------------------------------------------------------------
+  # TEMPORAL WORKFLOW ENGINE (Durable Task Orchestration)
+  # Primary: Coordination of 17,000 agents across chains, UI, social raids
+  # ─────────────────────────────────────────────────────────────────────────
+  temporal-postgres:
+    image: postgres:16-alpine
+    container_name: dreamnet_temporal_db
+    restart: always
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: ${TEMPORAL_DB_PASSWORD:-temporal_dev_pw}
+      POSTGRES_DB: temporal
+    volumes:
+      - temporal_postgres_data:/var/lib/postgresql/data
+    networks:
+      - dream_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temporal"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  temporal-server:
+    image: temporalio/auto-setup:latest
+    container_name: dreamnet_temporal_server
+    restart: always
+    depends_on:
+      temporal-postgres:
+        condition: service_healthy
+    environment:
+      DB: postgresql
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: ${TEMPORAL_DB_PASSWORD:-temporal_dev_pw}
+      POSTGRES_SEEDS: temporal-postgres
+      DYNAMIC_CONFIG_FILE_PATH: /etc/temporal/config/dynamicconfig/development.yaml
+      LOG_LEVEL: info
+      ENABLE_ES: "false"
+    ports:
+      - "7233:7233"  # gRPC
+      - "6933:6933"  # gRPC TLS
+      - "6934:6934"  # History
+      - "6935:6935"  # Matching
+      - "6936:6936"  # Frontend
+    volumes:
+      - ./config/temporal/dynamicconfig:/etc/temporal/config/dynamicconfig:ro
+    networks:
+      - dream_network
+    healthcheck:
+      test: ["CMD", "tctl", "cluster", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  temporal-ui:
+    image: temporalio/ui:latest
+    container_name: dreamnet_temporal_ui
+    restart: always
+    depends_on:
+      - temporal-server
+    ports:
+      - "8080:8080"
+    environment:
+      TEMPORAL_ADDRESS: temporal-server:7233
+      TEMPORAL_CORS_ORIGINS: http://localhost:3000,http://localhost:8080
+    networks:
+      - dream_network
+
+  # ---------------------------------------------------------------------------
+  # REDIS ENTERPRISE CLUSTER (HA Caching & Streams)
+  # Replaces: Alpine redis (production-grade HA, persistence, clustering)
+  # ─────────────────────────────────────────────────────────────────────────
+  redis-enterprise-node1:
+    image: redislabs/redis:latest
+    container_name: dreamnet_redis_enterprise_node1
+    restart: always
+    ports:
+      - "6379:6379"
+      - "6380:6380"
+      - "8443:8443"
+    environment:
+      REDIS_CLUSTER_ENABLED: "yes"
+      REDIS_CLUSTER_CONFIG_FILE: /data/nodes.conf
+      REDIS_CLUSTER_NODE_TIMEOUT: "15000"
+      REDIS_PORT: 6379
+      CLUSTER_ANNOUNCE_IP: 172.20.0.10
+      CLUSTER_ANNOUNCE_PORT: 6379
+      CLUSTER_ANNOUNCE_BUS_PORT: 6380
+    volumes:
+      - redis_enterprise_data_1:/data
+    networks:
+      dream_network:
+        ipv4_address: 172.20.0.10
+    healthcheck:
+      test: ["CMD", "redis-cli", "cluster", "info"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis-enterprise-node2:
+    image: redislabs/redis:latest
+    container_name: dreamnet_redis_enterprise_node2
+    restart: always
+    environment:
+      REDIS_CLUSTER_ENABLED: "yes"
+      REDIS_CLUSTER_CONFIG_FILE: /data/nodes.conf
+      REDIS_CLUSTER_NODE_TIMEOUT: "15000"
+      REDIS_PORT: 6379
+      CLUSTER_ANNOUNCE_IP: 172.20.0.11
+      CLUSTER_ANNOUNCE_PORT: 6379
+      CLUSTER_ANNOUNCE_BUS_PORT: 6380
+    volumes:
+      - redis_enterprise_data_2:/data
+    networks:
+      dream_network:
+        ipv4_address: 172.20.0.11
+    depends_on:
+      - redis-enterprise-node1
+
+  redis-enterprise-node3:
+    image: redislabs/redis:latest
+    container_name: dreamnet_redis_enterprise_node3
+    restart: always
+    environment:
+      REDIS_CLUSTER_ENABLED: "yes"
+      REDIS_CLUSTER_CONFIG_FILE: /data/nodes.conf
+      REDIS_CLUSTER_NODE_TIMEOUT: "15000"
+      REDIS_PORT: 6379
+      CLUSTER_ANNOUNCE_IP: 172.20.0.12
+      CLUSTER_ANNOUNCE_PORT: 6379
+      CLUSTER_ANNOUNCE_BUS_PORT: 6380
+    volumes:
+      - redis_enterprise_data_3:/data
+    networks:
+      dream_network:
+        ipv4_address: 172.20.0.12
+    depends_on:
+      - redis-enterprise-node1
+
+  # Cluster initialization (one-time)
+  redis-enterprise-init:
+    image: redislabs/redis:latest
+    container_name: dreamnet_redis_enterprise_init
+    depends_on:
+      - redis-enterprise-node1
+      - redis-enterprise-node2
+      - redis-enterprise-node3
+    networks:
+      - dream_network
+    command: |
+      /bin/sh -c "
+        sleep 5 &&
+        redis-cli -h redis-enterprise-node1 CLUSTER MEET redis-enterprise-node2 6379 &&
+        redis-cli -h redis-enterprise-node1 CLUSTER MEET redis-enterprise-node3 6379 &&
+        sleep 2 &&
+        redis-cli -h redis-enterprise-node1 CLUSTER SLOTS
+      "
+
+  # ---------------------------------------------------------------------------
+  # OPENWEBUI (LLM Chat & Agent Interface)
+  # Unified UI for ChatGPT, Claude, local models, Ollama integration
+  # ─────────────────────────────────────────────────────────────────────────
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: dreamnet_openwebui
+    restart: always
+    ports:
+      - "3001:8080"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      WEBUI_URL: http://localhost:3001
+      ENABLE_OLLAMA: ${ENABLE_OLLAMA:-false}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+    volumes:
+      - openwebui_data:/app/backend/data
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+
+  # Optional: Ollama (local LLM runtime)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: dreamnet_ollama
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - dream_network
+    profiles: ["optional"]  # Run with: docker compose --profile optional up
+
+  # ---------------------------------------------------------------------------
+  # TAILSCALE VPN (Secure Agent Mesh Networking)
+  # Encrypted overlay network for 17k agents + infrastructure
+  # ─────────────────────────────────────────────────────────────────────────
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: dreamnet_tailscale
+    restart: always
+    environment:
+      TS_AUTHKEY: ${TAILSCALE_AUTH_KEY}
+      TS_HOSTNAME: dreamnet-master
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_ACCEPT_DNS: "true"
+      TS_ALLOW_INCOMING_CONNECTIONS: "true"
+    volumes:
+      - tailscale_data:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+      - /run/dbus:/run/dbus:ro
+    networks:
+      - dream_network
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+
+  # ---------------------------------------------------------------------------
+  # NEURONTAINER EXTENDED (Advanced Portainer with extensions)
+  # Complements base Portainer with Docker extension management
+  # ─────────────────────────────────────────────────────────────────────────
+  portainer-agent:
+    image: portainer/agent:latest
+    container_name: dreamnet_portainer_agent
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - portainer_agent_data:/data
+    networks:
+      - dream_network
+    ports:
+      - "9001:9001"
+    environment:
+      AGENT_SECRET: ${PORTAINER_AGENT_SECRET:-agent_secret_key}
+
+  # ---------------------------------------------------------------------------
+  # DOCKER EXTENSION GATEWAY (Extension Hub Integration)
+  # Bridges Docker Desktop extensions with core infrastructure
+  # ─────────────────────────────────────────────────────────────────────────
+  docker-extensions-proxy:
+    image: nginx:alpine
+    container_name: dreamnet_extensions_proxy
+    restart: always
+    ports:
+      - "5000:80"
+    volumes:
+      - ./config/nginx/extensions.conf:/etc/nginx/nginx.conf:ro
+      - ./config/nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - dream_network
+    depends_on:
+      - local-manager
+      - temporal-ui
+      - openwebui
+
+  # ---------------------------------------------------------------------------
+  # MONITORING & TELEMETRY BRIDGE
+  # Bridges all subsystems to Temporal, Kafka, Redis streams
+  # ─────────────────────────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: dreamnet_prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - dream_network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    profiles: ["monitoring"]
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: dreamnet_grafana
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_INSTALL_PLUGINS: grafana-clock-panel
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - dream_network
+    profiles: ["monitoring"]
+
+volumes:
+  temporal_postgres_data:
+  redis_enterprise_data_1:
+  redis_enterprise_data_2:
+  redis_enterprise_data_3:
+  openwebui_data:
+  ollama_data:
+  tailscale_data:
+  portainer_agent_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  dream_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

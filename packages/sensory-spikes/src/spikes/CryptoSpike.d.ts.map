@@ -1,0 +1,1 @@
+{"version":3,"file":"CryptoSpike.d.ts","sourceRoot":"","sources":["CryptoSpike.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,YAAY,EAAE,KAAK,WAAW,EAAE,MAAM,aAAa,CAAC;AAElE;;;;GAIG;AACH,qBAAa,WAAY,YAAW,YAAY;IAC5C,IAAI,SAAgB;IACpB,IAAI,EAAE,WAAW,CAAe;IAE1B,KAAK,IAAI,OAAO,CAAC,WAAW,CAAC;CA2BtC;AAED,eAAO,MAAM,WAAW,aAAoB,CAAC"}

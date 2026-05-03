@@ -1,6 +1,8 @@
 import { NERVE_BUS } from '@dreamnet/nerve';
 import { natsService } from '../services/NatsService.js';
+import { memoryCoordinator } from '../services/MemoryCoordinator.js';
 import { type NerveEvent } from '@dreamnet/nerve/types';
+import { storage } from '../storage.js';
 
 export interface FundingTarget {
   amount: number;
@@ -140,8 +142,28 @@ export class WolfPackFundingHunter {
 
     if (results.findings.length > 0) {
       await natsService.publish('dreamnet.agents.wolfpack.hunt_results', results);
+      
+      // Sync findings to the Neural Mesh for other agents to see
+      await memoryCoordinator.syncState('funding_leads:active', results.findings, { persist: true, semantic: true });
+      
       this.log(`🐺 Targets identified: ${results.findings.length}`);
     }
+  }
+
+  /**
+   * Externally ingest a new lead (from a Sensory Spike or Hunter)
+   */
+  public async ingestLead(lead: any) {
+      this.log(`🐺 Ingesting new lead: ${lead.name}`);
+      // Evaluation logic would go here
+      await storage.createFundingLead({
+          name: lead.name,
+          category: lead.category || 'general',
+          amount: lead.amount || 0,
+          status: 'stalking',
+          source: lead.source || 'unknown',
+          metadata: lead
+      });
   }
 
   private log(message: string) {

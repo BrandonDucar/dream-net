@@ -49,5 +49,33 @@ export function createAryaRouter(): Router {
     }
   });
 
+  /**
+   * @route GET /api/arya/stats
+   * @description Get real-time swarm population and maturity metrics.
+   */
+  router.get('/stats', async (_req: Request, res: Response) => {
+    try {
+      const { getDb } = await import('../db.js');
+      const { swarmAgents } = await import('../../shared/schema.js');
+      const { sql } = await import('drizzle-orm');
+      
+      const db = getDb();
+      const stats = await db.select({
+        total: sql`count(*)`,
+        mature: sql`count(*) filter (where ${swarmAgents.licenseLevel} > 0)`,
+        validated: sql`count(*) filter (where ${swarmAgents.licenseLevel} > 0 and ${swarmAgents.maturation}->>'training' is not null)`,
+        leaders: sql`count(*) filter (where ${swarmAgents.licenseLevel} > 1)`
+      }).from(swarmAgents);
+
+      res.status(200).json({
+        success: true,
+        metrics: stats[0]
+      });
+    } catch (error) {
+      console.error('❌ [API] Failed to fetch swarm stats:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+
   return router;
 }

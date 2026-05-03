@@ -1,4 +1,4 @@
-import { FundingLead, EmailDraft, SendQueueItem, WolfPackFundingStatus, GrantApplicationDraft } from "../types";
+import { FundingLead, EmailDraft, SendQueueItem, WolfPackFundingStatus, GrantApplicationDraft, FundingStorageInterface } from "../types";
 
 const leads: Map<string, FundingLead> = new Map();
 const emailDrafts: Map<string, EmailDraft> = new Map();
@@ -6,12 +6,18 @@ const sendQueue: Map<string, SendQueueItem> = new Map();
 const grantDrafts: Map<string, GrantApplicationDraft> = new Map();
 
 let lastRunAt: number | null = null;
+let storage: FundingStorageInterface | null = null;
 
 export const FundingStore = {
+  init(externalStorage: FundingStorageInterface) {
+    storage = externalStorage;
+  },
+
   // Leads
-  upsertLead(lead: FundingLead | Partial<FundingLead> & { id: string; name: string; type: FundingLead["type"] }): FundingLead {
+  async upsertLead(lead: FundingLead | Partial<FundingLead> & { id: string; name: string; type: FundingLead["type"] }): Promise<FundingLead> {
     const now = Date.now();
-    const existing = leads.get(lead.id);
+    const existing = storage ? await storage.getFundingLead(lead.id) : leads.get(lead.id);
+    
     const merged: FundingLead = {
       ...existing,
       ...lead,
@@ -23,88 +29,122 @@ export const FundingStore = {
       createdAt: existing?.createdAt ?? lead.createdAt ?? now,
       updatedAt: now,
     } as FundingLead;
-    leads.set(merged.id, merged);
-    return merged;
+
+    if (storage) {
+      return await storage.upsertFundingLead(merged);
+    } else {
+      leads.set(merged.id, merged);
+      return merged;
+    }
   },
 
-  getLead(id: string): FundingLead | undefined {
+  async getLead(id: string): Promise<FundingLead | undefined> {
+    if (storage) return await storage.getFundingLead(id);
     return leads.get(id);
   },
 
-  listLeads(): FundingLead[] {
+  async listLeads(): Promise<FundingLead[]> {
+    if (storage) return await storage.getFundingLeads();
     return Array.from(leads.values());
   },
 
-  listLeadsByStage(stage: FundingLead["stage"]): FundingLead[] {
-    return Array.from(leads.values()).filter((l) => l.stage === stage);
+  async listLeadsByStage(stage: FundingLead["stage"]): Promise<FundingLead[]> {
+    const all = storage ? await storage.getFundingLeads() : Array.from(leads.values());
+    return all.filter((l) => l.stage === stage);
   },
 
-  removeLead(id: string) {
-    leads.delete(id);
+  async removeLead(id: string) {
+    if (storage) {
+      // Not implemented in StorageInterface yet, but could be added
+      // For now, we don't really remove leads in the DB, just set to 'dead' stage
+      const lead = await storage.getFundingLead(id);
+      if (lead) {
+        lead.stage = "dead";
+        await storage.upsertFundingLead(lead);
+      }
+    } else {
+      leads.delete(id);
+    }
   },
 
   // Email Drafts
-  addEmailDraft(draft: EmailDraft): EmailDraft {
+  async addEmailDraft(draft: EmailDraft): Promise<EmailDraft> {
+    if (storage) return await storage.upsertEmailDraft(draft);
     emailDrafts.set(draft.id, draft);
     return draft;
   },
 
-  getEmailDraft(id: string): EmailDraft | undefined {
+  async getEmailDraft(id: string): Promise<EmailDraft | undefined> {
+    if (storage) return await storage.getEmailDraft(id);
     return emailDrafts.get(id);
   },
 
-  listEmailDrafts(): EmailDraft[] {
+  async listEmailDrafts(): Promise<EmailDraft[]> {
+    if (storage) return await storage.getEmailDrafts();
     return Array.from(emailDrafts.values());
   },
 
-  listDraftsForLead(leadId: string): EmailDraft[] {
-    return Array.from(emailDrafts.values()).filter((d) => d.leadId === leadId);
+  async listDraftsForLead(leadId: string): Promise<EmailDraft[]> {
+    const all = storage ? await storage.getEmailDrafts() : Array.from(emailDrafts.values());
+    return all.filter((d) => d.leadId === leadId);
   },
 
   // Send Queue
-  enqueueSendQueueItem(item: SendQueueItem): SendQueueItem {
+  async enqueueSendQueueItem(item: SendQueueItem): Promise<SendQueueItem> {
+    if (storage) return await storage.upsertEmailQueueItem(item);
     sendQueue.set(item.id, item);
     return item;
   },
 
-  getSendQueueItem(id: string): SendQueueItem | undefined {
+  async getSendQueueItem(id: string): Promise<SendQueueItem | undefined> {
+    if (storage) return await storage.getEmailQueueItem(id);
     return sendQueue.get(id);
   },
 
-  listQueue(): SendQueueItem[] {
+  async listQueue(): Promise<SendQueueItem[]> {
+    if (storage) return await storage.getEmailQueue();
     return Array.from(sendQueue.values());
   },
 
-  listPendingQueueItems(): SendQueueItem[] {
-    return Array.from(sendQueue.values()).filter((item) => item.status === "pending");
+  async listPendingQueueItems(): Promise<SendQueueItem[]> {
+    const all = storage ? await storage.getEmailQueue() : Array.from(sendQueue.values());
+    return all.filter((item) => item.status === "pending");
   },
 
-  updateQueueItemStatus(id: string, status: SendQueueItem["status"], error?: string) {
-    const item = sendQueue.get(id);
-    if (item) {
-      item.status = status;
-      if (error) {
-        item.lastError = error;
+  async updateQueueItemStatus(id: string, status: SendQueueItem["status"], error?: string) {
+    if (storage) {
+      await storage.updateEmailQueueStatus(id, status, error);
+    } else {
+      const item = sendQueue.get(id);
+      if (item) {
+        item.status = status;
+        if (error) {
+          item.lastError = error;
+        }
+        sendQueue.set(id, item);
       }
-      sendQueue.set(id, item);
     }
   },
 
   // Grant Drafts (C)
-  upsertGrantDraft(draft: GrantApplicationDraft): GrantApplicationDraft {
+  async upsertGrantDraft(draft: GrantApplicationDraft): Promise<GrantApplicationDraft> {
+    if (storage) return await storage.upsertGrantApplicationDraft(draft);
     grantDrafts.set(draft.id, draft);
     return draft;
   },
 
-  getGrantDraft(id: string): GrantApplicationDraft | undefined {
+  async getGrantDraft(id: string): Promise<GrantApplicationDraft | undefined> {
+    if (storage) return await storage.getGrantApplicationDraft(id);
     return grantDrafts.get(id);
   },
 
-  listGrantDraftsForLead(leadId: string): GrantApplicationDraft[] {
-    return Array.from(grantDrafts.values()).filter((d) => d.leadId === leadId);
+  async listGrantDraftsForLead(leadId: string): Promise<GrantApplicationDraft[]> {
+    const all = storage ? await storage.getGrantApplicationDrafts() : Array.from(grantDrafts.values());
+    return all.filter((d) => d.leadId === leadId);
   },
 
-  listGrantDrafts(): GrantApplicationDraft[] {
+  async listGrantDrafts(): Promise<GrantApplicationDraft[]> {
+    if (storage) return await storage.getGrantApplicationDrafts();
     return Array.from(grantDrafts.values());
   },
 
@@ -113,20 +153,21 @@ export const FundingStore = {
     lastRunAt = ts;
   },
 
-  getStatus(): WolfPackFundingStatus {
-    const allLeads = Array.from(leads.values());
+  async getStatus(): Promise<WolfPackFundingStatus> {
+    const allLeads = storage ? await storage.getFundingLeads() : Array.from(leads.values());
+    const allQueue = storage ? await storage.getEmailQueue() : Array.from(sendQueue.values());
+    
     const hotLeads = allLeads.filter((l) => l.isHot === true);
-    const pendingQueue = Array.from(sendQueue.values()).filter((item) => item.status === "pending");
+    const pendingQueue = allQueue.filter((item) => item.status === "pending");
 
     return {
       lastRunAt,
-      leadCount: leads.size,
-      queueCount: sendQueue.size,
+      leadCount: allLeads.length,
+      queueCount: allQueue.length,
       pendingCount: pendingQueue.length,
       hotLeadCount: hotLeads.length,
       sampleLeads: allLeads.slice(0, 10),
-      sampleQueue: Array.from(sendQueue.values()).slice(0, 10),
+      sampleQueue: allQueue.slice(0, 10),
     };
   },
 };
-

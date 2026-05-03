@@ -1,1 +1,1 @@
-export * from "./src/clusters.ts";
+export * from "./src/clusters.js";

@@ -15,6 +15,10 @@ import { DexScreenerSuit } from './suits/DexScreenerSuit.js';
 import { CoinGeckoSuit } from './suits/CoinGeckoSuit.js';
 import { BaseSuit } from './suits/BaseSuit.js';
 import { HyperionSuit } from './suits/HyperionSuit.js';
+import { TravelFleetManager } from './suits/TravelFleetManager.js';
+import { WolfPackManager } from './suits/WolfPackManager.js';
+import { OrcaPackSuit } from './suits/OrcaPackSuit.js';
+import { WhalePackSuit } from './suits/WhalePackSuit.js';
 import dotenv from 'dotenv';
 // @ts-ignore - Sister package import
 import { memorySystem } from '@dreamnet/memory-dna';
@@ -144,6 +148,16 @@ async function main() {
     } catch (e) {
         console.error('Failed to wake CoinGeckoSuit', e);
     }
+
+    const travelFleet = new TravelFleetManager();
+    const wolfPack = new WolfPackManager();
+    const orcaPack = new OrcaPackSuit();
+    const whalePack = new WhalePackSuit();
+
+    try { await travelFleet.wake(); } catch (e) { console.error('TravelFleet failed', e); }
+    try { await wolfPack.wake(); } catch (e) { console.error('WolfPack failed', e); }
+    try { await orcaPack.wake(); } catch (e) { console.error('OrcaPack failed', e); }
+    try { await whalePack.wake(); } catch (e) { console.error('WhalePack failed', e); }
 
     const baseSuit = new BaseSuit();
     try {

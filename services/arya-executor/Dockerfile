@@ -4,12 +4,11 @@ RUN apk add --no-cache curl bash
 
 WORKDIR /app
 
-COPY services/arya-executor/package.json .
-RUN npm install
+COPY server.mjs ./
+COPY package.json ./
 
-COPY services/arya-executor/src ./src
-# Env variables injected via docker-compose
+RUN npm install redis
 
 EXPOSE 3204
 
-CMD ["npm", "run", "start"]
+CMD ["node", "server.mjs"]

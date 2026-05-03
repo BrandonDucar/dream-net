@@ -42,10 +42,27 @@ export class NotionAgentClient {
         return response.data;
     }
 
+    async getPage(pageId: string): Promise<any> {
+        const response = await axios.get(
+            `https://api.notion.com/v1/pages/${pageId}`,
+            { headers: this.headers }
+        );
+        return response.data;
+    }
+
     async updatePage(pageId: string, properties: any): Promise<any> {
         const response = await axios.patch(
             `https://api.notion.com/v1/pages/${pageId}`,
             { properties },
+            { headers: this.headers }
+        );
+        return response.data;
+    }
+
+    async appendBlock(blockId: string, children: any[]): Promise<any> {
+        const response = await axios.patch(
+            `https://api.notion.com/v1/blocks/${blockId}/children`,
+            { children },
             { headers: this.headers }
         );
         return response.data;

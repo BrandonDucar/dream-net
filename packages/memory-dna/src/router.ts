@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import { vectorStore } from './store/VectorStore.js';
 
-export const createDnaRouter = () => {
+export const createDnaRouter = (): Router => {
     const router = Router();
 
     router.post('/memories', async (req, res) => {

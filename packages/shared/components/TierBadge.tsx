@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from './ui/badge';
+import { Badge } from './ui/badge.js';
 
 export type Tier = 'LARVA' | 'SWARM' | 'COLONY' | 'HIVE' | 'QUEEN';
 

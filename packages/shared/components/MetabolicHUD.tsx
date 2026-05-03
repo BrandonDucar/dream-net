@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTelemetry } from '../hooks/useTelemetry';
+import { useTelemetry } from '../hooks/useTelemetry.js';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, Zap, Globe } from 'lucide-react';
 

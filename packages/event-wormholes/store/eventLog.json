@@ -13,6 +13,24 @@
         "haloLoop"
       ]
     },
+    "id": "728d6b73-0d9a-472a-a8ab-28bf1be3b5d6",
+    "timestamp": "2026-04-30T00:14:50.865Z",
+    "handled": false
+  },
+  {
+    "sourceType": "system",
+    "eventType": "synapse.connected",
+    "severity": "info",
+    "payload": {
+      "connections": 4,
+      "systems": [
+        "swarm",
+        "governance",
+        "wormholes",
+        "routing",
+        "haloLoop"
+      ]
+    },
     "id": "03bf1ffa-d1fa-4af1-bc98-dde41aacc95d",
     "timestamp": "2026-04-29T03:04:16.940Z",
     "handled": false

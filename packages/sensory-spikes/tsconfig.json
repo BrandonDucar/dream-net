@@ -23,6 +23,7 @@
     "references": [],
     "exclude": [
         "node_modules",
-        "dist"
+        "dist",
+        "src/worker.ts"
     ]
 }

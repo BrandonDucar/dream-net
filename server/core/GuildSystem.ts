@@ -1,7 +1,7 @@
 import { NERVE_BUS } from '@dreamnet/nerve';
 import { natsService } from '../services/NatsService.js';
 
-export type GuildId = 'piclaw' | 'pyclaw' | 'axo' | 'edge' | 'ghost' | 'flash';
+export type GuildId = 'piclaw' | 'pyclaw' | 'axo' | 'edge' | 'ghost' | 'flash' | 'quantum' | 'aegis' | 'archimedes' | 'wolf' | 'whale' | 'orca' | 'spider' | 'fly';
 
 export interface GuildTask {
   id: string;

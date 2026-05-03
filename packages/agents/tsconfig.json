@@ -12,6 +12,10 @@
         "types": [
             "node"
         ],
+        "baseUrl": ".",
+        "paths": {
+            "@dreamnet/lib": ["../lib/dist/index.js"]
+        },
         "skipLibCheck": true
     },
     "include": [
@@ -20,6 +24,9 @@
     "references": [
         {
             "path": "../construction-core"
+        },
+        {
+            "path": "../lib"
         }
     ],
     "exclude": [

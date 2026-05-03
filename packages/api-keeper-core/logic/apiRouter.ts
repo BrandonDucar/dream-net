@@ -101,7 +101,7 @@ function scoreProvider(
     estimatedCost = provider.pricing.payPerUse.pricePerRequest;
     score += (1 - estimatedCost * 100) * 20; // Up to 20 points for low cost
     reasons.push(`Cost: $${estimatedCost.toFixed(4)}/request`);
-  } else if (provider.pricing.paidTiers.length > 0) {
+  } else if (provider.pricing.paidTiers && provider.pricing.paidTiers.length > 0) {
     const tier = provider.pricing.paidTiers[0];
     if (tier.pricePerRequest) {
       estimatedCost = tier.pricePerRequest;

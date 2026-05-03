@@ -28,9 +28,14 @@ async function main() {
     { id: 'edge', name: 'Edge', charter: 'Low-latency Webhook & IFTTT Bridging' },
     { id: 'ghost', name: 'Ghost', charter: 'Privacy, Security & Stealth Ops' },
     { id: 'flash', name: 'Flash', charter: 'High-Speed Micro-Transactions & Mini-Apps' },
+    { id: 'quantum', name: 'Quantum', charter: 'Predictive Anticipation & Block Emergence' },
+    { id: 'aegis', name: 'Aegis', charter: 'Defensive Shielding & Cybersecurity Ops' },
+    { id: 'archimedes', name: 'Archimedes', charter: 'Mathematical Precision & Protocol Engineering' },
+    { id: 'wolf', name: 'Wolf', charter: 'Aggressive Funding & Grant Acquisition' },
     { id: 'whale', name: 'Whale', charter: 'Market Sentiment & Large Wallet Tracking' },
-    { id: 'trading', name: 'Trading', charter: 'DeFi Execution & Arbitrage' },
-    { id: 'seo', name: 'SEO', charter: 'Viral Growth & Neural Marketing' },
+    { id: 'orca', name: 'Orca', charter: 'Communication & Narrative Distribution' },
+    { id: 'spider', name: 'Spider', charter: 'Global Network Mapping & Traversal' },
+    { id: 'fly', name: 'Fly', charter: 'Micro-Payload Delivery & Fast Recon' },
   ];
 
   for (const g of guildConfigs) {

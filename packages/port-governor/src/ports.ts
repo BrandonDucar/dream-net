@@ -3,7 +3,7 @@
  * Charged ports for Env Keeper, API Keeper, and Vercel Agent
  */
 
-import type { PortProfile } from "./types";
+import type { PortProfile } from "./types.js";
 
 export const PORT_PROFILES: Record<string, PortProfile> = {
   ENVKEEPER_PORT: {
@@ -50,6 +50,78 @@ export const PORT_PROFILES: Record<string, PortProfile> = {
     priorityLane: 5,
     defaultSampleRate: 1.0,
     clusterId: "DEPLOYKEEPER_CORE",
+  },
+  // 🚀 NEW: External Collaboration Ports
+  NOTION_PORT: {
+    id: "NOTION_PORT",
+    name: "Notion Integration Port",
+    description: "Governed port for Notion workspace access",
+    direction: "egress",
+    allowedTiers: ["OPERATOR", "GOD_MODE"],
+    limits: {
+      maxRequestsPerMinute: 10,
+      maxRequestsPerHour: 100,
+    },
+    priorityLane: 4,
+    defaultSampleRate: 1.0,
+    clusterId: "EXTERNAL_INTEGRATION",
+  },
+  SLACK_PORT: {
+    id: "SLACK_PORT",
+    name: "Slack Comms Port",
+    description: "Governed port for Slack messaging and status updates",
+    direction: "egress",
+    allowedTiers: ["OPERATOR", "GOD_MODE"],
+    limits: {
+      maxRequestsPerMinute: 20,
+      maxRequestsPerHour: 500,
+    },
+    priorityLane: 4,
+    defaultSampleRate: 1.0,
+    clusterId: "EXTERNAL_INTEGRATION",
+  },
+  LINEAR_PORT: {
+    id: "LINEAR_PORT",
+    name: "Linear Task Port",
+    description: "Governed port for Linear issue tracking and project management",
+    direction: "egress",
+    allowedTiers: ["OPERATOR", "GOD_MODE"],
+    limits: {
+      maxRequestsPerMinute: 30,
+      maxRequestsPerHour: 1000,
+    },
+    priorityLane: 4,
+    defaultSampleRate: 1.0,
+    clusterId: "EXTERNAL_INTEGRATION",
+  },
+  NEON_DATABASE_PORT: {
+    id: "NEON_DATABASE_PORT",
+    name: "Neon Database Port",
+    description: "Governed port for high-fidelity Neon database operations",
+    direction: "egress",
+    allowedTiers: ["OPERATOR", "GOD_MODE"],
+    limits: {
+      maxRequestsPerMinute: 200,
+      maxRequestsPerHour: 10000,
+    },
+    priorityLane: 5,
+    defaultSampleRate: 1.0,
+    clusterId: "DATABASE_CORE",
+  },
+  SWARM_RESEARCH_PORT: {
+    id: "SWARM_RESEARCH_PORT",
+    name: "17k Swarm Research Port",
+    description: "High-concurrency port for autonomous research task forces",
+    direction: "egress",
+    allowedTiers: ["OPERATOR", "GOD_MODE"],
+    limits: {
+      maxRequestsPerMinute: 1000,
+      maxRequestsPerHour: 50000,
+      maxConcurrentRequests: 500,
+    },
+    priorityLane: 3,
+    defaultSampleRate: 0.1,
+    clusterId: "SWARM_INTELLIGENCE",
   },
   AGENT_GATEWAY: {
     id: "AGENT_GATEWAY",

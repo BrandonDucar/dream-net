@@ -1,0 +1,149 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'dreamnet-master'
+    cluster: 'dream-net'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  # ─────────────────────────────────────────────────────────────────────────
+  # PROMETHEUS SELF-MONITORING
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # DOCKER DAEMON METRICS
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['unix:///var/run/docker.sock']
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # REDIS ENTERPRISE CLUSTER
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'redis-enterprise'
+    scrape_interval: 10s
+    static_configs:
+      - targets: 
+          - 'redis-enterprise-node1:6379'
+          - 'redis-enterprise-node2:6379'
+          - 'redis-enterprise-node3:6379'
+        labels:
+          cluster: 'redis-enterprise'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # NATS JETSTREAM
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'nats'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['nats:8222']
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # KAFKA BROKER
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'kafka'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['kafka:9308']
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # TEMPORAL SERVER
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'temporal'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['temporal-server:7233']
+        labels:
+          service: 'temporal-server'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # DREAMNET CONTROL-CORE
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'control-core'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['control-core:3000']
+        labels:
+          service: 'control-core'
+          role: 'brain'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # SIGNAL SCREENER (Data Hub)
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'signal-screener'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['signal-screener:3203']
+        labels:
+          service: 'signal-screener'
+          role: 'hawk'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # ARYA EXECUTOR (Social Game)
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'arya-executor'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['arya-executor:3204']
+        labels:
+          service: 'arya-executor'
+          role: 'executioner'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # AGENT SPAWN (Citizen Factory)
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'agent-spawn'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['agent-spawn:3200']
+        labels:
+          service: 'agent-spawn'
+          population: 'quantum-family'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # AGENT HEALTH (Swarm Monitor)
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'agent-health'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['agent-health:3201']
+        labels:
+          service: 'agent-health'
+          population: 'quantum-family'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # OPENWEBUI
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'openwebui'
+    scrape_interval: 20s
+    static_configs:
+      - targets: ['openwebui:8080']
+        labels:
+          service: 'openwebui'
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # NODE EXPORTER (System Metrics) - if deployed
+  # ─────────────────────────────────────────────────────────────────────────
+  - job_name: 'node'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9100']
+
+# ─────────────────────────────────────────────────────────────────────────
+# SERVICE DISCOVERY HOOK (Auto-add new services)
+# If using Consul/Eureka for service discovery, add here
+# ─────────────────────────────────────────────────────────────────────────
+# consul_sd_configs:
+#   - server: 'consul:8500'

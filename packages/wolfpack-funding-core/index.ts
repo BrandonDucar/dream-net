@@ -16,30 +16,30 @@ export const WolfPackFundingCore = {
   // Leads
   // TODO (Phase 4): Add identityId parameter for ownership/permissions
   // Example: upsertLead(partial, identityId?: string)
-  upsertLead(partial: Partial<FundingLead> & { id: string; name: string; type: LeadType }): FundingLead {
+  async upsertLead(partial: Partial<FundingLead> & { id: string; name: string; type: LeadType }): Promise<FundingLead> {
     // TODO: When identityId is provided, validate agent ownership via IdentityGrid
     // import { identityControlsAgent } from "@shared/identity";
     // if (identityId && !identityControlsAgent(identityId, "agent:WolfPackFunding")) {
     //   throw new Error("Identity does not control WolfPackFunding agent");
     // }
-    return FundingStore.upsertLead(partial);
+    return await FundingStore.upsertLead(partial);
   },
 
-  listLeads(): FundingLead[] {
-    return FundingStore.listLeads();
+  async listLeads(): Promise<FundingLead[]> {
+    return await FundingStore.listLeads();
   },
 
-  getLead(id: string): FundingLead | undefined {
-    return FundingStore.getLead(id);
+  async getLead(id: string): Promise<FundingLead | undefined> {
+    return await FundingStore.getLead(id);
   },
 
   // Send Queue
-  listQueue(): SendQueueItem[] {
-    return FundingStore.listQueue();
+  async listQueue(): Promise<SendQueueItem[]> {
+    return await FundingStore.listQueue();
   },
 
-  updateQueueItemStatus(id: string, status: "pending" | "sent" | "failed", error?: string) {
-    FundingStore.updateQueueItemStatus(id, status, error);
+  async updateQueueItemStatus(id: string, status: "pending" | "sent" | "failed", error?: string) {
+    await FundingStore.updateQueueItemStatus(id, status, error);
   },
 
   // Email Drafts
@@ -73,25 +73,30 @@ export const WolfPackFundingCore = {
   },
 
   // Grant Drafts (C)
-  listGrantDrafts() {
-    return FundingStore.listGrantDrafts();
+  async listGrantDrafts() {
+    return await FundingStore.listGrantDrafts();
   },
 
-  listGrantDraftsForLead(leadId: string) {
-    return FundingStore.listGrantDraftsForLead(leadId);
+  async listGrantDraftsForLead(leadId: string) {
+    return await FundingStore.listGrantDraftsForLead(leadId);
   },
 
-  getGrantDraft(id: string) {
-    return FundingStore.getGrantDraft(id);
+  async getGrantDraft(id: string) {
+    return await FundingStore.getGrantDraft(id);
   },
 
   // Orchestration
-  run(context: WolfPackFundingContext): WolfPackFundingStatus {
-    return runWolfPackFundingCycle(context);
+  async run(context: WolfPackFundingContext): Promise<WolfPackFundingStatus> {
+    return await runWolfPackFundingCycle(context);
   },
 
-  status(): WolfPackFundingStatus {
-    return FundingStore.getStatus();
+  async status(): Promise<WolfPackFundingStatus> {
+    return await FundingStore.getStatus();
+  },
+
+  // Initialization
+  async init(storage?: FundingStorageInterface): Promise<void> {
+    await FundingStore.init(storage);
   },
 };
 

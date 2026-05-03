@@ -1,0 +1,12 @@
+name = "arya-generator"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+account_id = "7443bdb9dce80e4aec07a70fa5273e5c"
+workers_dev = true
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "roast-context"

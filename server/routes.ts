@@ -4,7 +4,10 @@ import { createServer, type Server } from "http";
 console.log("[Routes] Importing storage...");
 import { storage } from "./storage";
 console.log("[Routes] Importing schema...");
-import { insertDreamSchema, insertCocoonSchema, insertDreamCoreSchema, insertWalletSchema, type ContributorRole, contributorsLog, notifications, type CocoonLog } from "@shared/schema";
+import { insertDreamSchema, insertCocoonSchema, insertDreamCoreSchema, insertWalletSchema, type ContributorRole, contributorsLog, notifications, type CocoonLog, fundingLeads, emailQueue, emailDrafts, grantApplicationDrafts, libraries, type FundingLeadRecord, type EmailQueueRecord, type EmailDraftRecord, type GrantApplicationDraftRecord, type LibraryRecord, type InsertLibrary } from "@shared/schema";
+import { WolfPackFundingCore } from "../packages/wolfpack-funding-core/index.js";
+import { WolfPackMailerCore } from "../packages/wolfpack-mailer-core/index.js";
+import { librarianAgent } from "./agents/LibrarianAgent";
 console.log("[Routes] Importing auth...");
 import { requireAdmin as oldRequireAdmin, isAdminWallet } from "./auth";
 import { 
@@ -116,8 +119,10 @@ import registerAgentsRouter from './routes/register-agents';
 import awsRouter from './routes/aws';
 import googleCloudRouter from './routes/google-cloud';
 import onboardingRouter from './routes/onboarding';
+import missionControlRouter from './routes/mission-control';
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.use('/api/mission-control', missionControlRouter);
   console.log("[Routes] registerRoutes started");
   // SIWE Auth routes
   app.post("/api/auth/nonce", async (req, res) => {
@@ -190,6 +195,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const isAdmin = isAdminWallet(walletAddress);
       res.json({ isAdmin, walletAddress });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // WolfPack & Librarian Routes
+  app.get("/api/wolfpack/status", async (_req, res) => {
+    try {
+      res.json({
+        fundingCore: "active",
+        mailerCore: "active",
+        hunter: "active"
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/wolfpack/mailer/queue", requireAdmin, async (_req, res) => {
+    try {
+      const queue = await storage.getEmailQueue();
+      res.json(queue);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/wolfpack/mailer/process", requireAdmin, async (_req, res) => {
+    try {
+      await WolfPackMailerCore.processSendQueueOnce();
+      res.json({ success: true, message: "Mailer queue process triggered" });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/libraries", async (_req, res) => {
+    try {
+      const libs = await storage.getLibraries();
+      res.json(libs);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/libraries/scan", requireAdmin, async (_req, res) => {
+    try {
+      await librarianAgent.scanLibraries();
+      res.json({ success: true, message: "Library scan triggered" });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

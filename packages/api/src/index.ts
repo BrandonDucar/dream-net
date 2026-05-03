@@ -15,6 +15,7 @@ import { receiptGuard } from './services/ReceiptGuardService';
 import { zoraToken } from './services/ZoraTokenService';
 import { agentReputation } from './services/AgentReputationService';
 import { optioBridge } from './services/OptioBridgeService';
+import { taskDelegator } from './services/TaskDelegatorService';
 import feedRouter from './routes/feed';
 import Redis from 'ioredis';
 import dotenv from 'dotenv';

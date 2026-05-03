@@ -13,7 +13,14 @@
     },
     "dependencies": {
         "axios": "^1.13.2",
-        "ws": "^8.18.3"
+        "ioredis": "^5.10.1",
+        "nats": "^2.29.3",
+        "ws": "^8.18.3",
+        "@dreamnet/nerve": "workspace:*",
+        "@dreamnet/platform-connector": "workspace:*",
+        "@dreamnet/memory-dna": "workspace:*",
+        "@dreamnet/agent-wallet-manager": "workspace:*",
+        "@dreamnet/snapchain-connector": "workspace:*"
     },
     "devDependencies": {
         "@types/node": "^20.0.0",

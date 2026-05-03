@@ -1,2 +1,2 @@
-export * from './pheromone';
-export * from './api';
+export * from './pheromone.js';
+export * from './api.js';

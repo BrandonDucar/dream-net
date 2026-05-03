@@ -1,7 +1,31 @@
-**/node_modules
-**/dist
-.git
-.github
-.env*
-!packages/**/package.json
-!packages/**/dist
+# Ignore everything
+**
+
+# Allow essential root files
+!package.json
+!pnpm-workspace.yaml
+!pnpm-lock.yaml
+!.dockerignore
+
+# Allow platform-connector package (essential for arya-executor)
+!packages/platform-connector/package.json
+!packages/platform-connector/src/**
+
+# Allow other workspace packages (just in case they are dependencies)
+!packages/*/package.json
+!packages/*/src/**
+
+# Allow arya-executor service
+!services/arya-executor/package.json
+!services/arya-executor/src/**
+
+# Ignore common bloat even if in allowed folders
+**/node_modules/**
+**/dist/**
+**/.git/**
+**/.next/**
+**/*.log
+**/*.jpg
+**/*.png
+**/*.zip
+**/*.md

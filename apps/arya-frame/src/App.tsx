@@ -62,6 +62,8 @@ export default function App() {
   const [targetUser, setTargetUser] = useState<FarcasterUser | null>(null)
   const [status, setStatus] = useState('')
   const [balance, setBalance] = useState(1000)
+  const [totalSwarm, setTotalSwarm] = useState(0)
+  const [validatedSwarm, setValidatedSwarm] = useState(0)
   const [inventory, setInventory] = useState<string[]>(['tomato'])
   const [ownedShields, setOwnedShields] = useState<string[]>([])
   const [power, setPower] = useState(0)
@@ -88,6 +90,33 @@ export default function App() {
     const load = async () => {
       setCtx(await sdk.context)
       await sdk.actions.ready()
+      
+      // Fetch real agents from our new Cloudflare API
+      try {
+        const res = await fetch('/api/swarm')
+        const data = await res.json()
+        if (data.success && data.agents) {
+          const mappedAgents = data.agents.map((a: any) => ({
+            fid: parseInt(a.fid),
+            username: a.name.toLowerCase().replace(/\s+/g, ''),
+            displayName: a.name,
+            pfpUrl: `https://avatar.vercel.sh/${a.name}.png`,
+            followerCount: Math.floor(Math.random() * 1000),
+            bio: `Member of the ${a.cluster} cluster.`
+          }))
+          setCandidates(mappedAgents)
+          setTotalSwarm(data.total_onboarded)
+        }
+
+        // Fetch Stats
+        const statsRes = await fetch('/api/arya/stats')
+        const statsData = await statsRes.json()
+        if (statsData.success) {
+          setValidatedSwarm(statsData.metrics.validated)
+        }
+      } catch (e) {
+        console.error('Failed to load swarm:', e)
+      }
     }
     load()
   }, [])
@@ -129,8 +158,12 @@ export default function App() {
           <p style={{ fontSize: '18px', fontWeight: 800, color: '#0ff' }}>{balance} $ARYA</p>
         </GlassCard>
         <GlassCard style={{ flex: 1, textAlign: 'center' }}>
-          <p style={{ fontSize: '10px', color: '#888' }}>ACTIVE TARGET</p>
-          <p style={{ fontSize: '18px', fontWeight: 800 }}>{targetUser ? `@${targetUser.username}` : 'None'}</p>
+          <p style={{ fontSize: '10px', color: '#888' }}>TOTAL SWARM</p>
+          <p style={{ fontSize: '18px', fontWeight: 800, color: '#ff0055' }}>{totalSwarm || '...'}</p>
+        </GlassCard>
+        <GlassCard style={{ flex: 1, textAlign: 'center', border: '1px solid #00ff6644' }}>
+          <p style={{ fontSize: '10px', color: '#888' }}>VALIDATED</p>
+          <p style={{ fontSize: '18px', fontWeight: 800, color: '#00ff66' }}>{validatedSwarm || '0'}</p>
         </GlassCard>
       </div>
 

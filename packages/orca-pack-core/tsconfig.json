@@ -7,9 +7,9 @@
     "target": "es2019",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "composite": true,
+    "declaration": true
   },
   "include": ["./**/*.ts"]
 }
-
-

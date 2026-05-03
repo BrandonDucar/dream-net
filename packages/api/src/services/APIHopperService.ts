@@ -309,7 +309,7 @@ export class APIHopperService {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: 'gemma2:27b',
+            model: 'gemma2:9b',
             prompt: `${sys}\n\n${msg}`,
             stream: false,
           }),

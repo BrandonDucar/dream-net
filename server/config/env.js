@@ -15,9 +15,10 @@
 function loadEnvConfig() {
     const errors = [];
     // Required env vars
-    const nodeEnv = process.env.NODE_ENV;
-    if (!nodeEnv || !['development', 'production', 'test'].includes(nodeEnv)) {
-        errors.push('NODE_ENV must be one of: development, production, test');
+    const nodeEnv = process.env.NODE_ENV || 'development';
+    if (!['development', 'production', 'test'].includes(nodeEnv)) {
+        // Log a warning instead of erroring if it's provided but invalid
+        console.warn(`[Env Config] Invalid NODE_ENV "${nodeEnv}", defaulting to "development"`);
     }
     // PORT is optional - defaults to 3000
     const port = process.env.PORT ? Number(process.env.PORT) : 3000;

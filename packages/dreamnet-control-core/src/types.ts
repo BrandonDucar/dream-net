@@ -1,8 +1,5 @@
-
 import type { Request } from "express";
-import type { CallerIdentity, DreamPassport, TierId, ClusterId as SharedClusterId } from "@dreamnet/types";
-
-export type ClusterId = SharedClusterId;
+import type { TierId, ClusterId, CallerIdentity, DreamPassport } from "@dreamnet/types";
 
 export interface RequestWithIdentity extends Request {
     traceId?: string;

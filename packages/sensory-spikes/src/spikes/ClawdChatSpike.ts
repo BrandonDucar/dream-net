@@ -1,5 +1,5 @@
 import { type SensorySpike, type SpikeResult } from '../index-brandond.js';
-import { natsService } from '../../../../server/services/NatsService.js';
+import { natsService } from '../services/NatsService.js';
 import { connect, type KV } from 'nats';
 
 /**

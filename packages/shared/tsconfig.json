@@ -14,10 +14,13 @@
         "composite": true,
         "declaration": true,
         "outDir": "./dist",
-        "rootDir": "."
+        "rootDir": ".",
+        "jsx": "react-jsx",
+        "types": ["node"]
     },
     "include": [
-        "**/*.ts"
+        "**/*.ts",
+        "**/*.tsx"
     ],
     "exclude": [
         "node_modules",

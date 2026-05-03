@@ -10,7 +10,8 @@
  */
 
 import { randomUUID } from "node:crypto";
-import { DreamEventBus } from "./spine/index.js";
+import { NerveBus } from "./bus.js";
+import { createNerveEvent } from "./factory.js";
 
 export interface GanglionContext {
     miniAppId: string;
@@ -25,10 +26,10 @@ export interface SensoryImpulse {
 }
 
 export class CephalopodGanglion {
-    private bus: DreamEventBus;
+    private bus: NerveBus;
     private context: GanglionContext;
 
-    constructor(bus: DreamEventBus, context: GanglionContext) {
+    constructor(bus: NerveBus, context: GanglionContext) {
         this.bus = bus;
         this.context = context;
     }
@@ -41,27 +42,37 @@ export class CephalopodGanglion {
         console.log(`🐙 [Ganglion:${this.context.miniAppId}] Processing impulse: ${impulse.type}`);
 
         // 1. Local Reflex (Immediate Emission)
-        await this.bus.emit(`ganglion:${this.context.miniAppId}:${impulse.type}`, {
-            ...impulse.payload,
-            _ganglion: {
-                id: randomUUID(),
-                arm: this.context.armDescriptor,
-                timestamp: Date.now()
+        this.bus.publish(createNerveEvent({
+            channelId: "GENERIC",
+            kind: `ganglion:${this.context.miniAppId}:${impulse.type}`,
+            priority: impulse.priority === "high" ? 4 : 2,
+            payload: {
+                ...impulse.payload,
+                _ganglion: {
+                    id: randomUUID(),
+                    arm: this.context.armDescriptor,
+                    timestamp: Date.now()
+                }
             }
-        });
+        }));
 
         // 2. Central Shadowing (Only for high priority)
         if (impulse.priority === "high") {
             console.log(`🐙 [Ganglion] Shadowing high-priority impulse to central brain.`);
-            await this.bus.emit('brain:sensory_bypass', {
-                source: this.context.miniAppId,
-                type: impulse.type,
-                data: impulse.payload
-            });
+            this.bus.publish(createNerveEvent({
+                channelId: "INTEGRATION_EVENT",
+                kind: 'brain:sensory_bypass',
+                priority: 5,
+                payload: {
+                    source: this.context.miniAppId,
+                    type: impulse.type,
+                    data: impulse.payload
+                }
+            }));
         }
     }
 }
 
-export const createGanglion = (bus: DreamEventBus, context: GanglionContext) => {
+export const createGanglion = (bus: NerveBus, context: GanglionContext) => {
     return new CephalopodGanglion(bus, context);
 };

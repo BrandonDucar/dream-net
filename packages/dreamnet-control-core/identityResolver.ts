@@ -1,1 +1,1 @@
-export * from "./src/identityResolver.ts";
+export * from "./src/identityResolver.js";

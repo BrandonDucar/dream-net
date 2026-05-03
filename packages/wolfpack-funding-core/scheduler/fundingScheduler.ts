@@ -12,9 +12,9 @@ import { ensureGrantDraftsForLeads } from "../logic/grantDraftEngine";
  * - Enqueue send queue items
  * - Write to NarrativeField
  */
-export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFundingStatus {
+export async function runWolfPackFundingCycle(ctx: WolfPackFundingContext): Promise<WolfPackFundingStatus> {
   const now = Date.now();
-  const allLeads = FundingStore.listLeads();
+  const allLeads = await FundingStore.listLeads();
 
   // Default sender info (can be configured later)
   const fromName = "DreamNet Team";
@@ -25,7 +25,7 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
   const forceTest = process.env.WOLF_FUNDING_FORCE_TEST === "true";
 
   // Ensure grant drafts for relevant leads (C)
-  ensureGrantDraftsForLeads(allLeads);
+  await ensureGrantDraftsForLeads(allLeads);
 
   // Sort leads by hot priority (A)
   const sortedLeads = allLeads.slice().sort((a, b) => {
@@ -63,7 +63,7 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
         console.log("[WolfPackFundingCore] Test override: forcing email queue for lead", updatedLead.id);
       }
       // Check if there's no existing SendQueueItem for this lead in pending status
-      const existingQueue = FundingStore.listQueue();
+      const existingQueue = await FundingStore.listQueue();
       const hasPendingEmail = existingQueue.some(
         (item) => item.leadId === updatedLead.id && item.status === "pending"
       );
@@ -72,7 +72,7 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
         // Create an EmailDraft
         const draft = generateEmailDraftForLead(updatedLead, opts);
         if (draft) {
-          FundingStore.addEmailDraft(draft);
+          await FundingStore.addEmailDraft(draft);
 
           // Enqueue a SendQueueItem with status "pending"
           const queueItem: SendQueueItem = {
@@ -84,7 +84,7 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
             createdAt: now,
             status: "pending",
           };
-          FundingStore.enqueueSendQueueItem(queueItem);
+          await FundingStore.enqueueSendQueueItem(queueItem);
 
           // Write entry to NarrativeField
           if (ctx.narrativeField?.add) {
@@ -110,7 +110,7 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
   }
 
   // Handle follow-ups (B)
-  const existingQueue = FundingStore.listQueue();
+  const existingQueue = await FundingStore.listQueue();
   const hasPendingQueueForLead = (leadId: string) => {
     return existingQueue.some(
       (item) => item.leadId === leadId && item.status === "pending"
@@ -132,7 +132,7 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
     const draft = generateFollowUpDraftForLead(lead, opts);
     if (!draft) continue;
 
-    FundingStore.addEmailDraft(draft);
+    await FundingStore.addEmailDraft(draft);
 
     const queueItem: SendQueueItem = {
       id: `queue:${lead.id}:${Date.now()}`,
@@ -144,11 +144,11 @@ export function runWolfPackFundingCycle(ctx: WolfPackFundingContext): WolfPackFu
       status: "pending",
     };
 
-    FundingStore.enqueueSendQueueItem(queueItem);
+    await FundingStore.enqueueSendQueueItem(queueItem);
   }
 
   // Push summary to NeuralMesh
-  const status = FundingStore.getStatus();
+  const status = await FundingStore.getStatus();
   if (ctx.neuralMesh?.remember) {
     ctx.neuralMesh.remember({
       source: "WolfPackFundingCore",

@@ -177,7 +177,6 @@ export const SurgeonAgent = {
       timestamp: new Date().toISOString(),
       resolved: false,
       fixApplied: undefined,
-      priority: event.metadata?.emotions?.includes('chaos') ? 'high' : 'normal',
       severity,
     };
     

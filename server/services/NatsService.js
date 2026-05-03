@@ -41,7 +41,8 @@ export class NatsService {
         const streams = [
             { name: 'NERVE_EVENTS', subjects: ['dreamnet.nerve.>'] },
             { name: 'SYSTEM_METRICS', subjects: ['dreamnet.metrics.>'] },
-            { name: 'AGENT_LOGS', subjects: ['dreamnet.agents.>'] }
+            { name: 'AGENT_LOGS', subjects: ['dreamnet.agents.>'] },
+            { name: 'MEMORY_SYNC', subjects: ['dreamnet.memory.>'] }
         ];
         for (const stream of streams) {
             try {
@@ -78,6 +79,21 @@ export class NatsService {
         if (!this.connection)
             return;
         this.connection.publish(subject, jc.encode(data));
+    }
+    /**
+     * Subscribe to a NATS subject
+     */
+    async subscribe(subject, callback) {
+        if (!this.connection) {
+            console.warn(`⚠️ [NATS] Cannot subscribe to ${subject}: Not connected`);
+            return;
+        }
+        const sub = this.connection.subscribe(subject);
+        (async () => {
+            for await (const m of sub) {
+                callback(jc.decode(m.data));
+            }
+        })();
     }
     /**
      * Shutdown NATS connection

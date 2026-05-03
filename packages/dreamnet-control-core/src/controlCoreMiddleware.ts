@@ -52,7 +52,7 @@ import type { RequestWithIdentity, CallerIdentity } from "./identityResolver";
 import { checkAndConsume } from "./rateLimiter";
 import { emitControlCoreEvent, type ControlDecision } from "./eventFabric";
 import { evaluatePolicy, type PolicyContext } from "./policyEngine";
-import type { OfficeId, CabinetId } from "../../dream-state-core/types";
+import type { OfficeId, CabinetId } from "../../dreamstate/src/types.js";
 import { NERVE_BUS } from "../../nerve/src/bus.js";
 import { createRequestDecisionEvent, createShieldEvent } from "../../nerve/src/factory.js";
 

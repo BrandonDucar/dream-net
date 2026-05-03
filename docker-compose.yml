@@ -1,28 +1,7 @@
-version: '3.8'
-
-# ─────────────────────────────────────────────────────────────────────────────
-# IMAGE STRATEGY
-#
-# Third-party images (redis, portainer, woolyai) → Docker Hub (free, cached)
-# Custom dream-net images                         → GHCR (ghcr.io/brandonducar/dream-net/*)
-#
-# To rebuild and push a service:
-#   gh workflow run ghcr-publish.yml -f service=<name>
-#
-# To pull latest images locally (instead of building):
-#   docker compose pull
-#
-# To force local build instead of pulling GHCR (dev mode):
-#   docker compose build <service>
-# ─────────────────────────────────────────────────────────────────────────────
-
-x-ghcr: &ghcr ghcr.io/${GITHUB_OWNER:-brandonducar}/dream-net
+# DreamNet Docker Compose: 17,000+ Autonomous Agent Swarm
 
 services:
-  # ---------------------------------------------------------------------------
-  # THE NERVOUS SYSTEM (Redis / Nerve)
-  # Third-party — stays on Docker Hub, no need to store in GHCR
-  # ---------------------------------------------------------------------------
+  # Core Infrastructure
   nerve:
     image: redis:alpine
     container_name: dreamnet_nerve
@@ -34,10 +13,6 @@ services:
     networks:
       - dream_network
 
-  # ---------------------------------------------------------------------------
-  # THE EVENT BUS (NATS / JetStream)
-  # High-performance distributed messaging with persistence
-  # ---------------------------------------------------------------------------
   nats:
     image: nats:latest
     container_name: dreamnet_nats
@@ -51,37 +26,61 @@ services:
     networks:
       - dream_network
 
-  # ---------------------------------------------------------------------------
-  # THE BRAIN (Control Core)
-  # Pulled from GHCR. Build + push via: gh workflow run ghcr-publish.yml -f service=control-core
-  # ---------------------------------------------------------------------------
-  control-core:
-    image: dreamnet/control-core:local
-    container_name: dreamnet_control_core
-    restart: on-failure
-    env_file:
-      - .env.local
-    labels:
-      - "dreamnet.role=sacred"
-      - "dreamnet.protection=max"
-    depends_on:
-      - nerve
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: dreamnet_zookeeper
     environment:
-      - NODE_ENV=production
-      - REDIS_URL=redis://nerve:6379
-      - GITHUB_TOKEN=${GITHUB_TOKEN}
-      - PRIVATE_KEY=${PRIVATE_KEY}
-      - HOT_SENDER_PK=${HOT_SENDER_PK}
-    volumes:
-      - passports_data:/root/.dreamnet/passports
+      ZOOKEEPER_CLIENT_PORT: 2181
     networks:
       - dream_network
 
-  # ---------------------------------------------------------------------------
-  # THE NEURAL INTERFACE (Portainer)
-  # Third-party — stays on Docker Hub
-  # ---------------------------------------------------------------------------
-  local-manager:
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: dreamnet_kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - dream_network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: dreamnet_kafka_ui
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: dreamnet
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      - kafka
+    networks:
+      - dream_network
+
+  kafka-rest:
+    image: confluentinc/cp-kafka-rest:7.5.0
+    container_name: dreamnet_kafka_rest
+    ports:
+      - "8082:8082"
+    environment:
+      KAFKA_REST_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+      KAFKA_REST_HOST_NAME: kafka-rest
+    depends_on:
+      - kafka
+    networks:
+      - dream_network
+
+  # Portainer
+  portainer:
     image: portainer/portainer-ce:latest
     container_name: dreamnet_neurontainer_ui
     restart: always
@@ -93,38 +92,47 @@ services:
     networks:
       - dream_network
 
-  # ---------------------------------------------------------------------------
-  # GOOSECLAW — Goose AI Agent + OpenClaw bridge
-  # Pulled from GHCR. gh workflow run ghcr-publish.yml -f service=gooseclaw
-  # ---------------------------------------------------------------------------
-  gooseclaw:
-    image: ghcr.io/brandonducar/dream-net/gooseclaw:latest
-    container_name: dreamnet_gooseclaw
+  # MCP Bridges
+  openclaw:
+    image: dreamnet/openclaw:local
+    build:
+      context: .
+      dockerfile: packages/mcp-gateway/Dockerfile
+    container_name: dreamnet_openclaw
     restart: unless-stopped
-    stdin_open: true
-    tty: true
+    ports:
+      - "18789:18789"
     environment:
-      - GOOSE_PROVIDER=${GOOSE_PROVIDER:-anthropic}
-      - GOOSE_MODEL=${GOOSE_MODEL:-claude-sonnet-4-5}
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-      - OPENCLAW_MCP_URL=http://openclaw:8090/mcp
-      - HEYGENCLAW_MCP_URL=http://heygenclaw-mcp:8093/mcp
-    volumes:
-      - goose_config:/home/goose/.config/goose
-      - ./scripts:/workspace/scripts:ro
-      - ./packages:/workspace/packages:ro
-    working_dir: /workspace
+      - PORT=18789
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
     networks:
       - dream_network
     depends_on:
       - nerve
+      - nats
 
-  # ---------------------------------------------------------------------------
-  # HEYGENCLAW MCP — HeyGen Avatar Video Generation
-  # Pulled from GHCR. gh workflow run ghcr-publish.yml -f service=heygenclaw-mcp
-  # ---------------------------------------------------------------------------
+  nemoclaw:
+    image: dreamnet/nemoclaw:local
+    build:
+      context: .
+      dockerfile: packages/mcp/nemoclaw/Dockerfile
+    container_name: dreamnet_nemoclaw
+    restart: unless-stopped
+    ports:
+      - "1234:1234"
+    environment:
+      - PORT=1234
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+
   heygenclaw-mcp:
     image: ghcr.io/brandonducar/dream-net/heygenclaw-mcp:latest
     container_name: heygenclaw_mcp
@@ -137,10 +145,61 @@ services:
     networks:
       - dream_network
 
-  # ---------------------------------------------------------------------------
-  # SIGNAL SCREENER (Hawk / Arya)
-  # Data hub for Farcaster, Base, and Zora pattern detection
-  # ---------------------------------------------------------------------------
+  clawdchat-mcp:
+    image: dreamnet/clawdchat-mcp:local
+    build:
+      context: ./packages/mcp/clawdchat
+      dockerfile: Dockerfile
+    container_name: dreamnet_clawdchat_mcp
+    restart: unless-stopped
+    env_file:
+      - .env.clawdchat
+    ports:
+      - "8094:8094"
+    environment:
+      - CLAWDCHAT_PORT=8094
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8094/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 10s
+
+  # AI Brain
+  gooseclaw:
+    image: ghcr.io/brandonducar/dream-net/gooseclaw:latest
+    container_name: dreamnet_gooseclaw
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    environment:
+      - GOOSE_PROVIDER=${GOOSE_PROVIDER:-anthropic}
+      - GOOSE_MODEL=${GOOSE_MODEL:-claude-sonnet-4-5}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOSE_TELEMETRY_ENABLED=false
+      - OPENCLAW_MCP_URL=http://openclaw:18789/mcp
+      - HEYGENCLAW_MCP_URL=http://heygenclaw-mcp:8093/mcp
+      - CLAWDCHAT_MCP_URL=http://clawdchat-mcp:8094/mcp
+    volumes:
+      - goose_config:/home/goose/.config/goose
+      - ./scripts:/workspace/scripts:ro
+      - ./packages:/workspace/packages:ro
+    working_dir: /workspace
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - clawdchat-mcp
+
+  # Core Services
   signal-screener:
     image: dreamnet/signal-screener:local
     container_name: dreamnet_signal_screener
@@ -159,12 +218,11 @@ services:
     depends_on:
       - nerve
 
-  # ---------------------------------------------------------------------------
-  # ARYA EXECUTOR (Executioner / Social Game)
-  # Orchestrates roasts, reputation, and social loops based on Hawk signals
-  # ---------------------------------------------------------------------------
   arya-executor:
     image: dreamnet/arya-executor:local
+    build:
+      context: ./services/arya-executor
+      dockerfile: Dockerfile
     container_name: dreamnet_arya_executor
     restart: unless-stopped
     env_file:
@@ -172,7 +230,15 @@ services:
     environment:
       - REDIS_URL=redis://nerve:6379
       - NATS_URL=nats://nats:4222
+      - CLAWDCHAT_MCP_URL=http://clawdchat-mcp:8094
+      - ARYA_POSTING_ENABLED=false
+      - ARYA_INITIAL_POST_ENABLED=false
+      - ARYA_POST_INTERVAL_MINUTES=45
       - DATABASE_URL=${DATABASE_URL}
+      - NEYNAR_API_KEY=${NEYNAR_API_KEY}
+      - ENABLE_FINANCIAL_SUPPORT=true
+      - BASE_RPC_URL=https://mainnet.base.org
+      - AGENT_MNEMONIC=${AGENT_MNEMONIC}
       - NODE_ENV=development
       - PORT=3204
     networks:
@@ -181,12 +247,138 @@ services:
       - nerve
       - nats
       - signal-screener
+      - clawdchat-mcp
+
+  agent-broadcaster:
+    image: dreamnet/agent-broadcaster:local
+    build:
+      context: ./services/agent-broadcaster
+      dockerfile: Dockerfile
+    container_name: dreamnet_agent_broadcaster
+    restart: unless-stopped
+    ports:
+      - "3210:3210"
+    environment:
+      - PORT=3210
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - CLAWDCHAT_MCP_URL=http://clawdchat-mcp:8094
+      - AGENT_BROADCAST_ENABLED=true
+      - AGENT_BROADCAST_DRY_RUN=false
+      - AGENT_BROADCAST_IMMEDIATE=true
+      - AGENT_BROADCAST_INTERVAL_MINUTES=360
+      - AGENT_BROADCAST_MAX_POSTS_PER_TICK=15
+      - AGENT_BROADCAST_MAX_DAILY_POSTS_PER_AGENT=4
+      - AGENT_BROADCAST_MIN_SECONDS_BETWEEN_AGENT_POSTS=14400
+      - AGENT_BROADCAST_EXPECTED_AGENT_COUNT=15
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - clawdchat-mcp
+
+  agent-spawn:
+    image: dreamnet/agent-spawn:local
+    container_name: dreamnet_agent_spawn
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+      - NODE_ENV=development
+      - PORT=3200
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+
+  agent-health:
+    image: dreamnet/agent-health:local
+    container_name: dreamnet_agent_health
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+      - NODE_ENV=development
+      - PORT=3201
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+
+  message-bus:
+    image: dreamnet/message-bus:local
+    container_name: dreamnet_cross_agent_bus
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+      - NODE_ENV=development
+      - PORT=3202
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+
+  genealogist:
+    image: dreamnet/genealogist:local
+    build:
+      context: ./services/genealogist
+      dockerfile: Dockerfile
+    container_name: dreamnet_genealogist
+    restart: unless-stopped
+    ports:
+      - "3400:3400"
+    environment:
+      - PORT=3400
+      - NODE_ENV=production
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+
+  # Monitoring & Observability
+  monitor:
+    image: node:20-alpine
+    container_name: dreamnet_monitor
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./scripts:/app:ro
+    environment:
+      - REDIS_URL=redis://nerve:6379
+      - NATS_URL=nats://nats:4222
+      - MONITOR_PORT=3300
+      - NODE_ENV=production
+    ports:
+      - "3300:3300"
+    networks:
+      - dream_network
+    depends_on:
+      - nerve
+      - nats
+    command: ["node", "monitor.mjs"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3300/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   nerve_data:
   nats_data:
-  passports_data:
-  wooly_data:
   portainer_data:
   goose_config:
 

@@ -223,6 +223,37 @@ export class AgentWalletManager {
     const wallet = this.wallets.get(key);
     return wallet?.privateKey || null;
   }
+
+  /**
+   * Send transaction from agent wallet
+   * SECURITY: INTERNAL USE ONLY
+   */
+  async transfer(
+    fromAgentId: string,
+    toAddress: string,
+    amount: string,
+    chain: string,
+    provider: JsonRpcProvider
+  ): Promise<{ success: boolean; hash?: string; error?: string }> {
+    const key = `${fromAgentId}-${chain}`;
+    const walletInternal = this.wallets.get(key);
+    
+    if (!walletInternal) {
+      return { success: false, error: 'WALLET_NOT_FOUND' };
+    }
+
+    try {
+      const wallet = new Wallet(walletInternal.privateKey, provider);
+      const tx = await wallet.sendTransaction({
+        to: toAddress,
+        value: amount,
+      });
+      
+      return { success: true, hash: tx.hash };
+    } catch (err: any) {
+      return { success: false, error: err.message };
+    }
+  }
 }
 
 // Singleton instance
@@ -234,4 +265,5 @@ export function getAgentWalletManager(mnemonic?: string): AgentWalletManager {
   }
   return walletManagerInstance;
 }
-
+export * from "./OctopusController.js";
+export * from "./UniswapTrader.js";

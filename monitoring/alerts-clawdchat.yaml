@@ -1,0 +1,58 @@
+# ClawdChat MCP Alerting Rules
+# Prometheus alert rules for DreamNet swarm monitoring
+
+groups:
+  - name: clawdchat_mcp_alerts
+    interval: 30s
+    rules:
+      - alert: ClawdChatServiceUnhealthy
+        expr: clawdchat_success_rate < 95
+        for: 5m
+        labels:
+          severity: warning
+          component: clawdchat-mcp
+        annotations:
+          summary: "ClawdChat MCP success rate below 95%"
+          description: "Current success rate: {{ $value }}%"
+
+      - alert: ClawdChatHighFailureRate
+        expr: clawdchat_requests_total{status="failed"} > 10
+        for: 5m
+        labels:
+          severity: warning
+          component: clawdchat-mcp
+        annotations:
+          summary: "ClawdChat MCP has high failure count"
+          description: "Failed requests: {{ $value }}"
+
+      - alert: ClawdChatHighLatency
+        expr: clawdchat_request_latency_avg > 500
+        for: 5m
+        labels:
+          severity: warning
+          component: clawdchat-mcp
+        annotations:
+          summary: "ClawdChat MCP response latency elevated"
+          description: "Average latency: {{ $value }}ms"
+
+      - alert: ClawdChatCredentialRotationStall
+        expr: increase(clawdchat_credential_rotations[5m]) == 0
+        for: 10m
+        labels:
+          severity: info
+          component: clawdchat-mcp
+        annotations:
+          summary: "ClawdChat MCP credential rotation inactive"
+          description: "No credential rotations in past 5 minutes"
+
+      - alert: ClawdChatImbalancedCredentialUsage
+        expr: |
+          (max(clawdchat_credential_usage) - min(clawdchat_credential_usage)) > 
+          (avg(clawdchat_credential_usage) * 0.5)
+        for: 10m
+        labels:
+          severity: info
+          component: clawdchat-mcp
+        annotations:
+          summary: "ClawdChat credential usage imbalanced"
+          description: "Credential load distribution is uneven"

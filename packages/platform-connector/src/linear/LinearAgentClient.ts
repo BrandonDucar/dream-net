@@ -68,6 +68,38 @@ export class LinearAgentClient {
         const data = await this.query(query, { teamId, title, description });
         return data?.issueCreate?.issue;
     }
+
+    async getTeams(): Promise<any[]> {
+        const query = `
+            query {
+                teams {
+                    nodes {
+                        id
+                        name
+                        key
+                    }
+                }
+            }
+        `;
+        const data = await this.query(query);
+        return data?.teams?.nodes || [];
+    }
+
+    async updateIssue(issueId: string, input: any): Promise<any> {
+        const query = `
+            mutation IssueUpdate($id: String!, $input: IssueUpdateInput!) {
+                issueUpdate(id: $id, input: $input) {
+                    success
+                    issue {
+                        id
+                        status { name }
+                    }
+                }
+            }
+        `;
+        const data = await this.query(query, { id: issueId, input });
+        return data?.issueUpdate?.issue;
+    }
 }
 
 export const linearClient = new LinearAgentClient();

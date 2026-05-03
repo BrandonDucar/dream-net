@@ -13,10 +13,10 @@ export function createMailerFromEnv(): MailerConfig {
   const secure = (process.env.WOLFMAIL_SMTP_SECURE || "true") === "true";
 
   const user = process.env.WOLFMAIL_SMTP_USER || fromEmail;
-  const pass = process.env.WOLFMAIL_SMTP_PASS || "";
+  const pass = process.env.WOLFMAIL_SMTP_PASS || "MOCK";
 
-  if (!pass) {
-    throw new Error("WOLFMAIL_SMTP_PASS is not set");
+  if (!process.env.WOLFMAIL_SMTP_PASS) {
+    console.warn("[WolfPackMailer] WOLFMAIL_SMTP_PASS is not set. Defaulting to MOCK mode.");
   }
 
   return { fromName, fromEmail, host, port, secure, user, pass };
@@ -31,6 +31,16 @@ export async function sendMail(
   subject: string,
   body: string
 ): Promise<MailSendResult> {
+  // Handle MOCK mode
+  if (config.pass === "MOCK") {
+    console.log(`[WolfPackMailer] [MOCK MODE] Pre-dispatch summary:`);
+    console.log(`  To: ${to}`);
+    console.log(`  Subject: ${subject}`);
+    console.log(`  Body (first 100 chars): ${body.substring(0, 100)}...`);
+    console.log(`[WolfPackMailer] [MOCK MODE] Success simulation complete.`);
+    return { success: true };
+  }
+
   try {
     const transporter = nodemailer.createTransport({
       host: config.host,

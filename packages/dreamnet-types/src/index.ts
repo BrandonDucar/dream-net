@@ -1,10 +1,23 @@
 export type Brand<K, T> = K & { __brand: T };
 
-export type TierId = 'FREE_TIER' | 'VERCEL_PRO' | 'GOD_MODE' | 'OPERATOR' | 'SEED' | 'BUILDER';
+export type TierId = 'SEED' | 'BUILDER' | 'OPERATOR' | 'GOD_MODE';
 export type OfficeId = string; // Placeholder for now
 export type CabinetId = string; // Placeholder for now
 export type PortId = string;
-export type ClusterId = string;
+export type ClusterId = 
+  | "WOLF_PACK"
+  | "OCTOPUS"
+  | "SPIDER_WEB"
+  | "JAGGY"
+  | "SHIELD_CORE"
+  | "WEBHOOK_NERVOUS_SYSTEM"
+  | "ORCA_PACK"
+  | "WHALE_PACK"
+  | "API_KEEPER"
+  | "AI_SEO"
+  | "DREAM_STATE"
+  | "STAR_BRIDGE"
+  | "TRAVEL_FLEET";
 
 
 export type CitizenId = string;

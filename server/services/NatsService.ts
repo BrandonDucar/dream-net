@@ -51,7 +51,8 @@ export class NatsService {
     const streams = [
       { name: 'NERVE_EVENTS', subjects: ['dreamnet.nerve.>'] },
       { name: 'SYSTEM_METRICS', subjects: ['dreamnet.metrics.>'] },
-      { name: 'AGENT_LOGS', subjects: ['dreamnet.agents.>'] }
+      { name: 'AGENT_LOGS', subjects: ['dreamnet.agents.>'] },
+      { name: 'MEMORY_SYNC', subjects: ['dreamnet.memory.>'] }
     ];
 
     for (const stream of streams) {

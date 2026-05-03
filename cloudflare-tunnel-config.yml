@@ -1,0 +1,48 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Cloudflare Tunnel Configuration
+# Routes external world → DreamNet agent swarm
+# ─────────────────────────────────────────────────────────────────────────────
+
+tunnel: dreamnet-agents
+credentials-file: /etc/cloudflare-tunnel/credentials.json
+
+# Ingress rules: route external traffic to internal services
+ingress:
+  # PUBLIC: Agent gateway (external APIs, webhooks, LLM integration)
+  - hostname: agents.your-domain.com
+    service: http://agent-gateway:3205
+    originRequest:
+      httpHostHeader: agent-gateway:3205
+
+  # SEMI-PUBLIC: Ollama inference (for external LLM access)
+  - hostname: llm.your-domain.com
+    service: http://ollama:11434
+    originRequest:
+      httpHostHeader: ollama:11434
+
+  # SEMI-PUBLIC: Control core monitoring (dashboard, health)
+  - hostname: core.your-domain.com
+    service: http://control-core:3000
+    originRequest:
+      httpHostHeader: control-core:3000
+
+  # SEMI-PUBLIC: NanoClaw agent factory (spawn API)
+  - hostname: spawn.your-domain.com
+    service: http://nanoclaw:18790
+    originRequest:
+      httpHostHeader: nanoclaw:18790
+
+  # INTERNAL ONLY: Portainer (no external access)
+  # - hostname: portainer.your-domain.com
+  #   service: http://local-manager:9000
+
+  # INTERNAL ONLY: Kafka UI (no external access)
+  # - hostname: kafka.your-domain.com
+  #   service: http://kafka-ui:8080
+
+  # Default: reject everything else
+  - service: http_status:404
+
+# Logs
+logLevel: info
+logFile: /var/log/cloudflare-tunnel.log

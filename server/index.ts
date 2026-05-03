@@ -58,6 +58,7 @@ const createFabricRouter = () => Router();
 // import { createMediaRouter } from "./routes/media"; // Temporarily disabled - @dreamnet/media-vault missing
 import { createMetricsRouter } from "./routes/metrics";
 import { createOrdersRouter } from "./routes/orders";
+import { createBioSecurityRouter } from "./routes/bio-security";
 import { createPublicRouter } from "./routes/public";
 // import { createPosterRouter } from "./routes/poster"; // Temporarily disabled - @dreamnet/media-vault missing
 import { createRewardsRouter } from "./routes/rewards";
@@ -85,11 +86,14 @@ import onboardingRouter from "./routes/onboarding";
 let haloTriggers: { recordError?: () => void } = {};
 // Lazy imports for workspace packages - loaded only when INIT_HEAVY_SUBSYSTEMS=true
 // These will be dynamically imported to avoid startup issues
+import { economicEngineCore as RealEconomicEngineCoreInstance } from './services/EconomicEngineCore.js';
 let NeuralMesh: any, QuantumAnticipation: any, SquadAlchemy: any, WolfPack: any, OctopusExecutor: any;
 let SlugTimeMemory: any, StarBridgeLungs: any, DreamVault: any, DreamShop: any, FieldLayer: any;
 let DreamBetCore: any, ZenGardenCore: any, CivicPanelCore: any, DreamTankCore: any, LiquidityEngine: any;
-let SocialHubCore: any, InitRitualCore: any, EconomicEngineCore: any, AgentRegistryCore: any;
-let DreamNetOSCore: any, WolfPackFundingCore: any, APIKeeperCore: any, AISEOCore: any, EnvKeeperCore: any, ShieldCore: any;
+let SocialHubCore: any, InitRitualCore: any, EconomicEngineCore: any = RealEconomicEngineCoreInstance, AgentRegistryCore: any;
+let DreamNetOSCore: any, WolfPackFundingCore: any, WolfPackMailerCore: any, APIKeeperCore: any, AISEOCore: any, EnvKeeperCore: any, ShieldCore: any;
+let IdentityGrid: any, NarrativeField: any, ReputationLattice: any, TickerResearchSystem: any;
+let CloudflareTunnelSpike: any, PipelineSpike: any;
 
 // Stub Registry for missing core services
 import { STUB_REGISTRY } from "./services/StubRegistry.js";
@@ -120,6 +124,41 @@ APIKeeperCore = RealAPIKeeperCore;
 AISEOCore = STUB_REGISTRY.AISEOCore;
 EnvKeeperCore = RealEnvKeeperCore;
 ShieldCore = RealShieldCore;
+
+// Real Subsystem Imports (Replaces Stubs)
+import { IdentityGrid as RealIdentityGrid } from "../packages/identity-grid/index.js";
+import { NarrativeField as RealNarrativeField } from "../packages/narrative-field/index.js";
+import { ReputationLattice as RealReputationLattice } from "../packages/reputation-lattice/index.js";
+import { TickerResearchSystem as RealTickerResearchSystem } from "./services/TickerResearchSystem.js";
+import { CloudflareTunnelSpike as RealCloudflareTunnelSpike } from "../packages/sensory-spikes/src/spikes/CloudflareTunnelSpike.js";
+import { PipelineSpike as RealPipelineSpike } from "../packages/sensory-spikes/src/spikes/PipelineSpike.js";
+
+import { WolfPackFundingCore as RealWolfPackFundingCore } from "../packages/wolfpack-funding-core/index.js";
+import { WolfPackMailerCore as RealWolfPackMailerCore } from "../packages/wolfpack-mailer-core/index.js";
+import { aryaExecutioner } from "./agents/AryaStarkAgent";
+import { wolfPackFundingHunter } from "./agents/WolfPackFundingHunter";
+import { librarianAgent } from "./agents/LibrarianAgent";
+import { storage } from "./storage";
+
+IdentityGrid = RealIdentityGrid;
+NarrativeField = RealNarrativeField;
+ReputationLattice = RealReputationLattice;
+TickerResearchSystem = RealTickerResearchSystem;
+CloudflareTunnelSpike = RealCloudflareTunnelSpike;
+PipelineSpike = RealPipelineSpike;
+WolfPackFundingCore = RealWolfPackFundingCore;
+WolfPackMailerCore = RealWolfPackMailerCore;
+
+// Initialize Funding Core with Database Storage
+await WolfPackFundingCore.init(storage);
+
+// Log agent activation
+console.log(`🗡️ [Arya Stark] Agent active`);
+console.log(`🐺 [Wolf Pack Hunter] Agent active`);
+console.log(`📚 [Librarian] Agent active`);
+
+import { PredatorScavengerLoop as RealPredatorScavengerLoop } from "../packages/predator-scavenger/index.js";
+let PredatorScavengerLoop = RealPredatorScavengerLoop;
 console.log("[Server] Importing autoSEO middleware...");
 import { autoSEORequestMiddleware } from "./middleware/autoSEO";
 console.log("[Server] Importing heartbeatRouter...");
@@ -444,11 +483,18 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
       const { wolfPackFundingHunter } = await import("./agents/WolfPackFundingHunter.js");
       console.log("🐺 [WolfPackFundingHunter] Grant hunting pack active");
 
-      // Initialize Guild System - Families (PiClaw, PyClaw, Axo, Edge, Ghost, Flash)
+      // Initialize Guild System - Families, Fleets, and Packs
       const { guildSystem } = await import("./core/GuildSystem.js");
-      ['piclaw', 'pyclaw', 'axo', 'edge', 'ghost', 'flash'].forEach(id => {
+      [
+        'piclaw', 'pyclaw', 'axo', 'edge', 'ghost', 'flash', 'quantum',
+        'aegis', 'archimedes', 'wolf', 'whale', 'orca', 'spider', 'fly'
+      ].forEach(id => {
         guildSystem.activateGuild(id as any);
       });
+
+      // Initialize Quantum Guild (Anticipation Layer)
+      const { quantumGuild } = await import("./core/QuantumGuild.js");
+      console.log("⚛️ [Quantum Guild] Online and ready for block anticipation");
 
       // Start Swarm Daemon - The Orchestrator
       const { swarmDaemon } = await import("./services/SwarmDaemon.js");
@@ -715,6 +761,26 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
     console.log(`🛒 [Dream Shop] Initialized - ${shopStatus.offerCount} offers listed`);
   } catch (error) {
     console.warn("[Dream Shop] Initialization warning:", error);
+  }
+
+  // Initialize Ticker Research System - Tier IV Subsystem (Market Analysis)
+  try {
+    const { tickerResearchSystem } = await import("./services/TickerResearchSystem.js");
+    TickerResearchSystem = tickerResearchSystem;
+    console.log(`📈 [Ticker Research] Initialized - ${TickerResearchSystem.getAllTickers().length} tickers on watchlist`);
+  } catch (error) {
+    console.warn("[Ticker Research] Initialization warning:", error);
+  }
+
+  // Initialize Sensory Spikes - Real-time Data Ingestion
+  try {
+    const { cloudflareTunnelSpike } = await import("../packages/sensory-spikes/src/spikes/CloudflareTunnelSpike.js");
+    const { pipelineSpike } = await import("../packages/sensory-spikes/src/spikes/PipelineSpike.js");
+    CloudflareTunnelSpike = cloudflareTunnelSpike;
+    PipelineSpike = pipelineSpike;
+    console.log("📡 [Sensory Spikes] Cloudflare Tunnel and Pipeline spikes active");
+  } catch (error) {
+    console.warn("[Sensory Spikes] Initialization warning:", error);
   }
 
   // Initialize Field Layer - Tier IV Subsystem (Global Parameter Fields: Invisible Physics)
@@ -1173,14 +1239,17 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
   */
 
   // Initialize Nerve Fiber Event Fabric 🧠
-  // DISABLED FOR SIMPLIFIED STARTUP - Enable when ready
-  /*
   try {
-    const { initNerveFabric } = await import("@dreamnet/nerve/init");
-    const { NERVE_BUS } = await import("@dreamnet/nerve/bus");
+    const { initNerveFabric } = await import("../packages/nerve/src/init");
+    const { NERVE_BUS } = await import("../packages/nerve/src/bus");
     
     // Initialize fabric and register subscribers
     const { dreamScope } = initNerveFabric();
+    
+    // Instantiate Management Staff 🏛️
+    const { ComputeGovernor, GeneralManager } = await import("../packages/agents/src/index");
+    (global as any).governor = new ComputeGovernor();
+    (global as any).generalManager = new GeneralManager();
     
     // Store dreamScope for API endpoint access
     (global as any).dreamScopeNerve = dreamScope;
@@ -1188,15 +1257,15 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
     // Log stats
     const stats = NERVE_BUS.getStats();
     console.log(`🧠 [Nerve Fabric] Event bus online`);
+    console.log(`   🏛️  Governor & General Manager active`);
     console.log(`   ✅ Shield Core subscribed`);
     console.log(`   ✅ Jaggy subscribed`);
     console.log(`   ✅ DreamScope subscribed`);
-    console.log(`   📡 Nerve Fiber Event Fabric active - events routing through channels`);
+    console.log(`   📡 Nerve Fiber Event Fabric active - events routing through Kafka/NATS`);
     console.log(`   📊 Stats: ${stats.published} published, ${stats.dropped} dropped, queue: ${stats.queueSize}`);
   } catch (error) {
     console.warn("[Nerve Fabric] Initialization warning:", error);
   }
-  */
 
   // Initialize Spider Web Core - Event Threading & Fly-Catching 🕸️
   try {
@@ -1256,7 +1325,7 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
 
   // Initialize Wolf Pack Mailer Core - Email Sending & Queue Management 📧
   try {
-    const { WolfPackMailerCore } = await import("@dreamnet/wolfpack-mailer-core");
+    // WolfPackMailerCore is already initialized above
     
     // Start continuous mailer cycle (runs every 1 minute)
     setInterval(() => {
@@ -1269,26 +1338,64 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
     console.warn("[Wolf Pack Mailer Core] Initialization warning:", error);
   }
 
-  // Initialize Runtime Bridge Core - Runtime Context & Cycle Management 🌉
-  try {
-    const { RuntimeBridgeCore } = await import("@dreamnet/runtime-bridge-core");
-    
-    // Initialize runtime context
-    RuntimeBridgeCore.initContext({
-      DreamVault: DreamVault,
-      DreamShop: DreamShop,
-      NeuralMesh: NeuralMesh,
-    });
-    
-    // Start runtime loop (runs every 30 seconds)
-    RuntimeBridgeCore.startLoop(30 * 1000);
+    // Initialize Ticker Research System 📈
+    try {
+      TickerResearchSystem.init();
+      // Run initial cycle
+      TickerResearchSystem.runCycle();
+      
+      // Start continuous cycle every 5 minutes (connected to NerveFabric)
+      setInterval(() => {
+        TickerResearchSystem.runCycle((event: string, data: any) => {
+          // @ts-ignore
+          if (global.dreamScope) {
+            // @ts-ignore
+            global.dreamScope.emit(event, data);
+          }
+        });
+      }, 5 * 60 * 1000);
+      
+      console.log(`📈 [Ticker Research System] Active & Wired - Tracking $RSC, $AERO, $VELO, etc.`);
+    } catch (error) {
+      console.warn("[Ticker Research System] Initialization warning:", error);
+    }
 
-    const runtimeStatus = RuntimeBridgeCore.getStatus();
-    console.log(`🌉 [Runtime Bridge Core] Initialized`);
-    console.log(`   ⚙️  Runtime context & cycle management active`);
-  } catch (error) {
-    console.warn("[Runtime Bridge Core] Initialization warning:", error);
-  }
+    // Initialize Sensory Spikes 🛰️
+    try {
+      CloudflareTunnelSpike.init();
+      PipelineSpike.init();
+      
+      // Start pipeline heartbeat (every 1 minute)
+      setInterval(async () => {
+        await PipelineSpike.runCycle();
+      }, 60 * 1000);
+      
+      console.log(`🛰️  [Sensory Spikes] Cloudflare Tunnel & Pipeline active`);
+    } catch (error) {
+      console.warn("[Sensory Spikes] Initialization warning:", error);
+    }
+
+    // Initialize Runtime Bridge Core - Runtime Context & Cycle Management 🌉
+    try {
+      const { RuntimeBridgeCore } = await import("@dreamnet/runtime-bridge-core");
+      
+      // Initialize runtime context
+      RuntimeBridgeCore.initContext({
+        DreamVault: DreamVault,
+        DreamShop: DreamShop,
+        NeuralMesh: NeuralMesh,
+        IdentityGrid: IdentityGrid,
+        NarrativeField: NarrativeField
+      });
+      
+      // Start runtime loop (runs every 30 seconds)
+      RuntimeBridgeCore.startLoop(30 * 1000);
+
+      console.log(`🌉 [Runtime Bridge Core] Initialized`);
+      console.log(`   ⚙️  Runtime context & cycle management active`);
+    } catch (error) {
+      console.warn("[Runtime Bridge Core] Initialization warning:", error);
+    }
   } // End of shouldInitHeavy conditional - heavy subsystems disabled by default
 
   // Initialize Orchestrator Core - System Orchestration 🔄
@@ -1620,6 +1727,7 @@ console.log("⚡ [Instant Mesh] Zero-delay event routing active");
   app.use("/api/voice", voiceRouter);
   app.use("/api/keys", apiKeysRouter);
   app.use("/api/env-keeper", envKeeperRouter);
+  app.use("/api/bio-security", createBioSecurityRouter());
   
   // Vercel Agent API routes
   app.use("/api/vercel", vercelRouter);
@@ -1819,6 +1927,44 @@ app.use((req, res, next) => {
       console.log('[WhalePack] Control loop started');
     }).catch((err) => {
       console.error('[WhalePack] Failed to start control loop:', err);
+    });
+
+    // 🐝 Start SwarmOps Operational Loops
+    import('./workers/SwarmOpsWorker.js').then(({ swarmOps }) => {
+      // 1. Daily Data Dump (runs at 2 AM UTC)
+      setInterval(() => {
+          const now = new Date();
+          if (now.getUTCHours() === 2 && now.getUTCMinutes() === 0) {
+              swarmOps.performDailyDataDump();
+          }
+      }, 60 * 1000);
+      
+      // 2. Periodic Health Reporting (every 30 minutes)
+      setInterval(() => {
+          swarmOps.reportSwarmHealth(17000, 0); // TODO: Get actual counts from DB
+      }, 30 * 60 * 1000);
+      
+      console.log('🐝 [SwarmOps] Operational loops active');
+    }).catch((err) => {
+      console.error('❌ [SwarmOps] Failed to start:', err);
+    });
+
+    // ⚙️ Start Farcaster Action Ledger processing (every 30 seconds)
+    import('./workers/FarcasterActionWorker.js').then(({ actionWorker }) => {
+      setInterval(() => {
+          actionWorker.processLedger();
+      }, 30 * 1000);
+      console.log('⚙️ [FarcasterWorker] Ledger processing active');
+    }).catch((err) => {
+      console.error('❌ [FarcasterWorker] Failed to start:', err);
+    });
+
+    // 🎓 Start Swarm Maturity Pipeline
+    import('./workers/MaturityWorker.js').then(({ maturityWorker }) => {
+      maturityWorker.start();
+      console.log('🎓 [MaturityWorker] Pipeline active');
+    }).catch((err) => {
+      console.error('❌ [MaturityWorker] Failed to start:', err);
     });
     
     // Initialize optional subsystems asynchronously (non-blocking)

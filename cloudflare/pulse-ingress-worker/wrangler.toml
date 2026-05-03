@@ -1,0 +1,30 @@
+name = "dreamnet-pulse-ingress"
+main = "index.ts"
+compatibility_date = "2026-05-01"
+account_id = "7443bdb9dce80e4aec07a70fa5273e5c"
+workers_dev = true
+
+[vars]
+PULSE_REQUIRE_SIGNATURE = "false"
+PULSE_RAW_ARCHIVE_ENABLED = "true"
+PULSE_MAX_BODY_BYTES = "2000000"
+
+[[r2_buckets]]
+binding = "PULSE_ARCHIVE"
+bucket_name = "dreamnet-cflare-bucket"
+
+# Replace this placeholder with the DREAMNET_STATE namespace id once
+# Wrangler auth is repaired:
+# wrangler kv namespace list
+[[kv_namespaces]]
+binding = "DREAMNET_STATE"
+id = "REPLACE_WITH_DREAMNET_STATE_KV_NAMESPACE_ID"
+
+# Create after Cloudflare auth is repaired:
+# wrangler queues create dreamnet-pulse-ingest
+[[queues.producers]]
+binding = "PULSE_QUEUE"
+queue = "dreamnet-pulse-ingest"
+
+# Set with:
+# wrangler secret put PULSE_INGRESS_SECRET

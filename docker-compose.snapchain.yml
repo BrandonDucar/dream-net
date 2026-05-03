@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  snapchain:
+    image: farcasterxyz/snapchain:latest
+    container_name: dreamnet_snapchain
+    restart: unless-stopped
+    command: ["./snapchain", "--config-path", "/app/config/snapchain.toml"]
+    ports:
+      - "3381:3381/tcp"   # HTTP API
+      - "3382:3382/tcp"   # gRPC API
+      - "3383:3383/tcp"   # Replication / P2P
+      - "3383:3383/udp"   # Replication / P2P
+    volumes:
+      - snapchain_data:/app/.rocks
+      - ./config/snapchain:/app/config
+    networks:
+      - dream_network
+    environment:
+      - RUST_BACKTRACE=full
+      - SNAPCHAIN_NETWORK=mainnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3381/v1/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  snapchain_data:
+    driver: local
+
+networks:
+  dream_network:
+    name: dream-net_dream_network
+    external: true

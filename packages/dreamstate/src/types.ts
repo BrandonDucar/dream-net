@@ -5,8 +5,8 @@
  * @module @dreamnet/dreamstate/types
  */
 
-import type { TierId } from "@dreamnet/dreamnet-control-core/tierConfig";
-import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
+import type { TierId } from "@dreamnet/dreamnet-control-core/tierConfig.js";
+import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters.js";
 
 /**
  * Citizen ID - Unique identifier for a DreamNet citizen

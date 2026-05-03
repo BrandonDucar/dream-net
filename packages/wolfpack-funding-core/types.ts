@@ -104,3 +104,22 @@ export interface WolfPackFundingStatus {
   sampleQueue: SendQueueItem[];
 }
 
+export interface FundingStorageInterface {
+  getFundingLeads(): Promise<FundingLead[]>;
+  getFundingLead(id: string): Promise<FundingLead | undefined>;
+  upsertFundingLead(lead: FundingLead): Promise<FundingLead>;
+  
+  getEmailQueue(): Promise<SendQueueItem[]>;
+  getEmailQueueItem(id: string): Promise<SendQueueItem | undefined>;
+  upsertEmailQueueItem(item: SendQueueItem): Promise<SendQueueItem>;
+  updateEmailQueueStatus(id: string, status: string, error?: string): Promise<void>;
+  
+  getEmailDrafts(): Promise<EmailDraft[]>;
+  getEmailDraft(id: string): Promise<EmailDraft | undefined>;
+  upsertEmailDraft(draft: EmailDraft): Promise<EmailDraft>;
+  
+  getGrantApplicationDrafts(): Promise<GrantApplicationDraft[]>;
+  getGrantApplicationDraft(id: string): Promise<GrantApplicationDraft | undefined>;
+  upsertGrantApplicationDraft(draft: GrantApplicationDraft): Promise<GrantApplicationDraft>;
+}
+

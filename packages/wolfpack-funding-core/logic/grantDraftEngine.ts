@@ -4,7 +4,7 @@ import { FundingStore } from "../store/fundingStore";
 /**
  * Ensure grant application drafts exist for relevant leads.
  */
-export function ensureGrantDraftsForLeads(leads: FundingLead[]): void {
+export async function ensureGrantDraftsForLeads(leads: FundingLead[]): Promise<void> {
   const now = Date.now();
 
   const relevantTypes = new Set<FundingLead["type"]>([
@@ -16,7 +16,7 @@ export function ensureGrantDraftsForLeads(leads: FundingLead[]): void {
   for (const lead of leads) {
     if (!relevantTypes.has(lead.type)) continue;
 
-    const existingDrafts = FundingStore.listGrantDraftsForLead(lead.id);
+    const existingDrafts = await FundingStore.listGrantDraftsForLead(lead.id);
     if (existingDrafts.length > 0) continue;
 
     const draft: GrantApplicationDraft = {
@@ -28,7 +28,7 @@ export function ensureGrantDraftsForLeads(leads: FundingLead[]): void {
       updatedAt: now,
     };
 
-    FundingStore.upsertGrantDraft(draft);
+    await FundingStore.upsertGrantDraft(draft);
   }
 }
 

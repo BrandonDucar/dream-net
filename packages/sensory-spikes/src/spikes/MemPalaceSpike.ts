@@ -1,5 +1,5 @@
 import { NERVE_BUS } from '@dreamnet/nerve';
-import { natsService } from '@dreamnet/api/src/services/NatsService.js'; // Adjust path if needed
+import { natsService } from '../services/NatsService.js';
 
 /**
  * 🏰 MemPalaceSpike

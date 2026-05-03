@@ -4,11 +4,11 @@
  * Now with tier-based access control
  */
 
-import { controlStore } from "./store/controlStore";
-import type { ClusterId, ClusterRateLimit, ControlConfig, ControlContext } from "./types";
-import type { TierId, TierConfig } from "./tierConfig";
-import { bridgeToSpiderWeb } from "../../dreamnet-operational-bridge";
-import { getTierConfig, tierHasFeature } from "./tierConfig";
+import { controlStore } from "./store/controlStore.js";
+import type { ClusterId, ClusterRateLimit, ControlConfig, ControlContext } from "./types.js";
+import type { TierId, TierConfig } from "./tierConfig.js";
+import { bridgeToSpiderWeb } from "../../dreamnet-operational-bridge/index.js";
+import { getTierConfig, tierHasFeature } from "./tierConfig.js";
 
 export const DreamNetControlCore = {
   // Kill-switch controls

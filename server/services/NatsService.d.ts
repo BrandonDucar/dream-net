@@ -21,6 +21,10 @@ export declare class NatsService {
      */
     publish(subject: string, data: any): Promise<void>;
     /**
+     * Subscribe to a NATS subject
+     */
+    subscribe(subject: string, callback: (data: any) => void): Promise<void>;
+    /**
      * Shutdown NATS connection
      */
     shutdown(): Promise<void>;

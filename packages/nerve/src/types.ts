@@ -5,9 +5,7 @@
  * @module @dreamnet/nerve/types
  */
 
-import type { ClusterId } from "../../dreamnet-control-core/clusters";
-import type { TierId } from "../../dreamnet-control-core/tierConfig";
-import type { CitizenId, OfficeId, CabinetId } from "../../dreamstate/src/types";
+import type { ClusterId, TierId, CitizenId, OfficeId, CabinetId } from "@dreamnet/types";
 
 /**
  * Nerve Channel ID - Routing channels for events
@@ -115,6 +113,10 @@ export interface NerveContext {
   
   /** Whether this event was sampled */
   sampled?: boolean;
+  
+  /** Mosquito Drone Tracking */
+  trackedBy?: string;
+  mosquitoBiteTime?: string;
 }
 
 /**

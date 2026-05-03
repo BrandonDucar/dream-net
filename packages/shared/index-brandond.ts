@@ -1,3 +1,3 @@
-export * from './components';
-export * from './utils/pheromone';
-export * from './types';
+export * from './components/index.js';
+export * from './utils/pheromone.js';
+export * from './types.js';

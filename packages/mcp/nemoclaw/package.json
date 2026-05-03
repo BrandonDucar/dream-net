@@ -1,0 +1,24 @@
+{
+  "name": "@dreamnet/nemoclaw",
+  "version": "1.0.0",
+  "description": "NemoClaw: Neuromorphic memory & collective consensus for DreamNet",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "fastify": "^4.24.0",
+    "ws": "^8.14.0",
+    "yjs": "^13.6.0",
+    "redis": "^4.6.0",
+    "nats": "^2.15.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.0",
+    "tsx": "^4.0.0",
+    "@types/node": "^20.5.0"
+  }
+}

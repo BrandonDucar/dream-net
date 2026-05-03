@@ -1,0 +1,14 @@
+{
+  "name": "@dreamnet/app-dream-brain",
+  "version": "1.0.0",
+  "description": "Interactive 3D Brain visualization for DreamNet using TensorSpace.js",
+  "type": "module",
+  "main": "server.ts",
+  "scripts": {
+    "start": "node server.ts",
+    "dev": "node server.ts"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

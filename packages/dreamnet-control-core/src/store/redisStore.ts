@@ -3,7 +3,7 @@
  * Production-ready persistence layer
  */
 
-import type { KillSwitchState, ClusterRateLimit, ControlConfig, ClusterId } from "../types";
+import type { TierId, ClusterId, KillSwitchState, ClusterRateLimit, ControlConfig } from "@dreamnet/types";
 
 // Redis client interface (use ioredis or similar in production)
 interface RedisClient {

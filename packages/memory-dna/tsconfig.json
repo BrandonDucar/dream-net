@@ -4,10 +4,10 @@
     "composite": true,
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "src",
     "tsBuildInfoFile": "../../node_modules/.cache/memory-dna.tsbuildinfo"
   },
-  "include": ["./**/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]
 }
 

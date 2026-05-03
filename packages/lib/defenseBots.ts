@@ -5,6 +5,7 @@ export interface Threat {
   id: string;
   severity: 'low' | 'medium' | 'high' | 'critical';
   timestamp: string;
+  description?: string;
   source?: string;
   neutralized?: boolean;
   response?: string;

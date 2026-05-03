@@ -3,6 +3,8 @@ import { natsService } from './NatsService.js';
 import { guildSystem } from '../core/GuildSystem.js';
 import { brainBridge } from './BrainBridge.js';
 import { wolfPackFundingHunter } from '../agents/WolfPackFundingHunter.js';
+import { tickerResearchSystem } from './TickerResearchSystem.js';
+import { economicEngineCore } from './EconomicEngineCore.js';
 
 /**
  * ⚡ SwarmDaemon
@@ -43,7 +45,17 @@ export class SwarmDaemon {
 
     console.log(`⚡ [SwarmDaemon] Global Pulse ${this.pulseCount} - Synchronizing all sectors...`);
 
-    // 1. Health Heartbeat
+    // 1. Ticker Research Cycle (Real-time Alpha)
+    if (this.pulseCount % 2 === 0) {
+      await tickerResearchSystem.runCycle((event, data) => {
+        natsService.publish(`dreamnet.alpha.${data.symbol}`, data);
+      });
+    }
+
+    // 2. Economic Engine Cycle (Treasury Health)
+    const economyStatus = await economicEngineCore.run();
+
+    // 3. Health Heartbeat
     await natsService.publish('dreamnet.system.heartbeat', {
       pulse: this.pulseCount,
       timestamp,
@@ -51,29 +63,37 @@ export class SwarmDaemon {
         reasoning: brainBridge.getStatus(),
         guilds: guildSystem.getStatus(),
         engines: {
-          wolfPack: wolfPackFundingHunter.getStatus()
+          wolfPack: wolfPackFundingHunter.getStatus(),
+          economy: economyStatus
         }
       }
     });
 
-    // 2. Trigger "Guild Quests" (Autonomous tasks)
+    // 4. Trigger "Guild Quests" (Autonomous tasks)
     if (this.pulseCount % 5 === 0) {
       this.triggerGuildQuest();
     }
 
-    // 3. Update Nerve Bus status
+    // 5. Update Nerve Bus status
     NERVE_BUS.publish({
       id: `heartbeat-${Date.now()}`,
       channelId: 'SYSTEM_METRIC',
       kind: 'METRIC_SNAPSHOT',
       priority: 2,
       context: { timestamp: new Date().toISOString() },
-      payload: { metricName: 'pulse', value: this.pulseCount }
+      payload: { 
+        metricName: 'pulse', 
+        value: this.pulseCount,
+        economyHealth: economyStatus.health
+      }
     });
   }
 
   private triggerGuildQuest() {
-    const guilds: any[] = ['piclaw', 'pyclaw', 'axo', 'edge', 'ghost', 'flash'];
+    const guilds: string[] = [
+      'piclaw', 'pyclaw', 'axo', 'edge', 'ghost', 'flash', 
+      'quantum', 'aegis', 'archimedes', 'wolf', 'whale', 'orca', 'spider', 'fly'
+    ];
     const selectedGuild = guilds[Math.floor(Math.random() * guilds.length)];
 
     console.log(`⚡ [SwarmDaemon] Dispatching Quest to ${selectedGuild.toUpperCase()} Guild...`);

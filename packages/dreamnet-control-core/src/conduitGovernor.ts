@@ -3,15 +3,10 @@
  * Enforces per-line budgets and limits for {portId, clusterId, toolId} combos
  */
 
-import { getConduitConfig } from "./conduits";
-import type { PortId } from "../../port-governor/src/types";
-import type { ClusterId } from "../clusters";
-import type { ToolId } from "../../agent-gateway/src/tools";
-
-// Re-export for convenience
-export { getConduitConfig };
-
-import type { ConduitId } from "./conduits";
+import { getConduitConfig, type ConduitId } from "./conduits.js";
+import type { PortId } from "../../port-governor/src/types.js";
+import type { ClusterId } from "./clusters.js";
+import type { ToolId } from "../../agent-gateway/src/tools.js";
 
 export interface ConduitUsage {
   windowStart: number;

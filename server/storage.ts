@@ -8,7 +8,10 @@ import {
   type ContributorsLog, type CocoonLog, type CocoonContributor, type ContributorRole, type ContributorAction,
   type EvolutionChain, type InsertEvolutionChain,
   type DreamInvite, type InsertDreamInvite,
-  type DreamToken, type InsertDreamToken, type Notification
+  type DreamToken, type InsertDreamToken, type Notification,
+  fundingLeads, emailQueue, emailDrafts, grantApplicationDrafts, libraries,
+  type FundingLeadRecord, type EmailQueueRecord, type EmailDraftRecord, type GrantApplicationDraftRecord,
+  type LibraryRecord, type InsertLibrary
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, count, sql, and, or, lt, isNotNull, arrayContains } from "drizzle-orm";
@@ -299,6 +302,27 @@ export interface IStorage {
   unlockSecretMessage(messageId: string, walletAddress: string): Promise<{ success: boolean; message: string; xpReward?: number; badgeUnlocked?: string }>;
   sendSecretReply(originalMessageId: string, replyData: any): Promise<{ success: boolean; message: string }>;
   burnSecretVault(messageId: string, walletAddress: string): Promise<{ success: boolean; message: string }>;
+
+  // Funding Wolf Pack methods
+  getFundingLeads(): Promise<FundingLeadRecord[]>;
+  getFundingLead(id: string): Promise<FundingLeadRecord | undefined>;
+  upsertFundingLead(lead: FundingLeadRecord): Promise<FundingLeadRecord>;
+  
+  getEmailQueue(): Promise<EmailQueueRecord[]>;
+  getEmailQueueItem(id: string): Promise<EmailQueueRecord | undefined>;
+  upsertEmailQueueItem(item: EmailQueueRecord): Promise<EmailQueueRecord>;
+  updateEmailQueueStatus(id: string, status: string, error?: string): Promise<void>;
+  
+  getEmailDrafts(): Promise<EmailDraftRecord[]>;
+  getEmailDraft(id: string): Promise<EmailDraftRecord | undefined>;
+  upsertEmailDraft(draft: EmailDraftRecord): Promise<EmailDraftRecord>;
+  
+  getGrantApplicationDrafts(): Promise<GrantApplicationDraftRecord[]>;
+  getGrantApplicationDraft(id: string): Promise<GrantApplicationDraftRecord | undefined>;
+  upsertGrantApplicationDraft(draft: GrantApplicationDraftRecord): Promise<GrantApplicationDraftRecord>;
+  getEmailQueue(): Promise<EmailQueueRecord[]>;
+  getLibraries(): Promise<LibraryRecord[]>;
+  upsertLibrary(lib: InsertLibrary): Promise<LibraryRecord>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -2367,6 +2391,123 @@ export class DatabaseStorage implements IStorage {
       dreamId,
       newTotal: (dream.totalSheepEarned || 0) + sheepAmount
     };
+  }
+
+  // Funding Wolf Pack implementation
+  async getFundingLeads(): Promise<FundingLeadRecord[]> {
+    return await db.select().from(fundingLeads).orderBy(desc(fundingLeads.updatedAt));
+  }
+
+  async getFundingLead(id: string): Promise<FundingLeadRecord | undefined> {
+    const [lead] = await db.select().from(fundingLeads).where(eq(fundingLeads.id, id));
+    return lead || undefined;
+  }
+
+  async upsertFundingLead(lead: FundingLeadRecord): Promise<FundingLeadRecord> {
+    const [existing] = await db.select().from(fundingLeads).where(eq(fundingLeads.id, lead.id));
+    if (existing) {
+      const [updated] = await db.update(fundingLeads).set({ ...lead, updatedAt: new Date() }).where(eq(fundingLeads.id, lead.id)).returning();
+      return updated;
+    } else {
+      const [inserted] = await db.insert(fundingLeads).values(lead).returning();
+      return inserted;
+    }
+  }
+
+  async getEmailQueue(): Promise<EmailQueueRecord[]> {
+    return await db.select().from(emailQueue).orderBy(desc(emailQueue.createdAt));
+  }
+
+  async getEmailQueueItem(id: string): Promise<EmailQueueRecord | undefined> {
+    const [item] = await db.select().from(emailQueue).where(eq(emailQueue.id, id));
+    return item || undefined;
+  }
+
+  async upsertEmailQueueItem(item: EmailQueueRecord): Promise<EmailQueueRecord> {
+    const [existing] = await db.select().from(emailQueue).where(eq(emailQueue.id, item.id));
+    if (existing) {
+      const [updated] = await db.update(emailQueue).set(item).where(eq(emailQueue.id, item.id)).returning();
+      return updated;
+    } else {
+      const [inserted] = await db.insert(emailQueue).values(item).returning();
+      return inserted;
+    }
+  }
+
+  async updateEmailQueueStatus(id: string, status: string, error?: string): Promise<void> {
+    await db.update(emailQueue).set({ 
+      status: status as any, 
+      lastError: error,
+      sentAt: status === "sent" ? new Date() : undefined
+    }).where(eq(emailQueue.id, id));
+  }
+
+  async getEmailQueue(): Promise<EmailQueueRecord[]> {
+    return await db.select().from(emailQueue).orderBy(desc(emailQueue.createdAt));
+  }
+
+  async getEmailDrafts(): Promise<EmailDraftRecord[]> {
+    return await db.select().from(emailDrafts).orderBy(desc(emailDrafts.createdAt));
+  }
+
+  async getEmailDraft(id: string): Promise<EmailDraftRecord | undefined> {
+    const [draft] = await db.select().from(emailDrafts).where(eq(emailDrafts.id, id));
+    return draft || undefined;
+  }
+
+  async upsertEmailDraft(draft: EmailDraftRecord): Promise<EmailDraftRecord> {
+    const [existing] = await db.select().from(emailDrafts).where(eq(emailDrafts.id, draft.id));
+    if (existing) {
+      const [updated] = await db.update(emailDrafts).set(draft).where(eq(emailDrafts.id, draft.id)).returning();
+      return updated;
+    } else {
+      const [inserted] = await db.insert(emailDrafts).values(draft).returning();
+      return inserted;
+    }
+  }
+
+  async getGrantApplicationDrafts(): Promise<GrantApplicationDraftRecord[]> {
+    return await db.select().from(grantApplicationDrafts).orderBy(desc(grantApplicationDrafts.updatedAt));
+  }
+
+  async getGrantApplicationDraft(id: string): Promise<GrantApplicationDraftRecord | undefined> {
+    const [draft] = await db.select().from(grantApplicationDrafts).where(eq(grantApplicationDrafts.id, id));
+    return draft || undefined;
+  }
+
+  async upsertGrantApplicationDraft(draft: GrantApplicationDraftRecord): Promise<GrantApplicationDraftRecord> {
+    const [existing] = await db.select().from(grantApplicationDrafts).where(eq(grantApplicationDrafts.id, draft.id));
+    if (existing) {
+      const [updated] = await db.update(grantApplicationDrafts).set({ ...draft, updatedAt: new Date() }).where(eq(grantApplicationDrafts.id, draft.id)).returning();
+      return updated;
+    } else {
+      const [inserted] = await db.insert(grantApplicationDrafts).values(draft).returning();
+      return inserted;
+    }
+  async getLibraries(): Promise<LibraryRecord[]> {
+    return await db.select().from(libraries).orderBy(desc(libraries.lastScannedAt));
+  }
+
+  async upsertLibrary(lib: InsertLibrary): Promise<LibraryRecord> {
+    const [existing] = await db
+      .select()
+      .from(libraries)
+      .where(eq(libraries.packagePath, lib.packagePath));
+
+    if (existing) {
+      const [updated] = await db
+        .update(libraries)
+        .set({
+          ...lib,
+          lastScannedAt: new Date(),
+        })
+        .where(eq(libraries.id, existing.id))
+        .returning();
+      return updated;
+    }
+
+    const [inserted] = await db.insert(libraries).values(lib).returning();
+    return inserted;
   }
 }
 

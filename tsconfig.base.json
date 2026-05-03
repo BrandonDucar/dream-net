@@ -24,7 +24,9 @@
       "@dreamnet/cost-economic-bridge": ["packages/dreamnet-cost-economic-bridge/index.ts"],
       "@dreamnet/dreamnet-operational-bridge": ["packages/dreamnet-operational-bridge/index.ts"],
       "@dreamnet/dreamnet-snail-core": ["packages/dreamnet-snail-core/index.ts"],
-      "@dreamnet/dreamnet-voice-twilio": ["packages/dreamnet-voice-twilio/index.ts"]
+      "@dreamnet/dreamnet-voice-twilio": ["packages/dreamnet-voice-twilio/index.ts"],
+      "@dreamnet/wolfpack-funding-core": ["packages/wolfpack-funding-core/index.ts"],
+      "@dreamnet/wolfpack-mailer-core": ["packages/wolfpack-mailer-core/index.ts"]
     }
   }
 }

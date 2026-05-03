@@ -9,8 +9,7 @@
  * @module @dreamnet/dreamnet-control-core/rateLimiter
  */
 
-import type { ClusterId } from "./clusters";
-import type { TierId } from "./tierConfig";
+import type { TierId, ClusterId } from "@dreamnet/types";
 
 interface RateLimitWindow {
   requests: Array<{ timestamp: number }>;

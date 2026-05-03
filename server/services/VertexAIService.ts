@@ -1,17 +1,26 @@
 import axios from 'axios';
 import { NERVE_BUS } from '@dreamnet/nerve';
+import { GoogleAuth } from 'google-auth-library';
 
 export class VertexAIService {
   private static instance: VertexAIService;
   private projectId: string;
   private location: string;
   private modelId: string;
-  private accessToken: string | null = null;
+  private auth: GoogleAuth;
+  private cachedToken: string | null = null;
+  private tokenExpiry: number = 0;
 
   private constructor() {
     this.projectId = process.env.GCP_PROJECT_ID || 'aqueous-tube-470317-m6';
     this.location = process.env.GCP_LOCATION || 'us-central1';
     this.modelId = process.env.VERTEX_AI_MODEL || 'gemini-1.5-pro';
+    
+    // Initialize GoogleAuth for seamless production deployment
+    this.auth = new GoogleAuth({
+      scopes: 'https://www.googleapis.com/auth/cloud-platform',
+      projectId: this.projectId,
+    });
   }
 
   public static getInstance(): VertexAIService {
@@ -26,9 +35,36 @@ export class VertexAIService {
    */
   public async initialize(): Promise<void> {
     console.log(`🧠 [Vertex AI] Initializing for project ${this.projectId} in ${this.location}...`);
-    // In a real environment, we'd use GoogleAuth to get the token.
-    // For now, we assume the environment has GOOGLE_APPLICATION_CREDENTIALS or we use a stub.
-    console.log('✅ [Vertex AI] Service ready (awaiting first inference for auth validation)');
+    try {
+        // Test auth by fetching project ID
+        await this.auth.getProjectId();
+        console.log('✅ [Vertex AI] Service ready and authenticated');
+    } catch (e) {
+        console.warn('⚠️ [Vertex AI] Auth check failed, but service is ready for fallback inference:', e);
+    }
+  }
+
+  /**
+   * Helper to fetch the current access token
+   */
+  private async getAccessToken(): Promise<string | null> {
+    if (this.cachedToken && Date.now() < this.tokenExpiry) {
+        return this.cachedToken;
+    }
+
+    try {
+        const client = await this.auth.getClient();
+        const tokenResp = await client.getAccessToken();
+        
+        if (tokenResp.token) {
+            this.cachedToken = tokenResp.token;
+            this.tokenExpiry = Date.now() + 3000 * 1000; // Cache for 50 minutes
+            return this.cachedToken;
+        }
+    } catch (error) {
+        console.warn('⚠️ [Vertex AI] Failed to fetch access token:', error);
+    }
+    return null;
   }
 
   /**
@@ -38,11 +74,12 @@ export class VertexAIService {
     const url = `https://${this.location}-aiplatform.googleapis.com/v1/projects/${this.projectId}/locations/${this.location}/publishers/google/models/${this.modelId}:generateContent`;
 
     try {
-      // Note: This requires a valid Google Cloud access token. 
-      // In production, this would be fetched via 'google-auth-library'.
-      if (!this.accessToken) {
+      const token = await this.getAccessToken();
+      if (!token && !process.env.GCP_ACCESS_TOKEN) {
         console.warn('⚠️ [Vertex AI] No access token provided. Attempting to use local environment default...');
       }
+
+      const activeToken = token || process.env.GCP_ACCESS_TOKEN;
 
       const response = await axios.post(
         url,
@@ -63,7 +100,7 @@ export class VertexAIService {
         },
         {
           headers: {
-            'Authorization': `Bearer ${this.accessToken || process.env.GCP_ACCESS_TOKEN}`,
+            'Authorization': `Bearer ${activeToken}`,
             'Content-Type': 'application/json'
           }
         }
@@ -76,7 +113,7 @@ export class VertexAIService {
       console.error('❌ [Vertex AI] Inference failed:', error.response?.data || error.message);
       
       // Stub fallback if real API fails during "Boot Recovery"
-      if (process.env.STUB_AI === 'true' || !this.accessToken) {
+      if (process.env.STUB_AI === 'true' || !process.env.GCP_PROJECT_ID) {
         console.log('🔮 [Vertex AI] Falling back to heuristic stub...');
         return this.getHeuristicResponse(prompt);
       }
@@ -96,10 +133,11 @@ export class VertexAIService {
   }
 
   /**
-   * Set access token manually if needed
+   * Set access token manually if needed (Legacy / Test override)
    */
   public setAccessToken(token: string): void {
-    this.accessToken = token;
+    this.cachedToken = token;
+    this.tokenExpiry = Date.now() + 3000 * 1000;
   }
 }
 

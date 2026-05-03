@@ -3,8 +3,8 @@
  * Performance monitoring and metrics collection
  */
 
-import { metricsStore } from "./store/metricsStore";
-import type { RequestMetric, ClusterMetrics, PerformanceSnapshot, MetricQuery } from "./types";
+import { metricsStore } from "./store/metricsStore.js";
+import type { RequestMetric, ClusterMetrics, PerformanceSnapshot, MetricQuery } from "./types.js";
 
 export const DreamNetMetricsCore = {
   recordMetric(metric: RequestMetric): void {
@@ -25,9 +25,8 @@ export const DreamNetMetricsCore = {
 
   clear(): void {
     metricsStore.clear();
-  },
+  }
 };
 
-export * from "./types";
+export * from "./types.js";
 export default DreamNetMetricsCore;
-

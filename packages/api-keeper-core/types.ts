@@ -19,7 +19,7 @@ export interface APIPricing {
     requests: number;      // Requests per month
     features: string[];    // What's included
   };
-  paidTiers: {
+  paidTiers?: {
     name: string;          // "Starter", "Pro", "Enterprise"
     price: number;          // Monthly price in USD
     requests: number;       // Requests per month

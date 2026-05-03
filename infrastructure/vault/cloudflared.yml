@@ -1,0 +1,7 @@
+tunnel: library-vault-tunnel
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  - hostname: vault.dreamnet.internal
+    service: http://localhost:3333
+  - service: http_status:404

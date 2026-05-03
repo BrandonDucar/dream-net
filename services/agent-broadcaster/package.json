@@ -1,0 +1,17 @@
+{
+  "name": "@dreamnet/agent-broadcaster",
+  "version": "1.0.0",
+  "description": "Safe ClawdChat agent-level broadcaster for DreamNet social identities",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "dependencies": {
+    "redis": "^4.6.11"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -7,5 +7,5 @@ packages:
   - "apps/arya-frame"
   - "apps/arya-domain"
   - "packages/*"
+  - "services/*"
   - "server"
-

@@ -10,17 +10,17 @@
  */
 
 import type { Request, Response, NextFunction } from "express";
-import { TIERS, type TierConfig, type TierId } from "./tierConfig";
+import { TIERS, type TierConfig, type TierId } from "./tierConfig.js";
 import {
   GOD_VAULT,
   getGodVaultApiKeysFromEnv,
   isGodVaultWallet,
-} from "./godVault";
-import type { DreamPassport, OfficeId, CabinetId } from "../../dream-state-core/src/types";
+} from "./godVault.js";
+import type { DreamPassport, OfficeId, CabinetId } from "../../dreamstate/src/types.js";
 import {
   getPassportByWallet,
   getPassportByCitizenId,
-} from "../../dreamstate/src/registry";
+} from "../../dreamstate/src/registry.js";
 
 // If you're using ethers, you can uncomment this:
 // import { ethers } from "ethers";

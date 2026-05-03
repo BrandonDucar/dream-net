@@ -3,9 +3,8 @@
  * In production, this should use Redis/KV store
  */
 
-import type { KillSwitchState, ClusterRateLimit, ControlConfig, ClusterId } from "../types";
-import type { TierId, TierConfig } from "../tierConfig";
-import { TIERS } from "../tierConfig";
+import type { TierId, ClusterId, TierConfig, KillSwitchState, ClusterRateLimit, ControlConfig } from "@dreamnet/types";
+import { TIERS } from "../tierConfig.js";
 
 class ControlStore {
   private killSwitchState: KillSwitchState = {

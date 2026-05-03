@@ -4,9 +4,9 @@
  * "Supercharges" lines that branch out from ports with power profiles, budgets, and transforms
  */
 
-import type { PortId } from "../../port-governor/src/types";
-import type { ClusterId } from "../clusters";
-import type { ToolId } from "../../agent-gateway/src/tools";
+import type { PortId } from "../../port-governor/src/types.js";
+import type { ClusterId } from "./clusters.js";
+import type { ToolId } from "../../agent-gateway/src/tools.js";
 
 export interface ConduitIdParts {
   portId: PortId;

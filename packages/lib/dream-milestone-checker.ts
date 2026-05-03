@@ -1,4 +1,4 @@
-import { sendDreamCallSMS } from "./sms";
+import { sendDreamCallSMS } from "./sms.js";
 
 export async function checkDreamMilestones(dream: any, userPhone: string) {
   const { views, remixes, evolutionPath, viralityMetrics } = dream;

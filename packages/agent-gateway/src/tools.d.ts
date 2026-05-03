@@ -2,8 +2,8 @@
  * Agent Gateway Tool Registry
  * Defines available tools and their access requirements
  */
-import type { ClusterId } from "@dreamnet/dreamnet-control-core/clusters";
-import type { PortId } from "@dreamnet/port-governor/types";
+import type { ClusterId } from "../../dreamnet-control-core/src/clusters.js";
+import type { PortId } from "../../port-governor/src/types.js";
 export type ToolId = "env.get" | "env.set" | "env.delete" | "api.listKeys" | "api.rotateKey" | "vercel.deploy" | "vercel.listProjects" | "diagnostics.ping" | string;
 export interface ToolCostProfile {
     estimatedTokenCost?: number;

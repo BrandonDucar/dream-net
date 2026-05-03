@@ -15,7 +15,34 @@ interface BaseHealthStatus {
   };
 }
 
-export const DREAMKEEPER_CORE = {
+export interface DreamkeeperCore {
+  version: string;
+  networkVitals: {
+    totalDreams: number;
+    activeCores: number;
+    agentClusters: number;
+    networkHealth: "healthy" | "degraded" | "critical" | "unknown";
+    threatLevel: "stable" | "elevated" | "critical";
+  };
+  logs: any[];
+  dreamEvents: any[];
+  scanHistory: any[];
+  updateCycle: "realtime" | "hourly" | "daily";
+  baseHealth: any;
+  init: () => void;
+  processDreamEvent: (event: any) => void;
+  getDreamEvents: () => any[];
+  runSelfDiagnostics: () => void;
+  startMonitoring: () => void;
+  performNetworkScan: () => void;
+  learnAndAdapt: (feedback: any) => void;
+  requestSurgeonIntervention: (dreamId: string, issue: string) => void;
+  getStatus: () => any;
+  checkBaseHealth: (network?: any) => Promise<any>;
+  startBaseHealthChecks: () => void;
+}
+
+export const DREAMKEEPER_CORE: DreamkeeperCore = {
   version: "1.0.0",
   networkVitals: {
     totalDreams: 0,
@@ -67,7 +94,7 @@ export const DREAMKEEPER_CORE = {
     };
     
     DREAMKEEPER_CORE.dreamEvents.push(dreamEvent);
-    DREAMKEEPER_CORE.totalDreams++;
+    DREAMKEEPER_CORE.networkVitals.totalDreams++;
     
     // Analyze dream for patterns
     if (event.metadata?.emotions?.includes('chaos')) {
@@ -131,7 +158,7 @@ export const DREAMKEEPER_CORE = {
         `${DREAMKEEPER_CORE.networkVitals.activeCores} cores operational`,
         `${DREAMKEEPER_CORE.networkVitals.agentClusters} agent clusters responding`
       ],
-      recommendations: []
+      recommendations: [] as string[]
     };
     
     // Check for potential issues

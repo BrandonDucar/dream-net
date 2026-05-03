@@ -8,19 +8,7 @@
  * @module @dreamnet/dreamnet-control-core/clusters
  */
 
-export type ClusterId = 
-  | "WOLF_PACK"
-  | "OCTOPUS"
-  | "SPIDER_WEB"
-  | "JAGGY"
-  | "SHIELD_CORE"
-  | "WEBHOOK_NERVOUS_SYSTEM"
-  | "ORCA_PACK"
-  | "WHALE_PACK"
-  | "API_KEEPER"
-  | "AI_SEO"
-  | "DREAM_STATE"
-  | "STAR_BRIDGE";
+import type { ClusterId } from "@dreamnet/types";
 
 export interface ClusterConfig {
   /** Cluster identifier */
@@ -172,6 +160,15 @@ export const CLUSTERS: Record<ClusterId, ClusterConfig> = {
     defaultMaxRequestsPerMinute: 30,
     defaultMaxRequestsPerHour: 500,
     requiredFeatureFlag: "canAccessOctopus", // Star Bridge is cross-chain connector
+  },
+  TRAVEL_FLEET: {
+    id: "TRAVEL_FLEET",
+    label: "Travel Fleet",
+    description: "Autonomous logistics and movement - route optimization, carrier integration, spatial awareness",
+    enabled: true,
+    defaultMaxRequestsPerMinute: 50,
+    defaultMaxRequestsPerHour: 2000,
+    requiredFeatureFlag: "canAccessWolfPack",
   },
 };
 

@@ -3,8 +3,8 @@ import axios from 'axios';
 export const ollama = {
   async chat(system: string, user: string): Promise<string> {
     try {
-      const response = await axios.post('http://localhost:11434/api/generate', {
-        model: 'llama3', // or 'mistral'
+      const response = await axios.post('http://host.docker.internal:11434/api/generate', {
+        model: 'qwen2.5', // Swarm-optimized model
         prompt: `${system}\n\nUser: ${user}\n\nArya:`,
         stream: false
       });

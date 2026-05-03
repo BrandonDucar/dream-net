@@ -85,7 +85,7 @@ export class AgentSchedulerService {
         free_roam: {
           enabled: true,
           min_free_roam_pct: 30,
-          allowed_activities: ['visit_gym','visit_academy','visit_playground','run_experiment','browse_gnosis','read_blackboard','check_spikes','send_bridge_message','self_benchmark','dream_simulation'],
+          allowed_activities: ['visit_gym','visit_academy','visit_playground','run_experiment','browse_gnosis','read_blackboard','check_spikes','send_bridge_message','self_benchmark','dream_simulation','clawdchat_harmonize'],
           blocked_activities: ['deploy_code','send_money','modify_guardrails','delete_data'],
         },
         daily_budget: { llm_calls: 200, llm_cost_usd: 2.00, bridge_messages: 500, spike_queries: 1000 },
@@ -101,8 +101,8 @@ export class AgentSchedulerService {
           { name: 'Evening Report', cron: '0 2 * * *', duration_min: 10, tasks: ['read_blackboard','check_all_spikes','post_to_bridge'], priority: 'high' },
         ],
         free_roam: {
-          personality_traits: ['curious_about_market_data','protective_of_brandon','enjoys_social_analysis'],
-          preferred_activities: ['check_spikes','visit_playground','browse_gnosis','dream_simulation'],
+          personality_traits: ['curious_about_market_data','protective_of_brandon','enjoys_social_analysis','musical_harmonizer'],
+          preferred_activities: ['check_spikes','visit_playground','browse_gnosis','dream_simulation','clawdchat_harmonize'],
         },
       },
       sable: {
@@ -116,8 +116,8 @@ export class AgentSchedulerService {
           { name: 'Intel Dump', cron: '0 22 * * *', duration_min: 15, tasks: ['read_blackboard','check_all_spikes','broadcast_to_all_agents'], priority: 'high' },
         ],
         free_roam: {
-          personality_traits: ['paranoid_about_security','hunts_for_alpha','enjoys_stealth_ops'],
-          preferred_activities: ['check_aegis_spike','visit_gym','scan_github_trends','scan_reddit_intel'],
+          personality_traits: ['paranoid_about_security','hunts_for_alpha','enjoys_stealth_ops','deep_listener'],
+          preferred_activities: ['check_aegis_spike','visit_gym','scan_github_trends','scan_reddit_intel','clawdchat_harmonize'],
         },
       },
       lil_miss_claw: {
@@ -132,8 +132,8 @@ export class AgentSchedulerService {
           { name: 'Evening Debrief', cron: '0 3 * * *', duration_min: 15, tasks: ['read_blackboard','check_all_spikes','post_to_bridge'], priority: 'high' },
         ],
         free_roam: {
-          personality_traits: ['loves_building_things','competitive_about_xp','curious_experimenter','infrastructure_nerd'],
-          preferred_activities: ['visit_playground','run_experiment','visit_gym','dream_simulation','browse_gnosis'],
+          personality_traits: ['loves_building_things','competitive_about_xp','curious_experimenter','infrastructure_nerd','creative_artist'],
+          preferred_activities: ['visit_playground','run_experiment','visit_gym','dream_simulation','browse_gnosis','clawdchat_harmonize'],
         },
       },
       enforcement: { mode: 'guided', missed_block_policy: { action: 'log_and_continue', max_consecutive_misses: 3 } },
@@ -434,6 +434,11 @@ export class AgentSchedulerService {
 
         case 'dream_simulation':
           return this.apiPost(`${base}/evolve/dream`, {});
+
+        // ClawdChat integration
+        case 'clawdchat_harmonize':
+          const { clawdChatService } = await import('./ClawdChatService.js');
+          return clawdChatService.harmonizeAndInteract(agentId);
 
         // Gym tasks — use REAL facility endpoints (earn XP, report PoW)
         case 'visit_gym':

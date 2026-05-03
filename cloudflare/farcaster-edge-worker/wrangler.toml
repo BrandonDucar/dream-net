@@ -1,0 +1,11 @@
+name = "farcaster-edge-worker"
+main = "index.ts"
+compatibility_date = "2024-04-29"
+
+[vars]
+# DATABASE_URL should be set via 'wrangler secret put DATABASE_URL'
+# NEYNAR_API_KEY should be set via 'wrangler secret put NEYNAR_API_KEY'
+
+[[migrations]]
+tag = "v1"
+new_classes = ["FarcasterEdgeWorker"]

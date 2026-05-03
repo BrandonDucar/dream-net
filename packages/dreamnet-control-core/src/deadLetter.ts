@@ -3,10 +3,10 @@
  * Quarantine for high-risk conduit failures and timeouts
  */
 
-import type { ConduitId } from "./conduits";
-import type { PortId } from "../../port-governor/src/types";
-import type { ClusterId } from "../clusters";
-import type { ToolId } from "../../agent-gateway/src/tools";
+import type { ConduitId } from "./conduits.js";
+import type { PortId } from "../../port-governor/src/types.js";
+import type { ClusterId } from "./clusters.js";
+import type { ToolId } from "../../agent-gateway/src/tools.js";
 
 export interface DeadLetterRecord {
   id: string;

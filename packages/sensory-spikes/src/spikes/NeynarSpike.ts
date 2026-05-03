@@ -12,7 +12,7 @@ export class NeynarSpike {
             // Search for trending DreamNet or Agentic Web topics
             const casts = await Neynar.searchCasts("DreamNet OR 'Agentic Web' OR 'Base L2'");
             
-            const processed = casts.map(cast => ({
+            const processed = casts.map((cast: any) => ({
                 source: "farcaster",
                 author: cast.author.username,
                 text: cast.text,

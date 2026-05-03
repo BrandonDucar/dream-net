@@ -1,2 +1,1 @@
-
-export * from "./src/controlCoreMiddleware.ts";
+export * from "./src/controlCoreMiddleware.js";

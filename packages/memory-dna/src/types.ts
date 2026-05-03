@@ -1,3 +1,5 @@
+import type { HexCoordinate } from "./logic/honeycomb.js";
+
 export type EntityType = "agent" | "squad" | "endpoint" | "spore";
 
 export interface Trait {
@@ -21,6 +23,7 @@ export interface MemoryRecord {
   history: MemoryHistoryEntry[];
   createdAt: string;
   updatedAt: string;
+  coordinates?: HexCoordinate;
 }
 
 export type ResonanceSeverity = "low" | "medium" | "high";

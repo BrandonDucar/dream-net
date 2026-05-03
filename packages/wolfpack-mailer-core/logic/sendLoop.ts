@@ -20,7 +20,7 @@ import {
  */
 export async function processSendQueueOnce(): Promise<void> {
   const config = createMailerFromEnv();
-  const queue = WolfPackFundingCore.listQueue();
+  const queue = await WolfPackFundingCore.listQueue();
   const pending = queue.filter((q) => q.status === "pending");
 
   if (pending.length === 0) {
@@ -65,10 +65,10 @@ export async function processSendQueueOnce(): Promise<void> {
     const result = await sendMail(config, item.toEmail, item.subject, item.body);
 
     if (result.success) {
-      WolfPackFundingCore.updateQueueItemStatus(item.id, "sent");
+      await WolfPackFundingCore.updateQueueItemStatus(item.id, "sent");
       
       // Update follow-up metadata (B)
-      const lead = WolfPackFundingCore.getLead(item.leadId);
+      const lead = await WolfPackFundingCore.getLead(item.leadId);
       if (lead) {
         const now = Date.now();
         const followupDays = Number(process.env.WOLF_FUNDING_FOLLOWUP_DAYS || "5");
@@ -86,14 +86,14 @@ export async function processSendQueueOnce(): Promise<void> {
           updatedLead.stage = "contacted";
         }
         
-        WolfPackFundingCore.upsertLead(updatedLead);
+        await WolfPackFundingCore.upsertLead(updatedLead);
       }
       
       incrementTodayCount();
       sentCount += 1;
       console.log(`[WolfPackMailer] ✓ Email sent successfully to ${item.toEmail}`);
     } else {
-      WolfPackFundingCore.updateQueueItemStatus(item.id, "failed", result.error);
+      await WolfPackFundingCore.updateQueueItemStatus(item.id, "failed", result.error);
       failedCount += 1;
       console.error(`[WolfPackMailer] ✗ Failed to send email to ${item.toEmail}: ${result.error}`);
     }

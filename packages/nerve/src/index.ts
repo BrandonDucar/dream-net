@@ -5,9 +5,12 @@
  * @module @dreamnet/nerve
  */
 
-export * from "./types";
-export * from "./bus";
-export * from "./factory";
-export * from "./subscribers";
-export * from "./init";
+export * from "./types.js";
+export * from "./bus.js";
+export * from "./factory.js";
+export * from "./subscribers.js";
+export * from "./init.js";
+
+// Alias for ControlCore integration
+export { NERVE_BUS as dreamEventBus } from "./bus.js";
 

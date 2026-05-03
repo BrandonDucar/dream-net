@@ -1,0 +1,43 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Gooseclaw Manager
+  - job_name: 'gooseclaw-manager'
+    static_configs:
+      - targets: ['https://dreamnet-gooseclaw.dreamnet-intel.workers.dev']
+    metrics_path: '/health'
+
+  # Hawk Processor
+  - job_name: 'hawk-processor'
+    static_configs:
+      - targets: ['https://hawk-processor.dreamnet-intel.workers.dev']
+    metrics_path: '/health'
+
+  # Arya Generator
+  - job_name: 'arya-generator'
+    static_configs:
+      - targets: ['https://arya-generator.dreamnet-intel.workers.dev']
+    metrics_path: '/health'
+
+  # Governor Enforcer
+  - job_name: 'governor-enforcer'
+    static_configs:
+      - targets: ['https://governor-enforcer.dreamnet-intel.workers.dev']
+    metrics_path: '/health'
+
+  # Local Services
+  - job_name: 'dreamnet-services'
+    static_configs:
+      - targets: ['localhost:3200', 'localhost:3201', 'localhost:3202', 'localhost:3203', 'localhost:3204']
+
+  # Node Exporter
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

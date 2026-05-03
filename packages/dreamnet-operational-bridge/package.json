@@ -20,7 +20,13 @@
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@dreamnet/dreamnet-metrics-core": "workspace:*",
+    "@dreamnet/dreamnet-cost-core": "workspace:*",
+    "@dreamnet/spider-web-core": "workspace:*",
+    "@dreamnet/nerve": "workspace:*",
+    "@dreamnet/dreamstate": "workspace:*"
+  },
   "devDependencies": {
     "typescript": "^5.9.3"
   }

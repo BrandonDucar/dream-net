@@ -1,6 +1,36 @@
-name = "dreamnet-cortex"
-compatibility_date = "2024-04-05"
-pages_build_output_dir = "client/dist"
+name = "dreamnet-gooseclaw"
+main = "packages/gooseclaw/src/index.ts"
+compatibility_date = "2026-05-01"
+account_id = "7443bdb9dce80e4aec07a70fa5273e5c"
+workers_dev = true
 
+[build]
+command = "echo 'Gooseclaw ready'"
+
+# Vectorize bindings
+[[vectorize]]
+binding = "VECTORIZE_PROFILES"
+index_name = "agent-profiles"
+
+[[vectorize]]
+binding = "VECTORIZE_SIGNALS"
+index_name = "signal-embeddings"
+
+[[vectorize]]
+binding = "VECTORIZE_ROASTS"
+index_name = "roast-context"
+
+[[vectorize]]
+binding = "VECTORIZE_VOTES"
+index_name = "vote-positions"
+
+# AI binding
 [env.production]
-name = "dreamnet-cortex"
+name = "dreamnet-gooseclaw-prod"
+workers_dev = true
+vars = { ENVIRONMENT = "production" }
+
+[env.staging]
+name = "dreamnet-gooseclaw-staging"
+workers_dev = true
+vars = { ENVIRONMENT = "staging" }

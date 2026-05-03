@@ -1,1 +1,1 @@
-export * from "./src/conduits.ts";
+export * from "./src/conduits.js";
