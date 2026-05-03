@@ -188,7 +188,7 @@
     "drizzle-kit": "^0.31.6",
     "esbuild": "^0.27.0",
     "hardhat": "^2.22.0",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.10",
     "tailwindcss": "^3.4.18",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
