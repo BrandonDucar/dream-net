@@ -32,7 +32,7 @@
     "node-cron": "^3.0.3",
     "snarkjs": "^0.7.5",
     "stripe": "^14.21.0",
-    "vm2": "^3.10.0"
+    "vm2": "^3.10.5"
   },
   "devDependencies": {
     "@types/multer": "^1.4.12",
