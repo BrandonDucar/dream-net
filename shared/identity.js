@@ -25,6 +25,13 @@ catch {
     // Identity Grid not available - functions will check for null
 }
 /**
+ * Internal: Set IdentityGrid for testing purposes.
+ * @param grid - Mock IdentityGrid
+ */
+export function _setIdentityGrid(grid) {
+    IdentityGrid = grid;
+}
+/**
  * Convert auth provider user ID to DreamNet identity ID.
  *
  * This is the canonical mapping function used everywhere.
